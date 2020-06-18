@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application Title="SBT - Registro de Control Medico" Company="Smart Business Technology" Copyright="© Santiago Enrique Lemus" Description="Sistema de Registro y Control Médico">
+  <NavigationItems GenerateRelatedReportsGroup="True" StartupNavigationItem="">
+    <Items>
+      <Item Id="Catalogos">
+        <Items>
+          <Item Id="Constante_ListView" Index="0" />
+          <Item Id="Listas_ListView" Index="1" />
+          <Item Id="ZonaGeografica_ListView" Index="3" />
+          <Item Id="ActividadEconomica_ListView" Index="4" />
+          <Item Id="Empresa_ListView" Index="5" />
+          <Item Id="Tercero_ListView" Index="7" />
+        </Items>
+      </Item>
+      <Item Id="Default" Caption="Seguridad">
+        <Items>
+          <Item Id="MyDetails" Index="0" />
+          <Item Id="Role" ViewId="SecuritySystemRole_ListView" Index="1" IsNewNode="True" />
+          <Item Id="ConsultaExamen_ListView" Removed="True" />
+          <Item Id="ConsultaExamenFisico_ListView" Removed="True" />
+          <Item Id="ConsultaIncapacidad_ListView" Removed="True" />
+          <Item Id="ConsultaReceta_ListView" Removed="True" />
+          <Item Id="ConsultaSigno_ListView" Removed="True" />
+          <Item Id="ConsultaSintoma_ListView" Removed="True" />
+          <Item Id="EmpleadoCapacitacion_ListView" Removed="True" />
+          <Item Id="EmpleadoMembresia_ListView" Removed="True" />
+          <Item Id="EmpleadoPariente_ListView" Removed="True" />
+          <Item Id="EmpleadoProfesion_ListView" Removed="True" />
+          <Item Id="Event_ListView" Removed="True" />
+          <Item Id="MedicamentoDosis_ListView" Removed="True" />
+          <Item Id="MedicoConsultorio_ListView" Removed="True" />
+          <Item Id="MedicoEspecialidad_ListView" Removed="True" />
+          <Item Id="PacienteMedico_ListView" Removed="True" />
+          <Item Id="PacienteVacunas_ListView" Removed="True" />
+          <Item Id="Pariente_ListView" Removed="True" />
+          <Item Id="RegistroFiscal_ListView" Removed="True" />
+          <Item Id="Telefono_ListView" Removed="True" />
+          <Item Id="TerceroContacto_ListView" Removed="True" />
+          <Item Id="TerceroNota_ListView" Removed="True" />
+          <Item Id="TerceroNrf_ListView" Removed="True" />
+          <Item Id="TerceroRole_ListView" Removed="True" />
+          <Item Id="TerceroTelefono_ListView" Removed="True" />
+        </Items>
+      </Item>
+      <Item Id="Farmacia">
+        <Items>
+          <Item Id="Producto_ListView" Index="0" />
+        </Items>
+      </Item>
+      <Item Id="Recurso Humano">
+        <Items>
+          <Item Id="Event_ListView" ViewId="Event_ListView" ObjectKey="" IsNewNode="True" />
+        </Items>
+      </Item>
+      <Item Id="Salud">
+        <Items>
+          <Item Id="Enfermedad_ListView" Index="0" ObjectKey="" ViewId="Enfermedad_ListView" IsNewNode="True" Removed="True" />
+          <Item Id="Examen_ListView" Index="1" ObjectKey="" ViewId="Examen_ListView" IsNewNode="True" Removed="True" />
+          <Item Id="Cita_ListView" Index="2" />
+        </Items>
+      </Item>
+    </Items>
+  </NavigationItems>
+  <Options Skin="Visual Studio 2013 Blue" UIType="TabbedMDI" FormStyle="Ribbon" DataAccessMode="Server">
+    <RibbonOptions RibbonControlStyle="Office2013" />
+  </Options>
+  <SchemaModules>
+    <SchemaModule Name="CloneObjectModule" Version="19.1.4.0" IsNewNode="True" />
+    <SchemaModule Name="SchedulerModuleBase" Version="19.1.4.0" IsNewNode="True" />
+    <SchemaModule Name="SchedulerWindowsFormsModule" Version="19.1.4.0" IsNewNode="True" />
+    <SchemaModule Name="SystemModule" Version="19.1.4.0" IsNewNode="True" />
+    <SchemaModule Name="SystemWindowsFormsModule" Version="19.1.4.0" IsNewNode="True" />
+  </SchemaModules>
+</Application>

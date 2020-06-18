@@ -1,0 +1,476 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application Title="SBT.Apps.Medico.Generico.Module" Logo="ExpressAppLogo">
+  <BOModel>
+    <Class Name="DevExpress.Persistent.BaseImpl.Resource" DefaultDetailViewImage="GroupByResource" DefaultListViewImage="GroupByResource" />
+  </BOModel>
+  <SchemaModules>
+    <SchemaModule Name="CloneObjectModule" Version="19.1.4.0" IsNewNode="True" />
+    <SchemaModule Name="SystemModule" Version="19.1.4.0" IsNewNode="True" />
+  </SchemaModules>
+  <Views>
+    <DetailView Id="CdoPercentilPesoEstaturaBMI_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" Direction="Horizontal" RelativeSize="100">
+            <LayoutGroup Id="CdoPercentilPesoEstaturaBMI_col1" ShowCaption="False" Index="0" RelativeSize="50" IsNewNode="True">
+              <LayoutItem Id="TipoTabla" ViewItem="TipoTabla" Index="0" RelativeSize="4.8452220726783315" IsNewNode="True" />
+              <LayoutItem Id="EdadMes" ViewItem="EdadMes" Index="1" RelativeSize="3.4993270524899058" IsNewNode="True" />
+              <LayoutItem Id="P3" ViewItem="P3" Index="2" RelativeSize="3.4993270524899058" IsNewNode="True" />
+              <LayoutItem Id="P5" ViewItem="P5" Index="3" RelativeSize="3.4993270524899058" IsNewNode="True" />
+              <LayoutItem Id="P10" ViewItem="P10" Index="4" RelativeSize="3.4993270524899058" IsNewNode="True" />
+              <LayoutItem Id="P25" ViewItem="P25" Index="5" RelativeSize="81.157469717362048" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="CdoPercentilPesoEstaturaBMI_col2" ShowCaption="False" Index="1" RelativeSize="50" IsNewNode="True">
+              <LayoutItem Id="P50" ViewItem="P50" Index="0" RelativeSize="4.8452220726783315" IsNewNode="True" />
+              <LayoutItem Id="P75" ViewItem="P75" Index="1" RelativeSize="3.4993270524899058" IsNewNode="True" />
+              <LayoutItem Id="P85" ViewItem="P85" Index="2" RelativeSize="3.4993270524899058" IsNewNode="True" />
+              <LayoutItem Id="P90" ViewItem="P90" Index="3" RelativeSize="3.4993270524899058" IsNewNode="True" />
+              <LayoutItem Id="P95" ViewItem="P95" Index="4" RelativeSize="3.4993270524899058" IsNewNode="True" />
+              <LayoutItem Id="P97" ViewItem="P97" Index="5" RelativeSize="81.157469717362048" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="CdoPercentilPesoEstaturaBMI" Removed="True" />
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="Empleado_Profesiones_ListView">
+      <Columns>
+        <ColumnInfo Id="NumeroProfesional" Width="379" />
+      </Columns>
+    </ListView>
+    <DetailView Id="Enfermedad_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="100" Caption="SimpleEditors">
+            <LayoutGroup Id="Auto2bf63609-cd47-4a42-8af4-a0a83aa4178b" ShowCaption="False" Caption="" Direction="Horizontal" Index="0" RelativeSize="12.920592193808883" IsNewNode="True">
+              <LayoutGroup Id="Enfermedad_col1" ShowCaption="False" Index="0" RelativeSize="50" IsNewNode="True">
+                <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="37.5" IsNewNode="True" />
+                <LayoutItem Id="CodigoCie" ViewItem="CodigoCie" Index="1" RelativeSize="27.083333333333332" IsNewNode="True" />
+                <LayoutItem Id="Categoria" ViewItem="Categoria" Index="2" RelativeSize="35.416666666666664" IsNewNode="True" />
+              </LayoutGroup>
+              <LayoutGroup Id="Enfermedad_col2" ShowCaption="False" Index="1" RelativeSize="50" IsNewNode="True">
+                <LayoutItem Id="Comentario" ViewItem="Comentario" Index="0" RelativeSize="37.5" IsNewNode="True" />
+                <LayoutItem Id="Activo" ViewItem="Activo" Index="1" RelativeSize="27.083333333333332" IsNewNode="True" />
+                <LayoutItem Id="EsGrupo" ViewItem="EsGrupo" Index="2" RelativeSize="35.416666666666664" IsNewNode="True" />
+              </LayoutGroup>
+            </LayoutGroup>
+            <LayoutItem Id="Nombre" ViewItem="Nombre" Index="1" RelativeSize="87.079407806191114" IsNewNode="True" />
+            <LayoutGroup Id="XPObject" Caption="Oid" Direction="Horizontal" Index="1" RelativeSize="63.072776280323453" Removed="True">
+              <LayoutItem Id="Oid" Removed="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="Enfermedad" RelativeSize="18.438761776581426" Removed="True">
+              <LayoutGroup Id="Enfermedad_col1" RelativeSize="50">
+                <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="36.734693877551024" IsNewNode="True" />
+                <LayoutItem Id="CodigoCie" Index="1" RelativeSize="26.530612244897959" />
+                <LayoutItem Id="Categoria" Index="2" RelativeSize="36.734693877551024" />
+                <LayoutItem Id="Comentario" Index="3" RelativeSize="29.032258064516128" Removed="True" />
+              </LayoutGroup>
+              <LayoutGroup Id="Enfermedad_col2" RelativeSize="50">
+                <LayoutItem Id="Comentario" ViewItem="Comentario" Index="0" RelativeSize="36.734693877551024" IsNewNode="True" />
+                <LayoutItem Id="Activo" RelativeSize="26.530612244897959" Index="1" />
+                <LayoutItem Id="EsGrupo" RelativeSize="36.734693877551024" Index="2" />
+              </LayoutGroup>
+            </LayoutGroup>
+          </LayoutGroup>
+          <LayoutGroup Id="SizeableEditors" RelativeSize="50.06729475100942" Caption="Nombre" Direction="Horizontal" Removed="True">
+            <LayoutItem Id="Nombre" RelativeSize="100" Removed="True" />
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="Enfermedad_ListView" DataAccessMode="Server" />
+    <ListView Id="Enfermedad_LookupListView" DataAccessMode="Server" />
+    <DetailView Id="Examen_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="100">
+            <LayoutGroup Id="Examen" RelativeSize="100">
+              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="4.8192771084337354" IsNewNode="True" />
+              <LayoutItem Id="Nombre" Index="1" RelativeSize="3.4805890227576977" />
+              <LayoutItem Id="Comentario" Index="3" RelativeSize="3.4805890227576977" />
+              <LayoutItem Id="Activo" Index="4" RelativeSize="84.738955823293168" />
+            </LayoutGroup>
+            <LayoutGroup Id="XPObject" Caption="Oid" Direction="Horizontal" Index="1" RelativeSize="80.18741633199464" Removed="True">
+              <LayoutItem Id="Oid" Removed="True" />
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <DetailView Id="Medicamento_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="32.299012693935119">
+            <TabbedGroup Id="Item1" CaptionLocation="Top" Index="0" RelativeSize="100" IsNewNode="True">
+              <LayoutGroup Id="Producto" ShowCaption="True" Direction="Horizontal" Index="0" RelativeSize="100" IsNewNode="True">
+                <LayoutGroup Id="Producto_col1" ShowCaption="False" Index="0" RelativeSize="49.942329873125722" CaptionLocation="Left" IsNewNode="True">
+                  <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="20.454545454545453" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="Codigo" ViewItem="Codigo" Index="1" RelativeSize="14.772727272727273" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="CodigoBarra" ViewItem="CodigoBarra" Index="2" RelativeSize="14.772727272727273" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="Nombre" ViewItem="Nombre" Index="3" RelativeSize="14.772727272727273" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="Categoria" ViewItem="Categoria" Index="4" RelativeSize="14.772727272727273" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="NombreCorto" ViewItem="NombreCorto" Index="5" RelativeSize="20.454545454545453" CaptionLocation="Left" IsNewNode="True" />
+                </LayoutGroup>
+                <LayoutGroup Id="Producto_col2" ShowCaption="False" Index="1" RelativeSize="50.057670126874278" CaptionLocation="Left" IsNewNode="True">
+                  <LayoutItem Id="UnidadMedida" ViewItem="UnidadMedida" Index="0" RelativeSize="20.454545454545453" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="Presentacion" ViewItem="Presentacion" Index="1" RelativeSize="14.772727272727273" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="CantMinima" ViewItem="CantMinima" Index="2" RelativeSize="14.772727272727273" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="CantMaxima" ViewItem="CantMaxima" Index="3" RelativeSize="14.772727272727273" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="Activo" ViewItem="Activo" Index="4" RelativeSize="35.227272727272727" CaptionLocation="Left" IsNewNode="True" />
+                </LayoutGroup>
+              </LayoutGroup>
+              <LayoutGroup Id="Medicamento" ShowCaption="True" Direction="Horizontal" Index="1" RelativeSize="100" IsNewNode="True">
+                <LayoutGroup Id="Medicamento_col1" ShowCaption="False" Index="0" RelativeSize="47.174163783160324" IsNewNode="True">
+                  <LayoutItem Id="ContraIndicacion" ViewItem="ContraIndicacion" Index="0" RelativeSize="20.454545454545453" IsNewNode="True" />
+                  <LayoutItem Id="Concentracion" ViewItem="Concentracion" Index="1" RelativeSize="14.772727272727273" IsNewNode="True" />
+                  <LayoutItem Id="Via" ViewItem="Via" Index="2" RelativeSize="14.772727272727273" IsNewNode="True" />
+                  <LayoutItem Id="Prioridad" ViewItem="Prioridad" Index="3" RelativeSize="50" IsNewNode="True" />
+                </LayoutGroup>
+                <LayoutGroup Id="Medicamento_col2" ShowCaption="False" Index="1" RelativeSize="52.825836216839676" IsNewNode="True">
+                  <LayoutItem Id="NivelUso" ViewItem="NivelUso" Index="0" RelativeSize="20.454545454545453" IsNewNode="True" />
+                  <LayoutItem Id="CodigoVEN" ViewItem="CodigoVEN" Index="1" RelativeSize="14.772727272727273" IsNewNode="True" />
+                  <LayoutItem Id="Comentario" ViewItem="Comentario" Index="2" RelativeSize="64.772727272727266" IsNewNode="True" />
+                </LayoutGroup>
+              </LayoutGroup>
+            </TabbedGroup>
+            <LayoutGroup Id="XPObject" Index="1" RelativeSize="33.07692307692308" Caption="Oid" Direction="Horizontal" Removed="True">
+              <LayoutItem Id="Oid" RelativeSize="100" Removed="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="Medicamento" RelativeSize="35.128205128205131" Removed="True">
+              <LayoutGroup Id="Medicamento_col1" RelativeSize="50">
+                <LayoutItem Id="Concentracion" RelativeSize="26" />
+                <LayoutItem Id="ContraIndicacion" RelativeSize="34" />
+                <LayoutItem Id="Via" RelativeSize="40" />
+              </LayoutGroup>
+              <LayoutGroup Id="Medicamento_col2" RelativeSize="50">
+                <LayoutItem Id="CodigoVEN" RelativeSize="40" />
+                <LayoutItem Id="NivelUso" RelativeSize="26" />
+                <LayoutItem Id="Prioridad" RelativeSize="34" />
+              </LayoutGroup>
+            </LayoutGroup>
+            <LayoutGroup Id="Producto" Removed="True" />
+          </LayoutGroup>
+          <TabbedGroup Id="Tabs" RelativeSize="67.700987306064874" Index="1">
+            <LayoutGroup Id="MedicDosis" RelativeSize="100">
+              <LayoutItem Id="MedicDosis" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="Vacunas" RelativeSize="100">
+              <LayoutItem Id="Vacunas" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="Precios" RelativeSize="100">
+              <LayoutItem Id="Precios" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="Impuestos" RelativeSize="100">
+              <LayoutItem Id="Impuestos" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="ItemsEnsamble" RelativeSize="100">
+              <LayoutItem Id="ItemsEnsamble" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="Atributos" RelativeSize="100">
+              <LayoutItem Id="Atributos" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="Equivalentes" RelativeSize="100">
+              <LayoutItem Id="Equivalentes" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="Proveedores" RelativeSize="100">
+              <LayoutItem Id="Proveedores" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="Lotes" RelativeSize="100">
+              <LayoutItem Id="Lotes" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="CodigosBarra" RelativeSize="100">
+              <LayoutItem Id="CodigosBarra" RelativeSize="100" />
+            </LayoutGroup>
+          </TabbedGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="Medicamento_ListView" DataAccessMode="Server" />
+    <ListView Id="Medicamento_LookupListView" DataAccessMode="Server" />
+    <DetailView Id="MedicamentoDosis_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="100">
+            <LayoutGroup Id="MedicamentoDosis" RelativeSize="100">
+              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="4.8192771084337354" IsNewNode="True" />
+              <LayoutItem Id="Dosis" Index="1" RelativeSize="3.4805890227576977" />
+              <LayoutItem Id="Edad" Index="2" RelativeSize="3.4805890227576977" />
+              <LayoutItem Id="Comentario" Index="3" RelativeSize="88.219544846050866" />
+            </LayoutGroup>
+            <LayoutGroup Id="XPObject" Caption="Oid" Direction="Horizontal" Index="1" RelativeSize="83.668005354752339" Removed="True">
+              <LayoutItem Id="Oid" Removed="True" />
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="Medico_Citas_ListView" DataAccessMode="Server" />
+    <DetailView Id="Medico_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="41.318977119784655">
+            <TabbedGroup Id="Item1" CaptionLocation="Top" Index="0" RelativeSize="100" IsNewNode="True">
+              <LayoutGroup Id="Persona" ShowCaption="True" Direction="Horizontal" Index="0" RelativeSize="100" Caption="Datos Generales" IsNewNode="True">
+                <LayoutGroup Id="Persona_col1" ShowCaption="False" Index="0" RelativeSize="49.827784156142364" HorizontalAlign="Left" CaptionLocation="Left" IsNewNode="True">
+                  <LayoutItem Id="Nombre" ViewItem="Nombre" Index="0" RelativeSize="14.173228346456693" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="Apellido" ViewItem="Apellido" Index="1" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="Pais" ViewItem="Pais" Index="2" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="Provincia" ViewItem="Provincia" Index="3" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="Ciudad" ViewItem="Ciudad" Index="4" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="Direccion" ViewItem="Direccion" Index="5" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="FechaNacimiento" ViewItem="FechaNacimiento" Index="6" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="EMail" ViewItem="EMail" Index="7" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="Genero" ViewItem="Genero" Index="8" RelativeSize="14.173228346456693" CaptionLocation="Left" IsNewNode="True" />
+                </LayoutGroup>
+                <LayoutGroup Id="Persona_col2" ShowCaption="False" Index="1" RelativeSize="50.172215843857636" HorizontalAlign="Left" CaptionLocation="Left" IsNewNode="True">
+                  <LayoutItem Id="EstadoCivil" ViewItem="EstadoCivil" CaptionLocation="Left" Index="0" RelativeSize="14.173228346456693" IsNewNode="True" />
+                  <LayoutItem Id="FechaIngreso" ViewItem="FechaIngreso" Index="1" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="FechaRetiro" ViewItem="FechaRetiro" Index="2" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="TipoSangre" ViewItem="TipoSangre" Index="3" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="Idioma" ViewItem="Idioma" Index="4" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="FechaMuerte" ViewItem="FechaMuerte" Index="5" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="CausaMuerte" ViewItem="CausaMuerte" Index="6" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="Edad" ViewItem="Edad" Index="7" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="Fotografia" ViewItem="Fotografia" Index="8" RelativeSize="14.173228346456693" CaptionLocation="Left" IsNewNode="True" />
+                </LayoutGroup>
+              </LayoutGroup>
+              <LayoutGroup Id="Empleado" ShowCaption="True" Direction="Horizontal" Index="1" RelativeSize="100" Caption="Medico" IsNewNode="True">
+                <LayoutGroup Id="Empleado_col1" ShowCaption="False" Index="0" RelativeSize="49.827784156142364" HorizontalAlign="Left" CaptionLocation="Left" IsNewNode="True">
+                  <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="14.173228346456693" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="Empresa" ViewItem="Empresa" Index="1" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="Unidad" ViewItem="Unidad" Index="2" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="TipoSalario" ViewItem="TipoSalario" Index="3" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="Salario" ViewItem="Salario" Index="4" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="Cargo" ViewItem="Cargo" Index="5" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="Estado" ViewItem="Estado" Index="6" RelativeSize="34.645669291338585" CaptionLocation="Left" IsNewNode="True" />
+                </LayoutGroup>
+                <LayoutGroup Id="Empleado_col2" ShowCaption="False" Index="1" RelativeSize="50.172215843857636" HorizontalAlign="Left" CaptionLocation="Left" IsNewNode="True">
+                  <LayoutItem Id="Nacionalidad" ViewItem="Nacionalidad" Index="0" RelativeSize="14.173228346456693" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="TipoCuenta" ViewItem="TipoCuenta" Index="1" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="NumeroCuenta" ViewItem="NumeroCuenta" Index="2" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="Pensionado" ViewItem="Pensionado" Index="3" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="NumeroCarne" ViewItem="NumeroCarne" Index="4" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="Titulo" ViewItem="Titulo" Index="5" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="NumeroJVPM" ViewItem="NumeroJVPM" Index="6" RelativeSize="34.645669291338585" CaptionLocation="Left" IsNewNode="True" />
+                </LayoutGroup>
+              </LayoutGroup>
+            </TabbedGroup>
+            <LayoutGroup Id="XPObject" Index="1" RelativeSize="18.952618453865338" Caption="Oid" Direction="Horizontal" Removed="True">
+              <LayoutItem Id="Oid" RelativeSize="100" Removed="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="Empleado" RelativeSize="33.828382838283829" Removed="True">
+              <LayoutGroup Id="Empleado_col1" RelativeSize="50">
+                <LayoutItem Id="Cargo" RelativeSize="14.772727272727273" />
+                <LayoutItem Id="Empresa" RelativeSize="20.454545454545453" />
+                <LayoutItem Id="Estado" RelativeSize="20.454545454545453" />
+                <LayoutItem Id="Salario" RelativeSize="14.772727272727273" />
+                <LayoutItem Id="TipoSalario" RelativeSize="14.772727272727273" />
+                <LayoutItem Id="Unidad" RelativeSize="14.772727272727273" />
+              </LayoutGroup>
+              <LayoutGroup Id="Empleado_col2" RelativeSize="50">
+                <LayoutItem Id="Nacionalidad" RelativeSize="20.454545454545453" />
+                <LayoutItem Id="NumeroCarne" RelativeSize="14.772727272727273" />
+                <LayoutItem Id="NumeroCuenta" RelativeSize="14.772727272727273" />
+                <LayoutItem Id="Pensionado" RelativeSize="14.772727272727273" />
+                <LayoutItem Id="TipoCuenta" RelativeSize="14.772727272727273" />
+                <LayoutItem Id="Titulo" RelativeSize="20.454545454545453" />
+              </LayoutGroup>
+            </LayoutGroup>
+            <LayoutGroup Id="Medico" RelativeSize="10.972568578553616" Caption="Numero JVPM" Direction="Horizontal" Removed="True">
+              <LayoutItem Id="NumeroJVPM" RelativeSize="100" Removed="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="Persona" Removed="True" />
+          </LayoutGroup>
+          <TabbedGroup Id="Tabs" RelativeSize="58.681022880215345">
+            <LayoutGroup Id="Especialidades" RelativeSize="100">
+              <LayoutItem Id="Especialidades" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="Consultorios" RelativeSize="100">
+              <LayoutItem Id="Consultorios" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="Citas" RelativeSize="100">
+              <LayoutItem Id="Citas" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="Profesiones" RelativeSize="100">
+              <LayoutItem Id="Profesiones" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="Capacitaciones" RelativeSize="100">
+              <LayoutItem Id="Capacitaciones" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="Membresias" RelativeSize="100">
+              <LayoutItem Id="Membresias" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="Parientes" RelativeSize="100">
+              <LayoutItem Id="Parientes" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="Telefonos" RelativeSize="100">
+              <LayoutItem Id="Telefonos" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="Documentos" RelativeSize="100">
+              <LayoutItem Id="Documentos" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="Contactos" RelativeSize="100">
+              <LayoutItem Id="Contactos" RelativeSize="100" />
+            </LayoutGroup>
+          </TabbedGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <DetailView Id="MedicoConsultorio_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="100">
+            <LayoutGroup Id="MedicoConsultorio" RelativeSize="12.85140562248996">
+              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="37.5" IsNewNode="True" />
+              <LayoutItem Id="Consultorio" Index="1" RelativeSize="27.083333333333332" />
+              <LayoutItem Id="Activo" Index="2" RelativeSize="35.416666666666664" />
+            </LayoutGroup>
+            <LayoutGroup Id="XPObject" Caption="Oid" Direction="Horizontal" Index="1" RelativeSize="87.148594377510037">
+              <LayoutItem Id="Oid" Removed="True" />
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <DetailView Id="MedicoEspecialidad_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="100">
+            <LayoutGroup Id="MedicoEspecialidad" RelativeSize="100" Caption="Especialidad">
+              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="4.8452220726783315" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="XPObject" Caption="Oid" Direction="Horizontal" Index="1" RelativeSize="90.578734858681017" Removed="True">
+              <LayoutItem Id="Oid" Removed="True" />
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <DetailView Id="MedicoListas_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" Direction="Horizontal" RelativeSize="100">
+            <LayoutGroup Id="MedicoListas_col1" ShowCaption="False" Index="0" RelativeSize="50" IsNewNode="True">
+              <LayoutItem Id="Codigo" ViewItem="Codigo" Index="0" RelativeSize="4.8452220726783315" IsNewNode="True" />
+              <LayoutItem Id="Nombre" ViewItem="Nombre" Index="1" RelativeSize="3.4993270524899058" IsNewNode="True" />
+              <LayoutItem Id="Categoria" ViewItem="Categoria" Index="2" RelativeSize="3.4993270524899058" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="MedicoListas_col2" ShowCaption="False" Index="1" RelativeSize="50" IsNewNode="True">
+              <LayoutItem Id="Comentario" ViewItem="Comentario" Index="0" RelativeSize="4.8452220726783315" IsNewNode="True" />
+              <LayoutItem Id="Activo" ViewItem="Activo" Index="1" RelativeSize="95.154777927321675" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="MedicoListas" Removed="True" />
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <DetailView Id="PlanMedico_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="12.920592193808883">
+            <LayoutGroup Id="PlanMedico" RelativeSize="100">
+              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="37.5" IsNewNode="True" />
+              <LayoutItem Id="Nombre" Index="1" RelativeSize="27.083333333333332" />
+              <LayoutItem Id="Activo" Index="2" RelativeSize="35.416666666666664" />
+            </LayoutGroup>
+            <LayoutGroup Id="XPObject" Caption="Oid" Direction="Horizontal" Index="1" RelativeSize="74.123989218328845" Removed="True">
+              <LayoutItem Id="Oid" Removed="True" />
+            </LayoutGroup>
+          </LayoutGroup>
+          <LayoutGroup Id="Detalles_Group" Direction="Vertical" RelativeSize="87.079407806191114">
+            <LayoutItem Id="Detalles" RelativeSize="100" />
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <DetailView Id="Regla_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="16.41991924629879">
+            <LayoutGroup Id="Regla" RelativeSize="100">
+              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="29.508196721311474" IsNewNode="True" />
+              <LayoutItem Id="Descripcion" Index="1" RelativeSize="21.311475409836067" />
+              <LayoutItem Id="Tipo" Index="2" RelativeSize="21.311475409836067" />
+              <LayoutItem Id="PracticaDefecto" Index="3" RelativeSize="27.868852459016395" />
+            </LayoutGroup>
+            <LayoutGroup Id="XPObject" Caption="Oid" Direction="Horizontal" Index="1" RelativeSize="6.1538461538461542" Removed="True">
+              <LayoutItem Id="Oid" Removed="True" />
+            </LayoutGroup>
+          </LayoutGroup>
+          <LayoutGroup Id="PlanDetalles_Group" Direction="Vertical" RelativeSize="83.58008075370121">
+            <LayoutItem Id="PlanDetalles" RelativeSize="100" />
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <DetailView Id="TerminologiaAnatomica_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="100">
+            <LayoutGroup Id="TerminologiaAnatomica" RelativeSize="100">
+              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="4.8452220726783315" IsNewNode="True" />
+              <LayoutItem Id="CodigoTA" Index="1" RelativeSize="3.4993270524899058" />
+              <LayoutItem Id="CodigoFMA" Index="2" RelativeSize="3.4993270524899058" />
+              <LayoutItem Id="TerminoAnatomico" Index="3" RelativeSize="3.4993270524899058" />
+              <LayoutItem Id="Categoria" Index="4" RelativeSize="84.656796769851951" />
+            </LayoutGroup>
+            <LayoutGroup Id="XPObject" Caption="Oid" Direction="Horizontal" Index="1" RelativeSize="80.080753701211307" Removed="True">
+              <LayoutItem Id="Oid" Removed="True" />
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <DetailView Id="WhoPercentilPesoLong_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="100" Direction="Horizontal">
+            <LayoutGroup Id="WhoPercentilPesoLong_col1" ShowCaption="False" Index="0" RelativeSize="50" IsNewNode="True">
+              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="4.8452220726783315" IsNewNode="True" />
+              <LayoutItem Id="TipoTabla" ViewItem="TipoTabla" Index="1" RelativeSize="3.4993270524899058" IsNewNode="True" />
+              <LayoutItem Id="EdadMes" ViewItem="EdadMes" Index="2" RelativeSize="3.4993270524899058" IsNewNode="True" />
+              <LayoutItem Id="L" ViewItem="L" Index="3" RelativeSize="3.4993270524899058" IsNewNode="True" />
+              <LayoutItem Id="M" ViewItem="M" Index="4" RelativeSize="3.4993270524899058" IsNewNode="True" />
+              <LayoutItem Id="S" ViewItem="S" Index="5" RelativeSize="3.4993270524899058" IsNewNode="True" />
+              <LayoutItem Id="P2_3" ViewItem="P2_3" Index="6" RelativeSize="3.4993270524899058" IsNewNode="True" />
+              <LayoutItem Id="P5" ViewItem="P5" Index="7" RelativeSize="74.158815612382227" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="WhoPercentilPesoLong_col2" ShowCaption="False" Index="1" RelativeSize="50" IsNewNode="True">
+              <LayoutItem Id="P10" ViewItem="P10" Index="0" RelativeSize="4.8452220726783315" IsNewNode="True" />
+              <LayoutItem Id="P25" ViewItem="P25" Index="1" RelativeSize="3.4993270524899058" IsNewNode="True" />
+              <LayoutItem Id="P50" ViewItem="P50" Index="2" RelativeSize="3.4993270524899058" IsNewNode="True" />
+              <LayoutItem Id="P75" ViewItem="P75" Index="3" RelativeSize="3.4993270524899058" IsNewNode="True" />
+              <LayoutItem Id="P90" ViewItem="P90" Index="4" RelativeSize="3.4993270524899058" IsNewNode="True" />
+              <LayoutItem Id="P95" ViewItem="P95" Index="5" RelativeSize="3.4993270524899058" IsNewNode="True" />
+              <LayoutItem Id="P98" ViewItem="P98" Index="6" RelativeSize="77.658142664872145" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="XPObject" Caption="Oid" Direction="Horizontal" Index="1" RelativeSize="69.582772543741584" Removed="True">
+              <LayoutItem Id="Oid" Removed="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="WhoPercentilPesoLong" RelativeSize="35.935397039030953" Removed="True">
+              <LayoutGroup Id="WhoPercentilPesoLong_col1" RelativeSize="50">
+                <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="15.789473684210526" IsNewNode="True" />
+                <LayoutItem Id="TipoTabla" Index="1" RelativeSize="11.403508771929825" />
+                <LayoutItem Id="EdadMes" Index="2" RelativeSize="11.403508771929825" />
+                <LayoutItem Id="L" Index="3" RelativeSize="11.403508771929825" />
+                <LayoutItem Id="M" Index="4" RelativeSize="11.403508771929825" />
+                <LayoutItem Id="S" Index="5" RelativeSize="11.403508771929825" />
+                <LayoutItem Id="P2_3" Index="6" RelativeSize="11.403508771929825" />
+                <LayoutItem Id="P5" Index="7" RelativeSize="15.789473684210526" />
+              </LayoutGroup>
+              <LayoutGroup Id="WhoPercentilPesoLong_col2" RelativeSize="50">
+                <LayoutItem Id="P10" RelativeSize="15.789473684210526" />
+                <LayoutItem Id="P25" RelativeSize="11.403508771929825" />
+                <LayoutItem Id="P50" RelativeSize="11.403508771929825" />
+                <LayoutItem Id="P75" RelativeSize="11.403508771929825" />
+                <LayoutItem Id="P90" RelativeSize="11.403508771929825" />
+                <LayoutItem Id="P95" RelativeSize="11.403508771929825" />
+                <LayoutItem Id="P98" RelativeSize="27.192982456140349" />
+              </LayoutGroup>
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+  </Views>
+</Application>

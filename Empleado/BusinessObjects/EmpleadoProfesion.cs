@@ -1,0 +1,67 @@
+﻿using DevExpress.Persistent.Base;
+using DevExpress.Persistent.Validation;
+using SBT.Apps.Base.Module.BusinessObjects;
+using System;
+using System.Linq;
+
+namespace SBT.Apps.Empleado.Module.BusinessObjects
+{
+    [DefaultClassOptions, NavigationItem(false)]
+    [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Formación Profesional")]
+    [DevExpress.Persistent.Base.ImageNameAttribute("user_id-certificate")]
+    [DevExpress.Persistent.Base.CreatableItemAttribute(false)]
+    [RuleCombinationOfPropertiesIsUnique("EmpleadoProfesion_Unico", DefaultContexts.Save, "Profesion,NumeroProfesional", SkipNullOrEmptyValues = false)]
+    public class EmpleadoProfesion : XPObjectBaseBO
+    {
+
+        private Profesion _profesion;
+        private Empleado _empleado;
+        private System.String _numeroProfesional;
+        public EmpleadoProfesion(DevExpress.Xpo.Session session)
+          : base(session)
+        {
+        }
+        [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Profesión")]
+        [RuleRequiredField("EmpleadoProfesion_Profesion", DefaultContexts.Save, "Profesión es requerida")]
+        public Profesion Profesion
+        {
+            get
+            {
+                return _profesion;
+            }
+            set
+            {
+                SetPropertyValue("Profesion", ref _profesion, value);
+            }
+        }
+        [DevExpress.Xpo.SizeAttribute(12)]
+        [DevExpress.Persistent.Base.ToolTipAttribute("Número de certificación emitido por el organismo de vigilancia de la profesión")]
+        [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Número Profesional")]
+        [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
+        public System.String NumeroProfesional
+        {
+            get
+            {
+                return _numeroProfesional;
+            }
+            set
+            {
+                SetPropertyValue("NumeroProfesional", ref _numeroProfesional, value);
+            }
+        }
+        [DevExpress.Xpo.AssociationAttribute("Profesiones-Empleado")]
+        [RuleRequiredField("EmpleadoProfesion_Empleado", DefaultContexts.Save, "El empleado es requerido")]
+        public Empleado Empleado
+        {
+            get
+            {
+                return _empleado;
+            }
+            set
+            {
+                SetPropertyValue("Empleado", ref _empleado, value);
+            }
+        }
+
+    }
+}

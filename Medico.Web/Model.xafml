@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application Company="Smart Business Technology" Copyright="© Santiago Enrique Lemus" Description="Registro Electrónico de Pacientes" Title="SBT - Registro Electrónico de Pacientes" Logo="sbt_rep">
+  <NavigationItems GenerateRelatedReportsGroup="True" StartupNavigationItem="">
+    <Items>
+      <Item Id="Catalogos">
+        <Items>
+          <Item Id="Listas_ListView" Index="0" />
+          <Item Id="Constante_ListView" Index="1" />
+          <Item Id="Profesion_ListView" Index="4" />
+          <Item Id="ActividadEconomica_ListView" Index="5" />
+          <Item Id="ZonaGeografica_ListView" Index="6" />
+          <Item Id="Empresa_ListView" Index="7" />
+          <Item Id="Tercero_ListView" Index="8" />
+        </Items>
+      </Item>
+      <Item Id="Default" Caption="Seguridad">
+        <Items>
+          <Item Id="ConsultaExamen_ListView" Removed="True" />
+          <Item Id="ConsultaExamenFisico_ListView" Removed="True" />
+          <Item Id="ConsultaIncapacidad_ListView" Removed="True" />
+          <Item Id="ConsultaReceta_ListView" Removed="True" />
+          <Item Id="ConsultaSigno_ListView" Removed="True" />
+          <Item Id="ConsultaSintoma_ListView" Removed="True" />
+          <Item Id="Event_ListView" Removed="True" />
+          <Item Id="MedicamentoDosis_ListView" Removed="True" />
+          <Item Id="MedicoConsultorio_ListView" Removed="True" />
+          <Item Id="MedicoEspecialidad_ListView" Removed="True" />
+          <Item Id="PacienteMedico_ListView" Removed="True" />
+          <Item Id="PacienteVacunas_ListView" Removed="True" />
+          <Item Id="Pariente_ListView" Removed="True" />
+        </Items>
+      </Item>
+      <Item Id="Recurso Humano">
+        <Items>
+          <Item Id="Event_ListView" IsNewNode="True" />
+        </Items>
+      </Item>
+      <Item Id="Salud">
+        <Items>
+          <Item Id="Enfermedad_ListView" Index="0" />
+          <Item Id="Examen_ListView" Index="1" />
+          <Item Id="Cita_ListView" Index="2" />
+        </Items>
+      </Item>
+    </Items>
+  </NavigationItems>
+  <Options DataAccessMode="Server" CollectionsEditMode="Edit" />
+  <SchemaModules>
+    <SchemaModule Name="CloneObjectModule" Version="19.1.4.0" IsNewNode="True" />
+    <SchemaModule Name="SchedulerAspNetModule" Version="19.1.4.0" IsNewNode="True" />
+    <SchemaModule Name="SchedulerModuleBase" Version="19.1.4.0" IsNewNode="True" />
+    <SchemaModule Name="SystemAspNetModule" Version="19.1.4.0" IsNewNode="True" />
+    <SchemaModule Name="SystemModule" Version="19.1.4.0" IsNewNode="True" />
+  </SchemaModules>
+</Application>

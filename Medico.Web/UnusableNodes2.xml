@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application>
+  <NavigationItems Id="NavigationItems">
+    <Items Id="Items">
+      <Item Id="Farmacia">
+        <Items Id="Items">
+          <Item Id="Producto_ListView" Index="0" />
+        </Items>
+      </Item>
+    </Items>
+  </NavigationItems>
+</Application>
