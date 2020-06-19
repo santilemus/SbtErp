@@ -9,13 +9,24 @@ using System.Runtime.Serialization;
 
 namespace SBT.Apps.Base.Module.BusinessObjects
 {
+    /// <summary>
+    /// Parametros personalizados para el Log On
+    /// En este caso se incluyen la seleccion de Empresas y Agencias
+    /// </summary>
+    /// <remarks>
+    /// mas info en: https://docs.devexpress.com/eXpressAppFramework/112982/task-based-help/security/how-to-use-custom-logon-parameters-and-authentication
+    /// </remarks>
     [DomainComponent, Serializable]
     [System.ComponentModel.DisplayName("Conexión")]   // "Log On"
     public class CustomLogonParameters : INotifyPropertyChanged, ISerializable
     {
         int oidSucursal;
+        private int oidEmpresa;
         private Empresa empresa;
-        [DataSourceProperty("EmpresasDisponible"), ImmediatePostData(true)]
+        private EmpresaUnidad agencia;
+
+        //[DataSourceProperty("EmpresasDisponible"), ImmediatePostData(true)]
+        [DataSourceCriteria("Activa == True"), ImmediatePostData(true)]
         public Empresa Empresa
         {
             get { return empresa; }
@@ -23,12 +34,13 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             {
                 if (empresa == value) return;
                 empresa = value;
+                Agencia = null;
+                OnPropertyChanged(nameof(Empresa));
+                RefrescarAgencias();
                 //RefreshAvailableUsers();
-                RefrehsAvailableSuc();
             }
         }
 
-        private int oidEmpresa;
         /// <summary>
         /// Propiedad para recuperar la empresa a partir del codigo. La propiedad es utilizada desde el evento
         /// LastLogonParametersReading del Global.asax, con el valor del codigo de la empresa guardado en la
@@ -41,18 +53,13 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             set
             {
                 oidEmpresa = value;
-                if (EmpresasDisponible != null)
-                {
-                    var obj = EmpresasDisponible.Lookup(OidEmpresa);
-                    if (obj != null)
-                        Empresa = obj;
-                }
+                Empresa emp = ObjectSpace.GetObjectByKey<Empresa>(oidEmpresa);
+                if (emp != null)
+                    Empresa = emp;
             }
         }
 
-        private EmpresaUnidad agencia;
-        //[DataSourceCriteria("Empresa = '@This.Empresa'"), ImmediatePostData(true)]
-        [DataSourceProperty("SucursalesDisponibles"), ImmediatePostData(true)]
+        [DataSourceProperty("Empresa.Unidades"), ImmediatePostData(true)]
         public EmpresaUnidad Agencia
         {
             get { return agencia; }
@@ -60,6 +67,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             {
                 if (agencia == value) return;
                 agencia = value;
+                OnPropertyChanged(nameof(Agencia));
                 //RefreshAvailableUsers();
             }
         }
@@ -76,28 +84,14 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             set
             {
                 oidSucursal = value;
-                if (SucursalesDisponibles != null)
+                if (AgenciasDisponibles != null)
                 {
-                    var obj = SucursalesDisponibles.Lookup(value);
+                    var obj = AgenciasDisponibles.Lookup(value);
                     if (obj != null)
                         Agencia = obj;
                 }
             }
         }
-
-        //private Usuario usuario;
-        //[DataSourceProperty("UsuariosDisponible"), ImmediatePostData(true)]
-        //public Usuario Usuario
-        //{
-        //    get { return usuario; }
-        //    set
-        //    {
-        //        if (usuario == value || value == null) return;
-        //        usuario = value;
-        //        Empresa = usuario.Empresa; ;
-        //        UserName = usuario.UserName;
-        //    }
-        //}
 
         public CustomLogonParameters() { }
         // ISerializable 
@@ -120,49 +114,9 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         private void OnPropertyChanged(string propertyName)
         {
             if (PropertyChanged != null)
-            {
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
         }
         public event PropertyChangedEventHandler PropertyChanged;
-
-
-
-        //private void RefreshAvailableUsers()
-        //{
-        //    if (usuariosDisponible == null) return;
-        //    if (Empresa == null)
-        //    {
-        //        usuariosDisponible.Criteria = null;
-        //    }
-        //    else
-        //    {
-        //        if (Agencia != null)
-        //            usuariosDisponible.Criteria = CriteriaOperator.Parse("Empresa = ? And Agencia = ?", Empresa, Agencia);
-        //        else
-        //            usuariosDisponible.Criteria = new BinaryOperator("Empresa", Empresa);
-        //    }
-        //    if (usuario != null)
-        //    {
-        //        if ((usuariosDisponible.IndexOf(usuario) == -1) || (usuario.Empresa != Empresa))
-        //        {
-        //            Usuario = null;
-        //        }
-        //    }
-        //}
-
-
-        // AGREGAR AQUI, metodo similar al anterior pero para refrescar las usuarios disponibles por agencia y analizar si aplica, sino quitar la relacion
-        // entre usuarios y agencia
-
-        private void RefrehsAvailableSuc()
-        {
-            if (sucursalesDisponibles == null) return;
-            if (Agencia == null)
-                sucursalesDisponibles.Criteria = null;
-            else
-                sucursalesDisponibles.Criteria = CriteriaOperator.Parse("Empresa = ? And Role = ? And Activa = ?", Empresa, 2, true);
-        }
 
         //[Browsable(false)]
         public String UserName { get; set; }
@@ -179,8 +133,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         }
 
         private IObjectSpace objectSpace;
-        private XPCollection<Empresa> empresasDisponible;
-        private XPCollection<EmpresaUnidad> sucursalesDisponibles;
+        private XPCollection<EmpresaUnidad> agenciasDisponibles;
         //private XPCollection<Usuario> usuariosDisponible;
 
         [Browsable(false)]
@@ -190,51 +143,29 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             set { objectSpace = value; }
         }
 
-        [Browsable(false)]
-        [CollectionOperationSet(AllowAdd = false)]
-        public XPCollection<Empresa> EmpresasDisponible
-        {
-            get
-            {
-                if (empresasDisponible == null)
-                {
-                    empresasDisponible = ObjectSpace.GetObjects<SBT.Apps.Base.Module.BusinessObjects.Empresa>() as XPCollection<SBT.Apps.Base.Module.BusinessObjects.Empresa>;
-                }
-                return empresasDisponible;
-            }
-        }
-
         /// <summary>
         /// Retornar coleccion de sucursales, por eso se filtra por tipo de role (2 es agencia) y que esten activas
         /// </summary>
         [Browsable(false)]
         [CollectionOperationSet(AllowAdd = false, AllowRemove = false)]
-        public XPCollection<EmpresaUnidad> SucursalesDisponibles
+        public XPCollection<EmpresaUnidad> AgenciasDisponibles
         {
             get
             {
-                if (sucursalesDisponibles == null)
-                {
-                    CriteriaOperator criteria = CriteriaOperator.Parse("Empresa = ? And Role = ?", Empresa, 2); // And Activa = ?", Empresa, 2, true);
-                    sucursalesDisponibles = ObjectSpace.GetObjects<SBT.Apps.Base.Module.BusinessObjects.EmpresaUnidad>(criteria) as XPCollection<EmpresaUnidad>;
-                }
-                return sucursalesDisponibles;
+                if (agenciasDisponibles == null)
+                    RefrescarAgencias();
+                return agenciasDisponibles;
             }
         }
 
-        //[Browsable(false)]
-        //[CollectionOperationSet(AllowAdd = false)]
-        //public XPCollection<Usuario> UsuariosDisponible
-        //{
-        //    get
-        //    {
-        //        if (usuariosDisponible == null)
-        //        {
-        //            usuariosDisponible = ObjectSpace.GetObjects<Usuario>(CriteriaOperator.Parse("Empresa = ?", Empresa)) as XPCollection<Usuario>;
-        //            RefreshAvailableUsers();
-        //        }
-        //        return usuariosDisponible;
-        //    }
-        //}
+        private void RefrescarAgencias()
+        {
+            agenciasDisponibles = Empresa.Unidades;
+           // Se produce error al logearse cuando agenciasDisponibles es nulo, por eso se comentario el filtro
+           // porque pueden haber empresas en las cuales ninguna de sus unidades es agencia
+
+           // agenciasDisponibles.Filter = CriteriaOperator.Parse("[Role] == 2 && [Activa] == True");
+        }
+
     }
 }

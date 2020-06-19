@@ -55,6 +55,11 @@
     </DetailView>
     <ListView Id="Catalogo_ListView" DataAccessMode="Server" />
     <ListView Id="Catalogo_LookupListView" DataAccessMode="Server" />
+    <DetailView Id="CustomLogonParameters_DetailView">
+      <Items>
+        <PropertyEditor Id="Agencia" DataSourceCriteria="" />
+      </Items>
+    </DetailView>
     <DetailView Id="Empresa_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
@@ -298,7 +303,7 @@
         <LayoutGroup Id="Main" RelativeSize="100">
           <LayoutGroup Id="SimpleEditors" RelativeSize="19.919246298788696">
             <LayoutGroup Id="Usuario" RelativeSize="100" Caption="Agencia">
-              <LayoutItem Id="Empresa" ViewItem="Empresa" Index="0" RelativeSize="24.324324324324323" IsNewNode="True" />
+              <LayoutItem Id="Empresa" Index="0" RelativeSize="24.324324324324323" ViewItem="Empresa" IsNewNode="True" />
               <LayoutItem Id="Agencia" Index="1" RelativeSize="17.567567567567568" />
               <LayoutItem Id="ChangePasswordOnFirstLogon" ViewItem="ChangePasswordOnFirstLogon" Index="2" RelativeSize="17.567567567567568" IsNewNode="True" />
               <LayoutItem Id="UserName" ViewItem="UserName" Index="3" RelativeSize="17.567567567567568" IsNewNode="True" />

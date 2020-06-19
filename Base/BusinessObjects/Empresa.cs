@@ -10,6 +10,9 @@ namespace SBT.Apps.Base.Module.BusinessObjects
     /// <summary>
     /// Objeto persistente que corresponde a las empresas del sistema
     /// </summary>
+    /// <remarks>
+    /// Ver infomacion de uso de @This en https://docs.devexpress.com/eXpressAppFramework/113204/concepts/filtering/current-object-parameter
+    /// </remarks>
     [DefaultClassOptions]
     [DevExpress.Persistent.Base.NavigationItemAttribute("Catalogos")]
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Empresas")]
@@ -54,25 +57,30 @@ namespace SBT.Apps.Base.Module.BusinessObjects
                 SetPropertyValue("RazonSocial", ref _razonSocial, value);
             }
         }
+
+        /// <summary>
+        /// Pais de ubicacion de la empresa
+        /// </summary>
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("País")]
-        [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false), VisibleInListView(false)]
+        [VisibleInListView(false), ImmediatePostData(true)]
         [RuleRequiredField("Empresa.Pais_Requerido", DefaultContexts.Save, "País es requerido")]
-        [DataSourceCriteria("ZonaPadre is null and Activa = true")]
+        [DataSourceCriteria("[ZonaPadre] Is Null && [Activa] == True")]
         public ZonaGeografica Pais
         {
-            get
-            {
-                return _pais;
-            }
-            set
-            {
-                SetPropertyValue("Pais", ref _pais, value);
-            }
+            get => _pais;
+            set => SetPropertyValue(nameof(Pais), ref _pais, value);
         }
-        [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Departamento")]
+
+        /// <summary>
+        /// Provincia o departamento de ubicacion de la empresa
+        /// </summary>
+        /// <remarks>
+        ///Informacion de @This en https://docs.devexpress.com/eXpressAppFramework/113204/concepts/filtering/current-object-parameter
+        /// </remarks>
+        [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Departamento"), ImmediatePostData(true)]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false), VisibleInListView(false)]
         [RuleRequiredField("Empresa.Provincia_Requerido", DefaultContexts.Save, "Provincia es Requerido")]
-        [DataSourceCriteria("ZonaPadre = '@This.Pais' and Activa = true")]
+        [DataSourceCriteria("[ZonaPadre] == '@This.Pais' and [Activa] == True")]
         public ZonaGeografica Provincia
         {
             get
@@ -87,7 +95,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Ciudad")]
         [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
         [RuleRequiredField("Empresa.Ciudad_Requerido", DefaultContexts.Save, "Ciudad es Requerido")]
-        [DataSourceCriteria("ZonaPadre = '@This.Provincia' and Activa = true")]
+        [DataSourceCriteria("[ZonaPadre] == '@This.Provincia' and [Activa] == True")]
         public ZonaGeografica Ciudad
         {
             get
@@ -172,10 +180,17 @@ namespace SBT.Apps.Base.Module.BusinessObjects
                 SetPropertyValue("Activa", ref _activa, value);
             }
         }
+
+        /// <summary>
+        /// Imagen que corresponde al logo de la empresa
+        /// </summary>
+        /// <remarks>
+        /// Se carga cuando se requiere ver info en https://docs.devexpress.com/XPO/2024/feature-center/data-exchange-and-manipulation/delayed-loading
+        /// </remarks>
         [DevExpress.Xpo.ValueConverterAttribute(typeof(DevExpress.Xpo.Metadata.ImageValueConverter))]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [DevExpress.Persistent.Base.VisibleInListViewAttribute(false)]
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
+        [Delayed]
         public System.Drawing.Image Logo
         {
             get
@@ -216,7 +231,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             }
         }
 
-        [Association("Empresa-Usuarios"), DevExpress.Xpo.Aggregated, XafDisplayName("Usuarios"), VisibleInDetailView(true)]
+        [Association("Empresa-Usuarios"), /*DevExpress.Xpo.Aggregated,*/ XafDisplayName("Usuarios"), VisibleInDetailView(true)]
         public XPCollection<Usuario> Usuarios
         {
             get

@@ -28,6 +28,8 @@ namespace SBT.Apps.Erp.Module.Web.Controllers
         }
         private void XafPopupWindowControl_CustomizePopupWindowSize(object sender, CustomizePopupWindowSizeEventArgs e)
         {
+            if (e.ShowViewSource == null || e.ShowViewSource.SourceView == null)
+                return;
             if (!e.ShowViewSource.SourceView.ObjectTypeInfo.IsPersistent &&
                (e.ShowViewSource.SourceView.ObjectTypeInfo.Type != typeof(DevExpress.ExpressApp.ReportsV2.NewReportWizardParameters)))
             {

@@ -102,7 +102,6 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [DevExpress.Persistent.Base.ImmediatePostDataAttribute, DbType("varchar(8)")]
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Zona Padre")]
         [DevExpress.Persistent.Base.ToolTipAttribute("Código de la zona padre")]
-        [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [DevExpress.Xpo.IndexedAttribute]
         [Association("ZonaPadre-Zonas")]
         public ZonaGeografica ZonaPadre

@@ -127,7 +127,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             }
         }
 
-        [DbType("smallint"), XafDisplayName("Role de la Unidad"), Persistent("IdRole")]
+        [DbType("smallint"), XafDisplayName("Role Unidad"), Persistent("IdRole")]
         public ETipoRoleUnidad? Role
         {
             get => role;
