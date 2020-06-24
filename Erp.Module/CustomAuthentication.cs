@@ -41,11 +41,9 @@ namespace SBT.Apps.Medico.Module
                 //new BinaryOperator("UserName", customLogonParameters.UserName));
 
             if (usuario == null)
-                throw new ArgumentNullException("Usuario", string.Format("No Existe el Usuario {0}, en {1}", customLogonParameters.UserName, 
-                    customLogonParameters.Empresa.RazonSocial));
+                throw new ArgumentNullException("Usuario", $"No Existe el Usuario {customLogonParameters.UserName}, en {customLogonParameters.Empresa.RazonSocial}");
             if (usuario.Empresa.Oid != customLogonParameters.Empresa.Oid)
-                throw new ArgumentException(string.Format("Al usuario {0} no se le permite ingresar a la empresa {1}",
-                    customLogonParameters.UserName, customLogonParameters.Empresa.RazonSocial));
+                throw new ArgumentException($"Al usuario {customLogonParameters.UserName} no se le permite ingresar a la empresa {customLogonParameters.Empresa.RazonSocial}");
 
             if (!usuario.ComparePassword(customLogonParameters.Password))
                 throw new AuthenticationException(

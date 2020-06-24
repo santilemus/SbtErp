@@ -52,7 +52,7 @@ namespace SBT.Apps.Banco.BusinessObjects
         DateTime ? fechaAutorizo = null;
 
 
-        [Association("BancoCuenta-Conciliaciones"), Index(0), XafDisplayName("Número Cuenta")]
+        [Association("BancoCuenta-Conciliaciones"), Index(0), XafDisplayName("Número Cuenta"), VisibleInLookupListView(true)]
         public BancoCuenta NumeroCuenta
         {
             get => numeroCuenta;
@@ -84,6 +84,7 @@ namespace SBT.Apps.Banco.BusinessObjects
         }
 
         [XafDisplayName("Elaboró"), RuleRequiredField("BancoConciliacion.Elaboro_Requerido", DefaultContexts.Save), Index(4)]
+        [VisibleInListView(false)]
         public SBT.Apps.Empleado.Module.BusinessObjects.Empleado Elaboro
         {
             get => elaboro;
@@ -107,14 +108,14 @@ namespace SBT.Apps.Banco.BusinessObjects
             get { return saldoLibro; }
         }
 
-        [XafDisplayName("Autorizó"), Index(7)]
+        [XafDisplayName("Autorizó"), Index(7), VisibleInListView(false)]
         public SBT.Apps.Empleado.Module.BusinessObjects.Empleado Autorizo
         {
             get => autorizo;
             set => SetPropertyValue(nameof(Autorizo), ref autorizo, value);
         }
      
-        [PersistentAlias(nameof(fechaAutorizo)), XafDisplayName("Fecha Autorizó"), Index(8)]
+        [PersistentAlias(nameof(fechaAutorizo)), XafDisplayName("Fecha Autorizó"), Index(8), VisibleInListView(false)]
         [ModelDefault("DisplayFormat", "{0:G}"), ModelDefault("EditMask", "G")]
         public DateTime ? FechaAutorizo
         {

@@ -1,18 +1,12 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp;
-using System.ComponentModel;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
-using DevExpress.Persistent.Base;
-using System.Collections.Generic;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
+using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
-using SBT.Apps.Empleado.Module.BusinessObjects;
+using System;
+using System.ComponentModel;
+using System.Linq;
 
 namespace SBT.Apps.Banco.BusinessObjects
 {
@@ -33,7 +27,7 @@ namespace SBT.Apps.Banco.BusinessObjects
         }
         public override void AfterConstruction()
         {
-            base.AfterConstruction();        
+            base.AfterConstruction();
             minimoDisponible = CajaChica.MinimoDisponible;
             maximoGasto = CajaChica.MaximoGasto;
             montoFondo = CajaChica.MontoFondo;
@@ -68,13 +62,13 @@ namespace SBT.Apps.Banco.BusinessObjects
         [Persistent(nameof(MontoFondo)), DbType("money")]
         decimal montoFondo = 0.0m;
 
-        [Association("CajaChica-Transacciones"), ImmediatePostData(true)]
+        [Association("CajaChica-Transacciones"), ImmediatePostData(true), Index(0)]
         public CajaChica CajaChica
         {
             get => cajaChica;
             set
             {
-                var modificado = SetPropertyValue(nameof(CajaChica), ref cajaChica, value); 
+                var modificado = SetPropertyValue(nameof(CajaChica), ref cajaChica, value);
 
                 if (!IsLoading && !IsSaving && modificado)
                 {
@@ -87,7 +81,7 @@ namespace SBT.Apps.Banco.BusinessObjects
         }
 
         [DbType("varchar(3)"), Persistent("Moneda"), XafDisplayName("Moneda"), RuleRequiredField("CajaChicaTransaccion.Moneda_Requerido", "Save")]
-        [ImmediatePostData(true)]
+        [ImmediatePostData(true), Index(1)]
         public Moneda Moneda
         {
             get => moneda;
@@ -100,12 +94,13 @@ namespace SBT.Apps.Banco.BusinessObjects
         }
 
         [PersistentAlias("valorMoneda"), XafDisplayName("Valor Moneda"), ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
+        [Index(2), VisibleInListView(false)]
         public decimal ValorMoneda
         {
             get => valorMoneda;
         }
 
-        [DbType("datetime"), Persistent("FechaInicio"), XafDisplayName("Fecha Inicio")]
+        [DbType("datetime"), Persistent("FechaInicio"), XafDisplayName("Fecha Inicio"), Index(3)]
         [ModelDefault("DisplayFormat", "{0:G}"), ModelDefault("EditMask", "G")]
         public DateTime FechaInicio
         {
@@ -116,14 +111,14 @@ namespace SBT.Apps.Banco.BusinessObjects
         [DbType("datetime"), Persistent("FechaFin"), XafDisplayName("Fecha Fin")]
         [ModelDefault("DisplayFormat", "{0:G}"), ModelDefault("EditMask", "G")]
         [RuleValueComparison("CajaChicaTransaccion.FechaFin >= FechaInicio", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual,
-            "FechaInicio", ParametersMode.Expression, SkipNullOrEmptyValues = true)]
+            "FechaInicio", ParametersMode.Expression, SkipNullOrEmptyValues = true), Index(4)]
         public DateTime FechaFin
         {
             get => fechaFin;
             set => SetPropertyValue(nameof(FechaFin), ref fechaFin, value);
         }
 
-        [DbType("money"), Persistent("ValesPendientes"), XafDisplayName("Vales Pendientes")]
+        [DbType("money"), Persistent("ValesPendientes"), XafDisplayName("Vales Pendientes"), Index(5)]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         [RuleValueComparison("CajaChicaTransaccion.ValesPendientes >= 0", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual, 0, SkipNullOrEmptyValues = true)]
         public decimal ValesPendientes
@@ -132,54 +127,55 @@ namespace SBT.Apps.Banco.BusinessObjects
             set => SetPropertyValue(nameof(ValesPendientes), ref valesPendientes, value);
         }
 
-        [Size(150), DbType("varchar(150)"), Persistent("Observaciones"), XafDisplayName("Observaciones")]
+        [Size(150), DbType("varchar(150)"), Persistent("Observaciones"), XafDisplayName("Observaciones"), Index(6),
+            VisibleInListView(false)]
         public string Observaciones
         {
             get => observaciones;
             set => SetPropertyValue(nameof(Observaciones), ref observaciones, value);
         }
 
-        [PersistentAlias(nameof(fechaLiquidacion)), XafDisplayName("Fecha LIquidación")]
+        [PersistentAlias(nameof(fechaLiquidacion)), XafDisplayName("Fecha LIquidación"), Index(7), VisibleInListView(false)]
         [ModelDefault("DisplayFormat", "{0:G}"), ModelDefault("EditMask", "G")]
-        public DateTime ? FechaLiquidacion
+        public DateTime? FechaLiquidacion
         {
             get { return fechaLiquidacion; }
         }
 
-        [PersistentAlias("responsable"), XafDisplayName("Responsable")]
+        [PersistentAlias("responsable"), XafDisplayName("Responsable"), VisibleInLookupListView(true), Index(8)]
         public SBT.Apps.Empleado.Module.BusinessObjects.Empleado Responsable
         {
             get => responsable;
         }
 
         [XafDisplayName("Monto Fondo"), ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
-        [PersistentAlias(nameof(montoFondo))]
+        [PersistentAlias(nameof(montoFondo)), Index(9), VisibleInListView(false)]
         public decimal MontoFondo
         {
             get { return montoFondo; }
         }
 
         [XafDisplayName("Gasto Máximo"), ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
-        [PersistentAlias(nameof(maximoGasto))]
+        [PersistentAlias(nameof(maximoGasto)), Index(10), VisibleInListView(false)]
         public decimal MaximoGasto
         {
             get { return maximoGasto; }
         }
 
         [XafDisplayName("Mínimo Disponible"), ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
-        [PersistentAlias(nameof(minimoDisponible))]
+        [PersistentAlias(nameof(minimoDisponible)), Index(11), VisibleInListView(false)]
         public decimal MinimoDisponible
         {
             get { return minimoDisponible; }
         }
 
-        [PersistentAlias(nameof(bancoTransaccion)), XafDisplayName("Banco Transacción")]
+        [PersistentAlias(nameof(bancoTransaccion)), XafDisplayName("Banco Transacción"), Index(12), VisibleInListView(false)]
         public BancoTransaccion BancoTransaccion
         {
             get => bancoTransaccion;
         }
-       
-        [PersistentAlias("[BancoTransaccion.ChequeNo]"), XafDisplayName("Cheque No")]
+
+        [PersistentAlias("[BancoTransaccion.ChequeNo]"), XafDisplayName("Cheque No"), Index(12), VisibleInListView(false)]
         public int ChequeNo
         {
             get { return Convert.ToInt32(EvaluateAlias(nameof(ChequeNo))); }

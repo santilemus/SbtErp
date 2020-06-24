@@ -29,6 +29,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             Activa = true;
         }
 
+        string nRC;
         private System.Boolean _activa;
         private System.Drawing.Image _logo;
         private System.String _nit;
@@ -108,7 +109,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             }
         }
         [DevExpress.Xpo.SizeAttribute(200), DbType("varchar(200)"), Persistent("Direccion")]
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute, ]
+        [DevExpress.Persistent.Base.ImmediatePostDataAttribute,]
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Dirección")]
         [RuleRequiredField("Empresa.Direccion_Requerido", "Save")]
         public System.String Direccion
@@ -165,6 +166,13 @@ namespace SBT.Apps.Base.Module.BusinessObjects
                 SetPropertyValue("Nit", ref _nit, value);
             }
         }
+    
+        [Size(14), XafDisplayName("NRC"), RuleRequiredField("Empresa.NRC_Requerido", "Save")]
+        public string NRC
+        {
+            get => nRC;
+            set => SetPropertyValue(nameof(NRC), ref nRC, value);
+        }
 
         [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
         [DevExpress.Persistent.Base.VisibleInListViewAttribute(false)]
@@ -190,7 +198,6 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [DevExpress.Xpo.ValueConverterAttribute(typeof(DevExpress.Xpo.Metadata.ImageValueConverter))]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [DevExpress.Persistent.Base.VisibleInListViewAttribute(false)]
-        [Delayed]
         public System.Drawing.Image Logo
         {
             get
@@ -213,12 +220,12 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             }
         }
 
-        [DevExpress.Xpo.AssociationAttribute("RegistroFiscal-Empresa"), DevExpress.Xpo.Aggregated, VisibleInDetailView(true)]
-        public XPCollection<EmpresaNrf> RegistroFiscal
+        [DevExpress.Xpo.AssociationAttribute("Empresa-Giros"), DevExpress.Xpo.Aggregated, XafDisplayName("Giros")]
+        public XPCollection<EmpresaGiro> Giros
         {
             get
             {
-                return GetCollection<EmpresaNrf>("RegistroFiscal");
+                return GetCollection<EmpresaGiro>(nameof(Giros));
             }
         }
 

@@ -23,6 +23,7 @@ namespace SBT.Apps.Banco.BusinessObjects
     [DefaultClassOptions, ModelDefault("Caption", "Parámetros Caja Chica"), NavigationItem("Banco"), Persistent("BanCajaChica")]
     [RuleCombinationOfPropertiesIsUnique("CajaChica_EmpresaCodigo_Unico", DefaultContexts.Save, "Empresa,Codigo",
         CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction)]
+    [CreatableItem(false), DefaultProperty(nameof(Codigo))]
     [ImageName(nameof(CajaChica))]
     //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
@@ -50,7 +51,7 @@ namespace SBT.Apps.Banco.BusinessObjects
         decimal minimoDisponible;
         bool activa = true;
 
-        [Persistent("Empresa"), DbType("int"), XafDisplayName("Empresa"), Browsable(false)]
+        [Persistent("Empresa"), DbType("int"), XafDisplayName("Empresa"), Browsable(false), Index(0)]
         public Empresa Empresa
         {
             get => empresa;
@@ -59,7 +60,7 @@ namespace SBT.Apps.Banco.BusinessObjects
 
 
         [Size(6), DbType("varchar(6)"), Persistent("Codigo"), XafDisplayName("Código Caja"),
-            RuleRequiredField("CajaChica.Codigo_Requerido", DefaultContexts.Save)]
+            RuleRequiredField("CajaChica.Codigo_Requerido", DefaultContexts.Save), Index(1)]
         public string Codigo
         {
             get => codigo;
@@ -68,6 +69,7 @@ namespace SBT.Apps.Banco.BusinessObjects
 
 
         [DbType("varchar(3)"), Persistent("Moneda"), XafDisplayName("Moneda"), RuleRequiredField("CajaChica.Moneda_Requerido", "Save")]
+        [Index(2)]
         public Moneda Moneda
         {
             get => moneda;
@@ -75,7 +77,7 @@ namespace SBT.Apps.Banco.BusinessObjects
         }
 
 
-        [Persistent("Responsable"), XafDisplayName("Responsable"),
+        [Persistent("Responsable"), XafDisplayName("Responsable"), Index(3), VisibleInLookupListView(true),
             RuleRequiredField("CajaChica.Responsable_Requerido", "Save")]
         public SBT.Apps.Empleado.Module.BusinessObjects.Empleado Responsable
         {
@@ -83,7 +85,7 @@ namespace SBT.Apps.Banco.BusinessObjects
             set => SetPropertyValue(nameof(Responsable), ref responsable, value);
         }
 
-        [DbType("money"), Persistent("MontoFondo"), XafDisplayName("Monto del Fondo"),
+        [DbType("money"), Persistent("MontoFondo"), XafDisplayName("Monto del Fondo"), Index(4),
             ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2"),
             RuleValueComparison("CajaChica.MontoFondo > 0", DefaultContexts.Save, ValueComparisonType.GreaterThan, 0, SkipNullOrEmptyValues = false)]
         public decimal MontoFondo
@@ -92,7 +94,7 @@ namespace SBT.Apps.Banco.BusinessObjects
             set => SetPropertyValue(nameof(MontoFondo), ref montoFondo, value);
         }
 
-        [DbType("money"), Persistent("MaximoGasto"), XafDisplayName("Gasto Máximo"),
+        [DbType("money"), Persistent("MaximoGasto"), XafDisplayName("Gasto Máximo"), Index(5),
             ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2"),
             RuleRange("CajaChica.MaximoGasto > 0 y <= MontoFondo", DefaultContexts.Save, "0", "MontoFondo", 
             ParametersMode.Expression, SkipNullOrEmptyValues = false)]
@@ -102,7 +104,7 @@ namespace SBT.Apps.Banco.BusinessObjects
             set => SetPropertyValue(nameof(MaximoGasto), ref maximoGasto, value);
         }
 
-        [DbType("money"), Persistent("MinimoDisponible"), XafDisplayName("MinimoDisponible"),
+        [DbType("money"), Persistent("MinimoDisponible"), XafDisplayName("MinimoDisponible"), Index(6), 
             ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2"),
             RuleRange("CajaChica.MinimoDisponible >= MaximoGasto y <= MontoFondo", DefaultContexts.Save, "MaximoGasto", "MontoFondo", 
             ParametersMode.Expression, SkipNullOrEmptyValues = false)]
@@ -112,7 +114,7 @@ namespace SBT.Apps.Banco.BusinessObjects
             set => SetPropertyValue(nameof(MinimoDisponible), ref minimoDisponible, value);
         }
 
-        [DbType("bit"), Persistent("Activa"), XafDisplayName("Activa")]
+        [DbType("bit"), Persistent("Activa"), XafDisplayName("Activa"), Index(7)]
         public bool Activa
         {
             get => activa;

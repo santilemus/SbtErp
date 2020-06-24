@@ -1,9 +1,18 @@
-﻿<?xml version="1.0"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Application>
   <Options CollectionsEditMode="Edit" />
+  <SchemaModules>
+    <SchemaModule Name="CloneObjectModule" Version="19.1.4.0" IsNewNode="True" />
+    <SchemaModule Name="SystemAspNetModule" Version="19.1.4.0" IsNewNode="True" />
+    <SchemaModule Name="SystemModule" Version="19.1.4.0" IsNewNode="True" />
+  </SchemaModules>
   <ViewItems>
     <PropertyEditor Name="PropertyEditors">
       <RegisteredPropertyEditor PropertyType="System.Drawing.Color" EditorType="DevExpress.ExpressApp.Web.Editors.ASPx.ASPxColorPickerPropertyEditor" />
     </PropertyEditor>
   </ViewItems>
+  <Views>
+    <ListView Id="Partida_Detalles_ListView" DetailRowMode="None" DataAccessMode="Server" IsFooterVisible="True" />
+    <ListView Id="PartidaDetalle_ListView" DetailRowMode="None" />
+  </Views>
 </Application>

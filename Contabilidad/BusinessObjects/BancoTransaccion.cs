@@ -22,7 +22,7 @@ namespace SBT.Apps.Banco.BusinessObjects
     /// </summary>
 
     [DefaultClassOptions, ModelDefault("Caption", "Transacción Bancaria"), NavigationItem("Banco"), Persistent("BanTransaccion"),
-        DefaultProperty("Concepto")]  // revisar si es la propiedad por default adecuada
+        DefaultProperty(nameof(NumeroPorTipo))]  // revisar si es la propiedad por default adecuada
     [RuleCombinationOfPropertiesIsUnique("BancoTransaccion.Empresa_Clasificacion_NumeroPortipo", DefaultContexts.Save,
         "Empresa,Clasificacion,NumeroPorTipo", CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction, SkipNullOrEmptyValues = false)]
     [RuleCriteria("BancoTransaccion Cuenta.Empresa = Transaccion.Empresa", DefaultContexts.Save, "[NumeroCuenta.Empresa] = [Empresa]", 
@@ -78,14 +78,14 @@ namespace SBT.Apps.Banco.BusinessObjects
         // otros fields
         BancoChequera chequera;
 
-        [Association("BancoCuenta-Transacciones"), Persistent("NumeroCuenta"), XafDisplayName("Número Cuenta")]
+        [Association("BancoCuenta-Transacciones"), Persistent("NumeroCuenta"), XafDisplayName("Número Cuenta"), Index(0)]
         public BancoCuenta NumeroCuenta
         {
             get => numeroCuenta;
             set => SetPropertyValue(nameof(NumeroCuenta), ref numeroCuenta, value);
         }
 
-        [Persistent("Proveedor"), XafDisplayName("Proveedor")]
+        [Persistent("Proveedor"), XafDisplayName("Proveedor"), Index(1), VisibleInListView(false)]
         public SBT.Apps.Tercero.Module.BusinessObjects.Tercero Proveedor
         {
             get => proveedor;
@@ -97,15 +97,15 @@ namespace SBT.Apps.Banco.BusinessObjects
             }
         }
 
-        [PersistentAlias(nameof(serie)), XafDisplayName("No Serie")]
+        [PersistentAlias(nameof(serie)), XafDisplayName("No Serie"), Index(2), VisibleInListView(false)]
         public string Serie
         {
             get => serie;
         }
 
-        //[Association("BancoClasificacionTransac-Transacciones")]
         [Persistent("Clasificacion"), XafDisplayName("Clasificacion"), RuleRequiredField("BancoTransaccion.Tipo_Requerido", "Save")]
         [ToolTip("Clasificación de Transacciones de bancos", "Bancos", DevExpress.Utils.ToolTipIconType.Information)]
+        [Index(3)]
         public BancoClasificacionTransac Clasificacion
         {
             get => clasificacion;
@@ -124,27 +124,28 @@ namespace SBT.Apps.Banco.BusinessObjects
             }
         }
 
-        [XafDisplayName("Número x Clasificación"), PersistentAlias(nameof(numeroPorTipo))]
+        [XafDisplayName("Número Tipo"), PersistentAlias(nameof(numeroPorTipo)), Index(4), VisibleInListView(false)]
         public int? NumeroPorTipo
         {
             get => numeroPorTipo;
         }
 
         [XafDisplayName("Cheque No")]
-        [PersistentAlias(nameof(chequeNo))]
+        [PersistentAlias(nameof(chequeNo)), Index(5)]
         public int ChequeNo
         {
             get => chequeNo;
         }
 
-        [Size(150), DbType("varchar(150)"), Persistent("Beneficiario"), XafDisplayName("Paguese A")]
+        [Size(150), DbType("varchar(150)"), Persistent("Beneficiario"), XafDisplayName("Paguese A"), Index(6)]
+        [VisibleInLookupListView(true)]
         public string Beneficiario
         {
             get => beneficiario;
             set => SetPropertyValue(nameof(Beneficiario), ref beneficiario, value);
         }
 
-        [DbType("money"), Persistent("Monto"), XafDisplayName("Monto")]
+        [DbType("money"), Persistent("Monto"), XafDisplayName("Monto"), Index(7), VisibleInListView(false)]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         [RuleValueComparison("BancoTransaccion.Monto >= 0", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual, 0, SkipNullOrEmptyValues = false)]
         public decimal Monto
@@ -153,27 +154,27 @@ namespace SBT.Apps.Banco.BusinessObjects
             set => SetPropertyValue(nameof(Monto), ref monto, value);
         }
 
-        [DbType("smallint"), Persistent("Estado"), XafDisplayName("Estado")]
+        [DbType("smallint"), Persistent("Estado"), XafDisplayName("Estado"), Index(8)]
         public EBancoTransaccionEstado Estado
         {
             get => estado;
             set => SetPropertyValue(nameof(Estado), ref estado, value);
         }
 
-        [PersistentAlias(nameof(partida)), XafDisplayName("Partida")]
+        [PersistentAlias(nameof(partida)), XafDisplayName("Partida"), Index(9), VisibleInListView(false)]
         public SBT.Apps.Contabilidad.Module.BusinessObjects.Partida Partida
         {
             get => partida;
         }
 
-        [PersistentAlias("[Partida.Oid]"), XafDisplayName("Partida No")]
+        [PersistentAlias("[Partida.Oid]"), XafDisplayName("Partida No"), Index(10), VisibleInListView(false)]
         public int PartidaNumero
         {
             get { return Convert.ToInt32(EvaluateAlias("PartidaNumero")); }
         }       
 
         [PersistentAlias("Iif([Clasificacion.Tipo] = 1 Or [Clasificacion.Tipo] = 2, [Monto], 0)")]
-        [XafDisplayName("Abono"), ModelDefault("DisplayFormat", "{0:N2}")]
+        [XafDisplayName("Abono"), ModelDefault("DisplayFormat", "{0:N2}"), Index(11)]
         public decimal Abono
         {
             get { return Convert.ToDecimal(EvaluateAlias("Abono")); }
@@ -181,7 +182,7 @@ namespace SBT.Apps.Banco.BusinessObjects
 
 
         [PersistentAlias("Iif([Clasificacion.Tipo] = 3 Or [Clasificacion.Tipo] = 4, [Monto], 0)")]
-        [XafDisplayName("Cargo"), ModelDefault("DisplayFormat", "{0:N2}")]
+        [XafDisplayName("Cargo"), ModelDefault("DisplayFormat", "{0:N2}"), Index(12)]
         public decimal Cargo
         {
             get { return Convert.ToDecimal(EvaluateAlias("Cargo")); }

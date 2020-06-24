@@ -111,14 +111,14 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
             }
         }
 
-        [DevExpress.Xpo.Association("Tercero-Nrcs"), DevExpress.Xpo.Aggregated]
+        [DevExpress.Xpo.Association("Tercero-Giros"), DevExpress.Xpo.Aggregated]
         [DevExpress.Persistent.Base.VisibleInLookupListView(false), DevExpress.Persistent.Base.ImmediatePostData]
-        [DevExpress.ExpressApp.DC.XafDisplayName("Registro Fiscal")]
-        public XPCollection<TerceroNrf> NRCs
+        [DevExpress.ExpressApp.DC.XafDisplayName("Giros")]
+        public XPCollection<TerceroGiro> Giros
         {
             get
             {
-                return GetCollection<TerceroNrf>(nameof(NRCs));
+                return GetCollection<TerceroGiro>(nameof(Giros));
             }
         }
 

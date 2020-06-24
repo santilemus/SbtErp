@@ -117,6 +117,7 @@
     <Compile Include="BusinessObjects\EFormaAplicarTransaccion.cs" />
     <Compile Include="BusinessObjects\EFormaPago.cs" />
     <Compile Include="BusinessObjects\EMetodoAguinaldo.cs" />
+    <Compile Include="BusinessObjects\EmpleadoTipoPlanilla.cs" />
     <Compile Include="BusinessObjects\ETablaISR.cs" />
     <Compile Include="BusinessObjects\ETipoCalculoOperacion.cs" />
     <Compile Include="BusinessObjects\ETipoOperacion.cs" />

@@ -48,6 +48,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         }
 
 
+        SBT.Apps.Base.Module.BusinessObjects.EmpresaUnidad bodega;
         bool fProdChanged = false;
 
         #region Propiedades
@@ -70,7 +71,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         [Persistent(nameof(Oid)), DbType("bigint"), Key(AutoGenerate = true)]
         long oid = -1;
         [Persistent(nameof(CantidadAnulada)), DbType("numeric(12,2)")]
-        decimal ? cantidadAnulada;
+        decimal? cantidadAnulada = null;
 
         [PersistentAlias(nameof(oid)), XafDisplayName(nameof(Oid)), Index(0)]
         public long Oid => oid;
@@ -107,8 +108,20 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             }
         }
 
+        /// <summary>
+        /// Bodega de la cual salen los productos, cuando no es servicios
+        /// </summary>
+        [XafDisplayName("Bodega"), RuleRequiredField("VentaDetalle.Bodega_Requerida", "Save", 
+            TargetCriteria = "!([Producto.Categoria.Clasificacion] In (4, 5))")]
+        public SBT.Apps.Base.Module.BusinessObjects.EmpresaUnidad Bodega
+        {
+            get => bodega;
+            set => SetPropertyValue(nameof(Bodega), ref bodega, value);
+        }
+
         [DbType("numeric(12,2)"), XafDisplayName("Cantidad"), Index(3), VisibleInLookupListView(true),
             RuleValueComparison("VentaDetalle.Cantidad >= 0", DefaultContexts.Save, ValueComparisonType.GreaterThan, 0.0, SkipNullOrEmptyValues = false)]
+        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         public decimal Cantidad
         {
             get => cantidad;

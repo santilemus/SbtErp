@@ -107,8 +107,8 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 #endif
         [XafDisplayName("Clasificación"), RuleRequiredField("Transaccion.Clasificacion_Requerido", DefaultContexts.Save)]
         //DataSourceProperty("TransClasificaciones"), ImmediatePostData, Index(4)]
-        [DataSourceCriteria("('@This.TipoTransaccion' = 1 And Categoria = 18) Or ('@This.TipoTransaccion' = 2 And TipoLista = 19) " +
-            "Or ('@This.TipoTransaccion' = 3 And TipoLista = 20) ")]
+        [DataSourceCriteria("('@This.TipoTransaccion' = 1 And Categoria = 18) Or ('@This.TipoTransaccion' = 2 And Categoria = 19) " +
+            "Or ('@This.TipoTransaccion' = 3 And Categoria = 20) ")]
         [DetailViewLayout(LayoutColumnPosition.Left, LayoutGroupType.SimpleEditorsGroup)]
         public Listas Clasificacion
         {

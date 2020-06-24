@@ -21,6 +21,14 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
     /// Documento de Venta
     /// BO que corresponde al encabezado de los diferentes documentos de venta.
     /// </summary>
+    /// <remarks>
+    /// ***** L E E M E *****
+    /// 1. Pendiente de implementar Regla de validacion del NRC, cuando es credito fiscal y venta sujeto excluido. En esos
+    ///    casos el NRC es obligatorio
+    /// 2. Evaluar si se implementa regla de validacion del NIT, es obligatorio que exista en el cliente cuando se trata de
+    ///    creditos fiscales (ver que otros casos lo es)
+    ///    
+    /// </remarks>
     [DefaultClassOptions, ModelDefault("Caption", "Documento de Venta"), NavigationItem("Facturación"), DefaultProperty(nameof(NoFactura))]
     [Persistent("Venta")]
     //[ImageName("BO_Contact")]
@@ -48,6 +56,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
 
         #region Propiedades
 
+        SBT.Apps.Tercero.Module.BusinessObjects.TerceroGiro giro;
         [Persistent(nameof(Oid)), DbType("bigint"), Key(true)]
         long oid = -1;
         [Persistent(nameof(Agencia))]
@@ -60,7 +69,8 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         Tercero.Module.BusinessObjects.Tercero cliente;
         TerceroSucursal clienteAgencia;
         TerceroDocumento clienteDocumento;
-        TerceroNrf nrc;
+        [Persistent(nameof(NRC))]
+        TerceroDocumento nRC;
         TerceroDireccion direccionEntrega;
         Listas condicionPago;
         SBT.Apps.Empleado.Module.BusinessObjects.Empleado vendedor;
@@ -102,7 +112,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             get => agencia;
         }
 
-        [Association("Caja-Facturas"),  XafDisplayName("Caja"), Index(2)]
+        [Association("Caja-Facturas"), XafDisplayName("Caja"), Index(2)]
         public Caja Caja
         {
             get => caja;
@@ -156,7 +166,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         /// Cliente. Es requerido en el caso de documento es: credito fiscal, factura de consumidor final, factura de exportacion
         /// </summary>
         [XafDisplayName("Cliente"), RuleRequiredField("Venta.Cliente_Requerido", DefaultContexts.Save,
-            TargetCriteria = "@This.Tipo.Codigo In ('COVE01', 'COVE02', 'COVE03')")]
+            TargetCriteria = "'@This.Tipo.Codigo' In ('COVE01', 'COVE02', 'COVE03')")]
         [Index(6), VisibleInLookupListView(true)]
         public Tercero.Module.BusinessObjects.Tercero Cliente
         {
@@ -168,11 +178,15 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
                 {
                     if (Cliente.DireccionPrincipal != null)
                         DireccionEntrega = Cliente.DireccionPrincipal;
-                    if (Cliente.NRCs.Count > 0)
-                        Nrc = Cliente.NRCs.FirstOrDefault<TerceroNrf>();
+                    if (Cliente.Giros.Count > 0)
+                        Giro = Cliente.Giros.FirstOrDefault<TerceroGiro>();
                     if (Tipo.Codigo == "COVE01" || Tipo.Codigo == "COVE06")
+                    {
                         ClienteDocumento = Cliente.Documentos.FirstOrDefault(TerceroDocumento =>
                                           (TerceroDocumento.Tipo.Codigo == "NIT" && TerceroDocumento.Vigente == true));
+                        nRC = Cliente.Documentos.FirstOrDefault(TerceroDocumento =>
+                                          TerceroDocumento.Tipo.Codigo == "NRC" && TerceroDocumento.Vigente == true);
+                    }
                     else if (Tipo.Codigo == "COVE02")
                     {
                         TerceroDocumento doc = Cliente.Documentos.FirstOrDefault(TerceroDocumento =>
@@ -186,7 +200,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             }
         }
 
-        
+
         [XafDisplayName("Cliente Agencia"), VisibleInListView(false), Index(7)]
         public TerceroSucursal ClienteAgencia
         {
@@ -196,22 +210,27 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
 
         /// <summary>
         /// No de registro del contribuyente. Es requerido cuando el documento es credito fiscal o sujeto excluido
+        /// Implementar una validacion probablemente una RuleFromBoolProperty o una mas compleja
         /// </summary>
         [XafDisplayName("NRC"), ToolTip("No Registro Contribuyente")]
-        [RuleRequiredField("Venta.Nrf_Requerido", "Save", TargetCriteria = "@This.Tipo.Codigo In ('COVE01', 'COVE06')")]
-        [DataSourceCriteria("Tercero == @This.Cliente And Vigente == True"), VisibleInListView(false), Index(8)]
-        public TerceroNrf Nrc
-        {
-            get => nrc;
-            set => SetPropertyValue(nameof(Nrc), ref nrc, value);
-        }
+        [VisibleInListView(false), Index(8), PersistentAlias(nameof(nRC))]
+        public TerceroDocumento NRC => nRC;
 
+        
+        [XafDisplayName("Giro"), Index(9), Persistent(nameof(Giro))]
+        [RuleRequiredField("Venta.Giro_Requerido", DefaultContexts.Save, TargetCriteria = "'@This.Tipo.Codigo' In ('COVE01', 'COVE06')")]
+        [DataSourceProperty("Cliente.Giros"), VisibleInListView(false)]
+        public SBT.Apps.Tercero.Module.BusinessObjects.TerceroGiro Giro
+        {
+            get => giro;
+            set => SetPropertyValue(nameof(Giro), ref giro, value);
+        }
         /// <summary>
         /// En creditos fiscales es el NIT, en factura de consumidor puede ser: DUI, NIT, PASAPORTE
         /// </summary>
         [XafDisplayName("Cliente Documento"), ToolTip("Documento de identificación del cliente, cuando es requerido")]
-        [DataSourceCriteria("Tercero == @This.Cliente && Vigente == True")]
-        [VisibleInListView(false), Index(9)]
+        [DataSourceCriteria("Tercero == '@This.Cliente' && Vigente == True")]
+        [VisibleInListView(false), Index(10)]
         public TerceroDocumento ClienteDocumento
         {
             get => clienteDocumento;
@@ -222,7 +241,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         /// Direccion de entrega. Es requerido cuando el documento es cualquiera de los siguientes: credito fiscal, factura de
         /// consumidor final, factura de exportacion
         /// </summary>
-        [XafDisplayName("Dirección Entrega"), VisibleInListView(false), Index(10)]
+        [XafDisplayName("Dirección Entrega"), VisibleInListView(false), Index(11)]
         [RuleRequiredField("Venta.DireccionEntrega", DefaultContexts.Save,
             TargetCriteria = "@This.Tipo.Codigo In ('COVE01', 'COVE02', 'COVE03') ")]
         [DataSourceCriteria("Tercero == @This.Cliente And Activa == True")]
@@ -238,7 +257,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         [XafDisplayName("Condición Pago"), RuleRequiredField("Venta.CondicionPago_Requerido", "Save",
             TargetCriteria = "@This.Tipo.Codigo In ('COVE01', 'COVE02')")]
         [DataSourceCriteria("[Categoria] == 17 And [Activo] == True")]   // Categoria = 17 es condicion de pago
-        [VisibleInListView(false), Index(11)]
+        [VisibleInListView(false), Index(12)]
         public Listas CondicionPago
         {
             get => condicionPago;
@@ -256,7 +275,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         [RuleRequiredField("DocumentoVenta.Vendedor_Requerido", "Save", 
             TargetCriteria = "@This.Tipo.Codigo In ('COVE01', 'COVE02', 'COVE03') ")]
         [DataSourceCriteria("[Empresa] == @This.Empresa And [Unidad] == ? And [Cargo] == ?")]
-        [VisibleInListView(false), Index(12)]
+        [VisibleInListView(false), Index(13)]
         public SBT.Apps.Empleado.Module.BusinessObjects.Empleado Vendedor
         {
             get => vendedor;
@@ -269,21 +288,21 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         /// <remarks>
         /// PENDIENTE. Crear el BO NotaRemision, remplazar int por el tipo correspondiente al BO y crear la asociacion
         /// </remarks>
-        [XafDisplayName("Nota Remisión"), VisibleInListView(false), Index(13)]
+        [XafDisplayName("Nota Remisión"), VisibleInListView(false), Index(14)]
         public int NotaRemision
         {
             get => notaRemision;
             set => SetPropertyValue(nameof(NotaRemision), ref notaRemision, value);
         }
 
-        [XafDisplayName("Forma de Pago"), DbType("varchar(12)"), Index(14)]
+        [XafDisplayName("Forma de Pago"), DbType("varchar(12)"), Index(15)]
         [DataSourceCriteria("[Categoria] == 5 And [Activo] == True")]   // categoria 5 son las formas de pago
         public Listas FormaPago
         {
             get => formaPago;
             set => SetPropertyValue(nameof(FormaPago), ref formaPago, value);
         }
-        [XafDisplayName("Tipo Tarjeta"), DbType("varchar(12)"), VisibleInListView(false), Index(15)]
+        [XafDisplayName("Tipo Tarjeta"), DbType("varchar(12)"), VisibleInListView(false), Index(16)]
         [DataSourceCriteria("[Categoria] == 6 And [Activo] == True")]   // categoria 6 son tarjetas de credito
         [RuleRequiredField("DocumentoVenta.FomaPago_Requerido", "Save", TargetCriteria = "[FormaPago.Codigo] In ('FPA03', 'FPA04')",
              ResultType = ValidationResultType.Warning)]
@@ -293,7 +312,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             set => SetPropertyValue(nameof(TipoTarjeta), ref tipoTarjeta, value);
         }
 
-        [Size(25), DbType("varchar(25)"), XafDisplayName("No Tarjeta"), VisibleInListView(false), Index(16)]
+        [Size(25), DbType("varchar(25)"), XafDisplayName("No Tarjeta"), VisibleInListView(false), Index(17)]
         [RuleRequiredField("Venta.NoTarjeta_Requerido", DefaultContexts.Save, TargetCriteria = "[TipoTarjeta] Is Not Null",
              ResultType = ValidationResultType.Warning)]
         public string NoTarjeta
@@ -302,7 +321,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             set => SetPropertyValue(nameof(NoTarjeta), ref noTarjeta, value);
         }
 
-        [XafDisplayName("Banco Emisor"), VisibleInListView(false), Index(17)]
+        [XafDisplayName("Banco Emisor"), VisibleInListView(false), Index(18)]
         [ToolTip("Banco o tercero relacionado al cheque, tarjeta o pago electrónico", "Banco o Tercero", DevExpress.Utils.ToolTipIconType.Information)]
         [RuleRequiredField("Venta.Banco_Emisor", DefaultContexts.Save, TargetCriteria = "[FormaPago.Codigo] != 'FPA01' And [NoTarjeta] Is Not Null", 
             ResultType = ValidationResultType.Warning)]
@@ -314,7 +333,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         /// <summary>
         /// No de Referencia de Pago: Puede ser el numero de cheque, Id de transferencia, remesa, No de Vaucher por pago con tarjeta, etc.
         /// </summary>
-        [Size(25), DbType("varchar(25)"), XafDisplayName("No Referencia Pago"), VisibleInListView(false), Index(18)]
+        [Size(25), DbType("varchar(25)"), XafDisplayName("No Referencia Pago"), VisibleInListView(false), Index(19)]
         [ToolTip("No de referencia del pago: No de cheque, ID Remesa, ID pago electrónico, No vaucher", "Referencia Pago", 
             DevExpress.Utils.ToolTipIconType.Information)]
         public string NoReferenciaPago
@@ -323,44 +342,51 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             set => SetPropertyValue(nameof(NoReferenciaPago), ref noReferenciaPago, value);
         }
 
-        [PersistentAlias(nameof(ventaGravada)), XafDisplayName("Gravado"), Index(19)]
+        [PersistentAlias(nameof(ventaGravada)), XafDisplayName("Gravado"), Index(20)]
+        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         public decimal VentaGravada
         {
             get { return ventaGravada; }
         }
 
-        [PersistentAlias(nameof(iVA)), XafDisplayName("IVA"), Index(20)]
+        [PersistentAlias(nameof(iVA)), XafDisplayName("IVA"), Index(21)]
+        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         public decimal IVA
         {
             get { return iVA; }
         }
 
         [PersistentAlias("[VentaGravada] + [IVA]")]
-        [XafDisplayName("SubTotal"), Index(21)]
+        [XafDisplayName("SubTotal"), Index(22)]
+        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         public decimal SubTotal
         {
             get { return Convert.ToDecimal(EvaluateAlias(nameof(SubTotal))); }
         }
 
-        [PersistentAlias(nameof(ivaPercibido)), XafDisplayName("Iva Percibido"), VisibleInListView(false), Index(22)]
+        [PersistentAlias(nameof(ivaPercibido)), XafDisplayName("Iva Percibido"), VisibleInListView(false), Index(23)]
+        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         public decimal IvaPercibido
         {
             get { return ivaPercibido; }
         }
 
-        [PersistentAlias(nameof(ivaRetenido)), XafDisplayName("Iva Retenido"), VisibleInListView(false), Index(23)]
+        [PersistentAlias(nameof(ivaRetenido)), XafDisplayName("Iva Retenido"), VisibleInListView(false), Index(24)]
+        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         public decimal IvaRetenido
         {
             get { return ivaRetenido; }
         }
 
-        [PersistentAlias(nameof(ventaNoSujeta)), XafDisplayName("No Sujeta"), VisibleInListView(false), Index(24)]
+        [PersistentAlias(nameof(ventaNoSujeta)), XafDisplayName("No Sujeta"), VisibleInListView(false), Index(25)]
+        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         public decimal VentaNoSujeta
         {
             get { return ventaNoSujeta; }
         }
 
-        [PersistentAlias(nameof(ventaExenta)), XafDisplayName("Exento"), VisibleInListView(true), Index(25)]
+        [PersistentAlias(nameof(ventaExenta)), XafDisplayName("Exento"), VisibleInListView(true), Index(26)]
+        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         public decimal VentaExenta
         {
             get { return VentaExenta; }
@@ -368,26 +394,27 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
 
         
         [PersistentAlias("[SubTotal] + [IvaPercibido] - [IvaRetenido] + [VentaNoSujeta] + [VentaExenta] ")]
-        [XafDisplayName("Total"), Index(26)]
+        [ModelDefault("DisplayFormat", "{0:N2}")]
+        [XafDisplayName("Total"), Index(27)]
         public decimal Total
         {
             get { return Convert.ToDecimal(EvaluateAlias(nameof(Total))); }
         }
 
-        [PersistentAlias(nameof(diaCerrado)), XafDisplayName("Día Cerrado"), VisibleInListView(false), Index(27)]
+        [PersistentAlias(nameof(diaCerrado)), XafDisplayName("Día Cerrado"), VisibleInListView(false), Index(28)]
         public bool DiaCerrado
         {
             get { return diaCerrado; }
         }
 
-        [PersistentAlias(nameof(estado)), XafDisplayName("Estado"), VisibleInListView(false), Index(28)]
+        [PersistentAlias(nameof(estado)), XafDisplayName("Estado"), VisibleInListView(false), Index(29)]
         public EEstadoFactura Estado
         {
             get { return estado; }
         }
 
         [PersistentAlias(nameof(saldo)), XafDisplayName("Saldo Pendiente"), VisibleInListView(false), VisibleInLookupListView(false)]
-        [Index(29)]
+        [Index(30), ModelDefault("DisplayFormat", "{0:N2}")]
         public decimal ? Saldo
         {
             get { return saldo; }
@@ -415,12 +442,12 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             }
         }
 
-        [Association("Venta-CxCTransacciones"), DevExpress.Xpo.Aggregated, Delayed]
-        public XPCollection<SBT.Apps.CxC.Module.BusinessObjects.CxCTransaccion> CxCTransacciones
+        [Association("Venta-CxCDocumentos"), Index(2)]
+        public XPCollection<SBT.Apps.CxC.Module.BusinessObjects.CxCDocumento> CxCDocumentos
         {
             get
             {
-                return GetCollection<SBT.Apps.CxC.Module.BusinessObjects.CxCTransaccion>(nameof(CxCTransacciones));
+                return GetCollection<SBT.Apps.CxC.Module.BusinessObjects.CxCDocumento>(nameof(CxCDocumentos));
             }
         }
 

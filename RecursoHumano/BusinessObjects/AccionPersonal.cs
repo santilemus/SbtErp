@@ -20,7 +20,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
     /// Recurso Humano. BO para implementar el mantenimiento de las acciones de personal
     /// **** LEEME ==> Faltan dos persistent alias: dias y horas de accion
     /// </summary>
-    [DefaultClassOptions, ModelDefault("Caption", "Acción de Personal"), NavigationItem("Recurso Humano"), DefaultProperty("Tipo")]
+    [DefaultClassOptions, ModelDefault("Caption", "Acción de Personal"), NavigationItem("Recurso Humano"), DefaultProperty("Empleado")]
     [Persistent("PlaAccionPersonal")]
     //[ImageName("BO_Contact")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]

@@ -31,6 +31,7 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
             InitializeComponent();
             // Target required Views (via the TargetXXX properties) and create their Actions.
         }
+
         protected override void OnActivated()
         {
             base.OnActivated();

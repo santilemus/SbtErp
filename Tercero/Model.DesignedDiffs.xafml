@@ -70,9 +70,6 @@
             <LayoutGroup Id="Telefonos" RelativeSize="100">
               <LayoutItem Id="Telefonos" RelativeSize="100" />
             </LayoutGroup>
-            <LayoutGroup Id="NRCs" RelativeSize="100">
-              <LayoutItem Id="NRCs" RelativeSize="100" />
-            </LayoutGroup>
             <LayoutGroup Id="Contactos" RelativeSize="100">
               <LayoutItem Id="Contactos" RelativeSize="100" />
             </LayoutGroup>
@@ -140,9 +137,6 @@
           <TabbedGroup Id="Tabs" RelativeSize="83.58008075370121" Index="1">
             <LayoutGroup Id="Telefonos" RelativeSize="100">
               <LayoutItem Id="Telefonos" RelativeSize="100" />
-            </LayoutGroup>
-            <LayoutGroup Id="NRCs" RelativeSize="100">
-              <LayoutItem Id="NRCs" RelativeSize="100" />
             </LayoutGroup>
             <LayoutGroup Id="Contactos" RelativeSize="100">
               <LayoutItem Id="Contactos" RelativeSize="100" />
@@ -301,6 +295,22 @@
         </LayoutGroup>
       </Layout>
     </DetailView>
+    <DetailView Id="TerceroGiro_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="100">
+            <LayoutGroup Id="TerceroGiro" RelativeSize="100">
+              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="4.8452220726783315" IsNewNode="True" />
+              <LayoutItem Id="ActEconomica" Index="1" RelativeSize="3.4993270524899058" />
+              <LayoutItem Id="Vigente" Index="2" RelativeSize="91.655450874831757" />
+            </LayoutGroup>
+            <LayoutGroup Id="XPObject" Caption="Oid" Direction="Horizontal" Index="1" RelativeSize="87.079407806191114" Removed="True">
+              <LayoutItem Id="Oid" Removed="True" />
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
     <DetailView Id="TerceroNota_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
@@ -312,20 +322,6 @@
             </LayoutGroup>
             <LayoutGroup Id="XPObject" Caption="Oid" Direction="Horizontal" Index="1" RelativeSize="83.58008075370121" Removed="True">
               <LayoutItem Id="Oid" Removed="True" />
-            </LayoutGroup>
-          </LayoutGroup>
-        </LayoutGroup>
-      </Layout>
-    </DetailView>
-    <DetailView Id="TerceroNrf_DetailView">
-      <Layout>
-        <LayoutGroup Id="Main" RelativeSize="100">
-          <LayoutGroup Id="SimpleEditors" RelativeSize="100">
-            <LayoutGroup Id="RegistroFiscal" Index="0" RelativeSize="100">
-              <LayoutItem Id="Nrf" RelativeSize="4.8452220726783315" />
-              <LayoutItem Id="ActEconomica" Index="1" RelativeSize="3.4993270524899058" />
-              <LayoutItem Id="Vigente" RelativeSize="3.4993270524899058" Index="2" />
-              <LayoutItem Id="Comentario" Index="3" RelativeSize="88.156123822341854" />
             </LayoutGroup>
           </LayoutGroup>
         </LayoutGroup>

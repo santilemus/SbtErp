@@ -111,6 +111,7 @@
     <Compile Include="BusinessObjects\Cartera.cs" />
     <Compile Include="BusinessObjects\CarteraCliente.cs" />
     <Compile Include="BusinessObjects\Concepto.cs" />
+    <Compile Include="BusinessObjects\CxCDocumento.cs" />
     <Compile Include="BusinessObjects\CxCTransaccion.cs" />
     <Compile Include="BusinessObjects\TributoProducto.cs" />
     <Compile Include="BusinessObjects\Venta.cs" />

@@ -97,7 +97,7 @@
     <Compile Include="BusinessObjects\TerceroDocumento.cs" />
     <Compile Include="BusinessObjects\TerceroGarantia.cs" />
     <Compile Include="BusinessObjects\TerceroNota.cs" />
-    <Compile Include="BusinessObjects\TerceroNrf.cs" />
+    <Compile Include="BusinessObjects\TerceroGiro.cs" />
     <Compile Include="BusinessObjects\TerceroRole.cs" />
     <Compile Include="BusinessObjects\TerceroSucursal.cs" />
     <Compile Include="BusinessObjects\TerceroTelefono.cs" />

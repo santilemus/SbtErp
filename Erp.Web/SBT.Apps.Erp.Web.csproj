@@ -91,6 +91,7 @@
       <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
     </Reference>
+    <Reference Include="DevExpress.ExpressApp.TreeListEditors.v19.1, Version=19.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.ExpressApp.v19.1">
       <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
@@ -319,6 +320,10 @@
     <ProjectReference Include="..\Producto\SBT.Apps.Producto.csproj">
       <Project>{90D73CB9-2F45-473C-8FEE-AF118BB56C89}</Project>
       <Name>SBT.Apps.Producto</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RecursoHumano\SBT.Apps.RecursoHumano.csproj">
+      <Project>{DC2B10D5-7EB4-4E21-9A86-1E0247178F7B}</Project>
+      <Name>SBT.Apps.RecursoHumano</Name>
     </ProjectReference>
     <ProjectReference Include="..\Tercero\SBT.Apps.Tercero.csproj">
       <Project>{5F15837D-D1E5-44DC-92F0-4F2EBE9C3F8D}</Project>

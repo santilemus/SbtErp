@@ -23,7 +23,7 @@ namespace SBT.Apps.Banco.BusinessObjects
     /// Bancos. BO para las cuentas bancarias
     /// </summary>
     [DefaultClassOptions, ModelDefault("Caption", "Cuenta Bancaria"), NavigationItem("Banco"), Persistent("BanCuenta"), 
-        DefaultProperty("Oid")]
+        DefaultProperty("Numero")]
     [RuleCombinationOfPropertiesIsUnique("BancoCuenta.Banco_NumeroCta", DefaultContexts.Save, "Banco,Oid",
         CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction, SkipNullOrEmptyValues = false)]
     [ImageName(nameof(BancoCuenta))]
@@ -58,7 +58,7 @@ namespace SBT.Apps.Banco.BusinessObjects
         DevExpress.Persistent.BaseImpl.ReportDataV2 reporteCheque;
         decimal saldo;
 
-        [Persistent("Empresa"), DbType("int"), XafDisplayName("Empresa"), Browsable(false)]
+        [Persistent("Empresa"), DbType("int"), XafDisplayName("Empresa"), Browsable(false), Index(0)]
         public Empresa Empresa
         {
             get => empresa;
@@ -67,19 +67,20 @@ namespace SBT.Apps.Banco.BusinessObjects
 
         [DbType("int"), Persistent("Banco"), XafDisplayName("Banco"), RuleRequiredField("BancoCuenta.Banco_Requerido", "Save")]
         [DataSourceCriteria("[Roles][[IdRole] = 2]")]
+        [Index(1), VisibleInLookupListView(true)]
         public SBT.Apps.Tercero.Module.BusinessObjects.Tercero Banco
         {
             get => banco;
             set => SetPropertyValue(nameof(Banco), ref banco, value);
         }
 
-        [DbType("smallint"), Persistent("Tipo"), XafDisplayName("Tipo Cuenta")]
+        [DbType("smallint"), Persistent("Tipo"), XafDisplayName("Tipo Cuenta"), Index(2)]
         public ETipoCuentaBanco Tipo
         {
             get => tipo;
             set => SetPropertyValue(nameof(Tipo), ref tipo, value);
         }
-        [Size(25), DbType("varchar(25)"), Persistent("Oid"), XafDisplayName("Número Cuenta"),
+        [Size(25), DbType("varchar(25)"), Persistent("Oid"), XafDisplayName("Número Cuenta"), Index(3), 
             RuleRequiredField("BancoCuenta.Numero_Requerido", DefaultContexts.Save)]
         public string Numero
         {
@@ -87,7 +88,8 @@ namespace SBT.Apps.Banco.BusinessObjects
             set => SetPropertyValue(nameof(Numero), ref numero, value);
         }
 
-        [Size(60), DbType("varchar(60)"), Persistent("Nombre"), XafDisplayName("Nombre Cuenta")]
+        [Size(60), DbType("varchar(60)"), Persistent("Nombre"), XafDisplayName("Nombre Cuenta"), VisibleInListView(false), 
+            Index(4)]
         public string Nombre
         {
             get => nombre;
@@ -96,6 +98,7 @@ namespace SBT.Apps.Banco.BusinessObjects
 
 
         [DbType("varchar(3)"), Persistent("Moneda"), XafDisplayName("Moneda"), RuleRequiredField("BancoCuenta.Moneda_Requerido", "Save")]
+        [Index(5)]
         public Moneda Moneda
         {
             get => moneda;
@@ -105,13 +108,14 @@ namespace SBT.Apps.Banco.BusinessObjects
         [DbType("datetime"), Persistent("FechaApertura"), XafDisplayName("Fecha Apertura"),
             RuleRequiredField("BancoCuenta.FechaApertura_Requerido", "Save")]
         [ModelDefault("DisplayFormat", "{0:G}"), ModelDefault("EditMask", "G")]
+        [Index(6), VisibleInListView(false)]
         public DateTime FechaApertura
         {
             get => fechaApertura;
             set => SetPropertyValue(nameof(FechaApertura), ref fechaApertura, value);
         }
 
-        [DbType("datetime"), Persistent("FechaCierre"), XafDisplayName("Fecha Cierre"),
+        [DbType("datetime"), Persistent("FechaCierre"), XafDisplayName("Fecha Cierre"), Index(7), VisibleInListView(false), 
              RuleValueComparison("BancoCuenta.FechaCierre > FechaApertura", DefaultContexts.Save,
             ValueComparisonType.GreaterThan, "FechaApertura", ParametersMode.Expression, SkipNullOrEmptyValues = true)]
         [ModelDefault("DisplayFormat", "{0:G}"), ModelDefault("EditMask", "G")]
@@ -122,7 +126,7 @@ namespace SBT.Apps.Banco.BusinessObjects
         }
 
 
-        [Persistent("CuentaConta"), XafDisplayName("Cuenta Contable")]
+        [Persistent("CuentaConta"), XafDisplayName("Cuenta Contable"), Index(8), VisibleInListView(false)]
         public Catalogo CuentaConta
         {
             get => cuentaConta;
@@ -130,14 +134,14 @@ namespace SBT.Apps.Banco.BusinessObjects
         }
 
         
-        [PersistentAlias(nameof(saldo))]
+        [PersistentAlias(nameof(saldo)), Index(9)]
         public decimal Saldo
         {
             get { return saldo; }
         }
         
 
-        [Persistent("ReporteCheque"), XafDisplayName("Reporte Cheque")]
+        [Persistent("ReporteCheque"), XafDisplayName("Reporte Cheque"), VisibleInListView(false), Index(10)]
         public DevExpress.Persistent.BaseImpl.ReportDataV2 ReporteCheque
         {
             get => reporteCheque;

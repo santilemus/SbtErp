@@ -203,7 +203,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
 
         public bool ExistePartidaDe(int APeriodo, ETipoPartida ATipo)
         {
-            var obj = Session.Evaluate<Partida>(CriteriaOperator.Parse("Count(*)"),
+            var obj = Session.Evaluate<Partida>(CriteriaOperator.Parse("Count()"),
                 CriteriaOperator.Parse("[Empresa] = ? And [Periodo] = ? And [Tipo] = ?", ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid, APeriodo, (int)ATipo));
             return Convert.ToInt32(obj) > 0;
         }
@@ -236,7 +236,9 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         {
             get
             {
-                var obj = Session.Evaluate<CierreDiario>(CriteriaOperator.Parse("Count(*)"),
+                if (Fecha == null)
+                    return false;
+                var obj = Session.Evaluate<CierreDiario>(CriteriaOperator.Parse("Count()"),
                     CriteriaOperator.Parse("[Empresa] == ? && [FechaCierre] == ? && [DiaCerrado] = True", Empresa.Oid, Fecha));
                 return Convert.ToInt32(obj) == 0 && Fecha.Year == Periodo.Oid;
             }

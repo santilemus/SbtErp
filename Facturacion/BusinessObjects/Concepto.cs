@@ -25,7 +25,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
     //[ImageName("BO_Contact")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
-    public class Concepto : XPObjectBaseBO
+    public class Concepto : XPCustomBaseBO
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
         public Concepto(Session session)
             : base(session)
@@ -39,12 +39,19 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
 
         #region Propiedades
 
-
+        int oid;
         bool activo = true;
         Concepto padre;
         ETipoOperacion tipo = ETipoOperacion.Cargo;
         string codigo;
         string nombre;
+
+        [DbType("smallint"), Key(false), XafDisplayName("Oid")]
+        public int Oid
+        {
+            get => oid;
+            set => SetPropertyValue(nameof(Oid), ref oid, value);
+        }
 
         [Association("Concepto-Conceptos"), XafDisplayName("Concepto Padre"), Index(0)]
         public Concepto Padre

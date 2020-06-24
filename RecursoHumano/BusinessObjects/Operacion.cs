@@ -43,7 +43,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         #region Propiedades
 
         string nombre;
-        string nombreFunc;
+        string formula;
         ETipoOperacion tipo = ETipoOperacion.Null;
         decimal valor = 0.0m;
         string descripcion;
@@ -59,11 +59,17 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
             set => SetPropertyValue(nameof(Nombre), ref nombre, value);
         }
 
-        [Size(50), DbType("varchar(50)"), XafDisplayName("Nombre Función"), NonCloneable]
-        public string NombreFunc
+        [Browsable(false)]
+        public Type CriteriaObjectType { get { return typeof(Empleado.Module.BusinessObjects.Empleado); } }
+
+        [Size(200), DbType("varchar(200)"), XafDisplayName("Nombre Función"), Persistent(nameof(Formula))]
+        [ElementTypeProperty("CriteriaObjectType")]
+        [EditorAlias(EditorAliases.PopupExpressionPropertyEditor)]
+        [ModelDefault("Width", "50"), VisibleInListView(false)]
+        public string Formula
         {
-            get => nombreFunc;
-            set => SetPropertyValue(nameof(NombreFunc), ref nombreFunc, value);
+            get => formula;
+            set => SetPropertyValue(nameof(Formula), ref formula, value);
         }
 
         [DbType("smallint"), XafDisplayName("Tipo"), RuleRequiredField("Operacion.Tipo_Requerido", "Save")]
@@ -110,11 +116,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
             set => SetPropertyValue(nameof(Activo), ref activo, value);
         }
 
-        public Type CriteriaObjectType { get { return typeof(Empleado.Module.BusinessObjects.Empleado); } }
         [Size(200), DbType("varchar(200)"), XafDisplayName("Comentario")]
-        [ElementTypeProperty("CriteriaObjectType")]
-        [EditorAlias(EditorAliases.PopupExpressionPropertyEditor)]
-        [ModelDefault("Width", "50")]
         public string Comentario
         {
             get => comentario;

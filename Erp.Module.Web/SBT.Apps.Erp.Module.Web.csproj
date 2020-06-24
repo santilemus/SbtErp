@@ -148,6 +148,18 @@
     <Compile Include="Controllers\PopupWindowController.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controllers\vcBancoConciliacionWeb.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controllers\vcBancoCuentaWeb.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controllers\vcCajaChicaTransaccionWeb.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controllers\vcCajaChicaWeb.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controllers\vcCatalogoContableWeb.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -158,6 +170,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controllers\vcEmpresaWeb.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controllers\vcPartidaDetalleWeb.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controllers\vcProductoWeb.cs">

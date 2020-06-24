@@ -69,8 +69,13 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         /// <returns>La primer moneda Activa y FactorCambio = 1.0</returns>
         public Moneda ObtenerMonedaBase()
         {
-            var mone = Session.FindObject<Moneda>(DevExpress.Data.Filtering.CriteriaOperator.Parse("FactorCambio = 1.0 And Activa = true"));
-            return mone;
+            Constante constante = Session.GetObjectByKey<Constante>("MONEDA DEFECTO");
+            Moneda moneda = null;
+            if (constante != null)
+                moneda = Session.GetObjectByKey<Moneda>(constante.Valor.Trim());
+            if (moneda == null)
+                moneda = Session.FindObject<Moneda>(DevExpress.Data.Filtering.CriteriaOperator.Parse("FactorCambio = 1.0 And Activa = true"));
+            return moneda;
         }
 
         [Size(25), Persistent(@"UsuarioCrea"), DbType("varchar(25)"), NonCloneable, ModelDefault("AllowEdit", "False")]

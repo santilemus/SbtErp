@@ -127,7 +127,7 @@
     <Compile Include="BusinessObjects\ConsultaParametro.cs" />
     <Compile Include="BusinessObjects\CustomLogonParameters.cs" />
     <Compile Include="BusinessObjects\Empresa.cs" />
-    <Compile Include="BusinessObjects\EmpresaNrf.cs" />
+    <Compile Include="BusinessObjects\EmpresaGiro.cs" />
     <Compile Include="BusinessObjects\EmpresaTelefono.cs" />
     <Compile Include="BusinessObjects\EmpresaUnidad.cs" />
     <Compile Include="BusinessObjects\ETipoCuentaCatalogo.cs" />
@@ -160,7 +160,6 @@
     <Compile Include="BusinessObjects\PersonaDocumento.cs" />
     <Compile Include="BusinessObjects\PersonaTelefono.cs" />
     <Compile Include="BusinessObjects\Profesion.cs" />
-    <Compile Include="BusinessObjects\RegistroFiscal.cs" />
     <Compile Include="BusinessObjects\SesionDataHelper.cs" />
     <Compile Include="BusinessObjects\Telefono.cs" />
     <Compile Include="BusinessObjects\XPCustomBaseBO.cs" />

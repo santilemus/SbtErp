@@ -324,10 +324,6 @@
               <LayoutItem Id="FechaCierre" Index="1" RelativeSize="35.416666666666664" />
             </LayoutGroup>
           </LayoutGroup>
-          <LayoutGroup Id="SizeableEditors" RelativeSize="87.079407806191114" Caption="Bitácora">
-            <LayoutItem Id="Bitacora" RelativeSize="98.454404945904173" />
-            <LayoutItem Id="Item1" Index="1" RelativeSize="1.545595054095827" IsNewNode="True" />
-          </LayoutGroup>
         </LayoutGroup>
       </Layout>
     </DetailView>
@@ -375,26 +371,26 @@
         </LayoutGroup>
       </Layout>
     </DetailView>
-    <ListView Id="Partida_Detalles_ListView" IsFooterVisible="True">
+    <ListView Id="Partida_Detalles_ListView" IsFooterVisible="True" DataAccessMode="Server">
       <Columns>
         <ColumnInfo Id="CtaPresupuesto" Width="93" Index="-1" />
         <ColumnInfo Id="NombreCuenta" Index="-1" />
-        <ColumnInfo Id="Cuenta" Width="107" />
-        <ColumnInfo Id="Concepto" Index="1" Width="262" />
-        <ColumnInfo Id="ValorDebe" Index="2" Width="95">
+        <ColumnInfo Id="Cuenta" Width="175" />
+        <ColumnInfo Id="Concepto" Index="1" Width="580" />
+        <ColumnInfo Id="ValorDebe" Index="2" Width="127">
           <Summary>
             <ColumnSummaryItem Id="@c9d49e6d-77f4-4b89-a468-ff9a7792ce6a" SummaryType="Sum" IsNewNode="True" />
           </Summary>
         </ColumnInfo>
-        <ColumnInfo Id="ValorHaber" Index="3" Width="93">
+        <ColumnInfo Id="ValorHaber" Index="3" Width="128">
           <Summary>
             <ColumnSummaryItem Id="@0e9a3200-ad55-47ad-a9d7-b32ac1893330" SummaryType="Sum" IsNewNode="True" />
           </Summary>
         </ColumnInfo>
-        <ColumnInfo Id="AjusteConsolidacion" Index="4" Width="140" />
+        <ColumnInfo Id="AjusteConsolidacion" Index="4" Width="128" />
       </Columns>
     </ListView>
-    <ListView Id="Partida_ListView">
+    <ListView Id="Partida_ListView" DataAccessMode="Server">
       <Columns>
         <ColumnInfo Id="Numero" Index="0" Width="97" />
         <ColumnInfo Id="Tipo" Index="1" Width="186" />
@@ -428,6 +424,7 @@
         </LayoutGroup>
       </Layout>
     </DetailView>
+    <ListView Id="PartidaDetalle_ListView" DataAccessMode="Server" />
     <DetailView Id="PartidaModelo_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">

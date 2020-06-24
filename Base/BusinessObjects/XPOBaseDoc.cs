@@ -15,8 +15,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
     /// </summary>
     [NonPersistent,
         RuleIsReferenced("XPOBaseDoc.Empresa_Referencia", DefaultContexts.Save, typeof(Empresa), nameof(Empresa),
-        CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction),
-        RuleObjectExists("XPOBaseDoc.Empresa_Existe", CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction, LooksFor = typeof(Empresa))]
+        CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction)]
     public abstract class XPOBaseDoc : XPObjectBaseBO
     {
 

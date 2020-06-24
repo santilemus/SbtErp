@@ -9,7 +9,7 @@ using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Banco.BusinessObjects;
 using SBT.Apps.Base.Module.Controllers;
 
-namespace SBT.Apps.Bancos.Module.Controllers
+namespace SBT.Apps.Banco.Module.Controllers
 {
     /// <summary>
     /// Bancos
