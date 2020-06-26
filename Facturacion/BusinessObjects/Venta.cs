@@ -14,6 +14,7 @@ using DevExpress.Persistent.Validation;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Tercero.Module.BusinessObjects;
 using SBT.Apps.Empleado.Module.BusinessObjects;
+using SBT.Apps.Banco.Module.BusinessObjects;
 
 namespace SBT.Apps.Facturacion.Module.BusinessObjects
 {
@@ -78,7 +79,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         Listas formaPago;
         Listas tipoTarjeta;
         string noTarjeta;
-        Banco banco;
+        SBT.Apps.Tercero.Module.BusinessObjects.Banco banco;
         string noReferenciaPago;
         [Persistent(nameof(VentaGravada)), DbType("numeric(14,2)")]
         decimal ventaGravada = 0.0m;
@@ -325,7 +326,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         [ToolTip("Banco o tercero relacionado al cheque, tarjeta o pago electrónico", "Banco o Tercero", DevExpress.Utils.ToolTipIconType.Information)]
         [RuleRequiredField("Venta.Banco_Emisor", DefaultContexts.Save, TargetCriteria = "[FormaPago.Codigo] != 'FPA01' And [NoTarjeta] Is Not Null", 
             ResultType = ValidationResultType.Warning)]
-        public Banco Banco
+        public SBT.Apps.Tercero.Module.BusinessObjects.Banco Banco
         {
             get => banco;
             set => SetPropertyValue(nameof(Banco), ref banco, value);

@@ -4,7 +4,7 @@ using SBT.Apps.Base.Module.BusinessObjects;
 using System;
 using System.Linq;
 
-namespace SBT.Apps.Banco.Controllers
+namespace SBT.Apps.Banco.Module.Controllers
 {
     /// <summary>
     /// Bancos.

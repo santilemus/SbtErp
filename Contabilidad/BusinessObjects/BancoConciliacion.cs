@@ -13,7 +13,7 @@ using DevExpress.Persistent.BaseImpl;
 using DevExpress.Persistent.Validation;
 using SBT.Apps.Base.Module.BusinessObjects;
 
-namespace SBT.Apps.Banco.BusinessObjects
+namespace SBT.Apps.Banco.Module.BusinessObjects
 {
     /// <summary>
     /// Bancos

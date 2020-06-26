@@ -4,7 +4,7 @@ using SBT.Apps.Base.Module.BusinessObjects;
 using System;
 using System.Linq;
 
-namespace SBT.Apps.Banco.Controllers
+namespace SBT.Apps.Banco.Module.Controllers
 {
     /// <summary>
     /// Bancos.
@@ -22,7 +22,7 @@ namespace SBT.Apps.Banco.Controllers
         {
             base.OnActivated();
             // Perform various tasks depending on the target View.
-            if ((View.GetType().Name == "ListView") && View.ObjectTypeInfo.Type == typeof(SBT.Apps.Banco.BusinessObjects.BancoCuenta))
+            if ((View.GetType().Name == "ListView") && View.ObjectTypeInfo.Type == typeof(SBT.Apps.Banco.Module.BusinessObjects.BancoCuenta))
             {
                 ((ListView)View).CollectionSource.Criteria["Empresa Actual"] = new BinaryOperator("Empresa", ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid);
             }

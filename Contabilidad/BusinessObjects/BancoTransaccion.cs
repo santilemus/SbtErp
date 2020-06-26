@@ -15,7 +15,7 @@ using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Empleado.Module.BusinessObjects;
 using SBT.Apps.Tercero.Module.BusinessObjects;
 
-namespace SBT.Apps.Banco.BusinessObjects
+namespace SBT.Apps.Banco.Module.BusinessObjects
 {
     /// <summary>
     /// Banco. BO para las transacciones de bancos

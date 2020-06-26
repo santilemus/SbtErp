@@ -14,7 +14,7 @@ using DevExpress.Persistent.Validation;
 using SBT.Apps.Base.Module.BusinessObjects;
 
 
-namespace SBT.Apps.Banco.BusinessObjects
+namespace SBT.Apps.Banco.Module.BusinessObjects
 {
     /// <summary>
     /// Bancos. BO para las chequeras correspondientes a las cuentas bancarias de las cuales se emiten cheques

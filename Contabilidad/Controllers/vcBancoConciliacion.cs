@@ -6,7 +6,7 @@ using DevExpress.ExpressApp.Xpo;
 using DevExpress.Data.Filtering;
 using DevExpress.Persistent.Base;
 using SBT.Apps.Base.Module.BusinessObjects;
-using SBT.Apps.Banco.BusinessObjects;
+using SBT.Apps.Banco.Module.BusinessObjects;
 using SBT.Apps.Base.Module.Controllers;
 
 namespace SBT.Apps.Banco.Module.Controllers

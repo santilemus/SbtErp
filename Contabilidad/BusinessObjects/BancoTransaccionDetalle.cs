@@ -14,7 +14,7 @@ using DevExpress.Persistent.Validation;
 using SBT.Apps.Contabilidad.BusinessObjects;
 using SBT.Apps.Base.Module.BusinessObjects;
 
-namespace SBT.Apps.Banco.BusinessObjects
+namespace SBT.Apps.Banco.Module.BusinessObjects
 {
     /// <summary>
     /// Bancos. BO para el vaucher o detalle de una transacción de bancos

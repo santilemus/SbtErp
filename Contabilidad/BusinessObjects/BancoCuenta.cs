@@ -17,7 +17,7 @@ using SBT.Apps.Contabilidad.BusinessObjects;
 
 
 
-namespace SBT.Apps.Banco.BusinessObjects
+namespace SBT.Apps.Banco.Module.BusinessObjects
 {
     /// <summary>
     /// Bancos. BO para las cuentas bancarias

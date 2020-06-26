@@ -1,7 +1,7 @@
 ﻿using System;
 using DevExpress.ExpressApp.DC;
 
-namespace SBT.Apps.Banco.BusinessObjects
+namespace SBT.Apps.Banco.Module.BusinessObjects
 {
     /// <summary>
     /// Bancos. Clasificacion Basica de las transacciones bancarias

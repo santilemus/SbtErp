@@ -8,7 +8,7 @@ using System;
 using System.ComponentModel;
 using System.Linq;
 
-namespace SBT.Apps.Banco.BusinessObjects
+namespace SBT.Apps.Banco.Module.BusinessObjects
 {
     /// <summary>
     /// Bancos. BO para el registro de las transacciones de caja chica"

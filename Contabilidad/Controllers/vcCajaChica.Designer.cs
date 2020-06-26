@@ -1,4 +1,4 @@
-﻿namespace SBT.Apps.Banco.Controllers
+﻿namespace SBT.Apps.Banco.Module.Controllers
 {
     partial class vcCajaChica
     {
@@ -31,7 +31,7 @@
             // 
             // vcCajaChica
             // 
-            this.TargetObjectType = typeof(SBT.Apps.Banco.BusinessObjects.CajaChica);
+            this.TargetObjectType = typeof(SBT.Apps.Banco.Module.BusinessObjects.CajaChica);
 
         }
 

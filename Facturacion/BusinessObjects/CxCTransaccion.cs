@@ -16,6 +16,7 @@ using SBT.Apps.Tercero.Module.BusinessObjects;
 using SBT.Apps.Empleado.Module.BusinessObjects;
 using SBT.Apps.Facturacion.Module.BusinessObjects;
 
+
 namespace SBT.Apps.CxC.Module.BusinessObjects
 {
     /// <summary>
@@ -25,8 +26,8 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
     /// existe una tipifiacion o concepto
     /// </summary>
     /// <remarks>
-    /// 1. Faltan los siguientes properties: no de cheque, vendedor o cobrador (ver si aplica), fecha del cheque,
-    ///                                      banco del cheque, moneda, 
+    /// 1. Faltan los siguientes properties: fecha del cheque,
+    ///                                      moneda, 
     ///                                      numero de movimiento de bancos (si se va a tener interface a ese modulo) por
     ///                                      los pagos con transferencias, remesas o pagos electronicos, numero de pago
     ///                                      electronico. (evaluar que otros harian falta)
@@ -56,7 +57,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         string noTarjeta;
         string referencia;
         ECxcTransaccionEstado estado;
-        Banco banco;
+        SBT.Apps.Tercero.Module.BusinessObjects.Banco banco;
         string comentario;
         [Persistent(nameof(NRC))]
         TerceroDocumento nRC;
@@ -130,7 +131,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         public int Numero => numero;
 
         [XafDisplayName("Banco"), Index(6)]
-        public Banco Banco
+        public SBT.Apps.Tercero.Module.BusinessObjects.Banco Banco
         {
             get => banco;
             set => SetPropertyValue(nameof(Banco), ref banco, value);
