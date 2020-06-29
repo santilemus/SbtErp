@@ -14,7 +14,7 @@ using DevExpress.Persistent.Validation;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Tercero.Module.BusinessObjects;
 using SBT.Apps.Empleado.Module.BusinessObjects;
-using SBT.Apps.Banco.Module.BusinessObjects;
+
 
 namespace SBT.Apps.Facturacion.Module.BusinessObjects
 {

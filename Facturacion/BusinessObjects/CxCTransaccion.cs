@@ -15,6 +15,7 @@ using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Tercero.Module.BusinessObjects;
 using SBT.Apps.Empleado.Module.BusinessObjects;
 using SBT.Apps.Facturacion.Module.BusinessObjects;
+using SBT.Apps.Banco.Module.BusinessObjects;
 
 
 namespace SBT.Apps.CxC.Module.BusinessObjects
@@ -27,10 +28,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
     /// </summary>
     /// <remarks>
     /// 1. Faltan los siguientes properties: fecha del cheque,
-    ///                                      moneda, 
-    ///                                      numero de movimiento de bancos (si se va a tener interface a ese modulo) por
-    ///                                      los pagos con transferencias, remesas o pagos electronicos, numero de pago
-    ///                                      electronico. (evaluar que otros harian falta)
+    ///                                      moneda.  (evaluar que otros datos harian falta)
     ///                                  
     /// </remarks>
     
@@ -53,6 +51,12 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
 
         #region Propiedades
 
+        [Persistent(nameof(FactorCambio))]
+        decimal factorCambio;
+        Moneda moneda;
+        [Persistent(nameof(Valor))]
+        decimal valor;
+        BancoTransaccion bancoTransaccion;
         SBT.Apps.Empleado.Module.BusinessObjects.Empleado gestorCobro;
         string noTarjeta;
         string referencia;
@@ -136,7 +140,10 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
             get => banco;
             set => SetPropertyValue(nameof(Banco), ref banco, value);
         }
-        
+
+        /// <summary>
+        /// No de tarjeta de credito o debito
+        /// </summary>
         [Size(25), DbType("varchar(25)"), XafDisplayName("No Tarjeta"), ToolTip("No de Tarjeta de debito o credito, cuando es el medio de pago")]
         [Index(7)]
         public string NoTarjeta
@@ -154,6 +161,37 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
             get => referencia;
             set => SetPropertyValue(nameof(Referencia), ref referencia, value);
         }
+
+        /// <summary>
+        /// La trasaccion de bancos cuando es: transferencia bancaria, remesa a cuenta, pago electronico.
+        /// En los tres casos anteriores el movimiento de bancos es previo al registro del pago de la cuenta por cobrar
+        /// Cuando son pagos en efectivo o cheques, evaluar si puede ser la remesa del deposito a cuenta de la empresa
+        /// </summary>
+        /// <remarks>
+        /// Agregar validacion para que este dato sea requerido unicamente en los casos de transferencia, remesa o pago electronico
+        /// Agregar regla de apariencia, para que en los casos donde no es necesario este dato, aparezca deshabilitado u ocultarlo
+        /// </remarks>
+        [XafDisplayName("Banco Transacción"), Index(9),
+            ToolTip("La transacción de bancos, cuando es transferencia, remesa, o pago electronico")]
+        public BancoTransaccion BancoTransaccion
+        {
+            get => bancoTransaccion;
+            set => SetPropertyValue(nameof(BancoTransaccion), ref bancoTransaccion, value);
+        }
+
+        [XafDisplayName("Moneda"), Index(10)]
+        public Moneda Moneda
+        {
+            get => moneda;
+            set => SetPropertyValue(nameof(Moneda), ref moneda, value);
+        }
+
+        
+        [PersistentAlias(nameof(factorCambio)), XafDisplayName("Valor Moneda")]
+        public decimal FactorCambio => factorCambio;
+
+        [PersistentAlias(nameof(valor)), XafDisplayName("Valor"), Index(10)]
+        public decimal Valor => valor;
 
 
         [DbType("smallint"), XafDisplayName("Estado"), Index(15), RuleRequiredField("CxCTransaccion.Estado_Requerido", "Save")]
@@ -208,6 +246,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
     {
         Digitado = 0,
         Aplicado = 1,
-        Anulado = 2
+        Anulado = 2,
+        Rechazado = 3
     }
 }
