@@ -388,11 +388,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
 
         [PersistentAlias(nameof(ventaExenta)), XafDisplayName("Exento"), VisibleInListView(true), Index(26)]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
-        public decimal VentaExenta
-        {
-            get { return VentaExenta; }
-        }
-
+        public decimal VentaExenta => ventaExenta;
         
         [PersistentAlias("[SubTotal] + [IvaPercibido] - [IvaRetenido] + [VentaNoSujeta] + [VentaExenta] ")]
         [ModelDefault("DisplayFormat", "{0:N2}")]

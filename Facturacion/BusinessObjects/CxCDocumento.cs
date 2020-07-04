@@ -46,7 +46,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
 
         Venta venta;
         [Persistent(nameof(Numero)), DbType("int")]
-        int numero;
+        int numero = 0;
         CxCTransaccion cxCTransaccion;
         [Persistent(nameof(AutorizacionCorrelativo))]
         AutorizacionDocumento autorizacionCorrelativo = null;
@@ -139,10 +139,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
 
         [PersistentAlias(nameof(ventaExenta)), XafDisplayName("Exento"), VisibleInListView(true), Index(15)]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
-        public decimal VentaExenta
-        {
-            get { return VentaExenta; }
-        }
+        public decimal VentaExenta => ventaExenta;
 
         [PersistentAlias("[SubTotal] - [IvaRetenido] + [IvaPercibido]  + [VentaNoSujeta] + [VentaExenta] ")]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]

@@ -26,7 +26,7 @@ namespace SBT.Apps.Erp.Module.Web.Controllers
         protected override void DoInitializeComponent()
         {
             base.DoInitializeComponent();
-            TargetObjectType = typeof(SBT.Apps.Banco.BusinessObjects.CajaChica);
+            TargetObjectType = typeof(SBT.Apps.Banco.Module.BusinessObjects.CajaChica);
             FixColumnWidthInListView = ETipoAjusteColumnaListView.BestFit;
         }
     }

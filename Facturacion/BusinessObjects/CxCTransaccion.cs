@@ -52,10 +52,10 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         #region Propiedades
 
         [Persistent(nameof(FactorCambio))]
-        decimal factorCambio;
+        decimal factorCambio = 1.0m;
         Moneda moneda;
         [Persistent(nameof(Valor))]
-        decimal valor;
+        decimal ? valor = null;
         BancoTransaccion bancoTransaccion;
         SBT.Apps.Empleado.Module.BusinessObjects.Empleado gestorCobro;
         string noTarjeta;
@@ -64,15 +64,14 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         SBT.Apps.Tercero.Module.BusinessObjects.Banco banco;
         string comentario;
         [Persistent(nameof(NRC))]
-        TerceroDocumento nRC;
+        TerceroDocumento nRC = null;
         SBT.Apps.Tercero.Module.BusinessObjects.Tercero cliente;
         [Persistent(nameof(Numero)), DbType("int")]
         int numero = 0;
         [Persistent(nameof(FechaAnulacion)), DbType("datetime2")]
-        DateTime? fechaAnulacion;
+        DateTime? fechaAnulacion = null;
         [Persistent(nameof(UsuarioAnulo)), DbType("varchar(25)"), Size(25)]
-        string usuarioAnulo;
-        Venta venta;
+        string usuarioAnulo = null;
         DateTime fecha;
         Concepto concepto;
         Listas tipo;
@@ -97,7 +96,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         /// <summary>
         /// Tipo de concepto o de transaccion de cuenta por cobrar
         /// </summary>
-        [Association("Concepto-CxCTransacciones"), XafDisplayName("Tipo Concepto")]
+        [Association("Concepto-Transacciones"), XafDisplayName("Tipo Concepto")]
         [RuleRequiredField("CxcTransaccion.Concepto_Requerido", DefaultContexts.Save)]
         [Index(2), VisibleInLookupListView(true)]
         public Concepto Concepto
@@ -191,7 +190,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         public decimal FactorCambio => factorCambio;
 
         [PersistentAlias(nameof(valor)), XafDisplayName("Valor"), Index(10)]
-        public decimal Valor => valor;
+        public decimal ? Valor => valor;
 
 
         [DbType("smallint"), XafDisplayName("Estado"), Index(15), RuleRequiredField("CxCTransaccion.Estado_Requerido", "Save")]

@@ -75,7 +75,10 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
             set => SetPropertyValue(nameof(Nombre), ref nombre, value);
         }
 
-        [DbType("smallint"), XafDisplayName("Tipo"), Index(3)]
+        /// <summary>
+        /// Indica el tipo de operacion. Puede ser: un cargo o un abono
+        /// </summary>
+        [DbType("smallint"), XafDisplayName("Tipo"), Index(3), VisibleInLookupListView(true)]
         public ETipoOperacion Tipo
         {
             get => tipo;
@@ -98,6 +101,15 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
             get
             {
                 return GetCollection<Concepto>(nameof(Conceptos));
+            }
+        }
+
+        [Association("Concepto-Transacciones"), XafDisplayName("Transacciones"), Index(1)]
+        public XPCollection<CxCTransaccion> Transacciones
+        {
+            get
+            {
+                return GetCollection<CxCTransaccion>(nameof(Transacciones));
             }
         }
 
