@@ -63,7 +63,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         [Persistent(nameof(Agencia))]
         EmpresaUnidad agencia;
         Caja caja;
-        Listas tipo;
+        Listas tipoFactura;
         [Persistent(nameof(AutorizacionDocumento))]
         AutorizacionDocumento autorizacionCorrelativo;
         int noFactura;
@@ -120,18 +120,18 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             set => SetPropertyValue(nameof(Caja), ref caja, value);
         }
 
-        [XafDisplayName("Tipo"), RuleRequiredField("Venta.Tipo_Requerido", DefaultContexts.Save)]
+        [XafDisplayName("Tipo Factura"), RuleRequiredField("Venta.TipoFactura_Requerido", DefaultContexts.Save)]
         [DataSourceCriteria("[Categoria] == 15 And [Activo] == True"), VisibleInLookupListView(true), Index(3)]
-        public Listas Tipo
+        public Listas TipoFactura
         {
-            get => tipo;
+            get => tipoFactura;
             set
             {
-                bool changed = SetPropertyValue(nameof(Tipo), ref tipo, value);
+                bool changed = SetPropertyValue(nameof(TipoFactura), ref tipoFactura, value);
                 if (!IsLoading && !IsSaving && changed)
                 {
                     AutorizacionDocumento resolucionDoc = Session.FindObject<AutorizacionDocumento>(
-                        CriteriaOperator.Parse("Agencia.Oid == ? && Caja.Oid == ? && Tipo.Codigo == ? && Activo == True", Agencia.Oid, Caja.Oid, Tipo.Codigo));
+                        CriteriaOperator.Parse("Agencia.Oid == ? && Caja.Oid == ? && Tipo.Codigo == ? && Activo == True", Agencia.Oid, Caja.Oid, TipoFactura.Codigo));
                     if (resolucionDoc != null)
                     {
                         autorizacionCorrelativo = resolucionDoc;
@@ -181,14 +181,14 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
                         DireccionEntrega = Cliente.DireccionPrincipal;
                     if (Cliente.Giros.Count > 0)
                         Giro = Cliente.Giros.FirstOrDefault<TerceroGiro>();
-                    if (Tipo.Codigo == "COVE01" || Tipo.Codigo == "COVE06")
+                    if (TipoFactura.Codigo == "COVE01" || TipoFactura.Codigo == "COVE06")
                     {
                         ClienteDocumento = Cliente.Documentos.FirstOrDefault(TerceroDocumento =>
                                           (TerceroDocumento.Tipo.Codigo == "NIT" && TerceroDocumento.Vigente == true));
                         nRC = Cliente.Documentos.FirstOrDefault(TerceroDocumento =>
                                           TerceroDocumento.Tipo.Codigo == "NRC" && TerceroDocumento.Vigente == true);
                     }
-                    else if (Tipo.Codigo == "COVE02")
+                    else if (TipoFactura.Codigo == "COVE02")
                     {
                         TerceroDocumento doc = Cliente.Documentos.FirstOrDefault(TerceroDocumento =>
                                            (TerceroDocumento.Tipo.Codigo == "NIT" && TerceroDocumento.Vigente == true));
@@ -323,7 +323,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         }
 
         [XafDisplayName("Banco Emisor"), VisibleInListView(false), Index(18)]
-        [ToolTip("Banco o tercero relacionado al cheque, tarjeta o pago electrónico", "Banco o Tercero", DevExpress.Utils.ToolTipIconType.Information)]
+        [ToolTip("Banco o tercero relacionado al cheque, tarjeta o pago electrónico", "Banco o Tercero", ToolTipIconType.Information)]
         [RuleRequiredField("Venta.Banco_Emisor", DefaultContexts.Save, TargetCriteria = "[FormaPago.Codigo] != 'FPA01' And [NoTarjeta] Is Not Null", 
             ResultType = ValidationResultType.Warning)]
         public SBT.Apps.Tercero.Module.BusinessObjects.Banco Banco
@@ -336,7 +336,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         /// </summary>
         [Size(25), DbType("varchar(25)"), XafDisplayName("No Referencia Pago"), VisibleInListView(false), Index(19)]
         [ToolTip("No de referencia del pago: No de cheque, ID Remesa, ID pago electrónico, No vaucher", "Referencia Pago", 
-            DevExpress.Utils.ToolTipIconType.Information)]
+            ToolTipIconType.Information)]
         public string NoReferenciaPago
         {
             get => noReferenciaPago;
@@ -461,7 +461,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             string tableName = ClassInfo.TableName;
             string sCriteria = "Empresa.Oid == ? && Caja.Oid == ? && Tipo.Codigo == ? && GetYear(Fecha) == ?";
             object max = Session.Evaluate<Venta>(CriteriaOperator.Parse("Max(Numero)"), 
-                                                        CriteriaOperator.Parse(sCriteria, Empresa.Oid, Caja.Oid, Tipo.Codigo, Fecha));
+                                                        CriteriaOperator.Parse(sCriteria, Empresa.Oid, Caja.Oid, TipoFactura.Codigo, Fecha));
             return (max != null) ? Convert.ToInt32(max) : 1;
         }
         #endregion

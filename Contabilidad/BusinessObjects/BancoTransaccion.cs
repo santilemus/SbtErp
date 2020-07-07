@@ -104,7 +104,7 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         }
 
         [Persistent("Clasificacion"), XafDisplayName("Clasificacion"), RuleRequiredField("BancoTransaccion.Tipo_Requerido", "Save")]
-        [ToolTip("Clasificación de Transacciones de bancos", "Bancos", DevExpress.Utils.ToolTipIconType.Information)]
+        [ToolTip("Clasificación de Transacciones de bancos", "Bancos", ToolTipIconType.Information)]
         [Index(3)]
         public BancoClasificacionTransac Clasificacion
         {

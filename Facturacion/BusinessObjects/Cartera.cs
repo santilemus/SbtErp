@@ -19,7 +19,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
     /// <summary>
     /// Cuenta por Cobrar. BO para la definicion de las carteras de cuentas por cobrar
     /// </summary>
-    [DefaultClassOptions, ModelDefault("Caption", "Cartera CxC"), NavigationItem("Cuentas por Cobrar"), 
+    [DefaultClassOptions, ModelDefault("Caption", "Cartera CxC"), NavigationItem("Cuenta por Cobrar"), 
         DefaultProperty(nameof(Nombre)), Persistent("CxCCartera")]
     //[ImageName("BO_Contact")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]

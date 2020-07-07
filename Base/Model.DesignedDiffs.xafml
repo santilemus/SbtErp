@@ -1,12 +1,73 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Application Title="SBT.App.Base.BaseModule" Logo="ExpressAppLogo">
+  <BOModel>
+    <Class Name="SBT.Apps.Base.Module.BusinessObjects.BugReport" ImageName="security_bug" />
+  </BOModel>
   <SchemaModules>
-    <SchemaModule Name="CloneObjectModule" Version="19.1.4.0" IsNewNode="True" />
-    <SchemaModule Name="SystemModule" Version="19.1.4.0" IsNewNode="True" />
+    <SchemaModule Name="CloneObjectModule" Version="20.1.4.0" IsNewNode="True" />
+    <SchemaModule Name="SystemModule" Version="20.1.4.0" IsNewNode="True" />
   </SchemaModules>
   <Views>
     <ListView Id="ActividadEconomica_ListView" DataAccessMode="Server" />
     <ListView Id="ActividadEconomica_LookupListView" DataAccessMode="Server" />
+    <DetailView Id="BugReport_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="Bug ID" RelativeSize="12.570145903479236" IsCollapsibleGroup="True" ShowCaption="True" Direction="Horizontal" CaptionLocation="Default">
+            <LayoutGroup Id="Auto0c6baa1c-86d1-45e5-9080-4e99c185663c" ShowCaption="False" Caption="" Index="0" RelativeSize="50" CaptionLocation="Left" IsNewNode="True">
+              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="48.648648648648646" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Titulo" ViewItem="Titulo" Index="1" RelativeSize="51.351351351351354" CaptionLocation="Left" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="Auto6130a756-58c7-4e57-80ec-7f47bddba582" ShowCaption="False" Caption="" Index="1" RelativeSize="50" CaptionLocation="Left" IsNewNode="True">
+              <LayoutItem Id="FechaReporte" ViewItem="FechaReporte" Index="0" RelativeSize="48.648648648648646" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="ReportadoPor" ViewItem="ReportadoPor" Index="1" RelativeSize="51.351351351351354" CaptionLocation="Left" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutItem Id="Titulo" Index="1" RelativeSize="26.530612244897959" Removed="True" />
+            <LayoutItem Id="FechaReporte" Index="2" RelativeSize="22.033898305084747" Removed="True" />
+            <LayoutItem Id="ReportadoPor" Index="2" RelativeSize="36.734693877551024" Removed="True" />
+          </LayoutGroup>
+          <LayoutGroup Id="Resumen del Error" RelativeSize="19.528619528619529" IsCollapsibleGroup="True" ShowCaption="True" CaptionLocation="Default">
+            <LayoutItem Id="Url" RelativeSize="23.611111111111111" CaptionLocation="Left" />
+            <LayoutItem Id="CapturaPantalla" RelativeSize="18.055555555555557" CaptionLocation="Left" />
+            <LayoutItem Id="Descripcion" RelativeSize="58.333333333333336" CaptionLocation="Left" />
+          </LayoutGroup>
+          <LayoutGroup Id="Ambiente" RelativeSize="14.3658810325477" IsCollapsibleGroup="True" ShowCaption="True" CaptionLocation="Default">
+            <LayoutItem Id="Plataforma" RelativeSize="34.693877551020407" CaptionLocation="Left" />
+            <LayoutItem Id="SistemaOperativo" RelativeSize="26.530612244897959" CaptionLocation="Left" />
+            <LayoutItem Id="Navegador" RelativeSize="38.775510204081634" CaptionLocation="Left" />
+          </LayoutGroup>
+          <LayoutGroup Id="Detalle del Error" RelativeSize="19.528619528619529" IsCollapsibleGroup="True" ShowCaption="True" CaptionLocation="Default">
+            <LayoutItem Id="ResultadoEsperado" RelativeSize="23.611111111111111" CaptionLocation="Left" />
+            <LayoutItem Id="ResultadoActual" RelativeSize="18.055555555555557" CaptionLocation="Left" />
+            <LayoutItem Id="PasosReproducir" RelativeSize="58.333333333333336" CaptionLocation="Left" />
+          </LayoutGroup>
+          <LayoutGroup Id="Seguimiento" RelativeSize="11.447811447811448" IsCollapsibleGroup="True" ShowCaption="True" Direction="Horizontal" CaptionLocation="Default" IsGroupCollapsed="True">
+            <LayoutGroup Id="Auto1c4222c0-39f4-4879-85cc-008ccbd2a769" ShowCaption="False" Caption="" Index="0" RelativeSize="50" CaptionLocation="Left" IsNewNode="True">
+              <LayoutItem Id="DefectoSeveridad" ViewItem="DefectoSeveridad" Index="0" RelativeSize="50" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="DefectoPrioridad" ViewItem="DefectoPrioridad" Index="1" RelativeSize="50" CaptionLocation="Left" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="Autoe1be44db-2249-4dfe-a788-7865033d1fdb" ShowCaption="False" Caption="" Index="1" RelativeSize="50" CaptionLocation="Left" IsNewNode="True">
+              <LayoutItem Id="AsignadoA" ViewItem="AsignadoA" Index="0" RelativeSize="50" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Estado" ViewItem="Estado" Index="1" RelativeSize="50" CaptionLocation="Left" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutItem Id="Estado" RelativeSize="36.734693877551024" Index="2" Removed="True" />
+            <LayoutItem Id="AsignadoA" RelativeSize="20.967741935483872" Removed="True" />
+            <LayoutItem Id="DefectoPrioridad" RelativeSize="26.530612244897959" Removed="True" />
+            <LayoutItem Id="DefectoSeveridad" RelativeSize="29.032258064516128" Removed="True" />
+          </LayoutGroup>
+          <LayoutGroup Id="Correción" RelativeSize="22.446689113355781" IsCollapsibleGroup="True" ShowCaption="True" CaptionLocation="Default" IsGroupCollapsed="True">
+            <LayoutItem Id="Correccion" RelativeSize="20" CaptionLocation="Left" />
+            <LayoutItem Id="FechaCorrecion" RelativeSize="15.294117647058824" CaptionLocation="Left" />
+            <LayoutItem Id="Notas" RelativeSize="64.705882352941174" CaptionLocation="Left" />
+          </LayoutGroup>
+          <LayoutGroup Id="SimpleEditors" RelativeSize="0.1122334455667789" CaptionLocation="Default">
+            <LayoutGroup Id="XPObject" Caption="Oid" Index="0" RelativeSize="100" CaptionLocation="Left">
+              <LayoutItem Id="Oid" Removed="True" />
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
     <ListView Id="Catalogo_Cuentas_ListView" DataAccessMode="Server" />
     <DetailView Id="Catalogo_DetailView">
       <Layout>

@@ -23,7 +23,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
     /// Definicion de los impuestos y contribuciones especiales a calcular. No aplica el IVA, sino otros, como Fovial, Contrans, etc
     /// </summary>
     [DefaultClassOptions, CreatableItem(false), ModelDefault("Caption", "Definición de Tributos"), NavigationItem("Facturación")]
-    [Persistent("Tributo"), DefaultProperty(nameof(NombreAbreviado))]
+    [Persistent(nameof(Tributo)), DefaultProperty(nameof(NombreAbreviado))]
     //[ImageName("BO_Contact")]
     [DefaultListViewOptions(MasterDetailMode.ListViewAndDetailView, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).

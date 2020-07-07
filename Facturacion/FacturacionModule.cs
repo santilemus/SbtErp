@@ -38,42 +38,25 @@ namespace SBT.Apps.Facturacion.Module
         {
             base.CustomizeTypesInfo(typesInfo);
             CalculatedPersistentAliasHelper.CustomizeTypesInfo(typesInfo);
+
+            //string [] NombreBOs = typesInfo.PersistentTypes.Where(item => item.FullName.Contains(this.AssemblyName)).Select(p => p.FullName).ToArray();
+
             // creamos una lista de columnas (tiene dos propiedades: el nombre del campo y el valor del atributo index)
-            List<DBColumn> columnas = new List<DBColumn>();
-            int x = 0;
-            XPDictionary dictionary = DevExpress.ExpressApp.Xpo.XpoTypesInfoHelper.GetXpoTypeInfoSource().XPDictionary;
-            dictionary.GetClassInfo(typeof(DevExpress.ExpressApp.Xpo.Updating.ModuleInfo));
-            foreach (XPClassInfo ci in dictionary.Classes)
-            {
-                // limpiamos antes de iterar por cada propiedad persistente de la clase (XPObject o similar)
-                columnas.Clear();
-                foreach (XPMemberInfo mi in ci.PersistentProperties)
-                {
-                    Attribute att = mi.FindAttributeInfo("Index");
-                    x = (att != null) ? (att as IndexAttribute).Index : -1;
-                    if (x >= 0)
-                        columnas.Add(new DBColumn(x, mi.Name));
-                }
-                // si hay propiedades con el atributo index, esas se van a tratar de ordenar
-                // NOTAR que esta implementacion no resuelve el caso de propiedades persistentes que no tienen el atributo
-                // index, por lo tanto al crear la tabla en la bd, esas seran las primeras. Sugerencia usar siempre el atributo index
-                if (columnas.Count() > 0)
-                {
-                    // primero vamos a ordenar la lista de propiedades persistentes, usando el atributo Index, para crearlas nuevamente
-                    // en el orden que esta definido en el atributo Index
-                    List<DBColumn> SortColumns = columnas.OrderBy(DBColumn => DBColumn.Index).ToList<DBColumn>();
-                    foreach (DBColumn column in SortColumns)
-                    {
-                        XPMemberInfo mi = ((IEnumerable<XPMemberInfo>)ci.PersistentProperties).FirstOrDefault(XPMemberInfo => XPMemberInfo.Name == "Name");
-                        if (mi != null)
-                        {
-                            mi.RemoveAttribute(typeof(PersistentAttribute));
-                            mi.AddAttribute(new PersistentAttribute(mi.Name.ToUpper()));
-                        }
-                    }
-                    typesInfo.RefreshInfo(ci.ClassType);
-                }
-            }
+            //List <DBColumn> columnas = new List<DBColumn>();
+            //foreach(string bo in NombreBOs)
+            //{
+            //    columnas.Clear();
+            //    ITypeInfo ITipo = typesInfo.FindTypeInfo(bo);
+            //    foreach (IMemberInfo IMember in ITipo.Members)
+            //    {
+            //        IndexAttribute att = IMember.FindAttribute<DevExpress.Persistent.Base.IndexAttribute>();
+            //        columnas.Add(new DBColumn(att != null ? att.Index : 0, IMember));
+            //    }
+            //    List<DBColumn> SortColumns = columnas.OrderBy(DBColumn => DBColumn.Index).ToList<DBColumn>();
+            //    foreach (IMemberInfo IMember in ITipo.Members)
+            //    {
+            //    }
+            //}
         }
     }
 
@@ -84,14 +67,14 @@ namespace SBT.Apps.Facturacion.Module
 
         }
 
-        public DBColumn(int AIndex, string AName)
+        public DBColumn(int AIndex, IMemberInfo AMemberInfo)
         {
             Index = AIndex;
-            FieldName = AName;
+            MemberInfo = AMemberInfo;
         }
 
         public int Index { get; set; }
-        public string FieldName { get; set; }
+        public IMemberInfo MemberInfo { get; set; }
     }
     
 }

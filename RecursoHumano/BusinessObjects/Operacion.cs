@@ -60,7 +60,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         }
 
         [Browsable(false)]
-        public Type CriteriaObjectType { get { return typeof(Empleado.Module.BusinessObjects.Empleado); } }
+        private Type CriteriaObjectType { get { return typeof(Empleado.Module.BusinessObjects.Empleado); } }
 
         [Size(200), DbType("varchar(200)"), XafDisplayName("Nombre Función"), Persistent(nameof(Formula))]
         [ElementTypeProperty("CriteriaObjectType")]
@@ -143,10 +143,12 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         [Action(Caption = "Evaluar Expression", ImageName = "Attention", SelectionDependencyType = MethodActionSelectionDependencyType.RequireSingleObject)]
         public void Execute()
         {
-            ExpressionEvaluator eval = new ExpressionEvaluator(TypeDescriptor.GetProperties(typeof(Empleado.Module.BusinessObjects.Empleado)), Comentario);
-            Empleado.Module.BusinessObjects.Empleado emple = new Empleado.Module.BusinessObjects.Empleado(Session);
-            emple.Salario = 2500.00m;
-            Valor = Convert.ToDecimal(eval.Evaluate(emple));
+            ExpressionEvaluator eval = new ExpressionEvaluator(TypeDescriptor.GetProperties(typeof(Empleado.Module.BusinessObjects.Empleado)), Formula);
+            Empleado.Module.BusinessObjects.Empleado emple = Session.GetObjectByKey<Empleado.Module.BusinessObjects.Empleado>(1);
+            if (emple != null)
+                Valor = Convert.ToDecimal(eval.Evaluate(emple));
+            else
+                Valor = 0.0m;
         }
 
 

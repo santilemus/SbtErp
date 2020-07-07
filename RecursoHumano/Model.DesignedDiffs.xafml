@@ -4,8 +4,8 @@
     <LayoutManagerOptions RequiredFieldMark="*" />
   </Options>
   <SchemaModules>
-    <SchemaModule Name="CloneObjectModule" Version="19.1.4.0" IsNewNode="True" />
-    <SchemaModule Name="SystemModule" Version="19.1.4.0" IsNewNode="True" />
+    <SchemaModule Name="CloneObjectModule" Version="20.1.4.0" IsNewNode="True" />
+    <SchemaModule Name="SystemModule" Version="20.1.4.0" IsNewNode="True" />
   </SchemaModules>
   <Views>
     <DetailView Id="AccionPersonal_DetailView">
@@ -64,43 +64,42 @@
     <DetailView Id="Operacion_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
-          <LayoutGroup Id="SimpleEditors" RelativeSize="19.919246298788696" Direction="Horizontal">
-            <LayoutGroup Id="Operacion_col1" ShowCaption="False" Index="0" RelativeSize="50" IsNewNode="True">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="19.42257217847769" Direction="Horizontal">
+            <LayoutGroup Id="Operacion_col1" ShowCaption="False" Index="0" RelativeSize="49.9597747385358" IsNewNode="True">
               <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="24.324324324324323" IsNewNode="True" />
               <LayoutItem Id="Nombre" ViewItem="Nombre" Index="1" RelativeSize="17.567567567567568" IsNewNode="True" />
-              <LayoutItem Id="NombreFunc" ViewItem="NombreFunc" Index="2" RelativeSize="17.567567567567568" IsNewNode="True" />
+              <LayoutItem Id="Formula" ViewItem="Formula" Index="2" RelativeSize="17.567567567567568" IsNewNode="True" />
               <LayoutItem Id="Tipo" ViewItem="Tipo" Index="3" RelativeSize="17.567567567567568" IsNewNode="True" />
               <LayoutItem Id="Valor" ViewItem="Valor" Index="4" RelativeSize="22.972972972972972" IsNewNode="True" />
             </LayoutGroup>
-            <LayoutGroup Id="Operacion_col2" ShowCaption="False" Index="1" RelativeSize="50" IsNewNode="True">
+            <LayoutGroup Id="Operacion_col2" ShowCaption="False" Index="1" RelativeSize="50.0402252614642" IsNewNode="True">
               <LayoutItem Id="Descripcion" ViewItem="Descripcion" Index="0" RelativeSize="24.324324324324323" IsNewNode="True" />
               <LayoutItem Id="Visible" ViewItem="Visible" Index="1" RelativeSize="17.567567567567568" IsNewNode="True" />
               <LayoutItem Id="CalcularPara" ViewItem="CalcularPara" Index="2" RelativeSize="17.567567567567568" IsNewNode="True" />
               <LayoutItem Id="Activo" ViewItem="Activo" Index="3" RelativeSize="17.567567567567568" IsNewNode="True" />
               <LayoutItem Id="Comentario" ViewItem="Comentario" Index="4" RelativeSize="22.972972972972972" IsNewNode="True" />
             </LayoutGroup>
-            <LayoutGroup Id="XPObject" Caption="Oid" Direction="Horizontal" Index="1" RelativeSize="49.056603773584904" Removed="True">
+            <LayoutGroup Id="XPObject" Caption="Oid" Index="1" RelativeSize="61.15485564304462" Removed="True">
               <LayoutItem Id="Oid" Removed="True" />
             </LayoutGroup>
-            <LayoutGroup Id="Operacion" RelativeSize="100" Removed="True">
-              <LayoutGroup Id="Operacion_col1" RelativeSize="50">
-                <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="24" IsNewNode="True" />
-                <LayoutItem Id="Nombre" Index="1" RelativeSize="17.333333333333332" />
-                <LayoutItem Id="NombreFunc" Index="2" RelativeSize="17.333333333333332" />
-                <LayoutItem Id="Tipo" Index="3" RelativeSize="17.333333333333332" />
-                <LayoutItem Id="Valor" Index="4" RelativeSize="24" />
-                <LayoutItem Id="Descripcion" Index="5" RelativeSize="20.454545454545453" Removed="True" />
+            <LayoutGroup Id="Operacion" RelativeSize="56.69291338582677" Removed="True">
+              <LayoutGroup Id="Operacion_col1" RelativeSize="49.958915365653247">
+                <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="20.454545454545453" IsNewNode="True" />
+                <LayoutItem Id="Nombre" Index="1" RelativeSize="14.772727272727273" />
+                <LayoutItem Id="Formula" Index="2" RelativeSize="14.772727272727273" />
+                <LayoutItem Id="Tipo" Index="3" RelativeSize="14.772727272727273" />
+                <LayoutItem Id="Valor" Index="4" RelativeSize="14.772727272727273" />
+                <LayoutItem Id="Descripcion" Index="5" RelativeSize="20.454545454545453" />
               </LayoutGroup>
-              <LayoutGroup Id="Operacion_col2" RelativeSize="50">
-                <LayoutItem Id="Descripcion" ViewItem="Descripcion" Index="0" RelativeSize="24" IsNewNode="True" />
-                <LayoutItem Id="Visible" RelativeSize="17.333333333333332" Index="1" />
-                <LayoutItem Id="CalcularPara" RelativeSize="17.333333333333332" Index="2" />
-                <LayoutItem Id="Activo" RelativeSize="17.333333333333332" Index="3" />
-                <LayoutItem Id="Comentario" RelativeSize="24" Index="4" />
+              <LayoutGroup Id="Operacion_col2" RelativeSize="50.041084634346753">
+                <LayoutItem Id="Activo" RelativeSize="14.772727272727273" />
+                <LayoutItem Id="CalcularPara" RelativeSize="14.772727272727273" />
+                <LayoutItem Id="Comentario" RelativeSize="50" />
+                <LayoutItem Id="Visible" RelativeSize="20.454545454545453" />
               </LayoutGroup>
             </LayoutGroup>
           </LayoutGroup>
-          <LayoutGroup Id="Detalles_Group" Direction="Vertical" RelativeSize="80.080753701211307">
+          <LayoutGroup Id="Detalles_Group" Direction="Vertical" RelativeSize="80.5774278215223">
             <LayoutItem Id="Detalles" RelativeSize="100" />
           </LayoutGroup>
         </LayoutGroup>

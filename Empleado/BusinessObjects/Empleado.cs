@@ -268,7 +268,19 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
             }
         }
 
-        #endregion 
+        #endregion
+
+        #region Metodos
+        /// <summary>
+        /// Probar en el expression editor
+        /// </summary>
+        /// <param name="AMeses"></param>
+        /// <returns></returns>
+        public decimal IngresoPromedioN(int AMeses)
+        {
+            return 0.0m;
+        }
+        #endregion
 
     }
 }

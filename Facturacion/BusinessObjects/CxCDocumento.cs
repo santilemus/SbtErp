@@ -2,8 +2,8 @@
 using System.Linq;
 using System.Text;
 using DevExpress.Xpo;
-using DevExpress.ExpressApp;
 using System.ComponentModel;
+using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.DC;
 using DevExpress.Data.Filtering;
 using DevExpress.Persistent.Base;
@@ -16,19 +16,19 @@ using SBT.Apps.Tercero.Module.BusinessObjects;
 using SBT.Apps.Empleado.Module.BusinessObjects;
 using SBT.Apps.Facturacion.Module.BusinessObjects;
 
+
 namespace SBT.Apps.CxC.Module.BusinessObjects
 {
     /// <summary>
     /// Cuenta por Cobrar
-    /// BO que correspnde al encabezado de los documentos de la cuenta por cobrar (algunos no tienen detalle como los pagos).
+    /// BO que corresponde al encabezado de los documentos de la cuenta por cobrar (algunos no tienen detalle como los pagos).
     /// En todo caso es el detalle de BO CxcTransaccion
     /// </summary>
 
-    [DefaultClassOptions]
+    [DefaultClassOptions, ModelDefault(@"Caption", @"CxC Documento"), NavigationItem(false), CreatableItem(false), 
+        Persistent(nameof(CxCDocumento)), DefaultProperty(nameof(Numero))]
     //[ImageName("BO_Contact")]
-    //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
-    //[Persistent("DatabaseTableName")]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class CxCDocumento : XPObjectBaseBO
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
@@ -85,9 +85,8 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         /// </summary>
         [PersistentAlias(nameof(numero)), XafDisplayName("Número Documento"), Index(3)]
         public int Numero => numero;
-
-        
-        [Association("Venta-CxCDocumentos"), XafDisplayName("Venta"), Index(4)]
+     
+        [Association("Venta-CxCDocumentos"), XafDisplayName("Venta"), Index(4), VisibleInLookupListView(true)]
         public Venta Venta
         {
             get => venta;

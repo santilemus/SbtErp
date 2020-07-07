@@ -25,7 +25,6 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
             Activo = true;
         }
 
-        Tercero creditos;
         private System.Boolean activo;
         private TipoContribuyente tipoContribuyente;
         private TipoPersona tipoPersona;

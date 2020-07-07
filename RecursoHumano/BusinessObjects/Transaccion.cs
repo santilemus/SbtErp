@@ -88,7 +88,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 #else
         [DbType("smallint"), Persistent("Tipo")]
 #endif
-        [XafDisplayName("Tipo Transacción"), RuleRequiredField("Transaccion.Tipo_Requerido", "Save"), Index(3)]
+        [XafDisplayName("Tipo Transacción"), RuleRequiredField("CxC Transaccion.Tipo_Requerido", "Save"), Index(3)]
         [DetailViewLayout(LayoutColumnPosition.Left, LayoutGroupType.SimpleEditorsGroup), ImmediatePostData(true)]
         public ETipoTransaccion TipoTransaccion
         {

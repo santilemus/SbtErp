@@ -3,31 +3,31 @@
 	<Applications>
 		<!-- Win -->
 		<Application
-			Name="Visible.Medico.Win"
-			FileName="[WinAppBin]\Visible.Medico.Win.exe"
+			Name="SBT.Apps.Medico.Win"
+			FileName="[WinAppBin]\SBT.Apps.Medico.Win.exe"
 			AdapterAssemblyName="[WinAdapterAssemblyName]"
 			CommunicationPort="4100"/>
 		<!-- Web -->
 		<Application
-			Name="Visible.Medico.Web"
+			Name="SBT.Apps.Medico.Web"
 			Url="http://localhost:4030"
 			PhysicalPath="[WebAppBin]"
 			AdapterAssemblyName="[WebAdapterAssemblyName]"/>
 		<!-- For IIS -->
 		<!--Application
-			Name="Visible.Medico.Web"
-			Url="http://localhost/Visible.Medico.Web/Default.aspx"
+			Name="SBT.Apps.Medico.Web"
+			Url="http://localhost/SBT.Apps.Medico.Web/Default.aspx"
 			AdapterAssemblyName="[WebAdapterAssemblyName]"/-->
 	</Applications>
 	<TestDatabases>
-		<Database xsi:type="TestMSSQLDatabase" Server="(localdb)\v11.0" DBName="visible.medicoEasyTest"/>
+		<Database xsi:type="TestMSSQLDatabase" Server="(localdb)\v11.0" DBName="SBT.Apps.medicoEasyTest"/>
 	</TestDatabases>
 
 	<Aliases>
 		<Alias Name="DomainUserName" Value="%USERDOMAIN%\%USERNAME%" />
-		<Alias Name="WinAdapterAssemblyName" Value="DevExpress.ExpressApp.EasyTest.WinAdapter.v15.2, Version=15.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-		<Alias Name="WebAdapterAssemblyName" Value="DevExpress.ExpressApp.EasyTest.WebAdapter.v15.2, Version=15.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-		<Alias Name="WinAppBin" Value="[ConfigPath]\..\..\Visible.Medico.Win\Bin\EasyTest" />
-		<Alias Name="WebAppBin" Value="[ConfigPath]\..\..\Visible.Medico.Web" />
+		<Alias Name="WinAdapterAssemblyName" Value="DevExpress.ExpressApp.EasyTest.WinAdapter.v19.1, Version=19.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+		<Alias Name="WebAdapterAssemblyName" Value="DevExpress.ExpressApp.EasyTest.WebAdapter.v19.1, Version=19.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+		<Alias Name="WinAppBin" Value="[ConfigPath]\..\..\SBT.Apps.Medico.Win\Bin\EasyTest" />
+		<Alias Name="WebAppBin" Value="[ConfigPath]\..\..\SBT.Apps.Medico.Web" />
 	</Aliases>
 </Options>

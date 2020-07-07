@@ -33,7 +33,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
     /// </remarks>
     
     [DefaultClassOptions, ModelDefault("Caption", "CxC Transacción"), NavigationItem("Cuenta por Cobrar")]
-    [CreatableItem(false), Persistent("CxCTransaccion"), DefaultProperty("Numero")]
+    [CreatableItem(false), Persistent(nameof(CxCTransaccion)), DefaultProperty("Numero")]
     //[ImageName("BO_Contact")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
@@ -74,10 +74,11 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         string usuarioAnulo = null;
         DateTime fecha;
         Concepto concepto;
-        Listas tipo;
+        Listas tipoDocumento;
 
 
         [XafDisplayName("Cliente"), RuleRequiredField("CxCTransaccion.Cliente_Requerido", DefaultContexts.Save), Index(0)]
+        [DetailViewLayout("Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
         public SBT.Apps.Tercero.Module.BusinessObjects.Tercero Cliente
         {
             get => cliente;
@@ -87,6 +88,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         [DbType("datetime2"), XafDisplayName("Fecha"), Index(1)]
         [RuleValueComparison("CxCTransaccion.Fecha > Fecha Factura", DefaultContexts.Save,
             ValueComparisonType.GreaterThanOrEqual, "[Venta.Fecha]", ParametersMode.Expression, SkipNullOrEmptyValues = false)]
+        [DetailViewLayout("Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
         public DateTime Fecha
         {
             get => fecha;
@@ -99,6 +101,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         [Association("Concepto-Transacciones"), XafDisplayName("Tipo Concepto")]
         [RuleRequiredField("CxcTransaccion.Concepto_Requerido", DefaultContexts.Save)]
         [Index(2), VisibleInLookupListView(true)]
+        [DetailViewLayout("Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
         public Concepto Concepto
         {
             get => concepto;
@@ -106,6 +109,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         }
 
         [XafDisplayName("Gestor de Cobro"), Index(3)]
+        [DetailViewLayout("Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
         public SBT.Apps.Empleado.Module.BusinessObjects.Empleado GestorCobro
         {
             get => gestorCobro;
@@ -115,15 +119,17 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         /// <summary>
         /// Solo aplica para los conceptos que requieren de una autorizacion de correlativos
         /// </summary>
-        [XafDisplayName("Tipo"), RuleRequiredField("Venta.Tipo_Requerido", DefaultContexts.Save)]
+        [XafDisplayName("Tipo Documento"), RuleRequiredField("Venta.TipoDocumento_Requerido", DefaultContexts.Save)]
         [DataSourceCriteria("[Categoria] == 16 And [Activo] == True"), VisibleInLookupListView(true), Index(4)]
-        public Listas Tipo
+        [DetailViewLayout("Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
+        public Listas TipoDocumento
         {
-            get => tipo;
-            set => SetPropertyValue(nameof(Tipo), ref tipo, value);
+            get => tipoDocumento;
+            set => SetPropertyValue(nameof(TipoDocumento), ref tipoDocumento, value);
         }
 
         [PersistentAlias(nameof(nRC)), XafDisplayName("NRC"), Index(5), VisibleInListView(false)]
+        [DetailViewLayout("Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
         public TerceroDocumento NRC => nRC;
 
         /// <summary>
@@ -131,9 +137,11 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         /// notas de credito==> descuento, devolucion. Pagos ==> Efectivo, Cheque, Transferencia, etc
         /// </summary>
         [PersistentAlias(nameof(numero)), XafDisplayName("Número"), Index(6)]
+        [DetailViewLayout("Datos Transacción", LayoutGroupType.SimpleEditorsGroup, 1)]
         public int Numero => numero;
 
         [XafDisplayName("Banco"), Index(6)]
+        [DetailViewLayout("Datos Transacción", LayoutGroupType.SimpleEditorsGroup, 1)]
         public SBT.Apps.Tercero.Module.BusinessObjects.Banco Banco
         {
             get => banco;
@@ -144,7 +152,8 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         /// No de tarjeta de credito o debito
         /// </summary>
         [Size(25), DbType("varchar(25)"), XafDisplayName("No Tarjeta"), ToolTip("No de Tarjeta de debito o credito, cuando es el medio de pago")]
-        [Index(7)]
+        [Index(7), VisibleInListView(false)]
+        [DetailViewLayout("Datos Transacción", LayoutGroupType.SimpleEditorsGroup, 1)]
         public string NoTarjeta
         {
             get => noTarjeta;
@@ -154,7 +163,8 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         /// <summary>
         ///  No de cheque, No de pago electronico, Id de la remesa, transferencia, no vaucher etc.
         /// </summary>
-        [Size(40), DbType("varchar(40)"), XafDisplayName("No Referencia"), Index(8)]
+        [Size(40), DbType("varchar(40)"), XafDisplayName("No Referencia"), Index(8), VisibleInListView(false)]
+        [DetailViewLayout("Datos Transacción", LayoutGroupType.SimpleEditorsGroup, 1)]
         public string Referencia
         {
             get => referencia;
@@ -170,15 +180,17 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         /// Agregar validacion para que este dato sea requerido unicamente en los casos de transferencia, remesa o pago electronico
         /// Agregar regla de apariencia, para que en los casos donde no es necesario este dato, aparezca deshabilitado u ocultarlo
         /// </remarks>
-        [XafDisplayName("Banco Transacción"), Index(9),
+        [XafDisplayName("Banco Transacción"), Index(9), VisibleInListView(false),
             ToolTip("La transacción de bancos, cuando es transferencia, remesa, o pago electronico")]
+        [DetailViewLayout("Datos Transacción", LayoutGroupType.SimpleEditorsGroup, 1)]
         public BancoTransaccion BancoTransaccion
         {
             get => bancoTransaccion;
             set => SetPropertyValue(nameof(BancoTransaccion), ref bancoTransaccion, value);
         }
 
-        [XafDisplayName("Moneda"), Index(10)]
+        [XafDisplayName("Moneda"), Index(10), VisibleInListView(false)]
+        [DetailViewLayout("Datos Transacción", LayoutGroupType.SimpleEditorsGroup, 1)]
         public Moneda Moneda
         {
             get => moneda;
@@ -186,37 +198,44 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         }
 
         
-        [PersistentAlias(nameof(factorCambio)), XafDisplayName("Valor Moneda")]
+        [PersistentAlias(nameof(factorCambio)), XafDisplayName("Valor Moneda"), VisibleInListView(false)]
+        [DetailViewLayout("Datos Transacción", LayoutGroupType.SimpleEditorsGroup, 1)]
         public decimal FactorCambio => factorCambio;
 
         [PersistentAlias(nameof(valor)), XafDisplayName("Valor"), Index(10)]
+        [DetailViewLayout("Datos Transacción", LayoutGroupType.SimpleEditorsGroup, 1)]
         public decimal ? Valor => valor;
 
 
         [DbType("smallint"), XafDisplayName("Estado"), Index(15), RuleRequiredField("CxCTransaccion.Estado_Requerido", "Save")]
+        [DetailViewLayout("Otros Datos", LayoutGroupType.SimpleEditorsGroup, 2)]
         public ECxcTransaccionEstado Estado
         {
             get => estado;
             set => SetPropertyValue(nameof(Estado), ref estado, value);
         }
 
-        [Size(200), DbType("varchar(200)"), XafDisplayName("Comentario"), Index(16)]
+        [Size(200), DbType("varchar(200)"), XafDisplayName("Comentario"), Index(16), VisibleInListView(false)]
+        [DetailViewLayout("Otros Datos", LayoutGroupType.SimpleEditorsGroup, 2)]
         public string Comentario
         {
             get => comentario;
             set => SetPropertyValue(nameof(Comentario), ref comentario, value);
         }
 
-        [PersistentAlias(nameof(usuarioAnulo)), XafDisplayName("Usuario Anulo"), Index(17)]
+        [PersistentAlias(nameof(usuarioAnulo)), XafDisplayName("Usuario Anulo"), Index(17), VisibleInListView(false)]
+        [DetailViewLayout("Otros Datos", LayoutGroupType.SimpleEditorsGroup, 2)]
         public string UsuarioAnulo => usuarioAnulo;
         
-        [PersistentAlias(nameof(fechaAnulacion)), XafDisplayName("Fecha Anulación"), Index(18)]
+        [PersistentAlias(nameof(fechaAnulacion)), XafDisplayName("Fecha Anulación"), Index(18), VisibleInListView(false)]
+        [DetailViewLayout("Otros Datos", LayoutGroupType.SimpleEditorsGroup, 2)]
         public DateTime ? FechaAnulacion => fechaAnulacion;
 
         #endregion
 
         #region colecciones
         [Association("CxCTransaccion-Documentos"), DevExpress.Xpo.Aggregated, XafDisplayName("Documentos"), Index(0)]
+        
         public XPCollection<CxCDocumento> Documentos
         {
             get

@@ -21,7 +21,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
     /// Es la relacion entre los tributos y los productos a los cuales se aplican
     /// </summary>
     [DefaultClassOptions, ModelDefault("Caption", "Productos"), NavigationItem(false), CreatableItem(false), 
-        XafDisplayName(nameof(Producto)), Persistent(nameof(TributoProducto))]
+        DefaultProperty(nameof(Producto)), Persistent(nameof(TributoProducto))]
     //[ImageName("BO_Contact")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
