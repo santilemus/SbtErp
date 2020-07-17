@@ -1,5 +1,6 @@
 ﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
+using DevExpress.ExpressApp.SystemModule;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
@@ -7,8 +8,6 @@ using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Tercero.Module.BusinessObjects;
 using System;
 using System.Linq;
-using DevExpress.Data.Filtering;
-using DevExpress.ExpressApp.SystemModule;
 
 
 namespace SBT.Apps.Empleado.Module.BusinessObjects
@@ -146,7 +145,7 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
 
 
         [XafDisplayName("Banco")]
-        [DataSourceCriteria("[Roles][[IdRole] = 2]")]
+        [DataSourceCriteria("[Roles][[IdRole] = 2]"), VisibleInListView(false)]
         public Banco Banco
         {
             get => banco;
@@ -154,7 +153,7 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
         }
 
         [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
-        [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
+        [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false), VisibleInListView(false)]
         public ETipoCuentaBanco TipoCuenta
         {
             get => tipoCuenta;
@@ -164,13 +163,14 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
         [DevExpress.Xpo.SizeAttribute(14)]
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Número Cuenta")]
         [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
-        [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
+        [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false), VisibleInListView(false)]
         public System.String NumeroCuenta
         {
             get => numeroCuenta;
             set => SetPropertyValue(nameof(NumeroCuenta), ref numeroCuenta, value);
         }
         [RuleRequiredField("Empleado.Pensionado_requerido", DefaultContexts.Save, "Estado Pensionado es requerido")]
+        [VisibleInListView(false)]
         public System.Boolean Pensionado
         {
             get => pensionado;
@@ -180,7 +180,7 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
         [DevExpress.Xpo.SizeAttribute(10)]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
-        [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Número Carné")]
+        [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Número Carné"), VisibleInListView(false)]
         public System.String NumeroCarne
         {
             get => numeroCarne;
@@ -189,35 +189,35 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
 
         [DevExpress.Xpo.SizeAttribute(12)]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
+        [DevExpress.Persistent.Base.ImmediatePostDataAttribute, VisibleInListView(false)]
         public System.String Titulo
         {
             get => titulo;
             set => SetPropertyValue(nameof(Titulo), ref titulo, value);
         }
 
-        [XafDisplayName("Día Descanso"), DbType("smallint")]
+        [XafDisplayName("Día Descanso"), DbType("smallint"), VisibleInListView(false)]
         public EDiaDescanso DiaDescanso
         {
             get => diaDescanso;
             set => SetPropertyValue(nameof(DiaDescanso), ref diaDescanso, value);
         }
 
-        
-        [XafDisplayName("AFP")]
+
+        [XafDisplayName("AFP"), VisibleInListView(false)]
         public AFP AFP
         {
             get => aFP;
             set => SetPropertyValue(nameof(AFP), ref aFP, value);
         }
 
-        [PersistentAlias("Iif([TipoSalario] != 1, [Salario], [Salario] * DateDiffDay(LocalDateTimeThisYear(), LocalDateTimeNextYear()) / 12.00)")]      
-        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
+        [PersistentAlias("Iif([TipoSalario] != 1, [Salario], [Salario] * DateDiffDay(LocalDateTimeThisYear(), LocalDateTimeNextYear()) / 12.00)")]
+        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2"), VisibleInListView(false)]
         public decimal SalarioMes
         {
             get { return Convert.ToDecimal(EvaluateAlias(nameof(SalarioMes))); }
         }
-        
+
 
 
         //[Persistent("Usuario"), XafDisplayName("Usuario Sistema")]
@@ -278,8 +278,10 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
         /// <returns></returns>
         public decimal IngresoPromedioN(int AMeses)
         {
-            return 0.0m;
+            return Salario * AMeses;    
+    
         }
+
         #endregion
 
     }

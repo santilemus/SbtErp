@@ -51,6 +51,7 @@ namespace SBT.Apps.Medico.Win {
             this.empleadoModule1 = new SBT.Apps.Empleado.Module.EmpleadoModule();
             this.terceroModule1 = new SBT.Apps.Tercero.Module.TerceroModule();
             this.productoModule1 = new SBT.Apps.Producto.Module.ProductoModule();
+            this.treeListEditorsModuleBase1 = new DevExpress.ExpressApp.TreeListEditors.TreeListEditorsModuleBase();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             // 
             // securityStrategyComplex1
@@ -111,6 +112,7 @@ namespace SBT.Apps.Medico.Win {
             this.Modules.Add(this.schedulerModuleBase);
             this.Modules.Add(this.validationModule);
             this.Modules.Add(this.viewVariantsModule);
+            this.Modules.Add(this.treeListEditorsModuleBase1);
             this.Modules.Add(this.baseModule1);
             this.Modules.Add(this.genericoModule1);
             this.Modules.Add(this.expedienteModule1);
@@ -163,5 +165,6 @@ namespace SBT.Apps.Medico.Win {
         private Empleado.Module.EmpleadoModule empleadoModule1;
         private Tercero.Module.TerceroModule terceroModule1;
         private Producto.Module.ProductoModule productoModule1;
+        private DevExpress.ExpressApp.TreeListEditors.TreeListEditorsModuleBase treeListEditorsModuleBase1;
     }
 }

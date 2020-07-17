@@ -1,25 +1,25 @@
-using System;
-using System.Linq;
-using DevExpress.ExpressApp;
 using DevExpress.Data.Filtering;
-using DevExpress.Persistent.Base;
-using DevExpress.ExpressApp.Updating;
+using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.Security;
-using DevExpress.ExpressApp.Security.Strategy;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp.Xpo;
+using DevExpress.ExpressApp.Updating;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.BaseImpl;
 using DevExpress.Persistent.BaseImpl.PermissionPolicy;
 using SBT.Apps.Base.Module.BusinessObjects;
+using System;
+using System.Linq;
 
 namespace SBT.Apps.Medico.Module.DatabaseUpdate
 {
     // For more typical usage scenarios, be sure to check out http://documentation.devexpress.com/#Xaf/clsDevExpressExpressAppUpdatingModuleUpdatertopic
-    public class Updater : ModuleUpdater {
+    public class Updater : ModuleUpdater
+    {
         public Updater(IObjectSpace objectSpace, Version currentDBVersion) :
-            base(objectSpace, currentDBVersion) {
+            base(objectSpace, currentDBVersion)
+        {
         }
-        public override void UpdateDatabaseAfterUpdateSchema() {
+        public override void UpdateDatabaseAfterUpdateSchema()
+        {
             base.UpdateDatabaseAfterUpdateSchema();
 
             var empresa = CreateDefaultEmpresa();
@@ -51,24 +51,28 @@ namespace SBT.Apps.Medico.Module.DatabaseUpdate
 
             PermissionPolicyRole defaultRole = CreateDefaultRole();
             Usuario sampleUser = ObjectSpace.FindObject<Usuario>(new BinaryOperator("UserName", "Chamba"));
-            if(sampleUser == null) {
+            if (sampleUser == null)
+            {
                 sampleUser = ObjectSpace.CreateObject<Usuario>();
                 sampleUser.UserName = "Chamba";
                 sampleUser.SetPassword("");
                 sampleUser.Roles.Add(defaultRole);
                 sampleUser.Save();
             }
-     		ObjectSpace.CommitChanges();
+            ObjectSpace.CommitChanges();
         }
-        public override void UpdateDatabaseBeforeUpdateSchema() {
+        public override void UpdateDatabaseBeforeUpdateSchema()
+        {
             base.UpdateDatabaseBeforeUpdateSchema();
             //if(CurrentDBVersion < new Version("1.1.0.0") && CurrentDBVersion > new Version("0.0.0.0")) {
             //    RenameColumn("DomainObject1Table", "OldColumnName", "NewColumnName");
             //}
         }
-        private PermissionPolicyRole CreateDefaultRole() {
+        private PermissionPolicyRole CreateDefaultRole()
+        {
             PermissionPolicyRole defaultRole = ObjectSpace.FindObject<PermissionPolicyRole>(new BinaryOperator("Name", "Default"));
-            if(defaultRole == null) {
+            if (defaultRole == null)
+            {
                 defaultRole = ObjectSpace.CreateObject<PermissionPolicyRole>();
                 defaultRole.Name = "Default";
                 defaultRole.AddObjectPermission<PermissionPolicyUser>(SecurityOperations.ReadOnlyAccess, "[Oid] = CurrentUserId()", SecurityPermissionState.Allow);

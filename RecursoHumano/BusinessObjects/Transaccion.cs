@@ -1,19 +1,14 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
+﻿using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp;
-using System.ComponentModel;
 using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
-using DevExpress.Persistent.Base;
-using System.Collections.Generic;
 using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
+using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
-using SBT.Apps.Tercero.Module.BusinessObjects;
-using SBT.Apps.Empleado.Module.BusinessObjects;
+using System;
+using System.ComponentModel;
+using System.Linq;
 
 namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 {
@@ -103,7 +98,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 #if Firebird
         [DbType("DM_DESCRIPCION25"), Persistent("CLASIFICACION")]
 #else
-        [DbType("varchar(25)"), Persistent("clasificacion")]
+        [DbType("varchar(12)"), Persistent("clasificacion")]
 #endif
         [XafDisplayName("Clasificación"), RuleRequiredField("Transaccion.Clasificacion_Requerido", DefaultContexts.Save)]
         //DataSourceProperty("TransClasificaciones"), ImmediatePostData, Index(4)]

@@ -1,17 +1,12 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp;
-using System.ComponentModel;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
-using DevExpress.Persistent.Base;
-using System.Collections.Generic;
-using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
-using DevExpress.Persistent.Validation;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Editors;
+using DevExpress.ExpressApp.Model;
+using DevExpress.Persistent.Base;
+using DevExpress.Persistent.Validation;
+using DevExpress.Xpo;
+using System;
+using System.ComponentModel;
+using System.Linq;
 
 namespace SBT.Apps.Base.Module.BusinessObjects
 {
@@ -21,7 +16,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
     /// 
     [DefaultClassOptions, ModelDefault("Caption", "Bug Report"), DefaultProperty(nameof(Titulo)), CreatableItem(false),
         Persistent(nameof(BugReport))]
-    //[ImageName("security_bug")]
+    [ImageName("BugReport")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class BugReport : XPObjectBaseBO
@@ -53,7 +48,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         EBugPlataforma plataforma = EBugPlataforma.Web;
         byte[] capturaPantalla;
         string url;
-        string descripcion;
+        byte [] descripcion;
         [Persistent(nameof(ReportadoPor)), Size(50), DbType("varchar(50)")]
         string reportadoPor = DevExpress.ExpressApp.SecuritySystem.CurrentUserName;
         DateTime fechaReporte;
@@ -80,11 +75,19 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [Index(2), DetailViewLayout("Bug ID", LayoutGroupType.SimpleEditorsGroup, 0)]
         public string ReportadoPor => reportadoPor;
 
-        [DbType("varchar(1000)"), XafDisplayName("Descripción")]
+        /// <summary>
+        /// Mostrar un editor de texto enriquecido para esta propiedad
+        /// </summary>
+        /// <remarks>
+        /// Mas info: https://docs.devexpress.com/eXpressAppFramework/401419/concepts/extra-modules/office-module/ways-to-improve-the-performance-of-asp-net-office-module-editors#rich-text-editor
+        /// https://docs.devexpress.com/eXpressAppFramework/400004/concepts/extra-modules/office-module/use-rich-text-documents-in-business-objects
+        /// https://docs.devexpress.com/eXpressAppFramework/401210/task-based-help/office/how-to-customize-the-rich-text-editors
+        /// </remarks>
+        [XafDisplayName("Descripción"), VisibleInListView(false)]
         [Size(SizeAttribute.Unlimited)]
         [EditorAlias(EditorAliases.RichTextPropertyEditor)]
         [Index(3), DetailViewLayout("Resumen del Error", LayoutGroupType.SimpleEditorsGroup, 1)]
-        public string Descripcion
+        public byte[] Descripcion
         {
             get => descripcion;
             set => SetPropertyValue(nameof(Descripcion), ref descripcion, value);
@@ -98,8 +101,8 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             set => SetPropertyValue(nameof(Url), ref url, value);
         }
 
-        [Size(SizeAttribute.Unlimited), ImageEditor(ListViewImageEditorMode = ImageEditorMode.PictureEdit,
-            DetailViewImageEditorMode = ImageEditorMode.PictureEdit, ListViewImageEditorCustomHeight = 40)]
+        [Size(SizeAttribute.Unlimited), ImageEditor(ListViewImageEditorMode = ImageEditorMode.PopupPictureEdit,
+            DetailViewImageEditorMode = ImageEditorMode.PopupPictureEdit, ListViewImageEditorCustomHeight = 40)]
         [XafDisplayName("Captura Pantalla")]
         [Index(5), DetailViewLayout("Resumen del Error", LayoutGroupType.SimpleEditorsGroup, 1)]
         public byte[] CapturaPantalla
@@ -132,7 +135,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             set => SetPropertyValue(nameof(Navegador), ref navegador, value);
         }
 
-        [DbType("varchar(1000)"), XafDisplayName("Pasos Reproducir")]
+        [XafDisplayName("Pasos Reproducir"), VisibleInListView(false)]
         [Size(SizeAttribute.Unlimited)]
         [EditorAlias(EditorAliases.RichTextPropertyEditor)]
         [Index(9), DetailViewLayout("Detalle del Error", LayoutGroupType.SimpleEditorsGroup, 3)]
@@ -209,7 +212,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             set => SetPropertyValue(nameof(FechaCorrecion), ref fechaCorrecion, value);
         }
 
-        
+
         [Size(400), DbType("varchar(400)"), XafDisplayName("Notas")]
         [Index(18), DetailViewLayout("Correción", LayoutGroupType.SimpleEditorsGroup, 5)]
         public string Notas
@@ -233,7 +236,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         Web = 1,
         Movil = 2
     }
-    
+
     public enum EBugNavegadorWeb
     {
         Chrome = 0,

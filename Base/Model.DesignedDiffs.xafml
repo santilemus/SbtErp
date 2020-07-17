@@ -1,8 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Application Title="SBT.App.Base.BaseModule" Logo="ExpressAppLogo">
-  <BOModel>
-    <Class Name="SBT.Apps.Base.Module.BusinessObjects.BugReport" ImageName="security_bug" />
-  </BOModel>
   <SchemaModules>
     <SchemaModule Name="CloneObjectModule" Version="20.1.4.0" IsNewNode="True" />
     <SchemaModule Name="SystemModule" Version="20.1.4.0" IsNewNode="True" />

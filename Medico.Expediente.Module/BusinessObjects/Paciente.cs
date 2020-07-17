@@ -1,23 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
-using DevExpress.ExpressApp.DC;
 using DevExpress.Persistent.Base;
-using DevExpress.Persistent.BaseImpl;
 using DevExpress.Xpo;
-using SBT.Apps.Medico.Expediente.Module.BusinessObjects;
 using SBT.Apps.Base.Module.BusinessObjects;
-using SBT.Apps.Tercero.Module.BusinessObjects;
-using SBT.Apps.Medico.Generico.Module.BusinessObjects;
+using System;
+using System.Linq;
 
 namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 {
     [DefaultClassOptions]
     [ModelDefault("Caption", "Paciente"), NavigationItem("Salud"), XafDefaultProperty("NombreCompleto"), ImageName("Paciente")]
     //[NonPersistent]
-    public class Paciente: Persona
+    public class Paciente : Persona
     {
         private ZonaGeografica _nacionalidad;
         private Empresa _empresa;
@@ -176,13 +170,13 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
             }
         }
 
-        
+
         [PersistentAlias("DateDiffMonth([StartTime], Now())")]
         public decimal EdadMeses
         {
             get { return Convert.ToDecimal(EvaluateAlias(nameof(EdadMeses))); }
         }
-        
+
         [DevExpress.Xpo.AssociationAttribute("Parientes-Paciente")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Parientes"), Index(4), DevExpress.Xpo.Aggregated]
@@ -228,7 +222,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
             }
         }
 
-        [Association("Paciente-Recordatorios"), DevExpress.Xpo.Aggregated, ModelDefault("Caption", "Recordatorios"), 
+        [Association("Paciente-Recordatorios"), DevExpress.Xpo.Aggregated, ModelDefault("Caption", "Recordatorios"),
             Index(9)]
         public XPCollection<RecordatorioClinico> Recordatorios
         {
@@ -238,7 +232,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
             }
         }
 
-        [Association("Paciente-HistorialCrecimientos"), ModelDefault("Caption", "Crecimiento"), Index(10), 
+        [Association("Paciente-HistorialCrecimientos"), ModelDefault("Caption", "Crecimiento"), Index(10),
             DevExpress.Xpo.Aggregated]
         public XPCollection<HistorialCrecimiento> HistorialCrecimientos
         {

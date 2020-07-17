@@ -15,7 +15,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
     /// Recursos Humanos. BO para la parametrizacion de las tablas de calculo de la retencion de renta
     /// </summary>
     [DefaultClassOptions, ModelDefault("Caption", "Tablas ISR"), DefaultProperty("ID"), VisibleInDashboards(false),
-        DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None), Persistent("PlaParametroRenta"), NavigationItem("Recurso Humano")]
+        DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None), Persistent(nameof(ParametroRenta)), NavigationItem("Recurso Humano")]
     [ImageName("ParametroRenta")]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class ParametroRenta : XPObjectBaseBO

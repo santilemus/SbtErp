@@ -19,10 +19,9 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
     /// BO para la parametrizacion de las vacaciones. La parametrización es por empresa y el proposito es que puedan existir
     /// multiples tramos, segun la antiguedad del empleado. Si se aplica segun la ley solo habra un tramo desde 1 año hasta 999
     /// </summary>
-    [DefaultClassOptions, ModelDefault("Caption", "Parametro Vacación"), NavigationItem("Recurso Humano"), Persistent("PlaParamVacacion"),
+    [DefaultClassOptions, ModelDefault("Caption", "Parametro Vacación"), NavigationItem("Recurso Humano"), Persistent(nameof(ParametroVacacion)),
         DefaultProperty("Desde")]
     [ImageName("ParametroVacacion")]
-    //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class ParametroVacacion : XPObjectBaseBO

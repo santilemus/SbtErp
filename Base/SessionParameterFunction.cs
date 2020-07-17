@@ -72,8 +72,10 @@ namespace SBT.Apps.Base.Module
 
         public bool IsValidOperandType(int operandIndex, int operandCount, Type type)
         {
-            return true;
+            return (operandCount == 1 && (operandIndex == 0 && type.GetType() == typeof(string)));
         }
+
+
 
         public int MinOperandCount
         {

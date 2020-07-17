@@ -1,18 +1,12 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
-using SBT.Apps.Medico.Generico.Module.BusinessObjects;
-using DevExpress.ExpressApp;
-using System.ComponentModel;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
-using DevExpress.Persistent.Base;
-using System.Collections.Generic;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
+using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
+using System;
+using System.ComponentModel;
+using System.Linq;
 
 namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 {
@@ -20,7 +14,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
     //[ImageName("BO_Contact")]
     [DefaultProperty("EdadMes"), ModelDefault("Caption", "Who Percentil Peso Longitud"),
         RuleCombinationOfPropertiesIsUnique("WhoPercentilPesoLong.TipoMes_Unico", DefaultContexts.Save, "TipoTabla,EdadMes", SkipNullOrEmptyValues = false),
-        Indices("TipoTabla;EdadMes"), Persistent("WhoPercentilPesoLong"), NavigationItem("Salud")]  
+        Indices("TipoTabla;EdadMes"), Persistent("WhoPercentilPesoLong"), NavigationItem(false)] //NavigationItem("Salud")]  
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class WhoPercentilPesoLong : XPObjectBaseBO
@@ -58,7 +52,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
             set => SetPropertyValue(nameof(TipoTabla), ref tipoTabla, value);
         }
 
-        [DbType("numeric(3,2)"), RuleRequiredField("WhoPercentilPesoLong.Mes_Requerido", "Save"), 
+        [DbType("numeric(3,2)"), RuleRequiredField("WhoPercentilPesoLong.Mes_Requerido", "Save"),
             RuleRange("WhoPercentilPesoLong.Mes_Rango", DefaultContexts.Save, 0, 24)]
         public int EdadMes
         {

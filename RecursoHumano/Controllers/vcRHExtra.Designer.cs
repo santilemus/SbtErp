@@ -31,7 +31,7 @@
             // 
             // vcRHExtra
             // 
-            this.TargetObjectType = typeof(SBT.Apps.RecursoHumano.Module.BusinessObjects.RHExtra);
+            this.TargetObjectType = typeof(SBT.Apps.RecursoHumano.Module.BusinessObjects.ReporteHoraExtra);
 
         }
 

@@ -309,7 +309,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Model.Desktop.xafml" />
+    <Content Include="Model.Desktop.xafml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Model.Tablet.xafml" />
     <None Include="ReadMe.txt" />
     <Content Include="sbt128.ico" />
@@ -336,6 +338,10 @@
     <ProjectReference Include="..\Erp.Module.Web\SBT.Apps.Erp.Module.Web.csproj">
       <Project>{F91421D9-B02F-439F-A6EE-35996184F941}</Project>
       <Name>SBT.Apps.Erp.Module.Web</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Facturacion\SBT.Apps.Facturacion.csproj">
+      <Project>{079B99E0-C217-4989-9F00-43770CFD1AE7}</Project>
+      <Name>SBT.Apps.Facturacion</Name>
     </ProjectReference>
     <ProjectReference Include="..\Producto\SBT.Apps.Producto.csproj">
       <Project>{90D73CB9-2F45-473C-8FEE-AF118BB56C89}</Project>

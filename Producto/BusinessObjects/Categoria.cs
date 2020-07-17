@@ -1,13 +1,12 @@
-﻿using DevExpress.ExpressApp.DC;
+﻿using DevExpress.Data.Filtering;
+using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
-using DevExpress.Data.Filtering;
 using DevExpress.Xpo;
-using DevExpress.Persistent.BaseImpl;
 using SBT.Apps.Base.Module.BusinessObjects;
-using System.ComponentModel;
 using System;
+using System.ComponentModel;
 using System.Linq;
 
 namespace SBT.Apps.Producto.Module.BusinessObjects
@@ -76,7 +75,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         public Categoria Padre
         {
             get => padre;
-            set 
+            set
             {
                 bool changed = SetPropertyValue("Padre", ref padre, value);
                 if (!IsLoading && !IsSaving && changed)

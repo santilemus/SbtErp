@@ -21,7 +21,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
     /// BO para consulta y procesos relacionados con las planillas generadas en el sistema
     /// </summary>
     [DefaultClassOptions, ModelDefault("Caption", "Planillas"), NavigationItem("Recurso Humano"), DefaultProperty("Tipo")]
-    [Persistent("PlaPlanilla")]
+    [Persistent(nameof(Planilla))]
     //[ImageName("BO_Contact")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).

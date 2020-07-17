@@ -64,44 +64,36 @@
     <DetailView Id="Operacion_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
-          <LayoutGroup Id="SimpleEditors" RelativeSize="19.42257217847769" Direction="Horizontal">
-            <LayoutGroup Id="Operacion_col1" ShowCaption="False" Index="0" RelativeSize="49.9597747385358" IsNewNode="True">
-              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="24.324324324324323" IsNewNode="True" />
-              <LayoutItem Id="Nombre" ViewItem="Nombre" Index="1" RelativeSize="17.567567567567568" IsNewNode="True" />
-              <LayoutItem Id="Formula" ViewItem="Formula" Index="2" RelativeSize="17.567567567567568" IsNewNode="True" />
-              <LayoutItem Id="Tipo" ViewItem="Tipo" Index="3" RelativeSize="17.567567567567568" IsNewNode="True" />
-              <LayoutItem Id="Valor" ViewItem="Valor" Index="4" RelativeSize="22.972972972972972" IsNewNode="True" />
-            </LayoutGroup>
-            <LayoutGroup Id="Operacion_col2" ShowCaption="False" Index="1" RelativeSize="50.0402252614642" IsNewNode="True">
-              <LayoutItem Id="Descripcion" ViewItem="Descripcion" Index="0" RelativeSize="24.324324324324323" IsNewNode="True" />
-              <LayoutItem Id="Visible" ViewItem="Visible" Index="1" RelativeSize="17.567567567567568" IsNewNode="True" />
-              <LayoutItem Id="CalcularPara" ViewItem="CalcularPara" Index="2" RelativeSize="17.567567567567568" IsNewNode="True" />
-              <LayoutItem Id="Activo" ViewItem="Activo" Index="3" RelativeSize="17.567567567567568" IsNewNode="True" />
-              <LayoutItem Id="Comentario" ViewItem="Comentario" Index="4" RelativeSize="22.972972972972972" IsNewNode="True" />
-            </LayoutGroup>
-            <LayoutGroup Id="XPObject" Caption="Oid" Index="1" RelativeSize="61.15485564304462" Removed="True">
-              <LayoutItem Id="Oid" Removed="True" />
-            </LayoutGroup>
-            <LayoutGroup Id="Operacion" RelativeSize="56.69291338582677" Removed="True">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="29.396325459317584">
+            <LayoutGroup Id="Operacion" RelativeSize="100">
               <LayoutGroup Id="Operacion_col1" RelativeSize="49.958915365653247">
                 <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="20.454545454545453" IsNewNode="True" />
                 <LayoutItem Id="Nombre" Index="1" RelativeSize="14.772727272727273" />
-                <LayoutItem Id="Formula" Index="2" RelativeSize="14.772727272727273" />
-                <LayoutItem Id="Tipo" Index="3" RelativeSize="14.772727272727273" />
-                <LayoutItem Id="Valor" Index="4" RelativeSize="14.772727272727273" />
-                <LayoutItem Id="Descripcion" Index="5" RelativeSize="20.454545454545453" />
+                <LayoutItem Id="TipoBO" Index="2" RelativeSize="14.772727272727273" />
+                <LayoutItem Id="Formula" Index="3" RelativeSize="14.772727272727273" />
+                <LayoutItem Id="Tipo" Index="4" RelativeSize="14.772727272727273" />
+                <LayoutItem Id="Valor" Index="5" RelativeSize="20.454545454545453" />
               </LayoutGroup>
               <LayoutGroup Id="Operacion_col2" RelativeSize="50.041084634346753">
-                <LayoutItem Id="Activo" RelativeSize="14.772727272727273" />
+                <LayoutItem Id="Descripcion" RelativeSize="20.454545454545453" />
+                <LayoutItem Id="Visible" RelativeSize="14.772727272727273" />
                 <LayoutItem Id="CalcularPara" RelativeSize="14.772727272727273" />
-                <LayoutItem Id="Comentario" RelativeSize="50" />
-                <LayoutItem Id="Visible" RelativeSize="20.454545454545453" />
+                <LayoutItem Id="Activo" RelativeSize="14.772727272727273" />
+                <LayoutItem Id="Comentario" RelativeSize="35.227272727272727" />
               </LayoutGroup>
             </LayoutGroup>
+            <LayoutGroup Id="XPObject" Caption="Oid" Index="1" RelativeSize="43.30708661417323" Removed="True">
+              <LayoutItem Id="Oid" Removed="True" />
+            </LayoutGroup>
           </LayoutGroup>
-          <LayoutGroup Id="Detalles_Group" Direction="Vertical" RelativeSize="80.5774278215223">
-            <LayoutItem Id="Detalles" RelativeSize="100" />
-          </LayoutGroup>
+          <TabbedGroup Id="Tabs" RelativeSize="70.60367454068242">
+            <LayoutGroup Id="TipoPlanillas" RelativeSize="100">
+              <LayoutItem Id="TipoPlanillas" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="PlanillaDetalleOperaciones" RelativeSize="100">
+              <LayoutItem Id="PlanillaDetalleOperaciones" RelativeSize="100" />
+            </LayoutGroup>
+          </TabbedGroup>
         </LayoutGroup>
       </Layout>
     </DetailView>
@@ -328,43 +320,54 @@
         </LayoutGroup>
       </Layout>
     </DetailView>
-    <DetailView Id="RHExtra_DetailView">
+    <DetailView Id="RentaEmpleoAnterior_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
-          <LayoutGroup Id="SimpleEditors" RelativeSize="19.919246298788696" Direction="Horizontal">
-            <LayoutGroup Id="RHExtra_col1" ShowCaption="False" Index="0" RelativeSize="50" IsNewNode="True">
-              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="24.324324324324323" IsNewNode="True" />
-              <LayoutItem Id="Empleado" ViewItem="Empleado" Index="1" RelativeSize="17.567567567567568" IsNewNode="True" />
-              <LayoutItem Id="Unidad" ViewItem="Unidad" Index="2" RelativeSize="17.567567567567568" IsNewNode="True" />
-              <LayoutItem Id="JefeDepartamento" ViewItem="JefeDepartamento" Index="3" RelativeSize="17.567567567567568" IsNewNode="True" />
-              <LayoutItem Id="FechaInicio" ViewItem="FechaInicio" Index="4" RelativeSize="22.972972972972972" IsNewNode="True" />
+          <LayoutGroup Id="SimpleEditors" RelativeSize="100">
+            <LayoutGroup Id="RentaEmpleoAnterior" RelativeSize="100">
+              <LayoutGroup Id="RentaEmpleoAnterior_col1" RelativeSize="50">
+                <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="5.0561797752808992" IsNewNode="True" />
+                <LayoutItem Id="Empleado" Index="1" RelativeSize="3.6516853932584268" />
+                <LayoutItem Id="NitPatrono" Index="2" RelativeSize="3.6516853932584268" />
+                <LayoutItem Id="RazonSocial" Index="3" RelativeSize="87.640449438202253" />
+              </LayoutGroup>
+              <LayoutGroup Id="RentaEmpleoAnterior_col2" RelativeSize="50">
+                <LayoutItem Id="FechaHasta" RelativeSize="5.0561797752808992" />
+                <LayoutItem Id="IngresoGravado" RelativeSize="3.6516853932584268" />
+                <LayoutItem Id="RentaRetenida" RelativeSize="91.292134831460672" />
+              </LayoutGroup>
             </LayoutGroup>
-            <LayoutGroup Id="RHExtra_col2" ShowCaption="False" Index="1" RelativeSize="50" IsNewNode="True">
-              <LayoutItem Id="FechaFin" ViewItem="FechaFin" Index="0" RelativeSize="24.324324324324323" IsNewNode="True" />
-              <LayoutItem Id="FechaPago" ViewItem="FechaPago" Index="1" RelativeSize="17.567567567567568" IsNewNode="True" />
-              <LayoutItem Id="Planilla" ViewItem="Planilla" Index="2" RelativeSize="17.567567567567568" IsNewNode="True" />
-              <LayoutItem Id="Estado" ViewItem="Estado" Index="3" RelativeSize="40.54054054054054" IsNewNode="True" />
-            </LayoutGroup>
-            <LayoutGroup Id="XPObject" Caption="Oid" Direction="Horizontal" Index="1" RelativeSize="49.056603773584904" Removed="True">
+            <LayoutGroup Id="XPObject" Caption="Oid" Index="1" RelativeSize="78.477690288713916" Removed="True">
               <LayoutItem Id="Oid" Removed="True" />
             </LayoutGroup>
-            <LayoutGroup Id="RHExtra" RelativeSize="100" Removed="True">
-              <LayoutGroup Id="RHExtra_col1" RelativeSize="50">
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <DetailView Id="ReporteHoraExtra_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="25.984251968503937">
+            <LayoutGroup Id="ReporteHoraExtra" RelativeSize="100">
+              <LayoutGroup Id="ReporteHoraExtra_col1" RelativeSize="50">
                 <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="24" IsNewNode="True" />
                 <LayoutItem Id="Empleado" Index="1" RelativeSize="17.333333333333332" />
                 <LayoutItem Id="Unidad" Index="2" RelativeSize="17.333333333333332" />
                 <LayoutItem Id="JefeDepartamento" Index="3" RelativeSize="17.333333333333332" />
                 <LayoutItem Id="FechaInicio" Index="4" RelativeSize="24" />
               </LayoutGroup>
-              <LayoutGroup Id="RHExtra_col2" RelativeSize="50">
-                <LayoutItem Id="Estado" RelativeSize="41.333333333333336" />
+              <LayoutGroup Id="ReporteHoraExtra_col2" RelativeSize="50">
                 <LayoutItem Id="FechaFin" RelativeSize="24" />
                 <LayoutItem Id="FechaPago" RelativeSize="17.333333333333332" />
                 <LayoutItem Id="Planilla" RelativeSize="17.333333333333332" />
+                <LayoutItem Id="Estado" RelativeSize="41.333333333333336" />
               </LayoutGroup>
             </LayoutGroup>
+            <LayoutGroup Id="XPObject" Caption="Oid" Index="1" RelativeSize="50.131233595800524" Removed="True">
+              <LayoutItem Id="Oid" Removed="True" />
+            </LayoutGroup>
           </LayoutGroup>
-          <TabbedGroup Id="Tabs" RelativeSize="80.080753701211307">
+          <TabbedGroup Id="Tabs" RelativeSize="74.015748031496059">
             <LayoutGroup Id="Detalles" RelativeSize="100">
               <LayoutItem Id="Detalles" RelativeSize="100" />
             </LayoutGroup>
@@ -372,59 +375,6 @@
               <LayoutItem Id="Resumenes" RelativeSize="100" />
             </LayoutGroup>
           </TabbedGroup>
-        </LayoutGroup>
-      </Layout>
-    </DetailView>
-    <DetailView Id="RHExtraDetalle_DetailView">
-      <Layout>
-        <LayoutGroup Id="Main" RelativeSize="100">
-          <LayoutGroup Id="SimpleEditors" Direction="Horizontal" RelativeSize="100">
-            <LayoutGroup Id="RHExtraDetalle_col1" ShowCaption="False" Index="0" RelativeSize="50" IsNewNode="True">
-              <LayoutItem Id="TipoJornada" ViewItem="TipoJornada" Index="0" RelativeSize="4.8452220726783315" IsNewNode="True" />
-              <LayoutItem Id="FechaTrabajo" ViewItem="FechaTrabajo" Index="1" RelativeSize="3.4993270524899058" IsNewNode="True" />
-              <LayoutItem Id="Descripcion" ViewItem="Descripcion" Index="2" RelativeSize="91.655450874831757" IsNewNode="True" />
-            </LayoutGroup>
-            <LayoutGroup Id="RHExtraDetalle_col2" ShowCaption="False" Index="1" RelativeSize="50" IsNewNode="True">
-              <LayoutItem Id="UnidadSolicita" ViewItem="UnidadSolicita" Index="0" RelativeSize="4.8452220726783315" IsNewNode="True" />
-              <LayoutItem Id="HoraDesde" ViewItem="HoraDesde" Index="1" RelativeSize="3.4993270524899058" IsNewNode="True" />
-              <LayoutItem Id="HoraHasta" ViewItem="HoraHasta" Index="2" RelativeSize="91.655450874831757" IsNewNode="True" />
-            </LayoutGroup>
-            <LayoutGroup Id="RHExtraDetalle" Removed="True" />
-          </LayoutGroup>
-        </LayoutGroup>
-      </Layout>
-    </DetailView>
-    <DetailView Id="RHExtraResumen_DetailView">
-      <Layout>
-        <LayoutGroup Id="Main" RelativeSize="100">
-          <LayoutGroup Id="SimpleEditors" RelativeSize="100" Direction="Horizontal">
-            <LayoutGroup Id="RHExtraResumen_col1" ShowCaption="False" Index="0" RelativeSize="50" IsNewNode="True">
-              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="4.8452220726783315" IsNewNode="True" />
-              <LayoutItem Id="RHExtra" ViewItem="RHExtra" Index="1" RelativeSize="3.4993270524899058" IsNewNode="True" />
-              <LayoutItem Id="TipoJornada" ViewItem="TipoJornada" Index="2" RelativeSize="91.655450874831757" IsNewNode="True" />
-            </LayoutGroup>
-            <LayoutGroup Id="RHExtraResumen_col2" ShowCaption="False" Index="1" RelativeSize="50" IsNewNode="True">
-              <LayoutItem Id="Horas" ViewItem="Horas" Index="0" RelativeSize="4.8452220726783315" IsNewNode="True" />
-              <LayoutItem Id="Porcentaje" ViewItem="Porcentaje" Index="1" RelativeSize="3.4993270524899058" IsNewNode="True" />
-              <LayoutItem Id="Valor" ViewItem="Valor" Index="2" RelativeSize="91.655450874831757" IsNewNode="True" />
-            </LayoutGroup>
-            <LayoutGroup Id="XPObject" Caption="Oid" Direction="Horizontal" Index="1" RelativeSize="87.079407806191114" Removed="True">
-              <LayoutItem Id="Oid" Removed="True" />
-            </LayoutGroup>
-            <LayoutGroup Id="RHExtraResumen" RelativeSize="18.438761776581426" Removed="True">
-              <LayoutGroup Id="RHExtraResumen_col1" RelativeSize="50">
-                <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="36.734693877551024" IsNewNode="True" />
-                <LayoutItem Id="RHExtra" Index="1" RelativeSize="26.530612244897959" />
-                <LayoutItem Id="TipoJornada" Index="2" RelativeSize="36.734693877551024" />
-                <LayoutItem Id="Horas" Index="3" RelativeSize="29.032258064516128" Removed="True" />
-              </LayoutGroup>
-              <LayoutGroup Id="RHExtraResumen_col2" RelativeSize="50">
-                <LayoutItem Id="Horas" ViewItem="Horas" Index="0" RelativeSize="36.734693877551024" IsNewNode="True" />
-                <LayoutItem Id="Porcentaje" RelativeSize="26.530612244897959" Index="1" />
-                <LayoutItem Id="Valor" RelativeSize="36.734693877551024" Index="2" />
-              </LayoutGroup>
-            </LayoutGroup>
-          </LayoutGroup>
         </LayoutGroup>
       </Layout>
     </DetailView>

@@ -65,7 +65,7 @@ namespace SBT.Apps.Base.Module
 
         #endregion
 
-        #region Implementacion de  ICustomFunctionOperatorBrowsable
+        #region Implementacion de ICustomFunctionOperatorBrowsable
         public bool IsValidOperandCount(int count)
         {
             return count == 0;

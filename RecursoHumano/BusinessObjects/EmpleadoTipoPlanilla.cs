@@ -26,7 +26,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
     /// cuales estara incluido y reducir la necesidad de hacer cambios.
     /// </summary>
     [DefaultClassOptions, ModelDefault("Caption", "Empleado-Tipo Planilla"), NavigationItem(false), CreatableItem(false),
-        Persistent("PlaEmpleadoTipoPlanilla"), XafDefaultProperty(nameof(TipoPlanilla))]
+        Persistent(nameof(EmpleadoTipoPlanilla)), XafDefaultProperty(nameof(TipoPlanilla))]
     //[ImageName("BO_Contact")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).

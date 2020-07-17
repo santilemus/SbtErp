@@ -1,18 +1,13 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp;
-using System.ComponentModel;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
-using DevExpress.Persistent.Base;
-using System.Collections.Generic;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
+using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Empleado.Module.BusinessObjects;
+using System;
+using System.ComponentModel;
+using System.Linq;
 
 namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 {
@@ -21,7 +16,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
     /// **** LEEME ==> Faltan dos persistent alias: dias y horas de accion
     /// </summary>
     [DefaultClassOptions, ModelDefault("Caption", "Acción de Personal"), NavigationItem("Recurso Humano"), DefaultProperty("Empleado")]
-    [Persistent("PlaAccionPersonal")]
+    [Persistent(nameof(AccionPersonal))]
     //[ImageName("BO_Contact")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
@@ -90,7 +85,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
             set => SetPropertyValue(nameof(FechaAccion), ref fechaAccion, value);
         }
 
-        [DbType("datetime"), XafDisplayName("Fecha Inicio")]
+        [DbType("datetime2"), XafDisplayName("Fecha Inicio")]
         [ModelDefault("DisplayFormat", "{0:G}"), ModelDefault("EditMask", "G")]
         public DateTime FechaInicio
         {
@@ -103,8 +98,8 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         /// finalizacion. Los casos son: 1 => Permisos sin goce de sueldo, 3 => Suspension de Contrato, 9 => Vacacion, 10 => Maternidad, 
         /// 11 => Inasistencia, 14 => Licencia con Goce de Sueldo, 15 => Amonestacion
         /// </summary>
-        [DbType("datetime"), XafDisplayName("Fecha Fin")]
-        [RuleValueComparison("AccionPersonal.FechaFin >= FechaInicio", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual, 
+        [DbType("datetime2"), XafDisplayName("Fecha Fin")]
+        [RuleValueComparison("AccionPersonal.FechaFin >= FechaInicio", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual,
             "[FechaInicio]", ParametersMode.Expression, TargetCriteria = "[Tipo] In (1, 3, 9, 10, 11, 14, 15)")]
         [ModelDefault("DisplayFormat", "{0:G}"), ModelDefault("EditMask", "G")]
         public DateTime FechaFin
@@ -145,7 +140,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         /// SalarioPropuesto cuando el Tipo de la Accion es 6 => Aumento de Salario 
         /// </summary>
         [DbType("numeric(12, 2)"), XafDisplayName("Salario Propuesto")]
-        [RuleValueComparison("AccionPersonal.SalarioPropuesto > SalarioActual", DefaultContexts.Save, ValueComparisonType.GreaterThan, 
+        [RuleValueComparison("AccionPersonal.SalarioPropuesto > SalarioActual", DefaultContexts.Save, ValueComparisonType.GreaterThan,
             "[SalarioActual]", ParametersMode.Expression, TargetCriteria = "[Tipo] = 6)")]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         public decimal SalarioPropuesto
@@ -179,7 +174,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         {
             get => usuarioAprobo;
         }
-        [ XafDisplayName("Comentario Aprobación"), PersistentAlias(nameof(comentarioAprobo))]
+        [XafDisplayName("Comentario Aprobación"), PersistentAlias(nameof(comentarioAprobo))]
         public string ComentarioAprobo
         {
             get => comentarioAprobo;

@@ -23,7 +23,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
     /// </summary>
 
     [DefaultClassOptions, ModelDefault("Caption", "Planilla Detalle"), NavigationItem(false), DefaultProperty("Empleado")]
-    [Persistent("PlaPlanillaDeta")]
+    [Persistent(nameof(PlanillaDetalle))]
     //[ImageName("BO_Contact")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
@@ -83,11 +83,11 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 
         #region Colecciones
         [Association("PlanillaDetalle-Operaciones"), DevExpress.Xpo.Aggregated, XafDisplayName("Operaciones"), Index(0)]
-        public XPCollection<PlanillaDetaOperac> Operaciones
+        public XPCollection<PlanillaDetalleOperacion> Operaciones
         {
             get
             {
-                return GetCollection<PlanillaDetaOperac>(nameof(Operaciones));
+                return GetCollection<PlanillaDetalleOperacion>(nameof(Operaciones));
             }
         }
         #endregion

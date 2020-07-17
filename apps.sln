@@ -31,6 +31,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestMedico", "UnitTest\UnitTestMedico\UnitTestMedico.csproj", "{2F173420-FED9-48B5-B0AE-C922CEF26E0D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SBT.Apps.Medico.Module.Web", "Medico.Module.Web\SBT.Apps.Medico.Module.Web.csproj", "{0C729AAD-7626-4668-A7F1-35F7D240489D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{90D73CB9-2F45-473C-8FEE-AF118BB56C89} = {90D73CB9-2F45-473C-8FEE-AF118BB56C89}
+		{05F004D2-9388-44DB-A756-2FFB2ECCAE07} = {05F004D2-9388-44DB-A756-2FFB2ECCAE07}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SBT.Apps.Medico.Web", "Medico.Web\SBT.Apps.Medico.Web.csproj", "{82A6DBC9-B1B4-44E4-9718-55DF930CD349}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -68,6 +72,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SBT.Apps.Facturacion", "Fac
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SBT.Apps.RecursoHumano", "RecursoHumano\SBT.Apps.RecursoHumano.csproj", "{DC2B10D5-7EB4-4E21-9A86-1E0247178F7B}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "MedicoWebSetup", "MedicoWebSetup\MedicoWebSetup.vdproj", "{F98826A5-DDC0-4333-920B-9210BAE459DB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -196,6 +202,9 @@ Global
 		{DC2B10D5-7EB4-4E21-9A86-1E0247178F7B}.EasyTest|Any CPU.Build.0 = EasyTest|Any CPU
 		{DC2B10D5-7EB4-4E21-9A86-1E0247178F7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC2B10D5-7EB4-4E21-9A86-1E0247178F7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F98826A5-DDC0-4333-920B-9210BAE459DB}.Debug|Any CPU.ActiveCfg = Debug
+		{F98826A5-DDC0-4333-920B-9210BAE459DB}.EasyTest|Any CPU.ActiveCfg = Release
+		{F98826A5-DDC0-4333-920B-9210BAE459DB}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

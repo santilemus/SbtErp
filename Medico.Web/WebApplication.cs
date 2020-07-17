@@ -1,17 +1,15 @@
-using System;
 using DevExpress.ExpressApp;
-using System.ComponentModel;
-using DevExpress.ExpressApp.Web;
-using System.Collections.Generic;
-using DevExpress.ExpressApp.Xpo;
-using DevExpress.ExpressApp.Web.SystemModule;
 using DevExpress.ExpressApp.Security;
 using DevExpress.ExpressApp.Security.ClientServer;
+using DevExpress.ExpressApp.Web;
+using DevExpress.ExpressApp.Xpo;
+using System;
 
 namespace SBT.Apps.Medico.Web
 {
     // For more typical usage scenarios, be sure to check out http://documentation.devexpress.com/#Xaf/DevExpressExpressAppWebWebApplicationMembersTopicAll
-    public partial class medicoAspNetApplication : WebApplication {
+    public partial class medicoAspNetApplication : WebApplication
+    {
         private DevExpress.ExpressApp.SystemModule.SystemModule module1;
         private DevExpress.ExpressApp.Web.SystemModule.SystemAspNetModule module2;
         private SBT.Apps.Medico.Module.medicoModule module3;
@@ -41,6 +39,8 @@ namespace SBT.Apps.Medico.Web
         private Tercero.Module.TerceroModule terceroModule1;
         private Producto.Module.ProductoModule productoModule1;
         private DevExpress.ExpressApp.Validation.Web.ValidationAspNetModule validationAspNetModule1;
+        private DevExpress.ExpressApp.TreeListEditors.TreeListEditorsModuleBase treeListEditorsModuleBase1;
+        private DevExpress.ExpressApp.TreeListEditors.Web.TreeListEditorsAspNetModule treeListEditorsAspNetModule1;
         private DevExpress.ExpressApp.ViewVariantsModule.ViewVariantsModule viewVariantsModule;
 
         private void InitializeDefaults()
@@ -48,14 +48,16 @@ namespace SBT.Apps.Medico.Web
             LinkNewObjectToParentImmediately = true;
             OptimizedControllersCreation = true;
         }
-        public medicoAspNetApplication() {
+        public medicoAspNetApplication()
+        {
             InitializeComponent();
             InitializeDefaults();
             // agregado para permitir la seleccion de empresas y sucursales en el login
             ((SecurityStrategy)Security).AnonymousAllowedTypes.Add(typeof(SBT.Apps.Base.Module.BusinessObjects.Empresa));
             ((SecurityStrategy)Security).AnonymousAllowedTypes.Add(typeof(SBT.Apps.Base.Module.BusinessObjects.EmpresaUnidad));
         }
-        protected override void CreateDefaultObjectSpaceProvider(CreateCustomObjectSpaceProviderEventArgs args) {
+        protected override void CreateDefaultObjectSpaceProvider(CreateCustomObjectSpaceProviderEventArgs args)
+        {
             args.ObjectSpaceProvider = new SecuredObjectSpaceProvider((SecurityStrategyComplex)Security, GetDataStoreProvider(args.ConnectionString, args.Connection), true);
             args.ObjectSpaceProviders.Add(new NonPersistentObjectSpaceProvider(TypesInfo, null));
         }
@@ -79,16 +81,19 @@ namespace SBT.Apps.Medico.Web
             return dataStoreProvider;
         }
 
-        private void medicoAspNetApplication_DatabaseVersionMismatch(object sender, DevExpress.ExpressApp.DatabaseVersionMismatchEventArgs e) {
+        private void medicoAspNetApplication_DatabaseVersionMismatch(object sender, DevExpress.ExpressApp.DatabaseVersionMismatchEventArgs e)
+        {
 #if EASYTEST
             e.Updater.Update();
             e.Handled = true;
 #else
-            if(System.Diagnostics.Debugger.IsAttached) {
+            if (System.Diagnostics.Debugger.IsAttached)
+            {
                 e.Updater.Update();
                 e.Handled = true;
             }
-            else {
+            else
+            {
                 string message = "The application cannot connect to the specified database, because the latter doesn't exist or its version is older than that of the application.\r\n" +
                     "This error occurred  because the automatic database update was disabled when the application was started without debugging.\r\n" +
                     "To avoid this error, you should either start the application under Visual Studio in debug mode, or modify the " +
@@ -99,14 +104,16 @@ namespace SBT.Apps.Medico.Web
                     "'Database Security References' at http://help.devexpress.com/#Xaf/CustomDocument3237\r\n" +
                     "If this doesn't help, please contact our Support Team at http://www.devexpress.com/Support/Center/";
 
-                if(e.CompatibilityError != null && e.CompatibilityError.Exception != null) {
+                if (e.CompatibilityError != null && e.CompatibilityError.Exception != null)
+                {
                     message += "\r\n\r\nInner exception: " + e.CompatibilityError.Exception.Message;
                 }
                 throw new InvalidOperationException(message);
             }
 #endif
         }
-        private void InitializeComponent() {
+        private void InitializeComponent()
+        {
             this.module1 = new DevExpress.ExpressApp.SystemModule.SystemModule();
             this.module2 = new DevExpress.ExpressApp.Web.SystemModule.SystemAspNetModule();
             this.module4 = new SBT.Apps.Medico.Module.Web.MedicoAspNetModule();
@@ -137,6 +144,8 @@ namespace SBT.Apps.Medico.Web
             this.terceroModule1 = new SBT.Apps.Tercero.Module.TerceroModule();
             this.productoModule1 = new SBT.Apps.Producto.Module.ProductoModule();
             this.validationAspNetModule1 = new DevExpress.ExpressApp.Validation.Web.ValidationAspNetModule();
+            this.treeListEditorsModuleBase1 = new DevExpress.ExpressApp.TreeListEditors.TreeListEditorsModuleBase();
+            this.treeListEditorsAspNetModule1 = new DevExpress.ExpressApp.TreeListEditors.Web.TreeListEditorsAspNetModule();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             // 
             // securityStrategyComplex1
@@ -187,6 +196,7 @@ namespace SBT.Apps.Medico.Web
             // 
             this.ApplicationName = "SBT - Registro de Control Medico";
             this.CheckCompatibilityType = DevExpress.ExpressApp.CheckCompatibilityType.DatabaseSchema;
+            this.DefaultCollectionSourceMode = DevExpress.ExpressApp.CollectionSourceMode.Normal;
             this.Modules.Add(this.module1);
             this.Modules.Add(this.module2);
             this.Modules.Add(this.auditTrailModule);
@@ -198,6 +208,7 @@ namespace SBT.Apps.Medico.Web
             this.Modules.Add(this.schedulerModuleBase);
             this.Modules.Add(this.validationModule);
             this.Modules.Add(this.viewVariantsModule);
+            this.Modules.Add(this.treeListEditorsModuleBase1);
             this.Modules.Add(this.baseModule1);
             this.Modules.Add(this.genericoModule1);
             this.Modules.Add(this.expedienteModule1);
@@ -211,6 +222,7 @@ namespace SBT.Apps.Medico.Web
             this.Modules.Add(this.reportsAspNetModuleV2);
             this.Modules.Add(this.schedulerAspNetModule);
             this.Modules.Add(this.validationAspNetModule1);
+            this.Modules.Add(this.treeListEditorsAspNetModule1);
             this.Modules.Add(this.module4);
             this.Modules.Add(this.securityModule1);
             this.Security = this.securityStrategyComplex1;

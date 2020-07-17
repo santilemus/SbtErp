@@ -46,10 +46,10 @@
   </NavigationItems>
   <Options DataAccessMode="Server" CollectionsEditMode="Edit" />
   <SchemaModules>
-    <SchemaModule Name="CloneObjectModule" Version="19.1.4.0" IsNewNode="True" />
-    <SchemaModule Name="SchedulerAspNetModule" Version="19.1.4.0" IsNewNode="True" />
-    <SchemaModule Name="SchedulerModuleBase" Version="19.1.4.0" IsNewNode="True" />
-    <SchemaModule Name="SystemAspNetModule" Version="19.1.4.0" IsNewNode="True" />
-    <SchemaModule Name="SystemModule" Version="19.1.4.0" IsNewNode="True" />
+    <SchemaModule Name="CloneObjectModule" Version="20.1.4.0" IsNewNode="True" />
+    <SchemaModule Name="SchedulerAspNetModule" Version="20.1.4.0" IsNewNode="True" />
+    <SchemaModule Name="SchedulerModuleBase" Version="20.1.4.0" IsNewNode="True" />
+    <SchemaModule Name="SystemAspNetModule" Version="20.1.4.0" IsNewNode="True" />
+    <SchemaModule Name="SystemModule" Version="20.1.4.0" IsNewNode="True" />
   </SchemaModules>
 </Application>

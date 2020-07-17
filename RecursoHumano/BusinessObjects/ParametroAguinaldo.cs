@@ -22,7 +22,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
     /// del salario e incluso un valor fijo
     /// </summary>
     [DefaultClassOptions, NavigationItem("Recurso Humano"), ModelDefault("Caption", "Parámetro Aguinaldo"),
-        Persistent("PlaParamAguinaldo"), DefaultProperty("Desde")]
+        Persistent(nameof(ParametroAguinaldo)), DefaultProperty("Desde")]
     [ImageName("ParametroAguinaldo")]
     //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]

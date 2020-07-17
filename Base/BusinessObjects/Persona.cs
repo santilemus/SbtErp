@@ -26,7 +26,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         DateTime fechaMuerte;
         string idioma;
         private Listas _tipoSangre;
-        private System.Drawing.Image _fotografia;
+        private byte[] _fotografia;
         private System.DateTime _fechaRetiro;
         private System.DateTime _fechaIngreso;
         private EstadoCivil _estadoCivil;
@@ -165,7 +165,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [DevExpress.Xpo.SizeAttribute(60), DbType("varchar(60)")]
         [DevExpress.Persistent.Base.ToolTipAttribute("Direcciones de correo electrónico")]
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Correo Electrónico")]
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
+        [DevExpress.Persistent.Base.ImmediatePostDataAttribute, VisibleInListView(false)]
         public System.String EMail
         {
             get
@@ -206,7 +206,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         }
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [RuleRequiredField("Persona.FechaIngreso_Requerido", "Save")]
-        [ModelDefault("DisplayFormat", "{0:G}"), ModelDefault("EditMask", "G")]
+        [ModelDefault("DisplayFormat", "{0:G}"), ModelDefault("EditMask", "G"), VisibleInListView(false)]
         public System.DateTime FechaIngreso
         {
             get
@@ -220,7 +220,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         }
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
-        [ModelDefault("DisplayFormat", "{0:G}"), ModelDefault("EditMask", "G")]
+        [ModelDefault("DisplayFormat", "{0:G}"), ModelDefault("EditMask", "G"), VisibleInListView(false)]
         public System.DateTime FechaRetiro
         {
             get
@@ -246,7 +246,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         }
 
 
-        [Size(25), XafDisplayName("Idiomas"), DbType("varchar(25)"), Persistent("Idioma")]
+        [Size(25), XafDisplayName("Idiomas"), DbType("varchar(25)"), Persistent("Idioma"), VisibleInListView(false)]
         public string Idioma
         {
             get => idioma;
@@ -254,7 +254,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         }
 
         [DbType("datetime"), Persistent("FechaMuerte"), XafDisplayName("Fecha Muerte")]
-        [ModelDefault("DisplayFormat", "{0:G}"), ModelDefault("EditMask", "G")]
+        [ModelDefault("DisplayFormat", "{0:G}"), ModelDefault("EditMask", "G"), VisibleInListView(false)]
         public DateTime FechaMuerte
         {
             get => fechaMuerte;
@@ -262,7 +262,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         }
 
 
-        [Size(50), DbType("varchar(50)"), Persistent("CausaMuerte"), XafDisplayName("Causa Muerte")]
+        [Size(50), DbType("varchar(50)"), Persistent("CausaMuerte"), XafDisplayName("Causa Muerte"), VisibleInListView(false)]
         public string CausaMuerte
         {
             get => causaMuerte;
@@ -278,16 +278,17 @@ namespace SBT.Apps.Base.Module.BusinessObjects
 
 
         [PersistentAlias("Round(DateDiffMonth([FechaNacimiento], Now())/12.00, 2)")]
-        [XafDisplayName("Edad")]
+        [XafDisplayName("Edad"), VisibleInListView(false)]
         public decimal Edad
         {
             get { return Convert.ToDecimal(EvaluateAlias(nameof(Edad))); }
         }
 
-
-        [DevExpress.Xpo.ValueConverterAttribute(typeof(DevExpress.Xpo.Metadata.ImageValueConverter))]
+        [Size(SizeAttribute.Unlimited), ImageEditor(ListViewImageEditorMode = ImageEditorMode.PopupPictureEdit,
+    DetailViewImageEditorMode = ImageEditorMode.PopupPictureEdit, ListViewImageEditorCustomHeight = 40)]
+        [Index(5), DetailViewLayout("Resumen del Error", LayoutGroupType.SimpleEditorsGroup, 1)]
         [Delayed(true)]
-        public System.Drawing.Image Fotografia
+        public byte[] Fotografia
         {
             get
             {

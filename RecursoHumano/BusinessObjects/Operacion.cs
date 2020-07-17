@@ -1,20 +1,15 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp;
-using System.ComponentModel;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
-using DevExpress.Data.Filtering.Helpers;
-using DevExpress.Persistent.Base;
-using System.Collections.Generic;
-using DevExpress.ExpressApp.Model;
+﻿using DevExpress.Data.Filtering.Helpers;
 using DevExpress.ExpressApp.Core;
+using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Editors;
-using DevExpress.Persistent.BaseImpl;
+using DevExpress.ExpressApp.Model;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
+using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
+using System;
+using System.ComponentModel;
+using System.Linq;
 
 namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 {
@@ -42,6 +37,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 
         #region Propiedades
 
+        Type tipoBO;
         string nombre;
         string formula;
         ETipoOperacion tipo = ETipoOperacion.Null;
@@ -59,11 +55,30 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
             set => SetPropertyValue(nameof(Nombre), ref nombre, value);
         }
 
-        [Browsable(false)]
-        private Type CriteriaObjectType { get { return typeof(Empleado.Module.BusinessObjects.Empleado); } }
+        /// <summary>
+        /// El BO para el cual se implementa la formula
+        /// </summary>
+        /// <remarks>
+        /// Mas info
+        /// 1. EditorAliases.TypePropertyEditor implementa la lista de seleccion de los BO
+        ///    Ver: https://docs.devexpress.com/eXpressAppFramework/113579/concepts/business-model-design/data-types-supported-by-built-in-editors/type-properties
+        /// 2. ValueConverter, para hacer la propiedad persistente se tiliza la conversion a string y guardar el nombre del BO en la bd, incluyendo el namespace
+        /// </remarks>
+        [XafDisplayName("Tipo Business Object"), Persistent(nameof(TipoBO))]
+        [EditorAlias(EditorAliases.TypePropertyEditor)]
+        [ValueConverter(typeof(DevExpress.ExpressApp.Utils.TypeToStringConverter)), ImmediatePostData]
+        [DataSourceCriteria("")]
+        public Type TipoBO
+        {
+            get => tipoBO;
+            set => SetPropertyValue(nameof(TipoBO), ref tipoBO, value);
+        }
+
+        //[Browsable(false)]
+        //private Type CriteriaObjectType { get { return typeof(Empleado.Module.BusinessObjects.Empleado); } }
 
         [Size(200), DbType("varchar(200)"), XafDisplayName("Nombre Función"), Persistent(nameof(Formula))]
-        [ElementTypeProperty("CriteriaObjectType")]
+        [ElementTypeProperty(nameof(TipoBO))]
         [EditorAlias(EditorAliases.PopupExpressionPropertyEditor)]
         [ModelDefault("Width", "50"), VisibleInListView(false)]
         public string Formula
@@ -88,7 +103,6 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         }
 
         [Size(60), DbType("varchar(60)"), XafDisplayName("Descripción"), NonCloneable()]
-        [EditorAlias(EditorAliases.TypePropertyEditor)]
         public string Descripcion
         {
             get => descripcion;
@@ -110,6 +124,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         }
 
         [DbType("bit"), XafDisplayName("Activo"), RuleRequiredField("Operacion.Activo_Requerido", DefaultContexts.Save)]
+        [DefaultValue(true)]
         public bool Activo
         {
             get => activo;
@@ -123,15 +138,24 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
             set => SetPropertyValue(nameof(Comentario), ref comentario, value);
         }
         #endregion
-        
+
 
         #region Colecciones
-        [Association("Operacion-Detalles"), DevExpress.Xpo.Aggregated, XafDisplayName("Tipo Planillas"), Index(0)]
-        public XPCollection<TipoPlanillaOperacion> Detalles
+        [Association("Operacion-TipoPlanillas"), DevExpress.Xpo.Aggregated, XafDisplayName("Tipo Planillas"), Index(0)]
+        public XPCollection<OperacionTipoPlanilla> TipoPlanillas
         {
             get
             {
-                return GetCollection<TipoPlanillaOperacion>(nameof(Detalles));
+                return GetCollection<OperacionTipoPlanilla>(nameof(TipoPlanillas));
+            }
+        }
+
+        [Association("Operacion-PlanillaOperaciones"), XafDisplayName("Planillas Operaciones")]
+        public XPCollection<PlanillaDetalleOperacion> PlanillaDetalleOperaciones
+        {
+            get
+            {
+                return GetCollection<PlanillaDetalleOperacion>(nameof(PlanillaDetalleOperaciones));
             }
         }
         #endregion

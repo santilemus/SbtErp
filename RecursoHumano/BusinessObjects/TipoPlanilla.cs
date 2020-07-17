@@ -21,7 +21,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
     /// </summary>
     [DefaultClassOptions, ModelDefault("Caption", "Tipo Planilla"), NavigationItem("Recurso Humano"),
         DefaultProperty("Nombre"), DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None), 
-        Persistent("PlaTipoPlanilla"), ImageName("TipoPlanilla")]
+        Persistent(nameof(TipoPlanilla)), ImageName("TipoPlanilla")]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class TipoPlanilla : XPObjectBaseBO
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
@@ -116,11 +116,11 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 
         #region Coleciones
         [Association("TipoPlanilla-Operaciones"), XafDisplayName("Operaciones"), Index(0)]
-        public XPCollection<TipoPlanillaOperacion> Operaciones
+        public XPCollection<OperacionTipoPlanilla> Operaciones
         {
             get
             {
-                return GetCollection<TipoPlanillaOperacion>(nameof(Operaciones));
+                return GetCollection<OperacionTipoPlanilla>(nameof(Operaciones));
             }
         }
         #endregion

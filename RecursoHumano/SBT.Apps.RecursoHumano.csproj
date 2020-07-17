@@ -122,6 +122,7 @@
   <ItemGroup>
     <Compile Include="BusinessObjects\AccionPersonal.cs" />
     <Compile Include="BusinessObjects\APersonalParam.cs" />
+    <Compile Include="BusinessObjects\Asueto.cs" />
     <Compile Include="BusinessObjects\EClasePlanilla.cs" />
     <Compile Include="BusinessObjects\EEstadoAccionPersonal.cs" />
     <Compile Include="BusinessObjects\EEstadoPlanilla.cs" />
@@ -142,12 +143,13 @@
     <Compile Include="BusinessObjects\Planilla.cs" />
     <Compile Include="BusinessObjects\PlanillaDetalle.cs" />
     <Compile Include="BusinessObjects\Operacion.cs" />
-    <Compile Include="BusinessObjects\PlanillaDetaOperac.cs" />
+    <Compile Include="BusinessObjects\PlanillaDetalleOperacion.cs" />
+    <Compile Include="BusinessObjects\RentaEmpleoAnterior.cs" />
     <Compile Include="BusinessObjects\TestParam.cs" />
-    <Compile Include="BusinessObjects\TipoPlanillaOperacion.cs" />
-    <Compile Include="BusinessObjects\RHExtra.cs" />
-    <Compile Include="BusinessObjects\RHExtraDetalle.cs" />
-    <Compile Include="BusinessObjects\RHExtraResumen.cs" />
+    <Compile Include="BusinessObjects\OperacionTipoPlanilla.cs" />
+    <Compile Include="BusinessObjects\ReporteHoraExtra.cs" />
+    <Compile Include="BusinessObjects\ReporteHoraExtraDetalle.cs" />
+    <Compile Include="BusinessObjects\ReporteHoraExtraResumen.cs" />
     <Compile Include="BusinessObjects\TipoPlanilla.cs" />
     <Compile Include="BusinessObjects\ToETablaISR.cs" />
     <Compile Include="BusinessObjects\Transaccion.cs" />
@@ -206,6 +208,7 @@
       <DependentUpon>ViewControllerTestOperacion.cs</DependentUpon>
     </Compile>
     <Compile Include="DatabaseUpdate\Updater.cs" />
+    <Compile Include="EmpleadoFunction.cs" />
     <Compile Include="Module.cs">
       <SubType>Component</SubType>
     </Compile>

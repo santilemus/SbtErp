@@ -59,6 +59,8 @@
     <Reference Include="DevExpress.ExpressApp.Objects.v20.1">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+    <Reference Include="DevExpress.ExpressApp.Office.v20.1, Version=20.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.ExpressApp.Office.Web.v20.1, Version=20.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.ExpressApp.ReportsV2.v20.1">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
@@ -101,6 +103,7 @@
     <Reference Include="DevExpress.Data.Desktop.v20.1">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+    <Reference Include="DevExpress.Spreadsheet.v20.1.Core, Version=20.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Utils.v20.1">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
@@ -110,6 +113,8 @@
     <Reference Include="DevExpress.RichEdit.v20.1.Core">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+    <Reference Include="DevExpress.Web.ASPxRichEdit.v20.1, Version=20.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Web.ASPxSpreadsheet.v20.1, Version=20.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Web.v20.1">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
@@ -172,6 +177,10 @@
     <Compile Include="Controllers\vcBancoCuentaWeb.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controllers\vcBugReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controllers\vcBugReportShowRibbonController.cs" />
     <Compile Include="Controllers\vcBugReportWeb.cs">
       <SubType>Component</SubType>
     </Compile>

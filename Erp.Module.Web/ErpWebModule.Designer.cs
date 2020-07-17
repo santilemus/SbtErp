@@ -38,6 +38,7 @@
             this.RequiredModuleTypes.Add(typeof(SBT.Apps.Contabilidad.ContabilidadModule));
             this.RequiredModuleTypes.Add(typeof(SBT.Apps.RecursoHumano.RecursoHumanoModule));
             this.RequiredModuleTypes.Add(typeof(SBT.Apps.Facturacion.Module.FacturacionModule));
+            this.RequiredModuleTypes.Add(typeof(DevExpress.ExpressApp.Office.Web.OfficeAspNetModule));
 
         }
 

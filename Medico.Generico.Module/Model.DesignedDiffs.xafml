@@ -4,8 +4,8 @@
     <Class Name="DevExpress.Persistent.BaseImpl.Resource" DefaultDetailViewImage="GroupByResource" DefaultListViewImage="GroupByResource" />
   </BOModel>
   <SchemaModules>
-    <SchemaModule Name="CloneObjectModule" Version="19.1.4.0" IsNewNode="True" />
-    <SchemaModule Name="SystemModule" Version="19.1.4.0" IsNewNode="True" />
+    <SchemaModule Name="CloneObjectModule" Version="20.1.4.0" IsNewNode="True" />
+    <SchemaModule Name="SystemModule" Version="20.1.4.0" IsNewNode="True" />
   </SchemaModules>
   <Views>
     <DetailView Id="CdoPercentilPesoEstaturaBMI_DetailView">

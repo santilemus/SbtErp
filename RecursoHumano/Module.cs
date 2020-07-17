@@ -24,6 +24,8 @@ namespace SBT.Apps.RecursoHumano {
         public RecursoHumanoModule() {
             InitializeComponent();
 			BaseObject.OidInitializationMode = OidInitializationMode.AfterConstruction;
+
+            DevExpress.Data.Filtering.CriteriaOperator.RegisterCustomFunction(new SBT.Apps.RecursoHumano.Module.EmpleadoFunction());
         }
         public override IEnumerable<ModuleUpdater> GetModuleUpdaters(IObjectSpace objectSpace, Version versionFromDB) {
             ModuleUpdater updater = new DatabaseUpdate.Updater(objectSpace, versionFromDB);

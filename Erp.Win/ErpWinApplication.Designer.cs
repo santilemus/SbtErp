@@ -28,6 +28,7 @@
             this.module4 = new SBT.Apps.Erp.Module.Win.ErpWindowsFormsModule();
             this.securityModule1 = new DevExpress.ExpressApp.Security.SecurityModule();
             this.securityStrategyComplex1 = new DevExpress.ExpressApp.Security.SecurityStrategyComplex();
+            this.customAuthentication1 = new SBT.Apps.Medico.Module.CustomAuthentication();
             this.objectsModule = new DevExpress.ExpressApp.Objects.BusinessClassLibraryCustomizationModule();
             this.cloneObjectModule = new DevExpress.ExpressApp.CloneObject.CloneObjectModule();
             this.conditionalAppearanceModule = new DevExpress.ExpressApp.ConditionalAppearance.ConditionalAppearanceModule();
@@ -42,7 +43,12 @@
             this.auditTrailModule1 = new DevExpress.ExpressApp.AuditTrail.AuditTrailModule();
             this.baseModule1 = new SBT.Apps.Base.Module.BaseModule();
             this.erpModule2 = new SBT.Apps.Erp.Module.ErpModule();
-            this.customAuthentication1 = new SBT.Apps.Medico.Module.CustomAuthentication();
+            this.treeListEditorsModuleBase1 = new DevExpress.ExpressApp.TreeListEditors.TreeListEditorsModuleBase();
+            this.terceroModule1 = new SBT.Apps.Tercero.Module.TerceroModule();
+            this.empleadoModule1 = new SBT.Apps.Empleado.Module.EmpleadoModule();
+            this.productoModule1 = new SBT.Apps.Producto.Module.ProductoModule();
+            this.contabilidadModule1 = new SBT.Apps.Contabilidad.ContabilidadModule();
+            this.recursoHumanoModule1 = new SBT.Apps.RecursoHumano.RecursoHumanoModule();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             // 
             // securityStrategyComplex1
@@ -103,7 +109,13 @@
             this.Modules.Add(this.conditionalAppearanceModule);
             this.Modules.Add(this.viewVariantsModule);
             this.Modules.Add(this.auditTrailModule1);
+            this.Modules.Add(this.treeListEditorsModuleBase1);
             this.Modules.Add(this.baseModule1);
+            this.Modules.Add(this.terceroModule1);
+            this.Modules.Add(this.empleadoModule1);
+            this.Modules.Add(this.productoModule1);
+            this.Modules.Add(this.contabilidadModule1);
+            this.Modules.Add(this.recursoHumanoModule1);
             this.Modules.Add(this.erpModule1);
             this.Modules.Add(this.module4);
             this.Modules.Add(this.securityModule1);
@@ -137,5 +149,11 @@
         private Base.Module.BaseModule baseModule1;
         private Module.ErpModule erpModule2;
         private Medico.Module.CustomAuthentication customAuthentication1;
+        private DevExpress.ExpressApp.TreeListEditors.TreeListEditorsModuleBase treeListEditorsModuleBase1;
+        private Tercero.Module.TerceroModule terceroModule1;
+        private Empleado.Module.EmpleadoModule empleadoModule1;
+        private Producto.Module.ProductoModule productoModule1;
+        private Contabilidad.ContabilidadModule contabilidadModule1;
+        private RecursoHumano.RecursoHumanoModule recursoHumanoModule1;
     }
 }

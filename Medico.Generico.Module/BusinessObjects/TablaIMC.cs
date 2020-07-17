@@ -1,22 +1,17 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp;
-using System.ComponentModel;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
-using DevExpress.Persistent.Base;
-using System.Collections.Generic;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
+using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
+using System;
+using System.ComponentModel;
+using System.Linq;
 
 namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 {
-    [DefaultClassOptions, ModelDefault("Caption", "Tabla IMC"), NavigationItem("Salud"), XafDefaultProperty("Descripcion"),
-        Persistent("TablaIMC")]
+    [DefaultClassOptions, ModelDefault("Caption", "Tabla IMC"), XafDefaultProperty("Descripcion"),
+        Persistent("TablaIMC"), NavigationItem(false)] //,  NavigationItem("Salud")]
     [RuleCombinationOfPropertiesIsUnique("TablaIMC.Rango_Unico", DefaultContexts.Save, "Desde,Hasta",
         CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction, IncludeCurrentObject = true)]
     //[ImageName("BO_Contact")]
@@ -66,9 +61,9 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
             set => SetPropertyValue(nameof(Descripcion), ref descripcion, value);
         }
 
-        
+
         [Browsable(false)]
-        [RuleFromBoolProperty("TablaIMC.RangosValidos", DefaultContexts.Save, "El Rango ingresado no es valido" )]
+        [RuleFromBoolProperty("TablaIMC.RangosValidos", DefaultContexts.Save, "El Rango ingresado no es valido")]
         public bool HastaEsValido
         {
             get
@@ -78,7 +73,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
                     (Desde == 35.0m && Hasta == 39.9999m) || (Desde >= 40.0m));
             }
         }
-        
+
         #endregion
 
         //[Action(Caption = "My UI Action", ConfirmationMessage = "Are you sure?", ImageName = "Attention", AutoCommit = true)]

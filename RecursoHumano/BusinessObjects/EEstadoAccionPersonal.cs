@@ -7,8 +7,8 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
     /// </summary>
     public enum EEstadoAccionPersonal
     {
-        Digitada,
-        Aprobada,
-        Rechazada
+        Digitada = 0,
+        Aprobada = 1,
+        Rechazada = 2
     }
 }

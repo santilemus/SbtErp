@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Persistent.Base;
-using DevExpress.Persistent.BaseImpl;
-using DevExpress.Xpo;
+﻿using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
+using DevExpress.Xpo;
 using SBT.Apps.Medico.Generico.Module.BusinessObjects;
+using System;
+using System.Linq;
 
 
 /// <Notas>
@@ -28,7 +24,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         InvertResult = true, FoundObjectMessageFormat = "'{0}'", FoundObjectMessagesSeparator = ";")]
     //[RuleCombinationOfPropertiesIsUnique("Cita_PacienteFechaUnico", DefaultContexts.Save, "IdPaciente,Fecha", SkipNullOrEmptyValues = true)]
     [RuleCombinationOfPropertiesIsUnique("Cita_FechaNombreUnico", DefaultContexts.Save, "StartOn,Nombre", SkipNullOrEmptyValues = false)]
-    public class Cita : CitaBase 
+    public class Cita : CitaBase
     {
         /// <summary>
         /// Metodo para la inicialización de propiedades y/o objetos del BO. Se ejecuta una sola vez después de la creación del objeto

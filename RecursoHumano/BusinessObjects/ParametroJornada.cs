@@ -21,10 +21,9 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
     /// <remarks>
     /// Al igual que los otros BO, donde existe la propiedad empresa, se debe filtrar por defecto la informacion a la empresa de la sesion
     /// </remarks>
-    [DefaultClassOptions, ModelDefault("Caption", "Parámetros Jornadas"), NavigationItem("Recurso Humano"), Persistent("PlaParamJornada"), 
+    [DefaultClassOptions, ModelDefault("Caption", "Parámetros Jornadas"), NavigationItem("Recurso Humano"), Persistent(nameof(ParametroJornada)), 
         DefaultProperty("Tipo")]
     [ImageName("ParametroJornada")]
-    //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class ParametroJornada : XPObjectBaseBO
@@ -132,20 +131,20 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 
         #region Colecciones
         [Association("ParametroJornada-TipoJornadas"), XafDisplayName("Reporte HExtra Detalle"), Index(0)]
-        public XPCollection<RHExtraDetalle> TipoJornadas
+        public XPCollection<ReporteHoraExtraDetalle> TipoJornadas
         {
             get
             {
-                return GetCollection<RHExtraDetalle>(nameof(TipoJornadas));
+                return GetCollection<ReporteHoraExtraDetalle>(nameof(TipoJornadas));
             }
         }
 
         [Association("ParamJornada-Resumenes"), XafDisplayName("RHExtra Resumenes"), Index(1)]
-        public XPCollection<RHExtraResumen> Resumenes
+        public XPCollection<ReporteHoraExtraResumen> Resumenes
         {
             get
             {
-                return GetCollection<RHExtraResumen>(nameof(Resumenes));
+                return GetCollection<ReporteHoraExtraResumen>(nameof(Resumenes));
             }
         }
 

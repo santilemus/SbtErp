@@ -13,8 +13,8 @@ namespace SBT.Apps.Base.Module.BusinessObjects
     /// BO con las propiedades y funcionalidad comun para implementar los encabezados (datos generales) de documentos, cuando
     /// se heredan de XPObject. En este caso el Oid es un entero de 32 bits
     /// </summary>
-    [NonPersistent,
-        RuleIsReferenced("XPOBaseDoc.Empresa_Referencia", DefaultContexts.Save, typeof(Empresa), nameof(Empresa),
+    [NonPersistent, MemberDesignTimeVisibility(false)]
+    [RuleIsReferenced("XPOBaseDoc.Empresa_Referencia", DefaultContexts.Save, typeof(Empresa), nameof(Empresa),
         CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction)]
     public abstract class XPOBaseDoc : XPObjectBaseBO
     {

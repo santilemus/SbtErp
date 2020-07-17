@@ -1,14 +1,12 @@
 ﻿using DevExpress.ExpressApp.DC;
+using DevExpress.ExpressApp.SystemModule;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using System;
-using System.Linq;
-using DevExpress.Data.Filtering;
-using DevExpress.ExpressApp.SystemModule;
-using DevExpress.ExpressApp.ConditionalAppearance;
 using System.ComponentModel;
+using System.Linq;
 
 namespace SBT.Apps.Producto.Module.BusinessObjects
 {
@@ -115,7 +113,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
             set => SetPropertyValue(nameof(UnidadMedida), ref unidadMedida, value);
         }
 
-        [Association("Presentacion-Productos"), XafDisplayName("Presentación"), Persistent("Presentacion")]
+        [Association("Presentacion-Productos"), XafDisplayName("Presentación"), Persistent("Presentacion"), VisibleInListView(false)]
         public Presentacion Presentacion
         {
             get => presentacion;
@@ -148,14 +146,14 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         /// Pueden Ser: Gravados, Exentos, Excluidos. Ver la enumeracion EClasificacionIVA para mas detalle
         /// </summary>
         [DbType("smallint"), Persistent(nameof(Clasificacion)), XafDisplayName("Clasificación")]
-        [RuleRequiredField("Producto.Clasificacion_Requerido", "Save")]
+        [RuleRequiredField("Producto.Clasificacion_Requerido", "Save"), VisibleInListView(false)]
         public EClasificacionIVA Clasificacion
         {
             get => clasificacion;
             set => SetPropertyValue(nameof(Clasificacion), ref clasificacion, value);
         }
 
-        [DevExpress.Xpo.SizeAttribute(200)]
+        [DevExpress.Xpo.SizeAttribute(200), VisibleInListView(false)]
         public System.String Comentario
         {
             get => comentario;

@@ -12,8 +12,8 @@ namespace SBT.Apps.Base.Module.BusinessObjects
     /// <summary>
     /// Para heredar las clases de XPObject, con las propiedades de creación y modificación 
     /// </summary>
-    [NonPersistent]
-    public class XPObjectBaseBO : XPObject
+    [NonPersistent, MemberDesignTimeVisibility(false)]
+    public abstract class XPObjectBaseBO : XPObject
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
         public XPObjectBaseBO(Session session)
               : base(session)

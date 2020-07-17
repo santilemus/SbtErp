@@ -96,6 +96,7 @@
       <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
     </Reference>
+    <Reference Include="DevExpress.ExpressApp.TreeListEditors.v20.1, Version=20.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.ExpressApp.v20.1">
       <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
@@ -272,6 +273,7 @@
     <None Include="App.config" />
     <Content Include="Model.xafml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>
@@ -307,6 +309,14 @@
       <Project>{A538FE93-206D-4869-BC40-FDC561F8C1D1}</Project>
       <Name>SBT.Apps.Base</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Contabilidad\SBT.Apps.Contabilidad.csproj">
+      <Project>{F8ACB445-E391-4DC6-9AB3-B30AB53F7646}</Project>
+      <Name>SBT.Apps.Contabilidad</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Empleado\SBT.Apps.Empleado.csproj">
+      <Project>{05F004D2-9388-44DB-A756-2FFB2ECCAE07}</Project>
+      <Name>SBT.Apps.Empleado</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Erp.Module.Win\SBT.Apps.Erp.Module.Win.csproj">
       <Project>{fa6b39c2-8c8b-4992-babb-acfc3b7f72b6}</Project>
       <Name>SBT.Apps.Erp.Module.Win</Name>
@@ -314,6 +324,18 @@
     <ProjectReference Include="..\Erp.Module\SBT.Apps.Erp.Module.csproj">
       <Project>{4AF29138-6DDE-4467-96B1-E7F300EF69C5}</Project>
       <Name>SBT.Apps.Erp.Module</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Producto\SBT.Apps.Producto.csproj">
+      <Project>{90D73CB9-2F45-473C-8FEE-AF118BB56C89}</Project>
+      <Name>SBT.Apps.Producto</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RecursoHumano\SBT.Apps.RecursoHumano.csproj">
+      <Project>{DC2B10D5-7EB4-4E21-9A86-1E0247178F7B}</Project>
+      <Name>SBT.Apps.RecursoHumano</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tercero\SBT.Apps.Tercero.csproj">
+      <Project>{5F15837D-D1E5-44DC-92F0-4F2EBE9C3F8D}</Project>
+      <Name>SBT.Apps.Tercero</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
