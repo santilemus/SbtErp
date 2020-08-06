@@ -132,7 +132,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
         [DevExpress.Persistent.Base.ToolTipAttribute("Dirección de residencia")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
-        [RuleRequiredField("Persona.Direccion_Requerido", "Save")]
+        [RuleRequiredField("Persona.Direccion_Requerido", "Save", ResultType = ValidationResultType.Warning)]
         public System.String Direccion
         {
             get
@@ -279,6 +279,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
 
         [PersistentAlias("Round(DateDiffMonth([FechaNacimiento], Now())/12.00, 2)")]
         [XafDisplayName("Edad"), VisibleInListView(false)]
+        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         public decimal Edad
         {
             get { return Convert.ToDecimal(EvaluateAlias(nameof(Edad))); }

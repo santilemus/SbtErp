@@ -1,20 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using DevExpress.Data.Filtering;
+﻿using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp;
-using DevExpress.ExpressApp.Actions;
-using DevExpress.ExpressApp.Editors;
-using DevExpress.ExpressApp.Layout;
-using DevExpress.ExpressApp.Model.NodeGenerators;
-using DevExpress.ExpressApp.SystemModule;
-using DevExpress.ExpressApp.Templates;
-using DevExpress.ExpressApp.Utils;
-using DevExpress.Persistent.Base;
-using DevExpress.Persistent.Validation;
-using DevExpress.ExpressApp.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
+using System;
+using System.Linq;
 
 namespace SBT.Apps.Base.Module.Controllers
 {
@@ -46,7 +34,7 @@ namespace SBT.Apps.Base.Module.Controllers
             base.OnActivated();
             // revisar, se agrego aquí para no tenerlo repetido en cada vc, pero si da problemas habrá que quitarlo
             // Es para filtrar los datos para la empresa de la sesion y evitar que se mezclen cuando hay más de una empresa
-            if ((View.GetType().Name == "ListView") &&  (((ListView)View).ObjectTypeInfo.FindMember("Empresa") != null) &&  
+            if ((View.GetType().Name == "ListView") && (((ListView)View).ObjectTypeInfo.FindMember("Empresa") != null) &&
                 !(((ListView)View).CollectionSource.Criteria.ContainsKey("Empresa Actual")))
                 ((ListView)View).CollectionSource.Criteria["Empresa Actual"] = CriteriaOperator.Parse("Empresa = ?", ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid);
 

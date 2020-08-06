@@ -20,7 +20,7 @@ GO
 --- Creado por    : SELM
 --- Fecha Creación: 12/05/2020
 -- =====================================================================================
-create function fnPlaCalcularRenta(@Pais varchar(8), @TipoTabla varchar(12), @Salario numeric(14,2))
+create function fnPlaCalcularRenta(@Pais varchar(8), @TipoTabla smallint, @Salario numeric(14,2))
 returns numeric(14,2)
 as
 begin

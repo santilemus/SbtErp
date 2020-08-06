@@ -1,18 +1,12 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp;
-using System.ComponentModel;
+﻿using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
-using DevExpress.Persistent.Base;
-using System.Collections.Generic;
 using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
-using DevExpress.Persistent.Validation;
+using DevExpress.Persistent.Base;
+using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
-using SBT.Apps.Empleado.Module.BusinessObjects;
+using System;
+using System.ComponentModel;
+using System.Linq;
 
 namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 {
@@ -34,11 +28,23 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         public override void AfterConstruction()
         {
             base.AfterConstruction();
+            if (Empresa == null)
+                empresa = EmpresaDeSesion();
+            if (Empresa != null)
+            {
+                Parametro pa = Session.FindObject<Parametro>(CriteriaOperator.Parse("[Empresa.Oid] == ?", Empresa.Oid));
+                if (pa != null)
+                    parametro = pa;
+            }
+            moneda = ObtenerMonedaBase();
+            if (moneda != null)
+                valorMoneda = moneda.FactorCambio;
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
         #region Propiedades
 
+        Parametro parametro;
         [Persistent(nameof(Empresa))]
         Empresa empresa = null;
         [Persistent(nameof(Tipo))]
@@ -109,6 +115,14 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
             get { return fechaPago; }
         }
 
+
+        [XafDisplayName("Parámetros RRHH")]
+        public Parametro Parametro
+        {
+            get => parametro;
+            set => SetPropertyValue(nameof(Parametro), ref parametro, value);
+        }
+
         #endregion
 
         #region Colecciones
@@ -119,6 +133,16 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
             {
                 return GetCollection<PlanillaDetalle>(nameof(Detalles));
             }
+        }
+        #endregion
+
+        #region Metodos
+        public void SetEncabezadoDePlanilla(TipoPlanilla ATipo, DateTime AFechaInicio, DateTime AFechaFin, DateTime AFechaPago)
+        {
+            tipo = ATipo;
+            fechaInicio = AFechaInicio;
+            fechaFin = AFechaFin;
+            fechaPago = AFechaPago;
         }
         #endregion
 

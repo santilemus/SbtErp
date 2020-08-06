@@ -24,7 +24,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
     [Persistent(nameof(OperacionTipoPlanilla))]
     //[ImageName("BO_Contact")]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
-    public class OperacionTipoPlanilla : BaseObject
+    public class OperacionTipoPlanilla : XPObjectBaseBO
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
         public OperacionTipoPlanilla(Session session)
             : base(session)

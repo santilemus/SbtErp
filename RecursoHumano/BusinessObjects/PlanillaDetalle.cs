@@ -1,19 +1,13 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp;
-using System.ComponentModel;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
-using DevExpress.Persistent.Base;
-using System.Collections.Generic;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
-using DevExpress.Persistent.Validation;
-using DevExpress.ExpressApp.Xpo;
+using DevExpress.Persistent.Base;
+using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Empleado.Module.BusinessObjects;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 
 namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 {
@@ -32,12 +26,22 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         public PlanillaDetalle(Session session)
             : base(session)
         {
+            AddToMetodos();
+        }
+
+        public PlanillaDetalle(Session session, Planilla APlani, Empleado.Module.BusinessObjects.Empleado emple) : base(session)
+        {
+            planilla = APlani;
+            empleado = emple;
+            unidad = emple.Unidad;
+            cargo = emple.Cargo;
         }
         public override void AfterConstruction()
         {
             base.AfterConstruction();
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
+
 
         #region Propiedades
 
@@ -79,6 +83,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         {
             get => cargo;
         }
+
         #endregion
 
         #region Colecciones
@@ -90,6 +95,82 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
                 return GetCollection<PlanillaDetalleOperacion>(nameof(Operaciones));
             }
         }
+
+        #endregion
+
+        #region Metodos
+
+        /// <summary>
+        /// Retorna el acumulado de los dias de un tipo de accion de personal para el empleado actual del detalle y periodo de la planilla
+        /// </summary>
+        /// <param name="ATipo">Tipo de Accion de Personal</param>
+        /// <returns>El acumulado de dias de la accion de personal que se recibe en el parametro</returns>
+        private int ObtenerDiasDeAccion(params object[] pa)
+        {
+            return Convert.ToInt32(Session.ExecuteScalar("select dbo.fnPlaAcumuladoDiasAccion(@OidEmpleado, @Tipo, @FechaInicio, @FechaFin)",
+                new string[] { "@OidEmpleado", "@Tipo", "@FechaInicio", "@FechaFin" }, new object[] { Empleado.Oid, pa[0], Planilla.FechaInicio, Planilla.FechaFin }));
+        }
+
+        /// <summary>
+        /// retorna el monto acumulado de horas extras a pagar en la planilla, para el empleado actual del detalle de la planilla
+        /// </summary>
+        /// <returns>Acumulado de las horas extras cuya fecha de pago se encuentra en el periodo de la planilla para el empleado del detalle</returns>
+        private decimal TotalHorasExtra()
+        {
+            return Convert.ToDecimal(Session.ExecuteScalar("select dbo.fnPlaTotalHorasExtra(emple.Oid, @FechaPago)", new object[] { Empleado.Oid, Planilla.FechaPago }));
+        }
+
+        /// <summary>
+        /// Retorna el monto acumulado de una operacion en el mes para el empleado actual del detalle de la planilla
+        /// </summary>
+        /// <param name="OidOperacion">El Oid de la operacion</param>
+        /// <returns>Acumulado del Id de la operacion del parametro en el mes para el empleado del detalle de la planilla</returns>
+        private decimal TotalOperacionMes(params object[] pa)
+        {
+            DateTime fInicioMes = new DateTime(Planilla.FechaFin.Value.Year, Planilla.FechaFin.Value.Month, 1);
+            return Convert.ToDecimal(Session.ExecuteScalar("select dbo.fnPlaOperacionAcumulada(emple.Oid, @InicioMes, @FinMes, @OidOperacion)",
+                new object[] { Empleado.Oid, fInicioMes, fInicioMes.AddMonths(1).AddSeconds(-1), pa[0] }));
+        }
+
+        private decimal TransaccionSuma(params object[] pa)
+        {
+            return Convert.ToDecimal(Session.ExecuteScalar("select dbo.fnPlaTransaccionDe(@OidEmpleado, @FechaFin, @Clasificacion)",
+                new object[] { Empleado.Oid, Planilla.FechaFin, pa[0] }));
+        }
+  
+        private DateTime FechaCumpleAnioContrato()
+        {
+            return new DateTime(Planilla.FechaFin.Value.Year, Empleado.FechaIngreso.Month, Empleado.FechaIngreso.Day);
+        }
+
+        public object Evaluar(string ANombre)
+        {
+            return Metodos[ANombre](new object[] { });
+        }
+
+        public object Evaluar(string ANombre, object p1)
+        {
+            return Metodos[ANombre](new object[] { p1 });
+        }
+
+        public object Evaluar(string ANombre, object p1, object p2)
+        {
+            return Metodos[ANombre](new object[] { p1, p2 });
+        }
+
+        private Dictionary<string, Func<object[], object>> Metodos = new Dictionary<string, Func<object[], object>>();
+        private void AddToMetodos()
+        {
+            if (!Metodos.ContainsKey(nameof(ObtenerDiasDeAccion)))
+                Metodos.Add(nameof(ObtenerDiasDeAccion), (x) => ObtenerDiasDeAccion(x));
+            if (!Metodos.ContainsKey(nameof(TotalHorasExtra)))
+                Metodos.Add(nameof(TotalHorasExtra), (x) => TotalHorasExtra());
+            if (!Metodos.ContainsKey(nameof(TotalOperacionMes)))
+                Metodos.Add(nameof(TotalOperacionMes), (x) => TotalOperacionMes(x));
+            if (!Metodos.ContainsKey(nameof(TransaccionSuma)))
+                Metodos.Add(nameof(TransaccionSuma), (x) => TransaccionSuma(x));
+        }
+
         #endregion
 
         //[Action(Caption = "My UI Action", ConfirmationMessage = "Are you sure?", ImageName = "Attention", AutoCommit = true)]
@@ -98,4 +179,10 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         //    this.PersistentProperty = "Paid";
         //}
     }
+
+    //public static class GenericMethods
+    //{
+    //    public static Dictionary<string, Func<object[], object>> Metodos =  new Dictionary<string, Func<object[], object>>();
+
+    //}
 }

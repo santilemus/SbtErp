@@ -1,47 +1,200 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using DevExpress.Data.Filtering;
+﻿using DevExpress.Data.Filtering;
+using DevExpress.Data.Filtering.Helpers;
 using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.Actions;
-using DevExpress.ExpressApp.Editors;
-using DevExpress.ExpressApp.Layout;
-using DevExpress.ExpressApp.Model.NodeGenerators;
-using DevExpress.ExpressApp.SystemModule;
-using DevExpress.ExpressApp.Templates;
-using DevExpress.ExpressApp.Utils;
 using DevExpress.Persistent.Base;
-using DevExpress.Persistent.Validation;
-using SBT.Apps.Base.Module.BusinessObjects;
+using SBT.Apps.Base.Module.Controllers;
+using SBT.Apps.RecursoHumano.Module.BusinessObjects;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 
 namespace SBT.Apps.RecursoHumano.Module.Controllers
 {
-    // For more typical usage scenarios, be sure to check out https://documentation.devexpress.com/eXpressAppFramework/clsDevExpressExpressAppViewControllertopic.aspx.
-    public partial class vcPlanilla : ViewController
+    /// <summary>
+    /// View Controller Planilla
+    /// </summary>
+    /// <remarks>
+    /// Mas info en https://docs.devexpress.com/XPO/8914/feature-center/querying-a-data-store/direct-sql-queries
+    /// </remarks>
+    public class vcPlanilla : ViewControllerBase
     {
-        public vcPlanilla()
+        private SimpleAction saAprobar;
+        private PopupWindowShowAction pwsaCalcular;
+        private IContainer components;
+        private DevExpress.ExpressApp.View vParam;
+
+        public vcPlanilla() : base()
         {
-            InitializeComponent();
-            // Target required Views (via the TargetXXX properties) and create their Actions.
+
         }
 
         protected override void OnActivated()
         {
             base.OnActivated();
-            // Perform various tasks depending on the target View.
-            if (View.GetType().Name == "ListView")
-                ((ListView)View).CollectionSource.Criteria["Empresa Actual"] = CriteriaOperator.Parse("[Empresa] = ?", ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid);
+            //if (View.GetType().Name == "ListView")
+            //    ((ListView)View).CollectionSource.Criteria["Empresa Actual"] = CriteriaOperator.Parse("[Empresa] = ?", ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid);
+
         }
+
         protected override void OnDeactivated()
         {
-            // Unsubscribe from previously subscribed events and release other references and resources.
             base.OnDeactivated();
         }
-        protected override void OnViewControlsCreated()
+
+        protected override void DoInitializeComponent()
         {
-            base.OnViewControlsCreated();
-            // Access and customize the target View control.
+            base.DoInitializeComponent();
+            TargetObjectType = typeof(SBT.Apps.RecursoHumano.Module.BusinessObjects.Planilla);
+            // simple action aprobar la planilla
+            saAprobar = new SimpleAction(this, "saPlanillaAprobar", PredefinedCategory.Edit);
+            saAprobar.Caption = "Aprobar";
+            saAprobar.TargetObjectType = typeof(SBT.Apps.RecursoHumano.Module.BusinessObjects.Planilla);
+            saAprobar.TargetViewType = DevExpress.ExpressApp.ViewType.DetailView;
+            //// popup window action Calcular
+            pwsaCalcular = new PopupWindowShowAction(this, "pwsaCalcular", PredefinedCategory.Edit);
+            pwsaCalcular.Caption = "Calcular Planilla";
+            pwsaCalcular.TargetObjectType = typeof(SBT.Apps.RecursoHumano.Module.BusinessObjects.Planilla);
+            pwsaCalcular.TargetViewType = DevExpress.ExpressApp.ViewType.DetailView;
+            pwsaCalcular.ImageName = "service";
+            pwsaCalcular.AcceptButtonCaption = "Calcular";
+            pwsaCalcular.CancelButtonCaption = "Cancelar";
+
+            //pwsaCalcular.Execute += new PopupWindowShowActionExecuteEventHandler(pwsaCalcular_Execute);
+            pwsaCalcular.Execute += pwsaCalcular_Execute;
+            pwsaCalcular.CustomizePopupWindowParams += pwsaCalcular_CustomizePopupWindowsParams;
+
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            saAprobar.Dispose();
+            pwsaCalcular.Dispose();
+
+            base.Dispose(disposing);
+        }
+
+
+        //static string sSQL = @"select Empleado, DiasLicenciaSinSueldo, DiasInasistencia, DiasAmonestacion, DiasIncapacidad, DiasMaternidad " +
+        //                     @"TotalHoraExtra, CotizaAcumuladaIsss, CotizaAcumuladaAfp, CotizaAcumuladaRenta, IngresoBrutoQuincena, " +
+        //                     @"FechaInicio, FechaFin, FechaPago, ParametroEmpresa " +
+        //                     @"  from dbo.fnPlaEmpleadoPlanilla(@OidEmpresa, @OidEmpleado, @FechaInicio, @FechaFin, @FechaPago)";
+
+        //////Define a mapping array that specifies the order of columns in a result set.
+        //static LoadDataMemberOrderItem[] empleadoPlanillaLoadOrder = new LoadDataMemberOrderItem[]
+        //{
+        //    new LoadDataMemberOrderItem(0, "Empleado"),
+        //    new LoadDataMemberOrderItem(1, "DiasLicenciaSinSueldo"),
+        //    new LoadDataMemberOrderItem(2, "DiasInasistencia"),
+        //    new LoadDataMemberOrderItem(3, "DiasAmonestacion"),
+        //    new LoadDataMemberOrderItem(4, "DiasIncapacidad"),
+        //    new LoadDataMemberOrderItem(5, "DiasMaternidad"),
+        //    new LoadDataMemberOrderItem(6, "TotalHorasExtra"),
+        //    new LoadDataMemberOrderItem(7, "CotizaAcumuladaIsss"),
+        //    new LoadDataMemberOrderItem(8, "CotizaAcumuladaAfp"),
+        //    new LoadDataMemberOrderItem(9, "CotizaAcumuladaRenta"),
+        //    new LoadDataMemberOrderItem(10, "IngresoBrutoQuincena") //,
+        //    //new LoadDataMemberOrderItem(11, "FechaInicio"),
+        //    //new LoadDataMemberOrderItem(12, "FechaFin"),
+        //    //new LoadDataMemberOrderItem(13, "FechaPago")
+        //};
+
+        private void pwsaCalcular_CustomizePopupWindowsParams(object sender, CustomizePopupWindowParamsEventArgs e)
+        {
+            IObjectSpace objectSpace = (NonPersistentObjectSpace)Application.ObjectSpaceProviders[1].CreateObjectSpace(); 
+            var pa = objectSpace.CreateObject<CalcularPlanillaParam>();
+            pa.ObjectSpace = Application.CreateObjectSpace(typeof(SBT.Apps.RecursoHumano.Module.BusinessObjects.TipoPlanilla));
+            e.View = Application.CreateDetailView(objectSpace, pa);
+            e.View.Caption = "Calcular Planilla";
+            e.Size = new System.Drawing.Size(500, 500);
+            e.IsSizeable = false;
+            vParam = e.View;
+        }
+
+        /// <summary>
+        ///  Crear la condicion para los empleados a calcular por tipo de planilla. Evaluar si esta condicion queda
+        ///  parametrizable en el BO TipoPlanilla, Habra que agregar un ExpressionEditor y ademas sera del BO empleado
+        /// </summary>
+        /// <returns></returns>
+        private string CondicionEmpleado(EClasePlanilla AClasePlanilla)
+        {
+            string sCond = string.Empty;
+            switch (AClasePlanilla)
+            {
+                case EClasePlanilla.Salarios:
+                    sCond = "[Estado.Codigo] In ('EMPL01', 'EMPL04', 'EMPL05') && [TipoContrato] In (0, 1) && [TipoPlanillas][[TipoPlanilla.Clase] == ? && [TipoPlanilla.Activo] == True]";
+                    break;
+                case EClasePlanilla.Vacacion:
+                    sCond = "[Estado.Codigo] In ('EMPL01', 'EMPL04', 'EMPL05') && [TipoContrato] In (0, 1) && [TipoPlanillas][[TipoPlanilla.Clase] == ? && [TipoPlanilla.Activo] == True] " +
+                        " && GetMonth([FechaIngreso]) == ? && GetDay([FechaIngreso] Between (?, ?) && GetYear([FechaIngreso]) < ?";
+                    break;
+            }
+            return sCond;
+        }
+
+        private void pwsaCalcular_Execute(object sender, PopupWindowShowActionExecuteEventArgs e)
+        {
+            IObjectSpace ospace = Application.ObjectSpaceProvider.CreateObjectSpace();
+
+            //ICollection<PlanillaDetalleFuncion> empleFuncs;
+            // filtramos los empleados activos con tipos de contrato Indefinido, plazo y que se les debe calcular el tipo de planilla seleccionado y el tipo de planilla activo
+            CalcularPlanillaParam cp = e.PopupWindowView.CurrentObject as CalcularPlanillaParam;
+            ICollection<Empleado.Module.BusinessObjects.Empleado> empleados = ospace.GetObjects<Empleado.Module.BusinessObjects.Empleado>(
+                CriteriaOperator.Parse(CondicionEmpleado(cp.TipoPlanilla.Clase)));
+            // si no hay datos, no calcula nada y sale
+            if (empleados.Count == 0)
+                return;  
+            Planilla plani = (Planilla)View.CurrentObject;          
+            plani.SetEncabezadoDePlanilla(cp.TipoPlanilla, cp.FechaInicio, cp.FechaFin, cp.FechaPago);
+            foreach (Empleado.Module.BusinessObjects.Empleado emple in empleados)
+            {
+                if (!plani.Detalles.Any<PlanillaDetalle>(item => item.Empleado.Oid == emple.Oid))
+                {
+                    var pd = new PlanillaDetalle(plani.Session, plani, emple);
+
+                    //empleFuncs = ((XPObjectSpace)ospace).Session.GetObjectsFromQuery<PlanillaDetalleFuncion>(empleadoPlanillaLoadOrder, sSQL,
+                    //                new string[] { "@OidEmpresa", "@OidEmpleado", "@FechaInicio", "@FechaFin", "@FechaPago" },
+                    //                new object[] { plani.Empresa, emple.Oid, plani.FechaInicio, plani.FechaFin, plani.FechaPago });
+                    //foreach (PlanillaDetalleFuncion detfunc in empleFuncs)
+                    //    pd.Funciones.Add(detfunc);
+                    plani.Detalles.Add(pd);
+                    CalcularOperaciones(ospace, pd);
+                    //empleFuncs.Clear();
+                }
+            }
+            if (plani.Session.InTransaction)
+            {
+                plani.Save();
+                plani.Session.CommitTransaction();
+            }
+        }
+
+
+        private void CalcularOperaciones(IObjectSpace ospace, PlanillaDetalle planillaDetalle)
+        {
+            ICollection<OperacionTipoPlanilla> ops = ospace.GetObjects<OperacionTipoPlanilla>(new BinaryOperator("Tipo", planillaDetalle.Planilla.Tipo));
+            decimal valor = 0.0m;
+            foreach (OperacionTipoPlanilla op in ops)
+            {
+                if (op.Operacion.TipoBO != null && op.Operacion.Formula.Length > 0)
+                {
+                    ExpressionEvaluator eval = new ExpressionEvaluator(TypeDescriptor.GetProperties(op.Operacion.TipoBO), op.Operacion.Formula);
+                    valor = Convert.ToDecimal(eval.Evaluate(planillaDetalle.Empleado));
+                }
+                else
+                    valor = op.Operacion.Valor;
+                planillaDetalle.Operaciones.Add(new PlanillaDetalleOperacion(planillaDetalle.Planilla.Session, planillaDetalle, op.Operacion, valor));
+            }
+        }
+
+        private void InitializeComponent()
+        {
+            this.components = new System.ComponentModel.Container();
+            // 
+            // vcPlanilla
+            // 
+
         }
     }
 }

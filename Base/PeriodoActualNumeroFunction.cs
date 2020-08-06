@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DevExpress.Data.Filtering;
-using DevExpress.ExpressApp;
+﻿using DevExpress.Data.Filtering;
 using SBT.Apps.Base.Module.BusinessObjects;
+using System;
+using System.Linq;
 
 namespace SBT.Apps.Base.Module
 {
@@ -13,7 +9,7 @@ namespace SBT.Apps.Base.Module
     /// Implementar función personalizada que retorna el Oid del periodo de la sesion (periodo del sesion)
     /// PENDIENTE DE GUARDAR EN LA SESION EL PERIODO, para que esta funcion sea util
     /// </summary>
-    public class PeriodoActualNumeroFunction: ICustomFunctionOperatorBrowsable
+    public class PeriodoActualNumeroFunction : ICustomFunctionOperatorBrowsable
     {
         #region Implementacion de ICustomFunctionOperator
         /// <summary>

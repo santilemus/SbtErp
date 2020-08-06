@@ -1,18 +1,11 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp;
-using System.ComponentModel;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
-using DevExpress.Persistent.Base;
-using System.Collections.Generic;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.BaseImpl;
-using DevExpress.Persistent.Validation;
-using SBT.Apps.Base.Module.BusinessObjects;
-using SBT.Apps.Empleado.Module.BusinessObjects;
+using DevExpress.Xpo;
+using System;
+using System.ComponentModel;
+using System.Linq;
 
 
 namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
@@ -33,6 +26,14 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
             : base(session)
         {
         }
+
+        public PlanillaDetalleOperacion(Session session, PlanillaDetalle planiDetalle, Operacion op, decimal AValor) : base(session)
+        {
+            PlanillaDetalle = planiDetalle;
+            operacion = op;
+            valor = AValor;
+        }
+
         public override void AfterConstruction()
         {
             base.AfterConstruction();
@@ -50,7 +51,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         [Persistent(nameof(Valor)), DbType("numeric(12,2)")]
         decimal valor = 0.0m;
 
-        
+
         [Association("PlanillaDetalle-Operaciones"), XafDisplayName("Planilla Detalle")]
         public PlanillaDetalle PlanillaDetalle
         {
@@ -76,7 +77,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         {
             get { return valor; }
         }
-        
+
         #endregion
 
         //[Action(Caption = "My UI Action", ConfirmationMessage = "Are you sure?", ImageName = "Attention", AutoCommit = true)]

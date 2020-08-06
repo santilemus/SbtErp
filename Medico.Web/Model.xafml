@@ -44,7 +44,7 @@
       </Item>
     </Items>
   </NavigationItems>
-  <Options DataAccessMode="Server" CollectionsEditMode="Edit" />
+  <Options CollectionsEditMode="Edit" />
   <SchemaModules>
     <SchemaModule Name="CloneObjectModule" Version="20.1.4.0" IsNewNode="True" />
     <SchemaModule Name="SchedulerAspNetModule" Version="20.1.4.0" IsNewNode="True" />

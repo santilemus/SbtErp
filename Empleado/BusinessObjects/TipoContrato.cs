@@ -8,7 +8,7 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
         [XafDisplayName("Indefinido")]
         Indefinido = 0,
         [XafDisplayName("Plazo")]
-        Temporal = 1,
+        Plazo = 1,
         [XafDisplayName("SubContrato")]
         SubContratado = 2,
         [XafDisplayName("Otro")]

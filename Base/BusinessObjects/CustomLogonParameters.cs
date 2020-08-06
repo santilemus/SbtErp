@@ -1,5 +1,4 @@
-﻿using DevExpress.Data.Filtering;
-using DevExpress.ExpressApp;
+﻿using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.DC;
 using DevExpress.Persistent.Base;
 using DevExpress.Xpo;
@@ -161,10 +160,10 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         private void RefrescarAgencias()
         {
             agenciasDisponibles = Empresa.Unidades;
-           // Se produce error al logearse cuando agenciasDisponibles es nulo, por eso se comentario el filtro
-           // porque pueden haber empresas en las cuales ninguna de sus unidades es agencia
+            // Se produce error al logearse cuando agenciasDisponibles es nulo, por eso se comentario el filtro
+            // porque pueden haber empresas en las cuales ninguna de sus unidades es agencia
 
-           // agenciasDisponibles.Filter = CriteriaOperator.Parse("[Role] == 2 && [Activa] == True");
+            // agenciasDisponibles.Filter = CriteriaOperator.Parse("[Role] == 2 && [Activa] == True");
         }
 
     }

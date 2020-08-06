@@ -64,29 +64,36 @@
     <DetailView Id="Operacion_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
-          <LayoutGroup Id="SimpleEditors" RelativeSize="29.396325459317584">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="25.459317585301836">
             <LayoutGroup Id="Operacion" RelativeSize="100">
-              <LayoutGroup Id="Operacion_col1" RelativeSize="49.958915365653247">
-                <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="20.454545454545453" IsNewNode="True" />
-                <LayoutItem Id="Nombre" Index="1" RelativeSize="14.772727272727273" />
-                <LayoutItem Id="TipoBO" Index="2" RelativeSize="14.772727272727273" />
-                <LayoutItem Id="Formula" Index="3" RelativeSize="14.772727272727273" />
-                <LayoutItem Id="Tipo" Index="4" RelativeSize="14.772727272727273" />
-                <LayoutItem Id="Valor" Index="5" RelativeSize="20.454545454545453" />
+              <LayoutGroup Id="Operacion_col1" RelativeSize="49.830124575311437">
+                <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="24" CaptionLocation="Left" IsNewNode="True" />
+                <LayoutItem Id="Nombre" Index="1" RelativeSize="17.333333333333332" CaptionLocation="Left" />
+                <LayoutItem Id="TipoBO" Index="2" RelativeSize="17.333333333333332" CaptionLocation="Left" />
+                <LayoutItem Id="Tipo" Index="3" RelativeSize="17.333333333333332" CaptionLocation="Left" />
+                <LayoutItem Id="Descripcion" ViewItem="Descripcion" Index="4" RelativeSize="24" IsNewNode="True" />
+                <LayoutItem Id="Valor" Index="5" RelativeSize="22.905027932960895" Removed="True" />
               </LayoutGroup>
-              <LayoutGroup Id="Operacion_col2" RelativeSize="50.041084634346753">
-                <LayoutItem Id="Descripcion" RelativeSize="20.454545454545453" />
-                <LayoutItem Id="Visible" RelativeSize="14.772727272727273" />
-                <LayoutItem Id="CalcularPara" RelativeSize="14.772727272727273" />
-                <LayoutItem Id="Activo" RelativeSize="14.772727272727273" />
-                <LayoutItem Id="Comentario" RelativeSize="35.227272727272727" />
+              <LayoutGroup Id="Operacion_col2" RelativeSize="50.169875424688563">
+                <LayoutItem Id="Valor" ViewItem="Valor" Index="0" RelativeSize="24" CaptionLocation="Left" IsNewNode="True" />
+                <LayoutItem Id="Visible" RelativeSize="17.333333333333332" Index="1" CaptionLocation="Left" />
+                <LayoutItem Id="CalcularPara" RelativeSize="17.333333333333332" Index="2" CaptionLocation="Left" />
+                <LayoutItem Id="Activo" RelativeSize="41.333333333333336" Index="3" CaptionLocation="Left" />
+                <LayoutItem Id="Descripcion" RelativeSize="24" Removed="True" />
               </LayoutGroup>
             </LayoutGroup>
             <LayoutGroup Id="XPObject" Caption="Oid" Index="1" RelativeSize="43.30708661417323" Removed="True">
               <LayoutItem Id="Oid" Removed="True" />
             </LayoutGroup>
           </LayoutGroup>
-          <TabbedGroup Id="Tabs" RelativeSize="70.60367454068242">
+          <LayoutGroup Id="SizeableEditors" Caption="Fórmula" RelativeSize="29.921259842519685">
+            <LayoutGroup Id="Formula" ShowCaption="True" CaptionLocation="Default" Index="0" RelativeSize="100" Caption="Fórmula" IsCollapsibleGroup="True" IsGroupCollapsed="False" IsNewNode="True" Removed="True">
+              <LayoutItem Id="Formula" ViewItem="Formula" Index="0" RelativeSize="44.086021505376344" IsNewNode="True" />
+              <LayoutItem Id="Comentario" ViewItem="Comentario" Index="1" RelativeSize="55.913978494623656" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutItem Id="Comentario" Removed="True" />
+          </LayoutGroup>
+          <TabbedGroup Id="Tabs" RelativeSize="44.619422572178479">
             <LayoutGroup Id="TipoPlanillas" RelativeSize="100">
               <LayoutItem Id="TipoPlanillas" RelativeSize="100" />
             </LayoutGroup>

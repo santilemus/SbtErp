@@ -112,6 +112,7 @@ namespace SBT.Apps.Medico.Web
             }
 #endif
         }
+
         private void InitializeComponent()
         {
             this.module1 = new DevExpress.ExpressApp.SystemModule.SystemModule();

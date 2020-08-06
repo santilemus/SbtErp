@@ -27,8 +27,8 @@ namespace SBT.Apps.Erp.Module.Web.Controllers
         protected override void DoInitializeComponent()
         {
             base.DoInitializeComponent();
-            TargetObjectType = typeof(SBT.Apps.Base.Module.BusinessObjects.BugReport);
-            FixColumnWidthInListView = ETipoAjusteColumnaListView.BestFit;
+            //TargetObjectType = typeof(SBT.Apps.Base.Module.BusinessObjects.BugReport);
+            //FixColumnWidthInListView = ETipoAjusteColumnaListView.BestFit;
         }
     }
 }

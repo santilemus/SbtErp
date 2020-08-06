@@ -123,6 +123,7 @@
     <Compile Include="BusinessObjects\AccionPersonal.cs" />
     <Compile Include="BusinessObjects\APersonalParam.cs" />
     <Compile Include="BusinessObjects\Asueto.cs" />
+    <Compile Include="BusinessObjects\CalcularPlanillaParam.cs" />
     <Compile Include="BusinessObjects\EClasePlanilla.cs" />
     <Compile Include="BusinessObjects\EEstadoAccionPersonal.cs" />
     <Compile Include="BusinessObjects\EEstadoPlanilla.cs" />
@@ -130,6 +131,7 @@
     <Compile Include="BusinessObjects\EFormaAplicarTransaccion.cs" />
     <Compile Include="BusinessObjects\EFormaPago.cs" />
     <Compile Include="BusinessObjects\EMetodoAguinaldo.cs" />
+    <Compile Include="BusinessObjects\PlanillaDetalleFuncion.cs" />
     <Compile Include="BusinessObjects\EmpleadoTipoPlanilla.cs" />
     <Compile Include="BusinessObjects\ETablaISR.cs" />
     <Compile Include="BusinessObjects\ETipoCalculoOperacion.cs" />
@@ -145,11 +147,13 @@
     <Compile Include="BusinessObjects\Operacion.cs" />
     <Compile Include="BusinessObjects\PlanillaDetalleOperacion.cs" />
     <Compile Include="BusinessObjects\RentaEmpleoAnterior.cs" />
+    <Compile Include="BusinessObjects\TestEmpleadoPlanilla.cs" />
     <Compile Include="BusinessObjects\TestParam.cs" />
     <Compile Include="BusinessObjects\OperacionTipoPlanilla.cs" />
     <Compile Include="BusinessObjects\ReporteHoraExtra.cs" />
     <Compile Include="BusinessObjects\ReporteHoraExtraDetalle.cs" />
     <Compile Include="BusinessObjects\ReporteHoraExtraResumen.cs" />
+    <Compile Include="BusinessObjects\TestStoredProcHelper.cs" />
     <Compile Include="BusinessObjects\TipoPlanilla.cs" />
     <Compile Include="BusinessObjects\ToETablaISR.cs" />
     <Compile Include="BusinessObjects\Transaccion.cs" />
@@ -186,9 +190,6 @@
     <Compile Include="Controllers\vcPlanilla.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controllers\vcPlanilla.Designer.cs">
-      <DependentUpon>vcPlanilla.cs</DependentUpon>
-    </Compile>
     <Compile Include="Controllers\vcRHExtra.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -201,12 +202,6 @@
     <Compile Include="Controllers\vcTransaccion.Designer.cs">
       <DependentUpon>vcTransaccion.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\ViewControllerTestOperacion.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controllers\ViewControllerTestOperacion.Designer.cs">
-      <DependentUpon>ViewControllerTestOperacion.cs</DependentUpon>
-    </Compile>
     <Compile Include="DatabaseUpdate\Updater.cs" />
     <Compile Include="EmpleadoFunction.cs" />
     <Compile Include="Module.cs">
@@ -215,6 +210,7 @@
     <Compile Include="Module.Designer.cs">
       <DependentUpon>Module.cs</DependentUpon>
     </Compile>
+    <Compile Include="PlanillaEvaluarFunction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -241,9 +237,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controllers\vcTransaccion.resx">
       <DependentUpon>vcTransaccion.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controllers\ViewControllerTestOperacion.resx">
-      <DependentUpon>ViewControllerTestOperacion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Model.DesignedDiffs.xafml" />
     <EmbeddedResource Include="Properties\licenses.licx" />

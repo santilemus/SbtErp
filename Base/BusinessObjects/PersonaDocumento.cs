@@ -71,7 +71,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [DevExpress.Persistent.Base.ToolTipAttribute("Lugar de emisión del documento")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false), DbType("varchar(100)")]
         [DevExpress.Persistent.Base.ImmediatePostDataAttribute(true), Index(4)]
-        [RuleRequiredField("PersonaDocumento.LugarEmision_Requerido", "Save")]
+        [RuleRequiredField("PersonaDocumento.LugarEmision_Requerido", "Save", ResultType = ValidationResultType.Warning)]
         public System.String LugarEmision
         {
             get => lugarEmision;
@@ -81,7 +81,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Fecha de Emisión")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [DevExpress.Persistent.Base.ImmediatePostDataAttribute(true), Index(5)]
-        [RuleRequiredField("PersonaDocumento.FechaEmision_Requerido", "Save")]
+        [RuleRequiredField("PersonaDocumento.FechaEmision_Requerido", "Save", ResultType = ValidationResultType.Warning)]
         public System.DateTime FechaEmision
         {
             get => fechaEmision;

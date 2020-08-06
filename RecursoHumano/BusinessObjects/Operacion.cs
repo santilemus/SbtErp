@@ -77,10 +77,12 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         //[Browsable(false)]
         //private Type CriteriaObjectType { get { return typeof(Empleado.Module.BusinessObjects.Empleado); } }
 
-        [Size(200), DbType("varchar(200)"), XafDisplayName("Nombre Función"), Persistent(nameof(Formula))]
+        [Size(1000), DbType("varchar(1000)"), XafDisplayName("Fórmula"), Persistent(nameof(Formula))]
         [ElementTypeProperty(nameof(TipoBO))]
         [EditorAlias(EditorAliases.PopupExpressionPropertyEditor)]
-        [ModelDefault("Width", "50"), VisibleInListView(false)]
+        [VisibleInListView(false)]
+        //[ModelDefault("Width", "50")]
+        [ModelDefault("RowCount", "3")]
         public string Formula
         {
             get => formula;
@@ -131,7 +133,8 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
             set => SetPropertyValue(nameof(Activo), ref activo, value);
         }
 
-        [Size(200), DbType("varchar(200)"), XafDisplayName("Comentario")]
+        [Size(400), DbType("varchar(400)"), XafDisplayName("Comentario")]
+        [ModelDefault("RowCount", "4")]
         public string Comentario
         {
             get => comentario;
@@ -167,10 +170,10 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         [Action(Caption = "Evaluar Expression", ImageName = "Attention", SelectionDependencyType = MethodActionSelectionDependencyType.RequireSingleObject)]
         public void Execute()
         {
-            ExpressionEvaluator eval = new ExpressionEvaluator(TypeDescriptor.GetProperties(typeof(Empleado.Module.BusinessObjects.Empleado)), Formula);
-            Empleado.Module.BusinessObjects.Empleado emple = Session.GetObjectByKey<Empleado.Module.BusinessObjects.Empleado>(1);
-            if (emple != null)
-                Valor = Convert.ToDecimal(eval.Evaluate(emple));
+            ExpressionEvaluator eval = new ExpressionEvaluator(TypeDescriptor.GetProperties(TipoBO), Formula);          
+            var bo= Session.GetObjectByKey(TipoBO, 1); 
+            if (bo != null)
+                Valor = Convert.ToDecimal(eval.Evaluate(bo));
             else
                 Valor = 0.0m;
         }

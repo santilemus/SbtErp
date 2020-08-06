@@ -1,17 +1,13 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp;
-using System.ComponentModel;
+﻿using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
-using DevExpress.Persistent.Base;
-using System.Collections.Generic;
 using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
+using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
+using System;
+using System.ComponentModel;
+using System.Linq;
 
 
 namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
@@ -73,7 +69,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 #else
         [DbType("money"), Persistent("SueldoMinMensual")]
 #endif
-        [XafDisplayName("Sueldo Mínimo"), ToolTip("Sueldo Mínimo mensual, de acuerdo a la legislación laboral vigente"), 
+        [XafDisplayName("Sueldo Mínimo"), ToolTip("Sueldo Mínimo mensual, de acuerdo a la legislación laboral vigente"),
             RuleValueComparison("Parametro.SueldoMinimo > 0", DefaultContexts.Save, ValueComparisonType.GreaterThan, 0, SkipNullOrEmptyValues = false),
             ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2"), Index(1)]
         [DetailViewLayout(LayoutColumnPosition.Left, LayoutGroupType.SimpleEditorsGroup)]
@@ -206,7 +202,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         [DbType("smallint"), Persistent("MinDiasTrabVac")]
 #endif
         [XafDisplayName("Mín. Días Trabajados Vacación Completa"), ToolTip("Mínimo de días trabajados para tener derecho a vacación completa"),
-            RuleValueComparison("Parametro.MinDiasTrabVacacion >= 0", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual, 0, SkipNullOrEmptyValues = false), 
+            RuleValueComparison("Parametro.MinDiasTrabVacacion >= 0", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual, 0, SkipNullOrEmptyValues = false),
             Index(12), VisibleInListView(false), VisibleInLookupListView(false)]
         [DetailViewLayout(LayoutColumnPosition.Left, LayoutGroupType.SimpleEditorsGroup)]
         public int MinDiasTrabVacacion
@@ -228,7 +224,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         [DbType("smallint"), Persistent("DiasVacacion")]
 #endif
         [XafDisplayName("Días Vacación"), ToolTip("Días de vacación a los cuales tiene derecho el empleado"),
-            RuleValueComparison("Parametro.DiasVacacion >= 0", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual, 0, SkipNullOrEmptyValues = false), 
+            RuleValueComparison("Parametro.DiasVacacion >= 0", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual, 0, SkipNullOrEmptyValues = false),
             Index(13), VisibleInListView(false), VisibleInLookupListView(false)]
         [DetailViewLayout(LayoutColumnPosition.Left, LayoutGroupType.SimpleEditorsGroup)]
         public int DiasVacacion
@@ -243,7 +239,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
             }
         }
 
-        DateTime ? fechaCalcAguinaldo;
+        DateTime? fechaCalcAguinaldo;
 #if (Firebird)
         [DbType("DM_FECHA"), Persistent("FECHA_CALC_AGUI")]
 #else
@@ -253,7 +249,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
             VisibleInLookupListView(false)]
         [ModelDefault("DisplayFormat", "{0:G}"), ModelDefault("EditMask", "G")]
         [DetailViewLayout(LayoutColumnPosition.Right, LayoutGroupType.SimpleEditorsGroup)]
-        public DateTime ? FechaCalcAguinaldo
+        public DateTime? FechaCalcAguinaldo
         {
             get
             {
@@ -265,9 +261,9 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
             }
         }
 
-       // NOTA: Para el aguinaldo hacer una tabla (porcentajes) y ver si se incluye alli la fecha de calculo o se borra
-       //       BORRAR, porcentaje de vacacion, dias de vacacion y otros parametros relacionados y usar una tabla como
-       //       lo ultimo que se hizo para el IGD
+        // NOTA: Para el aguinaldo hacer una tabla (porcentajes) y ver si se incluye alli la fecha de calculo o se borra
+        //       BORRAR, porcentaje de vacacion, dias de vacacion y otros parametros relacionados y usar una tabla como
+        //       lo ultimo que se hizo para el IGD
 
         int minDiasAguinaldoProp;
 #if (Firebird)
@@ -276,7 +272,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         [DbType("smallint"), Persistent("MinDiasAguiProp")]
 #endif
         [XafDisplayName("Mínimo Días Aguinaldo Proporcional"), ToolTip("Mínimo de días que debe laborar el empleado para tener derecho al aguinaldo proporcional"),
-            RuleValueComparison("Parametro.MinDiasAguinaldoProp >= 0", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual, 0, SkipNullOrEmptyValues = false), 
+            RuleValueComparison("Parametro.MinDiasAguinaldoProp >= 0", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual, 0, SkipNullOrEmptyValues = false),
             Index(17), VisibleInListView(false), VisibleInLookupListView(false)]
         [DetailViewLayout(LayoutColumnPosition.Right, LayoutGroupType.SimpleEditorsGroup)]
         public int MinDiasAguinaldoProp
@@ -298,7 +294,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         [DbType("smallint"), Persistent("MinDiasAguiComp")]
 #endif
         [XafDisplayName("Mínimo Días Aguinaldo Completo"), ToolTip("Mínimo de días que debe laborar el empleado para tener derecho al aguinaldo completo"),
-            RuleValueComparison("Parametro.MinDiasAguinaldoComp >= MinDiasAguinaldoProp", DefaultContexts.Save, 
+            RuleValueComparison("Parametro.MinDiasAguinaldoComp >= MinDiasAguinaldoProp", DefaultContexts.Save,
                 ValueComparisonType.GreaterThanOrEqual, ParametersMode.Expression, "MinDiasAguinaldoProp", SkipNullOrEmptyValues = false), Index(18),
             VisibleInListView(false), VisibleInLookupListView(false)]
         [DetailViewLayout(LayoutColumnPosition.Right, LayoutGroupType.SimpleEditorsGroup)]
@@ -320,7 +316,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 #else
         [DbType("numeric(6,3)"), Persistent("PorcBono")]
 #endif
-        [XafDisplayName("Porcentaje Bono"), ToolTip("Porcentaje del salario de un mes al cual corresponde el monto del bono"), 
+        [XafDisplayName("Porcentaje Bono"), ToolTip("Porcentaje del salario de un mes al cual corresponde el monto del bono"),
             RuleValueComparison("Parametro.PorcentajeBono >= 0", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual, 0, SkipNullOrEmptyValues = true),
             ModelDefault("DisplayFormat", "{0:N3}"), ModelDefault("EditMask", "n3"), Index(19), VisibleInListView(false), VisibleInLookupListView(false)]
         [DetailViewLayout(LayoutColumnPosition.Right, LayoutGroupType.SimpleEditorsGroup)]
@@ -365,7 +361,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         [DbType("datetime"), Persistent("FechaCalBono")]
 #endif
         [XafDisplayName("Fecha Calculo Bono"), ToolTip("Fecha de calculo del bono"),
-            RuleValueComparison("FechaCalcBono >= FechaInicioBono", DefaultContexts.Save, ValueComparisonType.GreaterThan, ParametersMode.Expression, 
+            RuleValueComparison("FechaCalcBono >= FechaInicioBono", DefaultContexts.Save, ValueComparisonType.GreaterThan, ParametersMode.Expression,
             "FechaInicioBono", SkipNullOrEmptyValues = true), Index(21), VisibleInListView(false), VisibleInLookupListView(false)]
         [ModelDefault("DisplayFormat", "{0:G}"), ModelDefault("EditMask", "G")]
         [DetailViewLayout(LayoutColumnPosition.Right, LayoutGroupType.SimpleEditorsGroup)]
@@ -388,7 +384,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         [DbType("smallint"), Persistent("MinDiasBonoProp")]
 #endif
         [XafDisplayName("Mínimo Días Bono Proporcional"), ToolTip("Mínimo de días que debe laborar el empleado para tener derecho al bono proporcional"),
-            RuleValueComparison("Parametro.MinDiasBonoProp >= 0", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual, 0, SkipNullOrEmptyValues = false), 
+            RuleValueComparison("Parametro.MinDiasBonoProp >= 0", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual, 0, SkipNullOrEmptyValues = false),
             Index(22), VisibleInListView(false), VisibleInLookupListView(false)]
         [DetailViewLayout(LayoutColumnPosition.Right, LayoutGroupType.SimpleEditorsGroup)]
         public int MinDiasBonoProp
@@ -432,8 +428,8 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 #else
         [DbType("smallint"), Persistent("NoAusencias")]
 #endif
-        [XafDisplayName("No Ausencias"), ToolTip("Número de inasistencias no justificadas por mes"), 
-            RuleValueComparison("Parametro.NoAusencias >= 0", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual, 0, SkipNullOrEmptyValues = true), 
+        [XafDisplayName("No Ausencias"), ToolTip("Número de inasistencias no justificadas por mes"),
+            RuleValueComparison("Parametro.NoAusencias >= 0", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual, 0, SkipNullOrEmptyValues = true),
             Index(24), VisibleInListView(false), VisibleInLookupListView(false)]
         [DetailViewLayout(LayoutColumnPosition.Right, LayoutGroupType.SimpleEditorsGroup)]
         public int NoAusencias
@@ -455,7 +451,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         [DbType("smallint"), Persistent("DiasMaxLicenciaGS")]
 #endif
         [XafDisplayName("Días Máximo Lic. Con Sueldo"), ToolTip("Número máximo de días de licencia con goce de sueldo"),
-            RuleValueComparison("Parametro.DiasMaxLicencia >= 0", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual, 0, SkipNullOrEmptyValues = true), 
+            RuleValueComparison("Parametro.DiasMaxLicencia >= 0", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual, 0, SkipNullOrEmptyValues = true),
             Index(25), VisibleInListView(false), VisibleInLookupListView(false)]
         [DetailViewLayout(LayoutColumnPosition.Right, LayoutGroupType.SimpleEditorsGroup)]
         public int DiasMaxLicencia
@@ -477,7 +473,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         [DbType("smallint"), Persistent("DiasLicMatrimonio")]
 #endif
         [XafDisplayName("Días Máximo Lic. Matrimonio"), ToolTip("Número máximo de Días de licencia por matrimonio"),
-            RuleValueComparison("Parametro.DiasLicMatrimonio >= 0", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual, 0, SkipNullOrEmptyValues = true), 
+            RuleValueComparison("Parametro.DiasLicMatrimonio >= 0", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual, 0, SkipNullOrEmptyValues = true),
             Index(26), VisibleInListView(false), VisibleInLookupListView(false)]
         [DetailViewLayout(LayoutColumnPosition.Right, LayoutGroupType.SimpleEditorsGroup)]
         public int DiasLicMatrimonio
@@ -499,7 +495,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         [DbType("smallint"), Persistent("DiasLicMuerte")]
 #endif
         [XafDisplayName("Días Lic. Muerte"), ToolTip("Días de licencia por muerte de un pariente"),
-            RuleValueComparison("Parametro.DiasLicMuerte >= 0", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual, 0, SkipNullOrEmptyValues = true), 
+            RuleValueComparison("Parametro.DiasLicMuerte >= 0", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual, 0, SkipNullOrEmptyValues = true),
             Index(27), VisibleInListView(false), VisibleInLookupListView(false)]
         [DetailViewLayout(LayoutColumnPosition.Right, LayoutGroupType.SimpleEditorsGroup)]
         public int DiasLicMuerte
@@ -521,7 +517,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         [DbType("smallint"), Persistent("DiasLicNatalidad")]
 #endif
         [XafDisplayName("Días Lic. Muerte"), ToolTip("Días de licencia por natalidad"),
-            RuleValueComparison("Parametro.DiasLicNatalidad >= 0", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual, 0, SkipNullOrEmptyValues = true), 
+            RuleValueComparison("Parametro.DiasLicNatalidad >= 0", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual, 0, SkipNullOrEmptyValues = true),
             Index(28), VisibleInListView(false), VisibleInLookupListView(false)]
         [DetailViewLayout(LayoutColumnPosition.Right, LayoutGroupType.SimpleEditorsGroup)]
         public int DiasLicNatilidad

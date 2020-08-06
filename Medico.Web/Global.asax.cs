@@ -146,7 +146,7 @@ namespace SBT.Apps.Medico.Web
             SesionDataHelper.Agregar("OidSucursal", ((CustomLogonParameters)e.LogonParameters).OidSucursal);
             // agregar aqui otros variables globales para la sesion, por ejemplo: sucursal, bodega, caja, fecha de trabajo etc
 
-            // las siguientes dos lienas son por si se necesitara hacer algo con la informacion del equipo remoto (caso de POS, para identificar las cajas)
+            // las siguientes dos lineas son por si se necesitara hacer algo con la informacion del equipo remoto (caso de POS, para identificar las cajas)
             //Sanrey.Erp.Base.BusinessObjects.SesionDataHelper.Agregar("UserHostName", Request.UserHostName);
             //Sanrey.Erp.Base.BusinessObjects.SesionDataHelper.Agregar("UserHostAddress", Request.UserHostAddress);
 
@@ -155,6 +155,11 @@ namespace SBT.Apps.Medico.Web
                 var INavItems = ((IModelApplicationNavigationItems)WebApplication.Instance.Model).NavigationItems;
                 INavItems.StartupNavigationItem = null;
                 ((IModelRootNavigationItemsWeb)INavItems).ShowNavigationOnStart = true;
+
+                // la siguiente linea esta a prueba desde el 06/agosto/2020, porque las collecciones de detalle no se muestran cuando la aplicación
+                // se despliega en modo release, pero si en modo debug. La idea es hacer un despliegue release con esta linea, para ver que sucede
+                ((IModelOptionsWeb)WebApplication.Instance.Model.Options).CollectionsEditMode = DevExpress.ExpressApp.Editors.ViewEditMode.Edit;
+
                 WebApplication.Instance.Model.AboutInfoString = "{0:ProductName} - {0:Description}<br>{0:Version}<br>{0:Copyright}";
                 WebApplication.Instance.Title += WebApplication.Instance.Title + " - " + ((CustomLogonParameters)e.LogonParameters).Empresa.RazonSocial;
                 WebApplication.Instance.Model.Description = ((CustomLogonParameters)e.LogonParameters).Empresa.RazonSocial;

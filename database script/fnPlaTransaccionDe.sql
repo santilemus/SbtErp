@@ -31,12 +31,12 @@ Comentarios     :
 create function fnPlaTransaccionDe(
    @OidEmpleado   int, 
    @FechaFin      datetime2,
-   @Clasificacion varchar(12),
-   @NoQuincena    smallint) 
+   @Clasificacion varchar(12)) 
 returns numeric(14,2)
 as
 begin
   declare @monto numeric(14,2);
+  declare  @NoQuincena smallint = iif(Day(@FechaFin) <= 15, 1, 2);
   -- parametro quincena es 3, cuando la transaccion se aplica en ambas quincenas. El 2do
   -- sum --> coalesce(sum(... es para ajustar cuando la cuota / 2 no es exacta, el ajuste
   -- se aplica en 2da quincena, aumentando el centavo para aplicar la cuota exacta del mes

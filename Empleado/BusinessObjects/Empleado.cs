@@ -218,7 +218,8 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
             get { return Convert.ToDecimal(EvaluateAlias(nameof(SalarioMes))); }
         }
 
-
+        //[Browsable(false)]
+        //public DateTime? FechaCumpleAnioContrato => FechaIngreso.Year < DateTime.Now.Year ? (DateTime?)new DateTime(DateTime.Now.Year, FechaIngreso.Month, FechaIngreso.Day) : null;
 
         //[Persistent("Usuario"), XafDisplayName("Usuario Sistema")]
         //public Usuario Usuario
@@ -226,7 +227,6 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
         //    get => usuario;
         //    set => SetPropertyValue(nameof(Usuario), ref usuario, value);
         //}
-
 
         #endregion
 
@@ -278,8 +278,8 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
         /// <returns></returns>
         public decimal IngresoPromedioN(int AMeses)
         {
-            return Salario * AMeses;    
-    
+            return Salario * AMeses;
+
         }
 
         #endregion

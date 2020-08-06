@@ -1,23 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using DevExpress.Data.Filtering;
-using DevExpress.ExpressApp;
+﻿using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.Actions;
-using DevExpress.ExpressApp.Editors;
-using DevExpress.ExpressApp.Layout;
-using DevExpress.ExpressApp.Model.NodeGenerators;
-using DevExpress.ExpressApp.SystemModule;
-using DevExpress.ExpressApp.Templates;
-using DevExpress.ExpressApp.Utils;
-using DevExpress.Persistent.Base;
-using DevExpress.Persistent.Validation;
 using DevExpress.ExpressApp.Xpo;
-using DevExpress.ExpressApp.Model;
+using DevExpress.Persistent.Validation;
 using SBT.Apps.Base.Module.BusinessObjects;
-using SBT.Apps.Contabilidad.Module.BusinessObjects;
 using SBT.Apps.Base.Module.Controllers;
+using SBT.Apps.Contabilidad.Module.BusinessObjects;
+using System;
+using System.Linq;
 
 
 namespace SBT.Apps.Contabilidad.Module.Controllers
@@ -95,7 +84,7 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
                 ((CierreDiarioParam)e.PopupWindowViewCurrentObject).Bitacora += string.Format("Hora Finalizó: {0:G}", DateTime.Now) + Environment.NewLine;
                 throw new UserFriendlyException("No tiene valor la variable de la empresa de la sesion");
             }
-            ((CierreDiarioParam)e.PopupWindowViewCurrentObject).Bitacora += Environment.NewLine + "Ejecutando el Proceso" + Environment.NewLine;       
+            ((CierreDiarioParam)e.PopupWindowViewCurrentObject).Bitacora += Environment.NewLine + "Ejecutando el Proceso" + Environment.NewLine;
             IObjectSpace ospace = Application.ObjectSpaceProvider.CreateObjectSpace();
             ((XPObjectSpace)ospace).Session.ExecuteNonQuery("exec spConCierreDiario @Empresa, @FechaDesde, @FechaHasta, @Usuario",
                 new string[] { "@Empresa", "@FechaDesde", "@FechaHasta", "@Usuario" }, new object[] { EmpresaOid, fechaDesde, fechaHasta, sUsuario });
@@ -147,7 +136,7 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
         {
             RuleSetValidationResult result = Validator.RuleSet.ValidateTarget(vParam.ObjectSpace, vParam.CurrentObject, "Accept");
             if (!((CierreDiarioParam)vParam.CurrentObject).ValidarPeriodo)
-                result.AddResult(new RuleSetValidationResultItem(vParam.CurrentObject, "Accept", 
+                result.AddResult(new RuleSetValidationResultItem(vParam.CurrentObject, "Accept",
                     new RuleCriteria(), new RuleValidationResult(new RuleCriteria(), ValidationState.Invalid, "El proceso no se ejecutará, porque el Periodo no es Valido")));
             if (result.State == ValidationState.Invalid)
             {

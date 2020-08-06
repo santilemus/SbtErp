@@ -35,6 +35,8 @@ namespace SBT.Apps.Erp.Web
         private DevExpress.ExpressApp.TreeListEditors.TreeListEditorsModuleBase treeListEditorsModuleBase1;
         private RecursoHumano.RecursoHumanoModule recursoHumanoModule1;
         private Facturacion.Module.FacturacionModule facturacionModule1;
+        private DevExpress.ExpressApp.Office.OfficeModule officeModule1;
+        private DevExpress.ExpressApp.Office.Web.OfficeAspNetModule officeAspNetModule1;
         private DevExpress.ExpressApp.ViewVariantsModule.ViewVariantsModule viewVariantsModule;
 
         #region Default XAF configuration options (https://www.devexpress.com/kb=T501418)
@@ -148,6 +150,8 @@ namespace SBT.Apps.Erp.Web
             this.treeListEditorsModuleBase1 = new DevExpress.ExpressApp.TreeListEditors.TreeListEditorsModuleBase();
             this.recursoHumanoModule1 = new SBT.Apps.RecursoHumano.RecursoHumanoModule();
             this.facturacionModule1 = new SBT.Apps.Facturacion.Module.FacturacionModule();
+            this.officeModule1 = new DevExpress.ExpressApp.Office.OfficeModule();
+            this.officeAspNetModule1 = new DevExpress.ExpressApp.Office.Web.OfficeAspNetModule();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             // 
             // securityStrategyComplex1
@@ -195,6 +199,10 @@ namespace SBT.Apps.Erp.Web
             // 
             this.auditTrailModule1.AuditDataItemPersistentType = typeof(DevExpress.Persistent.BaseImpl.AuditDataItemPersistent);
             // 
+            // officeModule1
+            // 
+            this.officeModule1.RichTextMailMergeDataType = null;
+            // 
             // ErpAspNetApplication
             // 
             this.ApplicationName = "SBT - Sistema Administrativo Financiero";
@@ -214,6 +222,7 @@ namespace SBT.Apps.Erp.Web
             this.Modules.Add(this.viewVariantsModule);
             this.Modules.Add(this.auditTrailModule1);
             this.Modules.Add(this.treeListEditorsModuleBase1);
+            this.Modules.Add(this.officeModule1);
             this.Modules.Add(this.baseModule1);
             this.Modules.Add(this.terceroModule1);
             this.Modules.Add(this.empleadoModule1);
@@ -222,6 +231,7 @@ namespace SBT.Apps.Erp.Web
             this.Modules.Add(this.recursoHumanoModule1);
             this.Modules.Add(this.erpModule1);
             this.Modules.Add(this.facturacionModule1);
+            this.Modules.Add(this.officeAspNetModule1);
             this.Modules.Add(this.erpAspNetModule1);
             this.Security = this.securityStrategyComplex1;
             this.DatabaseVersionMismatch += new System.EventHandler<DevExpress.ExpressApp.DatabaseVersionMismatchEventArgs>(this.ErpAspNetApplication_DatabaseVersionMismatch);
