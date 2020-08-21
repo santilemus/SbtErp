@@ -131,6 +131,7 @@
     <Compile Include="BusinessObjects\EFormaAplicarTransaccion.cs" />
     <Compile Include="BusinessObjects\EFormaPago.cs" />
     <Compile Include="BusinessObjects\EMetodoAguinaldo.cs" />
+    <Compile Include="BusinessObjects\MiNoPersistenteClass.cs" />
     <Compile Include="BusinessObjects\PlanillaDetalleFuncion.cs" />
     <Compile Include="BusinessObjects\EmpleadoTipoPlanilla.cs" />
     <Compile Include="BusinessObjects\ETablaISR.cs" />
@@ -242,6 +243,7 @@
     <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="BusinessObjects\ReadMe.txt" />
     <None Include="Controllers\ReadMe.txt" />
     <None Include="DatabaseUpdate\ReadMe.txt" />

@@ -285,4 +285,6 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
         #endregion
 
     }
+
+
 }

@@ -288,7 +288,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [Size(SizeAttribute.Unlimited), ImageEditor(ListViewImageEditorMode = ImageEditorMode.PopupPictureEdit,
     DetailViewImageEditorMode = ImageEditorMode.PopupPictureEdit, ListViewImageEditorCustomHeight = 40)]
         [Index(5), DetailViewLayout("Resumen del Error", LayoutGroupType.SimpleEditorsGroup, 1)]
-        [Delayed(true)]
+        //[Delayed(true)]
         public byte[] Fotografia
         {
             get

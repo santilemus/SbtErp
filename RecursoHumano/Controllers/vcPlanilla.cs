@@ -2,6 +2,7 @@
 using DevExpress.Data.Filtering.Helpers;
 using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.Actions;
+using DevExpress.ExpressApp.Xpo;
 using DevExpress.Persistent.Base;
 using SBT.Apps.Base.Module.Controllers;
 using SBT.Apps.RecursoHumano.Module.BusinessObjects;
@@ -102,10 +103,10 @@ namespace SBT.Apps.RecursoHumano.Module.Controllers
 
         private void pwsaCalcular_CustomizePopupWindowsParams(object sender, CustomizePopupWindowParamsEventArgs e)
         {
-            IObjectSpace objectSpace = (NonPersistentObjectSpace)Application.ObjectSpaceProviders[1].CreateObjectSpace(); 
-            var pa = objectSpace.CreateObject<CalcularPlanillaParam>();
-            pa.ObjectSpace = Application.CreateObjectSpace(typeof(SBT.Apps.RecursoHumano.Module.BusinessObjects.TipoPlanilla));
-            e.View = Application.CreateDetailView(objectSpace, pa);
+            IObjectSpace oSpace = (NonPersistentObjectSpace)Application.ObjectSpaceProviders[1].CreateObjectSpace(); 
+            var pa = oSpace.CreateObject<CalcularPlanillaParam>();
+            pa.ObjectSpace = ObjectSpace; // Application.CreateObjectSpace(typeof(SBT.Apps.RecursoHumano.Module.BusinessObjects.TipoPlanilla));
+            e.View = Application.CreateDetailView(oSpace, pa);
             e.View.Caption = "Calcular Planilla";
             e.Size = new System.Drawing.Size(500, 500);
             e.IsSizeable = false;
@@ -135,13 +136,18 @@ namespace SBT.Apps.RecursoHumano.Module.Controllers
 
         private void pwsaCalcular_Execute(object sender, PopupWindowShowActionExecuteEventArgs e)
         {
-            IObjectSpace ospace = Application.ObjectSpaceProvider.CreateObjectSpace();
+            //IObjectSpace ospace = Application.ObjectSpaceProvider.CreateObjectSpace();
 
             //ICollection<PlanillaDetalleFuncion> empleFuncs;
             // filtramos los empleados activos con tipos de contrato Indefinido, plazo y que se les debe calcular el tipo de planilla seleccionado y el tipo de planilla activo
             CalcularPlanillaParam cp = e.PopupWindowView.CurrentObject as CalcularPlanillaParam;
-            ICollection<Empleado.Module.BusinessObjects.Empleado> empleados = ospace.GetObjects<Empleado.Module.BusinessObjects.Empleado>(
-                CriteriaOperator.Parse(CondicionEmpleado(cp.TipoPlanilla.Clase)));
+            EClasePlanilla clasePlani = cp.TipoPlanilla.Clase;
+
+            IList<DevExpress.Xpo.SortProperty> sortp = new List<DevExpress.Xpo.SortProperty>();
+            sortp.Add(new DevExpress.Xpo.SortProperty("Oid", DevExpress.Xpo.DB.SortingDirection.Ascending));
+            
+            IList<Empleado.Module.BusinessObjects.Empleado> empleados = ObjectSpace.GetObjects<Empleado.Module.BusinessObjects.Empleado>(
+                CriteriaOperator.Parse(CondicionEmpleado(clasePlani), new object[] { clasePlani }), sortp, true);
             // si no hay datos, no calcula nada y sale
             if (empleados.Count == 0)
                 return;  
@@ -159,7 +165,7 @@ namespace SBT.Apps.RecursoHumano.Module.Controllers
                     //foreach (PlanillaDetalleFuncion detfunc in empleFuncs)
                     //    pd.Funciones.Add(detfunc);
                     plani.Detalles.Add(pd);
-                    CalcularOperaciones(ospace, pd);
+                    CalcularOperaciones(pd);
                     //empleFuncs.Clear();
                 }
             }
@@ -171,20 +177,25 @@ namespace SBT.Apps.RecursoHumano.Module.Controllers
         }
 
 
-        private void CalcularOperaciones(IObjectSpace ospace, PlanillaDetalle planillaDetalle)
+        private void CalcularOperaciones(PlanillaDetalle planillaDetalle)
         {
-            ICollection<OperacionTipoPlanilla> ops = ospace.GetObjects<OperacionTipoPlanilla>(new BinaryOperator("Tipo", planillaDetalle.Planilla.Tipo));
-            decimal valor = 0.0m;
-            foreach (OperacionTipoPlanilla op in ops)
+            using (var os = Application.CreateObjectSpace(typeof(OperacionTipoPlanilla)))
             {
-                if (op.Operacion.TipoBO != null && op.Operacion.Formula.Length > 0)
+                ICollection<OperacionTipoPlanilla> ops = os.GetObjects<OperacionTipoPlanilla>(CriteriaOperator.Parse("[Tipo.Oid] == ?", planillaDetalle.Planilla.Tipo.Oid));
+                decimal valor = 0.0m;
+                foreach (OperacionTipoPlanilla op in ops)
                 {
-                    ExpressionEvaluator eval = new ExpressionEvaluator(TypeDescriptor.GetProperties(op.Operacion.TipoBO), op.Operacion.Formula);
-                    valor = Convert.ToDecimal(eval.Evaluate(planillaDetalle.Empleado));
+                    if (op.Operacion.TipoBO != null && op.Operacion.Formula.Length > 0)
+                    {
+                        // ultimo error en la siguiente linea, creo que es en la formula, revisar 
+                        // DevExpress.Data.Filtering.Exceptions.InvalidPropertyPathException: 'Can't find property 'Empleado!''
+                        ExpressionEvaluator eval = new ExpressionEvaluator(TypeDescriptor.GetProperties(op.Operacion.TipoBO), op.Operacion.Formula);
+                        valor = Convert.ToDecimal(eval.Evaluate(planillaDetalle));
+                    }
+                    else
+                        valor = op.Operacion.Valor;
+                    planillaDetalle.Operaciones.Add(new PlanillaDetalleOperacion(planillaDetalle.Planilla.Session, planillaDetalle, op.Operacion, valor));
                 }
-                else
-                    valor = op.Operacion.Valor;
-                planillaDetalle.Operaciones.Add(new PlanillaDetalleOperacion(planillaDetalle.Planilla.Session, planillaDetalle, op.Operacion, valor));
             }
         }
 

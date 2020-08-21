@@ -28,9 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            // 
-            // vcEmpleado
-            // 
+            this.components = new System.ComponentModel.Container();
             this.TargetObjectType = typeof(SBT.Apps.Empleado.Module.BusinessObjects.Empleado);
 
         }

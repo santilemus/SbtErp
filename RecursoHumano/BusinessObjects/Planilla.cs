@@ -82,11 +82,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 
         [PersistentAlias(nameof(valorMoneda)), XafDisplayName("Valor Moneda")]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
-        public decimal ValorMoneda
-        {
-            get { return valorMoneda; }
-        }
-
+        public decimal ValorMoneda => valorMoneda;
 
         [PersistentAlias(nameof(fechaInicio)), XafDisplayName("Fecha Inicio")]
         [ModelDefault("DisplayFormat", "{0:G}"), ModelDefault("EditMask", "G")]
@@ -144,8 +140,9 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
             fechaFin = AFechaFin;
             fechaPago = AFechaPago;
         }
-        #endregion
 
+
+        #endregion
 
         //[Action(Caption = "My UI Action", ConfirmationMessage = "Are you sure?", ImageName = "Attention", AutoCommit = true)]
         //public void ActionMethod() {
@@ -153,4 +150,6 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         //    this.PersistentProperty = "Paid";
         //}
     }
+
+   
 }
