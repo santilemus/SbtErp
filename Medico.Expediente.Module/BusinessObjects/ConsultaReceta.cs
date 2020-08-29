@@ -75,6 +75,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         }
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Farmáceutica")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
+        [DataSourceCriteria("[TipoPersona] == 2 && [Activo] == True && [Roles][[IdRole] In (4, 8) And [Activo] == True]")]
         public Tercero.Module.BusinessObjects.Tercero Farmaceutica
         {
             get

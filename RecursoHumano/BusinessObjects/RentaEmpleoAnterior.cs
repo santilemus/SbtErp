@@ -15,7 +15,7 @@ using SBT.Apps.Base.Module.BusinessObjects;
 
 namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 {
-    [DefaultClassOptions, ModelDefault("Caption", "Renta Empleo Anterior"), NavigationItem("Recurso Humano"), 
+    [DefaultClassOptions, ModelDefault("Caption", "Renta Empleo Anterior"), NavigationItem("Recurso Humano"),
         CreatableItem(false), DefaultProperty(nameof(RazonSocial)), Persistent(nameof(RentaEmpleoAnterior))]
     //[ImageName("BO_Contact")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
@@ -34,8 +34,11 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 
         #region Propiedades
 
+        [Persistent(nameof(ValorMoneda)), DbType("numeric(14,2)")]
+        decimal valorMoneda;
+        Moneda moneda;
         decimal rentaRetenida = 0.0m;
-        decimal ingresoGravado= 0.0m;
+        decimal ingresoGravado = 0.0m;
         DateTime fechaHasta;
         string razonSocial;
         string nitPatrono;
@@ -48,7 +51,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
             set => SetPropertyValue(nameof(Empleado), ref empleado, value);
         }
 
-        [Size(14), DbType("varchar(14)"), XafDisplayName("Nit Patrono"), Index(1), 
+        [Size(14), DbType("varchar(14)"), XafDisplayName("Nit Patrono"), Index(1),
             RuleRequiredField("RentaEmpleoAnterior.NitPatrono_Requerido", "Save")]
         public string NitPatrono
         {
@@ -57,7 +60,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         }
 
 
-        [Size(100), DbType("varchar(100)"), XafDisplayName("Razón Social"), Index(2), 
+        [Size(100), DbType("varchar(100)"), XafDisplayName("Razón Social"), Index(2),
             RuleRequiredField("RentaEmpleadoAnterior.RazonSocial", "Save")]
         public string RazonSocial
         {
@@ -65,7 +68,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
             set => SetPropertyValue(nameof(RazonSocial), ref razonSocial, value);
         }
 
-        [DbType("datetime2"), XafDisplayName("Fecha Hasta"), Index(3), 
+        [DbType("datetime2"), XafDisplayName("Fecha Hasta"), Index(3),
             RuleRequiredField("RentaEmpleadoAnterior.FechaHasta_Requerido", "Save")]
         public DateTime FechaHasta
         {
@@ -73,7 +76,24 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
             set => SetPropertyValue(nameof(FechaHasta), ref fechaHasta, value);
         }
 
-        [DbType("numeric(14,2)"), XafDisplayName("Ingreso Gravado"), Index(4), 
+
+        [Size(3), DbType("varchar(3)"), XafDisplayName("Moneda"), Index(4), 
+            RuleRequiredField("RentaEmpleoAnterior.Moneda_Requerido", "Save")]
+        public Moneda Moneda
+        {
+            get => moneda;
+            set
+            {
+                bool changed = SetPropertyValue(nameof(Moneda), ref moneda, value);
+                if (!IsLoading && !IsSaving && changed)
+                    valorMoneda = Moneda.FactorCambio;
+            }
+        }
+
+        [PersistentAlias(nameof(valorMoneda)), XafDisplayName("Valor Moneda"), Index(5)]
+        public decimal ValorMoneda => valorMoneda;
+
+        [DbType("numeric(14,2)"), XafDisplayName("Ingreso Gravado"), Index(6),
             RuleRequiredField("RentaEmpleadoAnterior.IngresoGravado_Requrido", "Save")]
         public decimal IngresoGravado
         {
@@ -81,7 +101,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
             set => SetPropertyValue(nameof(IngresoGravado), ref ingresoGravado, value);
         }
 
-        [DbType("numeric(14,2)"), XafDisplayName("Renta Retenida"), Index(5), 
+        [DbType("numeric(14,2)"), XafDisplayName("Renta Retenida"), Index(7),
             RuleRequiredField("RentaEmpleoAnterior.RentaRetenida_Requerido", "Save")]
         public decimal RentaRetenida
         {

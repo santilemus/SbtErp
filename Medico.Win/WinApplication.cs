@@ -8,6 +8,7 @@ using DevExpress.ExpressApp.Xpo;
 using DevExpress.ExpressApp.SystemModule;
 using DevExpress.ExpressApp.Win.SystemModule;
 using SBT.Apps.Base.Module.BusinessObjects;
+using DevExpress.ExpressApp.Security;
 
 namespace SBT.Apps.Medico.Win {
     // For more typical usage scenarios, be sure to check out http://documentation.devexpress.com/#Xaf/DevExpressExpressAppWinWinApplicationMembersTopicAll
@@ -21,6 +22,11 @@ namespace SBT.Apps.Medico.Win {
             LastLogonParametersWriting += LastLogonParametersWritingEvent;
             
             LoggedOn += LoggedOnEvent;
+            // agregado para permitir la seleccion de empresas y sucursales en el login
+            
+            ((SecurityStrategy)Security).AnonymousAllowedTypes.Add(typeof(SBT.Apps.Base.Module.BusinessObjects.Empresa));
+            ((SecurityStrategy)Security).AnonymousAllowedTypes.Add(typeof(SBT.Apps.Base.Module.BusinessObjects.EmpresaUnidad));
+            
             //LoggedOff += LoggedOffEvent;
         }
 

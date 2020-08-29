@@ -27,7 +27,7 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
         }
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Código Membresía")]
         [RuleRequiredField("EmpleadoMembresia.Codigo_Requerido", DefaultContexts.Save, "Membresía es requerido")]
-        [DataSourceCriteria("Categoria = 'Membresia'")]
+        [DataSourceCriteria("[Categoria] == 3 && [Activo] == True")]
         public Listas Codigo
         {
             get

@@ -1,4 +1,5 @@
-﻿using DevExpress.ExpressApp.DC;
+﻿using DevExpress.Data.Filtering;
+using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using DevExpress.Xpo;
@@ -84,6 +85,12 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
             get => cargo;
         }
 
+
+        [PersistentAlias("[Planilla.Parametro.CotizacionMaximaSeguro]"), Browsable(false)]
+        public decimal CotizacionMaximaSeguro => Convert.ToDecimal(EvaluateAlias(nameof(CotizacionMaximaSeguro)));
+
+        [PersistentAlias("[Planilla.Parametro.SalarioMaxPrevision] * [Empleado.AFP.AporteAfiliado]"), Browsable(false)]
+        public decimal CotizacionMaximaPension => Convert.ToDecimal(EvaluateAlias(nameof(CotizacionMaximaPension)));
         #endregion
 
         #region Colecciones
@@ -137,10 +144,52 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
             return Convert.ToDecimal(Session.ExecuteScalar("select dbo.fnPlaTransaccionDe(@OidEmpleado, @FechaFin, @Clasificacion)",
                 new object[] { Empleado.Oid, Planilla.FechaFin, pa[0] }));
         }
-  
+
+        /// <summary>
+        /// Retorna la fecha que cumple anios de contratado el empleado, en el anio de la fecha fin de la planilla
+        /// </summary>
+        /// <returns></returns>
         private DateTime FechaCumpleAnioContrato()
         {
             return new DateTime(Planilla.FechaFin.Value.Year, Empleado.FechaIngreso.Month, Empleado.FechaIngreso.Day);
+        }
+
+        private decimal CalcularRenta(params object[] pa)
+        {
+            return Convert.ToDecimal(Session.ExecuteScalar("select dbo.fnPlaCalcularRenta(@Pais, @TipoTabla, @Salario)", 
+                new object[] { Planilla.Empresa.Pais.Codigo, pa[0], pa[1] }));
+        }
+
+        /// <summary>
+        /// Ingreso Gravado del año para el recalculo de la renta
+        /// </summary>
+        /// <param name="pa"></param>
+        /// <returns></returns>
+        private decimal IngresoGravadoAcumulado(params object [] pa)
+        {            
+            return Convert.ToDecimal(Session.ExecuteScalar("select dbo.fnPlaIngresoGravado(@OidEmpleado, @FechaInicio, @FechaFin, @Moneda)",
+                new object[] { Empleado.Oid, new DateTime(Planilla.FechaFin.Value.Year, 01, 01), pa[0], pa[1] }));
+        }
+
+        private decimal OperacionAcumulada(params object [] pa)
+        {
+            return Convert.ToDecimal(Session.ExecuteScalar("select dbo.fnPlaOperacionAcumulada(emple.Oid, @InicioMes, @FinMes, @OidOperacion)",
+                new object[] { Empleado.Oid, new DateTime(Planilla.FechaFin.Value.Year, 1, 1), pa[0], pa[1] })); ;
+        }
+
+        /// <summary>
+        /// Retornar el parametro que corresponde al beneficio por vacacion, en funcion del tiempo de laborar del empleado.
+        /// El beneficio puede ser un valor fijo o un porcentaje. Corresponde al implementador evaluar como debe ser usado
+        /// para calcular la vacacion
+        /// </summary>
+        /// <returns></returns>
+        private decimal ? ParametroVacacion()
+        {
+            DateTime fechaCumple = FechaCumpleAnioContrato();
+            decimal Anios = Math.Round(Convert.ToDecimal(fechaCumple.Subtract(Empleado.FechaIngreso).TotalDays) / 365.25m, 2);
+            ParametroVacacion vaca = Session.FindObject<ParametroVacacion>(
+                CriteriaOperator.Parse("[Empresa.Oid] == ? && ? >= [Desde] && ? < [Hasta] && [Activo] == True", Planilla.Empresa.Oid, Anios, Anios));
+            return vaca != null ? (decimal?)vaca.Valor : null;
         }
 
         public object Evaluar(string ANombre)
@@ -148,14 +197,14 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
             return Metodos[ANombre](new object[] { });
         }
 
-        public object Evaluar(string ANombre, object p1)
+        public object Evaluar(string ANombre, object p0)
         {
-            return Metodos[ANombre](new object[] { p1 });
+            return Metodos[ANombre](new object[] { p0 });
         }
 
-        public object Evaluar(string ANombre, object p1, object p2)
+        public object Evaluar(string ANombre, object p0, object p1)
         {
-            return Metodos[ANombre](new object[] { p1, p2 });
+            return Metodos[ANombre](new object[] { p0, p1 });
         }
 
         private Dictionary<string, Func<object[], object>> Metodos = new Dictionary<string, Func<object[], object>>();
@@ -169,7 +218,22 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
                 Metodos.Add(nameof(TotalOperacionMes), (x) => TotalOperacionMes(x));
             if (!Metodos.ContainsKey(nameof(TransaccionSuma)))
                 Metodos.Add(nameof(TransaccionSuma), (x) => TransaccionSuma(x));
+            if (!Metodos.ContainsKey(nameof(FechaCumpleAnioContrato)))
+                Metodos.Add(nameof(FechaCumpleAnioContrato), (x) => FechaCumpleAnioContrato());
+            if (!Metodos.ContainsKey(nameof(CalcularRenta)))
+                Metodos.Add(nameof(CalcularRenta), (x) => CalcularRenta(x));
+            if (!Metodos.ContainsKey(nameof(IngresoGravadoAcumulado)))
+                Metodos.Add(nameof(IngresoGravadoAcumulado), (x) => IngresoGravadoAcumulado(x));
+            if (!Metodos.ContainsKey(nameof(OperacionAcumulada)))
+                Metodos.Add(nameof(OperacionAcumulada), (x) => OperacionAcumulada(x));
+            if (!Metodos.ContainsKey(nameof(ParametroVacacion)))
+                Metodos.Add(nameof(ParametroVacacion), (x) => ParametroVacacion());
         }
+
+        //private Dictionary<string, Func<object[], object>> Metodos2 = new Dictionary<string, Func<object[], object>>()
+        //{
+        //    {nameof(ObtenerDiasDeAccion),  x => ObtenerDiasDeAccion(x)}
+        //};
 
         #endregion
 

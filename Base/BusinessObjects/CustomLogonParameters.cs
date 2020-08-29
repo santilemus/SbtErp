@@ -159,7 +159,8 @@ namespace SBT.Apps.Base.Module.BusinessObjects
 
         private void RefrescarAgencias()
         {
-            agenciasDisponibles = Empresa.Unidades;
+            if (empresa != null)
+                agenciasDisponibles = Empresa.Unidades;
             // Se produce error al logearse cuando agenciasDisponibles es nulo, por eso se comentario el filtro
             // porque pueden haber empresas en las cuales ninguna de sus unidades es agencia
 

@@ -52,7 +52,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         [Persistent(nameof(Moneda))]
         Moneda moneda = null;
         [Persistent(nameof(ValorMoneda))]
-        decimal valorMoneda = 0.0m;
+        decimal valorMoneda = 1.0m;
         [Persistent(nameof(FechaInicio)), DbType("datetime2")]
         DateTime? fechaInicio = null;
         [Persistent(nameof(FechaFin)), DbType("datetime2")]
@@ -118,6 +118,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
             get => parametro;
             set => SetPropertyValue(nameof(Parametro), ref parametro, value);
         }
+    
 
         #endregion
 

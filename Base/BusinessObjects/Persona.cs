@@ -233,6 +233,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             }
         }
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
+        [DataSourceCriteria("[Categoria] == 2 && [Activo] == True")]
         public Listas TipoSangre
         {
             get
@@ -286,7 +287,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         }
 
         [Size(SizeAttribute.Unlimited), ImageEditor(ListViewImageEditorMode = ImageEditorMode.PopupPictureEdit,
-    DetailViewImageEditorMode = ImageEditorMode.PopupPictureEdit, ListViewImageEditorCustomHeight = 40)]
+    DetailViewImageEditorMode = ImageEditorMode.PopupPictureEdit, ListViewImageEditorCustomHeight = 34)]
         [Index(5), DetailViewLayout("Resumen del Error", LayoutGroupType.SimpleEditorsGroup, 1)]
         //[Delayed(true)]
         public byte[] Fotografia

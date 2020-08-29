@@ -11,6 +11,9 @@ using DevExpress.Web;
 using DevExpress.ExpressApp.SystemModule;
 using DevExpress.ExpressApp.Web.SystemModule;
 using SBT.Apps.Base.Module.BusinessObjects;
+using DevExpress.Security.Resources;
+using DevExpress.XtraReports.Security;
+using DevExpress.XtraReports.UI;
 
 namespace SBT.Apps.Medico.Web
 {
@@ -22,6 +25,10 @@ namespace SBT.Apps.Medico.Web
             SecurityAdapterHelper.Enable();
             ASPxWebControl.CallbackError += new EventHandler(Application_Error);
             WebApplication.EnableMultipleBrowserTabsSupport = true;
+
+            // Style sheets cannot be loaded from file directories; only XML report layout serialization format is allowed
+            DevExpress.Security.Resources.AccessSettings.ReportingSpecificResources.SetRules(DirectoryAccessRule.Deny(), SerializationFormatRule.Deny(SerializationFormat.Xml));
+
 #if EASYTEST
             DevExpress.ExpressApp.Web.TestScripts.TestScriptsManager.EasyTestEnabled = true;
 #endif

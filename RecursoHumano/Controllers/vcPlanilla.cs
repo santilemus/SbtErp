@@ -103,7 +103,7 @@ namespace SBT.Apps.RecursoHumano.Module.Controllers
 
         private void pwsaCalcular_CustomizePopupWindowsParams(object sender, CustomizePopupWindowParamsEventArgs e)
         {
-            IObjectSpace oSpace = (NonPersistentObjectSpace)Application.ObjectSpaceProviders[1].CreateObjectSpace(); 
+            IObjectSpace oSpace = (NonPersistentObjectSpace)Application.ObjectSpaceProviders[1].CreateObjectSpace();
             var pa = oSpace.CreateObject<CalcularPlanillaParam>();
             pa.ObjectSpace = ObjectSpace; // Application.CreateObjectSpace(typeof(SBT.Apps.RecursoHumano.Module.BusinessObjects.TipoPlanilla));
             e.View = Application.CreateDetailView(oSpace, pa);
@@ -145,13 +145,13 @@ namespace SBT.Apps.RecursoHumano.Module.Controllers
 
             IList<DevExpress.Xpo.SortProperty> sortp = new List<DevExpress.Xpo.SortProperty>();
             sortp.Add(new DevExpress.Xpo.SortProperty("Oid", DevExpress.Xpo.DB.SortingDirection.Ascending));
-            
+
             IList<Empleado.Module.BusinessObjects.Empleado> empleados = ObjectSpace.GetObjects<Empleado.Module.BusinessObjects.Empleado>(
                 CriteriaOperator.Parse(CondicionEmpleado(clasePlani), new object[] { clasePlani }), sortp, true);
             // si no hay datos, no calcula nada y sale
             if (empleados.Count == 0)
-                return;  
-            Planilla plani = (Planilla)View.CurrentObject;          
+                return;
+            Planilla plani = (Planilla)View.CurrentObject;
             plani.SetEncabezadoDePlanilla(cp.TipoPlanilla, cp.FechaInicio, cp.FechaFin, cp.FechaPago);
             foreach (Empleado.Module.BusinessObjects.Empleado emple in empleados)
             {
@@ -169,33 +169,34 @@ namespace SBT.Apps.RecursoHumano.Module.Controllers
                     //empleFuncs.Clear();
                 }
             }
+            plani.Save();
             if (plani.Session.InTransaction)
-            {
-                plani.Save();
                 plani.Session.CommitTransaction();
-            }
         }
 
 
         private void CalcularOperaciones(PlanillaDetalle planillaDetalle)
         {
-            using (var os = Application.CreateObjectSpace(typeof(OperacionTipoPlanilla)))
+            // la idea es ordenar las operaciones para su ejecucion: primero por tipo y luego por el Id de la operacion
+            // asi calculamos primero las operaciones sin tipo, luego ingresos, subtotales, descuento, subtotal y resultado
+            IList<DevExpress.Xpo.SortProperty> orden = new List<DevExpress.Xpo.SortProperty>();
+            orden.Add(new DevExpress.Xpo.SortProperty("[Operacion.Tipo]", DevExpress.Xpo.DB.SortingDirection.Ascending));
+            orden.Add(new DevExpress.Xpo.SortProperty("[Operacion]", DevExpress.Xpo.DB.SortingDirection.Ascending));
+            ICollection<OperacionTipoPlanilla> ops = ObjectSpace.GetObjects<OperacionTipoPlanilla>(
+                CriteriaOperator.Parse("[Tipo.Oid] == ?", planillaDetalle.Planilla.Tipo.Oid), orden, true);
+            decimal valor = 0.0m;
+            foreach (OperacionTipoPlanilla op in ops)
             {
-                ICollection<OperacionTipoPlanilla> ops = os.GetObjects<OperacionTipoPlanilla>(CriteriaOperator.Parse("[Tipo.Oid] == ?", planillaDetalle.Planilla.Tipo.Oid));
-                decimal valor = 0.0m;
-                foreach (OperacionTipoPlanilla op in ops)
+                if (op.Operacion.TipoBO != null && op.Operacion.Formula.Length > 0)
                 {
-                    if (op.Operacion.TipoBO != null && op.Operacion.Formula.Length > 0)
-                    {
-                        // ultimo error en la siguiente linea, creo que es en la formula, revisar 
-                        // DevExpress.Data.Filtering.Exceptions.InvalidPropertyPathException: 'Can't find property 'Empleado!''
-                        ExpressionEvaluator eval = new ExpressionEvaluator(TypeDescriptor.GetProperties(op.Operacion.TipoBO), op.Operacion.Formula);
-                        valor = Convert.ToDecimal(eval.Evaluate(planillaDetalle));
-                    }
-                    else
-                        valor = op.Operacion.Valor;
-                    planillaDetalle.Operaciones.Add(new PlanillaDetalleOperacion(planillaDetalle.Planilla.Session, planillaDetalle, op.Operacion, valor));
+                    // ultimo error en la siguiente linea, creo que es en la formula, revisar 
+                    // DevExpress.Data.Filtering.Exceptions.InvalidPropertyPathException: 'Can't find property 'Empleado!''
+                    ExpressionEvaluator eval = new ExpressionEvaluator(TypeDescriptor.GetProperties(op.Operacion.TipoBO), op.Operacion.Formula);
+                    valor = Convert.ToDecimal(eval.Evaluate(planillaDetalle));
                 }
+                else
+                    valor = op.Operacion.Valor;
+                planillaDetalle.Operaciones.Add(new PlanillaDetalleOperacion(planillaDetalle.Planilla.Session, planillaDetalle, op.Operacion, valor));
             }
         }
 

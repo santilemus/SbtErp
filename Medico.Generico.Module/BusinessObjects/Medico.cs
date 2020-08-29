@@ -73,12 +73,12 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 		  }
 		}
 
-        [Association("Medico-Citas"), XafDisplayName("Citas"), DevExpress.Xpo.Aggregated]
-        public XPCollection<CitaBase> Citas
+        [Association("Medico-RecursoMedico"), XafDisplayName("Citas"), DevExpress.Xpo.Aggregated]
+        public XPCollection<RecursoMedico> Citas
         {
             get
             {
-                return GetCollection<CitaBase>(nameof(Citas));
+                return GetCollection<RecursoMedico>(nameof(Citas));
             }
         }
     }

@@ -6,6 +6,7 @@ using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Xpo;
 using DevExpress.Xpo;
 using DevExpress.Persistent.BaseImpl;
+using System.ComponentModel;
 
 namespace SBT.Apps.Base.Module.BusinessObjects
 {
@@ -14,12 +15,13 @@ namespace SBT.Apps.Base.Module.BusinessObjects
     /// </summary>
     /// 
     [DefaultClassOptions]
-    [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Profesión")]
-    [DevExpress.Persistent.Base.ImageNameAttribute("user_id-certificate")]
-    [DevExpress.Persistent.Base.NavigationItemAttribute("Catalogos")]
+    [DevExpress.ExpressApp.DC.XafDisplayName("Profesión")]
+    [DevExpress.Persistent.Base.ImageName("user_id-certificate")]
+    [DevExpress.Persistent.Base.NavigationItem("Catalogos")]
     [RuleIsReferenced("Profesion_Referencia", DefaultContexts.Delete, typeof(Profesion), nameof(Oid),
         MessageTemplateMustBeReferenced = "Para borrar el objeto '{TargetObject}', debe estar seguro que no es utilizado (referenciado) en ningún lugar.",
         InvertResult = true, FoundObjectMessageFormat = "'{0}'", FoundObjectMessagesSeparator = ";")]
+    [DefaultProperty(nameof(Descripcion))]
     public class Profesion : XPObjectBaseBO
     {
         public override void AfterConstruction()
@@ -57,7 +59,6 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         /// </summary>
         [DevExpress.Xpo.SizeAttribute(150), Persistent("Descripcion")]
         [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
-        [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [RuleRequiredField("Profesion.Nombre_Requerido", "Save"), DbType("varchar(150)")]
         public System.String Descripcion
         {
@@ -68,8 +69,8 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         /// <summary>
         /// Título corto con el cual se llama a los que ejercen la profesion
         /// </summary>
-        [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Título Corto"), VisibleInListView(true)]
-        [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false), Size(25), DbType("varchar(25)")]
+        [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Título Corto"), VisibleInListView(true), VisibleInLookupListView(true)]
+        [Size(25), DbType("varchar(25)")]
         public System.String TituloCorto
         {
             get
@@ -85,7 +86,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         /// <summary>
         /// Clasificacion de la profesion
         /// </summary>
-        [RuleRequiredField("Profesion.Clasificacion_Requerido", "Save")]
+        [RuleRequiredField("Profesion.Clasificacion_Requerido", "Save"), XafDisplayName("Clasificación")]
         public ClasificacionProfesion Clasificacion
         {
             get

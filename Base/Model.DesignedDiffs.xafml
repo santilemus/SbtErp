@@ -24,9 +24,9 @@
             <LayoutItem Id="ReportadoPor" Index="2" RelativeSize="36.734693877551024" Removed="True" />
           </LayoutGroup>
           <LayoutGroup Id="Resumen del Error" RelativeSize="19.528619528619529" IsCollapsibleGroup="True" ShowCaption="True" CaptionLocation="Default">
+            <LayoutItem Id="Descripcion" RelativeSize="58.333333333333336" CaptionLocation="Left" />
             <LayoutItem Id="Url" RelativeSize="23.611111111111111" CaptionLocation="Left" />
             <LayoutItem Id="CapturaPantalla" RelativeSize="18.055555555555557" CaptionLocation="Left" />
-            <LayoutItem Id="Descripcion" RelativeSize="58.333333333333336" CaptionLocation="Left" />
           </LayoutGroup>
           <LayoutGroup Id="Ambiente" RelativeSize="14.3658810325477" IsCollapsibleGroup="True" ShowCaption="True" CaptionLocation="Default">
             <LayoutItem Id="Plataforma" RelativeSize="34.693877551020407" CaptionLocation="Left" />
@@ -160,6 +160,7 @@
         </LayoutGroup>
       </Layout>
     </DetailView>
+    <ListView Id="Empresa_LookupListView" AllowDelete="False" />
     <DetailView Id="EmpresaGiro_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
@@ -378,12 +379,12 @@
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
           <LayoutGroup Id="SimpleEditors" RelativeSize="19.919246298788696">
-            <LayoutGroup Id="Usuario" RelativeSize="100" Caption="Agencia">
-              <LayoutItem Id="Empresa" Index="0" RelativeSize="24.324324324324323" ViewItem="Empresa" IsNewNode="True" />
-              <LayoutItem Id="Agencia" Index="1" RelativeSize="17.567567567567568" />
-              <LayoutItem Id="ChangePasswordOnFirstLogon" ViewItem="ChangePasswordOnFirstLogon" Index="2" RelativeSize="17.567567567567568" IsNewNode="True" />
-              <LayoutItem Id="UserName" ViewItem="UserName" Index="3" RelativeSize="17.567567567567568" IsNewNode="True" />
-              <LayoutItem Id="IsActive" ViewItem="IsActive" Index="4" RelativeSize="22.972972972972972" IsNewNode="True" />
+            <LayoutGroup Id="Usuario" RelativeSize="100" Caption="Agencia" CaptionLocation="Default">
+              <LayoutItem Id="Empresa" Index="0" RelativeSize="24.324324324324323" CaptionLocation="Default" ViewItem="Empresa" IsNewNode="True" />
+              <LayoutItem Id="Agencia" Index="1" RelativeSize="17.567567567567568" CaptionLocation="Default" />
+              <LayoutItem Id="ChangePasswordOnFirstLogon" ViewItem="ChangePasswordOnFirstLogon" Index="2" RelativeSize="17.567567567567568" CaptionLocation="Default" IsNewNode="True" />
+              <LayoutItem Id="UserName" ViewItem="UserName" Index="3" RelativeSize="17.567567567567568" CaptionLocation="Default" IsNewNode="True" />
+              <LayoutItem Id="IsActive" ViewItem="IsActive" Index="4" RelativeSize="22.972972972972972" CaptionLocation="Default" IsNewNode="True" />
             </LayoutGroup>
             <LayoutGroup Id="PermissionPolicyUser" RelativeSize="5.1282051282051286" Caption="PermissionPolicyUser" Direction="Horizontal" Removed="True">
               <LayoutItem Id="IsActive" RelativeSize="100" Index="0" Removed="True" />

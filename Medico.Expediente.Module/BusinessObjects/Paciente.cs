@@ -34,7 +34,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
             Empresa = EmpresaDeSesion();
         }
 
-        [DbType("int"), Persistent("Empresa"), XafDisplayName("Empresa")]
+        [DbType("int"), Persistent("Empresa"), XafDisplayName("Empresa"), VisibleInListView(false), VisibleInLookupListView(false)]
         public Empresa Empresa
         {
             get
@@ -104,6 +104,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         }
 
         [Persistent("Nacionalidad"), XafDisplayName("Nacionalidad")]
+        [DataSourceCriteria("[ZonaPadre] is null and [Activa] = true")]
         public ZonaGeografica Nacionalidad
         {
             get
@@ -132,6 +133,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         }
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false),
             Persistent("Asegurador"), XafDisplayName("Aseguradora")]
+        [DataSourceCriteria("[TipoPersona] == 2 && [Activo] == True && [Roles][[IdRole] == 9 And [Activo] == True]")]
         public Tercero.Module.BusinessObjects.Tercero Aseguradora
         {
             get
@@ -171,7 +173,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         }
 
 
-        [PersistentAlias("DateDiffMonth([StartTime], Now())")]
+        [PersistentAlias("DateDiffMonth([FechaNacimiento], Now())")]
         public decimal EdadMeses
         {
             get { return Convert.ToDecimal(EvaluateAlias(nameof(EdadMeses))); }

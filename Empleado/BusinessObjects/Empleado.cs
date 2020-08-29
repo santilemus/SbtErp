@@ -70,6 +70,7 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
         [ModelDefault("Caption", "Unidad"), ImmediatePostData(true), VisibleInLookupListView(false), VisibleInDetailView(true),
             VisibleInReports(true)]
         [RuleRequiredField("Empleado.CodUnidad_requerido", DefaultContexts.Save, "Unidad asignada es requerida")]
+        [DataSourceCriteria("[Empresa.Oid] == '@This.Empresa'")]
         public EmpresaUnidad Unidad
         {
             get => unidad;
@@ -136,7 +137,7 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
 
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
-        [DataSourceCriteria("ZonaPadre is null and Activa = true")]
+        [DataSourceCriteria("[ZonaPadre] is null and [Activa] = true")]
         public ZonaGeografica Nacionalidad
         {
             get => nacionalidad;

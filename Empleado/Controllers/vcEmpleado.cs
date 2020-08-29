@@ -31,11 +31,11 @@ namespace SBT.Apps.Empleado.Module.Controllers
         {
             InitializeComponent();
             // Target required Views (via the TargetXXX properties) and create their Actions.
-            //pwsaDocumentosDigitales = new PopupWindowShowAction(this, "idDocumentosDigitales", PredefinedCategory.RecordEdit);
-            //pwsaDocumentosDigitales.TargetObjectType = typeof(SBT.Apps.Empleado.Module.BusinessObjects.Empleado);
-            //pwsaDocumentosDigitales.TargetViewType = ViewType.DetailView;
-            //pwsaDocumentosDigitales.Caption = "Documentos";
-            //pwsaDocumentosDigitales.ToolTip ="Prueba de consumir servicios del gestor de documentos";
+            pwsaDocumentosDigitales = new PopupWindowShowAction(this, "idDocumentosDigitales", PredefinedCategory.RecordEdit);
+            pwsaDocumentosDigitales.TargetObjectType = typeof(SBT.Apps.Empleado.Module.BusinessObjects.Empleado);
+            pwsaDocumentosDigitales.TargetViewType = ViewType.DetailView;
+            pwsaDocumentosDigitales.Caption = "Documentos";
+            pwsaDocumentosDigitales.ToolTip = "Prueba de consumir servicios del gestor de documentos";
         }
         protected override void OnActivated()
         {
@@ -46,7 +46,7 @@ namespace SBT.Apps.Empleado.Module.Controllers
                 if (View.GetType().Name == "ListView")
                     ((ListView)View).CollectionSource.Criteria["Empresa Actual"] = new BinaryOperator("Empresa", ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid);
             }
-            //pwsaDocumentosDigitales.CustomizePopupWindowParams += pwsaDocumentosDigitales_CustomizePopupWindowsParams;
+            pwsaDocumentosDigitales.CustomizePopupWindowParams += pwsaDocumentosDigitales_CustomizePopupWindowsParams;
         }
         protected override void OnViewControlsCreated()
         {
@@ -57,7 +57,7 @@ namespace SBT.Apps.Empleado.Module.Controllers
         {
             // Unsubscribe from previously subscribed events and release other references and resources.
             base.OnDeactivated();
-            //pwsaDocumentosDigitales.CustomizePopupWindowParams -= pwsaDocumentosDigitales_CustomizePopupWindowsParams;
+            pwsaDocumentosDigitales.CustomizePopupWindowParams -= pwsaDocumentosDigitales_CustomizePopupWindowsParams;
         }
 
         private void pwsaDocumentosDigitales_CustomizePopupWindowsParams(Object sender, CustomizePopupWindowParamsEventArgs e)
@@ -100,14 +100,14 @@ namespace SBT.Apps.Empleado.Module.Controllers
                 //sWebUrl = $"http://192.168.1.104:8000/api/documents/{id}/";
                 sWebUrl = $"http://192.168.1.104:8000/api/documents/4/";
                 client.DefaultRequestHeaders.Add("Authorization", "Token " + token["token"]);
-                //MayanDocumentsReadResponse mayandocumentread = new MayanDocumentsReadResponse();
+                MayanDocumentsReadResponse mayandocumentread = new MayanDocumentsReadResponse();
                 using (var response = await client.GetAsync(sWebUrl).ConfigureAwait(false))
                 {
                     if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                    {
+                    { 
                         //string respuesta = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                         string respuesta = response.Content.ReadAsStringAsync().Result;
-                        //mayandocumentread = Newtonsoft.Json.JsonConvert.DeserializeObject<MayanDocumentsReadResponse>(respuesta);
+                        // mayandocumentread = Newtonsoft.Json.JsonConvert.DeserializeObject<MayanDocumentsReadResponse>(respuesta);
                         mayanDocumento = JsonSerializer.Deserialize<MayanDocumentsReadResponse>(respuesta,
                             new JsonSerializerOptions() { AllowTrailingCommas = true, IgnoreNullValues = true });
                     }

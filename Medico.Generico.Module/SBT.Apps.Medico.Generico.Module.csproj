@@ -106,10 +106,13 @@
     <Reference Include="DevExpress.Utils.v20.1.UI, Version=20.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraReports.v20.1, Version=20.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraReports.v20.1.Extensions, Version=20.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraScheduler.v20.1.Core, Version=20.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="System">
       <Name>System</Name>
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessObjects\CdoPercentilPesoEstaturaBMI.cs" />
@@ -130,6 +133,7 @@
     <Compile Include="BusinessObjects\MedicoListas.cs" />
     <Compile Include="BusinessObjects\PlanMedico.cs" />
     <Compile Include="BusinessObjects\PlanMedicoDetalle.cs" />
+    <Compile Include="BusinessObjects\RecursoMedico.cs" />
     <Compile Include="BusinessObjects\Regla.cs" />
     <Compile Include="BusinessObjects\TablaIMC.cs" />
     <Compile Include="BusinessObjects\TerminologiaAnatomica.cs" />

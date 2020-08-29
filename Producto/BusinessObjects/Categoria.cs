@@ -62,7 +62,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         private System.Boolean activa = true;
         private System.String nombre;
         private System.String codigo;
-        [Persistent(nameof(Nivel)), DbType("smallint")]
+        [Persistent(nameof(Nivel)), DbType("smallint"), FetchOnly]
         private int nivel = 1;
 
         public Categoria(DevExpress.Xpo.Session session)

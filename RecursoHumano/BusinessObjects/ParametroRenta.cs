@@ -111,7 +111,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         [DbType("money"), Persistent(nameof(Porcentaje))]
 #endif
         [XafDisplayName("Porcentaje"), RuleValueComparison("ParametroRenta.Porcentaje >= 0", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual, 0,
-            SkipNullOrEmptyValues = false), Index(7), ModelDefault("DisplayFormat", "{0:P2}"), ModelDefault("EditMask", "{0:P2}")]
+            SkipNullOrEmptyValues = false), Index(7), ModelDefault("DisplayFormat", "{0:P2}"), ModelDefault("EditMask", "p2")]
         public decimal Porcentaje
         {
             get => porcentaje;

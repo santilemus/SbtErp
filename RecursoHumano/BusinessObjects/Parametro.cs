@@ -53,14 +53,8 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         [DetailViewLayout(LayoutColumnPosition.Left, LayoutGroupType.SimpleEditorsGroup)]
         public Empresa Empresa
         {
-            get
-            {
-                return empresa;
-            }
-            set
-            {
-                SetPropertyValue("Empresa", ref empresa, value);
-            }
+            get => empresa;
+            set => SetPropertyValue("Empresa", ref empresa, value);
         }
 
         decimal sueldoMinimo;
@@ -75,14 +69,8 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         [DetailViewLayout(LayoutColumnPosition.Left, LayoutGroupType.SimpleEditorsGroup)]
         public decimal SueldoMinimo
         {
-            get
-            {
-                return sueldoMinimo;
-            }
-            set
-            {
-                SetPropertyValue("SueldoMinimo", ref sueldoMinimo, value);
-            }
+            get => sueldoMinimo;
+            set => SetPropertyValue("SueldoMinimo", ref sueldoMinimo, value);
         }
 
         decimal minimoDiario;
@@ -97,14 +85,8 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         [DetailViewLayout(LayoutColumnPosition.Left, LayoutGroupType.SimpleEditorsGroup)]
         public decimal MinimoDiario
         {
-            get
-            {
-                return minimoDiario;
-            }
-            set
-            {
-                SetPropertyValue("MinimoDiario", ref minimoDiario, value);
-            }
+            get => minimoDiario;
+            set => SetPropertyValue("MinimoDiario", ref minimoDiario, value);
         }
 
         decimal salarioMaxSeguro;
@@ -119,14 +101,8 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         [DetailViewLayout(LayoutColumnPosition.Left, LayoutGroupType.SimpleEditorsGroup)]
         public decimal SalarioMaxSeguro
         {
-            get
-            {
-                return salarioMaxSeguro;
-            }
-            set
-            {
-                SetPropertyValue("SalarioMaxSeguro", ref salarioMaxSeguro, value);
-            }
+            get => salarioMaxSeguro;
+            set => SetPropertyValue("SalarioMaxSeguro", ref salarioMaxSeguro, value);
         }
 
         decimal salarioMaxPrevision;
@@ -141,17 +117,11 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         [DetailViewLayout(LayoutColumnPosition.Left, LayoutGroupType.SimpleEditorsGroup)]
         public decimal SalarioMaxPrevision
         {
-            get
-            {
-                return salarioMaxPrevision;
-            }
-            set
-            {
-                SetPropertyValue("SalarioMaxPrevision", ref salarioMaxPrevision, value);
-            }
+            get => salarioMaxPrevision;
+            set => SetPropertyValue("SalarioMaxPrevision", ref salarioMaxPrevision, value);
         }
 
-        decimal porcSeguroEmpleado;
+        decimal porcentajeSeguroEmpleado;
 #if (Firebird)
         [DbType("numeric(6,3)"), Persistent("PORC_SSOCIAL_EMPLE")]
 #else
@@ -161,19 +131,13 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
             RuleValueComparison("Parametro.PorcSeguroEmpleado >= 0", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual, 0, SkipNullOrEmptyValues = false),
             ModelDefault("DisplayFormat", "{0:N3}"), ModelDefault("EditMask", "n3"), Index(10)]
         [DetailViewLayout(LayoutColumnPosition.Left, LayoutGroupType.SimpleEditorsGroup)]
-        public decimal PorcSeguroEmpleado
+        public decimal PorcentajeSeguroEmpleado
         {
-            get
-            {
-                return porcSeguroEmpleado;
-            }
-            set
-            {
-                SetPropertyValue("PorcSeguroEmpleado", ref porcSeguroEmpleado, value);
-            }
+            get => porcentajeSeguroEmpleado;
+            set => SetPropertyValue(nameof(PorcentajeSeguroEmpleado), ref porcentajeSeguroEmpleado, value);
         }
 
-        decimal porcSeguroPatrono;
+        decimal porcentajeSeguroPatrono;
 #if (Firebird)
         [DbType("numeric(6,3)"), Persistent("PORC_SSOCIAL_PATRONO")]
 #else
@@ -183,16 +147,10 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
             RuleValueComparison("Parametro.PorcSeguroPatrono >= 0", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual, 0, SkipNullOrEmptyValues = false),
             ModelDefault("DisplayFormat", "{0:N3}"), ModelDefault("EditMask", "n3"), Index(11)]
         [DetailViewLayout(LayoutColumnPosition.Left, LayoutGroupType.SimpleEditorsGroup)]
-        public decimal PorcSeguroPatrono
+        public decimal PorcentajeSeguroPatrono
         {
-            get
-            {
-                return porcSeguroPatrono;
-            }
-            set
-            {
-                SetPropertyValue("PorcSeguroPatrono", ref porcSeguroPatrono, value);
-            }
+            get => porcentajeSeguroPatrono;
+            set => SetPropertyValue(nameof(PorcentajeSeguroPatrono), ref porcentajeSeguroPatrono, value);
         }
 
         int minDiasTrabVacacion;
@@ -207,14 +165,8 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         [DetailViewLayout(LayoutColumnPosition.Left, LayoutGroupType.SimpleEditorsGroup)]
         public int MinDiasTrabVacacion
         {
-            get
-            {
-                return minDiasTrabVacacion;
-            }
-            set
-            {
-                SetPropertyValue("MinDiasTrabVacacion", ref minDiasTrabVacacion, value);
-            }
+            get => minDiasTrabVacacion;
+            set => SetPropertyValue("MinDiasTrabVacacion", ref minDiasTrabVacacion, value);
         }
 
         int diasVacacion;
@@ -229,14 +181,8 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         [DetailViewLayout(LayoutColumnPosition.Left, LayoutGroupType.SimpleEditorsGroup)]
         public int DiasVacacion
         {
-            get
-            {
-                return diasVacacion;
-            }
-            set
-            {
-                SetPropertyValue("DiasVacacion", ref diasVacacion, value);
-            }
+            get => diasVacacion;
+            set => SetPropertyValue("DiasVacacion", ref diasVacacion, value);
         }
 
         DateTime? fechaCalcAguinaldo;
@@ -251,14 +197,8 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         [DetailViewLayout(LayoutColumnPosition.Right, LayoutGroupType.SimpleEditorsGroup)]
         public DateTime? FechaCalcAguinaldo
         {
-            get
-            {
-                return fechaCalcAguinaldo;
-            }
-            set
-            {
-                SetPropertyValue("FechaCalcAguinaldo", ref fechaCalcAguinaldo, value);
-            }
+            get => fechaCalcAguinaldo;
+            set => SetPropertyValue("FechaCalcAguinaldo", ref fechaCalcAguinaldo, value);
         }
 
         // NOTA: Para el aguinaldo hacer una tabla (porcentajes) y ver si se incluye alli la fecha de calculo o se borra
@@ -277,14 +217,8 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         [DetailViewLayout(LayoutColumnPosition.Right, LayoutGroupType.SimpleEditorsGroup)]
         public int MinDiasAguinaldoProp
         {
-            get
-            {
-                return minDiasAguinaldoProp;
-            }
-            set
-            {
-                SetPropertyValue("MinDiasAguinaldoProp", ref minDiasAguinaldoProp, value);
-            }
+            get => minDiasAguinaldoProp;
+            set => SetPropertyValue("MinDiasAguinaldoProp", ref minDiasAguinaldoProp, value);
         }
 
         int minDiasAguinaldoComp;
@@ -300,14 +234,8 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         [DetailViewLayout(LayoutColumnPosition.Right, LayoutGroupType.SimpleEditorsGroup)]
         public int MinDiasAguinaldoComp
         {
-            get
-            {
-                return minDiasAguinaldoComp;
-            }
-            set
-            {
-                SetPropertyValue("MinDiasAguinaldoComp", ref minDiasAguinaldoComp, value);
-            }
+            get => minDiasAguinaldoComp;
+            set => SetPropertyValue("MinDiasAguinaldoComp", ref minDiasAguinaldoComp, value);
         }
 
         decimal porcentajeBono;
@@ -322,14 +250,8 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         [DetailViewLayout(LayoutColumnPosition.Right, LayoutGroupType.SimpleEditorsGroup)]
         public decimal PorcentajeBono
         {
-            get
-            {
-                return porcentajeBono;
-            }
-            set
-            {
-                SetPropertyValue("PorcentajeBono", ref porcentajeBono, value);
-            }
+            get => porcentajeBono;
+            set => SetPropertyValue("PorcentajeBono", ref porcentajeBono, value);
         }
 
         DateTime fechaInicioBono;
@@ -344,14 +266,8 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         [DetailViewLayout(LayoutColumnPosition.Right, LayoutGroupType.SimpleEditorsGroup)]
         public DateTime FechaInicioBono
         {
-            get
-            {
-                return fechaInicioBono;
-            }
-            set
-            {
-                SetPropertyValue("FechaInicioBono", ref fechaInicioBono, value);
-            }
+            get => fechaInicioBono;
+            set => SetPropertyValue("FechaInicioBono", ref fechaInicioBono, value);
         }
 
         DateTime fechaCalcBono;
@@ -367,14 +283,8 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         [DetailViewLayout(LayoutColumnPosition.Right, LayoutGroupType.SimpleEditorsGroup)]
         public DateTime FechaCalcBono
         {
-            get
-            {
-                return fechaCalcBono;
-            }
-            set
-            {
-                SetPropertyValue("FechaCalcBono", ref fechaCalcBono, value);
-            }
+            get => fechaCalcBono;
+            set => SetPropertyValue("FechaCalcBono", ref fechaCalcBono, value);
         }
 
         int minDiasBonoProp;
@@ -389,14 +299,8 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         [DetailViewLayout(LayoutColumnPosition.Right, LayoutGroupType.SimpleEditorsGroup)]
         public int MinDiasBonoProp
         {
-            get
-            {
-                return minDiasBonoProp;
-            }
-            set
-            {
-                SetPropertyValue("MinDiasBonoProp", ref minDiasBonoProp, value);
-            }
+            get => minDiasBonoProp;
+            set => SetPropertyValue("MinDiasBonoProp", ref minDiasBonoProp, value);
         }
 
         int minDiasBonoComp;
@@ -412,14 +316,8 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         [DetailViewLayout(LayoutColumnPosition.Right, LayoutGroupType.SimpleEditorsGroup)]
         public int MinDiasBonoComp
         {
-            get
-            {
-                return minDiasBonoComp;
-            }
-            set
-            {
-                SetPropertyValue("MinDiasBonoComp", ref minDiasBonoComp, value);
-            }
+            get => minDiasBonoComp;
+            set => SetPropertyValue("MinDiasBonoComp", ref minDiasBonoComp, value);
         }
 
         int noAusencias;
@@ -434,14 +332,8 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         [DetailViewLayout(LayoutColumnPosition.Right, LayoutGroupType.SimpleEditorsGroup)]
         public int NoAusencias
         {
-            get
-            {
-                return noAusencias;
-            }
-            set
-            {
-                SetPropertyValue("NoAusencias", ref noAusencias, value);
-            }
+            get => noAusencias;
+            set => SetPropertyValue("NoAusencias", ref noAusencias, value);
         }
 
         int diasMaxLicencia;
@@ -456,14 +348,8 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         [DetailViewLayout(LayoutColumnPosition.Right, LayoutGroupType.SimpleEditorsGroup)]
         public int DiasMaxLicencia
         {
-            get
-            {
-                return diasMaxLicencia;
-            }
-            set
-            {
-                SetPropertyValue("DiasMaxLicencia", ref diasMaxLicencia, value);
-            }
+            get => diasMaxLicencia;
+            set => SetPropertyValue("DiasMaxLicencia", ref diasMaxLicencia, value);
         }
 
         int diasLicMatrimonio;
@@ -478,14 +364,8 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         [DetailViewLayout(LayoutColumnPosition.Right, LayoutGroupType.SimpleEditorsGroup)]
         public int DiasLicMatrimonio
         {
-            get
-            {
-                return diasLicMatrimonio;
-            }
-            set
-            {
-                SetPropertyValue("DiasLicMatrimonio", ref diasLicMatrimonio, value);
-            }
+            get => diasLicMatrimonio;
+            set => SetPropertyValue("DiasLicMatrimonio", ref diasLicMatrimonio, value);
         }
 
         int diasLicMuerte;
@@ -500,14 +380,8 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         [DetailViewLayout(LayoutColumnPosition.Right, LayoutGroupType.SimpleEditorsGroup)]
         public int DiasLicMuerte
         {
-            get
-            {
-                return diasLicMuerte;
-            }
-            set
-            {
-                SetPropertyValue("DiasLicMuerte", ref diasLicMuerte, value);
-            }
+            get => diasLicMuerte;
+            set => SetPropertyValue("DiasLicMuerte", ref diasLicMuerte, value);
         }
 
         int diasLicNatilidad;
@@ -522,15 +396,13 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         [DetailViewLayout(LayoutColumnPosition.Right, LayoutGroupType.SimpleEditorsGroup)]
         public int DiasLicNatilidad
         {
-            get
-            {
-                return diasLicNatilidad;
-            }
-            set
-            {
-                SetPropertyValue("DiasLicNatilidad", ref diasLicNatilidad, value);
-            }
+            get => diasLicNatilidad;
+            set => SetPropertyValue("DiasLicNatilidad", ref diasLicNatilidad, value);
         }
+
+
+        [PersistentAlias("[SalarioMaxSeguro] * [PorcentajeSeguroEmpleado]"), Browsable(false)]
+        public decimal CotizacionMaximaSeguro => Convert.ToDecimal(EvaluateAlias(nameof(CotizacionMaximaSeguro)));
 
         #endregion
 

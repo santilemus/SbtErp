@@ -32,12 +32,10 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         public override void AfterConstruction()
         {
             base.AfterConstruction();
-            //Fecha = DateTime.Now;
             SePresento = false;
         }
 
         private Paciente _paciente;
-        //private SBT.Apps.Medico.Generico.Module.BusinessObjects.Medico _medico;
         private System.Boolean _sePresento;
         private System.String _motivo;
         private System.String _nombre;
@@ -46,21 +44,10 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         {
         }
 
-        //[DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
-        //[RuleRequiredField("Cita.Medico_Requerido", "Save")]
-        //public SBT.Apps.Medico.Generico.Module.BusinessObjects.Medico Medico
-        //{
-        //    get => _medico;
-        //    set => SetPropertyValue("Medico", ref _medico, value);
-        //}
-
         [DevExpress.Xpo.AssociationAttribute("Paciente-Citas")]
         public Paciente Paciente
         {
-            get
-            {
-                return _paciente;
-            }
+            get => _paciente;
             set
             {
                 var oldValue = _paciente;
@@ -74,42 +61,25 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         [RuleRequiredField("Cita.Nombre_Requerido", "Save"), Size(100), DbType("varchar(100)")]
         public System.String Nombre
         {
-            get
-            {
-                return _nombre;
-            }
-            set
-            {
-                SetPropertyValue("Nombre", ref _nombre, value);
-            }
+            get => _nombre;
+            set => SetPropertyValue("Nombre", ref _nombre, value);
         }
 
         [DevExpress.Xpo.SizeAttribute(250)]
         [RuleRequiredField("Cita.Motivo_Requerido", "Save")]
         public System.String Motivo
         {
-            get
-            {
-                return _motivo;
-            }
-            set
-            {
-                SetPropertyValue("Motivo", ref _motivo, value);
-            }
+            get => _motivo;
+            set => SetPropertyValue("Motivo", ref _motivo, value);
         }
 
         [RuleRequiredField("Cita.SePresento_Requerido", "Save")]
         public System.Boolean SePresento
         {
-            get
-            {
-                return _sePresento;
-            }
-            set
-            {
-                SetPropertyValue("SePresento", ref _sePresento, value);
-            }
+            get => _sePresento;
+            set => SetPropertyValue("SePresento", ref _sePresento, value);
         }
 
     }
+
 }
