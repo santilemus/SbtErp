@@ -15,9 +15,11 @@ using SBT.Apps.Base.Module.BusinessObjects;
 
 namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 {
+    /// <summary>
+    /// BO que corresponde a las vacunas. Se relaciona con el BO Medicamentos y por lo tanto a Producto
+    /// </summary>
     [DefaultClassOptions, Persistent("Vacuna"), DefaultProperty("Nombre"), ModelDefault("Caption", "Vacuna"), NavigationItem("Salud"),]
     [ImageName(nameof(Vacuna))]
-    // OJO. PENDIENTE VINCULARLA CON PRODUCTOS. ESTA ES LA INFORMACION TECNICA DE LA VACUNA, AHORA FALTA VINCULARLA AL PRODUCTO
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class Vacuna : XPObjectBaseBO
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
@@ -77,7 +79,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
         }
 
 
-        [Size(200), DbType("varchar(200)"), Persistent("DescripcionCPT"), XafDisplayName("Descripción CPT")]
+        [Size(200), DbType("varchar(250)"), Persistent("DescripcionCPT"), XafDisplayName("Descripción CPT")]
         public string DescripcionCPT
         {
             get => descripcionCPT;
@@ -91,14 +93,6 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
             get => comentario;
             set => SetPropertyValue(nameof(Comentario), ref comentario, value);
         }
-        //private string _PersistentProperty;
-        //[XafDisplayName("My display name"), ToolTip("My hint message")]
-        //[ModelDefault("EditMask", "(000)-00"), Index(0), VisibleInListView(false)]
-        //[Persistent("DatabaseColumnName"), RuleRequiredField(DefaultContexts.Save)]
-        //public string PersistentProperty {
-        //    get { return _PersistentProperty; }
-        //    set { SetPropertyValue("PersistentProperty", ref _PersistentProperty, value); }
-        //}
 
         //[Action(Caption = "My UI Action", ConfirmationMessage = "Are you sure?", ImageName = "Attention", AutoCommit = true)]
         //public void ActionMethod() {

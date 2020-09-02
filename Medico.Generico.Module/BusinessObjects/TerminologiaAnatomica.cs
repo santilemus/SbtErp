@@ -30,7 +30,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 
         #region Propiedades
 
-        MedicoListas categoria;
+        MedicoLista categoria;
         string terminoAnatomico;
         string codigoFMA;
         string codigoTA;
@@ -66,7 +66,8 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
         [Size(10), DbType("varchar(10)"), XafDisplayName("Categoría"),
             RuleRequiredField("TerminologiaAnatomica.Categoria_Requerida", "Save")]       
         [Association("MedicoListas-TerminologiaAnatomicas")]
-        public MedicoListas Categoria
+        [DataSourceCriteria("[Categoria] == 1")]
+        public MedicoLista Categoria
         {
             get => categoria;
             set => SetPropertyValue(nameof(Categoria), ref categoria, value);

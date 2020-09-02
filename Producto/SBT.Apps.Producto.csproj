@@ -169,7 +169,7 @@
     <EmbeddedResource Include="Images\ProductoEnsamble_32x32.png" />
     <EmbeddedResource Include="Images\ProductoEquivalente.png" />
     <EmbeddedResource Include="Images\ProductoEquivalente_32x32.png" />
-    <EmbeddedResource Include="Images\ProductoImpuesto.png" />
+    <EmbeddedResource Include="Images\Tributo.png" />
     <EmbeddedResource Include="Images\ProductoImpuesto_32x32.png" />
     <EmbeddedResource Include="Images\ProductoLote.png" />
     <EmbeddedResource Include="Images\ProductoLote_32x32.png" />

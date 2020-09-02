@@ -12,6 +12,9 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
     /// <summary>
     /// Objeto Persistente que representa los Impuestos que se aplican a cada producto
     /// </summary>
+    /// <remarks>
+    /// Se reemplaza por los BO Tributo y TributoProducto. Borrar cuando ya no sea necesario
+    /// </remarks>
     [DefaultClassOptions]
     [ImageName(nameof(ProductoImpuesto))]
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Impuesto"), NavigationItem(false), ModelDefault("Caption", "Impuesto"),

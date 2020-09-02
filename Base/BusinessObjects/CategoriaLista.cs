@@ -1,15 +1,16 @@
 ﻿using DevExpress.ExpressApp.DC;
+using DevExpress.Persistent.Base;
 using System;
 
 namespace SBT.Apps.Base.Module.BusinessObjects
 {
     public enum CategoriaLista
     {
-        /// <summary>
-        /// DISPONIBLE, REUTILIZAR CON OTRA COSA, CAMBIAR EL DISPLAYNAME Y LA ETIQUETA DEL ITEM DEL ENUM
-        /// </summary>
-        ///[XafDisplayName("Clasificacion Profesiones")]
-        ///ClasificacionProfesion = 1,
+        // <summary>
+        // DISPONIBLE, REUTILIZAR CON OTRA COSA, CAMBIAR EL DISPLAYNAME Y LA ETIQUETA DEL ITEM DEL ENUM
+        // </summary>
+        //[XafDisplayName("Clasificacion Profesiones")]
+        //ClasificacionProfesion = 1,
 
         /// <summary>
         /// Tipos de sangre. Manera de codificarlos:  GSAXXXXXXXX. Ejemplos: GSA01
@@ -17,11 +18,12 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [XafDisplayName("Grupo Sanguineo")]
         GrupoSanguineo = 2,
 
-        /// <summary>
-        /// Catálogos de membresías. Manera de codificarlos: MBR-XXXXXXXX. Ejemplos: MBR-0001 --> Colegio Medico, MBR-0002 --> Sociedad de Bufalos Mojados
-        /// </summary>
-        [XafDisplayName("Membresías")]
-        Membresia = 3,
+         ///<summary>
+         /// Tipos de Garantía válida que puede presentar un tercero que es cliente al recibir credito
+         ///</summary>
+        [XafDisplayName("Tipo Garantía")]
+        [ToolTip("Tipos de Garantía válidos, cuando se vincula a un tercero que es cliente")]
+        TipoGarantia = 3,
 
         /// <summary>
         /// Tipos de seguros. Manera de codificarlos. SEGXXXXXXXX. Ejemplo: SEG001 --> Medico Hospitalario, SEG002 --> Seguro Medico colectivo, etc

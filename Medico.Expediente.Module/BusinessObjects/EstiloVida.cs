@@ -43,7 +43,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         EEstadoEstiloVida estado;
         string descripcion;
         Paciente paciente;
-        MedicoListas factor;
+        MedicoLista factor;
 
 
         [Association("Paciente-EstilosVida"), Persistent("Paciente"), XafDisplayName("Paciente"), Index(0)]
@@ -56,7 +56,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         [DataSourceCriteria("[Categoria] = 9")]  // 9 es estilo de vida
         [Size(10), DbType("varchar(10)"), Persistent("Factor"), XafDisplayName("Factor"), ToolTip("Clasificación del habito de estilo de vida"),
             Index(1)]
-        public MedicoListas Factor
+        public MedicoLista Factor
         {
             get => factor;
             set => SetPropertyValue(nameof(Factor), ref factor, value);

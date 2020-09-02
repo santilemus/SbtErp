@@ -36,7 +36,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 		
 		private System.String _comentario;
 		private System.Boolean _activo;
-		private MedicoListas _categoria;
+		private MedicoLista _categoria;
 		private System.String _nombre;
 		public Examen(DevExpress.Xpo.Session session): base(session)
 		{
@@ -59,7 +59,8 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 		[DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(true)]
 		[DevExpress.Persistent.Base.ImmediatePostDataAttribute]
 		[RuleRequiredField("Examen.IdCategoria_Requerido", "Save")]
-		public MedicoListas Categoria
+        [DataSourceCriteria("[Categoria] == 8")]
+		public MedicoLista Categoria
 		{
             get => _categoria;
 		    set => SetPropertyValue("Categoria", ref _categoria, value);

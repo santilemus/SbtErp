@@ -30,10 +30,10 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         public override void AfterConstruction()
         {
             base.AfterConstruction();
-            var obj = Session.GetObjectByKey<MedicoListas>("PM01");
+            var obj = Session.GetObjectByKey<MedicoLista>("PM01");
             if (obj != null)
                 Tipo = obj;
-            obj = Session.GetObjectByKey<MedicoListas>("PMF07");
+            obj = Session.GetObjectByKey<MedicoLista>("PMF07");
             if (obj != null)
                 Frecuencia = obj;
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
@@ -41,13 +41,13 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 
         #region Propiedades
 
-        MedicoListas resultado;
-        MedicoListas reaccion;
-        MedicoListas gravedad;
+        MedicoLista resultado;
+        MedicoLista reaccion;
+        MedicoLista gravedad;
         string titulo;
-        MedicoListas tipo;
+        MedicoLista tipo;
         string comentario;
-        MedicoListas frecuencia;
+        MedicoLista frecuencia;
         DateTime fechaFin;
         DateTime fechaInicio;
         Enfermedad diagnostico;
@@ -63,7 +63,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         [DbType("varchar(10)"), Persistent("Tipo"), XafDisplayName("Tipo"), RuleRequiredField("ProblemaMedico.Tipo_Requerido", DefaultContexts.Save)]
         [DataSourceCriteria("[Categoria] = 10 And [Activo] = true"), Index(1)]   // Problema Medico
         [ToolTip("Tipo de Problema Medico")]
-        public MedicoListas Tipo
+        public MedicoLista Tipo
         {
             get => tipo;
             set => SetPropertyValue(nameof(Tipo), ref tipo, value);
@@ -108,7 +108,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 
         [Persistent("Frecuencia"), XafDisplayName("Frecuencia")]
         [DataSourceCriteria("[Categoria] = 14 And [Activo] = true")]  // lista de valores de Periodicidad
-        public MedicoListas Frecuencia
+        public MedicoLista Frecuencia
         {
             get => frecuencia;
             set => SetPropertyValue(nameof(Frecuencia), ref frecuencia, value);
@@ -117,7 +117,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 
         [DbType("varchar(10)"), Persistent("Gravedad"), XafDisplayName("Gravedad")]
         [DataSourceCriteria("[Categoria] = 11 And [Activo] = true")]  // lista de valores de Gravedad
-        public MedicoListas Gravedad
+        public MedicoLista Gravedad
         {
             get => gravedad;
             set => SetPropertyValue(nameof(Gravedad), ref gravedad, value);
@@ -126,7 +126,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 
         [DbType("varchar(10)"), Persistent("Reaccion"), XafDisplayName("Reacción")]
         [DataSourceCriteria("[Categoria] = 12 And [Activo] = true")]   // lista de valores de reaccion
-        public MedicoListas Reaccion
+        public MedicoLista Reaccion
         {
             get => reaccion;
             set => SetPropertyValue(nameof(Reaccion), ref reaccion, value);
@@ -142,7 +142,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         
         [DbType("varchar(10)"), Persistent("Resultado"), XafDisplayName("Resultado")]
         [DataSourceCriteria("[Categoria] = 13 And [Activo] = true")]   // lista de valores de resultado de problemas medico
-        public MedicoListas Resultado
+        public MedicoLista Resultado
         {
             get => resultado;
             set => SetPropertyValue(nameof(Resultado), ref resultado, value);

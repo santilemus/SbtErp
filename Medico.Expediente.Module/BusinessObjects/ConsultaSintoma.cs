@@ -37,14 +37,15 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         private System.DateTime _fechaInicio;
         private System.String _descripcion;
         private System.String _nombre;
-        private MedicoListas _intensidad;
+        private MedicoLista _intensidad;
         public ConsultaSintoma(DevExpress.Xpo.Session session)
           : base(session)
         {
         }
 
         [RuleRequiredField("ConsultaSintoma.Intensidad_Requerido", "Save")]
-        public MedicoListas Intensidad
+        [DataSourceCriteria("[Categoria] == 2")]
+        public MedicoLista Intensidad
         {
             get
             {

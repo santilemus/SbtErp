@@ -42,13 +42,13 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         private System.String _frecuencia;
         private System.String _dosis;
         private Tercero.Module.BusinessObjects.Tercero _farmaceutica;
-        private MedicoListas _viaAdministracion;
+        private MedicamentoVia _viaAdministracion;
         public ConsultaReceta(DevExpress.Xpo.Session session)
           : base(session)
         {
         }
 
-        [RuleRequiredField("ConsultaReceta.Medicamento_Requerido", "Save")]
+        [RuleRequiredField("ConsultaReceta.Medicamento_Requerido", "Save"), ImmediatePostData(true), XafDisplayName("Medicamento")]
         public Medicamento Medicamento
         {
             get
@@ -62,7 +62,8 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         }
 
         [RuleRequiredField("ConsultaReceta.ViaAdministracion_Requerido", "Save")]
-        public MedicoListas ViaAdministracion
+        [DataSourceProperty("Medicamento.Vias"), ImmediatePostData(true)]
+        public MedicamentoVia ViaAdministracion
         {
             get
             {

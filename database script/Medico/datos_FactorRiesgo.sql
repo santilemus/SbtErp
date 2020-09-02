@@ -1,0 +1,22 @@
+ insert into FactorRiesgo 
+        (Diagnostico, Descripcion, FechaCrea, UsuarioCrea)
+ values (697, 'Venas Varicosas', current_timestamp, 'Admin'),
+        (639, 'Hipertension', current_timestamp, 'Admin'),
+		(350, 'Diabetes', current_timestamp, 'Admin'),
+		(314, 'Trastornos Falciformes', current_timestamp, 'Admin'),
+		(null, 'Fibromas', current_timestamp, 'Admin'),
+		(null, 'Enfermedad Pelvica Inflamatoria (PID)', current_timestamp, 'Admin'),
+		(522, 'Migraña', current_timestamp, 'Admin'),
+        (null, 'Enfermedad del Corazón', current_timestamp, 'Admin'),
+		(null, 'Trombosis/Derrame Cerebral', current_timestamp, 'Admin'),
+		(null, 'Hepatitis', current_timestamp, 'Admin'),
+		(null, 'Afección de la Besicula Biliar', current_timestamp, 'Admin'),
+		(null, 'Enfermedad en las mamas', current_timestamp, 'Admin'),
+		(null, 'Depresión', current_timestamp, 'Admin'),
+		(null, 'Alergias', current_timestamp, 'Admin'),
+		(null, 'Infertilidad', current_timestamp, 'Admin'),
+		(742, 'Asma', current_timestamp, 'Admin'),
+		(520, 'Epilepsia', current_timestamp, 'Admin'),
+		(null, 'Lentes de Contacto', current_timestamp, 'Admin'),
+		(null, 'Complicación Anticonceptivos', current_timestamp, 'Admin'),
+		(null, 'Otros', current_timestamp, 'Admin')

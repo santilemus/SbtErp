@@ -12,25 +12,18 @@ using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.BaseImpl;
 using DevExpress.Persistent.Validation;
 using SBT.Apps.Base.Module.BusinessObjects;
-using SBT.Apps.Producto.Module.BusinessObjects;
 
-namespace SBT.Apps.Facturacion.Module.BusinessObjects
+namespace SBT.Apps.Empleado.Module.BusinessObjects
 {
-    /// <summary>
-    /// BO TributoProduto
-    /// Es la relacion entre los tributos y los productos a los cuales se aplican
-    /// </summary>
-    /// <remarks>
-    /// Debe moverse a Productos. Y dinamicamente tendra que manejarse la relacion con la venta, hay que ver el impacto
-    /// </remarks> 
-    [DefaultClassOptions, ModelDefault("Caption", "Productos"), NavigationItem(false), CreatableItem(false), 
-        DefaultProperty(nameof(Producto)), Persistent(nameof(TributoProducto))]
+    [DefaultClassOptions, ModelDefault("Caption", "Asociación Profesional"), NavigationItem("Recurso Humano"), 
+        Persistent("AsociacionProfesional"), CreatableItem(false), DefaultProperty(nameof(Nombre))]
     //[ImageName("BO_Contact")]
+    //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
-    public class TributoProducto : XPObjectBaseBO
+    public class AsociacionProfesional : XPObjectBaseBO
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
-        public TributoProducto(Session session)
+        public AsociacionProfesional(Session session)
             : base(session)
         {
         }
@@ -42,25 +35,42 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
 
         #region Propiedades
 
-        Tributo tributo;
-        Producto.Module.BusinessObjects.Producto producto;
+        bool activa;
+        string telefono;
+        string direccion;
+        string nombre;
 
-        [XafDisplayName("Producto"), Index(0), RuleRequiredField("TributoProducto.Producto_Requerido", DefaultContexts.Save)]
-        public Producto.Module.BusinessObjects.Producto Producto
+        [Size(100), DbType("varchar(100)"), XafDisplayName("Nombre"), RuleRequiredField("AsociacionProfesional.Nombre_Requerido", "Save")]
+        public string Nombre
         {
-            get => producto;
-            set => SetPropertyValue(nameof(Producto), ref producto, value);
+            get => nombre;
+            set => SetPropertyValue(nameof(Nombre), ref nombre, value);
         }
 
-        
-        [Association("Tributo-Productos"), XafDisplayName("Tributo")]
-        public Tributo Tributo
+
+        [Size(150), DbType("varchar(150)"), XafDisplayName("Dirección"), VisibleInLookupListView(false)]
+        public string Direccion
         {
-            get => tributo;
-            set => SetPropertyValue(nameof(Tributo), ref tributo, value);
+            get => direccion;
+            set => SetPropertyValue(nameof(Direccion), ref direccion, value);
         }
 
-        #endregion
+
+        [Size(25), DbType("varchar(25)"), XafDisplayName("Teléfono"), VisibleInLookupListView(false)]
+        public string Telefono
+        {
+            get => telefono;
+            set => SetPropertyValue(nameof(Telefono), ref telefono, value);
+        }
+
+        [DbType("bit"), XafDisplayName("Activa"), VisibleInLookupListView(true)]
+        public bool Activa
+        {
+            get => activa;
+            set => SetPropertyValue(nameof(Activa), ref activa, value);
+        }
+
+        #endregion 
 
         //[Action(Caption = "My UI Action", ConfirmationMessage = "Are you sure?", ImageName = "Attention", AutoCommit = true)]
         //public void ActionMethod() {

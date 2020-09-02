@@ -12,25 +12,24 @@ using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.BaseImpl;
 using DevExpress.Persistent.Validation;
 using SBT.Apps.Base.Module.BusinessObjects;
-using SBT.Apps.Producto.Module.BusinessObjects;
+using SBT.Apps.Medico.Generico.Module.BusinessObjects;
 
-namespace SBT.Apps.Facturacion.Module.BusinessObjects
+namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 {
     /// <summary>
-    /// BO TributoProduto
-    /// Es la relacion entre los tributos y los productos a los cuales se aplican
+    /// BO que corresponde a las vías de administración de los medicamentos
     /// </summary>
-    /// <remarks>
-    /// Debe moverse a Productos. Y dinamicamente tendra que manejarse la relacion con la venta, hay que ver el impacto
-    /// </remarks> 
-    [DefaultClassOptions, ModelDefault("Caption", "Productos"), NavigationItem(false), CreatableItem(false), 
-        DefaultProperty(nameof(Producto)), Persistent(nameof(TributoProducto))]
+
+    [DefaultClassOptions, NavigationItem(false), ModelDefault("Caption", "Vía Administración"), CreatableItem(false), 
+        DefaultProperty(nameof(Via))]
     //[ImageName("BO_Contact")]
+    //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
+    //[Persistent("DatabaseTableName")]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
-    public class TributoProducto : XPObjectBaseBO
+    public class MedicamentoVia : XPObjectBaseBO
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
-        public TributoProducto(Session session)
+        public MedicamentoVia(Session session)
             : base(session)
         {
         }
@@ -42,22 +41,22 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
 
         #region Propiedades
 
-        Tributo tributo;
-        Producto.Module.BusinessObjects.Producto producto;
+        Medicamento medicamento;
+        MedicoLista via;
 
-        [XafDisplayName("Producto"), Index(0), RuleRequiredField("TributoProducto.Producto_Requerido", DefaultContexts.Save)]
-        public Producto.Module.BusinessObjects.Producto Producto
+        [Association("Medicamento-Vias"), XafDisplayName("Medicamento"), Index(0)]
+        public Medicamento Medicamento
         {
-            get => producto;
-            set => SetPropertyValue(nameof(Producto), ref producto, value);
+            get => medicamento;
+            set => SetPropertyValue(nameof(Medicamento), ref medicamento, value);
         }
 
-        
-        [Association("Tributo-Productos"), XafDisplayName("Tributo")]
-        public Tributo Tributo
+        [DataSourceCriteria("[Categoria] == 6"), XafDisplayName("Vía Administración"), Index(1),
+            RuleRequiredField("MedicamentoVia.Via_Requerido", "Save")]
+        public MedicoLista Via
         {
-            get => tributo;
-            set => SetPropertyValue(nameof(Tributo), ref tributo, value);
+            get => via;
+            set => SetPropertyValue(nameof(Via), ref via, value);
         }
 
         #endregion

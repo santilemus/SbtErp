@@ -20,10 +20,10 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
     [DevExpress.Persistent.Base.NavigationItem("Salud")]
     [DevExpress.Persistent.Base.ImageName("list-key")]
     [Persistent("MedLista")]
-    [RuleIsReferenced("MedicoListas_Referencia", DefaultContexts.Delete, typeof(MedicoListas), nameof(Codigo),
+    [RuleIsReferenced("MedicoListas_Referencia", DefaultContexts.Delete, typeof(MedicoLista), nameof(Codigo),
         MessageTemplateMustBeReferenced = "Para borrar el objeto '{TargetObject}', debe estar seguro que no es utilizado (referenciado) en ningún lugar.",
         InvertResult = true, FoundObjectMessageFormat = "'{0}'", FoundObjectMessagesSeparator = ";")]
-    public class MedicoListas: XPCustomBaseBO
+    public class MedicoLista: XPCustomBaseBO 
     {
         /// <summary>
         /// Metodo para la inicialización de propiedades y/o objetos del BO. Se ejecuta una sola vez después de la creación del objeto
@@ -35,12 +35,12 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 
         }
 		
-		private CategoriaListaMedico _categoria = CategoriaListaMedico.CategoriaExamen;
+		private CategoriaListaMedico _categoria = CategoriaListaMedico.TipoExamen;
 		private System.Boolean _activo;
 		private System.String _comentario;
 		private System.String _nombre;
 		private System.String _codigo;
-		public MedicoListas(DevExpress.Xpo.Session session)
+		public MedicoLista(DevExpress.Xpo.Session session)
 		  : base(session)
 		{
 		}

@@ -21,14 +21,15 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
     public class MedicoEspecialidad: XPObjectBaseBO
     {
 	    private Medico _medico;
-		private MedicoListas especialidad;
+		private MedicoLista especialidad;
 		public MedicoEspecialidad(DevExpress.Xpo.Session session)
 		  : base(session)
 		{
 		}
 		[DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Especialidad")]
 		[RuleRequiredField("MedicoEspecialidad.Especialidad_Requerido", "Save")]
-		public MedicoListas Especialidad
+        [DataSourceCriteria("[Categoria] == 3")]
+		public MedicoLista Especialidad
 		{
             get => especialidad;
 		    set => SetPropertyValue("Especialidad", ref especialidad, value);

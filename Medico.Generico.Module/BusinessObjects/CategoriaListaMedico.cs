@@ -4,7 +4,7 @@ using DevExpress.ExpressApp.DC;
 
 namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 {
-    public enum CategoriaListaMedico
+    public enum CategoriaListaMedico 
     {
         [XafDisplayName("Terminología Anatómica")]
         PartesCuerpo = 1,
@@ -14,14 +14,15 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
         Especialidad = 3,
         [XafDisplayName("UnidadMedica")]
         UnidadMedica = 4,
-        [XafDisplayName("Tipo de Vacuna")]
-        TipoVacuna = 5,
+        // NO SE USA, reemplazar con otro uso
+        //[XafDisplayName("Tipo de Vacuna")]
+        //TipoVacuna = 5,
         [XafDisplayName("Vías de Administración")]
         ViaAdministracion = 6,
         [XafDisplayName("Tipo de Admisión")]
         TipoAdmision = 7,
-        [XafDisplayName("Categoría Examen")]
-        CategoriaExamen = 8,
+        [XafDisplayName("Tipo de Examén")]
+        TipoExamen = 8,
         [XafDisplayName("Estilo de Vida")]
         EstiloVida = 9,
         [XafDisplayName("Tipo Problema Medico")]

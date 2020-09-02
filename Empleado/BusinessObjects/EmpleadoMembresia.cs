@@ -19,25 +19,18 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
         }
 
         private Empleado _empleado;
-        private System.Boolean _vigente;
-        private Listas _codigo;
+        private System.Boolean _vigente = true;
+        private AsociacionProfesional asociacionProfesional;
         public EmpleadoMembresia(DevExpress.Xpo.Session session)
           : base(session)
         {
         }
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Código Membresía")]
         [RuleRequiredField("EmpleadoMembresia.Codigo_Requerido", DefaultContexts.Save, "Membresía es requerido")]
-        [DataSourceCriteria("[Categoria] == 3 && [Activo] == True")]
-        public Listas Codigo
+        public AsociacionProfesional AsociacionProfesional
         {
-            get
-            {
-                return _codigo;
-            }
-            set
-            {
-                SetPropertyValue("Codigo", ref _codigo, value);
-            }
+            get => asociacionProfesional;
+            set => SetPropertyValue(nameof(AsociacionProfesional), ref asociacionProfesional, value);
         }
         [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
         [RuleRequiredField("EmpleadoMembresia.Vigente_Requerido", "Save")]

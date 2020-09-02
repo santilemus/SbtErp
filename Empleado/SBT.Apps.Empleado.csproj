@@ -120,6 +120,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessObjects\AsociacionProfesional.cs" />
     <Compile Include="BusinessObjects\Cargo.cs" />
     <Compile Include="BusinessObjects\EDiaDescanso.cs" />
     <Compile Include="BusinessObjects\Empleado.cs" />
@@ -171,12 +172,6 @@
       <Project>{5F15837D-D1E5-44DC-92F0-4F2EBE9C3F8D}</Project>
       <Name>SBT.Apps.Tercero</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="UnusableNodes.xml">
-      <DependentUpon>Model.DesignedDiffs.xafml</DependentUpon>
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

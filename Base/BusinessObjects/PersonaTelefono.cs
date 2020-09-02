@@ -21,17 +21,9 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [DevExpress.Xpo.AssociationAttribute("Telefonos-Persona")]
         public Persona Persona
         {
-            get
-            {
-                return _persona;
-            }
-            set
-            {
-                SetPropertyValue("Persona", ref _persona, value);
-            }
+            get => _persona;
+            set =>SetPropertyValue("Persona", ref _persona, value);
         }
-
-
 
     }
 }

@@ -1,4 +1,5 @@
-﻿using DevExpress.Persistent.Base;
+﻿using DevExpress.ExpressApp.DC;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using System;
@@ -21,9 +22,9 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             Activo = true;
         }
 
-        private System.Boolean _activo;
-        private System.String _descripcion;
-        private System.String _numero;
+        TipoTelefono tipo = TipoTelefono.Movil;
+        private System.Boolean activo;
+        private System.String numero;
         public Telefono(DevExpress.Xpo.Session session)
           : base(session)
         {
@@ -41,32 +42,16 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [RuleUniqueValue("Telefono.Numero_Unico", DefaultContexts.Save, CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction)]
         public System.String Numero
         {
-            get
-            {
-                return _numero;
-            }
-            set
-            {
-                SetPropertyValue("Oid", ref _numero, value);
-            }
+            get => numero;
+            set => SetPropertyValue(nameof(Numero), ref numero, value);
         }
 
-        /// <summary>
-        /// Descripcion del numero de telefono
-        /// </summary>
-        [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Descripción"), DbType("varchar(100)")]
-        [DevExpress.Persistent.Base.ToolTipAttribute("Descripción o comentario del teléfono")]
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute, VisibleInListView(true), VisibleInLookupListView(true)]
-        public System.String Descripcion
+        [DbType("smallint"), XafDisplayName("Tipo"), RuleRequiredField("Telefono.Tipo_Requerido", DefaultContexts.Save)]
+        [VisibleInLookupListView(true)]
+        public TipoTelefono Tipo
         {
-            get
-            {
-                return _descripcion;
-            }
-            set
-            {
-                SetPropertyValue("Descripcion", ref _descripcion, value);
-            }
+            get => tipo;
+            set => SetPropertyValue(nameof(Tipo), ref tipo, value);
         }
 
         /// <summary>
@@ -78,14 +63,8 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [RuleRequiredField("Telefono.Activo_Requerido", "Save")]
         public System.Boolean Activo
         {
-            get
-            {
-                return _activo;
-            }
-            set
-            {
-                SetPropertyValue("Activo", ref _activo, value);
-            }
+            get => activo;
+            set => SetPropertyValue(nameof(Activo), ref activo, value);
         }
 
     }

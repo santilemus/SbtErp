@@ -14,6 +14,11 @@ using DevExpress.ExpressApp.ConditionalAppearance;
 
 namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 {
+    /// <summary>
+    ///  Medicamentos hereda de Productos. Solo aplica cuando son medicamentos
+    ///  Las pestañas Dosis y Vacunas solo se muestran cuando la categoria del producto => (medicamento) es Producto Terminado (Categoria.Clasificacion = 0)
+    ///  y se ocultan en los otros casos
+    /// </summary>
 	[DefaultClassOptions]
     [DevExpress.Persistent.Base.ImageNameAttribute("medicamento")]
     [DevExpress.ExpressApp.DC.XafDefaultPropertyAttribute("Nombre")]
@@ -24,13 +29,13 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
         MessageTemplateMustBeReferenced = "Para borrar el objeto '{TargetObject}', debe estar seguro que no es utilizado (referenciado) en ningún lugar.",
         InvertResult = true, FoundObjectMessageFormat = "'{0}'", FoundObjectMessagesSeparator = ";")]
     [Appearance("MedicamentosDosisHide", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "MedicamentoDosis_ListView", 
-        Criteria = "[Categoria.Clasificacion] != 4", TargetItems = "MedicDosis")]
+        Criteria = "[Categoria.Clasificacion] != 0", TargetItems = "MedicDosis")]
     [Appearance("MedicamentosDosisShow", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Show, Context = "MedicamentoDosis_ListView", 
-        Criteria = "[Categoria.Clasificacion] = 4", TargetItems = "MedicDosis")]
+        Criteria = "[Categoria.Clasificacion] = 0", TargetItems = "MedicDosis")]
     [Appearance("MedicamentoVacunaHide", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "Medicamento_Vacunas_ListView",
-        Criteria = "[Categoria.Clasificacion] != 4", TargetItems = "Vacunas")]
+        Criteria = "[Categoria.Clasificacion] != 0", TargetItems = "Vacunas")]
     [Appearance("MedicamentosVacunaShow", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Show, Context = "Medicamento_Vacunas_ListView",
-        Criteria = "[Categoria.Clasificacion] = 4", TargetItems = "Vacunas")]
+        Criteria = "[Categoria.Clasificacion] = 0", TargetItems = "Vacunas")]
     public class Medicamento: Producto.Module.BusinessObjects.Producto
     {
         public override void AfterConstruction()
@@ -118,7 +123,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
         #region Colecciones
 
         [DevExpress.Xpo.AssociationAttribute("MedicamentoDosises-Medicamento"), DevExpress.Xpo.Aggregated]
-		[DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Medicamento Dosis")]
+		[DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Medicamento Dosis"), Index(0)]
 		public XPCollection<MedicamentoDosis> MedicDosis
 		{
 		  get
@@ -127,12 +132,28 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 		  }
 		}
 
-        [Association("Medicamento-Vacunas"), XafDisplayName("Vacunas"), DevExpress.Xpo.Aggregated]
+        /// <summary>
+        /// No puede ser Agregated la relacion porque no existe un producto para todas las vacunas y además porque nos
+        /// toco relacionar a un mismo producto varias vacunas
+        /// </summary>
+        [Association("Medicamento-Vacunas"), XafDisplayName("Vacunas"), Index(1)]
         public XPCollection<Vacuna> Vacunas
         {
             get
             {
                 return GetCollection<Vacuna>(nameof(Vacunas));
+            }
+        }
+
+        /// <summary>
+        /// Diferentes vias de administracion de un medicamento
+        /// </summary>
+        [Association("Medicamento-Vias"), DevExpress.Xpo.Aggregated, XafDisplayName("Vías de Administración"), Index(2)]
+        public XPCollection<MedicamentoVia> Vias
+        {
+            get
+            {
+                return GetCollection<MedicamentoVia>(nameof(Vias));
             }
         }
 

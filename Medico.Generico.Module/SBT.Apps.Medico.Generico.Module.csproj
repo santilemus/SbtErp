@@ -127,10 +127,11 @@
     <Compile Include="BusinessObjects\FactorRiesgo.cs" />
     <Compile Include="BusinessObjects\Medicamento.cs" />
     <Compile Include="BusinessObjects\MedicamentoDosis.cs" />
+    <Compile Include="BusinessObjects\MedicamentoVia.cs" />
     <Compile Include="BusinessObjects\Medico.cs" />
     <Compile Include="BusinessObjects\MedicoConsultorio..cs" />
     <Compile Include="BusinessObjects\MedicoEspecialidad.cs" />
-    <Compile Include="BusinessObjects\MedicoListas.cs" />
+    <Compile Include="BusinessObjects\MedicoLista.cs" />
     <Compile Include="BusinessObjects\PlanMedico.cs" />
     <Compile Include="BusinessObjects\PlanMedicoDetalle.cs" />
     <Compile Include="BusinessObjects\RecursoMedico.cs" />
@@ -211,12 +212,6 @@
     <EmbeddedResource Include="Images\FactorRiesgo_32x32.png" />
     <EmbeddedResource Include="Images\PlanMedico.png" />
     <EmbeddedResource Include="Images\PlanMedico_32x32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="UnusableNodes.xml">
-      <DependentUpon>Model.DesignedDiffs.xafml</DependentUpon>
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Images\Vacuna.png" />

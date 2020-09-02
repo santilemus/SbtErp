@@ -62,7 +62,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
         /// y completar el datasource aqui
         /// </summary>
         [XafDisplayName("Tipo Garantía"), VisibleInLookupListView(true), Index(2)]
-        [DataSourceCriteria("[Categoria] == ? And [Activo] == True")]
+        [DataSourceCriteria("[Categoria] == 3 And [Activo] == True")]
         public Listas Tipo
         {
             get => tipo;

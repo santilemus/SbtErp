@@ -1,8 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Application Title="SBT.Apps.Medico.Generico.Module" Logo="ExpressAppLogo">
-  <BOModel>
-    <Class Name="DevExpress.Persistent.BaseImpl.Resource" DefaultDetailViewImage="GroupByResource" DefaultListViewImage="GroupByResource" />
-  </BOModel>
   <SchemaModules>
     <SchemaModule Name="CloneObjectModule" Version="20.1.4.0" IsNewNode="True" />
     <SchemaModule Name="SystemModule" Version="20.1.4.0" IsNewNode="True" />
@@ -204,6 +201,21 @@
         </LayoutGroup>
       </Layout>
     </DetailView>
+    <DetailView Id="MedicamentoVia_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="100">
+            <LayoutGroup Id="MedicamentoVia" RelativeSize="100" Caption="Vía Administración">
+              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="4.7244094488188972" IsNewNode="True" />
+              <LayoutItem Id="Via" Index="1" RelativeSize="95.2755905511811" />
+            </LayoutGroup>
+            <LayoutGroup Id="XPObject" Caption="Oid" Index="1" RelativeSize="90.813648293963254" Removed="True">
+              <LayoutItem Id="Oid" Removed="True" />
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
     <ListView Id="Medico_Citas_ListView" DataAccessMode="Client" />
     <DetailView Id="Medico_DetailView">
       <Layout>
@@ -228,8 +240,7 @@
                   <LayoutItem Id="Idioma" ViewItem="Idioma" Index="3" RelativeSize="11.403508771929825" CaptionLocation="Left" IsNewNode="True" />
                   <LayoutItem Id="FechaMuerte" ViewItem="FechaMuerte" Index="4" RelativeSize="11.403508771929825" CaptionLocation="Left" IsNewNode="True" />
                   <LayoutItem Id="CausaMuerte" ViewItem="CausaMuerte" Index="5" RelativeSize="11.403508771929825" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="Edad" ViewItem="Edad" Index="6" RelativeSize="11.403508771929825" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="Fotografia" ViewItem="Fotografia" Index="7" RelativeSize="15.789473684210526" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="Edad" ViewItem="Edad" Index="6" RelativeSize="27.192982456140349" CaptionLocation="Left" IsNewNode="True" />
                 </LayoutGroup>
               </LayoutGroup>
               <LayoutGroup Id="Empleado" ShowCaption="True" Direction="Horizontal" Index="1" RelativeSize="100" Caption="Medico" IsNewNode="True">
@@ -252,6 +263,9 @@
                   <LayoutItem Id="Titulo" ViewItem="Titulo" Index="5" RelativeSize="11.403508771929825" CaptionLocation="Left" IsNewNode="True" />
                   <LayoutItem Id="NumeroJVPM" ViewItem="NumeroJVPM" Index="6" RelativeSize="27.192982456140349" CaptionLocation="Left" IsNewNode="True" />
                 </LayoutGroup>
+              </LayoutGroup>
+              <LayoutGroup Id="Item2" ShowCaption="True" CaptionLocation="Top" Direction="Vertical" Index="2" Caption="Fotografía" RelativeSize="100" IsNewNode="True">
+                <LayoutItem Id="Fotografia" ViewItem="Fotografia" CaptionLocation="Left" Index="0" RelativeSize="100" IsNewNode="True" />
               </LayoutGroup>
             </TabbedGroup>
             <LayoutGroup Id="XPObject" Index="1" RelativeSize="18.952618453865338" Caption="Oid" Direction="Horizontal" Removed="True">
@@ -344,24 +358,6 @@
             <LayoutGroup Id="XPObject" Caption="Oid" Direction="Horizontal" Index="1" RelativeSize="90.578734858681017" Removed="True">
               <LayoutItem Id="Oid" Removed="True" />
             </LayoutGroup>
-          </LayoutGroup>
-        </LayoutGroup>
-      </Layout>
-    </DetailView>
-    <DetailView Id="MedicoListas_DetailView">
-      <Layout>
-        <LayoutGroup Id="Main" RelativeSize="100">
-          <LayoutGroup Id="SimpleEditors" Direction="Horizontal" RelativeSize="100">
-            <LayoutGroup Id="MedicoListas_col1" ShowCaption="False" Index="0" RelativeSize="50" IsNewNode="True">
-              <LayoutItem Id="Codigo" ViewItem="Codigo" Index="0" RelativeSize="4.8452220726783315" IsNewNode="True" />
-              <LayoutItem Id="Nombre" ViewItem="Nombre" Index="1" RelativeSize="3.4993270524899058" IsNewNode="True" />
-              <LayoutItem Id="Categoria" ViewItem="Categoria" Index="2" RelativeSize="3.4993270524899058" IsNewNode="True" />
-            </LayoutGroup>
-            <LayoutGroup Id="MedicoListas_col2" ShowCaption="False" Index="1" RelativeSize="50" IsNewNode="True">
-              <LayoutItem Id="Comentario" ViewItem="Comentario" Index="0" RelativeSize="4.8452220726783315" IsNewNode="True" />
-              <LayoutItem Id="Activo" ViewItem="Activo" Index="1" RelativeSize="95.154777927321675" IsNewNode="True" />
-            </LayoutGroup>
-            <LayoutGroup Id="MedicoListas" Removed="True" />
           </LayoutGroup>
         </LayoutGroup>
       </Layout>
