@@ -16,7 +16,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
     /// <summary>
     /// Objeto Persistente que corresponde a las incapacidades emitidas en las consultas. Es la clase para el objeto de negocios incapacidades
     /// </summary>
-    [DefaultClassOptions]
+    [NavigationItem(false)]
     [DevExpress.Persistent.Base.CreatableItemAttribute(false)]
     [DevExpress.Persistent.Base.ImageNameAttribute("BO_Lead")]
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Incapacidades")]
@@ -67,7 +67,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
                 SetPropertyValue("FechaFin", ref _fechaFin, value);
             }
         }
-        [DevExpress.Xpo.SizeAttribute(300)]
+        [DevExpress.Xpo.SizeAttribute(300), DbType("varchar(300)")]
         [RuleRequiredField("ConsultaIncapacidad.Motivo_Requerido", "Save")]
         public System.String Motivo
         {

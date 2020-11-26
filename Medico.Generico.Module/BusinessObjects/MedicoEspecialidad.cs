@@ -14,7 +14,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
     /// <summary>
     /// Objeto Persistente que corresponde a MedicoEspecialidad. Es la clase para el objeto de negocios que corresponde a las especialidades del médico
     /// </summary>
-	[DefaultClassOptions]
+	[NavigationItem(false)]
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Especialidades del Médico")]
     [DevExpress.Persistent.Base.CreatableItemAttribute(false)]
     [DevExpress.Persistent.Base.ImageNameAttribute("med_especialista")]

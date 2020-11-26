@@ -15,10 +15,12 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
     /// <summary>
     /// Objeto Persistente que corresponde a los Sintomas presentados por el paciente en una consulta. Es la clase para el objeto de negocios de ConsultaSintoma
     /// </summary>
-    [DefaultClassOptions]
+    //[DefaultClassOptions]
     [DevExpress.Persistent.Base.CreatableItemAttribute(false)]
     [DevExpress.Persistent.Base.ImageNameAttribute("list-info")]
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Síntomas")]
+    [XafDefaultProperty(nameof(Descripcion))]
+    [NavigationItem(false)]
     [RuleCriteria("ConsultaSintoma.FechaFin_Valida", DefaultContexts.Save, "Not(IsNull([FechaFin])) And FechaFin >= FechaInicio", "Fecha Fin debe ser mayor o igual Fecha Inicio")]
     public class ConsultaSintoma: XPObjectBaseBO
     {
@@ -29,11 +31,10 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         {
             base.AfterConstruction();
             FechaInicio = DateTime.Now;
-            FechaFin = DateTime.Now;
         }
 
         private Consulta _consulta;
-        private System.DateTime _fechaFin;
+        private Nullable<System.DateTime> _fechaFin;
         private System.DateTime _fechaInicio;
         private System.String _descripcion;
         private System.String _nombre;
@@ -70,7 +71,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
                 SetPropertyValue("Nombre", ref _nombre, value);
             }
         }
-        [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Descripcipon")]
+        [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Descripción")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         public System.String Descripcion
         {
@@ -95,7 +96,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
                 SetPropertyValue("FechaInicio", ref _fechaInicio, value);
             }
         }
-        public System.DateTime FechaFin
+        public Nullable<System.DateTime> FechaFin
         {
             get
             {

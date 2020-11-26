@@ -181,12 +181,6 @@
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
           <LayoutGroup Id="SimpleEditors" RelativeSize="100">
-            <LayoutGroup Id="EmpresaTelefono" RelativeSize="100" Caption="Tipo">
-              <LayoutItem Id="Tipo" RelativeSize="4.8452220726783315" />
-              <LayoutItem Id="Numero" ViewItem="Numero" Index="1" RelativeSize="3.4993270524899058" IsNewNode="True" />
-              <LayoutItem Id="Descripcion" ViewItem="Descripcion" Index="2" RelativeSize="3.4993270524899058" IsNewNode="True" />
-              <LayoutItem Id="Activo" ViewItem="Activo" Index="3" RelativeSize="88.156123822341854" IsNewNode="True" />
-            </LayoutGroup>
             <LayoutGroup Id="Telefono" RelativeSize="83.58008075370121" Caption="Telefono" Direction="Horizontal" Removed="True">
               <LayoutItem Id="Activo" Index="0" RelativeSize="100" Removed="True" />
               <LayoutItem Id="Descripcion" Index="0" RelativeSize="4.431314623338257" Removed="True" />
@@ -262,9 +256,9 @@
     <DetailView Id="Persona_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
-          <LayoutGroup Id="SimpleEditors" RelativeSize="37.165775401069517" Direction="Horizontal">
-            <LayoutGroup Id="Persona_col1" ShowCaption="False" Index="0" RelativeSize="49.9302649930265" HorizontalAlign="NotSet" CaptionLocation="Left" IsNewNode="True">
-              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="12.949640287769784" CaptionLocation="Left" IsNewNode="True" />
+          <LayoutGroup Id="SimpleEditors" RelativeSize="37.06666666666667" Direction="Horizontal">
+            <LayoutGroup Id="Persona_col1" ShowCaption="False" Index="0" RelativeSize="49.866666666666667" HorizontalAlign="NotSet" CaptionLocation="Left" IsNewNode="True">
+              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="12.23021582733813" CaptionLocation="Left" IsNewNode="True" />
               <LayoutItem Id="Nombre" ViewItem="Nombre" Index="1" RelativeSize="9.3525179856115113" CaptionLocation="Left" IsNewNode="True" />
               <LayoutItem Id="Apellido" ViewItem="Apellido" Index="2" RelativeSize="9.3525179856115113" CaptionLocation="Left" IsNewNode="True" />
               <LayoutItem Id="Pais" ViewItem="Pais" Index="3" RelativeSize="9.3525179856115113" CaptionLocation="Left" IsNewNode="True" />
@@ -273,10 +267,10 @@
               <LayoutItem Id="Direccion" ViewItem="Direccion" Index="6" RelativeSize="9.3525179856115113" CaptionLocation="Left" IsNewNode="True" />
               <LayoutItem Id="FechaNacimiento" ViewItem="FechaNacimiento" Index="7" RelativeSize="9.3525179856115113" CaptionLocation="Left" IsNewNode="True" />
               <LayoutItem Id="EMail" ViewItem="EMail" Index="8" RelativeSize="9.3525179856115113" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="Genero" ViewItem="Genero" Index="9" RelativeSize="12.23021582733813" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Genero" ViewItem="Genero" Index="9" RelativeSize="12.949640287769784" CaptionLocation="Left" IsNewNode="True" />
             </LayoutGroup>
-            <LayoutGroup Id="Persona_col2" ShowCaption="False" Index="1" RelativeSize="50.0697350069735" HorizontalAlign="NotSet" CaptionLocation="Left" IsNewNode="True">
-              <LayoutItem Id="EstadoCivil" ViewItem="EstadoCivil" Index="0" RelativeSize="12.949640287769784" CaptionLocation="Left" IsNewNode="True" />
+            <LayoutGroup Id="Persona_col2" ShowCaption="False" Index="1" RelativeSize="50.133333333333333" HorizontalAlign="NotSet" CaptionLocation="Left" IsNewNode="True">
+              <LayoutItem Id="EstadoCivil" ViewItem="EstadoCivil" Index="0" RelativeSize="12.23021582733813" CaptionLocation="Left" IsNewNode="True" />
               <LayoutItem Id="FechaIngreso" ViewItem="FechaIngreso" Index="1" RelativeSize="9.3525179856115113" CaptionLocation="Left" IsNewNode="True" />
               <LayoutItem Id="FechaRetiro" ViewItem="FechaRetiro" Index="2" RelativeSize="9.3525179856115113" CaptionLocation="Left" IsNewNode="True" />
               <LayoutItem Id="TipoSangre" ViewItem="TipoSangre" Index="3" RelativeSize="9.3525179856115113" CaptionLocation="Left" IsNewNode="True" />
@@ -285,14 +279,14 @@
               <LayoutItem Id="CausaMuerte" ViewItem="CausaMuerte" Index="6" RelativeSize="9.3525179856115113" CaptionLocation="Left" IsNewNode="True" />
               <LayoutItem Id="NombreCompleto" ViewItem="NombreCompleto" Index="7" RelativeSize="9.3525179856115113" CaptionLocation="Left" IsNewNode="True" />
               <LayoutItem Id="Edad" ViewItem="Edad" Index="8" RelativeSize="9.3525179856115113" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="Fotografia" ViewItem="Fotografia" Index="9" RelativeSize="12.23021582733813" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Fotografia" ViewItem="Fotografia" Index="9" RelativeSize="12.949640287769784" CaptionLocation="Left" IsNewNode="True" />
             </LayoutGroup>
             <LayoutGroup Id="XPObject" Index="1" RelativeSize="10.897435897435898" Caption="Oid" Direction="Horizontal" Removed="True">
               <LayoutItem Id="Oid" RelativeSize="100" Removed="True" />
             </LayoutGroup>
             <LayoutGroup Id="Persona" Removed="True" />
           </LayoutGroup>
-          <TabbedGroup Id="Tabs" RelativeSize="62.834224598930483">
+          <TabbedGroup Id="Tabs" RelativeSize="62.93333333333333" Index="1">
             <LayoutGroup Id="Telefonos" RelativeSize="100">
               <LayoutItem Id="Telefonos" RelativeSize="100" />
             </LayoutGroup>
@@ -303,11 +297,38 @@
               <LayoutItem Id="Contactos" RelativeSize="100" />
             </LayoutGroup>
           </TabbedGroup>
+          <LayoutGroup Id="Resumen del Error" Caption="Fotografia" RelativeSize="21.733333333333334" Removed="True">
+            <LayoutItem Id="Fotografia" Removed="True" />
+          </LayoutGroup>
         </LayoutGroup>
       </Layout>
     </DetailView>
     <ListView Id="Persona_ListView" DataAccessMode="Server" />
     <ListView Id="Persona_LookupListView" DataAccessMode="Server" />
+    <DetailView Id="PersonaContacto_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="100">
+            <LayoutGroup Id="PersonaContacto" RelativeSize="100">
+              <LayoutGroup Id="PersonaContacto_col1" RelativeSize="50">
+                <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="5.0561797752808992" IsNewNode="True" />
+                <LayoutItem Id="Contacto" Index="1" RelativeSize="3.6516853932584268" />
+                <LayoutItem Id="Nombre" Index="2" RelativeSize="91.292134831460672" />
+                <LayoutItem Id="Direccion" Index="3" RelativeSize="29.032258064516128" Removed="True" />
+              </LayoutGroup>
+              <LayoutGroup Id="PersonaContacto_col2" RelativeSize="50">
+                <LayoutItem Id="Direccion" ViewItem="Direccion" Index="0" RelativeSize="5.0561797752808992" IsNewNode="True" />
+                <LayoutItem Id="Telefono" RelativeSize="3.6516853932584268" Index="1" />
+                <LayoutItem Id="Activo" RelativeSize="91.292134831460672" Index="2" />
+              </LayoutGroup>
+            </LayoutGroup>
+            <LayoutGroup Id="XPObject" Caption="Oid" Index="1" RelativeSize="81.889763779527556" Removed="True">
+              <LayoutItem Id="Oid" Removed="True" />
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
     <ListView Id="PersonaContacto_ListView" DataAccessMode="Server" />
     <DetailView Id="PersonaDocumento_DetailView">
       <Layout>
@@ -424,12 +445,12 @@
         </LayoutGroup>
       </Layout>
     </DetailView>
-    <ListView Id="ZonaGeografica_ListView" DataAccessMode="Client">
+    <ListView Id="ZonaGeografica_ListView" DataAccessMode="Server">
       <Columns>
         <ColumnInfo Id="CodigoTelefonico" Width="121" />
       </Columns>
     </ListView>
-    <ListView Id="ZonaGeografica_LookupListView" DataAccessMode="Client" />
-    <ListView Id="ZonaGeografica_Zonas_ListView" DataAccessMode="Client" />
+    <ListView Id="ZonaGeografica_LookupListView" DataAccessMode="Server" />
+    <ListView Id="ZonaGeografica_Zonas_ListView" DataAccessMode="Server" />
   </Views>
 </Application>

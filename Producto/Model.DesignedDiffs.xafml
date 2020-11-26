@@ -46,6 +46,8 @@
         </LayoutGroup>
       </Layout>
     </DetailView>
+    <ListView Id="Categoria_ListView" DataAccessMode="Server" />
+    <ListView Id="Categoria_LookupListView" DataAccessMode="Server" />
     <DetailView Id="Producto_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
@@ -92,9 +94,6 @@
           <TabbedGroup Id="Tabs" RelativeSize="76.5814266487214">
             <LayoutGroup Id="Precios" RelativeSize="100">
               <LayoutItem Id="Precios" RelativeSize="100" />
-            </LayoutGroup>
-            <LayoutGroup Id="Impuestos" RelativeSize="100">
-              <LayoutItem Id="Impuestos" RelativeSize="100" />
             </LayoutGroup>
             <LayoutGroup Id="ItemsEnsamble" RelativeSize="100">
               <LayoutItem Id="ItemsEnsamble" RelativeSize="100" />
@@ -179,39 +178,6 @@
             </LayoutGroup>
             <LayoutGroup Id="XPObject" Caption="Oid" Direction="Horizontal" Index="1" RelativeSize="87.079407806191114" Removed="True">
               <LayoutItem Id="Oid" Removed="True" />
-            </LayoutGroup>
-          </LayoutGroup>
-        </LayoutGroup>
-      </Layout>
-    </DetailView>
-    <DetailView Id="ProductoImpuesto_DetailView">
-      <Layout>
-        <LayoutGroup Id="Main" RelativeSize="100">
-          <LayoutGroup Id="SimpleEditors" RelativeSize="100" Direction="Horizontal">
-            <LayoutGroup Id="ProductoImpuesto_col1" ShowCaption="False" Index="0" RelativeSize="50" IsNewNode="True">
-              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="4.8452220726783315" IsNewNode="True" />
-              <LayoutItem Id="Codigo" ViewItem="Codigo" Index="1" RelativeSize="3.4993270524899058" IsNewNode="True" />
-              <LayoutItem Id="AplicarEn" ViewItem="AplicarEn" Index="2" RelativeSize="3.4993270524899058" IsNewNode="True" />
-              <LayoutItem Id="MontoFijo" ViewItem="MontoFijo" Index="3" RelativeSize="88.156123822341854" IsNewNode="True" />
-            </LayoutGroup>
-            <LayoutGroup Id="ProductoImpuesto_col2" ShowCaption="False" Index="1" RelativeSize="50" IsNewNode="True">
-              <LayoutItem Id="Porcentaje" ViewItem="Porcentaje" Index="0" RelativeSize="4.8452220726783315" IsNewNode="True" />
-              <LayoutItem Id="Activo" ViewItem="Activo" Index="1" RelativeSize="95.154777927321675" IsNewNode="True" />
-            </LayoutGroup>
-            <LayoutGroup Id="XPObject" Caption="Oid" Direction="Horizontal" Index="1" RelativeSize="78.061911170928667" Removed="True">
-              <LayoutItem Id="Oid" Removed="True" />
-            </LayoutGroup>
-            <LayoutGroup Id="ProductoImpuesto" RelativeSize="100" Removed="True">
-              <LayoutGroup Id="ProductoImpuesto_col1" RelativeSize="50">
-                <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="5.1873198847262252" IsNewNode="True" />
-                <LayoutItem Id="Codigo" Index="1" RelativeSize="3.7463976945244957" />
-                <LayoutItem Id="AplicarEn" Index="2" RelativeSize="3.7463976945244957" />
-                <LayoutItem Id="MontoFijo" Index="3" RelativeSize="87.319884726224785" />
-              </LayoutGroup>
-              <LayoutGroup Id="ProductoImpuesto_col2" RelativeSize="50">
-                <LayoutItem Id="Activo" RelativeSize="94.812680115273778" />
-                <LayoutItem Id="Porcentaje" RelativeSize="5.1873198847262252" />
-              </LayoutGroup>
             </LayoutGroup>
           </LayoutGroup>
         </LayoutGroup>

@@ -8,4 +8,8 @@
     <SchemaModule Name="SystemAspNetModule" Version="20.1.4.0" IsNewNode="True" />
     <SchemaModule Name="SystemModule" Version="20.1.4.0" IsNewNode="True" />
   </SchemaModules>
+  <Views>
+    <ListView Id="Medico_Citas_ListView" EditorTypeName="DevExpress.ExpressApp.Web.Editors.ASPx.ASPxGridListEditor" />
+    <ListView Id="Paciente_Citas_ListView" EditorTypeName="DevExpress.ExpressApp.Web.Editors.ASPx.ASPxGridListEditor" />
+  </Views>
 </Application>

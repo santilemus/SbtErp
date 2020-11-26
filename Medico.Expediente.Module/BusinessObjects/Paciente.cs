@@ -132,7 +132,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
             }
         }
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false),
-            Persistent("Asegurador"), XafDisplayName("Aseguradora")]
+            Persistent("Aseguradora"), XafDisplayName("Aseguradora")]
         [DataSourceCriteria("[TipoPersona] == 2 && [Activo] == True && [Roles][[IdRole] == 9 And [Activo] == True]")]
         public Tercero.Module.BusinessObjects.Tercero Aseguradora
         {
@@ -174,6 +174,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 
 
         [PersistentAlias("DateDiffMonth([FechaNacimiento], Now())")]
+        [ModelDefault("DisplayFormat", "{0:N2}")]
         public decimal EdadMeses
         {
             get { return Convert.ToDecimal(EvaluateAlias(nameof(EdadMeses))); }
@@ -271,5 +272,8 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
                 return GetCollection<ProblemaMedico>(nameof(Problemas));
             }
         }
+
+        [Association("Paciente-ArchivosAdjuntos"), DevExpress.Xpo.Aggregated, XafDisplayName("Archivos Adjuntos"), Index(14)]
+        public XPCollection<ArchivoAdjunto> ArchivosAdjuntos => GetCollection<ArchivoAdjunto>(nameof(ArchivosAdjuntos));
     }
 }

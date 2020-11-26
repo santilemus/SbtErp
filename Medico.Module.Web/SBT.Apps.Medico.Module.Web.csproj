@@ -50,6 +50,7 @@
     <Reference Include="DevExpress.ExpressApp.ConditionalAppearance.v20.1">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+    <Reference Include="DevExpress.ExpressApp.FileAttachment.Web.v20.1, Version=20.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.ExpressApp.Images.v20.1">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
@@ -162,6 +163,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\WebDocumentViewer.cs" />
     <Compile Include="Controllers\vcConsultaWeb.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -183,7 +185,14 @@
     <Compile Include="Controllers\vcEmpresaWeb.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controllers\vcExamenWeb.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controllers\vcMostrarImagenArchivoAdjunto.cs" />
     <Compile Include="Controllers\vcPacienteWeb.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controllers\vcProblemaMedicoWeb.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controllers\vcProductoWeb.cs">
@@ -193,6 +202,18 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controllers\vcTerceroWeb.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controllers\vcUltrasonografiaObstetricaDetalleWeb.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controllers\vcUltrasonografiaObstetricaWeb.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controllers\vcUltrasonografiaPelvicaWeb.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controllers\vcVacunaWeb.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controllers\vcZonaGeograficaWeb.cs">
@@ -213,6 +234,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Controllers\vcEmpleadoWeb.resx">
+      <DependentUpon>vcEmpleadoWeb.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="WebModule.resx">
       <DependentUpon>WebModule.cs</DependentUpon>

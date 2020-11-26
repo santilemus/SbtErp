@@ -15,7 +15,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
     /// <summary>
     /// Objeto Persistente que corresponde a los consultorios donde labora el médico Es la clase para el objeto de negocios que corresponde al mantenimiento consultorios del medico
     /// </summary>
-    [DefaultClassOptions]
+    [NavigationItem(false)]
     [CreatableItem(false), ImageName("ccmedico"), ModelDefault("Caption", "Consultorio")]
     public class MedicoConsultorio: XPObjectBaseBO
     {

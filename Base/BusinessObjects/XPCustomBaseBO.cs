@@ -1,6 +1,8 @@
-﻿using DevExpress.ExpressApp.Model;
+﻿using DevExpress.ExpressApp;
+using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using DevExpress.Xpo;
+using DevExpress.Xpo.Metadata;
 using System;
 using System.ComponentModel;
 using System.Linq;
@@ -11,7 +13,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
     /// Para heredar los clases de XPCustomObject, con las propiedades de creación y modificación 
     /// </summary>
     [NonPersistent]
-    public class XPCustomBaseBO : XPCustomObject
+    public abstract class XPCustomBaseBO : XPCustomObject
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
         public XPCustomBaseBO(Session session)
             : base(session)
@@ -52,6 +54,27 @@ namespace SBT.Apps.Base.Module.BusinessObjects
                 }
                 throw new Exception($"No puede borrar, Existen objetos, que usan el objeto que esta intentando eliminar : {ToString()}\r\n{usadoPor}");
             }
+        }
+
+        private bool isDefaultPropertyAttributeInit;
+        private XPMemberInfo defaultPropertyMemberInfo;
+        public override string ToString()
+        {
+            if (!isDefaultPropertyAttributeInit)
+            {
+                DefaultPropertyAttribute attrib = XafTypesInfo.Instance.FindTypeInfo(
+                    GetType()).FindAttribute<DefaultPropertyAttribute>();
+                if (attrib != null)
+                    defaultPropertyMemberInfo = ClassInfo.FindMember(attrib.Name);
+                isDefaultPropertyAttributeInit = true;
+            }
+            if (defaultPropertyMemberInfo != null)
+            {
+                object obj = defaultPropertyMemberInfo.GetValue(this);
+                if (obj != null)
+                    return obj.ToString();
+            }
+            return base.ToString();
         }
 
         protected Empresa EmpresaDeSesion()

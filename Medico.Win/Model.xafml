@@ -14,37 +14,7 @@
       </Item>
       <Item Id="Default" Caption="Seguridad">
         <Items>
-          <Item Id="MyDetails" Index="0" />
-          <Item Id="Role" ViewId="SecuritySystemRole_ListView" Index="1" IsNewNode="True" />
-          <Item Id="ConsultaExamen_ListView" Removed="True" />
-          <Item Id="ConsultaExamenFisico_ListView" Removed="True" />
-          <Item Id="ConsultaIncapacidad_ListView" Removed="True" />
-          <Item Id="ConsultaReceta_ListView" Removed="True" />
-          <Item Id="ConsultaSigno_ListView" Removed="True" />
-          <Item Id="ConsultaSintoma_ListView" Removed="True" />
-          <Item Id="EmpleadoCapacitacion_ListView" Removed="True" />
-          <Item Id="EmpleadoMembresia_ListView" Removed="True" />
-          <Item Id="EmpleadoPariente_ListView" Removed="True" />
-          <Item Id="EmpleadoProfesion_ListView" Removed="True" />
-          <Item Id="Event_ListView" Removed="True" />
-          <Item Id="MedicamentoDosis_ListView" Removed="True" />
-          <Item Id="MedicoConsultorio_ListView" Removed="True" />
-          <Item Id="MedicoEspecialidad_ListView" Removed="True" />
-          <Item Id="PacienteMedico_ListView" Removed="True" />
-          <Item Id="PacienteVacunas_ListView" Removed="True" />
-          <Item Id="Pariente_ListView" Removed="True" />
-          <Item Id="RegistroFiscal_ListView" Removed="True" />
-          <Item Id="Telefono_ListView" Removed="True" />
-          <Item Id="TerceroContacto_ListView" Removed="True" />
-          <Item Id="TerceroNota_ListView" Removed="True" />
-          <Item Id="TerceroNrf_ListView" Removed="True" />
-          <Item Id="TerceroRole_ListView" Removed="True" />
-          <Item Id="TerceroTelefono_ListView" Removed="True" />
-        </Items>
-      </Item>
-      <Item Id="Farmacia">
-        <Items>
-          <Item Id="Producto_ListView" Index="0" />
+          <Item Id="Event_ListView" Visible="True" />
         </Items>
       </Item>
       <Item Id="Recurso Humano">

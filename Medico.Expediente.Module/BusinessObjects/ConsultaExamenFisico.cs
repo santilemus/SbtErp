@@ -15,7 +15,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
     /// <summary>
     /// Objeto Persistente que corresponde a los examenes físicos en las consultas. Es la clase para el objeto de negocios de ConsultaExamenFisico
     /// </summary>
-    [DefaultClassOptions]
+    [NavigationItem(false)]
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Examenes Físicos")]
     [DevExpress.Persistent.Base.CreatableItemAttribute(false)]
     [DevExpress.Persistent.Base.ImageNameAttribute("examenfis")]
@@ -52,7 +52,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
                 SetPropertyValue("Fecha", ref _fecha, value);
             }
         }
-        [DevExpress.Xpo.SizeAttribute(250)]
+        [DevExpress.Xpo.SizeAttribute(250), DbType("varchar(250)")]
         [RuleRequiredField("ConsultaExamenFisico.Descripcion_Requerido", "Save")]
         public System.String Descripcion
         {
@@ -65,7 +65,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
                 SetPropertyValue("Descripcion", ref _descripcion, value);
             }
         }
-        [DevExpress.Xpo.SizeAttribute(400)]
+        [DevExpress.Xpo.SizeAttribute(400), DbType("varchar(400)")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [RuleRequiredField("ConsultaExamenFisico.Resultado_Requerido", "Save")]
         public System.String Resultado

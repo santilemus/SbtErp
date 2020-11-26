@@ -82,17 +82,17 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         SBT.Apps.Tercero.Module.BusinessObjects.Banco banco;
         string noReferenciaPago;
         [Persistent(nameof(VentaGravada)), DbType("numeric(14,2)")]
-        decimal ventaGravada = 0.0m;
-        [Persistent(nameof(IVA)), DbType("numeric(14,2)")]
-        decimal iVA = 0.0m;
+        decimal? ventaGravada = 0.0m;
+        [Persistent(nameof(Iva)), DbType("numeric(14,2)")]
+        decimal?  iva = 0.0m;
         [Persistent(nameof(IvaPercibido)), DbType("numeric(14,2)")]
         decimal ivaPercibido = 0.0m;
         [Persistent(nameof(IvaRetenido)), DbType("numeric(14,2)")]
-        decimal ivaRetenido = 0.0m;
+        decimal? ivaRetenido = 0.0m;
         [Persistent(nameof(VentaNoSujeta)), DbType("numeric(14,2)")]
-        decimal ventaNoSujeta = 0.0m;
+        decimal? ventaNoSujeta = 0.0m;
         [Persistent(nameof(VentaExenta)), DbType("numeric(14,2)")]
-        decimal ventaExenta = 0.0m;
+        decimal? ventaExenta = 0.0m;
         [Persistent(nameof(DiaCerrado)), DbType("bit"), Browsable(false)]
         bool diaCerrado = false;
         [Persistent(nameof(Estado)), DbType("smallint")]
@@ -345,19 +345,29 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
 
         [PersistentAlias(nameof(ventaGravada)), XafDisplayName("Gravado"), Index(20)]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
-        public decimal VentaGravada
+        public decimal? VentaGravada
         {
-            get { return ventaGravada; }
+            get
+            {
+                if (!IsLoading && !IsSaving && ventaGravada == null)
+                    UpdateTotalGravado(false);
+                return ventaGravada;
+            }
         }
 
-        [PersistentAlias(nameof(iVA)), XafDisplayName("IVA"), Index(21)]
+        [PersistentAlias(nameof(iva)), XafDisplayName("IVA"), Index(21)]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
-        public decimal IVA
+        public decimal? Iva
         {
-            get { return iVA; }
+            get
+            {
+                if (!IsLoading && !IsSaving && iva == null)
+                    UpdateTotalIva(false);
+                return iva;
+            }
         }
 
-        [PersistentAlias("[VentaGravada] + [IVA]")]
+        [PersistentAlias("[VentaGravada] + [Iva]")]
         [XafDisplayName("SubTotal"), Index(22)]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         public decimal SubTotal
@@ -367,28 +377,35 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
 
         [PersistentAlias(nameof(ivaPercibido)), XafDisplayName("Iva Percibido"), VisibleInListView(false), Index(23)]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
-        public decimal IvaPercibido
+        public decimal? IvaPercibido
         {
             get { return ivaPercibido; }
         }
 
         [PersistentAlias(nameof(ivaRetenido)), XafDisplayName("Iva Retenido"), VisibleInListView(false), Index(24)]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
-        public decimal IvaRetenido
+        public decimal? IvaRetenido
         {
             get { return ivaRetenido; }
         }
 
         [PersistentAlias(nameof(ventaNoSujeta)), XafDisplayName("No Sujeta"), VisibleInListView(false), Index(25)]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
-        public decimal VentaNoSujeta
+        public decimal? VentaNoSujeta
         {
             get { return ventaNoSujeta; }
         }
 
         [PersistentAlias(nameof(ventaExenta)), XafDisplayName("Exento"), VisibleInListView(true), Index(26)]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
-        public decimal VentaExenta => ventaExenta;
+        public decimal? VentaExenta
+        {   get
+            {
+                if (!IsLoading && !IsSaving && ventaExenta == null)
+                    UpdateTotalExento(false);
+                return ventaExenta;
+            }
+        }
         
         [PersistentAlias("[SubTotal] + [IvaPercibido] - [IvaRetenido] + [VentaNoSujeta] + [VentaExenta] ")]
         [ModelDefault("DisplayFormat", "{0:N2}")]
@@ -464,16 +481,43 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
                                                         CriteriaOperator.Parse(sCriteria, Empresa.Oid, Caja.Oid, TipoFactura.Codigo, Fecha));
             return (max != null) ? Convert.ToInt32(max) : 1;
         }
+
+
+        public void UpdateTotalExento(bool forceChangeEvents)
+        {
+            decimal? oldVentaExenta = ventaExenta;
+            decimal tempVentaExenta = 0.0m;
+            foreach (VentaDetalle detalle in Detalles)
+                tempVentaExenta += detalle.Exenta;
+            ventaExenta = tempVentaExenta;
+            if (forceChangeEvents)
+                OnChanged(nameof(VentaExenta), oldVentaExenta, ventaExenta);
+        }
+
+        public void UpdateTotalGravado(bool forceChangeEvents)
+        {
+            decimal? oldVentaGravada = ventaGravada;
+            decimal tempVentaGravada = 0.0m;
+            foreach (VentaDetalle detalle in Detalles)
+                tempVentaGravada += detalle.Gravada;
+            ventaGravada = tempVentaGravada;
+            if (forceChangeEvents)
+                OnChanged(nameof(VentaGravada), oldVentaGravada, ventaGravada);
+        }
+
+        public void UpdateTotalIva(bool forceChangeEvents)
+        {
+            decimal? oldIva = iva;
+            decimal tempIva = 0.0m;
+            foreach (VentaDetalle detalle in Detalles)
+                tempIva += detalle.Iva;
+            iva = tempIva;
+            if (forceChangeEvents)
+                OnChanged(nameof(Iva), oldIva, iva);
+        }
+
         #endregion
 
-        //private string _PersistentProperty;
-        //[XafDisplayName("My display name"), ToolTip("My hint message")]
-        //[ModelDefault("EditMask", "(000)-00"), Index(0), VisibleInListView(false)]
-        //[Persistent("DatabaseColumnName"), RuleRequiredField(DefaultContexts.Save)]
-        //public string PersistentProperty {
-        //    get { return _PersistentProperty; }
-        //    set { SetPropertyValue("PersistentProperty", ref _PersistentProperty, value); }
-        //}
 
         //[Action(Caption = "My UI Action", ConfirmationMessage = "Are you sure?", ImageName = "Attention", AutoCommit = true)]
         //public void ActionMethod() {

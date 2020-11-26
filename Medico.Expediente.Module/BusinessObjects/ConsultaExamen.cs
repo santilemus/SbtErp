@@ -17,14 +17,11 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
     /// <summary>
     /// Objeto Persistente que corresponde a los examenes por consulta. Es la clase para el objeto de negocios ConsultaExamen
     /// </summary>
-    [DefaultClassOptions]
+    [NavigationItem(false)]
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Exámenes")]
     [DevExpress.Persistent.Base.ImageNameAttribute("electrocardiograma")]
     [DevExpress.Persistent.Base.CreatableItemAttribute(false)]
     [RuleCombinationOfPropertiesIsUnique("ConsultaExamen_ExamenFechaUnico", DefaultContexts.Save, "Examen,Fecha", SkipNullOrEmptyValues = false)]  
-    [RuleCriteria("ConsultaExamen.FechaPresentacionValida", DefaultContexts.Save, "Not(IsNull([FechaPresentacion])) And FechaPresentacion >= Fecha", "Fecha Presentación debe ser mayor o igual a Fecha")]
-    [RuleObjectExists("ConsultaExamen.IdLaboratorioValido",DefaultContexts.Save,"Not(IsNull([FechaPresentacion])) And IsNull([Laboratorio])", InvertResult = true,
-     CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction, SkipNullOrEmptyValues=false, MessageTemplateMustExist = "Debe indicar el laboratorio donde realizó los exámenes")]
     public class ConsultaExamen : XPObjectBaseBO
     {
         /// <summary>
@@ -34,117 +31,73 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         {
             base.AfterConstruction();
             Fecha = DateTime.Now;
-            Presentado = false;
         }
 
-        private Tercero.Module.BusinessObjects.Tercero _laboratorio;
-        private System.DateTime _fechaPresentacion;
-        private Consulta _consulta;
-        private DevExpress.Persistent.BaseImpl.FileData _documento;
-        private System.String _resultado;
-        private System.Boolean _presentado;
-        private System.DateTime _fecha;
-        private Examen _examen;
+        private Tercero.Module.BusinessObjects.Tercero laboratorio;
+        private Nullable<System.DateTime> fechaPresentacion;
+        private Consulta consulta;
+        private DevExpress.Persistent.BaseImpl.FileData documento;
+        private System.String resultado;
+        private System.DateTime fecha;
+        private Examen examen;
         public ConsultaExamen(DevExpress.Xpo.Session session)
           : base(session)
         {
         }
 
-        [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Examen")]
+        [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Examen"), ImmediatePostData(true)]
         [RuleRequiredField("ConsultaExamen.Examen_Requerido", "Save")]
         public Examen Examen
         {
-            get => _examen;
-            set => SetPropertyValue("Examen", ref _examen, value);
+            get => examen;
+            set => SetPropertyValue(nameof(Examen), ref examen, value);
         }
 
         [RuleRequiredField("ConsultaExamen.Fecha_Requerido", "Save")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         public System.DateTime Fecha
         {
-            get
-            {
-                return _fecha;
-            }
-            set
-            {
-                SetPropertyValue("Fecha", ref _fecha, value);
-            }
+            get => fecha;
+            set => SetPropertyValue(nameof(Fecha), ref fecha, value);
         }
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Fecha Presentación")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
-        public System.DateTime FechaPresentacion
+        [RuleValueComparison("ConsultaExamen.FechaPresentacion >= Fecha", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual, "[Fecha]", ParametersMode.Expression,
+            TargetCriteria = "[Examen.Categoria.Codigo] != 'EX001'")]
+
+        public Nullable<System.DateTime> FechaPresentacion
         {
-            get
-            {
-                return _fechaPresentacion;
-            }
-            set
-            {
-                SetPropertyValue("FechaPresentacion", ref _fechaPresentacion, value);
-            }
-        }
-        public Tercero.Module.BusinessObjects.Tercero Laboratorio
-        {
-            get
-            {
-                return _laboratorio;
-            }
-            set
-            {
-                SetPropertyValue("Laboratorio", ref _laboratorio, value);
-            }
+            get => fechaPresentacion;
+            set => SetPropertyValue(nameof(FechaPresentacion), ref fechaPresentacion, value);
         }
 
-        [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
-        [RuleRequiredField("ConsultaExamen.Presentado_Requerido", "Save")]
-        public System.Boolean Presentado
+        [XafDisplayName("Laboratorio")]
+        [DataSourceCriteria("[Roles][[IdRole] In (4, 5)]")]
+        [RuleRequiredField("ConsultaExamen.Laboratorio_Requerido", DefaultContexts.Save, TargetCriteria = "[Examen.Categoria.Codigo] != 'EX001'")]
+        public Tercero.Module.BusinessObjects.Tercero Laboratorio
         {
-            get
-            {
-                return _presentado;
-            }
-            set
-            {
-                SetPropertyValue("Presentado", ref _presentado, value);
-            }
+            get => laboratorio;
+            set => SetPropertyValue(nameof(Laboratorio), ref laboratorio, value);
         }
-        [DevExpress.Xpo.SizeAttribute(400)]
+
+        [DevExpress.Xpo.SizeAttribute(400), DbType("varchar(400)")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         public System.String Resultado
         {
-            get
-            {
-                return _resultado;
-            }
-            set
-            {
-                SetPropertyValue("Resultado", ref _resultado, value);
-            }
+            get => resultado;
+            set => SetPropertyValue(nameof(Resultado), ref resultado, value);
         }
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         public DevExpress.Persistent.BaseImpl.FileData Documento
         {
-            get
-            {
-                return _documento;
-            }
-            set
-            {
-                SetPropertyValue("Documento", ref _documento, value);
-            }
+            get => documento;
+            set => SetPropertyValue(nameof(Documento), ref documento, value);
         }
         [DevExpress.Xpo.AssociationAttribute("Exámenes-Consulta")]
         public Consulta Consulta
         {
-            get
-            {
-                return _consulta;
-            }
-            set
-            {
-                SetPropertyValue("Consulta", ref _consulta, value);
-            }
+            get => consulta;
+            set => SetPropertyValue("Consulta", ref consulta, value);
         }
 
     }

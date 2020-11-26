@@ -82,7 +82,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         /// </summary>
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Precio Unitario")]
         [RuleValueComparison("ProductoPrecio.PrecioUnitario_Mayor_Cero", DefaultContexts.Save, ValueComparisonType.GreaterThan, 0)]
-        [ModelDefault("DisplayFormat", "N4"), ModelDefault("EditMask", "N4"), Persistent("ProductoPrecio")]
+        [ModelDefault("DisplayFormat", "{0:N4}"), ModelDefault("EditMask", "n4"), Persistent(nameof(PrecioUnitario))]
         public System.Decimal PrecioUnitario
         {
             get
@@ -98,7 +98,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         /// <summary>
         /// Cantidad Desde. Cuando el precio se aplica en función de la cantidad comprada
         /// </summary>
-        [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Cantidad Desde"), ModelDefault("DisplayFormat", "N0")]
+        [XafDisplayName("Cantidad Desde"), ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [RuleValueComparison("ProductoPrecio.CantidadDesde_Mayor_Igual_Cero", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual, 0)]
         public System.Decimal CantidadDesde
@@ -116,7 +116,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         /// <summary>
         /// Cantidad Hasta. Cuando el precio se aplica en función de la cantidad de compra (se encuentra dentro de un rango)
         /// </summary>
-        [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Cantidad Hasta"), ModelDefault("DisplayFormat", "N0")]
+        [XafDisplayName("Cantidad Hasta"), ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         public System.Decimal CantidadHasta
         {

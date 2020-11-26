@@ -22,7 +22,6 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
         }
 
         private Tercero tercero;
-        private TipoTelefono tipo;
         public TerceroTelefono(DevExpress.Xpo.Session session)
           : base(session)
         {
@@ -30,11 +29,6 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
 
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
-        public TipoTelefono Tipo
-        {
-            get => tipo;
-            set => SetPropertyValue(nameof(Tipo), ref tipo, value);
-        }
 
         [DevExpress.Xpo.AssociationAttribute("Tercero-Telefonos"), VisibleInListView(false)]
         public Tercero Tercero

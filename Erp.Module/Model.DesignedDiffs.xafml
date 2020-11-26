@@ -1,8 +1,10 @@
-﻿<?xml version="1.0" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Application Title="SBT.Apps.Erp">
   <Options>
     <LayoutManagerOptions RequiredFieldMark="*" />
   </Options>
-  <Views>
-  </Views>
+  <SchemaModules>
+    <SchemaModule Name="CloneObjectModule" Version="20.1.4.0" IsNewNode="True" />
+    <SchemaModule Name="SystemModule" Version="20.1.4.0" IsNewNode="True" />
+  </SchemaModules>
 </Application>

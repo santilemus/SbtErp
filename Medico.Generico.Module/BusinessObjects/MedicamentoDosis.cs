@@ -14,7 +14,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
     /// <summary>
     /// Objeto Persistente que corresponde a Dosis de Medicamento. Es la clase para el objeto de negocios que corresponde a las dosis de medicamente
     /// </summary>
-	[DefaultClassOptions]
+	[NavigationItem(false)]
     [DevExpress.Persistent.Base.CreatableItemAttribute(false)]
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Dosis")]
     [DevExpress.ExpressApp.DC.XafDefaultPropertyAttribute("Comentario")]

@@ -196,6 +196,12 @@
     <Compile Include="Controllers\vcEmpleadoWeb.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controllers\vcEmpresaLookupListViewHideNew.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controllers\vcEmpresaUnidadLookupListViewHideNew.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controllers\vcEmpresaUnidadWeb.cs">
       <SubType>Component</SubType>
     </Compile>

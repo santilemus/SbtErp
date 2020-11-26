@@ -18,7 +18,7 @@ using DevExpress.Data.Filtering.Helpers;
 using DevExpress.ExpressApp.ConditionalAppearance;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Producto.Module.BusinessObjects;
-
+using DevExpress.Xpo.Metadata;
 
 namespace SBT.Apps.Facturacion.Module.BusinessObjects
 {
@@ -30,6 +30,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         Criteria = "[Venta.Tipo.Codigo] In ('COVE02', 'COVE04', 'COVE05')", Context = "Any", Visibility = ViewItemVisibility.Hide)]
     [Appearance("Venta Detalle - Factura Exportacion", AppearanceItemType = "ViewItem", TargetItems = "IVA;Exenta;NoSujeta",
         Criteria = "[Venta.Tipo.Codigo] == 'COVE03'", Context = "Any", Visibility = ViewItemVisibility.Hide)]
+    [OptimisticLockingReadBehavior(OptimisticLockingReadBehavior.Default, true)]
     //[ImageName("BO_Contact")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
@@ -62,8 +63,8 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         decimal gravada = 0.0m;
         [DbType("numeric(14,2)"), Persistent(nameof(Exenta))]
         decimal exenta = 0.0m;
-        [Persistent(nameof(IVA)), DbType("numeric(14,2)")]
-        decimal iVA = 0.0m;
+        [Persistent(nameof(Iva)), DbType("numeric(14,2)")]
+        decimal iva = 0.0m;
         decimal precioUnidad;
         decimal cantidad = 1.0m;
         SBT.Apps.Producto.Module.BusinessObjects.Producto producto;
@@ -141,9 +142,9 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         [ModelDefault("DisplayFormat", "{0:N4}"), ModelDefault("EditMask", "n4")]
         public decimal PrecioConIva => Convert.ToDecimal(EvaluateAlias(nameof(PrecioConIva)));
 
-        [XafDisplayName("Iva"), Index(7), PersistentAlias(nameof(iVA))]
+        [XafDisplayName("Iva"), Index(7), PersistentAlias(nameof(iva))]
         [ModelDefault("DisplayFormat", "{0:N4}"), ModelDefault("EditMask", "n4")]
-        public decimal IVA => iVA;
+        public decimal Iva => iva;
 
         [DbType("numeric(14,2)"), XafDisplayName("Venta Exenta"), PersistentAlias(nameof(exenta)), Index(8)]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
@@ -166,7 +167,18 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         public Venta Venta
         {
             get => venta;
-            set => SetPropertyValue(nameof(Venta), ref venta, value);
+            set
+            {
+                Venta oldVenta = venta;
+                bool changed = SetPropertyValue(nameof(Venta), ref venta, value);
+                if (!IsLoading && !IsSaving && changed && Venta != null)
+                {
+                    oldVenta = oldVenta ?? venta;
+                    oldVenta.UpdateTotalExento(true);
+                    oldVenta.UpdateTotalGravado(true);
+                    oldVenta.UpdateTotalIva(true);
+                }
+            }
         }
 
         
@@ -192,30 +204,66 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
                     if (tp != null)
                     {
                         ExpressionEvaluator eval = new ExpressionEvaluator(TypeDescriptor.GetProperties(typeof(Venta)), tp.Tributo.Formula);
-                        iVA = Math.Round(Convert.ToDecimal(eval.Evaluate(this)), 2);
+                        iva = Math.Round(Convert.ToDecimal(eval.Evaluate(this)), 2);
 
                     }
                 }
                 else
                 {
                     gravada = 0.0m;
-                    iVA = 0.0m;
+                    iva = 0.0m;
                     exenta = Math.Round(Cantidad * precioUnidad, 2);
                     noSujeta = 0.0m;
                 }
             }
         }
 
-        #endregion
+        /// <summary>
+        /// Ejecuta metodos que actualiza la informacion en otros BO, como el inventario
+        /// </summary>
+        /// <remarks>
+        /// Ver mas info en: https://supportcenter.devexpress.com/ticket/details/t685638/get-the-context-of-an-update-and-trigger-another-db-operation
+        /// </remarks>
 
-        //private string _PersistentProperty;
-        //[XafDisplayName("My display name"), ToolTip("My hint message")]
-        //[ModelDefault("EditMask", "(000)-00"), Index(0), VisibleInListView(false)]
-        //[Persistent("DatabaseColumnName"), RuleRequiredField(DefaultContexts.Save)]
-        //public string PersistentProperty {
-        //    get { return _PersistentProperty; }
-        //    set { SetPropertyValue("PersistentProperty", ref _PersistentProperty, value); }
-        //}
+        protected override void OnSaving()
+        {
+            bool isObjectMarkedDeleted = this.Session.IsObjectMarkedDeleted(this);
+            bool isNewObject = this.Session.IsNewObject(this);
+            XPMemberInfo cantidadInfo = this.Session.GetClassInfo(this).GetMember(nameof(Cantidad));
+            XPMemberInfo productoInfo = this.Session.GetClassInfo(this).GetMember(nameof(Producto));
+            if (isNewObject)
+                ActualizarInventario(Bodega.Oid, Venta.Oid, Producto.Oid, Cantidad);
+            if (cantidadInfo.GetModified(this))
+            {
+                decimal cantidadOld = Convert.ToDecimal(cantidadInfo.GetOldValue(this));
+                decimal cantidadNew = Convert.ToDecimal(cantidadInfo.GetValue(this));
+                ActualizarInventario(Bodega.Oid, Venta.Oid, Producto.Oid, cantidadNew - cantidadOld);
+            }
+            // pendiente de implementar cuando se cambia el producto
+
+            if (isObjectMarkedDeleted)
+                ActualizarInventario(Bodega.Oid, Venta.Oid, Producto.Oid, -cantidad);
+            base.OnSaving();
+        }
+
+        /// <summary>
+        /// Metodo para realizar la actualizacion del inventario. Evaluar si queda aca o se lleva al BO de inventario
+        /// porque el mismo metodo se necesitara para las compras, devoluciones y otros documentos internos que afectan inventario
+        /// </summary>
+        /// <param name="OidBodega">Bodega cuyo inventario será afectado</param>
+        /// <param name="OidDocumento">Oid del documento de referencia. Evaluar si se pasa el Oid de la Venta o el Oid del detalle de la venta</param>
+        /// <param name="OidProducto">Oid del Producto del inventario a actualizar</param>
+        /// <param name="ACantidad">Oid de la cantidad del inventario que sera afectado</param>
+        /// <remarks>
+        /// Pendiente de completar, faltan los BO de Inventario 
+        /// También esta pendiente cuando sean PEPS o UEPS porque en ese caso falta alli el lote
+        /// </remarks>
+        public void ActualizarInventario(int OidBodega, long OidDocumento, int OidProducto, decimal ACantidad)
+        {
+
+        }
+
+        #endregion
 
         //[Action(Caption = "My UI Action", ConfirmationMessage = "Are you sure?", ImageName = "Attention", AutoCommit = true)]
         //public void ActionMethod() {

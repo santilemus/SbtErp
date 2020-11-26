@@ -17,7 +17,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
     /// <summary>
     /// Objeto Persistente que corresponde a las recetas emitiidas en las Consultas. Es la clase para el objeto de negocios de Recetas
     /// </summary>
-    [DefaultClassOptions]
+    [NavigationItem(false)]
     [DevExpress.Persistent.Base.CreatableItemAttribute(false)]
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Receta")]
     [DevExpress.Persistent.Base.ImageNameAttribute("BO_Contract")]

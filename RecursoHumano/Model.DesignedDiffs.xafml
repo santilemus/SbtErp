@@ -339,7 +339,6 @@
                 <LayoutItem Id="RazonSocial" Index="3" RelativeSize="87.640449438202253" />
               </LayoutGroup>
               <LayoutGroup Id="RentaEmpleoAnterior_col2" RelativeSize="50">
-                <LayoutItem Id="FechaHasta" RelativeSize="5.0561797752808992" />
                 <LayoutItem Id="IngresoGravado" RelativeSize="3.6516853932584268" />
                 <LayoutItem Id="RentaRetenida" RelativeSize="91.292134831460672" />
               </LayoutGroup>

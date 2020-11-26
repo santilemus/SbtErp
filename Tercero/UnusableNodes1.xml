@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application>
+  <Views Id="Views">
+    <DetailView Id="TerceroTelefono_DetailView">
+      <Layout Id="Layout">
+        <LayoutGroup Id="Main">
+          <LayoutGroup Id="SimpleEditors">
+            <LayoutGroup Id="TerceroTelefono" Caption="Tipo" Direction="Horizontal" RelativeSize="83.689839572192511" Removed="True">
+              <LayoutItem Id="Tipo" Removed="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="Telefono">
+              <LayoutItem Id="Descripcion" Index="2" RelativeSize="3.4759358288770055" />
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+  </Views>
+</Application>

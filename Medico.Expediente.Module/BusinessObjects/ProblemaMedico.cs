@@ -69,7 +69,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
             set => SetPropertyValue(nameof(Tipo), ref tipo, value);
         }
 
-        [XafDisplayName("Diagnostico"), Index(2), Persistent("Diagnostico")]
+        [XafDisplayName("Diagnostico"), Index(2), Persistent("Diagnostico"), ImmediatePostData(true), VisibleInListView(false)]
         public Enfermedad Diagnostico
         {
             get => diagnostico;
@@ -78,7 +78,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
                 var oldValue = Diagnostico;
                 bool changed = SetPropertyValue(nameof(Diagnostico), ref diagnostico, value);
                 if (!IsLoading && !IsSaving && changed)
-                    Titulo = value.Nombre.Substring(1, 100);
+                    Titulo = !string.IsNullOrEmpty(value.Nombre) && value.Nombre.Length <= 150 ? value.Nombre : value.Nombre.Substring(1, 150);
             }
         }
 
@@ -132,7 +132,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
             set => SetPropertyValue(nameof(Reaccion), ref reaccion, value);
         }
 
-        [Size(200)]
+        [Size(200), VisibleInListView(false)]
         public string Comentario
         {
             get => comentario;
@@ -140,7 +140,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         }
 
         
-        [DbType("varchar(10)"), Persistent("Resultado"), XafDisplayName("Resultado")]
+        [DbType("varchar(10)"), Persistent("Resultado"), XafDisplayName("Resultado"), VisibleInListView(false)]
         [DataSourceCriteria("[Categoria] = 13 And [Activo] = true")]   // lista de valores de resultado de problemas medico
         public MedicoLista Resultado
         {

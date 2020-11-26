@@ -16,23 +16,11 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         }
 
         private Empresa _empresa;
-        private TipoTelefono _tipo;
         public EmpresaTelefono(DevExpress.Xpo.Session session)
           : base(session)
         {
         }
-        [RuleRequiredField("EmpresaTelefono.Tipo_Requerido", "Save")]
-        public TipoTelefono Tipo
-        {
-            get
-            {
-                return _tipo;
-            }
-            set
-            {
-                SetPropertyValue("Tipo", ref _tipo, value);
-            }
-        }
+
         [DevExpress.Xpo.AssociationAttribute("Telefonos-Empresa")]
         public Empresa Empresa
         {

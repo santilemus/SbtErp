@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Application Title="SBT.Apps.Medico.Generico.Module" Logo="ExpressAppLogo">
+  <Options DataAccessMode="Server" />
   <SchemaModules>
     <SchemaModule Name="CloneObjectModule" Version="20.1.4.0" IsNewNode="True" />
     <SchemaModule Name="SystemModule" Version="20.1.4.0" IsNewNode="True" />
@@ -30,6 +31,41 @@
         </LayoutGroup>
       </Layout>
     </DetailView>
+    <DetailView Id="CitaBase_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="25.459317585301836">
+            <LayoutGroup Id="CitaBase" RelativeSize="100">
+              <LayoutGroup Id="CitaBase_col1" RelativeSize="50">
+                <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="24" IsNewNode="True" />
+                <LayoutItem Id="Subject" Index="1" RelativeSize="17.333333333333332" />
+                <LayoutItem Id="StartOn" Index="2" RelativeSize="17.333333333333332" />
+                <LayoutItem Id="EndOn" Index="3" RelativeSize="17.333333333333332" />
+                <LayoutItem Id="AllDay" Index="4" RelativeSize="24" />
+              </LayoutGroup>
+              <LayoutGroup Id="CitaBase_col2" RelativeSize="50">
+                <LayoutItem Id="Location" RelativeSize="24" />
+                <LayoutItem Id="Label" RelativeSize="17.333333333333332" />
+                <LayoutItem Id="Status" RelativeSize="17.333333333333332" />
+                <LayoutItem Id="ReminderInfoXml" RelativeSize="41.333333333333336" />
+              </LayoutGroup>
+            </LayoutGroup>
+            <LayoutGroup Id="XPObject" Caption="Oid" Index="1" RelativeSize="7.766990291262136" Removed="True">
+              <LayoutItem Id="Oid" Removed="True" />
+            </LayoutGroup>
+          </LayoutGroup>
+          <LayoutGroup Id="SizeableEditors" RelativeSize="37.270341207349084">
+            <LayoutItem Id="Description" RelativeSize="50" />
+            <LayoutItem Id="RecurrenceInfoXml" RelativeSize="50" />
+          </LayoutGroup>
+          <LayoutGroup Id="Medicos_Group" Direction="Vertical" RelativeSize="37.270341207349084">
+            <LayoutItem Id="Medicos" RelativeSize="100" />
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="CitaBase_ListView" DataAccessMode="Client" />
+    <ListView Id="CitaBase_LookupListView" DataAccessMode="Client" />
     <ListView Id="Empleado_Profesiones_ListView">
       <Columns>
         <ColumnInfo Id="NumeroProfesional" Width="379" />
@@ -156,9 +192,6 @@
             </LayoutGroup>
             <LayoutGroup Id="Precios" RelativeSize="100">
               <LayoutItem Id="Precios" RelativeSize="100" />
-            </LayoutGroup>
-            <LayoutGroup Id="Impuestos" RelativeSize="100">
-              <LayoutItem Id="Impuestos" RelativeSize="100" />
             </LayoutGroup>
             <LayoutGroup Id="ItemsEnsamble" RelativeSize="100">
               <LayoutItem Id="ItemsEnsamble" RelativeSize="100" />
@@ -413,6 +446,30 @@
               <LayoutItem Id="Categoria" Index="4" RelativeSize="84.656796769851951" />
             </LayoutGroup>
             <LayoutGroup Id="XPObject" Caption="Oid" Direction="Horizontal" Index="1" RelativeSize="80.080753701211307" Removed="True">
+              <LayoutItem Id="Oid" Removed="True" />
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <DetailView Id="Vacuna_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="100">
+            <LayoutGroup Id="Vacuna" RelativeSize="100">
+              <LayoutGroup Id="Vacuna_col1" RelativeSize="50">
+                <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="5.0561797752808992" IsNewNode="True" />
+                <LayoutItem Id="Medicamento" Index="1" RelativeSize="3.6516853932584268" />
+                <LayoutItem Id="Codigo" Index="2" RelativeSize="3.6516853932584268" />
+                <LayoutItem Id="CodigoCVX" Index="3" RelativeSize="87.640449438202253" />
+              </LayoutGroup>
+              <LayoutGroup Id="Vacuna_col2" RelativeSize="50">
+                <LayoutItem Id="Nombre" RelativeSize="5.0561797752808992" />
+                <LayoutItem Id="DescripcionCPT" RelativeSize="3.6516853932584268" />
+                <LayoutItem Id="Comentario" RelativeSize="91.292134831460672" />
+              </LayoutGroup>
+            </LayoutGroup>
+            <LayoutGroup Id="XPObject" Caption="Oid" Index="1" RelativeSize="78.477690288713916" Removed="True">
               <LayoutItem Id="Oid" Removed="True" />
             </LayoutGroup>
           </LayoutGroup>

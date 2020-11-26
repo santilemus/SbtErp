@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
+using System.Xml;
 using DevExpress.Xpo;
 using DevExpress.ExpressApp;
 using System.ComponentModel;
@@ -14,24 +15,39 @@ using DevExpress.Persistent.Validation;
 using DevExpress.Xpo.Metadata;
 using DevExpress.Persistent.Base.General;
 using DevExpress.XtraScheduler.Xml;
-using System.Xml;
+using DevExpress.ExpressApp.SystemModule.Notifications;
+using DevExpress.ExpressApp.Filtering;
+using DevExpress.XtraScheduler.Compatibility;
+using SBT.Apps.Base.Module.BusinessObjects;
+
 
 namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 {
-    [Persistent("Cita"), NavigationItem(false)]
+    [Persistent("Cita"), NavigationItem(false), DefaultProperty(nameof(Subject))]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
-    public class CitaBase : BaseObject, IEvent, IRecurrentEvent, IReminderEvent
+    public class CitaBase : XPObjectBaseBO, IEvent, IRecurrentEvent, IReminderEvent
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
         public CitaBase(Session session)
             : base(session)
         {
+            Medicos.ListChanged += new ListChangedEventHandler(Medicos_ListChanged);
         }
         public override void AfterConstruction()
         {
             base.AfterConstruction();
             StartOn = DateTime.Now;
             EndOn = StartOn.AddHours(1);
-            //Medicos.Add(Session.GetObjectByKey<RecursoMedico>(SecuritySystem.CurrentUserId));
+
+            var ci = ((Usuario)SecuritySystem.CurrentUser).ClassInfo;
+            if (ci.FindMember("Empleado") == null)
+                return;   // ver que hacemos porque hay un problema no existe la propiedad empleado
+            Empleado.Module.BusinessObjects.Empleado empleado = (((Usuario)SecuritySystem.CurrentUser).GetMemberValue("Empleado") as Empleado.Module.BusinessObjects.Empleado);
+            if (empleado == null)
+                return;   // la propiedad existe, pero no tiene valor
+            var medico = Session.GetObjectByKey<Medico>(empleado.Oid);
+            if (medico != null)
+                Medicos.Add(medico);
+
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
@@ -45,6 +61,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
         }
 
         //private EventImpl appointmentImpl = new EventImpl();
+
         bool isPostponed;
         DateTime? alarmTime;
         TimeSpan? remindIn;
@@ -66,7 +83,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 
         #region Miembros IEvent
 
-        [Size(250), XafDisplayName("Asunto")]
+        [Size(250), DbType("varchar(250)"), XafDisplayName("Nombre")]
         public string Subject
         {
             get => subject;
@@ -74,7 +91,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
         }
 
 
-        [Size(SizeAttribute.Unlimited), XafDisplayName("Descripción")]
+        [Size(SizeAttribute.Unlimited), DbType("varchar(max)"), XafDisplayName("Descripción")]
         public string Description
         {
             get => description;
@@ -105,7 +122,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
             set => SetPropertyValue(nameof(AllDay), ref allDay, value);
         }
 
-        [Size(100), XafDisplayName("Ubicación")]
+        [Size(100), DbType("varchar(100)"), XafDisplayName("Ubicación")]
         public string Location
         {
             get => location;
@@ -133,7 +150,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
             set => SetPropertyValue(nameof(Type), ref type, value);
         }
 
-        [XafDisplayName("Id Recurso"), PersistentAlias(nameof(medicoIds))]
+        [XafDisplayName("Id Recurso"), PersistentAlias(nameof(medicoIds)), Browsable(false)]
         public string ResourceId
         {
             get
@@ -144,7 +161,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
             }
             set
             {
-                if (!IsLoading && !IsSaving && medicoIds != value && value != null)
+                if ((!IsLoading && !IsSaving) && medicoIds != value && value != null)
                 {
                     medicoIds = value;
                     UpdateMedicos();
@@ -250,10 +267,10 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 
         #endregion
                         
-        [Association("RecursoMedico-Citas", UseAssociationNameAsIntermediateTableName = true)]
-        public XPCollection<RecursoMedico> Medicos
+        [Association("Medico-Citas", UseAssociationNameAsIntermediateTableName = true)]
+        public XPCollection<Medico> Medicos
         {
-            get { return GetCollection<RecursoMedico>(nameof(Medicos)); }
+            get { return GetCollection<Medico>(nameof(Medicos)); }
         }
 
         //Medico medico;
@@ -279,11 +296,11 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
         public void UpdateMedicoIds()
         {
             medicoIds = string.Empty;
-            foreach (RecursoMedico activityUser in Medicos)
+            foreach (Medico activityUser in Medicos)
             {
-                medicoIds += String.Format(@"<ResourceId Type=""{0}"" Value=""{1}"" />", activityUser.Id.GetType().FullName, activityUser.Id);
+                medicoIds += String.Format(@"<ResourceId Type=""{0}"" Value=""{1}"" />\r\n", activityUser.Id.GetType().FullName, activityUser.Id);
             }
-            medicoIds = String.Format("<ResourceIds>{0}</ResourceIds>", medicoIds);
+            medicoIds = String.Format("<ResourceIds>\r\n{0}</ResourceIds>", medicoIds);
         }
         private void UpdateMedicos()
         {
@@ -298,7 +315,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
                     xmlDocument.LoadXml(medicoIds);
                     foreach (XmlNode xmlNode in xmlDocument.DocumentElement.ChildNodes)
                     {
-                        RecursoMedico activityUser = Session.GetObjectByKey<RecursoMedico>(new Guid(xmlNode.Attributes["Value"].Value));
+                        Medico activityUser = Session.GetObjectByKey<Medico>(xmlNode.Attributes["Value"].Value);
                         if (activityUser != null)
                             Medicos.Add(activityUser);
                     }
@@ -314,7 +331,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
             if (e.ListChangedType == ListChangedType.ItemAdded || e.ListChangedType == ListChangedType.ItemDeleted)
             {
                 UpdateMedicoIds();
-                OnChanged("ResourceId");
+                OnChanged(nameof(ResourceId));
             }
         }
 
@@ -364,6 +381,21 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
                 remindIn = null;
                 IsPostponed = false;
             }
+        }
+
+        public event EventHandler<CustomizeNotificationsPostponeTimeListEventArgs> CustomizeReminderTimeLookup;
+        private IList<PostponeTime> CreatePostponeTimes()
+        {
+            IList<PostponeTime> result = PostponeTime.CreateDefaultPostponeTimesList();
+            result.Add(new PostponeTime("None", null, "None"));
+            result.Add(new PostponeTime("AtStartTime", TimeSpan.Zero, "0 minutes"));
+            CustomizeNotificationsPostponeTimeListEventArgs args = new CustomizeNotificationsPostponeTimeListEventArgs(result);
+            if (CustomizeReminderTimeLookup != null)
+            {
+                CustomizeReminderTimeLookup(this, args);
+            }
+            PostponeTime.SortPostponeTimesList(args.PostponeTimesList);
+            return args.PostponeTimesList;
         }
 
         #endregion

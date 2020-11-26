@@ -43,7 +43,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 		}
 		[RuleRequiredField("Examen.Nombre_Requerido", "Save")]
 		[RuleUniqueValue("Examen.Nombre_Unico", DefaultContexts.Save, CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction)]
-		[DevExpress.Persistent.Base.ImmediatePostDataAttribute]
+		[DbType("varchar(100)"), Size(100)]
 		public System.String Nombre
 		{
 		  get
@@ -66,8 +66,8 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 		    set => SetPropertyValue("Categoria", ref _categoria, value);
 		}
 
-		[DevExpress.Xpo.SizeAttribute(250)]
-		[DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
+		[DevExpress.Xpo.SizeAttribute(250), DbType("varchar(250)")]
+		[DevExpress.Persistent.Base.VisibleInListViewAttribute(false)]
 		public System.String Comentario
 		{
 		  get

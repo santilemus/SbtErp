@@ -1,17 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Application>
   <Views Id="Views">
-    <DetailView Id="Operacion_DetailView">
+    <DetailView Id="Parametro_DetailView">
       <Layout Id="Layout">
         <LayoutGroup Id="Main">
           <LayoutGroup Id="SimpleEditors">
-            <LayoutGroup Id="Operacion">
-              <LayoutGroup Id="Operacion_col1">
-                <LayoutItem Id="Formula" Index="3" RelativeSize="14.772727272727273" />
-              </LayoutGroup>
-              <LayoutGroup Id="Operacion_col2">
-                <LayoutItem Id="Descripcion" RelativeSize="20.454545454545453" />
-              </LayoutGroup>
+            <LayoutGroup Id="Parametro_col1">
+              <LayoutItem Id="PorcSeguroPatrono" ViewItem="PorcSeguroPatrono" />
+              <LayoutItem Id="PorcSeguroEmpleado" ViewItem="PorcSeguroEmpleado" />
             </LayoutGroup>
           </LayoutGroup>
         </LayoutGroup>

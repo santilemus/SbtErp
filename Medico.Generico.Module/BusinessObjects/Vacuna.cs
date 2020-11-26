@@ -51,7 +51,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
         }
 
         [Size(8), DbType("varchar(8)"), Persistent("CodigoPT"), XafDisplayName("Código PT"),
-            RuleRequiredField("Vacuna.CodigoPT_Requerido", "Save"),
+            RuleRequiredField("Vacuna.CodigoPT_Requerido", "Save"), VisibleInListView(false),
             RuleUniqueValue("Vacuna.CodigoPT_Unico", DefaultContexts.Save, CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction,
                                                      SkipNullOrEmptyValues = false, ResultType = ValidationResultType.Error)]
         public string Codigo
@@ -61,7 +61,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
         }
 
 
-        [Size(6), DbType("varchar(6)"), Persistent("CodigoCVX"), XafDisplayName("Código CVX"),
+        [Size(6), DbType("varchar(6)"), Persistent("CodigoCVX"), XafDisplayName("Código CVX"), VisibleInListView(false),
             RuleRequiredField("Vacuna.CodigoCVX_Requerido", DefaultContexts.Save)]
         public string CodigoCVX
         {
@@ -87,7 +87,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
         }
 
         
-        [Size(150), DbType("varchar(150)"), Persistent("Comentario"), XafDisplayName("Comentario")]
+        [Size(150), DbType("varchar(150)"), Persistent("Comentario"), XafDisplayName("Comentario"), VisibleInListView(false)]
         public string Comentario
         {
             get => comentario;

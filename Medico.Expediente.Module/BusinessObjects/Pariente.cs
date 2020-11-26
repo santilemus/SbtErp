@@ -12,7 +12,7 @@ using SBT.Apps.Medico.Generico.Module.BusinessObjects;
 
 namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 {
-    [DefaultClassOptions]
+    [NavigationItem(false)]
     [DevExpress.Persistent.Base.ImageNameAttribute("user_group")]
     [DevExpress.Persistent.Base.CreatableItemAttribute(false)]
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Parientes")]

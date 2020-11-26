@@ -171,7 +171,8 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             decimal? oldTotalHaber = totalHaber;
             decimal tempHaber = 0.0m;
             foreach (PartidaDetalle detalle in Detalles)
-                totalHaber = tempHaber;
+                tempHaber += detalle.ValorHaber;
+            totalHaber = tempHaber;
             if (forceChangeEvents)
                 OnChanged(nameof(TotalHaber), oldTotalHaber, totalHaber);
         }

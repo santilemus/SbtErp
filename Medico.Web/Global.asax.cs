@@ -167,9 +167,11 @@ namespace SBT.Apps.Medico.Web
                 // se despliega en modo release, pero si en modo debug. La idea es hacer un despliegue release con esta linea, para ver que sucede
                 ((IModelOptionsWeb)WebApplication.Instance.Model.Options).CollectionsEditMode = DevExpress.ExpressApp.Editors.ViewEditMode.Edit;
 
-                WebApplication.Instance.Model.AboutInfoString = "{0:ProductName} - {0:Description}<br>{0:Version}<br>{0:Copyright}";
-                WebApplication.Instance.Title += WebApplication.Instance.Title + " - " + ((CustomLogonParameters)e.LogonParameters).Empresa.RazonSocial;
-                WebApplication.Instance.Model.Description = ((CustomLogonParameters)e.LogonParameters).Empresa.RazonSocial;
+                //WebApplication.Instance.Model.AboutInfoString = "{0:ProductName} - {0:Description}<br>{0:Version}<br>{0:Copyright}";
+                WebApplication.Instance.Model.AboutInfoString = "{0:ProductName}, {0:Version}<br>{0:Description}";
+                
+                //WebApplication.Instance.Title += WebApplication.Instance.Title + " [" + ((CustomLogonParameters)e.LogonParameters).Empresa.RazonSocial + "]";
+               // WebApplication.Instance.Model.Description = ((CustomLogonParameters)e.LogonParameters).Empresa.RazonSocial;
             }
         }
 

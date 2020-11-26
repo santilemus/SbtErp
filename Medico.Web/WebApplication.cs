@@ -195,7 +195,7 @@ namespace SBT.Apps.Medico.Web
             // 
             // medicoAspNetApplication
             // 
-            this.ApplicationName = "SBT - Registro de Control Medico";
+            this.ApplicationName = "SBT - Registro Electrónico Clínico";
             this.CheckCompatibilityType = DevExpress.ExpressApp.CheckCompatibilityType.DatabaseSchema;
             this.DefaultCollectionSourceMode = DevExpress.ExpressApp.CollectionSourceMode.Normal;
             this.Modules.Add(this.module1);

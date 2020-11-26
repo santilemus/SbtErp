@@ -60,7 +60,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 			SetPropertyValue("CodigoCie", ref _codigo, value);
 		  }
 		}
-		[DevExpress.Persistent.Base.ImmediatePostDataAttribute]
+		[DbType("varchar(100)"), Size(100)]
 		[RuleRequiredField("MedicoListas.Nombre_Requerido", "Save")]
 		[RuleUniqueValue("MedicoListas.Nombre_Unico", DefaultContexts.Save, CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction)]
 		public System.String Nombre
@@ -84,7 +84,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 		    set => SetPropertyValue("Categoria", ref _categoria, value);
 		}
 
-		[DevExpress.Xpo.SizeAttribute(250)]
+		[DevExpress.Xpo.SizeAttribute(250), DbType("varchar(250)")]
 		[DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
 		[DevExpress.Persistent.Base.VisibleInListViewAttribute(false)]
 		[DevExpress.Persistent.Base.ImmediatePostDataAttribute]

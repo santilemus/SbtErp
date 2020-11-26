@@ -23,7 +23,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         MessageTemplateMustBeReferenced = "Para borrar el objeto '{TargetObject}', debe estar seguro que no es utilizado (referenciado) en ningún lugar.",
         InvertResult = true, FoundObjectMessageFormat = "'{0}'", FoundObjectMessagesSeparator = ";")]
     //[RuleCombinationOfPropertiesIsUnique("Cita_PacienteFechaUnico", DefaultContexts.Save, "IdPaciente,Fecha", SkipNullOrEmptyValues = true)]
-    [RuleCombinationOfPropertiesIsUnique("Cita_FechaNombreUnico", DefaultContexts.Save, "StartOn,Nombre", SkipNullOrEmptyValues = false)]
+    [RuleCombinationOfPropertiesIsUnique("Cita_FechaNombreUnico", DefaultContexts.Save, "StartOn,Subject", SkipNullOrEmptyValues = false)]
     public class Cita : CitaBase
     {
         /// <summary>
@@ -37,14 +37,12 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 
         private Paciente _paciente;
         private System.Boolean _sePresento;
-        private System.String _motivo;
-        private System.String _nombre;
         public Cita(DevExpress.Xpo.Session session)
           : base(session)
         {
         }
 
-        [DevExpress.Xpo.AssociationAttribute("Paciente-Citas")]
+        [DevExpress.Xpo.AssociationAttribute("Paciente-Citas"), ImmediatePostData(true)]
         public Paciente Paciente
         {
             get => _paciente;
@@ -53,24 +51,8 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
                 var oldValue = _paciente;
                 bool changed = SetPropertyValue("Paciente", ref _paciente, value);
                 if (!IsLoading && !IsSaving && changed)
-                    Nombre = value.NombreCompleto;
+                    Subject = value.NombreCompleto;
             }
-        }
-
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
-        [RuleRequiredField("Cita.Nombre_Requerido", "Save"), Size(100), DbType("varchar(100)")]
-        public System.String Nombre
-        {
-            get => _nombre;
-            set => SetPropertyValue("Nombre", ref _nombre, value);
-        }
-
-        [DevExpress.Xpo.SizeAttribute(250)]
-        [RuleRequiredField("Cita.Motivo_Requerido", "Save")]
-        public System.String Motivo
-        {
-            get => _motivo;
-            set => SetPropertyValue("Motivo", ref _motivo, value);
         }
 
         [RuleRequiredField("Cita.SePresento_Requerido", "Save")]

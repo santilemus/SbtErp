@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Application Company="Smart Business Technology" Copyright="© Santiago Enrique Lemus" Description="Registro Electrónico de Pacientes" Title="SBT - Registro Electrónico de Pacientes" Logo="sbt_rep">
+<Application Company="Smart Business Technology" Copyright="© Santiago Enrique Lemus" Description="Registro Electrónico Clínico" Title="SBT - Registro Electrónico Clínico" Logo="sbt_rep" AboutInfoString="{0:ProductName}&lt;br&gt;{0:Version}&lt;br&gt;{0:Description}">
   <NavigationItems GenerateRelatedReportsGroup="True" StartupNavigationItem="">
     <Items>
       <Item Id="Catalogos">
@@ -13,23 +13,7 @@
           <Item Id="Tercero_ListView" Index="8" />
         </Items>
       </Item>
-      <Item Id="Default" Caption="Seguridad">
-        <Items>
-          <Item Id="ConsultaExamen_ListView" Removed="True" />
-          <Item Id="ConsultaExamenFisico_ListView" Removed="True" />
-          <Item Id="ConsultaIncapacidad_ListView" Removed="True" />
-          <Item Id="ConsultaReceta_ListView" Removed="True" />
-          <Item Id="ConsultaSigno_ListView" Removed="True" />
-          <Item Id="ConsultaSintoma_ListView" Removed="True" />
-          <Item Id="Event_ListView" Removed="True" />
-          <Item Id="MedicamentoDosis_ListView" Removed="True" />
-          <Item Id="MedicoConsultorio_ListView" Removed="True" />
-          <Item Id="MedicoEspecialidad_ListView" Removed="True" />
-          <Item Id="PacienteMedico_ListView" Removed="True" />
-          <Item Id="PacienteVacunas_ListView" Removed="True" />
-          <Item Id="Pariente_ListView" Removed="True" />
-        </Items>
-      </Item>
+      <Item Id="Default" Caption="Seguridad" />
       <Item Id="Recurso Humano">
         <Items>
           <Item Id="Event_ListView" IsNewNode="True" />

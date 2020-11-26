@@ -187,14 +187,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
                 return GetCollection<ProductoPrecio>("Precios");
             }
         }
-        [DevExpress.Xpo.AssociationAttribute("Impuestos-Producto"), DevExpress.Xpo.Aggregated, XafDisplayName("Impuestos")]
-        public XPCollection<ProductoImpuesto> Impuestos
-        {
-            get
-            {
-                return GetCollection<ProductoImpuesto>("Impuestos");
-            }
-        }
+
         [AssociationAttribute("ItemsEnsamble-Producto"), DevExpress.Xpo.Aggregated, XafDisplayName("Ensamble Items")]
         public XPCollection<ProductoEnsamble> ItemsEnsamble
         {

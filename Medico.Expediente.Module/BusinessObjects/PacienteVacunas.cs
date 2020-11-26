@@ -12,7 +12,7 @@ using SBT.Apps.Medico.Generico.Module.BusinessObjects;
 
 namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 {
-    [DefaultClassOptions]
+    [NavigationItem(false)]
     [DevExpress.Persistent.Base.CreatableItemAttribute(false)]
     [DevExpress.Persistent.Base.ImageNameAttribute("vacunas")]
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Vacunas")]

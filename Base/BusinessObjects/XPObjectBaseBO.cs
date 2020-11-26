@@ -6,6 +6,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Collections.Generic;
 using DevExpress.Persistent.Validation;
+using DevExpress.Xpo.Metadata;
+using DevExpress.ExpressApp;
 
 namespace SBT.Apps.Base.Module.BusinessObjects
 {
@@ -53,6 +55,27 @@ namespace SBT.Apps.Base.Module.BusinessObjects
                 }
                 throw new Exception($"No puede borrar, Existen objetos, que usan el objeto que esta intentando eliminar : {ToString()}\r\n{usadoPor}");
             }
+        }
+
+        private bool isDefaultPropertyAttributeInit;
+        private XPMemberInfo defaultPropertyMemberInfo;
+        public override string ToString()
+        {
+            if (!isDefaultPropertyAttributeInit)
+            {
+                DefaultPropertyAttribute attrib = XafTypesInfo.Instance.FindTypeInfo(
+                    GetType()).FindAttribute<DefaultPropertyAttribute>();
+                if (attrib != null)
+                    defaultPropertyMemberInfo = ClassInfo.FindMember(attrib.Name);
+                isDefaultPropertyAttributeInit = true;
+            }
+            if (defaultPropertyMemberInfo != null)
+            {
+                object obj = defaultPropertyMemberInfo.GetValue(this);
+                if (obj != null)
+                    return obj.ToString();
+            }
+            return base.ToString();
         }
 
         #region Metodos

@@ -95,13 +95,14 @@
     <Compile Include="BusinessObjects\ClasificacionAplicarImpuesto.cs" />
     <Compile Include="BusinessObjects\EClasificacion.cs" />
     <Compile Include="BusinessObjects\EClasificacionIVA.cs" />
+    <Compile Include="BusinessObjects\Inventario.cs" />
+    <Compile Include="BusinessObjects\Kardex.cs" />
     <Compile Include="BusinessObjects\Presentacion.cs" />
     <Compile Include="BusinessObjects\Producto.cs" />
     <Compile Include="BusinessObjects\ProductoAtributo.cs" />
     <Compile Include="BusinessObjects\ProductoCodigoBarra.cs" />
     <Compile Include="BusinessObjects\ProductoEnsamble.cs" />
     <Compile Include="BusinessObjects\ProductoEquivalente.cs" />
-    <Compile Include="BusinessObjects\ProductoImpuesto.cs" />
     <Compile Include="BusinessObjects\ProductoLote.cs" />
     <Compile Include="BusinessObjects\ProductoPrecio.cs" />
     <Compile Include="BusinessObjects\ProductoProveedor.cs" />

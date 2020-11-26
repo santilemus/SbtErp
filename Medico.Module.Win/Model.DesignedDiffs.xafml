@@ -7,4 +7,8 @@
     <SchemaModule Name="SystemModule" Version="20.1.4.0" IsNewNode="True" />
     <SchemaModule Name="SystemWindowsFormsModule" Version="20.1.4.0" IsNewNode="True" />
   </SchemaModules>
+  <Views>
+    <ListView Id="Medico_Citas_ListView" EditorTypeName="DevExpress.ExpressApp.Win.Editors.GridListEditor" />
+    <ListView Id="Paciente_Citas_ListView" EditorTypeName="DevExpress.ExpressApp.Win.Editors.GridListEditor" />
+  </Views>
 </Application>

@@ -3,6 +3,11 @@
   <NavigationItems>
     <Items>
       <Item Id="Contabilidad" Visible="False" />
+      <Item Id="Default">
+        <Items>
+          <Item Id="Event_ListView" Visible="False" />
+        </Items>
+      </Item>
     </Items>
   </NavigationItems>
   <Options DataAccessMode="Server" />

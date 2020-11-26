@@ -16,6 +16,10 @@ using DevExpress.Persistent.Base.General;
 
 namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 {
+    /// <summary>
+    /// BO para los recursos que son Medicos. No se usan directamente el BO Medico porque el OID es Integer y
+    /// para los recursos debe de ser uniqueidentifier, porque Resource debe heredar de BaseObject
+    /// </summary>
     [DefaultClassOptions]
     //[ImageName("BO_Contact")]
     //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]

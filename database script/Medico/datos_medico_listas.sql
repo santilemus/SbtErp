@@ -219,7 +219,7 @@ select * from MedLista where Categoria = 6
 -- para actualizar los datos de via en medicamentos y poner todo de forma uniforme
 update Medicamento
    set via = 'Tópica'
-  where via in ('T¢pica', 'Tópico')
+  where via in ('Tópica', 'Tópico')
 go
 update Medicamento
    set via = 'IM, IV'

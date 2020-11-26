@@ -286,8 +286,8 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             get { return Convert.ToDecimal(EvaluateAlias(nameof(Edad))); }
         }
 
-        [Size(SizeAttribute.Unlimited), ImageEditor(ListViewImageEditorMode = ImageEditorMode.PopupPictureEdit,
-    DetailViewImageEditorMode = ImageEditorMode.PopupPictureEdit, ListViewImageEditorCustomHeight = 34)]
+        [Size(SizeAttribute.Unlimited), ImageEditor(ListViewImageEditorMode = ImageEditorMode.DropDownPictureEdit,
+    DetailViewImageEditorMode = ImageEditorMode.PictureEdit, ListViewImageEditorCustomHeight = 34)]
         [Index(5), DetailViewLayout("Resumen del Error", LayoutGroupType.SimpleEditorsGroup, 1)]
         //[Delayed(true)]
         public byte[] Fotografia

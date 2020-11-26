@@ -134,7 +134,6 @@
     <Compile Include="BusinessObjects\MedicoLista.cs" />
     <Compile Include="BusinessObjects\PlanMedico.cs" />
     <Compile Include="BusinessObjects\PlanMedicoDetalle.cs" />
-    <Compile Include="BusinessObjects\RecursoMedico.cs" />
     <Compile Include="BusinessObjects\Regla.cs" />
     <Compile Include="BusinessObjects\TablaIMC.cs" />
     <Compile Include="BusinessObjects\TerminologiaAnatomica.cs" />

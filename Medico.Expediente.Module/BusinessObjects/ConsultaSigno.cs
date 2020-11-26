@@ -9,7 +9,7 @@ using DevExpress.Xpo;
 using DevExpress.Persistent.Validation;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Medico.Generico.Module.BusinessObjects;
-
+using System.ComponentModel;
 
 namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 {
@@ -17,11 +17,12 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
     /// Objeto Persistente que corresponde a los signos tomados en las Consultas. Es la clase para el objeto de negocios ConsultaSigno
     /// y se utiliza para los signos clinicos del paciente y obtenidos en la consulta
     /// </summary>
-    [DefaultClassOptions]
+    ///[DefaultClassOptions]
     [DevExpress.Persistent.Base.CreatableItemAttribute(false)]
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Signos")]
     [DevExpress.Persistent.Base.ImageNameAttribute("signo")]
-    [RuleCriteria("ConsultaSigno.FechaFin_Valida", DefaultContexts.Save, "Not(IsNull([FechaFin])) And FechaFin >= FechaInicio", "Fecha Fin debe ser mayor o igual a Fecha Inicio")]
+    [NavigationItem(false)]
+    [DefaultProperty(nameof(Consulta))]
     public class ConsultaSigno: XPObjectBaseBO
     {
         /// <summary>
@@ -52,13 +53,14 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 
         [Persistent("Problema"), XafDisplayName("Problema Medico"), Index(1), ]
         [RuleRequiredField("ConsultaSigno.Problema_Requerido", "Save", ResultType = ValidationResultType.Warning)]
+        [DataSourceCriteria("[Paciente.Oid] == '@This.Consulta.Paciente.Oid'")]
         public ProblemaMedico Problema
         {
             get => _problema;
             set => SetPropertyValue(nameof(Problema), ref _problema, value);
         }
 
-        [DevExpress.Xpo.SizeAttribute(250)]
+        [DevExpress.Xpo.SizeAttribute(250), DbType("varchar(250)")]
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Descripción")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false), Index(2)]
         [RuleRequiredField("ConsultaSigno.Descripcion_Requerido", "Save")]

@@ -94,11 +94,11 @@ namespace SBT.Apps.Medico.Module.DatabaseUpdate
         private Empresa CreateDefaultEmpresa()
         {
             var iCant = ObjectSpace.Evaluate(typeof(Empresa), CriteriaOperator.Parse("Count()"), CriteriaOperator.Parse("Activa = true And Oid > 0"));
-            Empresa emp;
-            if (Convert.ToInt16(iCant) == 0)
+            Empresa emp = ObjectSpace.FindObject<Empresa>(CriteriaOperator.Parse("Activa = true And Oid > 0"));
+            if (emp == null)
             {
                 emp = ObjectSpace.CreateObject<Empresa>();
-                emp.RazonSocial = "SBT Technology, SA de CV";
+                emp.RazonSocial = "Servicios Medicos, S.A de C.V";
                 var zg = ObjectSpace.FindObject<ZonaGeografica>(new BinaryOperator("Codigo", "SLV"));
                 if (zg != null)
                     emp.Pais = zg;
@@ -110,20 +110,36 @@ namespace SBT.Apps.Medico.Module.DatabaseUpdate
                     emp.Ciudad = zg;
                 emp.Direccion = "S/D";
                 emp.Activa = true;
-                iCant = ObjectSpace.Evaluate(typeof(EmpresaUnidad), CriteriaOperator.Parse("Count()"), CriteriaOperator.Parse("Empresa = ? And Activa = true", emp));
-                EmpresaUnidad suc = ObjectSpace.CreateObject<EmpresaUnidad>();
-                suc.Empresa = emp;
+                emp.Unidades.Add(SucursalDefault(emp));
+                emp.Save();
+                emp.Session.CommitTransaction();
+            }
+            else
+            {
+                emp = ObjectSpace.FirstOrDefault<Empresa>(x => (x.Activa == true || x.Oid > 0));
+                if (emp.Unidades.Count == 0)
+                {
+                    emp.Unidades.Add(SucursalDefault(emp));
+                    emp.Save();
+                    emp.Session.CommitTransaction();
+                }
+            }
+            return emp;
+        }
+
+        private EmpresaUnidad SucursalDefault(Empresa empresa)
+        {
+            EmpresaUnidad suc = ObjectSpace.FindObject<EmpresaUnidad>(CriteriaOperator.Parse("Empresa = ? And Activa = true", empresa));
+            if (suc == null)
+            {
+                suc = ObjectSpace.CreateObject<EmpresaUnidad>();
+                suc.Empresa = empresa;
                 suc.Nombre = "Agencia 1";
                 suc.Role = ETipoRoleUnidad.Agencia;
                 suc.Codigo = "AG0001";
                 suc.Activa = true;
-                emp.Unidades.Add(suc);
-                emp.Save();
-                emp.Session.CommitTransaction();
-                return emp;
             }
-            else
-                return null;
+            return suc;
         }
     }
 }

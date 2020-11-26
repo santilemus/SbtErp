@@ -374,7 +374,6 @@
         <ColumnInfo Id="Cliente" Index="4" Width="246" />
         <ColumnInfo Id="FormaPago" Index="5" Width="97" />
         <ColumnInfo Id="VentaGravada" Index="6" />
-        <ColumnInfo Id="IVA" Index="7" />
         <ColumnInfo Id="SubTotal" Index="8" />
         <ColumnInfo Id="VentaExenta" Index="9" />
         <ColumnInfo Id="Total" Index="10" />

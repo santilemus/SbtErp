@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SBT.Apps.Medico.Web")]
+[assembly: AssemblyTitle("Registro Electrónico Clínico")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("-")]
+[assembly: AssemblyCompany("Smart Business Technology, S.A de C.V")]
 [assembly: AssemblyProduct("SBT.Apps.Medico.Web")]
-[assembly: AssemblyCopyright("Copyright © - 2008")]
+[assembly: AssemblyCopyright("Copyright © - 2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

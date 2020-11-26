@@ -11,7 +11,7 @@ using SBT.Apps.Medico.Generico.Module.BusinessObjects;
 
 namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 {
-    [DefaultClassOptions]
+    [NavigationItem(false)]
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Medicos del Paciente")]
     [DevExpress.Persistent.Base.ImageNameAttribute("medico")]
     [DevExpress.Persistent.Base.CreatableItemAttribute(false)]

@@ -1,9 +1,13 @@
-﻿using DevExpress.Persistent.Base;
+﻿using DevExpress.ExpressApp;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using System;
 using System.Linq;
+using DevExpress.ExpressApp.DC;
+using SBT.Apps.Medico.Generico.Module.BusinessObjects;
+using System.ComponentModel;
 
 namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 {
@@ -13,7 +17,8 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
     [DefaultClassOptions]
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Consulta")]
     [DevExpress.Persistent.Base.ImageNameAttribute("planning-customer")]
-    [DevExpress.Persistent.Base.NavigationItemAttribute("Salud")]
+    [DevExpress.Persistent.Base.NavigationItem("Salud")]
+    [DefaultProperty(nameof(Fecha))]
     [RuleIsReferenced("Consulta_Referencia", DefaultContexts.Delete, typeof(Consulta), nameof(Oid),
        MessageTemplateMustBeReferenced = "Para borrar el objeto '{TargetObject}', debe estar seguro que no es utilizado (referenciado) en ningún lugar.",
        InvertResult = true, FoundObjectMessageFormat = "'{0}'", FoundObjectMessagesSeparator = ";")]
@@ -29,16 +34,35 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
             base.AfterConstruction();
             Fecha = DateTime.Now;
             RealizarExamenes = true;
-            Empresa = EmpresaDeSesion();
+            empresa = EmpresaDeSesion();
+            if (((Usuario)SecuritySystem.CurrentUser).Agencia != null)
+            {
+                // se  hace de esta forma, no solo se asigna la agencia al consultorio porque da error. La informacion del usuario es una sesion diferente
+                int idConsultorio = ((Usuario)SecuritySystem.CurrentUser).Agencia.Oid;
+                Consultorio = Session.GetObjectByKey<EmpresaUnidad>(idConsultorio);
+            }
+            // para obtener el medico de la sesion y asignarlo en caso que se trate de un medico
+            var ci = ((Usuario)SecuritySystem.CurrentUser).ClassInfo;
+            if (ci.FindMember("Empleado") == null)
+                return;   
+            Empleado.Module.BusinessObjects.Empleado empleado = (((Usuario)SecuritySystem.CurrentUser).GetMemberValue("Empleado") as Empleado.Module.BusinessObjects.Empleado);
+            if (empleado == null)
+                return;   // la propiedad existe, pero no tiene valor
+            Generico.Module.BusinessObjects.Medico doc = Session.GetObjectByKey<Generico.Module.BusinessObjects.Medico>(empleado.Oid);
+            if (doc != null)
+                Medico = doc;
         }
 
+     //   SBT.Apps.Producto.Module.BusinessObjects.ProductoPrecio precio;
+     //   SBT.Apps.Producto.Module.BusinessObjects.Producto producto;
         private Generico.Module.BusinessObjects.Medico _medico;
         private Paciente _paciente;
         private System.String _unidadDeRemision;
         private EmpresaUnidad _consultorio;
         private System.Boolean _realizarExamenes;
         private System.DateTime _proximaCita;
-        private Empresa _empresa;
+        [Persistent(nameof(Empresa))]
+        private Empresa empresa;
         private System.String _diagnostico;
         private System.DateTime _fecha;
         public Consulta(DevExpress.Xpo.Session session)
@@ -79,10 +103,10 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
                 SetPropertyValue("Fecha", ref _fecha, value);
             }
         }
-        [DevExpress.Xpo.SizeAttribute(1000)]
+        [DevExpress.Xpo.SizeAttribute(1000), DbType("varchar(1000)")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [RuleRequiredField("Consulta.Diagnostico_Requerido", "Save")]
-        [DevExpress.ExpressApp.Model.ModelDefault("RowCount", "6")]
+        [DevExpress.ExpressApp.Model.ModelDefault("RowCount", "5")]
         public System.String Diagnostico
         {
             get
@@ -95,15 +119,12 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
             }
         }
 
-        [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
-        [DevExpress.Persistent.Base.VisibleInListViewAttribute(false)]
+        [VisibleInDetailView(false), VisibleInListView(false)]
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Institución Médica")]
-        [DevExpress.Xpo.NonPersistentAttribute]
-        [RuleRequiredField("Consulta.IdEmpresa_Requerido", "Save")]
+        [PersistentAlias(nameof(empresa))]
         public Empresa Empresa
         {
-            get => _empresa;
-            set => SetPropertyValue("Empresa", ref _empresa, value);
+            get => empresa;
         }
 
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Próxima Cita")]
@@ -134,6 +155,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         }
 
         [RuleRequiredField("Consulta.Consultorio_Requerido", "Save")]
+        [DataSourceCriteria("[Role] == 2")]
         public EmpresaUnidad Consultorio
         {
             get
@@ -145,7 +167,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
                 SetPropertyValue("Consultorio", ref _consultorio, value);
             }
         }
-        [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Unidad de Remisión")]
+        [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Unidad de Remisión"), DbType("varchar(100)")]
         public System.String UnidadDeRemision
         {
             get
@@ -157,6 +179,24 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
                 SetPropertyValue("UnidadDeRemision", ref _unidadDeRemision, value);
             }
         }
+
+
+        //[DevExpress.ExpressApp.DC.XafDisplayName("Producto")]
+        //[DataSourceCriteria("[Categoria.Clasificacion] == 4 && [Categoria.EsGrupo] == False && [Categoria.Activa] == true && [Activo] == True")]
+        //public SBT.Apps.Producto.Module.BusinessObjects.Producto Producto
+        //{
+        //    get => producto;
+        //    set => SetPropertyValue(nameof(Producto), ref producto, value);
+        //}
+      
+        //[DevExpress.ExpressApp.DC.XafDisplayName("Precio")]
+        //[DataSourceProperty("Precios")]
+        //public SBT.Apps.Producto.Module.BusinessObjects.ProductoPrecio Precio
+        //{
+        //    get => precio;
+        //    set => SetPropertyValue(nameof(Precio), ref precio, value);
+        //}
+
         [DevExpress.Xpo.AssociationAttribute("Exámenes-Consulta"), DevExpress.Xpo.Aggregated]
         public XPCollection<ConsultaExamen> Exámenes
         {
@@ -191,6 +231,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
                 return GetCollection<ConsultaSintoma>("Sintomas");
             }
         }
+
         [DevExpress.Xpo.AssociationAttribute("Receta-Consulta"), DevExpress.Xpo.Aggregated]
         public XPCollection<ConsultaReceta> Receta
         {
@@ -199,6 +240,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
                 return GetCollection<ConsultaReceta>("Receta");
             }
         }
+
         [DevExpress.Xpo.AssociationAttribute("Incapacidades-Consulta"), DevExpress.Xpo.Aggregated]
         public XPCollection<ConsultaIncapacidad> Incapacidades
         {
@@ -208,5 +250,10 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
             }
         }
 
+        [Association("Consulta-UltraSonografiaObstetricas"), DevExpress.Xpo.Aggregated, XafDisplayName("Ecografía Obstetrica")]
+        public XPCollection<Ginecologia.UltraSonografiaObstetrica> UltrasonografiaObstetricas => GetCollection<Ginecologia.UltraSonografiaObstetrica>(nameof(UltrasonografiaObstetricas));
+
+        [Association("Consulta-UltrasonografiaPelvicas"), DevExpress.Xpo.Aggregated, XafDisplayName("Ecografía Pélvica")]
+        public XPCollection<Ginecologia.UltrasonografiaPelvica> UltrasonografiaPelvicas => GetCollection<Ginecologia.UltrasonografiaPelvica>(nameof(UltrasonografiaPelvicas));
     }
 }

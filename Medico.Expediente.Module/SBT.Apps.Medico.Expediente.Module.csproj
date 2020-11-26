@@ -136,8 +136,12 @@
     <Compile Include="BusinessObjects\ConsultaReceta.cs" />
     <Compile Include="BusinessObjects\ConsultaSigno.cs" />
     <Compile Include="BusinessObjects\ConsultaSintoma.cs" />
+    <Compile Include="BusinessObjects\ArchivoAdjunto.cs" />
     <Compile Include="BusinessObjects\EEstadoEstiloVida.cs" />
     <Compile Include="BusinessObjects\EstiloVida.cs" />
+    <Compile Include="BusinessObjects\Ginecologia\UltraSonografiaObstetrica.cs" />
+    <Compile Include="BusinessObjects\Ginecologia\UltrasonografiaObstetricaDetalle.cs" />
+    <Compile Include="BusinessObjects\Ginecologia\UltrasonografiaPelvica.cs" />
     <Compile Include="BusinessObjects\HistoriaFamiliar.cs" />
     <Compile Include="BusinessObjects\HistorialCrecimiento.cs" />
     <Compile Include="BusinessObjects\Paciente.cs" />
@@ -218,6 +222,10 @@
     <ProjectReference Include="..\Medico.Generico.Module\SBT.Apps.Medico.Generico.Module.csproj">
       <Project>{241955B7-7FFC-4F17-AEFA-613AD3E97826}</Project>
       <Name>SBT.Apps.Medico.Generico.Module</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Producto\SBT.Apps.Producto.csproj">
+      <Project>{90d73cb9-2f45-473c-8fee-af118bb56c89}</Project>
+      <Name>SBT.Apps.Producto</Name>
     </ProjectReference>
     <ProjectReference Include="..\Tercero\SBT.Apps.Tercero.csproj">
       <Project>{5f15837d-d1e5-44dc-92f0-4f2ebe9c3f8d}</Project>
