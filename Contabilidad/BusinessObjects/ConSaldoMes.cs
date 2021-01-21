@@ -43,23 +43,23 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         [Persistent(nameof(Oid)), Key(true), DbType("bigint")]
         Int64 oid = -1;
         [Persistent(nameof(Empresa)), FetchOnly]
-        Empresa empresa = null;
+        Empresa empresa;
         [DbType("int"), Persistent(nameof(Periodo)), FetchOnly]
-        Periodo periodo = null;
+        Periodo periodo;
         [Persistent(nameof(MesAnio)), DbType("int"), FetchOnly, Indexed(nameof(cuenta), Name = "idx_MesAnio_Cuenta")]
-        int mesAnio = 0;
+        int mesAnio;
         [Persistent(nameof(Cuenta))]
-        Catalogo cuenta = null;
+        Catalogo cuenta;
         [Persistent(nameof(Mes)), DbType("smallint"), FetchOnly]
         int mes = 1;
         [Persistent(nameof(SaldoInicio)), DbType("money"), FetchOnly]
-        decimal saldoInicio = 0.0m;
+        decimal saldoInicio;
         [Persistent(nameof(Debe)), DbType("money"), FetchOnly]
-        decimal debe = -0.0m;
+        decimal debe;
         [Persistent(nameof(Haber)), DbType("money"), FetchOnly]
-        decimal haber = 0.0m;
+        decimal haber;
         [Persistent(nameof(SaldoFin)), DbType("money"), FetchOnly]
-        decimal saldoFin = 0.0m;
+        decimal saldoFin;
 
 
         [PersistentAlias(nameof(oid))]

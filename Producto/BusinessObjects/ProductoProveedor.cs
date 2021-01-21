@@ -11,7 +11,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
     /// <summary>
     /// Objeto Persistente que corresponde a la relación de los proveedores de un producto
     /// </summary>
-    [DefaultClassOptions]
+    [DefaultClassOptions, CreatableItem(false)]
     [ImageName("Tercero")]
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Producto Proveedor"), NavigationItem(false), Persistent("ProductoProveedor"),
         XafDefaultProperty("Proveedor")]

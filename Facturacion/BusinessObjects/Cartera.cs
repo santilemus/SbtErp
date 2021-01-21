@@ -33,7 +33,6 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         public override void AfterConstruction()
         {
             base.AfterConstruction();
-            empresa = EmpresaDeSesion();
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
@@ -42,11 +41,14 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         bool activa = true;
         SBT.Apps.Empleado.Module.BusinessObjects.Empleado vendedor;
         string nombre;
-        [Persistent(nameof(Empresa))]
         Empresa empresa;
 
-        [XafDisplayName("Empresa"), Index(0), Browsable(false), PersistentAlias(nameof(empresa))]
-        public Empresa Empresa => empresa;
+        [XafDisplayName("Empresa"), Index(0), Browsable(false), Persistent(nameof(Empresa))]
+        public Empresa Empresa
+        {
+            get => empresa;
+            set => SetPropertyValue(nameof(Empresa), ref empresa, value);
+        }
 
 
         [Size(80), DbType("varchar(80)"), XafDisplayName("Nombre"), RuleRequiredField("Cartera.Nombre_Requerido", DefaultContexts.Save),

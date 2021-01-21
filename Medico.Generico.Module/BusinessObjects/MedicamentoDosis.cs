@@ -51,7 +51,8 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 			SetPropertyValue("Dosis", ref _dosis, value);
 		  }
 		}
-		[DevExpress.Xpo.SizeAttribute(50)]
+
+		[DevExpress.Xpo.SizeAttribute(50), DbType("varchar(50)")]
 		[RuleRequiredField("MedicamentoDosis.Edad_Requerido", "Save"), VisibleInLookupListView(true)]
 		public System.String Edad
 		{
@@ -64,7 +65,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 			SetPropertyValue("Edad", ref _edad, value);
 		  }
 		}
-		[DevExpress.Xpo.SizeAttribute(200)]
+		[DevExpress.Xpo.SizeAttribute(200), DbType("varchar(200)")]
 		public System.String Comentario
 		{
 		  get

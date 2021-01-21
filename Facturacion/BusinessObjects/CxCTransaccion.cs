@@ -55,7 +55,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         decimal factorCambio = 1.0m;
         Moneda moneda;
         [Persistent(nameof(Valor))]
-        decimal ? valor = null;
+        decimal ? valor;
         BancoTransaccion bancoTransaccion;
         SBT.Apps.Empleado.Module.BusinessObjects.Empleado gestorCobro;
         string noTarjeta;
@@ -64,14 +64,14 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         SBT.Apps.Tercero.Module.BusinessObjects.Banco banco;
         string comentario;
         [Persistent(nameof(NRC))]
-        TerceroDocumento nRC = null;
+        TerceroDocumento nRC;
         SBT.Apps.Tercero.Module.BusinessObjects.Tercero cliente;
         [Persistent(nameof(Numero)), DbType("int")]
-        int numero = 0;
+        int numero;
         [Persistent(nameof(FechaAnulacion)), DbType("datetime2")]
-        DateTime? fechaAnulacion = null;
+        DateTime? fechaAnulacion;
         [Persistent(nameof(UsuarioAnulo)), DbType("varchar(25)"), Size(25)]
-        string usuarioAnulo = null;
+        string usuarioAnulo;
         DateTime fecha;
         Concepto concepto;
         Listas tipoDocumento;
@@ -258,13 +258,5 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         //    // Trigger a custom business logic for the current record in the UI (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112619.aspx).
         //    this.PersistentProperty = "Paid";
         //}
-    }
-
-    public enum ECxcTransaccionEstado
-    {
-        Digitado = 0,
-        Aplicado = 1,
-        Anulado = 2,
-        Rechazado = 3
     }
 }

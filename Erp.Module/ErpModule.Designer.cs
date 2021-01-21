@@ -42,6 +42,8 @@
             this.RequiredModuleTypes.Add(typeof(SBT.Apps.Producto.Module.ProductoModule));
             this.RequiredModuleTypes.Add(typeof(SBT.Apps.Contabilidad.ContabilidadModule));
             this.RequiredModuleTypes.Add(typeof(SBT.Apps.RecursoHumano.RecursoHumanoModule));
+            this.RequiredModuleTypes.Add(typeof(SBT.Apps.Facturacion.Module.FacturacionModule));
+
 		}
 
 		#endregion

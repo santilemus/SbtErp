@@ -32,7 +32,6 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
             Activo = true;
             CantMinima = 0.0m;
             CantMaxima = 0.0m;
-            Empresa = EmpresaDeSesion();
         }
 
         EClasificacionIVA clasificacion = EClasificacionIVA.Gravado;
@@ -56,7 +55,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         #region Propiedades
         [DevExpress.Xpo.SizeAttribute(20), VisibleInLookupListView(true), DbType("varchar(20)")]
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Código")]
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
+        [ImmediatePostData(true)]
         [RuleRequiredField("Producto.Codigo_Requerido", "Save")]
         public System.String Codigo
         {
@@ -66,7 +65,8 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
 
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Código Barra")]
         [DevExpress.Persistent.Base.ToolTipAttribute("Código de barra principal o por defecto del producto")]
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute, NoForeignKey]
+        [NoForeignKey]
+        //[ImmediatePostData(true)]
         public ProductoCodigoBarra CodigoBarra
         {
             get => codigoBarra;
@@ -81,7 +81,6 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
             set => SetPropertyValue(nameof(Nombre), ref nombre, value);
         }
 
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
         [DevExpress.Persistent.Base.ToolTipAttribute("Línea del producto")]
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Categoría")]
         [DevExpress.Xpo.IndexedAttribute]
@@ -95,7 +94,6 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         }
 
         [DevExpress.Xpo.SizeAttribute(25), DbType("varchar(25)")]
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [DevExpress.Persistent.Base.VisibleInListViewAttribute(false)]
         //[RuleRequiredField("Producto.NombreCorto_Requerido", "Save")]
@@ -121,7 +119,6 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         }
 
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Cantidad Mínima")]
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [DevExpress.Persistent.Base.VisibleInListViewAttribute(false)]
         [RuleValueComparison("Producto.CantidadMinima_Mayor_o_Igual_0", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual, 0)]
@@ -131,7 +128,6 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
             set => SetPropertyValue(nameof(CantMinima), ref cantMinima, value);
         }
 
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Cantidad Máxima")]
         [DevExpress.Persistent.Base.VisibleInListViewAttribute(false)]
@@ -153,7 +149,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
             set => SetPropertyValue(nameof(Clasificacion), ref clasificacion, value);
         }
 
-        [DevExpress.Xpo.SizeAttribute(200), VisibleInListView(false)]
+        [DevExpress.Xpo.SizeAttribute(200), DbType("varchar(200)"), VisibleInListView(false)]
         public System.String Comentario
         {
             get => comentario;

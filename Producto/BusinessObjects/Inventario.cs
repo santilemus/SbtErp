@@ -1,18 +1,10 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp;
-using System.ComponentModel;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
+﻿using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
-using System.Collections.Generic;
-using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
-using DevExpress.Persistent.Validation;
+using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
-using SBT.Apps.Producto.Module.BusinessObjects;
+using System;
+using System.ComponentModel;
+using System.Linq;
 
 
 namespace SBT.Apps.Inventario.Module.BusinessObjects
@@ -33,6 +25,7 @@ namespace SBT.Apps.Inventario.Module.BusinessObjects
         public override void AfterConstruction()
         {
             base.AfterConstruction();
+            cantidad = 0.0m;
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
@@ -40,8 +33,8 @@ namespace SBT.Apps.Inventario.Module.BusinessObjects
         EmpresaUnidad bodega;
         Producto.Module.BusinessObjects.Producto producto;
         ETipoMovimientoInventario tipoMovimiento = ETipoMovimientoInventario.Inicial;
-        [Persistent(nameof(Cantidad))]
-        decimal cantidad = 0.0m;
+        [Persistent(nameof(Cantidad)), DbType("numeric(12,2)")]
+        decimal cantidad;
 
 
         public EmpresaUnidad Bodega
@@ -94,15 +87,5 @@ namespace SBT.Apps.Inventario.Module.BusinessObjects
         //    // Trigger a custom business logic for the current record in the UI (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112619.aspx).
         //    this.PersistentProperty = "Paid";
         //}
-    }
-
-    public enum ETipoMovimientoInventario
-    {
-        Inicial = 0,
-        Compra = 1,
-        Ingreso = 2,
-        Devolucion = 3,
-        Facturado = 4,
-        Egreso = 5
     }
 }

@@ -29,7 +29,7 @@ namespace SBT.Apps.Facturacion.Module.Controllers
         protected override void OnActivated()
         {
             base.OnActivated();
-            if (View.GetType().Name == "ListView")
+            if (string.Compare(View.GetType().Name, "ListView", StringComparison.Ordinal) == 0)
                 ((ListView)View).CollectionSource.Criteria["Empresa Actual"] = CriteriaOperator.Parse("[Agencia.Empresa.Oid] == ?", ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid);
 
         }

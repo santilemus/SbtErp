@@ -13,7 +13,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
     /// para que en los documentos como la impresion de las Partidas Contables, se pueda mostrar el nombre del empleado
     /// </summary>
     [DefaultClassOptions(), DefaultProperty("UserName"), DevExpress.ExpressApp.Model.ModelDefault("Caption", "Usuarios - Empresa"),
-        NavigationItem(false)]
+        NavigationItem(false), CreatableItem(false)]
     [Persistent(@"Usuario")]
     [RuleCriteria("Usuario_Prevent_delete_logged_in_user", DefaultContexts.Delete, "[Oid] != CurrentUserId()", 
         "No puede borrar el usuario con el cual inicio la sesion actual. Por favor, ingreso con otra cuenta de usuario y reintente la operación.")]

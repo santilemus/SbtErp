@@ -45,14 +45,14 @@ namespace SBT.Apps.Inventario.Module.BusinessObjects
 
         #region Propiedades
         [Persistent(nameof(Oid)), DbType("bigint"), Key(true)]
-        long oid;
+        long oid = -1;
         EmpresaUnidad bodega;
         Producto.Module.BusinessObjects.Producto producto;
         DateTime fecha;
         ETipoMovimientoInventario tipoMovimiento;
-        decimal cantidad = 0.0m;
-        decimal costoUnidad = 0.0m;
-        decimal precioUnidad = 0.0m;
+        decimal cantidad;
+        decimal costoUnidad;
+        decimal precioUnidad;
 
         [PersistentAlias(nameof(oid)), XafDisplayName("Oid"), Browsable(false), Index(0)]
         public long Oid => oid;
@@ -83,18 +83,21 @@ namespace SBT.Apps.Inventario.Module.BusinessObjects
             set => SetPropertyValue(nameof(TipoMovimiento), ref tipoMovimiento, value);
         }
 
+        [DbType("numeric(12,2)")]
         public decimal Cantidad
         {
             get => cantidad;
             set => SetPropertyValue(nameof(Cantidad), ref cantidad, value);
         }
 
+        [DbType("numeric(16,8)")]
         public decimal CostoUnidad
         {
             get => costoUnidad;
             set => SetPropertyValue(nameof(CostoUnidad), ref costoUnidad, value);
         }
 
+        [DbType("numeric(14,4)")]
         public decimal PrecioUnidad
         {
             get => precioUnidad;

@@ -21,7 +21,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
     /// Ejemplos: Hipertension, Diabetes, etc y los cuales deben tenerse en cuenta al ser tratado
     /// </summary>
     [DefaultClassOptions, Persistent("FactorRiesgo"), ModelDefault("Caption", "Factor Riesgo"), NavigationItem("Salud"), 
-        XafDefaultProperty("Diagnostico")]
+        XafDefaultProperty("Diagnostico"), CreatableItem(false)]
     [ImageName("FactorRiesgo")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
@@ -52,7 +52,6 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
                 bool changed = SetPropertyValue(nameof(Diagnostico), ref diagnostico, value);
                 if (!IsLoading && !IsSaving && changed)
                 {
-                    var sOldValue = Descripcion;
                     if (Diagnostico != null)
                         Descripcion = Diagnostico.Nombre;
                     else

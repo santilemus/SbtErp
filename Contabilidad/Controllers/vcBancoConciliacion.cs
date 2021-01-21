@@ -84,11 +84,11 @@ namespace SBT.Apps.Banco.Module.Controllers
                         ((XPObjectSpace)os).Session.ExecuteNonQuery("exec spBanDetalleConciliacion @Oid", new string[] { "Oid" }, new object[] { Oid });
                         ((BancoConciliacion)View.CurrentObject).Detalles.Reload();
                     }
-                    MostrarMensajeResultado(string.Format("Detalle Generado. Son {0:N0} transacciones", ((BancoConciliacion)View.CurrentObject).Detalles.Count));
+                    MostrarMensajeResultado($"Detalle Generado. Son {((BancoConciliacion)View.CurrentObject).Detalles.Count:N0} transacciones");
                 }
                 catch (Exception ex)
                 {
-                    MostrarError(string.Format("Detalle de la Conciliación no se pudo generar. Error {0}", ex.Message));
+                    MostrarError($"Detalle de la Conciliación no se pudo generar. Error {ex.Message}");
                 }
                 finally
                 {

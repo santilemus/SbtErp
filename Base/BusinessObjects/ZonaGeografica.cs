@@ -19,7 +19,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
     ///    ClientMode, lo cual es una limitacion seria cuando son muchos registros porque deben pasar todos al cliente
     ///    para construir el tree.
     /// </summary>
-    [DefaultClassOptions]
+    [DefaultClassOptions, CreatableItem(false)]
     [DevExpress.ExpressApp.DC.XafDefaultPropertyAttribute("Nombre")]
     [DevExpress.Persistent.Base.NavigationItemAttribute("Catalogos")]
     [DevExpress.Persistent.Base.ImageNameAttribute("place_blue")]
@@ -51,7 +51,6 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         }
         [DevExpress.Xpo.SizeAttribute(8), DbType("varchar(8)")]
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Código")]
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
         [DevExpress.Persistent.Base.ToolTipAttribute("Código de la Zona Geográfica")]
         [DevExpress.Xpo.KeyAttribute, VisibleInLookupListView(true), VisibleInListView(true)]
         [RuleRequiredField("ZonaGeografica.Codigo_Requerido", "Save"), Index(0)]
@@ -68,7 +67,6 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             }
         }
         [DevExpress.Xpo.SizeAttribute(60), DbType("varchar(60)"), Index(0)]
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
         [DevExpress.Persistent.Base.ToolTipAttribute("Nombre de la zona geográfica")]
         [RuleRequiredField("ZonaGeografica.Nombre_Requerido", "Save")]
         [RuleUniqueValue("ZonaGeografica.Nombre_Unico", DefaultContexts.Save, CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction)]
@@ -86,7 +84,6 @@ namespace SBT.Apps.Base.Module.BusinessObjects
 
         [DevExpress.Xpo.SizeAttribute(25), DbType("varchar(25)")]
         [DevExpress.Persistent.Base.ToolTipAttribute("Gentilicio para las personas de la zona geográfica")]
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
         [VisibleInListView(false)]
         public System.String Gentilicio
         {
@@ -124,7 +121,6 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             set => SetPropertyValue(nameof(CodigoTelefonico), ref codigoTelefonico, value);
         }
 
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
         [RuleRequiredField("ZonaGeografica.Activa_Requerido", "Save")]
         public System.Boolean Activa
         {

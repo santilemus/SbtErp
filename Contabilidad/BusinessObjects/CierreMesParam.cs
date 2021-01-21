@@ -17,7 +17,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
     /// BO para los parametros del cierre de mes
     /// </summary>
     [DomainComponent]
-    [DefaultClassOptions, ModelDefault("Caption", "Cierre de Mes")]
+    [DefaultClassOptions, ModelDefault("Caption", "Cierre de Mes"), NavigationItem("Contabilidad")]
     //[ImageName("BO_Unknown")]
     //[DefaultProperty("SampleProperty")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]

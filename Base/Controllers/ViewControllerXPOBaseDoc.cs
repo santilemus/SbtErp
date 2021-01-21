@@ -36,7 +36,7 @@ namespace SBT.Apps.Base.Module.Controllers
         protected override void OnActivated()
         {
             base.OnActivated();          
-            if ((View.GetType().Name == "ListView") && (((ListView)View).ObjectTypeInfo.FindMember("Empresa") != null)) 
+            if ((string.Compare(View.GetType().Name, "ListView", StringComparison.Ordinal) == 0) && (((ListView)View).ObjectTypeInfo.FindMember("Empresa") != null)) 
                 ((ListView)View).CollectionSource.Criteria["Empresa Actual"] = CriteriaOperator.Parse("Empresa = ?", ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid);
             // otra manera es la siguiente
             //((ListView)View).CollectionSource.Criteria["Filtro Defecto"] = CriteriaOperator.Parse("Empresa.Oid = EmpresaActualOid()"); 

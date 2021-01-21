@@ -40,7 +40,7 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         #region Propiedades
 
         EConciliacionDetalleEstado estado = EConciliacionDetalleEstado.AplicadoYContabilizado;
-        decimal monto = 0.0m;
+        decimal monto;
         string beneficiario;
         DateTime fecha;
         BancoTransaccion transaccion;
@@ -128,19 +128,5 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         //    // Trigger a custom business logic for the current record in the UI (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112619.aspx).
         //    this.PersistentProperty = "Paid";
         //}
-    }
-
-    public enum EConciliacionDetalleEstado
-    {
-        [XafDisplayName("Aplicado y Contabilizado")]
-        AplicadoYContabilizado = 0,
-        [XafDisplayName("Cargo Contabilizado No Aplicado por Banco")]
-        CargoContabilizadoNoABanco = 1,
-        [XafDisplayName("Cargo Aplicado por el Banco No Contabilizado")]
-        CargoABancoNoContabilizado = 2,
-        [XafDisplayName("Abono Contabilizado No Aplicado por Banco")]
-        AbonoContabilizadoNoABanco = 3,
-        [XafDisplayName("Abono Aplicado por el Banco No Contabilizado")]
-        AbonoABancoNoContabilizado = 4
     }
 }

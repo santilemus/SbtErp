@@ -20,7 +20,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
     /// Historia de padecimientos y/o enfermedades comunes en la familia
     /// </summary>
     [DefaultClassOptions, ModelDefault("Caption", "Historia Familiar"), NavigationItem(false), XafDefaultProperty(nameof(QuePadecen)),
-        Persistent("HistoriaFamiliar")]
+        Persistent("HistoriaFamiliar"), CreatableItem(false)]
     [ImageName(nameof(HistoriaFamiliar))]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).

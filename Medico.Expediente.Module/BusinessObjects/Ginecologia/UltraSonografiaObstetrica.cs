@@ -25,7 +25,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects.Ginecologia
     /// </summary>
     [DefaultClassOptions, ModelDefault("Caption", "Ultrasonografía Obstetrica"), DefaultProperty(nameof(Fecha))]
     [NavigationItem(false), Persistent(nameof(UltraSonografiaObstetrica)), CreatableItem(false)]
-    //[ImageName("BO_Contact")]
+    [ImageName("UltraSonografiaObstetrica")]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class UltraSonografiaObstetrica : XPObjectBaseBO
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
@@ -46,7 +46,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects.Ginecologia
         ECantidadFeto tipoEmbarazo;
         ETipoUltrasonografiaObstetrica tipoUltrasonografia;
         Consulta consulta;
-        string plan;
+        string datosPlan;
         string diagnostico;
         DateTime fecha;
 
@@ -97,10 +97,11 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects.Ginecologia
 
 
         [Size(200), DbType("varchar(200)"), XafDisplayName("Plan"), ModelDefault("RowCount", "4"), VisibleInListView(false)]
-        public string Plan
+        [Persistent(nameof(DatosPlan))]
+        public string DatosPlan
         {
-            get => plan;
-            set => SetPropertyValue(nameof(Plan), ref plan, value);
+            get => datosPlan;
+            set => SetPropertyValue(nameof(DatosPlan), ref datosPlan, value);
         }
 
         #endregion
@@ -115,17 +116,5 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects.Ginecologia
         //    // Trigger a custom business logic for the current record in the UI (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112619.aspx).
         //    this.PersistentProperty = "Paid";
         //}
-    }
-
-    public enum ETipoUltrasonografiaObstetrica
-    {
-        Abdominal = 0,
-        Vaginal = 1
-    }
-
-    public enum ECantidadFeto
-    {
-        Unico = 0,
-        Multiple = 1
     }
 }

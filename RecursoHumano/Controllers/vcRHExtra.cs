@@ -29,7 +29,7 @@ namespace SBT.Apps.RecursoHumano.Module.Controllers
         {
             base.OnActivated();
             // Perform various tasks depending on the target View.
-            if (View.GetType().Name == "ListView")
+            if (string.Compare(View.GetType().Name, "ListView", StringComparison.Ordinal) == 0)
                 ((ListView)View).CollectionSource.Criteria["Empresa Actual"] = CriteriaOperator.Parse("[Empleado.Empresa] = ?", ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid);
 
         }

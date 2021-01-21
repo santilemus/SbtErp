@@ -143,7 +143,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             key.AddAttribute(new BrowsableAttribute(false));
             foreach (ConsultaParametro pa in ASql.Parametros)
             {
-                string sTipo = "System." + Enum.GetName(typeof(ETipoDato), pa.Tipo).Substring(1);
+                string sTipo = $"System.{(Enum.GetName(typeof(ETipoDato), pa.Tipo).Substring(1))}";
                 XPMemberInfo mi = info.CreateMember(pa.Nombre, Type.GetType(sTipo));
                 mi.AddAttribute(new DevExpress.Xpo.DisplayNameAttribute(pa.Descripcion));
             }

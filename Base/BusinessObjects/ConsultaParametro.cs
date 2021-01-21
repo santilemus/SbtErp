@@ -14,7 +14,7 @@ using DevExpress.Persistent.Validation;
 
 namespace SBT.Apps.Base.Module.BusinessObjects
 {
-    [DefaultClassOptions, NavigationItem(false)]
+    [DefaultClassOptions, NavigationItem(false), CreatableItem(false)]
     //[ImageName("BO_Contact")]
     //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
@@ -34,7 +34,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
 
         #region Propiedades
 
-        int prioridad = 0;
+        int prioridad;
         ETipoDato tipo = ETipoDato.tString;
         bool activo = true;
         bool visible = true;

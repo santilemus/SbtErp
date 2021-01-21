@@ -8,6 +8,16 @@ using System.Linq;
 
 namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 {
+    /// <summary>
+    /// BO que corresponde a los Pacientes. Hereda del BO Persona
+    /// </summary>
+    /// <remarks>
+    /// 26/dic/2020 agregado por SELM
+    /// Se agrega el atributo [ExplicitLoading] para las propiedades que son referencia a otros BO y que no se 
+    /// necesitan en en ListView y que además es poco probable que se usen en el codigo para que se carguen hasta que
+    /// se necesiten y reducir el numero de consultas que se ejecutan cuando se carga la opción y por lo tanto aumentar
+    /// la velocidad. Evaluar si se aplica a otras propiedades
+    /// </remarks>
     [DefaultClassOptions]
     [ModelDefault("Caption", "Paciente"), NavigationItem("Salud"), XafDefaultProperty("NombreCompleto"), ImageName("Paciente")]
     //[NonPersistent]
@@ -31,10 +41,10 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         public override void AfterConstruction()
         {
             base.AfterConstruction();
-            Empresa = EmpresaDeSesion();
         }
 
         [DbType("int"), Persistent("Empresa"), XafDisplayName("Empresa"), VisibleInListView(false), VisibleInLookupListView(false)]
+        [ExplicitLoading]
         public Empresa Empresa
         {
             get
@@ -76,6 +86,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         }
 
         [DbType("int"), Persistent("Patrono"), XafDisplayName("Patrono")]
+        [ExplicitLoading]
         public Tercero.Module.BusinessObjects.Tercero Patrono
         {
             get
@@ -105,6 +116,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 
         [Persistent("Nacionalidad"), XafDisplayName("Nacionalidad")]
         [DataSourceCriteria("[ZonaPadre] is null and [Activa] = true")]
+        [ExplicitLoading]
         public ZonaGeografica Nacionalidad
         {
             get
@@ -120,6 +132,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [DevExpress.Persistent.Base.ImmediatePostDataAttribute, Persistent("TipoSeguro"),
             XafDisplayName("Tipo Seguro")]
+        [ExplicitLoading]
         public Listas TipoSeguro
         {
             get
@@ -134,6 +147,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false),
             Persistent("Aseguradora"), XafDisplayName("Aseguradora")]
         [DataSourceCriteria("[TipoPersona] == 2 && [Activo] == True && [Roles][[IdRole] == 9 And [Activo] == True]")]
+        [ExplicitLoading]
         public Tercero.Module.BusinessObjects.Tercero Aseguradora
         {
             get
@@ -200,11 +214,11 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
             }
         }
         [DevExpress.Xpo.AssociationAttribute("Vacunas-Paciente"), Index(6), DevExpress.Xpo.Aggregated]
-        public XPCollection<PacienteVacunas> Vacunas
+        public XPCollection<PacienteVacuna> Vacunas
         {
             get
             {
-                return GetCollection<PacienteVacunas>("Vacunas");
+                return GetCollection<PacienteVacuna>("Vacunas");
             }
         }
         [DevExpress.Xpo.AssociationAttribute("Consultas-Paciente")]
@@ -235,17 +249,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
             }
         }
 
-        [Association("Paciente-HistorialCrecimientos"), ModelDefault("Caption", "Crecimiento"), Index(10),
-            DevExpress.Xpo.Aggregated]
-        public XPCollection<HistorialCrecimiento> HistorialCrecimientos
-        {
-            get
-            {
-                return GetCollection<HistorialCrecimiento>(nameof(HistorialCrecimientos));
-            }
-        }
-
-        [Association("Paciente-HistoriaFamiliares"), DevExpress.Xpo.Aggregated, XafDisplayName("Historia Familiar"), Index(11)]
+        [Association("Paciente-HistoriaFamiliares"), DevExpress.Xpo.Aggregated, XafDisplayName("Historia Familiar"), Index(10)]
         public XPCollection<HistoriaFamiliar> HistoriaFamiliares
         {
             get
@@ -254,7 +258,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
             }
         }
 
-        [Association("Paciente-EstilosVida"), DevExpress.Xpo.Aggregated, XafDisplayName("Estilo Vida"), Index(12)]
+        [Association("Paciente-EstilosVida"), DevExpress.Xpo.Aggregated, XafDisplayName("Estilo Vida"), Index(11)]
         public XPCollection<EstiloVida> EstilosVida
         {
             get
@@ -274,6 +278,6 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         }
 
         [Association("Paciente-ArchivosAdjuntos"), DevExpress.Xpo.Aggregated, XafDisplayName("Archivos Adjuntos"), Index(14)]
-        public XPCollection<ArchivoAdjunto> ArchivosAdjuntos => GetCollection<ArchivoAdjunto>(nameof(ArchivosAdjuntos));
+        public XPCollection<PacienteFileData> ArchivosAdjuntos => GetCollection<PacienteFileData>(nameof(ArchivosAdjuntos));
     }
 }

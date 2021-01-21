@@ -17,14 +17,13 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
     {
         private Tercero tercero;
         bool vigente = true;
-        private ActividadEconomica actEconomica = null;
+        private ActividadEconomica actEconomica;
 
         public TerceroGiro(DevExpress.Xpo.Session session)
           : base(session)
         {
         }
 
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
         [VisibleInListView(true), VisibleInLookupListView(true)]
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Actividad Económica")]
         [RuleRequiredField("TerceroGiro.ActEconomica_Requerido", DefaultContexts.Save, "Actividad Económica es requerida")]

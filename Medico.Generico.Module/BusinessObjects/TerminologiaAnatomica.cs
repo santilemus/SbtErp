@@ -9,7 +9,7 @@ using SBT.Apps.Base.Module.BusinessObjects;
 
 namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 {
-    [DefaultClassOptions]
+    [DefaultClassOptions, CreatableItem(false)]
     //[DevExpress.Persistent.Base.ImageNameAttribute("vacunas")]
     [NavigationItem("Salud"), Persistent("TerminologiaAnatomica"),
         XafDefaultProperty("TerminoAnatomico"), ModelDefault("Caption", "Terminología Anatómica")]

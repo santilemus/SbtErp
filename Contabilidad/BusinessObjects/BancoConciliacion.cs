@@ -44,12 +44,12 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         DateTime fechaInicio;
         DateTime fechaFin;
         SBT.Apps.Empleado.Module.BusinessObjects.Empleado elaboro;
-        decimal saldoEstadoCuenta = 0.0m;
+        decimal saldoEstadoCuenta;
         [Persistent(nameof(SaldoLibro)), DbType("numeric(14,2)")]
-        decimal saldoLibro = 0.0m;
+        decimal saldoLibro;
         SBT.Apps.Empleado.Module.BusinessObjects.Empleado autorizo;
         [Persistent(nameof(FechaAutorizo)), DbType("datetime2")]
-        DateTime ? fechaAutorizo = null;
+        DateTime ? fechaAutorizo;
 
 
         [Association("BancoCuenta-Conciliaciones"), Index(0), XafDisplayName("Número Cuenta"), VisibleInLookupListView(true)]

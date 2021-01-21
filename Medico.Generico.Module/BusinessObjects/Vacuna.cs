@@ -19,7 +19,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
     /// BO que corresponde a las vacunas. Se relaciona con el BO Medicamentos y por lo tanto a Producto
     /// </summary>
     [DefaultClassOptions, Persistent("Vacuna"), DefaultProperty("Nombre"), ModelDefault("Caption", "Vacuna"), NavigationItem("Salud"),]
-    [ImageName(nameof(Vacuna))]
+    [ImageName(nameof(Vacuna)),  CreatableItem(false)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class Vacuna : XPObjectBaseBO
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).

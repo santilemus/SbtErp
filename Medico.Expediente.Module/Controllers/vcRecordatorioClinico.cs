@@ -15,24 +15,26 @@ using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using SBT.Apps.Medico.Generico.Module.BusinessObjects;
 using SBT.Apps.Medico.Expediente.Module.BusinessObjects;
+using SBT.Apps.Base.Module.Controllers;
 
 namespace SBT.Apps.Medico.Expediente.Module.Controllers
 {
     // For more typical usage scenarios, be sure to check out https://documentation.devexpress.com/eXpressAppFramework/clsDevExpressExpressAppViewControllertopic.aspx.
-    public partial class vcRecordatorioClinico : ViewController
+    public partial class vcRecordatorioClinico : ViewControllerBase
     {
         public vcRecordatorioClinico()
         {
             InitializeComponent();
-            TargetObjectType = typeof(RecordatorioClinico);
-            //TargetViewType = ViewType.DetailView;
-            pwsActionSeleccionPlan.TargetObjectType = typeof(RecordatorioClinico);
+            //TargetObjectType = typeof(SBT.Apps.Medico.Expediente.Module.BusinessObjects.Paciente);
+            TargetViewType = ViewType.DetailView;
+            //pwsActionSeleccionPlan.TargetObjectType = typeof(SBT.Apps.Medico.Expediente.Module.BusinessObjects.Paciente);
             pwsActionSeleccionPlan.TargetViewType = ViewType.DetailView;
             pwsActionSeleccionPlan.Caption = "Copiar de Plan";
             pwsActionSeleccionPlan.Category = "RecordEdit";
             pwsActionSeleccionPlan.ActionMeaning = ActionMeaning.Accept;
             pwsActionSeleccionPlan.ToolTip = "Generar recordatorios clinicos del paciente a partir de plan seleccionado";
             pwsActionSeleccionPlan.ImageName = "LoadFrom";
+            pwsActionSeleccionPlan.SelectionDependencyType = SelectionDependencyType.RequireSingleObject;
 
             // Target required Views (via the TargetXXX properties) and create their Actions.
         }

@@ -48,7 +48,6 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [DevExpress.Xpo.SizeAttribute(50), DbType("varchar(50)")]
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Nombres")]
         [DevExpress.Persistent.Base.ToolTipAttribute("Nombres de la persona")]
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
         [RuleRequiredField("Persona.Nombre_Requerido", "Save")]
         public System.String Nombre
         {
@@ -63,7 +62,6 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         }
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Apellidos")]
         [DevExpress.Persistent.Base.ToolTipAttribute("Apellidos  de la persona")]
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
         [DevExpress.Xpo.SizeAttribute(50), DbType("varchar(50)")]
         [RuleRequiredField("Persona.Apellido_Requerido", "Save")]
         public System.String Apellido
@@ -84,6 +82,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [DevExpress.Persistent.Base.ToolTipAttribute("País de residencia")]
         [RuleRequiredField("Persona.Pais_Requerido", DefaultContexts.Save, "País es requerido")]
         [DataSourceCriteria("ZonaPadre is null and Activa = true")]
+        [ExplicitLoading]
         public ZonaGeografica Pais
         {
             get
@@ -129,7 +128,6 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             }
         }
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Dirección"), DbType("varchar(100)")]
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
         [DevExpress.Persistent.Base.ToolTipAttribute("Dirección de residencia")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [RuleRequiredField("Persona.Direccion_Requerido", "Save", ResultType = ValidationResultType.Warning)]
@@ -165,7 +163,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [DevExpress.Xpo.SizeAttribute(60), DbType("varchar(60)")]
         [DevExpress.Persistent.Base.ToolTipAttribute("Direcciones de correo electrónico")]
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Correo Electrónico")]
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute, VisibleInListView(false)]
+        [VisibleInListView(false)]
         public System.String EMail
         {
             get
@@ -219,7 +217,6 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             }
         }
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
         [ModelDefault("DisplayFormat", "{0:G}"), ModelDefault("EditMask", "G"), VisibleInListView(false)]
         public System.DateTime FechaRetiro
         {
@@ -234,6 +231,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         }
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [DataSourceCriteria("[Categoria] == 2 && [Activo] == True")]
+        [ExplicitLoading]
         public Listas TipoSangre
         {
             get
@@ -308,8 +306,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [DevExpress.Xpo.AssociationAttribute("Telefonos-Persona"), DevExpress.Xpo.Aggregated]
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Teléfonos")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
-        [DevExpress.ExpressApp.DC.Aggregated, Index(0)]
+        [Index(0)]
         public XPCollection<PersonaTelefono> Telefonos
         {
             get

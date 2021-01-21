@@ -43,12 +43,12 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         SBT.Apps.Tercero.Module.BusinessObjects.Tercero proveedor;
         DateTime fechaCompra = DateTime.Now;
         string numeroFactura;
-        Listas tipoFactura = null;
-        decimal cantidad = 0.0m;
+        Listas tipoFactura;
+        decimal cantidad;
         string concepto;
-        decimal valorGravado = 0.0m;
-        decimal iva = 0.0m;
-        decimal renta = 0.0m;
+        decimal valorGravado;
+        decimal iva;
+        decimal renta ;
         SBT.Apps.Contabilidad.BusinessObjects.Catalogo cuentaContable;
 
         [Association("CajaChicaTransaccion-Detalles"), XafDisplayName("Transacción"),

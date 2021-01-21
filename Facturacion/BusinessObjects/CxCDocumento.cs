@@ -46,22 +46,22 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
 
         Venta venta;
         [Persistent(nameof(Numero)), DbType("int")]
-        int numero = 0;
+        int numero;
         CxCTransaccion cxCTransaccion;
         [Persistent(nameof(AutorizacionCorrelativo))]
-        AutorizacionDocumento autorizacionCorrelativo = null;
+        AutorizacionDocumento autorizacionCorrelativo;
         [Persistent(nameof(VentaGravada)), DbType("numeric(14,2)")]
-        decimal ventaGravada = 0.0m;
+        decimal ventaGravada;
         [Persistent(nameof(IVA)), DbType("numeric(14,2)")]
-        decimal iVA = 0.0m;
+        decimal iVA;
         [Persistent(nameof(IvaPercibido)), DbType("numeric(14,2)")]
-        decimal ivaPercibido = 0.0m;
+        decimal ivaPercibido;
         [Persistent(nameof(IvaRetenido)), DbType("numeric(14,2)")]
-        decimal ivaRetenido = 0.0m;
+        decimal ivaRetenido;
         [Persistent(nameof(VentaNoSujeta)), DbType("numeric(14,2)")]
-        decimal ventaNoSujeta = 0.0m;
+        decimal ventaNoSujeta;
         [Persistent(nameof(VentaExenta)), DbType("numeric(14,2)")]
-        decimal ventaExenta = 0.0m;
+        decimal ventaExenta;
 
         [Association("CxCTransaccion-Documentos"), XafDisplayName("Transacción"), Index(0)]
         public CxCTransaccion CxCTransaccion

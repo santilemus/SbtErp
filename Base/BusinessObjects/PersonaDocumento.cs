@@ -32,7 +32,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         {
         }
 
-        [ImmediatePostData(true), VisibleInListView(true), Index(0), VisibleInLookupListView(true)]
+        [VisibleInListView(true), Index(0), VisibleInLookupListView(true)]
         [RuleRequiredField("PersonaDocumento.Tipo_Requerido", DefaultContexts.Save, "Tipo Documento es requerido")]
         [DataSourceCriteria("Categoria = 'DocumentoIdentidad'"), XafDisplayName("Tipo Documento")]
         public Listas Tipo
@@ -47,7 +47,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             get => Convert.ToString(EvaluateAlias("CodigoDocumento"));
         }
 
-        [Size(14), DbType("varchar(14)"), ImmediatePostData(true), XafDisplayName("Número"), Index(2)]
+        [Size(14), DbType("varchar(14)"), XafDisplayName("Número"), Index(2)]
         [RuleRequiredField("PersonaDocumento.Numero_Requerido", "Save")]
         public System.String Numero
         {
@@ -69,8 +69,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
 
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Lugar Emisión")]
         [DevExpress.Persistent.Base.ToolTipAttribute("Lugar de emisión del documento")]
-        [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false), DbType("varchar(100)")]
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute(true), Index(4)]
+        [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false), DbType("varchar(100)"), Index(4)]
         [RuleRequiredField("PersonaDocumento.LugarEmision_Requerido", "Save", ResultType = ValidationResultType.Warning)]
         public System.String LugarEmision
         {
@@ -79,8 +78,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         }
 
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Fecha de Emisión")]
-        [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute(true), Index(5)]
+        [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false), Index(5)]
         [RuleRequiredField("PersonaDocumento.FechaEmision_Requerido", "Save", ResultType = ValidationResultType.Warning)]
         public System.DateTime FechaEmision
         {
@@ -88,8 +86,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             set => SetPropertyValue(nameof(FechaEmision), ref fechaEmision, value);
         }
 
-        [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
-        [DevExpress.Persistent.Base.ImmediatePostData(true), Index(6)]
+        [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false), Index(6)]
         [RuleRequiredField("PersonaDocumento.Vigente_Requerido", "Save")]
         public System.Boolean Vigente
         {

@@ -31,7 +31,6 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
             Salario = 0.0m;
             TipoSalario = TipoSalario.Mensual;
             Pensionado = false;
-            Empresa = EmpresaDeSesion();
         }
 
         AFP aFP;
@@ -61,13 +60,14 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
         [XafDisplayName("Empresa"), ImmediatePostData(true), VisibleInLookupListView(false), VisibleInListView(false), VisibleInDetailView(true),
             VisibleInReports(true)]
         [RuleRequiredField("Empleado.CodEmpresa_requerido", DefaultContexts.Save, "Empresa es requerida")]
+        [ExplicitLoading]
         public Empresa Empresa
         {
             get => empresa;
             set => SetPropertyValue(nameof(Empresa), ref empresa, value);
         }
 
-        [ModelDefault("Caption", "Unidad"), ImmediatePostData(true), VisibleInLookupListView(false), VisibleInDetailView(true),
+        [ModelDefault("Caption", "Unidad"), VisibleInLookupListView(false), VisibleInDetailView(true),
             VisibleInReports(true)]
         [RuleRequiredField("Empleado.CodUnidad_requerido", DefaultContexts.Save, "Unidad asignada es requerida")]
         [DataSourceCriteria("[Empresa.Oid] == '@This.Empresa'")]
@@ -77,15 +77,21 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
             set => SetPropertyValue(nameof(Unidad), ref unidad, value);
         }
 
+        /// <summary>
+        /// Cargo del Empleado
+        /// </summary>
+        /// <remarks>En casos como este donde hay codigo en el setter que depende del BO referenciado (Cargo), 
+        /// debe incluir el atributo [ImmediatePostData] para que ejecute correctamente las asignaciones del setter
+        /// y NO DEBE usar el atributo [ExplicitLoading]
+        /// </remarks>
 
         [XafDisplayName("Cargo"), RuleRequiredField("Empleado.Cargo_Requerido", DefaultContexts.Save), ImmediatePostData(true)]
-        [DevExpress.Xpo.NoForeignKey]
+        //[DevExpress.Xpo.NoForeignKey]
         public Cargo Cargo
         {
             get => cargo;
             set
             {
-                var oldValue = Cargo;
                 bool changed = SetPropertyValue(nameof(Cargo), ref cargo, value);
                 if (!IsLoading && !IsSaving && changed)
                 {
@@ -126,7 +132,7 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
 
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Estado Empleado")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
+        //[DevExpress.Persistent.Base.ImmediatePostDataAttribute]
         [RuleRequiredField("Empleado.Estado_requerido", DefaultContexts.Save, "Estado del empleado es Requerido")]
         [DataSourceCriteria("Categoria = 9")]  // categoria corresponde a los estados del empleado
         public Listas Estado
@@ -136,8 +142,8 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
         }
 
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
         [DataSourceCriteria("[ZonaPadre] is null and [Activa] = true")]
+        [ExplicitLoading]
         public ZonaGeografica Nacionalidad
         {
             get => nacionalidad;
@@ -147,6 +153,7 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
 
         [XafDisplayName("Banco")]
         [DataSourceCriteria("[Roles][[IdRole] = 2]"), VisibleInListView(false)]
+        [ExplicitLoading]
         public Banco Banco
         {
             get => banco;
@@ -161,7 +168,7 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
             set => SetPropertyValue(nameof(TipoCuenta), ref tipoCuenta, value);
         }
 
-        [DevExpress.Xpo.SizeAttribute(14)]
+        [DevExpress.Xpo.SizeAttribute(14), DbType("varchar(14)")]
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Número Cuenta")]
         [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false), VisibleInListView(false)]
@@ -178,7 +185,7 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
             set => SetPropertyValue(nameof(Pensionado), ref pensionado, value);
         }
 
-        [DevExpress.Xpo.SizeAttribute(10)]
+        [DevExpress.Xpo.SizeAttribute(10), DbType("varchar(10)")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Número Carné"), VisibleInListView(false)]
@@ -188,7 +195,7 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
             set => SetPropertyValue(nameof(NumeroCarne), ref numeroCarne, value);
         }
 
-        [DevExpress.Xpo.SizeAttribute(12)]
+        [DevExpress.Xpo.SizeAttribute(12), DbType("varchar(12)")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [DevExpress.Persistent.Base.ImmediatePostDataAttribute, VisibleInListView(false)]
         public System.String Titulo
@@ -206,6 +213,7 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
 
 
         [XafDisplayName("AFP"), VisibleInListView(false)]
+        [ExplicitLoading]
         public AFP AFP
         {
             get => aFP;

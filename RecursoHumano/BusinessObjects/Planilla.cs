@@ -28,45 +28,38 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         public override void AfterConstruction()
         {
             base.AfterConstruction();
-            if (Empresa == null)
-                empresa = EmpresaDeSesion();
             if (Empresa != null)
             {
                 Parametro pa = Session.FindObject<Parametro>(CriteriaOperator.Parse("[Empresa.Oid] == ?", Empresa.Oid));
                 if (pa != null)
                     parametro = pa;
             }
-            moneda = ObtenerMonedaBase();
-            if (moneda != null)
-                valorMoneda = moneda.FactorCambio;
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
         #region Propiedades
 
         Parametro parametro;
-        [Persistent(nameof(Empresa))]
-        Empresa empresa = null;
+        Empresa empresa;
         [Persistent(nameof(Tipo))]
-        TipoPlanilla tipo = null;
-        [Persistent(nameof(Moneda))]
-        Moneda moneda = null;
-        [Persistent(nameof(ValorMoneda))]
+        TipoPlanilla tipo;
+        Moneda moneda;
         decimal valorMoneda = 1.0m;
         [Persistent(nameof(FechaInicio)), DbType("datetime2")]
-        DateTime? fechaInicio = null;
+        DateTime? fechaInicio;
         [Persistent(nameof(FechaFin)), DbType("datetime2")]
-        DateTime? fechaFin = null;
+        DateTime? fechaFin;
         [Persistent(nameof(Estado)), DbType("smallint")]
         EEstadoPlanilla estado = EEstadoPlanilla.PreCalculo;
         [Persistent(nameof(FechaPago)), DbType("datetime2")]
-        DateTime? fechaPago = null;
+        DateTime? fechaPago;
 
 
-        [XafDisplayName("Empresa"), PersistentAlias(nameof(empresa))]
+        [XafDisplayName("Empresa"), Persistent(nameof(Empresa))]
         public Empresa Empresa
         {
             get => empresa;
+            set => SetPropertyValue(nameof(Empresa), ref empresa, value);
         }
         [Association("TipoPlanilla-Planillas"), XafDisplayName("Tipo"), PersistentAlias(nameof(tipo))]
         public TipoPlanilla Tipo
@@ -74,15 +67,20 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
             get => tipo;
         }
 
-        [XafDisplayName("Moneda"), PersistentAlias(nameof(moneda))]
+        [XafDisplayName("Moneda"), Persistent(nameof(Moneda))]
         public Moneda Moneda
         {
             get => moneda;
+            set => SetPropertyValue(nameof(Moneda), ref moneda, value);
         }
 
-        [PersistentAlias(nameof(valorMoneda)), XafDisplayName("Valor Moneda")]
+        [Persistent(nameof(ValorMoneda)), XafDisplayName("Valor Moneda")]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
-        public decimal ValorMoneda => valorMoneda;
+        public decimal ValorMoneda
+        {
+            get => valorMoneda;
+            set => SetPropertyValue(nameof(ValorMoneda), ref valorMoneda, value);
+        }
 
         [PersistentAlias(nameof(fechaInicio)), XafDisplayName("Fecha Inicio")]
         [ModelDefault("DisplayFormat", "{0:G}"), ModelDefault("EditMask", "G")]

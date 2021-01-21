@@ -17,8 +17,8 @@ using SBT.Apps.Medico.Generico.Module.BusinessObjects;
 namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects.Ginecologia
 {
     [DefaultClassOptions, ModelDefault("Caption", "Ultrasonografía Pélvica"), NavigationItem(false), 
-        DefaultProperty(nameof(Fecha)), Persistent(nameof(UltrasonografiaPelvica))]
-    //[ImageName("BO_Contact")]
+        DefaultProperty(nameof(Fecha)), Persistent(nameof(UltrasonografiaPelvica)), CreatableItem(false)]
+    [ImageName("UltraSonografiaPelvica")]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class UltrasonografiaPelvica : XPObjectBaseBO
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
@@ -139,11 +139,5 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects.Ginecologia
         //    // Trigger a custom business logic for the current record in the UI (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112619.aspx).
         //    this.PersistentProperty = "Paid";
         //}
-    }
-
-    public enum ETipoUltrasonografiaPelvica
-    {
-        Abdominal = 0,
-        Vaginal = 1
     }
 }

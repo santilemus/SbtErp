@@ -56,7 +56,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
                 SetPropertyValue("Empresa", ref _empresa, value);
             }
         }
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute, Size(100), DbType("varchar(100)")]
+        [Size(100), DbType("varchar(100)")]
         [RuleRequiredField("EmpresaUnidad.Nombre_Requerido", "Save")]
         public System.String Nombre
         {
@@ -71,7 +71,6 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         }
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Dirección")]
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
         [DevExpress.Xpo.Size(200), DbType("varchar(200)")]
         public System.String Direccion
         {
@@ -85,7 +84,6 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             }
         }
         [DevExpress.Xpo.Size(20), DbType("varchar(20)")]
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Teléfono")]
         public System.String Telefono
         {
@@ -114,7 +112,6 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [DevExpress.Xpo.Size(50), DbType("varchar(50)")]
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Correo Electrónico")]
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
         public System.String EMail
         {
             get
@@ -135,7 +132,6 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         }
 
         //[RuleUniqueValue("EmpresaUnidad.CodigoRole_UniqueValue", "Save", SkipNullOrEmptyValues = false)]
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(true)]
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Código Role")]
         [DevExpress.Xpo.Size(6), DbType("varchar(6)")]

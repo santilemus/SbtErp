@@ -84,7 +84,7 @@ namespace SBT.Apps.Base.Module
 
         public string Description
         {
-            get { return "AgenciaActualOid()" + Environment.NewLine + "Retorna el Oid de la agencia o sucursal de la sesion actual (seleccionada en LogIn"; }
+            get { return $"AgenciaActualOid(){Environment.NewLine}Retorna el Oid de la agencia o sucursal de la sesion actual (seleccionada en LogIn"; }
         }
 
         public FunctionCategory Category

@@ -49,13 +49,13 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         [DbType("bigint"), Persistent(nameof(Oid)), Key(true)]
         int oid = -1;
         [Persistent(nameof(Planilla)), Association("Planilla-Detalles")]
-        Planilla planilla = null;
+        Planilla planilla;
         [Persistent(nameof(Empleado))]
-        SBT.Apps.Empleado.Module.BusinessObjects.Empleado empleado = null;
+        SBT.Apps.Empleado.Module.BusinessObjects.Empleado empleado;
         [Persistent(nameof(Unidad))]
-        EmpresaUnidad unidad = null;
+        EmpresaUnidad unidad;
         [Persistent(nameof(Cargo))]
-        Cargo cargo = null;
+        Cargo cargo;
 
         [PersistentAlias(nameof(oid)), XafDisplayName("Oid")]
         public Int64 Oid

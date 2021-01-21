@@ -46,10 +46,10 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         string descripcion;
         DateTime fechaInicio;
         EFormaAplicarTransaccion formaAplicar = EFormaAplicarTransaccion.Ambas;
-        decimal montoCuota = 0.0m;
+        decimal montoCuota;
         int cantidadCuotas = 1;
         int diaPago;
-        bool cancelado = false;
+        bool cancelado;
 
 #if Firebird
         [DbType("DM_ENTERO"), Persistent("ID_EMPLE")]

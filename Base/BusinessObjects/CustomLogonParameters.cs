@@ -47,7 +47,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         /// </summary>
         [VisibleInDetailView(false), VisibleInListView(false)]
         public int OidEmpresa
-        {
+        {        
             get { return (empresa != null) ? empresa.Oid : 1; }
             set
             {

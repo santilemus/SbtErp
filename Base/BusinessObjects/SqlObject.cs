@@ -20,7 +20,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
     /// para procesos dinamicos
     /// </summary>
     [DefaultClassOptions, ModelDefault("Caption", "Consulta Sql"), Persistent("SysConsulta"), DefaultProperty("Nombre"),
-        NavigationItem(false)]
+        NavigationItem(false), CreatableItem(false)]
     //[ImageName("BO_Contact")]
     //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]

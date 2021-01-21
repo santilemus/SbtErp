@@ -37,8 +37,8 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         [Persistent(nameof(ValorMoneda)), DbType("numeric(14,2)")]
         decimal valorMoneda;
         Moneda moneda;
-        decimal rentaRetenida = 0.0m;
-        decimal ingresoGravado = 0.0m;
+        decimal rentaRetenida;
+        decimal ingresoGravado;
         DateTime fechaHasta;
         string razonSocial;
         string nitPatrono;

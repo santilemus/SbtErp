@@ -15,38 +15,29 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
     /// relacionar porque esa información estará en los módulos de transacciones correspondientes, que no se conocen en este momento.
     /// Los items de este objeto serán generados por el sistema y el usuario no podrá modificar ninguna de sus propiedades
     /// </summary>
-    [DefaultClassOptions]
+    [DefaultClassOptions, CreatableItem(false)]
     [ImageName(nameof(ProductoLote))]
     [RuleIsReferenced("ProductoLote_Referencia", DefaultContexts.Delete, typeof(ProductoLote), nameof(Oid),
         MessageTemplateMustBeReferenced = "Para borrar el objeto '{TargetObject}', debe estar seguro que no es utilizado (referenciado) en ningún lugar.",
         InvertResult = true, FoundObjectMessageFormat = "'{0}'", FoundObjectMessagesSeparator = ";")]
-    [RuleCriteria("ProductoLote.Entrada_Mayor_o_Igual_Salidas", DefaultContexts.Save, @"Entrada >= AcumSalida", "Entrada >= Acumulado Salidas")]
+    [RuleCriteria("ProductoLote.Entrada_Mayor_o_Igual_Salidas", DefaultContexts.Save, @"Entrada >= Salida", "Entrada >= Acumulado Salidas")]
     [ModelDefault("Caption", "Lote"), NavigationItem(false), XafDefaultProperty("NoLote"), Persistent("ProductoLote")]
     public class ProductoLote : XPObjectBaseBO
     {
-        /// <summary>
-        /// Existencia disponible para el lote. Entrada - AcumSalida
-        /// </summary>
-        [PersistentAlias("Entrada - AcumSalida")]
-        [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Existencia")]
-        [DevExpress.Persistent.Base.VisibleInListViewAttribute(true)]
-        public System.Decimal Existencia
-        {
-            get { return Convert.ToDecimal(EvaluateAlias("Existencia")); }
-        }
+
 
         public override void AfterConstruction()
         {
             base.AfterConstruction();
             Entrada = 0.0m;
-            AcumSalida = 0.0m;
+            Salida = 0.0m;
             Costo = 0.0m;
             Promedio = 0.0m;
             PromedioAnterior = 0.0m;
         }
 
         private Producto _producto;
-        private System.Decimal _acumSalida;
+        private System.Decimal _salida;
         private System.Decimal _entrada;
         private System.Int32 _noLote;
         private System.Decimal _promedioAnterior;
@@ -98,6 +89,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         /// de esta manera se reemplaza la propiedad Ultimo Costo de Compra del objeto persistene Producto
         /// </summary>
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Costo"), ModelDefault("DisplayFormat", "N6"), ModelDefault("EditMask", "N6")]
+        [DbType("numeric(16,8)")]
         public System.Decimal Costo
         {
             get
@@ -115,6 +107,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         /// y se reemplaza la propiedad Costo Promedio del objeto Persistente Producto
         /// </summary>
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Costo Promedio"), ModelDefault("DisplayFormat", "N6"), ModelDefault("EditMask", "N6")]
+        [DbType("numeric(16,8)")]
         public System.Decimal Promedio
         {
             get
@@ -135,6 +128,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         /// </summary>
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Promedio Anterior")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false), ModelDefault("DisplayFormat", "N6"), ModelDefault("EditMask", "N6")]
+        [DbType("numeric(16,8)")]
         public System.Decimal PromedioAnterior
         {
             get
@@ -152,16 +146,11 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         /// igual a la cantidad en la correspondiente transaccion (compra, importacion, orden de produccion)
         /// </summary>
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Entradas"), ModelDefault("DisplayFormat", "N2"), ModelDefault("EditMask", "N2")]
+        [DbType("numeric(12,2)"), Persistent(nameof(Entrada))]
         public System.Decimal Entrada
         {
-            get
-            {
-                return _entrada;
-            }
-            set
-            {
-                SetPropertyValue("Entrada", ref _entrada, value);
-            }
+            get => _entrada;
+            set => SetPropertyValue(nameof(Entrada), ref _entrada, value);
         }
 
         /// <summary>
@@ -169,16 +158,11 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         /// </summary>
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Salidas")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false), ModelDefault("DisplayFormat", "N2"), ModelDefault("EditMask", "N2")]
-        public System.Decimal AcumSalida
+        [DbType("numeric(12,2)"), Persistent(nameof(Salida))]
+        public System.Decimal Salida
         {
-            get
-            {
-                return _acumSalida;
-            }
-            set
-            {
-                SetPropertyValue("AcumSalida", ref _acumSalida, value);
-            }
+            get => _salida;
+            set => SetPropertyValue(nameof(Salida), ref _salida, value);
         }
         [DevExpress.Xpo.AssociationAttribute("Lotes-Producto")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
@@ -193,6 +177,17 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
             {
                 SetPropertyValue("Producto", ref _producto, value);
             }
+        }
+
+        /// <summary>
+        /// Existencia disponible para el lote. Entrada - AcumSalida
+        /// </summary>
+        [PersistentAlias("Entrada - Salida")]
+        [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Existencia")]
+        [DevExpress.Persistent.Base.VisibleInListViewAttribute(true)]
+        public System.Decimal Existencia
+        {
+            get { return Convert.ToDecimal(EvaluateAlias("Existencia")); }
         }
 
     }

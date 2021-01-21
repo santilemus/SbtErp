@@ -40,7 +40,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [DbType("int"), Persistent(nameof(Oid)), Key(true)]
         int oid = -1;
         [Persistent(nameof(Empresa))]
-        Empresa empresa = null;
+        Empresa empresa;
         [Persistent(nameof(NombreProceso)), Size(60), DbType("varchar(60)")]
         string nombreProceso = string.Empty;
         [Persistent(nameof(Bitacora)), Size(2000), DbType("varchar(2000)")]
@@ -102,8 +102,8 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             usuarioCrea = DevExpress.ExpressApp.SecuritySystem.CurrentUserName;
             fechaCrea = DateTime.Now;
             if (!string.IsNullOrEmpty(sParametros))
-                bitacora += " ***** Parametros **** " + Environment.NewLine + sParametros + Environment.NewLine;
-            bitacora += " **** LOG ***" + Environment.NewLine + sLog;
+                bitacora += $" ***** Parametros **** {Environment.NewLine}{sParametros}{Environment.NewLine}";
+            bitacora += $" **** LOG ***{Environment.NewLine}{sLog}";
             Save();
             if (Session.InTransaction)
                 Session.CommitTransaction();

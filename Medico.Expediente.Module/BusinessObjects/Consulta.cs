@@ -8,6 +8,8 @@ using System.Linq;
 using DevExpress.ExpressApp.DC;
 using SBT.Apps.Medico.Generico.Module.BusinessObjects;
 using System.ComponentModel;
+using DevExpress.Data.Filtering;
+using DevExpress.ExpressApp.ConditionalAppearance;
 
 namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 {
@@ -18,12 +20,14 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Consulta")]
     [DevExpress.Persistent.Base.ImageNameAttribute("planning-customer")]
     [DevExpress.Persistent.Base.NavigationItem("Salud")]
-    [DefaultProperty(nameof(Fecha))]
+    [DefaultProperty(nameof(Paciente))]
     [RuleIsReferenced("Consulta_Referencia", DefaultContexts.Delete, typeof(Consulta), nameof(Oid),
        MessageTemplateMustBeReferenced = "Para borrar el objeto '{TargetObject}', debe estar seguro que no es utilizado (referenciado) en ningún lugar.",
        InvertResult = true, FoundObjectMessageFormat = "'{0}'", FoundObjectMessagesSeparator = ";")]
     [RuleCombinationOfPropertiesIsUnique("Consulta_PacienteMedicoFechaUnico", DefaultContexts.Save, "Paciente,Medico,Fecha", SkipNullOrEmptyValues = false)]
     [RuleCriteria("Consulta.ProximaCitaValida", DefaultContexts.Save, "ProximaCita >= Fecha", "Fecha de próxima cita debe ser mayor o igual a Fecha")]
+    [Appearance("Ultrasonografia_Hide", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide,
+        Context = "DetailView", Criteria = "[Paciente.Genero] != 1 && [Paciente.Edad] >= 10", TargetItems = "UltrasonografiaObstetricas;UltrasonografiaPelvicas")]
     public class Consulta : XPObjectBaseBO
     {
         /// <summary>
@@ -34,7 +38,6 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
             base.AfterConstruction();
             Fecha = DateTime.Now;
             RealizarExamenes = true;
-            empresa = EmpresaDeSesion();
             if (((Usuario)SecuritySystem.CurrentUser).Agencia != null)
             {
                 // se  hace de esta forma, no solo se asigna la agencia al consultorio porque da error. La informacion del usuario es una sesion diferente
@@ -61,7 +64,6 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         private EmpresaUnidad _consultorio;
         private System.Boolean _realizarExamenes;
         private System.DateTime _proximaCita;
-        [Persistent(nameof(Empresa))]
         private Empresa empresa;
         private System.String _diagnostico;
         private System.DateTime _fecha;
@@ -121,10 +123,12 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 
         [VisibleInDetailView(false), VisibleInListView(false)]
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Institución Médica")]
-        [PersistentAlias(nameof(empresa))]
+        [Persistent(nameof(Empresa))]
+        [ExplicitLoading]
         public Empresa Empresa
         {
             get => empresa;
+            set => SetPropertyValue(nameof(Empresa), ref empresa, value);
         }
 
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Próxima Cita")]
@@ -214,14 +218,18 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
                 return GetCollection<ConsultaExamenFisico>("ExamenesFisicos");
             }
         }
-        [DevExpress.Xpo.AssociationAttribute("Signos-Consulta"), DevExpress.Xpo.Aggregated]
-        public XPCollection<ConsultaSigno> Signos
+        [DevExpress.Xpo.AssociationAttribute("Diagnostico-Consulta"), DevExpress.Xpo.Aggregated]
+        public XPCollection<ConsultaDiagnostico> Diagnosticos
         {
             get
             {
-                return GetCollection<ConsultaSigno>("Signos");
+                return GetCollection<ConsultaDiagnostico>(nameof(Diagnosticos));
             }
         }
+
+        [Association("ConsultaSigno-Consulta"), DevExpress.Xpo.Aggregated]
+        public XPCollection<ConsultaSigno> ConsultaSignos => GetCollection<ConsultaSigno>(nameof(ConsultaSignos));
+
         [DevExpress.Xpo.AssociationAttribute("Sintomas-Consulta"), DevExpress.Xpo.Aggregated]
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Síntomas")]
         public XPCollection<ConsultaSintoma> Sintomas
@@ -255,5 +263,9 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 
         [Association("Consulta-UltrasonografiaPelvicas"), DevExpress.Xpo.Aggregated, XafDisplayName("Ecografía Pélvica")]
         public XPCollection<Ginecologia.UltrasonografiaPelvica> UltrasonografiaPelvicas => GetCollection<Ginecologia.UltrasonografiaPelvica>(nameof(UltrasonografiaPelvicas));
+
+        #region Metodos
+
+        #endregion
     }
 }

@@ -26,7 +26,7 @@ public partial class ErrorPage : System.Web.UI.Page
         {
             ApplicationTitle.Text = "No application";
         }
-        Header.Title = "Application Error - " + ApplicationTitle.Text;
+        Header.Title = $"Application Error - {ApplicationTitle.Text}";
 
         ErrorInfo errorInfo = ErrorHandling.GetApplicationError();
         if (errorInfo != null)

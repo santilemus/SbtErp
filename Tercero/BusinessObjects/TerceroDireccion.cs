@@ -16,8 +16,8 @@ using SBT.Apps.Base.Module.BusinessObjects;
 namespace SBT.Apps.Tercero.Module.BusinessObjects
 {
     [DefaultClassOptions, ModelDefault("Caption", "Tercero Dirección"), NavigationItem(false), DefaultProperty(nameof(Direccion))]
-    [Persistent("TerceroDireccion")]
-    //[ImageName("BO_Contact")]
+    [Persistent("TerceroDireccion"), CreatableItem(false)]
+    [ImageName("address")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class TerceroDireccion : XPObjectBaseBO
@@ -47,8 +47,10 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
             set => SetPropertyValue(nameof(Tercero), ref tercero, value);
         }
 
-        [VisibleInLookupListView(false), XafDisplayName("País"), ImmediatePostData, Index(1)]
+        [VisibleInLookupListView(false), XafDisplayName("País"), ImmediatePostData, Index(1), VisibleInListView(false)]
         [DataSourceCriteria("ZonaPadre is null and Activa = true")]
+        [ExplicitLoading]
+        
         public ZonaGeografica Pais
         {
             get => pais;
@@ -63,7 +65,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
             set => SetPropertyValue(nameof(Provincia), ref provincia, value);
         }
 
-        [XafDisplayName("Ciudad"), ImmediatePostData(true), VisibleInLookupListView(true), Index(4)]
+        [XafDisplayName("Ciudad"), VisibleInLookupListView(true), Index(4)]
         [DataSourceCriteria("ZonaPadre = '@This.Provincia' and Activa = true")]
         public ZonaGeografica Ciudad
         {
@@ -71,7 +73,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
             set => SetPropertyValue(nameof(Ciudad), ref ciudad, value);
         }
 
-        [ImmediatePostData(true), XafDisplayName("Dirección"), Size(200), DbType("varchar(200)")]
+        [XafDisplayName("Dirección"), Size(200), DbType("varchar(200)")]
         [RuleRequiredField("Tercero.Direccion_Requerida", "Save"), Index(5)]
         public System.String Direccion
         {

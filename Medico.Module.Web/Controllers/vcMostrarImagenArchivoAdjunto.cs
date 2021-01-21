@@ -29,13 +29,13 @@ namespace SBT.Apps.Medico.Module.Web.Controllers
 
         private void DoInitializeComponent()
         {
-            TargetObjectType = typeof(SBT.Apps.Medico.Expediente.Module.BusinessObjects.ArchivoAdjunto);     
+            TargetObjectType = typeof(SBT.Apps.Medico.Expediente.Module.BusinessObjects.PacienteFileData);     
             saMostrarAdjunto = new SimpleAction(this, "saMostrarAdjunto", DevExpress.Persistent.Base.PredefinedCategory.RecordEdit);
             saMostrarAdjunto.Caption = "Ver Documento";
             //saMostrarAdjunto.Category = "RecordEdit";
             saMostrarAdjunto.SelectionDependencyType = SelectionDependencyType.RequireSingleObject;
             saMostrarAdjunto.ImageName = "DocumentStatistics";
-            saMostrarAdjunto.TargetObjectType = typeof(SBT.Apps.Medico.Expediente.Module.BusinessObjects.ArchivoAdjunto);
+            saMostrarAdjunto.TargetObjectType = typeof(SBT.Apps.Medico.Expediente.Module.BusinessObjects.PacienteFileData);
             saMostrarAdjunto.TargetViewType = ViewType.ListView;
             saMostrarAdjunto.ToolTip = "Mostrar visor del documento";
         }
@@ -68,14 +68,14 @@ namespace SBT.Apps.Medico.Module.Web.Controllers
         {
             if (e.CurrentObject == null)
                 return;
-            ArchivoAdjunto archivo = (ArchivoAdjunto)ObjectSpace.GetObject(e.CurrentObject);
+            PacienteFileData archivo = (PacienteFileData)ObjectSpace.GetObject(e.CurrentObject);
             string nombreArchivo = archivo.File.FileName;
             string extension = Path.GetExtension(nombreArchivo);
             WebDocumentViewer webDocViewer = new WebDocumentViewer
             {
                 bytes = archivo.File.Content,
                 fileName = nombreArchivo,
-                contentType = string.Format("image/{0}", extension.Substring(1))
+                contentType = $"image/{extension.Substring(1)}"
             };
             webDocViewer.ProcessRequest(HttpContext.Current);
         }

@@ -12,7 +12,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
     /// <summary>
     /// Objeto Persistente que corresponde a la Representación de los Precios de Productos
     /// </summary>
-    [DefaultClassOptions]
+    [DefaultClassOptions, CreatableItem(false)]
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Precio"), NavigationItem(false), ModelDefault("Caption", "Precio"),
         Persistent("ProductoPrecio"), XafDefaultProperty("Tipo")]
     [ImageName(nameof(ProductoPrecio))]
@@ -83,6 +83,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Precio Unitario")]
         [RuleValueComparison("ProductoPrecio.PrecioUnitario_Mayor_Cero", DefaultContexts.Save, ValueComparisonType.GreaterThan, 0)]
         [ModelDefault("DisplayFormat", "{0:N4}"), ModelDefault("EditMask", "n4"), Persistent(nameof(PrecioUnitario))]
+        [DbType("numeric(14,4)")]
         public System.Decimal PrecioUnitario
         {
             get
@@ -101,6 +102,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         [XafDisplayName("Cantidad Desde"), ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [RuleValueComparison("ProductoPrecio.CantidadDesde_Mayor_Igual_Cero", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual, 0)]
+        [DbType("numeric(12,2)")]
         public System.Decimal CantidadDesde
         {
             get
@@ -118,6 +120,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         /// </summary>
         [XafDisplayName("Cantidad Hasta"), ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
+        [DbType("numeric(12,2)")]
         public System.Decimal CantidadHasta
         {
             get

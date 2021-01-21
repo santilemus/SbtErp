@@ -32,7 +32,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         }
 
         private Consulta _consulta;
-        private DevExpress.Persistent.BaseImpl.FileData _documento;
+        private PacienteFileData _documento;
         private System.String _resultado;
         private System.String _descripcion;
         private System.DateTime _fecha;
@@ -79,17 +79,12 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
                 SetPropertyValue("Resultado", ref _resultado, value);
             }
         }
-        public DevExpress.Persistent.BaseImpl.FileData Documento
+        public PacienteFileData Documento
         {
-            get
-            {
-                return _documento;
-            }
-            set
-            {
-                SetPropertyValue("Documento", ref _documento, value);
-            }
+            get => _documento;
+            set => SetPropertyValue(nameof(Documento), ref _documento, value);
         }
+
         [DevExpress.Xpo.AssociationAttribute("ExamenesFisicos-Consulta")]
         public Consulta Consulta
         {

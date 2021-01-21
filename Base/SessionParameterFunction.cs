@@ -89,7 +89,7 @@ namespace SBT.Apps.Base.Module
 
         public string Description
         {
-            get { return "GetSessionParameter(Value)" + Environment.NewLine + "Retorna el valor del parametro de la sesion, cuyo nombre se recibe en el argumento value"; }
+            get { return $"GetSessionParameter(Value){Environment.NewLine}Retorna el valor del parametro de la sesion, cuyo nombre se recibe en el argumento value"; }
         }
 
         public FunctionCategory Category

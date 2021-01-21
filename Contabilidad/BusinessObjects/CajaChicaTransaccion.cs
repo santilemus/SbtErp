@@ -31,12 +31,6 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
             minimoDisponible = CajaChica.MinimoDisponible;
             maximoGasto = CajaChica.MaximoGasto;
             montoFondo = CajaChica.MontoFondo;
-            var fMone = ObtenerMonedaBase();
-            if (fMone != null)
-            {
-                Moneda = fMone;
-                valorMoneda = fMone.FactorCambio;
-            }
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
@@ -52,15 +46,15 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         [Persistent(nameof(Responsable))]
         SBT.Apps.Empleado.Module.BusinessObjects.Empleado responsable;
         [Persistent(nameof(FechaLiquidacion)), DbType("datetime")]
-        DateTime? fechaLiquidacion = null;
+        DateTime? fechaLiquidacion;
         [Persistent(nameof(BancoTransaccion))]
-        BancoTransaccion bancoTransaccion = null;
+        BancoTransaccion bancoTransaccion;
         [Persistent(nameof(MinimoDisponible)), DbType("money")]
-        decimal minimoDisponible = 0.0m;
+        decimal minimoDisponible;
         [Persistent(nameof(MaximoGasto)), DbType("money")]
-        decimal maximoGasto = 0.0m;
+        decimal maximoGasto;
         [Persistent(nameof(MontoFondo)), DbType("money")]
-        decimal montoFondo = 0.0m;
+        decimal montoFondo;
 
         [Association("CajaChica-Transacciones"), ImmediatePostData(true), Index(0)]
         public CajaChica CajaChica

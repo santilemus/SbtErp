@@ -11,7 +11,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
     /// <summary>
     /// Definicion del objeto persistente que representa las equivalencias entre productos. 
     /// </summary>
-    [DefaultClassOptions]
+    [DefaultClassOptions, CreatableItem(false)]
     [ImageName(nameof(ProductoEquivalente))]
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Equivalente"), XafDefaultProperty("Equivalente"), NavigationItem(false),
         Persistent("ProductoEquivalente")]

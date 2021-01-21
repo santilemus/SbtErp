@@ -24,6 +24,23 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         public override void AfterConstruction()
         {
             base.AfterConstruction();
+            if (this.ClassInfo.FindMember("Empresa") != null)
+            {
+                this["Empresa"] = this.Session.GetObjectByKey<Empresa>(SesionDataHelper.ObtenerValor("OidEmpresa"));
+            }
+            if (this.GetType().GetProperty("Moneda") != null)
+            {
+                Constante constante = Session.GetObjectByKey<Constante>("MONEDA DEFECTO");
+                Moneda moneda = null;
+                if (constante != null)
+                    moneda = this.Session.GetObjectByKey<Moneda>(constante.Valor.Trim());
+                if (moneda == null)
+                {
+                    this["Moneda"] = moneda;
+                    if (this.GetType().GetProperty("ValorMoneda") != null)
+                        this["ValorMoneda"] = moneda.FactorCambio;
+                }
+            }
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
@@ -50,7 +67,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
                 foreach (var a in Session.CollectReferencingObjects(this))
                 {
                     i++;
-                    usadoPor = usadoPor + a.GetType().ToString() + ":" + a.ToString() + "; ";
+                    usadoPor = $"{usadoPor}{a.GetType()}:{a}; ";
                     if (i > 2) break;
                 }
                 throw new Exception($"No puede borrar, Existen objetos, que usan el objeto que esta intentando eliminar : {ToString()}\r\n{usadoPor}");
@@ -59,51 +76,6 @@ namespace SBT.Apps.Base.Module.BusinessObjects
 
         private bool isDefaultPropertyAttributeInit;
         private XPMemberInfo defaultPropertyMemberInfo;
-        public override string ToString()
-        {
-            if (!isDefaultPropertyAttributeInit)
-            {
-                DefaultPropertyAttribute attrib = XafTypesInfo.Instance.FindTypeInfo(
-                    GetType()).FindAttribute<DefaultPropertyAttribute>();
-                if (attrib != null)
-                    defaultPropertyMemberInfo = ClassInfo.FindMember(attrib.Name);
-                isDefaultPropertyAttributeInit = true;
-            }
-            if (defaultPropertyMemberInfo != null)
-            {
-                object obj = defaultPropertyMemberInfo.GetValue(this);
-                if (obj != null)
-                    return obj.ToString();
-            }
-            return base.ToString();
-        }
-
-        #region Metodos
-        protected Empresa EmpresaDeSesion()
-        {
-            var fEmpre = Session.GetObjectByKey<Empresa>(SesionDataHelper.ObtenerValor("OidEmpresa"));
-            if (fEmpre != null)
-                return fEmpre;
-            else
-                return null;
-        }
-
-        /// <summary>
-        ///  retorna la primer moneda base que el sistema encuentra. La moneda base tiene factor de cambio o valor de 1.0
-        /// </summary>
-        /// <returns>La primer moneda Activa y FactorCambio = 1.0</returns>
-        public Moneda ObtenerMonedaBase()
-        {
-            Constante constante = Session.GetObjectByKey<Constante>("MONEDA DEFECTO");
-            Moneda moneda = null;
-            if (constante != null)
-                moneda = Session.GetObjectByKey<Moneda>(constante.Valor.Trim());
-            if (moneda == null)
-                moneda = Session.FindObject<Moneda>(DevExpress.Data.Filtering.CriteriaOperator.Parse("FactorCambio = 1.0 And Activa = true"));
-            return moneda;
-        }
-
-        #endregion Metodos
 
         #region Propiedades
         private XPDelayedProperty audit = new XPDelayedProperty();
@@ -162,10 +134,24 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         }
         #endregion Propiedades
 
-        [Action(Caption = "Información de Auditoría", ImageName = "BO_Contact", ToolTip = "Mostrar la Información de Auditoría del Objeto")]
-        public void MostrarAuditInfo(AuditObjectInfo AuditParameters)
+        #region Metodos
+        public override string ToString()
         {
-            
+            if (!isDefaultPropertyAttributeInit)
+            {
+                DefaultPropertyAttribute attrib = XafTypesInfo.Instance.FindTypeInfo(
+                    GetType()).FindAttribute<DefaultPropertyAttribute>();
+                if (attrib != null)
+                    defaultPropertyMemberInfo = ClassInfo.FindMember(attrib.Name);
+                isDefaultPropertyAttributeInit = true;
+            }
+            if (defaultPropertyMemberInfo != null)
+            {
+                object obj = defaultPropertyMemberInfo.GetValue(this);
+                if (obj != null)
+                    return obj.ToString();
+            }
+            return base.ToString();
         }
 
         /// <summary>
@@ -179,9 +165,17 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         /// </remarks>
         public object this[string propertyName]
         {
-            get => ClassInfo.GetMember(propertyName).GetValue(this); 
-            set => ClassInfo.GetMember(propertyName).SetValue(this, value); 
+            get => ClassInfo.GetMember(propertyName).GetValue(this);
+            set => ClassInfo.GetMember(propertyName).SetValue(this, value);
         }
+
+        [Action(Caption = "Información de Auditoría", ImageName = "BO_Contact", ToolTip = "Mostrar la Información de Auditoría del Objeto")]
+        public void MostrarAuditInfo(AuditObjectInfo AuditParameters)
+        {
+
+        }
+
+        #endregion Metodos
     }
 
     /// <summary>

@@ -39,8 +39,6 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         public override void AfterConstruction()
         {
             base.AfterConstruction();
-            Empresa = EmpresaDeSesion();
-            Moneda = ObtenerMonedaBase();
      
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }

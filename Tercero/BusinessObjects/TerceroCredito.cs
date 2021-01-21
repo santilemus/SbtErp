@@ -22,7 +22,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
 
     [DefaultClassOptions, ModelDefault("Caption", "Tercero Crédito"), NavigationItem(false), CreatableItem(false), 
        DefaultProperty(nameof(FechaOtorgamiento)), Persistent(nameof(TerceroCredito))]
-    //[ImageName("BO_Contact")]
+    [ImageName("credito")]
     //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
@@ -35,12 +35,10 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
         public override void AfterConstruction()
         {
             base.AfterConstruction();
-            empresa = EmpresaDeSesion();
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
         #region Propiedades
-        [Persistent(nameof(Empresa))]
         Empresa empresa;
         DateTime? fechaCancelacion;
         DateTime fechaOtorgamiento;
@@ -54,8 +52,12 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
         Tercero cliente;
 
 
-        [XafDisplayName("Empresa"), PersistentAlias(nameof(empresa)), Browsable(false), Index(0)]
-        public Empresa Empresa => empresa;
+        [XafDisplayName("Empresa"), Persistent(nameof(Empresa)), Browsable(false), Index(0)]
+        public Empresa Empresa
+        {
+            get => empresa;
+            set => SetPropertyValue(nameof(Empresa), ref empresa, value);
+        }
 
         [Association("Tercero-Creditos"), XafDisplayName("Cliente"), Index(0)]
         public Tercero Cliente

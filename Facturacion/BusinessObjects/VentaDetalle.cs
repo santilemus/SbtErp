@@ -50,29 +50,29 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
 
 
         SBT.Apps.Base.Module.BusinessObjects.EmpresaUnidad bodega;
-        bool fProdChanged = false;
+        bool fProdChanged;
 
         #region Propiedades
 
         Venta venta;
         [Persistent(nameof(Costo)), DbType("numeric(14,6)")]
-        decimal costo = 0.0m;
+        decimal costo;
         [DbType("numeric(14,2)"), Persistent(nameof(NoSujeta))]
-        decimal noSujeta = 0.0m;
+        decimal noSujeta;
         [DbType("numeric(14,2)"), Persistent(nameof(Gravada))]
-        decimal gravada = 0.0m;
+        decimal gravada;
         [DbType("numeric(14,2)"), Persistent(nameof(Exenta))]
-        decimal exenta = 0.0m;
+        decimal exenta;
         [Persistent(nameof(Iva)), DbType("numeric(14,2)")]
-        decimal iva = 0.0m;
+        decimal iva;
         decimal precioUnidad;
-        decimal cantidad = 1.0m;
+        decimal cantidad;
         SBT.Apps.Producto.Module.BusinessObjects.Producto producto;
         ProductoCodigoBarra codigoBarra;
         [Persistent(nameof(Oid)), DbType("bigint"), Key(AutoGenerate = true)]
         long oid = -1;
         [Persistent(nameof(CantidadAnulada)), DbType("numeric(12,2)")]
-        decimal? cantidadAnulada = null;
+        decimal? cantidadAnulada;
 
         [PersistentAlias(nameof(oid)), XafDisplayName(nameof(Oid)), Index(0)]
         public long Oid => oid;

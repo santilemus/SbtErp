@@ -29,7 +29,6 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         public override void AfterConstruction()
         {
             base.AfterConstruction();
-            Empresa = EmpresaDeSesion();
             DiasLicMatrimonio = 0;
             DiasLicMuerte = 0;
             DiasLicNatilidad = 0;

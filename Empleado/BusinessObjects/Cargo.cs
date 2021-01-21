@@ -1,5 +1,6 @@
 ﻿using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
+using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using System;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
     /// <summary>
     /// Objeto Persistente que corresponde a Cargo. Es la clase para el objeto de negocios que corresponde al mantenimiento de Cargos
     /// </summary>
-    [DefaultClassOptions]
+    [DefaultClassOptions, CreatableItem(false)]
     [DevExpress.Persistent.Base.NavigationItemAttribute("Catalogos")]
     [DevExpress.ExpressApp.DC.XafDefaultPropertyAttribute("Nombre")]
     [DevExpress.Persistent.Base.ImageNameAttribute("archive-man")]
@@ -40,8 +41,9 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
           : base(session)
         {
         }
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
+
         [RuleRequiredField("Cargo.Nombre_Requerido", DefaultContexts.Save, "Nombre del tipoContrato es requerido")]
+        [Size(100), DbType("varchar(100)")]
         public System.String Nombre
         {
             get
@@ -54,7 +56,6 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
             }
         }
 
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         public TipoContrato TipoContrato
         {
@@ -62,8 +63,8 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
             set => SetPropertyValue(nameof(TipoContrato), ref tipoContrato, value);
         }
 
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
+        [DbType("numeric(12,2)")]
         public System.Decimal Salario
         {
             get
@@ -75,7 +76,7 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
                 SetPropertyValue("Salario", ref _salario, value);
             }
         }
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
+
         public TipoSalario TipoSalario
         {
             get
@@ -87,8 +88,7 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
                 SetPropertyValue("TipoSalario", ref _tipoSalario, value);
             }
         }
-        [DevExpress.Xpo.SizeAttribute(500)]
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
+        [DevExpress.Xpo.SizeAttribute(500), DbType("varchar(500)")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [DevExpress.Persistent.Base.VisibleInListViewAttribute(false)]
         public System.String Obligaciones
@@ -102,7 +102,7 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
                 SetPropertyValue("Obligaciones", ref _obligaciones, value);
             }
         }
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
+
         [RuleRequiredField("Cargo.Activo_Requerido", DefaultContexts.Save, "Activo es obligatorio")]
         public System.Boolean Activo
         {

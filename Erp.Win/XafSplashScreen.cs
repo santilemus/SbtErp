@@ -25,7 +25,7 @@ namespace SBT.Apps.Erp.Win {
         }
         public XafSplashScreen() {
             InitializeComponent();
-            this.labelCopyright.Text = "Copyright © " + DateTime.Now.Year.ToString() + " Company Name" +  System.Environment.NewLine + "All Rights Reserved";
+            this.labelCopyright.Text = $"Copyright © {DateTime.Now.Year} Company Name{System.Environment.NewLine}All Rights Reserved";
             UpdateLabelsPosition();
         }
         

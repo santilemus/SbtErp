@@ -22,8 +22,8 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
     /// NIT y cualquier otro documento vinculado a su personería
     /// </summary>
     [DefaultClassOptions, ModelDefault("Caption", "Tercero Documentos"), NavigationItem(false), DefaultProperty(nameof(Numero))]
-    [Persistent(nameof(TerceroDocumento))]
-    //[ImageName("BO_Contact")]
+    [Persistent(nameof(TerceroDocumento)), CreatableItem(false)]
+    [ImageName("user_id-info")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class TerceroDocumento : XPObjectBaseBO
@@ -62,7 +62,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
             get => Convert.ToString(EvaluateAlias("CodigoDocumento"));
         }
 
-        [Size(14), DbType("varchar(14)"), ImmediatePostData(true), XafDisplayName("Número"), Index(2)]
+        [Size(14), DbType("varchar(14)"), XafDisplayName("Número"), Index(2)]
         [RuleRequiredField("TerceroDocumento.Numero_Requerido", "Save"), Indexed("Tipo", Name = "idxTerceroNoDocumento")]
         public System.String Numero
         {
@@ -81,7 +81,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
         }
 
         [XafDisplayName("Lugar Emisión"), ToolTip("Lugar de emisión del documento"), VisibleInListView(false),
-            VisibleInLookupListView(false), DbType("varchar(100)"), ImmediatePostData(true), Index(4)]
+            VisibleInLookupListView(false), DbType("varchar(100)"), Index(4)]
         [RuleRequiredField("TerceroDocumento.LugarEmision_Requerido", "Save")]
         public System.String LugarEmision
         {
@@ -89,7 +89,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
             set => SetPropertyValue(nameof(LugarEmision), ref lugarEmision, value);
         }
 
-        [XafDisplayName("Fecha Emisión"), VisibleInLookupListView(false), ImmediatePostData(true)]
+        [XafDisplayName("Fecha Emisión"), VisibleInLookupListView(false)]
         [RuleRequiredField("TerceroDocumento.FechaEmision_Requerido", "Save")]
         [Index(5), VisibleInListView(false)]
         public System.DateTime FechaEmision
@@ -98,7 +98,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
             set => SetPropertyValue(nameof(FechaEmision), ref fechaEmision, value);
         }
 
-        [VisibleInLookupListView(false), ImmediatePostData(true), Index(6)]
+        [VisibleInLookupListView(false), Index(6)]
         [RuleRequiredField("TerceroDocumento.Vigente_Requerido", "Save")]
         public System.Boolean Vigente
         {

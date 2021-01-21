@@ -39,15 +39,15 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         #region Propiedades
 
         [Persistent(nameof(ReporteHoraExtra)), Association("ReporteHoraExtra-Resumenes")]
-        ReporteHoraExtra reporteHoraExtra = null;
+        ReporteHoraExtra reporteHoraExtra;
         [Persistent(nameof(TipoJornada)), Association("ParamJornada-Resumenes")]
-        ParametroJornada tipoJornada = null;
+        ParametroJornada tipoJornada;
         [Persistent(nameof(Horas)), FetchOnly]
-        decimal horas = 0.0m;
+        decimal horas;
         [Persistent(nameof(Porcentaje)), DbType("numeric(10,2)"), FetchOnly]
-        decimal porcentaje = 0.0m;
+        decimal porcentaje;
         [Persistent(nameof(Valor)), DbType("numeric(12,4)"), FetchOnly]
-        decimal valor = 0.0m;
+        decimal valor;
  
         [PersistentAlias(nameof(reporteHoraExtra))]
         public ReporteHoraExtra ReporteHoraExtra

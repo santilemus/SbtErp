@@ -20,7 +20,6 @@ namespace SBT.Apps.Base.Module
             BaseObject.OidInitializationMode = OidInitializationMode.AfterConstruction;
             /// se registran las funciones personalizadas que se han definido en la app
             CriteriaOperator.RegisterCustomFunction(new SessionParameterFunction());
-            //SessionParameterFunction.Register();
             /// las tres funciones siguientes seran similares a la anterior, excepto que en la
             /// primera se debe pasar el nombre del parametro de inicio de sesion, el cual debio 
             /// agregarse al almacenamiento de SesionDataHelper en el global.asax evento Instance_LoggedOn

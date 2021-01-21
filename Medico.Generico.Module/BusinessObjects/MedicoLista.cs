@@ -14,8 +14,8 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
     /// <summary>
     /// Objeto Persistente que corresponde a Listas de Valores del sistema Médico.
     /// </summary>
-	[DefaultClassOptions]
-    [DevExpress.ExpressApp.DC.XafDisplayName("Listas de Valores")]
+	[DefaultClassOptions, CreatableItem(false)]
+    [DevExpress.ExpressApp.DC.XafDisplayName("Listas Valores - Medico")]
     [DevExpress.ExpressApp.DC.XafDefaultProperty("Nombre")]
     [DevExpress.Persistent.Base.NavigationItem("Salud")]
     [DevExpress.Persistent.Base.ImageName("list-key")]
@@ -45,7 +45,6 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 		{
 		}
 		[DevExpress.Xpo.SizeAttribute(10)]
-		[DevExpress.Persistent.Base.ImmediatePostDataAttribute]
 		[DevExpress.Xpo.KeyAttribute]
 		[RuleRequiredField("MedicoListas.Codigo_Requerido", "Save")]
 		[RuleUniqueValue("MedicoListas.Codigo_Unico", DefaultContexts.Save, CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction)]
@@ -60,6 +59,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 			SetPropertyValue("CodigoCie", ref _codigo, value);
 		  }
 		}
+
 		[DbType("varchar(100)"), Size(100)]
 		[RuleRequiredField("MedicoListas.Nombre_Requerido", "Save")]
 		[RuleUniqueValue("MedicoListas.Nombre_Unico", DefaultContexts.Save, CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction)]
@@ -75,7 +75,6 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 		  }
 		}
 
-		[DevExpress.Persistent.Base.ImmediatePostDataAttribute]
 		[DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Categoría")]
 		[RuleRequiredField("MedicoListas.IdCategoria_Requerido", "Save")]
 		public CategoriaListaMedico Categoria
@@ -87,7 +86,6 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 		[DevExpress.Xpo.SizeAttribute(250), DbType("varchar(250)")]
 		[DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
 		[DevExpress.Persistent.Base.VisibleInListViewAttribute(false)]
-		[DevExpress.Persistent.Base.ImmediatePostDataAttribute]
 		public System.String Comentario
 		{
 		  get
@@ -99,8 +97,8 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 			SetPropertyValue("Comentario", ref _comentario, value);
 		  }
 		}
+
 		[DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
-		[DevExpress.Persistent.Base.ImmediatePostDataAttribute]
 		[RuleRequiredField("MedicoListas.Activo_Requerido", "Save")]
 		public System.Boolean Activo
 		{

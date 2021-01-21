@@ -54,7 +54,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
           : base(session)
         {
         }
-        [DevExpress.Xpo.SizeAttribute(200)]
+        [DevExpress.Xpo.SizeAttribute(200), DbType("varchar(200)")]
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("ContraIndicación")]
         [RuleRequiredField("Medicamente.ContraIndicacion_Requerido", "Save")]
         public System.String ContraIndicacion
@@ -68,7 +68,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
                 SetPropertyValue("ContraIndicacion", ref _contraIndicacion, value);
             }
         }
-        [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Concentración")]
+        [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Concentración"), DbType("varchar(100)")]
         public System.String Concentracion
         {
             get
@@ -80,7 +80,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
                 SetPropertyValue("Concentracion", ref _concentracion, value);
             }
         }
-        [DevExpress.Xpo.SizeAttribute(25)]
+        [DevExpress.Xpo.SizeAttribute(25), DbType("varchar(25)")]
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Vía")]
         [RuleRequiredField("Diagnostico.Via_Requerido", "Save")]
         public System.String Via

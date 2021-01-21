@@ -14,7 +14,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
     /// <summary>
     /// Es la clase para el objeto de negocios que corresponde al mantenimiento de enfermedades
     /// </summary>
-	[DefaultClassOptions]
+	[DefaultClassOptions, CreatableItem(false)]
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Enfermedades")]
     [DevExpress.ExpressApp.DC.XafDefaultPropertyAttribute("Nombre")]
     [DevExpress.Persistent.Base.ImageNameAttribute(nameof(Enfermedad))]
@@ -46,9 +46,8 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 		}
 
         #region Propiedades
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
 		[DevExpress.Xpo.Indexed(Unique = true)]
-		[DevExpress.Xpo.SizeAttribute(6), VisibleInLookupListView(true)]
+		[DevExpress.Xpo.SizeAttribute(6), VisibleInLookupListView(true), DbType("varchar(6)")]
 		[RuleRequiredField("Diagnostico.Codigo_Requerido", "Save")]
 		[RuleUniqueValue("Diagnostico.Codigo_Unico", DefaultContexts.Save, CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction)]
 		public System.String CodigoCie
@@ -62,8 +61,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 			SetPropertyValue("CodigoCie", ref _codigoCie, value);
 		  }
 		}
-		[DevExpress.Xpo.SizeAttribute(300)]
-		[DevExpress.Persistent.Base.ImmediatePostDataAttribute]
+		[DevExpress.Xpo.SizeAttribute(300), DbType("varchar(300)")]
 		[RuleRequiredField("Diagnostico.Nombre_Requerido", "Save")]
 		[RuleUniqueValue("Diagnostico.Nombre_Unico", DefaultContexts.Save, CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction)]
 		public System.String Nombre
@@ -77,8 +75,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 			SetPropertyValue("Nombre", ref _nombre, value);
 		  }
 		}
-		[DevExpress.Xpo.SizeAttribute(6)]
-		[DevExpress.Persistent.Base.ImmediatePostDataAttribute]
+
 		[DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
 		public Enfermedad Categoria
 		{
@@ -91,10 +88,9 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 			SetPropertyValue("Categoria", ref _categoria, value);
 		  }
 		}
-		[DevExpress.Xpo.SizeAttribute(250)]
+		[DevExpress.Xpo.SizeAttribute(250), DbType("varchar(250)")]
 		[DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
 		[DevExpress.Persistent.Base.VisibleInListViewAttribute(false)]
-		[DevExpress.Persistent.Base.ImmediatePostDataAttribute]
 		public System.String Comentario
 		{
 		  get

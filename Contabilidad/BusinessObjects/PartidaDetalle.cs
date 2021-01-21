@@ -44,8 +44,8 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         Partida partida;
         Catalogo catalogo;
         string concepto;
-        decimal valorDebe = 0.0m;
-        decimal valorHaber = 0.0m;
+        decimal valorDebe;
+        decimal valorHaber;
         int ctaPresupuesto;
         ETipoOperacionConsolidacion ajusteConsolidacion = ETipoOperacionConsolidacion.Ninguno;
 

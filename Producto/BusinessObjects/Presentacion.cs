@@ -10,7 +10,13 @@ using System.Linq;
 
 namespace SBT.Apps.Producto.Module.BusinessObjects
 {
-    [DefaultClassOptions, ModelDefault("Caption", "Presentacion"), DefaultProperty("Nombre"), NavigationItem("Inventario"), Persistent("ProPresentacion")]
+    /// <summary>
+    /// BO que corresponde a las presentaciones que pueden tener los productos
+    /// 
+    /// </summary>
+    
+    [DefaultClassOptions, ModelDefault("Caption", "Presentacion"), DefaultProperty("Nombre"), NavigationItem("Inventario"), 
+        CreatableItem(false), Persistent("ProPresentacion")]
     [ImageName("Presentacion")]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class Presentacion : XPObjectBaseBO
@@ -23,7 +29,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         {
             base.AfterConstruction();
             Activo = true;
-            UnidadInventa = 0;
+            Unidades = 0;
             Defecto = true;
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
@@ -48,14 +54,15 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
             set => SetPropertyValue("Nombre", ref nombre, value);
         }
 
-        decimal unidadInventa;
-        [DbType("int"), Persistent("CantUnidadInventa")]
+        decimal unidades;
+        [DbType("numeric(12,2)"), Persistent(nameof(Unidades))]
+        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         [XafDisplayName("Unidades Inventario"), Index(2), RuleRequiredField("Presentacion.UnidInventa_Requerido", DefaultContexts.Save), VisibleInLookupListView(false),
            ToolTip("Cantidad de Unidades de Inventario para el presentacion")]
-        public decimal UnidadInventa
+        public decimal Unidades
         {
-            get => unidadInventa;
-            set => SetPropertyValue("UnidadInventa", ref unidadInventa, value);
+            get => unidades;
+            set => SetPropertyValue(nameof(Unidades), ref unidades, value);
         }
 
         bool activo;

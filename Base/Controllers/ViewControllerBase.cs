@@ -34,7 +34,7 @@ namespace SBT.Apps.Base.Module.Controllers
             base.OnActivated();
             // revisar, se agrego aquí para no tenerlo repetido en cada vc, pero si da problemas habrá que quitarlo
             // Es para filtrar los datos para la empresa de la sesion y evitar que se mezclen cuando hay más de una empresa
-            if ((View.GetType().Name == "ListView") && (((ListView)View).ObjectTypeInfo.FindMember("Empresa") != null) &&
+            if ((string.Compare(View.GetType().Name, "ListView", StringComparison.Ordinal) == 0) && (((ListView)View).ObjectTypeInfo.FindMember("Empresa") != null) &&
                 !(((ListView)View).CollectionSource.Criteria.ContainsKey("Empresa Actual")))
                 ((ListView)View).CollectionSource.Criteria["Empresa Actual"] = CriteriaOperator.Parse("Empresa = ?", ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid);
 

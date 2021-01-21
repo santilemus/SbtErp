@@ -7,7 +7,7 @@ using DevExpress.ExpressApp.DC;
 
 namespace SBT.Apps.Base.Module.BusinessObjects
 {
-    [DefaultClassOptions]
+    [DefaultClassOptions, CreatableItem(false)]
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Constante")]
     [DevExpress.Persistent.Base.ImageNameAttribute("list-key")]
     [DevExpress.ExpressApp.DC.XafDefaultPropertyAttribute("Nombre")]

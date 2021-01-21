@@ -18,7 +18,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
 
         bool vigente = true;
         private Empresa empresa;
-        private ActividadEconomica actEconomica = null;
+        private ActividadEconomica actEconomica;
 
         public EmpresaGiro(DevExpress.Xpo.Session session)
           : base(session)
@@ -32,7 +32,6 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             set => SetPropertyValue(nameof(Empresa), ref empresa, value);
         }
 
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
         [VisibleInListView(true), VisibleInLookupListView(true)]
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Actividad Económica")]
         [RuleRequiredField("RegistroFiscal.ActEconomica_Requerido", DefaultContexts.Save, "Actividad Económica es requerida")]

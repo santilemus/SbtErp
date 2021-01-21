@@ -43,7 +43,7 @@ namespace SBT.Apps.Empleado.Module.Controllers
             // Perform various tasks depending on the target View.
             if (View.ObjectTypeInfo.Type == typeof(SBT.Apps.Empleado.Module.BusinessObjects.Empleado))
             {
-                if (View.GetType().Name == "ListView")
+                if (string.Compare(View.GetType().Name, "ListView", StringComparison.Ordinal) == 0)
                     ((ListView)View).CollectionSource.Criteria["Empresa Actual"] = new BinaryOperator("Empresa", ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid);
             }
             pwsaDocumentosDigitales.CustomizePopupWindowParams += pwsaDocumentosDigitales_CustomizePopupWindowsParams;
@@ -66,52 +66,55 @@ namespace SBT.Apps.Empleado.Module.Controllers
             if (mayanDocumento == null)
                 mayanDocumento = os.CreateObject<MayanDocumentsReadResponse>();
 
-            GetDocument();
+            GetDocumentAsync();
             e.View = Application.CreateDetailView(os, mayanDocumento);
         }
 
-        private async void GetDocument()
+        private async void GetDocumentAsync()
         {
-            // clavados para probar
-            string sWebUrl = $"http://192.168.1.104:8000/api/auth/token/obtain/";
-            string sToken = $"";
-            using (var client = new System.Net.Http.HttpClient())
+            try
             {
-                var pp = new Dictionary<string, string>();
-                pp.Add("username", "slemus");
-                pp.Add("password", "Dumbo#2020");
-                var encodedContent = new System.Net.Http.FormUrlEncodedContent(pp);
-                client.BaseAddress = new Uri(sWebUrl);
-                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                client.DefaultRequestHeaders.ConnectionClose = true;
-                Dictionary<string, string> token = new Dictionary<string, string>();
-                using (var response = await client.PostAsync(sWebUrl, encodedContent).ConfigureAwait(false))
+                // clavados para probar
+                string sWebUrl = $"http://192.168.1.104:8000/api/auth/token/obtain/";
+                string sToken = $"";
+                using (var client = new System.Net.Http.HttpClient())
                 {
-                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                    {
-                        sToken = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        token = JsonSerializer.Deserialize<Dictionary<string, string>>(sToken, new JsonSerializerOptions() { AllowTrailingCommas = true, IgnoreNullValues = true });
-                        //token = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, string>>(sToken);
-                    }
+                    var pp = new Dictionary<string, string>();
+                    pp.Add("username", "slemus");
+                    pp.Add("password", "Dumbo#2020");
+                    var encodedContent = new System.Net.Http.FormUrlEncodedContent(pp);
+                    client.BaseAddress = new Uri(sWebUrl);
+                    client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                    client.DefaultRequestHeaders.ConnectionClose = true;
+                    Dictionary<string, string> token = new Dictionary<string, string>();
+                    using (var response = await client.PostAsync(sWebUrl, encodedContent).ConfigureAwait(false))
+                        if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                        {
+                            sToken = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            token = JsonSerializer.Deserialize<Dictionary<string, string>>(sToken, new JsonSerializerOptions() { AllowTrailingCommas = true, IgnoreNullValues = true });
+                            //token = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, string>>(sToken);
+                        }
+                    if (string.IsNullOrEmpty(sToken))
+                        return;
+                    // ahora intentamos recuperar un documento
+                    //sWebUrl = $"http://192.168.1.104:8000/api/documents/{id}/";
+                    sWebUrl = $"http://192.168.1.104:8000/api/documents/4/";
+                    client.DefaultRequestHeaders.Add("Authorization", $"Token {token["token"]}");
+                    //MayanDocumentsReadResponse mayandocumentread = new MayanDocumentsReadResponse();
+                    using (var response = await client.GetAsync(sWebUrl).ConfigureAwait(false))
+                        if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                        {
+                            //string respuesta = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            string respuesta = response.Content.ReadAsStringAsync().Result;
+                            // mayandocumentread = Newtonsoft.Json.JsonConvert.DeserializeObject<MayanDocumentsReadResponse>(respuesta);
+                            mayanDocumento = JsonSerializer.Deserialize<MayanDocumentsReadResponse>(respuesta,
+                                new JsonSerializerOptions() { AllowTrailingCommas = true, IgnoreNullValues = true });
+                        }
                 }
-                if (string.IsNullOrEmpty(sToken))
-                    return;
-                // ahora intentamos recuperar un documento
-                //sWebUrl = $"http://192.168.1.104:8000/api/documents/{id}/";
-                sWebUrl = $"http://192.168.1.104:8000/api/documents/4/";
-                client.DefaultRequestHeaders.Add("Authorization", "Token " + token["token"]);
-                MayanDocumentsReadResponse mayandocumentread = new MayanDocumentsReadResponse();
-                using (var response = await client.GetAsync(sWebUrl).ConfigureAwait(false))
-                {
-                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                    { 
-                        //string respuesta = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        string respuesta = response.Content.ReadAsStringAsync().Result;
-                        // mayandocumentread = Newtonsoft.Json.JsonConvert.DeserializeObject<MayanDocumentsReadResponse>(respuesta);
-                        mayanDocumento = JsonSerializer.Deserialize<MayanDocumentsReadResponse>(respuesta,
-                            new JsonSerializerOptions() { AllowTrailingCommas = true, IgnoreNullValues = true });
-                    }
-                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
 

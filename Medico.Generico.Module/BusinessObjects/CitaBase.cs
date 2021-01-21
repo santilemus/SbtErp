@@ -161,7 +161,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
             }
             set
             {
-                if ((!IsLoading && !IsSaving) && medicoIds != value && value != null)
+                if ((!IsLoading && !IsSaving) && string.Compare(medicoIds, value, StringComparison.Ordinal) != 0 && value != null)
                 {
                     medicoIds = value;
                     UpdateMedicos();
@@ -286,7 +286,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
         protected override XPCollection<T> CreateCollection<T>(XPMemberInfo property)
         {
             XPCollection<T> result = base.CreateCollection<T>(property);
-            if (property.Name == nameof(Medicos))
+            if (string.Compare(property.Name, nameof(Medicos), StringComparison.Ordinal) == 0)
             {
                 result.ListChanged += Medicos_ListChanged;
             }
@@ -298,9 +298,9 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
             medicoIds = string.Empty;
             foreach (Medico activityUser in Medicos)
             {
-                medicoIds += String.Format(@"<ResourceId Type=""{0}"" Value=""{1}"" />\r\n", activityUser.Id.GetType().FullName, activityUser.Id);
+                medicoIds += $@"<ResourceId Type=""{activityUser.Id.GetType().FullName}"" Value=""{activityUser.Id}"" />\r\n";
             }
-            medicoIds = String.Format("<ResourceIds>\r\n{0}</ResourceIds>", medicoIds);
+            medicoIds = $"<ResourceIds>\r\n{medicoIds}</ResourceIds>";
         }
         private void UpdateMedicos()
         {

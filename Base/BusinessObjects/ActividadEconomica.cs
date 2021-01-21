@@ -6,7 +6,7 @@ using DevExpress.Xpo;
 
 namespace SBT.Apps.Base.Module.BusinessObjects
 {
-    [DefaultClassOptions]
+    [DefaultClassOptions, CreatableItem(false)]
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Actividad Económica")]
     [DevExpress.ExpressApp.DC.XafDefaultPropertyAttribute("Concepto")]
     [DevExpress.Persistent.Base.ImageNameAttribute("business_report")]

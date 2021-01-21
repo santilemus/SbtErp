@@ -22,7 +22,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
     /// o los diagnosticos
     /// </summary>
     [DefaultClassOptions, Persistent("EstiloVida"), NavigationItem(false), ModelDefault("Caption", "Estilo Vida"),
-        DefaultProperty("Factor")]
+        DefaultProperty("Factor"), CreatableItem(false)]
     [ImageName(nameof(EstiloVida))]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
@@ -54,7 +54,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         }
 
         [DataSourceCriteria("[Categoria] = 9")]  // 9 es estilo de vida
-        [Size(10), DbType("varchar(10)"), Persistent("Factor"), XafDisplayName("Factor"), ToolTip("Clasificación del habito de estilo de vida"),
+        [Persistent("Factor"), XafDisplayName("Factor"), ToolTip("Clasificación del habito de estilo de vida"),
             Index(1)]
         public MedicoLista Factor
         {

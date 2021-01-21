@@ -47,9 +47,9 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         //[Persistent(nameof(Empleado))]
         //SBT.Apps.Empleado.Module.BusinessObjects.Empleado empleado;
         [Persistent(nameof(Operacion)), Association("Operacion-PlanillaOperaciones")]
-        Operacion operacion = null;
+        Operacion operacion;
         [Persistent(nameof(Valor)), DbType("numeric(12,2)")]
-        decimal valor = 0.0m;
+        decimal valor;
 
 
         [Association("PlanillaDetalle-Operaciones"), XafDisplayName("Planilla Detalle")]

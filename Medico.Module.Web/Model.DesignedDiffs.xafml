@@ -11,5 +11,9 @@
   <Views>
     <ListView Id="Medico_Citas_ListView" EditorTypeName="DevExpress.ExpressApp.Web.Editors.ASPx.ASPxGridListEditor" />
     <ListView Id="Paciente_Citas_ListView" EditorTypeName="DevExpress.ExpressApp.Web.Editors.ASPx.ASPxGridListEditor" />
+    <ListView Id="PercentilTablaDetalle_Chart" EditorTypeName="DevExpress.ExpressApp.Chart.Web.ASPxChartListEditor" />
+    <ListView Id="PercentilTablaDetalle_ListView">
+      <Variants Current="" />
+    </ListView>
   </Views>
 </Application>

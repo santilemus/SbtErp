@@ -17,9 +17,9 @@ using SBT.Apps.Medico.Generico.Module.BusinessObjects;
 namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 {
     [DefaultClassOptions, ModelDefault("Caption", "Recordatorio Clínico"), NavigationItem(false), Persistent("RecordatorioClinico"),
-        DefaultProperty("Regla")]
+        DefaultProperty("Regla"), CreatableItem(false)]
     [RuleCombinationOfPropertiesIsUnique("RecordatorioClinico.PacientePlanRegla_Unico", DefaultContexts.Save, "Paciente,Regla", 
-        CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction, IncludeCurrentObject = true, SkipNullOrEmptyValues = false)]
+        CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction, SkipNullOrEmptyValues = false)]
     [ImageName(nameof(RecordatorioClinico))]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
@@ -40,8 +40,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         Regla regla;
         Paciente paciente;
 
-        [Association("Paciente-Recordatorios"), ModelDefault("Caption", "Paciente"), Persistent("Paciente"), 
-            DbType("int")]
+        [Association("Paciente-Recordatorios"), ModelDefault("Caption", "Paciente"), Persistent(nameof(Paciente))]
         public Paciente Paciente
         {
             get => paciente;

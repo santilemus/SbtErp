@@ -25,6 +25,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             : base(session)
         {
         }
+
         public override void AfterConstruction()
         {
             base.AfterConstruction();
@@ -48,7 +49,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         EBugPlataforma plataforma = EBugPlataforma.Web;
         byte[] capturaPantalla;
         string url;
-        byte [] descripcion;
+        byte[] descripcion;
         [Persistent(nameof(ReportadoPor)), Size(50), DbType("varchar(50)")]
         string reportadoPor = DevExpress.ExpressApp.SecuritySystem.CurrentUserName;
         DateTime fechaReporte;
@@ -136,7 +137,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         }
 
         [XafDisplayName("Pasos Reproducir"), VisibleInListView(false)]
-        [Size(SizeAttribute.Unlimited)]
+        [Size(SizeAttribute.Unlimited), DbType("varchar(max)")]
         [EditorAlias(EditorAliases.RichTextPropertyEditor)]
         [Index(9), DetailViewLayout("Detalle del Error", LayoutGroupType.SimpleEditorsGroup, 3)]
         public string PasosReproducir
@@ -229,66 +230,4 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         //    this.PersistentProperty = "Paid";
         //}
     }
-
-    public enum EBugPlataforma
-    {
-        Windows = 0,
-        Web = 1,
-        Movil = 2
-    }
-
-    public enum EBugNavegadorWeb
-    {
-        Chrome = 0,
-        FireFox = 1,
-        [XafDisplayName("Internet Explorer")]
-        IExplorer = 2,
-        [XafDisplayName("Microsoft Edge")]
-        Edge = 3,
-        Opera = 4,
-        Otro = 5
-    }
-
-    public enum EBugSistemaOperativo
-    {
-        [XafDisplayName("Windows 7")]
-        Windows7 = 0,
-        [XafDisplayName("Windows 8.x")]
-        Windows8 = 1,
-        [XafDisplayName("Windows 10")]
-        Windows10 = 2,
-        Linux = 3,
-        Osx = 4,
-        [XafDisplayName("Windows Server")]
-        WindowServer,
-        Android,
-        Otro
-    }
-
-    public enum EBugSeveridad
-    {
-        [XafDisplayName("Crítico")]
-        Critico = 0,
-        Alto = 1,
-        Medio = 2,
-        Bajo = 3,
-        Cosmetico = 4
-    }
-
-    public enum EBugPrioridad
-    {
-        Bloquea = 0,
-        Alta = 1,
-        Media = 2,
-        Baja = 3,
-        Trivial = 4
-    }
-
-    public enum EBugEstado
-    {
-        Abierto = 0,
-        Resuelto = 1,
-        Cerrado = 2
-    }
-
 }

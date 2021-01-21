@@ -17,7 +17,7 @@ using SBT.Apps.Medico.Generico.Module.BusinessObjects;
 namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 {
     [DefaultClassOptions, ModelDefault("Caption", "Problema Medico"), NavigationItem(false), XafDefaultProperty(nameof(Diagnostico)), 
-        Persistent("ProblemaMedico")]
+        Persistent(nameof(ProblemaMedico)), CreatableItem(false)]
     [ImageName(nameof(ProblemaMedico))]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
@@ -75,7 +75,6 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
             get => diagnostico;
             set
             {
-                var oldValue = Diagnostico;
                 bool changed = SetPropertyValue(nameof(Diagnostico), ref diagnostico, value);
                 if (!IsLoading && !IsSaving && changed)
                     Titulo = !string.IsNullOrEmpty(value.Nombre) && value.Nombre.Length <= 150 ? value.Nombre : value.Nombre.Substring(1, 150);
@@ -132,7 +131,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
             set => SetPropertyValue(nameof(Reaccion), ref reaccion, value);
         }
 
-        [Size(200), VisibleInListView(false)]
+        [Size(200), DbType("varchar(200)"), VisibleInListView(false)]
         public string Comentario
         {
             get => comentario;

@@ -123,12 +123,4 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         //    this.PersistentProperty = "Paid";
         //}
     }
-
-    public enum ETipoOperacion
-    {
-        [XafDisplayName("Cargo")]
-        Cargo = 0,
-        [XafDisplayName("Abono")]
-        Abono = 1
-    }
 }

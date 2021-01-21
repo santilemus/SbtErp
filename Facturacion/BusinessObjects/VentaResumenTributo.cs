@@ -39,7 +39,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
 
         #region Propiedades
         [Persistent(nameof(Valor))]
-        decimal valor = 0.0m;
+        decimal valor;
         Tributo tributo;
         Venta ventaFactura;
 

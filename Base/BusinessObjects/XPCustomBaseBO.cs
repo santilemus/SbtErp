@@ -23,8 +23,24 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         {
             base.AfterConstruction();
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
+            if (this.ClassInfo.FindMember("Empresa") != null)
+            {
+                this["Empresa"] = this.Session.GetObjectByKey<Empresa>(SesionDataHelper.ObtenerValor("OidEmpresa"));
+            }
+            if (this.GetType().GetProperty("Moneda") != null)
+            {
+                Constante constante = Session.GetObjectByKey<Constante>("MONEDA DEFECTO");
+                Moneda moneda = null;
+                if (constante != null)
+                    moneda = this.Session.GetObjectByKey<Moneda>(constante.Valor.Trim());
+                if (moneda == null)
+                {
+                    this["Moneda"] = moneda;
+                    if (this.GetType().GetProperty("ValorMoneda") != null)
+                        this["ValorMoneda"] = moneda.FactorCambio;
+                }
+            }
         }
-
 
         protected override void OnSaving()
         {
@@ -58,48 +74,8 @@ namespace SBT.Apps.Base.Module.BusinessObjects
 
         private bool isDefaultPropertyAttributeInit;
         private XPMemberInfo defaultPropertyMemberInfo;
-        public override string ToString()
-        {
-            if (!isDefaultPropertyAttributeInit)
-            {
-                DefaultPropertyAttribute attrib = XafTypesInfo.Instance.FindTypeInfo(
-                    GetType()).FindAttribute<DefaultPropertyAttribute>();
-                if (attrib != null)
-                    defaultPropertyMemberInfo = ClassInfo.FindMember(attrib.Name);
-                isDefaultPropertyAttributeInit = true;
-            }
-            if (defaultPropertyMemberInfo != null)
-            {
-                object obj = defaultPropertyMemberInfo.GetValue(this);
-                if (obj != null)
-                    return obj.ToString();
-            }
-            return base.ToString();
-        }
 
-        protected Empresa EmpresaDeSesion()
-        {
-            var fEmpre = Session.GetObjectByKey<Empresa>(SesionDataHelper.ObtenerValor("OidEmpresa"));
-            if (fEmpre != null)
-                return fEmpre;
-            else
-                return null;
-        }
-
-        /// <summary>
-        ///  retorna la primer moneda base que el sistema encuentra. La moneda base tiene factor de cambio o valor de 1.0
-        /// </summary>
-        /// <returns>La primer moneda Activa y FactorCambio = 1.0</returns>
-        public Moneda ObtenerMonedaBase()
-        {
-            Constante constante = Session.GetObjectByKey<Constante>("MONEDA DEFECTO");
-            Moneda moneda = null;
-            if (constante != null)
-                moneda = Session.GetObjectByKey<Moneda>(constante.Valor.Trim());
-            if (moneda == null)
-                moneda = Session.FindObject<Moneda>(DevExpress.Data.Filtering.CriteriaOperator.Parse("FactorCambio = 1.0 And Activa = true"));
-            return moneda;
-        }
+        #region Propiedades
 
         [Size(25), Persistent(@"UsuarioCrea"), DbType("varchar(25)"), NonCloneable, ModelDefault("AllowEdit", "False")]
         string usuarioCrea = DevExpress.ExpressApp.SecuritySystem.CurrentUserName;
@@ -145,6 +121,44 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             get { return fechaMod; }
         }
 
+        #endregion
+
+        #region Metodos
+
+        public override string ToString()
+        {
+            if (!isDefaultPropertyAttributeInit)
+            {
+                DefaultPropertyAttribute attrib = XafTypesInfo.Instance.FindTypeInfo(
+                    GetType()).FindAttribute<DefaultPropertyAttribute>();
+                if (attrib != null)
+                    defaultPropertyMemberInfo = ClassInfo.FindMember(attrib.Name);
+                isDefaultPropertyAttributeInit = true;
+            }
+            if (defaultPropertyMemberInfo != null)
+            {
+                object obj = defaultPropertyMemberInfo.GetValue(this);
+                if (obj != null)
+                    return obj.ToString();
+            }
+            return base.ToString();
+        }
+
+        /// <summary>
+        /// Extender funcionalidad de la clase, para acceder a una propiedad por su nombre
+        /// Ejemplo: myObject["Nombre"] = "San"
+        /// </summary>
+        /// <param name="propertyName">Nombre de la propiedad cuyo valor se va a asignar o leer</param>
+        /// <returns>El valor de la propiedad que corresponde a propertyName</returns>
+        /// <remarks>
+        /// Ver https://supportcenter.devexpress.com/ticket/details/a755/how-to-access-the-property-of-a-class-by-its-name-in-c
+        /// </remarks>
+        public object this[string propertyName]
+        {
+            get => ClassInfo.GetMember(propertyName).GetValue(this);
+            set => ClassInfo.GetMember(propertyName).SetValue(this, value);
+        }
+
         protected int CorrelativoSQ(string SQName)
         {
 #if (Firebird)
@@ -164,6 +178,8 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         {
 
         }
+
+        #endregion
 
     }
 }

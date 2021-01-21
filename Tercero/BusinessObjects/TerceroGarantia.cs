@@ -32,13 +32,11 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
         public override void AfterConstruction()
         {
             base.AfterConstruction();
-            empresa = EmpresaDeSesion();
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
         #region Propiedades
 
-        [Persistent(nameof(Empresa))]
         Empresa empresa;
         DateTime? fechaVence;
         decimal valor;
@@ -54,8 +52,12 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
             set => SetPropertyValue(nameof(Cliente), ref cliente, value);
         }
 
-        [XafDisplayName("Empresa"), PersistentAlias(nameof(empresa)), Index(1), Browsable(false)]
-        public Empresa Empresa => empresa;
+        [XafDisplayName("Empresa"), Persistent(nameof(Empresa)), Index(1), Browsable(false)]
+        public Empresa Empresa
+        {
+            get => empresa;
+            set => SetPropertyValue(nameof(Empresa), ref empresa, value);
+        }
 
         /// <summary>
         /// Tipo de Credito. Pendiente de agregar en el BO, la clasificacion de tipos de garantia

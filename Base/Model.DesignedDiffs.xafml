@@ -134,7 +134,7 @@
               <LayoutItem Id="EMail" ViewItem="EMail" Index="0" RelativeSize="20.689655172413794" CaptionLocation="Left" IsNewNode="True" />
               <LayoutItem Id="SitioWeb" ViewItem="SitioWeb" Index="1" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
               <LayoutItem Id="Nit" ViewItem="Nit" Index="2" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="NRC" ViewItem="NRC" Index="3" RelativeSize="14.942528735632184" IsNewNode="True" />
+              <LayoutItem Id="NRC" ViewItem="NRC" Index="3" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
               <LayoutItem Id="Activa" ViewItem="Activa" Index="4" RelativeSize="34.482758620689658" CaptionLocation="Left" IsNewNode="True" />
             </LayoutGroup>
             <LayoutGroup Id="Empresa" Removed="True" />
@@ -181,10 +181,12 @@
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
           <LayoutGroup Id="SimpleEditors" RelativeSize="100">
-            <LayoutGroup Id="Telefono" RelativeSize="83.58008075370121" Caption="Telefono" Direction="Horizontal" Removed="True">
-              <LayoutItem Id="Activo" Index="0" RelativeSize="100" Removed="True" />
-              <LayoutItem Id="Descripcion" Index="0" RelativeSize="4.431314623338257" Removed="True" />
-              <LayoutItem Id="Numero" Removed="True" />
+            <LayoutGroup Id="EmpresaTelefono" RelativeSize="100" Caption="Teléfono">
+              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="4.7244094488188972" IsNewNode="True" />
+              <LayoutItem Id="Telefono" Index="1" RelativeSize="95.2755905511811" />
+            </LayoutGroup>
+            <LayoutGroup Id="XPObject" Caption="Oid" RelativeSize="90.813648293963254" Removed="True">
+              <LayoutItem Id="Oid" Removed="True" />
             </LayoutGroup>
           </LayoutGroup>
         </LayoutGroup>
@@ -366,6 +368,21 @@
       </Layout>
     </DetailView>
     <ListView Id="PersonaDocumento_ListView" DataAccessMode="Server" />
+    <DetailView Id="PersonaTelefono_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="100">
+            <LayoutGroup Id="PersonaTelefono" RelativeSize="100" Caption="Teléfono">
+              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="4.7244094488188972" IsNewNode="True" />
+              <LayoutItem Id="Telefono" Index="1" RelativeSize="95.2755905511811" />
+            </LayoutGroup>
+            <LayoutGroup Id="XPObject" Caption="Oid" RelativeSize="90.813648293963254" Removed="True">
+              <LayoutItem Id="Oid" Removed="True" />
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
     <ListView Id="PersonaTelefono_ListView" DataAccessMode="Server" />
     <DetailView Id="Profesion_DetailView">
       <Layout>
@@ -450,7 +467,7 @@
         <ColumnInfo Id="CodigoTelefonico" Width="121" />
       </Columns>
     </ListView>
-    <ListView Id="ZonaGeografica_LookupListView" DataAccessMode="Server" />
+    <ListView Id="ZonaGeografica_LookupListView" DataAccessMode="Server" ShowAutoFilterRow="False" />
     <ListView Id="ZonaGeografica_Zonas_ListView" DataAccessMode="Server" />
   </Views>
 </Application>

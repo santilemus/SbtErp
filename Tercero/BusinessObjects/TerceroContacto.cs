@@ -54,7 +54,6 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
 
         [DevExpress.Xpo.SizeAttribute(60), DbType("varchar(60)")]
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Correo Electrónico")]
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [RuleRequiredField("TerceroContacto.EMail_Requerido", "Save")]
         public System.String EMail
@@ -64,7 +63,6 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
         }
 
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(true)]
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
         [RuleRequiredField("TerceroContacto.Activo_Requerido", "Save")]
         public System.Boolean Activo
         {

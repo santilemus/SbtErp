@@ -26,7 +26,7 @@ namespace SBT.Apps.Medico.Module.Web.Classes
             context.Response.Charset = "";
             if (true) // context.Request.QueryString["download"] == "1")  
             {
-                context.Response.AppendHeader("Content-Disposition", "attachment; filename=" + fileName);
+                context.Response.AppendHeader("Content-Disposition", $"attachment; filename={fileName}");
             }
             context.Response.Cache.SetCacheability(HttpCacheability.NoCache);
             context.Response.ContentType = contentType;

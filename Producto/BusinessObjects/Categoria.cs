@@ -16,7 +16,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
     /// El propósito es crear un agrupamiento jerarquico, donde los productos estarán vinculados al último nivel (detalle)
     /// Lo anterior es para no hacer jerarquico el catálogo de productos, sino el atributo de agrupamiento
     /// </summary>
-    [DefaultClassOptions, XafDefaultProperty(nameof(Nombre))]
+    [DefaultClassOptions, XafDefaultProperty(nameof(Nombre)), CreatableItem(false)]
     [ModelDefault("Caption", "Categoría Productos"), NavigationItem("Catalogos")]
     [RuleIsReferenced("Categoria_Referencia", DefaultContexts.Delete, typeof(Categoria), nameof(Oid),
         MessageTemplateMustBeReferenced = "Para borrar el objeto '{TargetObject}', debe estar seguro que no es utilizado (referenciado) en ningún lugar.",
@@ -58,7 +58,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
 
         private Categoria padre;
         private EClasificacion clasificacion = EClasificacion.ProductoTerminado;
-        private System.Boolean esGrupo = false;
+        private System.Boolean esGrupo;
         private System.Boolean activa = true;
         private System.String nombre;
         private System.String codigo;

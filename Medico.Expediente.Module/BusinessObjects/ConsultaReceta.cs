@@ -90,6 +90,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         }
         [RuleRequiredField("ConsultaReceta.Dosis_Requerido", "Save")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
+        [DbType("varchar(100)")]
         public System.String Dosis
         {
             get
@@ -103,6 +104,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         }
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [RuleRequiredField("ConsultaReceta.Frecuencia_Requerido", "Save")]
+        [DbType("varchar(100)")]
         public System.String Frecuencia
         {
             get
@@ -115,7 +117,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
             }
         }
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Precaución")]
-        [DevExpress.Xpo.SizeAttribute(250)]
+        [DevExpress.Xpo.SizeAttribute(250), DbType("varchar(250)")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         public System.String Precaucion
         {
@@ -141,7 +143,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
                 SetPropertyValue("MuestraMedica", ref _muestraMedica, value);
             }
         }
-        [RuleRequiredField("ConsultaReceta.Cantidad_Requerido", "Save")]
+        [RuleRequiredField("ConsultaReceta.Cantidad_Requerido", "Save"), DbType("numeric(12,2)")]
         public System.Decimal Cantidad
         {
             get

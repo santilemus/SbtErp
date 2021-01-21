@@ -7,7 +7,7 @@ namespace SBT.Apps.Medico.Win
     public class MedicoSplash : ISplash, ISupportUpdateSplash
     {
         static private MedSplashScreen form;
-        private static bool isStarted = false;
+        private static bool isStarted;
         public void Start()
         {
             isStarted = true;

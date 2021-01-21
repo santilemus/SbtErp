@@ -20,6 +20,7 @@ namespace SBT.Apps.Erp.Web {
             InitializeComponent();
         }
         protected void Application_Start(Object sender, EventArgs e) {
+            DevExpress.ExpressApp.FrameworkSettings.DefaultSettingsCompatibilityMode = DevExpress.ExpressApp.FrameworkSettingsCompatibilityMode.v20_1;
             RouteTable.Routes.RegisterXafRoutes();
             ASPxWebControl.CallbackError += new EventHandler(Application_Error);
 #if EASYTEST
@@ -100,7 +101,7 @@ namespace SBT.Apps.Erp.Web {
         /// <param name="e">parámetros del logon que se desean guardar</param>
         private void Instance_LastLogonParametersWriting(object sender, LastLogonParametersWritingEventArgs e)
         {
-            if (((CustomLogonParameters)e.LogonObject).UserName != "Admin")
+            if (string.Compare(((CustomLogonParameters)e.LogonObject).UserName, "Admin", StringComparison.Ordinal) != 0)
             {
                 e.SettingsStorage.SaveOption(string.Empty, "UserName", ((CustomLogonParameters)e.LogonObject).UserName);
             }
@@ -162,7 +163,7 @@ namespace SBT.Apps.Erp.Web {
                 INavItems.StartupNavigationItem = null;
                 ((IModelRootNavigationItemsWeb)INavItems).ShowNavigationOnStart = true;
                 WebApplication.Instance.Model.AboutInfoString = "{0:ProductName} - {0:Description}<br>{0:Version}<br>{0:Copyright}";
-                WebApplication.Instance.Title += WebApplication.Instance.Title + " - " + ((CustomLogonParameters)e.LogonParameters).Empresa.RazonSocial;
+                WebApplication.Instance.Title += $"{WebApplication.Instance.Title} - {((CustomLogonParameters)e.LogonParameters).Empresa.RazonSocial}";
                 WebApplication.Instance.Model.Description = ((CustomLogonParameters)e.LogonParameters).Empresa.RazonSocial;
             }
         }

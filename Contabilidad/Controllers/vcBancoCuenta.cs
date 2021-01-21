@@ -22,7 +22,7 @@ namespace SBT.Apps.Banco.Module.Controllers
         {
             base.OnActivated();
             // Perform various tasks depending on the target View.
-            if ((View.GetType().Name == "ListView") && View.ObjectTypeInfo.Type == typeof(SBT.Apps.Banco.Module.BusinessObjects.BancoCuenta))
+            if ((string.Compare(View.GetType().Name, "ListView", StringComparison.Ordinal) == 0) && View.ObjectTypeInfo.Type == typeof(SBT.Apps.Banco.Module.BusinessObjects.BancoCuenta))
             {
                 ((ListView)View).CollectionSource.Criteria["Empresa Actual"] = new BinaryOperator("Empresa", ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid);
             }

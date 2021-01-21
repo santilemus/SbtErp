@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace SBT.Apps.Tercero.Module.BusinessObjects
 {
-    [DefaultClassOptions]
+    [DefaultClassOptions, CreatableItem(false)]
     [XafDefaultProperty("Nombre"), NavigationItem("Catalogos"), ModelDefault("Caption", "Bancos")]
     [ImageName("Bank")]
     [DevExpress.Xpo.MapInheritance(DevExpress.Xpo.MapInheritanceType.ParentTable)]    

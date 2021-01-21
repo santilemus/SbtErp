@@ -46,7 +46,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
         {
         }
 
-        [DevExpress.Xpo.SizeAttribute(10), VisibleInLookupListView(true)]
+        [DevExpress.Xpo.SizeAttribute(10), VisibleInLookupListView(true), DbType("varchar(10)")]
         [RuleRequiredField("Medico.NumeroJVPM_Requerido", "Save")]
         [RuleUniqueValue("Medico.NumeroJVPM_Unico", DefaultContexts.Save, CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction)]
         public System.String NumeroJVPM

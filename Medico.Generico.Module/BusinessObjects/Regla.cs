@@ -19,7 +19,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
     /// Clase que corresponde a las BO con la definicion de las reglas, que se pueden aplicar a los recordatorios del paciente")
     /// </summary>
     [DefaultClassOptions, Persistent("Regla"), ModelDefault("Caption", "Reglas - Plan Medico"), NavigationItem("Salud"), 
-        XafDefaultProperty(nameof(Descripcion))]
+        XafDefaultProperty(nameof(Descripcion)), CreatableItem(false)]
     [ImageName("list-key")]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class Regla : XPObjectBaseBO
@@ -40,7 +40,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
         EEstadoRegla practicaDefecto = EEstadoRegla.PorDefecto;
         string descripcion;
 
-        [Size(100), DbType("varchar(100"), Persistent("Descripcion"), XafDisplayName("Descripción"),
+        [Size(100), DbType("varchar(100)"), Persistent("Descripcion"), XafDisplayName("Descripción"),
             RuleRequiredField("Regla.Descripcion_Requerido", "Save")]
         public string Descripcion
         {

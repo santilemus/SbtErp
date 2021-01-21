@@ -16,7 +16,7 @@ using SBT.Apps.Base.Module.BusinessObjects;
 namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 {
     [DefaultClassOptions, ModelDefault("Caption", "Plan Medico"), NavigationItem("Salud"), XafDefaultProperty("Nombre"), 
-        Persistent("PlanMedico")]
+        Persistent("PlanMedico"), CreatableItem(false)]
     [ImageName("PlanMedico")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).

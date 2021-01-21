@@ -48,7 +48,6 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
             get => _paciente;
             set
             {
-                var oldValue = _paciente;
                 bool changed = SetPropertyValue("Paciente", ref _paciente, value);
                 if (!IsLoading && !IsSaving && changed)
                     Subject = value.NombreCompleto;

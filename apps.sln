@@ -85,6 +85,8 @@ Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Medico.Setup", "Medico.Setu
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Medico.Setup.Web", "Medico.Setup.Web\Medico.Setup.Web.vdproj", "{03A31E8D-40FB-4A4E-82A7-B2549D2CB52C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SBT.Apps.Compra", "Compra\SBT.Apps.Compra.csproj", "{E300665D-AD47-415F-8AE3-0BDB0D4F0371}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -217,6 +219,12 @@ Global
 		{03A31E8D-40FB-4A4E-82A7-B2549D2CB52C}.Debug|Any CPU.ActiveCfg = Debug
 		{03A31E8D-40FB-4A4E-82A7-B2549D2CB52C}.EasyTest|Any CPU.ActiveCfg = Release
 		{03A31E8D-40FB-4A4E-82A7-B2549D2CB52C}.Release|Any CPU.ActiveCfg = Release
+		{E300665D-AD47-415F-8AE3-0BDB0D4F0371}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E300665D-AD47-415F-8AE3-0BDB0D4F0371}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E300665D-AD47-415F-8AE3-0BDB0D4F0371}.EasyTest|Any CPU.ActiveCfg = EasyTest|Any CPU
+		{E300665D-AD47-415F-8AE3-0BDB0D4F0371}.EasyTest|Any CPU.Build.0 = EasyTest|Any CPU
+		{E300665D-AD47-415F-8AE3-0BDB0D4F0371}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E300665D-AD47-415F-8AE3-0BDB0D4F0371}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

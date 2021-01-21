@@ -1,20 +1,26 @@
-﻿using DevExpress.Persistent.Base;
+﻿using DevExpress.ExpressApp.DC;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
+using DevExpress.Xpo;
 using System;
+using System.ComponentModel;
 using System.Linq;
 
 namespace SBT.Apps.Base.Module.BusinessObjects
 {
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Teléfonos")]
     [DevExpress.Persistent.Base.ImageNameAttribute("phone")]
-    public class EmpresaTelefono : Telefono
+    [RuleCombinationOfPropertiesIsUnique("EmpresaTelefono.NumeroUnico", DefaultContexts.Save, "Empresa;Telefono",
+        CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction, SkipNullOrEmptyValues = false)]
+    [DefaultProperty(nameof(Telefono))]
+    public class EmpresaTelefono : XPObject
     {
         public override void AfterConstruction()
         {
             base.AfterConstruction();
-            this.Tipo = TipoTelefono.Pbx;
         }
 
+        Telefono telefono;
         private Empresa _empresa;
         public EmpresaTelefono(DevExpress.Xpo.Session session)
           : base(session)
@@ -32,6 +38,14 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             {
                 SetPropertyValue("Empresa", ref _empresa, value);
             }
+        }
+
+        
+        [XafDisplayName("Telefono")]
+        public Telefono Telefono
+        {
+            get => telefono;
+            set => SetPropertyValue(nameof(Telefono), ref telefono, value);
         }
 
     }

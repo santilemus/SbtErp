@@ -13,9 +13,9 @@ namespace SBT.Apps.Base.Module.BusinessObjects
     /// <remarks>
     /// Ver infomacion de uso de @This en https://docs.devexpress.com/eXpressAppFramework/113204/concepts/filtering/current-object-parameter
     /// </remarks>
-    [DefaultClassOptions]
+    [DefaultClassOptions, CreatableItem(false)]
     [DevExpress.Persistent.Base.NavigationItemAttribute("Catalogos")]
-    [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Empresas")]
+    [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Empresa")]
     [DevExpress.ExpressApp.DC.XafDefaultPropertyAttribute("RazonSocial")]
     [DevExpress.Persistent.Base.ImageNameAttribute("company-info")]
     [RuleIsReferenced("Empresa_Referencia", DefaultContexts.Delete, typeof(Empresa), nameof(Oid), 
@@ -29,7 +29,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             Activa = true;
         }
 
-        string nRC;
+        string nrc;
         private System.Boolean _activa;
         private System.Drawing.Image _logo;
         private System.String _nit;
@@ -45,7 +45,6 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         {
         }
         [DevExpress.Xpo.SizeAttribute(200), DbType("varchar(200)"), Persistent("RazonSocial"), XafDisplayName("Razon Social")]
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
         [RuleRequiredField("Empresa.RazonSocial_Requerido", "Save")]
         public System.String RazonSocial
         {
@@ -66,6 +65,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [VisibleInListView(false), ImmediatePostData(true)]
         [RuleRequiredField("Empresa.Pais_Requerido", DefaultContexts.Save, "País es requerido")]
         [DataSourceCriteria("[ZonaPadre] Is Null && [Activa] == True")]
+        [ExplicitLoading]
         public ZonaGeografica Pais
         {
             get => _pais;
@@ -82,6 +82,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false), VisibleInListView(false)]
         [RuleRequiredField("Empresa.Provincia_Requerido", DefaultContexts.Save, "Provincia es Requerido")]
         [DataSourceCriteria("[ZonaPadre] == '@This.Pais' and [Activa] == True")]
+        //[ExplicitLoading]
         public ZonaGeografica Provincia
         {
             get
@@ -109,7 +110,6 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             }
         }
         [DevExpress.Xpo.SizeAttribute(200), DbType("varchar(200)"), Persistent("Direccion")]
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute,]
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Dirección")]
         [RuleRequiredField("Empresa.Direccion_Requerido", "Save")]
         public System.String Direccion
@@ -154,7 +154,6 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         }
         [DevExpress.Xpo.SizeAttribute(14), DbType("varchar(14)"), Persistent("Nit")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
         public System.String Nit
         {
             get
@@ -167,14 +166,13 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             }
         }
     
-        [Size(14), XafDisplayName("NRC"), RuleRequiredField("Empresa.NRC_Requerido", "Save")]
-        public string NRC
+        [Size(14), DbType("varchar(14)"), XafDisplayName("NRC"), RuleRequiredField("Empresa.NRC_Requerido", "Save")]
+        public string Nrc
         {
-            get => nRC;
-            set => SetPropertyValue(nameof(NRC), ref nRC, value);
+            get => nrc;
+            set => SetPropertyValue(nameof(Nrc), ref nrc, value);
         }
 
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
         [DevExpress.Persistent.Base.VisibleInListViewAttribute(false)]
         [RuleRequiredField("Empresa.Activa_Requerido", "Save")]
         public System.Boolean Activa

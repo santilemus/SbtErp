@@ -371,10 +371,12 @@
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
           <LayoutGroup Id="SimpleEditors" RelativeSize="100">
-            <LayoutGroup Id="Telefono" RelativeSize="100" Index="0">
-              <LayoutItem Id="Tipo" Index="0" RelativeSize="4.81283422459893" ViewItem="Tipo" IsNewNode="True" />
-              <LayoutItem Id="Numero" Index="1" RelativeSize="3.4759358288770055" />
-              <LayoutItem Id="Activo" Index="3" RelativeSize="88.235294117647058" />
+            <LayoutGroup Id="TerceroTelefono" RelativeSize="100" Caption="Teléfono">
+              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="4.7244094488188972" IsNewNode="True" />
+              <LayoutItem Id="Telefono" Index="1" RelativeSize="95.2755905511811" />
+            </LayoutGroup>
+            <LayoutGroup Id="XPObject" Caption="Oid" RelativeSize="90.813648293963254" Removed="True">
+              <LayoutItem Id="Oid" Removed="True" />
             </LayoutGroup>
           </LayoutGroup>
         </LayoutGroup>

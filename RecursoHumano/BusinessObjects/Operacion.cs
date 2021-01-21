@@ -41,7 +41,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         string nombre;
         string formula;
         ETipoOperacion tipo = ETipoOperacion.Null;
-        decimal valor = 0.0m;
+        decimal valor;
         string descripcion;
         bool visible = true;
         ETipoCalculoOperacion calcularPara = ETipoCalculoOperacion.Siempre;

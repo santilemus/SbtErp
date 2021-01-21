@@ -36,6 +36,8 @@ namespace SBT.Apps.Medico.Web
         protected void Session_Start(Object sender, EventArgs e) {
             Tracing.Initialize();
             WebApplication.SetInstance(Session, new medicoAspNetApplication());
+            SecurityStrategy security = (SecurityStrategy)WebApplication.Instance.Security;
+            security.RegisterXPOAdapterProviders();
             DevExpress.ExpressApp.Web.Templates.DefaultVerticalTemplateContentNew.ClearSizeLimit();
             WebApplication.Instance.SwitchToNewStyle();
             if (ConfigurationManager.ConnectionStrings["medico"] != null) {
@@ -94,20 +96,20 @@ namespace SBT.Apps.Medico.Web
         }
 
         /// <summary>
-        /// Guardar los parámetros de la ventana de logon, justo despues que el login ha sido satisfactorio
+        /// Guardar los parametros de la ventana de logon, justo despues que el login ha sido satisfactorio
         /// (Se guardan en una cookie). Agregar más adelante, los párametros de empresa, sucursal, bodega
         /// </summary>
         /// <param name="sender">Objeto que dispara el evento</param>
         /// <param name="e">parámetros del logon que se desean guardar</param>
         private void Instance_LastLogonParametersWriting(object sender, LastLogonParametersWritingEventArgs e)
         {
-            if (((CustomLogonParameters)e.LogonObject).UserName != "Admin")
+            if (string.Compare(((CustomLogonParameters)e.LogonObject).UserName, "Admin", StringComparison.Ordinal) != 0)
             {
                 e.SettingsStorage.SaveOption(string.Empty, "UserName", ((CustomLogonParameters)e.LogonObject).UserName);
             }
 
             System.Globalization.CultureInfo cci = System.Globalization.CultureInfo.CurrentCulture;
-            e.SettingsStorage.SaveOption(string.Empty, "Empresa", ((CustomLogonParameters)e.LogonObject).OidEmpresa.ToString(cci.NumberFormat));
+            e.SettingsStorage.SaveOption(string.Empty, "Empresa", ((CustomLogonParameters)e.LogonObject).Empresa.Oid.ToString(cci.NumberFormat));
             e.SettingsStorage.SaveOption(string.Empty, "Agencia", ((CustomLogonParameters)e.LogonObject).Agencia.Oid.ToString(cci.NumberFormat));
             e.Handled = true;
         }

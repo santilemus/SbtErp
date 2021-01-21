@@ -8,7 +8,7 @@ using DevExpress.Data.Filtering;
 
 namespace SBT.Apps.Base.Module.BusinessObjects
 {
-    [DefaultClassOptions]
+    [DefaultClassOptions, CreatableItem(false)]
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Moneda")]
     [DevExpress.Persistent.Base.NavigationItemAttribute("Catalogos")]
     [DevExpress.ExpressApp.DC.XafDefaultPropertyAttribute("Nombre")]
@@ -54,7 +54,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             }
         }
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Nombre")]
-        [DevExpress.Xpo.SizeAttribute(60)]
+        [DevExpress.Xpo.SizeAttribute(60), DbType("varchar(60)")]
         [DevExpress.Persistent.Base.ToolTipAttribute("Nombre de la moneda")]
         [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
         [RuleRequiredField("Moneda.Nombre_Requerido", "Save")]
@@ -73,6 +73,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [DevExpress.Persistent.Base.ToolTipAttribute("Factor de cambio o valor con respecto a la moneda base")]
         [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
         [RuleRequiredField("Moneda.FactorCambio_Requerido", "Save")]
+        [DbType("numeric(12,2)")]
         public System.Decimal FactorCambio
         {
             get
@@ -84,7 +85,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
                 SetPropertyValue("FactorCambio", ref _factorCambio, value);
             }
         }
-        [DevExpress.Xpo.SizeAttribute(25)]
+        [DevExpress.Xpo.SizeAttribute(25), DbType("varchar(25)")]
         [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
         [DevExpress.Persistent.Base.ToolTipAttribute("Plural de la moneda")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]

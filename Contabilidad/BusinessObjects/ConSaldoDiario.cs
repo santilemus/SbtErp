@@ -43,23 +43,23 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         [Persistent("Oid"), Key(true), DbType("bigint")]
         Int64 oid = -1;
         [Persistent(nameof(Empresa)), FetchOnly]
-        Empresa empresa = null;
+        Empresa empresa;
         [DbType("int"), Persistent(nameof(Periodo)), FetchOnly]
-        Periodo periodo = null;
+        Periodo periodo;
         [Persistent(nameof(Cuenta)), DbType("int"), Indexed(nameof(fecha), Name = "idx_Cuenta_Fecha")]
-        Catalogo cuenta = null;
+        Catalogo cuenta;
         [Persistent(nameof(Fecha)), DbType("datetime"), FetchOnly]
         DateTime fecha = DateTime.Today;
         [Persistent(nameof(Debe)), DbType("money"), FetchOnly]
-        decimal debe = 0.0m;
+        decimal debe;
         [Persistent(nameof(Haber)), DbType("money"), FetchOnly]
-        decimal haber = 0.0m;
+        decimal haber;
         [Persistent(nameof(TipoSaldoDia)), DbType("smallint"), FetchOnly]
         ETipoSaldoDia tipoSaldoDia = ETipoSaldoDia.Operaciones;
         [Persistent(nameof(DebeAjusteConsolida)), DbType("money"), FetchOnly]
-        decimal debeAjusteConsolida = 0.0m;
+        decimal debeAjusteConsolida;
         [Persistent(nameof(HaberAjusteConsolida)), DbType("money"), FetchOnly]
-        decimal haberAjusteConsolida = 0.0m;
+        decimal haberAjusteConsolida;
 
         [PersistentAlias(nameof(oid)), XafDisplayName("Oid")]
         public Int64 Oid

@@ -21,7 +21,7 @@ namespace SBT.Apps.RecursoHumano.Module.Controllers
         {
             base.OnActivated();
             // Perform various tasks depending on the target View.
-            if (View.GetType().Name == "ListView")
+            if (string.Compare(View.GetType().Name, "ListView", StringComparison.Ordinal) == 0)
                 ((ListView)View).CollectionSource.Criteria["Empresa Actual"] = CriteriaOperator.Parse("[Empleado.Empresa] = ?", ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid);
             pwsaAprobar.CustomizePopupWindowParams += CustomizePopupWindowParam;
             pwsaRechazar.CustomizePopupWindowParams += CustomizePopupWindowParam;
@@ -46,11 +46,11 @@ namespace SBT.Apps.RecursoHumano.Module.Controllers
                 try
                 {
                     ((AccionPersonal)View.CurrentObject).Aprobar(((APersonalParam)e.PopupWindowViewCurrentObject).Comentario);
-                    MostrarMensajeResultado(string.Format("La Acción de Personal de {0} se aprobó", ((AccionPersonal)View.CurrentObject).Empleado.NombreCompleto));
+                    MostrarMensajeResultado($"La Acción de Personal de {((AccionPersonal)View.CurrentObject).Empleado.NombreCompleto} se aprobó");
                 }
                 catch (Exception E)
                 {
-                    MostrarError(string.Format("La acción no se pudo aprobar por el siguiente error {0}", E.Message));
+                    MostrarError($"La acción no se pudo aprobar por el siguiente error {E.Message}");
                 }
             }
         }
@@ -72,11 +72,11 @@ namespace SBT.Apps.RecursoHumano.Module.Controllers
                 try
                 {
                     ((AccionPersonal)View.CurrentObject).Rechazar(((APersonalParam)e.PopupWindowViewCurrentObject).Comentario);
-                    MostrarMensajeResultado(string.Format("La Acción de Personal de {0} se rechazó", ((AccionPersonal)View.CurrentObject).Empleado.NombreCompleto));
+                    MostrarMensajeResultado($"La Acción de Personal de {((AccionPersonal)View.CurrentObject).Empleado.NombreCompleto} se rechazó");
                 }
                 catch (Exception E)
                 {
-                    MostrarError(string.Format("La acción no se pudo aprobar por el siguiente error {0}", E.Message));
+                    MostrarError($"La acción no se pudo aprobar por el siguiente error {E.Message}");
                 }
             }
         }

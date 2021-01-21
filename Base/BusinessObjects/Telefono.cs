@@ -3,6 +3,7 @@ using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using System;
+using System.ComponentModel;
 using System.Linq;
 
 namespace SBT.Apps.Base.Module.BusinessObjects
@@ -14,6 +15,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Teléfono")]
     [DevExpress.Persistent.Base.CreatableItemAttribute(false)]
     [DevExpress.Persistent.Base.ImageNameAttribute("phone")]
+    [DefaultProperty(nameof(Numero))]
     public class Telefono : XPCustomBaseBO
     {
         public override void AfterConstruction()
@@ -36,7 +38,6 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [Size(14), DbType("varchar(14)")]
         [DevExpress.Persistent.Base.ToolTipAttribute("Número de teléfono")]
         [DevExpress.Persistent.Base.DataSourcePropertyAttribute("No Télefono")]
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
         [DevExpress.Xpo.KeyAttribute, VisibleInListView(true), VisibleInLookupListView(true)]
         [RuleRequiredField("Telefono.Numero_Requerido", "Save")]
         [RuleUniqueValue("Telefono.Numero_Unico", DefaultContexts.Save, CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction)]

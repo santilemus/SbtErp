@@ -14,7 +14,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
     ///  Objeto Persistente que representa el catálogo de profesiones (oficios)
     /// </summary>
     /// 
-    [DefaultClassOptions]
+    [DefaultClassOptions, CreatableItem(false)]
     [DevExpress.ExpressApp.DC.XafDisplayName("Profesión")]
     [DevExpress.Persistent.Base.ImageName("user_id-certificate")]
     [DevExpress.Persistent.Base.NavigationItem("Catalogos")]
@@ -45,7 +45,6 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         /// Codigo CIUO-08 (Codigo de la clasificacion internacional uniforme de ocupaciones), revision 08 (ultima al 2019)
         /// </summary>
         [XafDisplayName("Código Ciuo"), Size(10), DbType("varchar(10)"), Persistent("CodigoCiuo")]
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
         [RuleRequiredField("Profesion.Codigo_Requerido", DefaultContexts.Save, "Código es requerido ")]
         //[RuleUniqueValue("Profesion.Codigo_Unico", DefaultContexts.Save, CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction)]
         public string Codigo
@@ -58,7 +57,6 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         /// Descripción de la profesion (nombre largo)
         /// </summary>
         [DevExpress.Xpo.SizeAttribute(150), Persistent("Descripcion")]
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
         [RuleRequiredField("Profesion.Nombre_Requerido", "Save"), DbType("varchar(150)")]
         public System.String Descripcion
         {

@@ -68,6 +68,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 
 
        // [Association("WhoPercentilPesoLong-HistorialCrecimientos")]
+       [XafDisplayName("Tabla 0 - 2 Años")]
         public WhoPercentilPesoLong Tabla_0_2Anios
         {
             get => tabla_0_2Anios;
@@ -76,6 +77,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 
 
         //[Association("CdoPercentilPesoEstaturaBMI-HistorialCrecimientos")]
+        [XafDisplayName("Tabla 2 - 20 Años")]
         public CdoPercentilPesoEstaturaBMI Tabla_2_20Anios
         {
             get => tabla_2_20Anios;
@@ -109,14 +111,6 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
             get => comentario;
             set => SetPropertyValue(nameof(Comentario), ref comentario, value);
         }
-        //private string _PersistentProperty;
-        //[XafDisplayName("My display name"), ToolTip("My hint message")]
-        //[ModelDefault("EditMask", "(000)-00"), Index(0), VisibleInListView(false)]
-        //[Persistent("DatabaseColumnName"), RuleRequiredField(DefaultContexts.Save)]
-        //public string PersistentProperty {
-        //    get { return _PersistentProperty; }
-        //    set { SetPropertyValue("PersistentProperty", ref _PersistentProperty, value); }
-        //}
 
         //[Action(Caption = "My UI Action", ConfirmationMessage = "Are you sure?", ImageName = "Attention", AutoCommit = true)]
         //public void ActionMethod() {

@@ -57,7 +57,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
                 SetPropertyValue("Intensidad", ref _intensidad, value);
             }
         }
-        [DevExpress.Xpo.SizeAttribute(250)]
+        [DevExpress.Xpo.SizeAttribute(250), DbType("varchar(250)")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [RuleRequiredField("ConsultaSintoma.Nombre_Requerido", "Save")]
         public System.String Nombre
@@ -73,6 +73,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         }
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Descripción")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
+        [DbType("varchar(100)")]
         public System.String Descripcion
         {
             get

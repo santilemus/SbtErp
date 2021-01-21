@@ -34,7 +34,6 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         /// <returns>Entero que representa un correlativo de documento en un objeto persistente</returns>
         protected virtual int CorrelativoDoc()
         {
-            string tableName = ClassInfo.TableName;
             string sCriteria = "Empresa.Oid == ? && GetYear(Fecha) == ?";
             object max = Session.Evaluate(this.GetType(), CriteriaOperator.Parse("Max(Numero)"), CriteriaOperator.Parse(sCriteria, Empresa.Oid, Fecha));
             return (max != null) ? Convert.ToInt32(max) : 1;
@@ -44,17 +43,6 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         {
             base.AfterConstruction();
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
-            if (this.GetType().GetProperty("Moneda") != null)
-            {
-                var fMone = ObtenerMonedaBase();
-                if (fMone != null)
-                {
-                    Moneda = fMone;
-                    ValorMoneda = fMone.FactorCambio;
-                }
-            }
-            if (this.GetType().GetProperty("Empresa") != null)
-                Empresa = EmpresaDeSesion();
             if (this.GetType().GetProperty("Fecha") != null)
                 Fecha = DateTime.Now;
         }
@@ -80,7 +68,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         /// <param name="AnularParams">Parametros para realizar la anulacion</param>
         public virtual void Anular(AnularParametros AnularParams)
         {
-            comentario += Environment.NewLine + AnularParams.Comentario;
+            comentario += $"{Environment.NewLine}{AnularParams.Comentario}";
             fechaAnula = DateTime.Now;
             usuarioAnulo = DevExpress.ExpressApp.SecuritySystem.CurrentUserName;
         }

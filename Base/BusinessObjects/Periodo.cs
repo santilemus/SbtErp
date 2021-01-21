@@ -15,7 +15,7 @@ using DevExpress.Persistent.Validation;
 
 namespace SBT.Apps.Base.Module.BusinessObjects
 {
-    [DefaultClassOptions]
+    [DefaultClassOptions, CreatableItem(false)]
     //[ImageName("BO_Contact")]
     [Persistent("ConPeriodo"), RuleCriteria("Periodo.Empresa Sesion", DefaultContexts.Save, "Empresa.Codigo = EmpresaActualOid()"), 
         DefaultProperty("Oid"), NavigationItem(false)] 

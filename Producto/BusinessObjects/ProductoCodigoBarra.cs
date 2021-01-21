@@ -13,7 +13,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
     /// Objeto Persistente que representa los códigos de barra asociados a un producto
     /// </summary>
     [DefaultClassOptions, NavigationItem(false), ModelDefault("Caption", "Código de Barra"), XafDefaultProperty("CodigoBarra"), Persistent("ProductoCodigoBarra")]
-    [ImageName(nameof(ProductoCodigoBarra))]
+    [ImageName(nameof(ProductoCodigoBarra)), CreatableItem(false)]
     public class ProductoCodigoBarra : XPObjectBaseBO
     {
         public override void AfterConstruction()

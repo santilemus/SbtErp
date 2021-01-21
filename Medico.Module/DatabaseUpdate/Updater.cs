@@ -41,12 +41,28 @@ namespace SBT.Apps.Medico.Module.DatabaseUpdate
             {
                 userAdmin = ObjectSpace.CreateObject<Usuario>();
                 userAdmin.UserName = "Admin";
+                userAdmin.SetPassword("Admin#2021");
+                userAdmin.ChangePasswordOnFirstLogon = true;
                 userAdmin.Empresa = empresa;
                 userAdmin.Agencia = empresa.Unidades.FirstOrDefault();
-                // Set a password if the standard authentication type is used
-                userAdmin.SetPassword("");
                 userAdmin.Roles.Add(adminRole);
                 userAdmin.Save();
+            }
+
+            // agregar role de super usuario. Es un usuario que tiene facultades para dar permisos y crear usuarios
+            // pero NO es parte del role Administrators
+            PermissionPolicyRole secAdminRole = CreateSecurityAdminRole();
+            Usuario sysAdmin = ObjectSpace.FindObject<Usuario>(new BinaryOperator("UserName", "SysAdmin"));
+            if (sysAdmin == null)
+            {
+                sysAdmin = ObjectSpace.CreateObject<Usuario>();
+                sysAdmin.UserName = "SysAdmin";
+                sysAdmin.SetPassword("");
+                //sysAdmin.ChangePasswordOnFirstLogon = true;
+                sysAdmin.Empresa = empresa;
+                sysAdmin.Agencia = empresa.Unidades.FirstOrDefault();
+                sysAdmin.Roles.Add(secAdminRole);
+                sysAdmin.Save();
             }
 
             PermissionPolicyRole defaultRole = CreateDefaultRole();
@@ -91,9 +107,49 @@ namespace SBT.Apps.Medico.Module.DatabaseUpdate
             return defaultRole;
         }
 
+        /// <summary>
+        /// Super Usuario con algunos privilegios de Administrador
+        /// Este usuario es para proporcionar en las implementaciones un usuario con privilegios de administracion limitados
+        /// y restringir el role de Administradores a SBT
+        /// </summary>
+        /// <returns></returns>
+        private PermissionPolicyRole CreateSecurityAdminRole()
+        {
+            PermissionPolicyRole securityAdminRole = ObjectSpace.FindObject<PermissionPolicyRole>(new BinaryOperator("Name", "Security Admin"));
+            if (securityAdminRole == null)
+            {
+                securityAdminRole = ObjectSpace.CreateObject<PermissionPolicyRole>();
+                securityAdminRole.Name = "Security Admin";
+                securityAdminRole.PermissionPolicy = SecurityPermissionPolicy.AllowAllByDefault;
+                securityAdminRole.AddTypePermissionsRecursively<Empresa>(SecurityOperations.FullAccess, SecurityPermissionState.Allow);
+                securityAdminRole.AddTypePermissionsRecursively<EmpresaUnidad>(SecurityOperations.FullAccess, SecurityPermissionState.Allow);
+                securityAdminRole.AddTypePermissionsRecursively<PermissionPolicyUser>(SecurityOperations.FullAccess, SecurityPermissionState.Allow);
+                securityAdminRole.AddTypePermissionsRecursively<Usuario>(SecurityOperations.FullAccess, SecurityPermissionState.Allow);
+                securityAdminRole.AddTypePermissionsRecursively<PermissionPolicyRole>(SecurityOperations.FullAccess, SecurityPermissionState.Allow);
+                securityAdminRole.AddTypePermission<PermissionPolicyUser>(SecurityOperations.FullAccess, SecurityPermissionState.Allow);
+                securityAdminRole.AddTypePermission<PermissionPolicyMemberPermissionsObject>(SecurityOperations.FullAccess, SecurityPermissionState.Allow);
+                securityAdminRole.AddTypePermission<PermissionPolicyActionPermissionObject>(SecurityOperations.FullAccess, SecurityPermissionState.Allow);
+                securityAdminRole.AddTypePermission<PermissionPolicyNavigationPermissionObject>(SecurityOperations.FullAccess, SecurityPermissionState.Allow);
+                securityAdminRole.AddTypePermission<PermissionPolicyObjectPermissionsObject>(SecurityOperations.FullAccess, SecurityPermissionState.Allow);
+                securityAdminRole.AddTypePermission<PermissionPolicyTypePermissionObject>(SecurityOperations.FullAccess, SecurityPermissionState.Allow);
+                securityAdminRole.AddTypePermission<ReportDataV2>(SecurityOperations.FullAccess, SecurityPermissionState.Deny);
+                securityAdminRole.IsAdministrative = false;
+                securityAdminRole.CanEditModel = false;
+                // definimos la estructura de permisos para evitar que puedan escalar a Administrador, pero que siga teniendo role para dar permisos
+                securityAdminRole.AddNavigationPermission(@"Application/NavigationItems/Items/Seguridad/Items/Role", SecurityPermissionState.Allow);
+                securityAdminRole.AddMemberPermission<PermissionPolicyRole>("Read;Write", "IsAdministrative;CanEditModel", "", SecurityPermissionState.Deny);
+                securityAdminRole.AddObjectPermission<PermissionPolicyRole>("Read;Write;Delete;Navigate", "[Name] == 'Administrators'", SecurityPermissionState.Deny);
+                securityAdminRole.AddMemberPermission<PermissionPolicyUser>(SecurityOperations.Write, "IsActive;Roles", "[UserName] = 'Admin'", SecurityPermissionState.Deny);
+                securityAdminRole.AddObjectPermission<PermissionPolicyUser>("Read;Write;Delete;Navigate", "[UserName] = 'Admin'", SecurityPermissionState.Deny);
+                securityAdminRole.Save();
+            }
+            return securityAdminRole;
+        }
+
+
         private Empresa CreateDefaultEmpresa()
         {
-            var iCant = ObjectSpace.Evaluate(typeof(Empresa), CriteriaOperator.Parse("Count()"), CriteriaOperator.Parse("Activa = true And Oid > 0"));
+            ObjectSpace.Evaluate(typeof(Empresa), CriteriaOperator.Parse("Count()"), CriteriaOperator.Parse("Activa = true And Oid > 0"));
             Empresa emp = ObjectSpace.FindObject<Empresa>(CriteriaOperator.Parse("Activa = true And Oid > 0"));
             if (emp == null)
             {

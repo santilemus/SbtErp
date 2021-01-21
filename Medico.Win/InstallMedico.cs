@@ -1,15 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using System.ComponentModel;
-using System.Configuration.Install;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Data.SqlClient;
 using System.Windows.Forms;
-using System.Reflection;
-using System.Text.RegularExpressions;
-using System.Configuration;
 
 namespace SBT.Apps.Medico.Win
 {
@@ -38,9 +29,9 @@ namespace SBT.Apps.Medico.Win
             string sExe = Context.Parameters["assemblypath"];
             //System.Diagnostics.Debugger.Break();
             sourcePath = Context.Parameters["srcdir"];
-            if (!System.IO.Directory.Exists(sourcePath + @"Scripts"))
+            if (!System.IO.Directory.Exists($@"{sourcePath}Scripts"))
             {
-                MessageBox.Show(string.Format("La creación y carga de datos no se realizará, porque no se encontro la carpeta {0} o esta vacía", sourcePath + @"Scripts"), 
+                MessageBox.Show($"La creación y carga de datos no se realizará, porque no se encontro la carpeta {sourcePath}Scripts o esta vacía", 
                     "Registro Electrónico Medico");
                 return; // no hace nada no existe la carpeta con los recursos para crear la bd y llenar los catalogos
             }

@@ -101,7 +101,7 @@ namespace SBT.Apps.RecursoHumano.Module
 
         public string Description
         {
-            get { return "EmpleadoFunction()" + Environment.NewLine + "Retorna el valor de la funcion calculada en el primer parametro"; }
+            get { return $"EmpleadoFunction(){Environment.NewLine}Retorna el valor de la funcion calculada en el primer parametro"; }
         }
 
         public FunctionCategory Category

@@ -41,8 +41,8 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         PartidaModelo partidaModelo;
         Catalogo catalogo;
         string concepto;
-        decimal valorHaber = 0.0m;
-        decimal valorDebe = 0.0m;
+        decimal valorHaber;
+        decimal valorDebe;
         string expresionItem;
         string valorItem;
 
@@ -102,7 +102,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         }
 
         
-        [Size(50), Persistent(nameof(valorItem)), XafDisplayName("Valor Item")]
+        [Size(50), Persistent(nameof(ValorItem)), XafDisplayName("Valor Item")]
         [RuleRequiredField("PartidaModeloDetalle.ValorItem_Requerido", DefaultContexts.Save, TargetCriteria = "[PartidaModelo.TipoModelo] = 1",
             SkipNullOrEmptyValues = true)]
         public string ValorItem

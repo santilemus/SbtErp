@@ -42,15 +42,15 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 
         SBT.Apps.Empleado.Module.BusinessObjects.Empleado empleado;
         [Persistent(nameof(Unidad))]
-        EmpresaUnidad unidad = null;
+        EmpresaUnidad unidad;
         [Persistent(nameof(JefeDepartamento))]
-        SBT.Apps.Empleado.Module.BusinessObjects.Empleado jefeDepartamento = null;
+        SBT.Apps.Empleado.Module.BusinessObjects.Empleado jefeDepartamento;
         DateTime fechaInicio;
         DateTime fechaFin;
         [Persistent(nameof(FechaPago)), DbType("datetime")]
-        DateTime ? fechaPago = null;
+        DateTime ? fechaPago;
         [Persistent(nameof(Planilla))]
-        int ? planilla = null;
+        int ? planilla;
         EEstadoReporteHoraExtra estado = EEstadoReporteHoraExtra.Digitado;
 
         [XafDisplayName("Empleado")]

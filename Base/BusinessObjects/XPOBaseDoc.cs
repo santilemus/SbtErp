@@ -31,7 +31,6 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         /// <returns>Entero que representa un correlativo de documento en un objeto persistente</returns>
         protected virtual int CorrelativoDoc()
         {          
-            string tableName = ClassInfo.TableName;
             string sCriteria = "Empresa.Oid == ? && GetYear(Fecha) == ?";
             //if (GetType().GetProperty("Caja") != null)
             //    sCriteria += " && Caja.Oid == ?";
@@ -58,17 +57,6 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         public override void AfterConstruction()
         {
             base.AfterConstruction();
-            if (this.GetType().GetProperty("Moneda") != null)
-            {
-                var fMone = ObtenerMonedaBase();
-                if (fMone != null)
-                {
-                    Moneda = fMone;
-                    ValorMoneda = fMone.FactorCambio;
-                }
-            }
-            if (this.GetType().GetProperty("Empresa") != null)
-                Empresa = EmpresaDeSesion();
             if (this.GetType().GetProperty("Fecha") != null)
                 Fecha = DateTime.Now;
         }
@@ -80,7 +68,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         /// <param name="AnularParams">Parametros para realizar la anulacion</param>
         public virtual void Anular(AnularParametros AnularParams)
         {
-            comentario += Environment.NewLine + AnularParams.Comentario;
+            comentario += $"{Environment.NewLine}{AnularParams.Comentario}";
             fechaAnula = DateTime.Now;
             usuarioAnulo = DevExpress.ExpressApp.SecuritySystem.CurrentUserName;
         }
@@ -91,7 +79,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
 #if (Firebird)
         [DbType("DM_ENTERO_CORTO"), Persistent("COD_EMP")]
 #else
-        [DbType("smallint")]
+        [DbType("smallint"), Persistent(nameof(Empresa))]
 #endif
         [Index(0), ModelDefault("AllowEdit", "False"), XafDisplayName("Empresa")]
         public Empresa Empresa

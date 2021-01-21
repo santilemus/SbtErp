@@ -1,0 +1,188 @@
+
+ALTER TABLE [dbo].[Telefono] DROP CONSTRAINT [FK_Telefono_ObjectType]
+GO
+
+/****** Object:  Index [iObjectType_Telefono]    Script Date: 4/1/2021 18:04:30 ******/
+DROP INDEX [iObjectType_Telefono] ON [dbo].[Telefono]
+GO
+
+ALTER TABLE [dbo].[Telefono] DROP COLUMN [ObjectType]
+GO
+
+-- EmpresaTelefono
+
+alter table EmpresaTelefono
+  drop column Tipo
+go
+
+alter table EmpresaTelefono
+  drop constraint FK_EmpresaTelefono_Numero
+go
+
+/****** Object:  Index [PK_EmpresaTelefono]    Script Date: 4/1/2021 18:18:54 ******/
+ALTER TABLE [dbo].[EmpresaTelefono] DROP CONSTRAINT [PK_EmpresaTelefono] WITH ( ONLINE = OFF )
+GO
+alter table EmpresaTelefono
+  add Oid int identity(1,1) 
+go
+
+alter table EmpresaTelefono
+  add constraint PK_EmpresaTelefono primary key(Oid)
+go
+
+alter table EmpresaTelefono
+  add constraint FK_EmpresaTelefono_Telefono foreign key(Telefono) references Telefono(Numero)
+go
+
+
+-- PersonaTelefono
+alter table PersonaTelefono
+  drop constraint FK_PersonaTelefono_Numero
+go
+
+/****** Object:  Index [PK_EmpresaTelefono]    Script Date: 4/1/2021 18:18:54 ******/
+ALTER TABLE [dbo].[PersonaTelefono] DROP CONSTRAINT [PK_PersonaTelefono] WITH ( ONLINE = OFF )
+GO
+alter table PersonaTelefono
+  add Oid int identity(1,1) 
+go
+
+alter table PersonaTelefono
+  add constraint PK_PersonaTelefono primary key(Oid)
+go
+
+alter table PersonaTelefono
+  add constraint FK_PersonaTelefono_Telefono foreign key(Telefono) references Telefono(Numero)
+go
+
+
+-- TerceroTelefono
+alter table TerceroTelefono
+  drop constraint FK_TerceroTelefono_Numero
+go
+
+alter table TerceroTelefono
+  drop column Tipo
+go
+
+/****** Object:  Index [PK_EmpresaTelefono]    Script Date: 4/1/2021 18:18:54 ******/
+ALTER TABLE [dbo].[TerceroTelefono] DROP CONSTRAINT [PK_TerceroTelefono] WITH ( ONLINE = OFF )
+GO
+alter table TerceroTelefono
+  add Oid int identity(1,1) 
+go
+
+alter table TerceroTelefono
+  add constraint PK_TerceroTelefono primary key(Oid)
+go
+
+alter table TerceroTelefono
+  add constraint FK_TerceroTelefono_Telefono foreign key(Telefono) references Telefono(Numero)
+go
+
+drop table Enfermedad_antes
+
+alter table Moneda
+   alter column Nombre varchar(60) null
+go
+alter table Moneda
+   alter column Plural varchar(25) null
+go
+alter table Moneda
+   alter column FactorCambio numeric(12,2) null
+go
+
+
+alter table Paciente
+  drop column edad
+go
+
+
+alter table ProblemaMedico
+   alter column Comentario varchar(200)
+go
+
+alter table ProductoEnsamble
+  alter column Cantidad numeric(12,2) null
+go
+
+drop table ProductoImpuesto
+go
+
+
+alter table ProductoLote
+  alter column Costo numeric(16,8)
+go
+alter table ProductoLote
+  alter column Promedio numeric(16,8)
+go
+alter table ProductoLote
+  alter column PromedioAnterior numeric(16, 8)
+go
+alter table ProductoLote
+  alter column Entrada numeric(12,2)
+go
+exec sp_rename 'ProductoLote.AcumSalida', 'Salida', 'COLUMN'; 
+go
+alter table ProductoLote
+  alter column Salida numeric(12,2)
+go
+
+
+alter table ProductoPrecio
+   alter column PrecioUnitario numeric(14,4) null
+go
+alter table ProductoPrecio
+   alter column CantidadDesde numeric(12,2) null
+go
+alter table ProductoPrecio
+   alter column CantidadHasta numeric(12,2) null
+go
+
+
+
+exec sp_rename 'ProPresentacion.CantUnidadInventa', 'Unidades', 'COLUMN'; 
+go
+
+
+alter table Tercero
+  alter column Comision numeric(10,4)
+go
+
+
+
+
+
+exec sp_rename 'UltraSonografiaObsetrica.[Plan]', 'DatosPlan', 'COLUMN'; 
+go
+
+
+
+
+alter table UltraSonografiaObstetricaDetalle
+  drop column [Presentación]
+go
+alter table UltraSonografiaObstetricaDetalle
+  drop column [Posición]
+go
+
+
+
+drop table TMP_ACT_ECONOMICA
+go
+drop table TMP_CIE_10
+go
+drop table TMP_CVX_VACUNA
+go
+drop table tmp_GrupoMedicamentos
+go
+drop table tmp_GrupoMedicamentos_Copia
+go
+drop table tmp_Medicamento
+go
+
+
+
+alter table TerminologiaAnatomica
+  drop column Activo
+go

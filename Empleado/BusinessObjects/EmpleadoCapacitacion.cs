@@ -1,5 +1,6 @@
 ﻿using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
+using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using System;
 using System.Linq;
@@ -30,7 +31,6 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
         {
         }
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Código")]
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
         [RuleRequiredField("EmpleadoCapacitacion.Codigo_Requerido", DefaultContexts.Save, "Capacitación es requerida")]
         [DataSourceCriteria("Categoria = 'Capacitacion'")]
         public Listas Codigo
@@ -44,7 +44,7 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
                 SetPropertyValue("Codigo", ref _codigo, value);
             }
         }
-        [DevExpress.Xpo.SizeAttribute(150)]
+        [DevExpress.Xpo.SizeAttribute(150), DbType("varchar(150)")]
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Descripción")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [RuleRequiredField("EmpleadoCapacitacion.Descripcion_Requerido", "Save")]
@@ -59,7 +59,7 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
                 SetPropertyValue("Descripcion", ref _descripcion, value);
             }
         }
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
+
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [RuleRequiredField("EmpleadoCapacitacion.FechaInicio_Requerido", "Save")]
         public System.DateTime FechaInicio
@@ -73,7 +73,7 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
                 SetPropertyValue("FechaInicio", ref _fechaInicio, value);
             }
         }
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
+
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Días de Duración")]
         [RuleRequiredField("EmpleadoCapacitacion.DiasDuracion_Requerido", "Save")]
@@ -88,6 +88,7 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
                 SetPropertyValue("DiasDuracion", ref _diasDuracion, value);
             }
         }
+
         [DevExpress.Xpo.AssociationAttribute("Capacitaciones-Empleado")]
         public Empleado Empleado
         {

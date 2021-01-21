@@ -57,7 +57,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
             set => SetPropertyValue("Codigo", ref codigo, value);
         }
 
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute, DbType("varchar(100)")]
+        [DbType("varchar(100)")]
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Descripción"), Index(2)]
         [RuleRequiredField("TerceroRole.Descripcion_Requerido", "Save")]
         public System.String Descripcion
@@ -66,7 +66,6 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
             set => SetPropertyValue(nameof(Descripcion), ref descripcion, value);
         }
 
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(true), Index(3)]
         [RuleRequiredField("TerceroRole.Activo_Requerido", "Save")]
         public System.Boolean Activo

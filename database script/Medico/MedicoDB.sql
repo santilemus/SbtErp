@@ -93,12 +93,12 @@ CREATE TABLE [dbo].[Afp](
 ) ON [PRIMARY]
 GO
 
-/****** Object:  Table [dbo].[ArchivoAdjunto]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[PacienteAdjunto]    Script Date: 19/11/2020 14:08:55 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[ArchivoAdjunto](
+CREATE TABLE [dbo].[PacienteAdjunto](
 	[OID] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
 	[UsuarioCrea] [varchar](25) NULL,
 	[FechaCrea] [datetime] NULL,
@@ -112,7 +112,7 @@ CREATE TABLE [dbo].[ArchivoAdjunto](
 	[Vigente] [bit] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
- CONSTRAINT [PK_ArchivoAdjunto] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_PacienteAdjunto] PRIMARY KEY CLUSTERED 
 (
 	[OID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
@@ -563,12 +563,12 @@ CREATE TABLE [dbo].[ConsultaReceta](
 ) ON [PRIMARY]
 GO
 
-/****** Object:  Table [dbo].[ConsultaSigno]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[ConsultaDiagnostico]    Script Date: 19/11/2020 14:08:55 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[ConsultaSigno](
+CREATE TABLE [dbo].[ConsultaDiagnostico](
 	[OID] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
 	[UsuarioCrea] [varchar](25) NULL,
 	[FechaCrea] [datetime] NULL,
@@ -579,7 +579,7 @@ CREATE TABLE [dbo].[ConsultaSigno](
 	[Descripcion] [nvarchar](250) NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
- CONSTRAINT [PK_ConsultaSigno] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_ConsultaDiagnostico] PRIMARY KEY CLUSTERED 
 (
 	[OID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
@@ -1780,12 +1780,11 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[PlanMedicoDetalle](
 	[Oid] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
+	[Regla] [int] NULL,
 	[UsuarioCrea] [varchar](25) NULL,
 	[FechaCrea] [datetime] NULL,
 	[UsuarioMod] [varchar](25) NULL,
 	[FechaMod] [datetime] NULL,
-	[Chequeo] [int] NULL,
-	[Regla] [int] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
 	[PlanMedico] [int] NULL,
@@ -3059,26 +3058,26 @@ CREATE NONCLUSTERED INDEX [iGCRecord_Afp] ON [dbo].[Afp]
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [iCategoria_ArchivoAdjunto]    Script Date: 19/11/2020 14:08:55 ******/
-CREATE NONCLUSTERED INDEX [iCategoria_ArchivoAdjunto] ON [dbo].[ArchivoAdjunto]
+/****** Object:  Index [iCategoria_PacienteAdjunto]    Script Date: 19/11/2020 14:08:55 ******/
+CREATE NONCLUSTERED INDEX [iCategoria_PacienteAdjunto] ON [dbo].[PacienteAdjunto]
 (
 	[Categoria] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iFile_ArchivoAdjunto]    Script Date: 19/11/2020 14:08:55 ******/
-CREATE NONCLUSTERED INDEX [iFile_ArchivoAdjunto] ON [dbo].[ArchivoAdjunto]
+/****** Object:  Index [iFile_PacienteAdjunto]    Script Date: 19/11/2020 14:08:55 ******/
+CREATE NONCLUSTERED INDEX [iFile_PacienteAdjunto] ON [dbo].[PacienteAdjunto]
 (
 	[File] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_ArchivoAdjunto]    Script Date: 19/11/2020 14:08:55 ******/
-CREATE NONCLUSTERED INDEX [iGCRecord_ArchivoAdjunto] ON [dbo].[ArchivoAdjunto]
+/****** Object:  Index [iGCRecord_PacienteAdjunto]    Script Date: 19/11/2020 14:08:55 ******/
+CREATE NONCLUSTERED INDEX [iGCRecord_PacienteAdjunto] ON [dbo].[PacienteAdjunto]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iPaciente_ArchivoAdjunto]    Script Date: 19/11/2020 14:08:55 ******/
-CREATE NONCLUSTERED INDEX [iPaciente_ArchivoAdjunto] ON [dbo].[ArchivoAdjunto]
+/****** Object:  Index [iPaciente_PacienteAdjunto]    Script Date: 19/11/2020 14:08:55 ******/
+CREATE NONCLUSTERED INDEX [iPaciente_PacienteAdjunto] ON [dbo].[PacienteAdjunto]
 (
 	[Paciente] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
@@ -3383,20 +3382,20 @@ CREATE NONCLUSTERED INDEX [iViaAdministracion_ConsultaReceta] ON [dbo].[Consulta
 	[ViaAdministracion] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iConsulta_ConsultaSigno]    Script Date: 19/11/2020 14:08:55 ******/
-CREATE NONCLUSTERED INDEX [iConsulta_ConsultaSigno] ON [dbo].[ConsultaSigno]
+/****** Object:  Index [iConsulta_ConsultaDiagnostico]    Script Date: 19/11/2020 14:08:55 ******/
+CREATE NONCLUSTERED INDEX [iConsulta_ConsultaDiagnostico] ON [dbo].[ConsultaDiagnostico]
 (
 	[Consulta] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_ConsultaSigno]    Script Date: 19/11/2020 14:08:55 ******/
-CREATE NONCLUSTERED INDEX [iGCRecord_ConsultaSigno] ON [dbo].[ConsultaSigno]
+/****** Object:  Index [iGCRecord_ConsultaDiagnostico]    Script Date: 19/11/2020 14:08:55 ******/
+CREATE NONCLUSTERED INDEX [iGCRecord_ConsultaDiagnostico] ON [dbo].[ConsultaDiagnostico]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iProblema_ConsultaSigno]    Script Date: 19/11/2020 14:08:55 ******/
-CREATE NONCLUSTERED INDEX [iProblema_ConsultaSigno] ON [dbo].[ConsultaSigno]
+/****** Object:  Index [iProblema_ConsultaDiagnostico]    Script Date: 19/11/2020 14:08:55 ******/
+CREATE NONCLUSTERED INDEX [iProblema_ConsultaDiagnostico] ON [dbo].[ConsultaDiagnostico]
 (
 	[Problema] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
@@ -5110,23 +5109,23 @@ NOT FOR REPLICATION
 GO
 ALTER TABLE [dbo].[Afp] CHECK CONSTRAINT [FK_Afp_Proveedor]
 GO
-ALTER TABLE [dbo].[ArchivoAdjunto]  WITH NOCHECK ADD  CONSTRAINT [FK_ArchivoAdjunto_Categoria] FOREIGN KEY([Categoria])
+ALTER TABLE [dbo].[PacienteAdjunto]  WITH NOCHECK ADD  CONSTRAINT [FK_PacienteAdjunto_Categoria] FOREIGN KEY([Categoria])
 REFERENCES [dbo].[MedLista] ([Codigo])
 NOT FOR REPLICATION 
 GO
-ALTER TABLE [dbo].[ArchivoAdjunto] CHECK CONSTRAINT [FK_ArchivoAdjunto_Categoria]
+ALTER TABLE [dbo].[PacienteAdjunto] CHECK CONSTRAINT [FK_PacienteAdjunto_Categoria]
 GO
-ALTER TABLE [dbo].[ArchivoAdjunto]  WITH NOCHECK ADD  CONSTRAINT [FK_ArchivoAdjunto_File] FOREIGN KEY([File])
+ALTER TABLE [dbo].[PacienteAdjunto]  WITH NOCHECK ADD  CONSTRAINT [FK_PacienteAdjunto_File] FOREIGN KEY([File])
 REFERENCES [dbo].[FileData] ([Oid])
 NOT FOR REPLICATION 
 GO
-ALTER TABLE [dbo].[ArchivoAdjunto] CHECK CONSTRAINT [FK_ArchivoAdjunto_File]
+ALTER TABLE [dbo].[PacienteAdjunto] CHECK CONSTRAINT [FK_PacienteAdjunto_File]
 GO
-ALTER TABLE [dbo].[ArchivoAdjunto]  WITH NOCHECK ADD  CONSTRAINT [FK_ArchivoAdjunto_Paciente] FOREIGN KEY([Paciente])
+ALTER TABLE [dbo].[PacienteAdjunto]  WITH NOCHECK ADD  CONSTRAINT [FK_PacienteAdjunto_Paciente] FOREIGN KEY([Paciente])
 REFERENCES [dbo].[Paciente] ([OID])
 NOT FOR REPLICATION 
 GO
-ALTER TABLE [dbo].[ArchivoAdjunto] CHECK CONSTRAINT [FK_ArchivoAdjunto_Paciente]
+ALTER TABLE [dbo].[PacienteAdjunto] CHECK CONSTRAINT [FK_PacienteAdjunto_Paciente]
 GO
 ALTER TABLE [dbo].[AuditDataItemPersistent]  WITH NOCHECK ADD  CONSTRAINT [FK_AuditDataItemPersistent_AuditedObject] FOREIGN KEY([AuditedObject])
 REFERENCES [dbo].[AuditedObjectWeakReference] ([Oid])
@@ -5231,7 +5230,7 @@ GO
 ALTER TABLE [dbo].[ConsultaExamen] CHECK CONSTRAINT [FK_ConsultaExamen_Consulta]
 GO
 ALTER TABLE [dbo].[ConsultaExamen]  WITH NOCHECK ADD  CONSTRAINT [FK_ConsultaExamen_Documento] FOREIGN KEY([Documento])
-REFERENCES [dbo].[FileData] ([Oid])
+REFERENCES [dbo].[PacienteFileData] ([Oid])
 NOT FOR REPLICATION 
 GO
 ALTER TABLE [dbo].[ConsultaExamen] CHECK CONSTRAINT [FK_ConsultaExamen_Documento]
@@ -5255,7 +5254,7 @@ GO
 ALTER TABLE [dbo].[ConsultaExamenFisico] CHECK CONSTRAINT [FK_ConsultaExamenFisico_Consulta]
 GO
 ALTER TABLE [dbo].[ConsultaExamenFisico]  WITH NOCHECK ADD  CONSTRAINT [FK_ConsultaExamenFisico_Documento] FOREIGN KEY([Documento])
-REFERENCES [dbo].[FileData] ([Oid])
+REFERENCES [dbo].[PacienteFileData] ([Oid])
 NOT FOR REPLICATION 
 GO
 ALTER TABLE [dbo].[ConsultaExamenFisico] CHECK CONSTRAINT [FK_ConsultaExamenFisico_Documento]
@@ -5296,17 +5295,17 @@ NOT FOR REPLICATION
 GO
 ALTER TABLE [dbo].[ConsultaReceta] CHECK CONSTRAINT [FK_ConsultaReceta_ViaAdministracion]
 GO
-ALTER TABLE [dbo].[ConsultaSigno]  WITH NOCHECK ADD  CONSTRAINT [FK_ConsultaSigno_Consulta] FOREIGN KEY([Consulta])
+ALTER TABLE [dbo].[ConsultaDiagnostico]  WITH NOCHECK ADD  CONSTRAINT [FK_ConsultaDiagnostico_Consulta] FOREIGN KEY([Consulta])
 REFERENCES [dbo].[Consulta] ([OID])
 NOT FOR REPLICATION 
 GO
-ALTER TABLE [dbo].[ConsultaSigno] CHECK CONSTRAINT [FK_ConsultaSigno_Consulta]
+ALTER TABLE [dbo].[ConsultaDiagnostico] CHECK CONSTRAINT [FK_ConsultaDiagnostico_Consulta]
 GO
-ALTER TABLE [dbo].[ConsultaSigno]  WITH NOCHECK ADD  CONSTRAINT [FK_ConsultaSigno_Problema] FOREIGN KEY([Problema])
+ALTER TABLE [dbo].[ConsultaDiagnostico]  WITH NOCHECK ADD  CONSTRAINT [FK_ConsultaDiagnostico_Problema] FOREIGN KEY([Problema])
 REFERENCES [dbo].[ProblemaMedico] ([OID])
 NOT FOR REPLICATION 
 GO
-ALTER TABLE [dbo].[ConsultaSigno] CHECK CONSTRAINT [FK_ConsultaSigno_Problema]
+ALTER TABLE [dbo].[ConsultaDiagnostico] CHECK CONSTRAINT [FK_ConsultaDiagnostico_Problema]
 GO
 ALTER TABLE [dbo].[ConsultaSintoma]  WITH NOCHECK ADD  CONSTRAINT [FK_ConsultaSintoma_Consulta] FOREIGN KEY([Consulta])
 REFERENCES [dbo].[Consulta] ([OID])
@@ -5835,10 +5834,6 @@ REFERENCES [dbo].[Persona] ([OID])
 NOT FOR REPLICATION 
 GO
 ALTER TABLE [dbo].[PersonaTelefono] CHECK CONSTRAINT [FK_PersonaTelefono_Persona]
-GO
-ALTER TABLE [dbo].[PlanMedicoDetalle]  WITH NOCHECK ADD  CONSTRAINT [FK_Detalle_PlanMedico] FOREIGN KEY([Chequeo])
-REFERENCES [dbo].[PlanMedico] ([Oid])
-NOT FOR REPLICATION 
 GO
 ALTER TABLE [dbo].[PlanMedicoDetalle] CHECK CONSTRAINT [FK_Detalle_PlanMedico]
 GO

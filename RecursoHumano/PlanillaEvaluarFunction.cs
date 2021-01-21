@@ -111,7 +111,7 @@ namespace SBT.Apps.RecursoHumano.Module
 
         public string Description
         {
-            get { return nameof(PlanillaEvaluarFunction) + "()" + System.Environment.NewLine + "Retorna el valor de la funcion calculada en el primer parametro"; }
+            get { return $"{nameof(PlanillaEvaluarFunction)}(){System.Environment.NewLine}Retorna el valor de la funcion calculada en el primer parametro"; }
         }
 
         public FunctionCategory Category

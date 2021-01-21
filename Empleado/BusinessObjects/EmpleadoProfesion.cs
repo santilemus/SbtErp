@@ -1,5 +1,6 @@
 ﻿using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
+using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using System;
 using System.Linq;
@@ -34,7 +35,7 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
                 SetPropertyValue("Profesion", ref _profesion, value);
             }
         }
-        [DevExpress.Xpo.SizeAttribute(12)]
+        [DevExpress.Xpo.SizeAttribute(12), DbType("varchar(12)")]
         [DevExpress.Persistent.Base.ToolTipAttribute("Número de certificación emitido por el organismo de vigilancia de la profesión")]
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Número Profesional")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]

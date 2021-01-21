@@ -52,13 +52,13 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         int? presupuesto;
         string concepto;
         [Persistent(nameof(Elaboro))]
-        SBT.Apps.Empleado.Module.BusinessObjects.Empleado elaboro = null;
+        SBT.Apps.Empleado.Module.BusinessObjects.Empleado elaboro;
         [Persistent(nameof(TotalHaber))]
-        decimal? totalHaber = null;
+        decimal? totalHaber;
         [Persistent(nameof(TotalDebe))]
-        decimal? totalDebe = null;
+        decimal? totalDebe;
         [Persistent(nameof(Mayorizada)), DbType("bit")]
-        bool mayorizada = false;
+        bool mayorizada;
 
         [DbType("int"), Persistent("Periodo"), XafDisplayName("Período"), VisibleInLookupListView(false), VisibleInListView(false)]
         public Periodo Periodo

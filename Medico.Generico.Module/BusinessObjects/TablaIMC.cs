@@ -10,8 +10,16 @@ using System.Linq;
 
 namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 {
+    /// <summary>
+    /// BO que corresponde a las mediciones del IMC para adultos. Modificarla si se utiliza para las interpretaciones
+    /// de los resultados para niños y jovenes, que además usan las tablas de percentiles
+    /// </summary>
+    /// <remarks>
+    /// Formula: IMC = weight in kilograms divided by length or height in meters squared (kg/m2)
+    /// mas info en https://apps.who.int/iris/bitstream/handle/10665/43601/9789241595070_BoysGrowth_eng.pdf?sequence=9&isAllowed=y
+    /// </remarks>
     [DefaultClassOptions, ModelDefault("Caption", "Tabla IMC"), XafDefaultProperty("Descripcion"),
-        Persistent("TablaIMC"), NavigationItem(false)] //,  NavigationItem("Salud")]
+        Persistent("TablaIMC"), NavigationItem(false), CreatableItem(false)] //,  NavigationItem("Salud")]
     [RuleCombinationOfPropertiesIsUnique("TablaIMC.Rango_Unico", DefaultContexts.Save, "Desde,Hasta",
         CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction, IncludeCurrentObject = true)]
     //[ImageName("BO_Contact")]

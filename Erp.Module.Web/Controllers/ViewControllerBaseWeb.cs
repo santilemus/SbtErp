@@ -29,7 +29,7 @@ namespace SBT.Apps.Erp.Module.Web.Controllers
             base.OnActivated();
             // Perform various tasks depending on the target View.
             // ajustes del View cuando se trata de un ListView
-            if (View.GetType().Name == "ListView")
+            if (string.Compare(View.GetType().Name, "ListView", StringComparison.Ordinal) == 0)
             {
                 if (FixColumnWidthInListView == ETipoAjusteColumnaListView.BestFit)
                     SetWebGridAdaptative();
@@ -41,7 +41,7 @@ namespace SBT.Apps.Erp.Module.Web.Controllers
             // Access and customize the target View control.
 
             // Ajuste a los controles cuando se trata de un ListView
-            if (View.GetType().Name == "ListView")
+            if (string.Compare(View.GetType().Name, "ListView", StringComparison.Ordinal) == 0)
             {
                 if (FixColumnWidthInListView == ETipoAjusteColumnaListView.Model)
                     ShowColumnWidthFromModel();
@@ -76,7 +76,7 @@ namespace SBT.Apps.Erp.Module.Web.Controllers
         /// </remarks>
         private void ShowColumnWidthFromModel()
         {
-            if (View.GetType().Name != "ListView")
+            if (string.Compare(View.GetType().Name, "ListView", StringComparison.Ordinal) != 0)
                 return;
             ASPxGridListEditor gridListEditor = (View as ListView).Editor as ASPxGridListEditor;
             if (gridListEditor != null)
@@ -107,7 +107,7 @@ namespace SBT.Apps.Erp.Module.Web.Controllers
         /// </remarks>
         private void ShowOnlyColumnsFitInScreen()
         {
-            if (View.GetType().Name != "ListView")
+            if (string.Compare(View.GetType().Name, "ListView", StringComparison.Ordinal) != 0)
                 return;
             ASPxGridListEditor gridListEditor = (View as ListView).Editor as ASPxGridListEditor;
             if (gridListEditor != null)
@@ -130,7 +130,7 @@ namespace SBT.Apps.Erp.Module.Web.Controllers
         /// </summary>
         private void SetWebGridAdaptative()
         {
-            if (View.GetType().Name != "ListView")
+            if (string.Compare(View.GetType().Name, "ListView", StringComparison.Ordinal) != 0)
                 return;
             var webGridListEditor = (View as ListView)?.Editor as ASPxGridListEditor;
             if (webGridListEditor != null)
@@ -139,21 +139,5 @@ namespace SBT.Apps.Erp.Module.Web.Controllers
             }
         }
 
-    }
-
-    public enum ETipoAjusteColumnaListView
-    {
-        /// <summary>
-        /// Ancho de columnas por defecto. En aplicaciones asp.net es calculado dinamicamente con base al contenido de la columna
-        /// </summary>
-        Default,
-        /// <summary>
-        /// Ancho de la columna de acuerdo al ancho definido para la columna en el correspondiente ListView del Model
-        /// </summary>
-        Model,
-        /// <summary>
-        /// Solamente se muestran las columnas que caben de acuerdo al ancho de la pantalla. Se ajusta dinamicamente para ser responsive
-        /// </summary>
-        BestFit
     }
 }

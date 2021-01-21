@@ -38,8 +38,8 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
           : base(session)
         {
         }
+
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Tipo Pariente")]
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
         [RuleRequiredField("EmpleadoPariente.CodTipo_requerido", DefaultContexts.Save, "Tipo Pariente es requerido")]
         [DataSourceCriteria("Categoria = 12")]
         public Listas Tipo
@@ -53,8 +53,8 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
                 SetPropertyValue("Tipo", ref tipo, value);
             }
         }
-        [DevExpress.Xpo.SizeAttribute(50)]
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
+
+        [DevExpress.Xpo.SizeAttribute(50), DbType("varchar(50)")]
         [RuleRequiredField("EmpleadoPariente.Nombre_requerido", "Save")]
         public System.String Nombre
         {
@@ -67,8 +67,8 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
                 SetPropertyValue("Nombre", ref _nombre, value);
             }
         }
-        [DevExpress.Xpo.SizeAttribute(50)]
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
+
+        [DevExpress.Xpo.SizeAttribute(50), DbType("varchar(50)")]
         [RuleRequiredField("EmpleadoPariente.Apellido_requerido", "Save")]
         public System.String Apellido
         {
@@ -81,8 +81,8 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
                 SetPropertyValue("Apellido", ref _apellido, value);
             }
         }
+
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
         [RuleRequiredField("EmpleadoPariente.Beneficiario_requerido", "Save")]
         public System.Boolean Beneficiario
         {
@@ -95,9 +95,9 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
                 SetPropertyValue("Beneficiario", ref _beneficiario, value);
             }
         }
+
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [DevExpress.Xpo.IndexedAttribute]
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
         [RuleRequiredField("EmpleadoPariente.FechaNacimiento_requerido", "Save")]
         public System.DateTime FechaNacimiento
         {
@@ -110,8 +110,8 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
                 SetPropertyValue("FechaNacimiento", ref _fechaNacimiento, value);
             }
         }
-        [DevExpress.Xpo.SizeAttribute(150)]
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
+
+        [DevExpress.Xpo.SizeAttribute(150), DbType("varchar(150)")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         public System.String Direccion
         {
@@ -124,6 +124,7 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
                 SetPropertyValue("Direccion", ref _direccion, value);
             }
         }
+
         [DevExpress.Xpo.AssociationAttribute("Parientes-Empleado")]
         public Empleado Empleado
         {

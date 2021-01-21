@@ -32,7 +32,7 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
             get => asociacionProfesional;
             set => SetPropertyValue(nameof(AsociacionProfesional), ref asociacionProfesional, value);
         }
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
+
         [RuleRequiredField("EmpleadoMembresia.Vigente_Requerido", "Save")]
         public System.Boolean Vigente
         {

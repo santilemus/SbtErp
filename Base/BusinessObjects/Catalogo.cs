@@ -23,7 +23,7 @@ namespace SBT.Apps.Contabilidad.BusinessObjects
     /// PENDIENTE. Si agregamos la columna periodo. La idea de este catalogo es que no sea necesario estar replicando cada año.
     /// Por eso es de evaluar si agregamos el período, para saber en que año se creo la cuenta.
     /// </remarks>
-    [DefaultClassOptions]
+    [DefaultClassOptions, CreatableItem(false)]
     //[ImageName("BO_Contact")]
     [ModelDefault("Caption", "Catálogo Contable"), NavigationItem("Contabilidad"), DefaultProperty("CodCuenta"), Persistent("ConCatalogo"), 
         DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None), 
@@ -40,7 +40,6 @@ namespace SBT.Apps.Contabilidad.BusinessObjects
         {
             base.AfterConstruction();
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
-            empresa = EmpresaDeSesion();
         }
 
         protected override void OnSaving()
@@ -60,7 +59,7 @@ namespace SBT.Apps.Contabilidad.BusinessObjects
         Catalogo padre;
         ETipoCuentaCatalogo tipoCuenta = ETipoCuentaCatalogo.Activo;
         bool ctaResumen = true;
-        bool ctaMayor = false;
+        bool ctaMayor;
         ETipoSaldoCuenta tipoSaldoCta = ETipoSaldoCuenta.Deudor;
         [Persistent(nameof(Nivel)), DbType("smallint")]
         int nivelCta = 1;
@@ -76,6 +75,7 @@ namespace SBT.Apps.Contabilidad.BusinessObjects
         public Empresa Empresa
         {
             get => empresa;
+            set => SetPropertyValue(nameof(Empresa), ref empresa, value);
         }
 
 #if Firebird

@@ -17,10 +17,9 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
     /// <summary>
     /// Objeto Persistente que corresponde a los examenes por consulta. Es la clase para el objeto de negocios ConsultaExamen
     /// </summary>
-    [NavigationItem(false)]
+    [NavigationItem(false), CreatableItem(false)]
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Exámenes")]
     [DevExpress.Persistent.Base.ImageNameAttribute("electrocardiograma")]
-    [DevExpress.Persistent.Base.CreatableItemAttribute(false)]
     [RuleCombinationOfPropertiesIsUnique("ConsultaExamen_ExamenFechaUnico", DefaultContexts.Save, "Examen,Fecha", SkipNullOrEmptyValues = false)]  
     public class ConsultaExamen : XPObjectBaseBO
     {
@@ -36,7 +35,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         private Tercero.Module.BusinessObjects.Tercero laboratorio;
         private Nullable<System.DateTime> fechaPresentacion;
         private Consulta consulta;
-        private DevExpress.Persistent.BaseImpl.FileData documento;
+        private PacienteFileData documento;
         private System.String resultado;
         private System.DateTime fecha;
         private Examen examen;
@@ -88,7 +87,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
             set => SetPropertyValue(nameof(Resultado), ref resultado, value);
         }
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
-        public DevExpress.Persistent.BaseImpl.FileData Documento
+        public PacienteFileData Documento
         {
             get => documento;
             set => SetPropertyValue(nameof(Documento), ref documento, value);

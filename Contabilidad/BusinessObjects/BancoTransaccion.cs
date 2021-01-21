@@ -69,12 +69,12 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         string serie;
         SBT.Apps.Tercero.Module.BusinessObjects.Tercero proveedor;
         string beneficiario;
-        decimal monto = 0.0m;
+        decimal monto;
         [DbType("int"), Persistent("NumeroPorTipo")]
-        int? numeroPorTipo = null;
+        int? numeroPorTipo;
         EBancoTransaccionEstado estado = EBancoTransaccionEstado.Digitado;
         [Persistent("Partida")]
-        SBT.Apps.Contabilidad.Module.BusinessObjects.Partida partida = null;
+        SBT.Apps.Contabilidad.Module.BusinessObjects.Partida partida;
         // otros fields
         BancoChequera chequera;
 

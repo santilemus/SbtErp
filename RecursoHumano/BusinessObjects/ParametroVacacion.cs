@@ -33,7 +33,6 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         public override void AfterConstruction()
         {
             base.AfterConstruction();
-            Empresa = EmpresaDeSesion();
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
@@ -42,7 +41,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         Empresa empresa;
         int desde;
         int hasta;
-        decimal valor = 0.0m;
+        decimal valor;
         int dias;
         bool activo = true;
 

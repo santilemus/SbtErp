@@ -88,7 +88,7 @@ namespace SBT.Apps.Base.Module
 
         public string Description
         {
-            get { return "EmpresaActualOid()" + Environment.NewLine + "Retorna el Oid de la empresa de la sesion actual (seleccionada en LogIn"; }
+            get { return $"EmpresaActualOid(){Environment.NewLine}Retorna el Oid de la empresa de la sesion actual (seleccionada en LogIn"; }
         }
 
         public FunctionCategory Category

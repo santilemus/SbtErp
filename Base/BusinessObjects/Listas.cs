@@ -6,10 +6,10 @@ using System.Linq;
 
 namespace SBT.Apps.Base.Module.BusinessObjects
 {
-    [DefaultClassOptions]
+    [DefaultClassOptions, CreatableItem(false)]
     [DevExpress.ExpressApp.DC.XafDefaultPropertyAttribute("Nombre")]
     [DevExpress.Persistent.Base.NavigationItemAttribute("Catalogos")]
-    [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Listas de Valores")]
+    [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Listas Valores")]
     [DevExpress.Persistent.Base.ImageNameAttribute("list")]
     [Persistent(nameof(Listas))]
     [RuleIsReferenced("Listas_Referencia", DefaultContexts.Delete, typeof(Listas), nameof(Codigo),
@@ -29,6 +29,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [RuleUniqueValue("Listas.Codigo_Unico", DefaultContexts.Save, CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction)]
         [DevExpress.Xpo.Size(12), DbType("varchar(12)"), Index(0)]
         [DevExpress.Xpo.KeyAttribute, VisibleInLookupListView(true)]
+        [RuleRequiredField("Listas.Codigo_Requerido", "Save")]
         public System.String Codigo
         {
             get
@@ -41,7 +42,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             }
         }
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Nombre"), DbType("varchar(100)")]
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute, Index(1)]
+        [Index(1)]
         [RuleRequiredField("Lista.NombreRequerido", DefaultContexts.Save, "Nombre es requerido")]
         public System.String Nombre
         {
@@ -54,7 +55,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
                 SetPropertyValue("Nombre", ref _nombre, value);
             }
         }
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute, Index(2)]
+        [Index(2)]
         [RuleRequiredField("Lista.CategoriaRequerida", DefaultContexts.Save, "Categoría es requerida")]
         public CategoriaLista Categoria
         {
@@ -67,8 +68,8 @@ namespace SBT.Apps.Base.Module.BusinessObjects
                 SetPropertyValue("Categoria", ref _categoria, value);
             }
         }
+
         [DevExpress.Xpo.Size(250), DbType("varchar(250)"), Index(3), VisibleInListView(false)]
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
         public System.String Comentario
         {
             get
@@ -80,7 +81,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
                 SetPropertyValue("Comentario", ref _comentario, value);
             }
         }
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute, Index(4)]
+        [Index(4)]
         [RuleRequiredField("Lista.Activa", DefaultContexts.Save, "Activa es requerida")]
         public System.Boolean Activo
         {

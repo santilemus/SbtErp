@@ -39,7 +39,6 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
         }
 
         [DevExpress.Xpo.SizeAttribute(200), DbType("varchar(200)"), Index(0)]
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Nombre")]
         [RuleRequiredField("Tercero.Nombre_Requerido", "Save")]
         public System.String Nombre
@@ -58,7 +57,6 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
 
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false), Index(2)]
         [DevExpress.Xpo.SizeAttribute(60), DbType("varchar(60)")]
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Correo Electrónico")]
         public System.String EMail
         {
@@ -68,7 +66,6 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
 
         [DevExpress.Xpo.SizeAttribute(60), DbType("varchar(60)"), Index(3)]
         [DevExpress.Persistent.Base.VisibleInListView(false)]
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
         public System.String SitioWeb
         {
             get => sitioWeb;
@@ -90,7 +87,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
             set => SetPropertyValue(nameof(TipoContribuyente), ref tipoContribuyente, value);
         }
 
-        [DevExpress.Persistent.Base.ImmediatePostData, Index(6), VisibleInLookupListView(true)]
+        [Index(6), VisibleInLookupListView(true)]
         [RuleRequiredField("Tercero.Activo_Requerido", "Save")]
         public System.Boolean Activo
         {

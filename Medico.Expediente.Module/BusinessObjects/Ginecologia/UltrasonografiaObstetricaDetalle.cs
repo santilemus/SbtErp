@@ -53,8 +53,8 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects.Ginecologia
         EFormaPlacentaPrevia formaPlacentaPrevia;
         EPlacentraFetoUltra placenta;
         EDorsoFetoUltra dorso;
-        EPosicionFetoUltra posición;
-        EPresentacionFetoUltra presentación;
+        EPosicionFetoUltra posicion;
+        EPresentacionFetoUltra presentacion;
         ESituacionFetoUltra situacion;
         UltraSonografiaObstetrica ultrasonografia;
 
@@ -72,18 +72,18 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects.Ginecologia
             set => SetPropertyValue(nameof(Situacion), ref situacion, value);
         }
 
-        [DbType("smallint"), XafDisplayName("Presentación")]
-        public EPresentacionFetoUltra Presentación
+        [DbType("smallint"), XafDisplayName("Presentación"), Persistent(nameof(Presentacion))]
+        public EPresentacionFetoUltra Presentacion
         {
-            get => presentación;
-            set => SetPropertyValue(nameof(Presentación), ref presentación, value);
+            get => presentacion;
+            set => SetPropertyValue(nameof(Presentacion), ref presentacion, value);
         }
 
-        [DbType("smallint"), XafDisplayName("Posición")]
-        public EPosicionFetoUltra Posición
+        [DbType("smallint"), XafDisplayName("Posición"), Persistent(nameof(Posicion))]
+        public EPosicionFetoUltra Posicion
         {
-            get => posición;
-            set => SetPropertyValue(nameof(Posición), ref posición, value);
+            get => posicion;
+            set => SetPropertyValue(nameof(Posicion), ref posicion, value);
         }
 
         [DbType("smallint"), XafDisplayName("Dorso")]
@@ -196,8 +196,9 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects.Ginecologia
         /// <summary>
         /// longitud del fémur expresada en milímetros. Es mismo que FL en Inglés
         /// </summary>
-        [DbType("Longitud del fémur expresada en milímetros. Es mismo que FL en Inglés")]
+        [ToolTip("Longitud del fémur expresada en milímetros. Es mismo que FL en Inglés")]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
+        [DbType("numeric(10,2)")]
         public decimal Lf
         {
             get => lf;
@@ -306,54 +307,4 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects.Ginecologia
 
 
     }
-
-    public enum ESituacionFetoUltra
-    {
-        Longitudinal = 0,
-        Transverso = 1,
-        Oblicuo = 2
-    }
-
-    public enum EPresentacionFetoUltra
-    {
-        Cefalico = 0,
-        Podalico = 1
-
-    }
-
-    public enum EPosicionFetoUltra
-    {
-        Izquierda = 0,
-        Derecha = 1
-    }
-
-    public enum EDorsoFetoUltra
-    {
-        Lateral = 0,
-        Anterior = 1,
-        Posterior = 2
-    }
-
-    public enum EPlacentraFetoUltra
-    {
-        Anterior = 0,
-        Posterior = 2,
-        Previa = 3,
-        Fundica = 4
-    }
-
-    public enum EFormaPlacentaPrevia
-    {
-        Marginal = 0,
-        Parcial = 1,
-        Completa = 2
-    }
-
-    public enum EGradoPlacenta
-    {
-        I = 0,
-        II = 1,
-        III = 2
-    }
-
 }

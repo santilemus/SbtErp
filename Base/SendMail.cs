@@ -23,17 +23,25 @@ namespace SBT.Apps.Base.Module
 
         public void Send(string mailFrom, string mailTo, string subject, string msg)
         {
-            MailMessage mailMsg = new MailMessage(mailFrom, mailTo, subject, msg);
-            SmtpClient mailClient = new SmtpClient(MailHost, MailPort);
-            mailClient.Send(mailMsg);
+            using (SmtpClient mailClient = new SmtpClient(MailHost, MailPort))
+            {
+                using (MailMessage mailMsg = new MailMessage(mailFrom, mailTo, subject, msg))
+                {
+                    mailClient.Send(mailMsg);
+                }
+            }
         }
 
         public void Send(string mailFrom, string mailTo, string subject, string msg, string fileName)
         {
-            MailMessage mailMsg = new MailMessage(mailFrom, mailTo, subject, msg);
-            Attachment adjunto = new Attachment(fileName);
-            SmtpClient mailClient = new SmtpClient(MailHost, MailPort);
-            mailClient.Send(mailMsg);
+            using (SmtpClient mailClient = new SmtpClient(MailHost, MailPort))
+            {
+                using (MailMessage mailMsg = new MailMessage(mailFrom, mailTo, subject, msg))
+                {
+                    mailMsg.Attachments.Add(new Attachment(fileName));
+                    mailClient.Send(mailMsg);
+                }
+            }          
         }
 
         public string Smtp { get; set; }

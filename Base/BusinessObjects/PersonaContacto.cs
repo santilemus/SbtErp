@@ -6,6 +6,7 @@ using DevExpress.Xpo;
 using System;
 using System.ComponentModel;
 using System.Linq;
+using DevExpress.Data.Filtering;
 
 namespace SBT.Apps.Base.Module.BusinessObjects
 {
@@ -43,6 +44,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
 
 
         [XafDisplayName("Contacto"), Persistent("Contacto"), DbType("int")]
+        [ImmediatePostData(true)]
         public Persona Contacto
         {
             get => contacto;
@@ -51,10 +53,10 @@ namespace SBT.Apps.Base.Module.BusinessObjects
                 bool changed = SetPropertyValue(nameof(Contacto), ref contacto, value);
                 if (!IsLoading && !IsSaving && changed)
                 {
-                    var sOldValue = Nombre;
                     Nombre = value != null ? value.Nombre : string.Empty;
                     Direccion = value != null ? value.Direccion : string.Empty;
-                    Telefono = value != null ? value.Telefonos.FirstOrDefault<Telefono>().Numero : string.Empty;
+                    if (value.Telefonos.Count > 0)
+                        Telefono = value != null ? value.Telefonos.FirstOrDefault<PersonaTelefono>().Telefono.Numero : string.Empty;
                 }
             }
         }

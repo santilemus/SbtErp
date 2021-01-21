@@ -83,7 +83,7 @@ namespace SBT.Apps.Base.Module
 
         public string Description
         {
-            get { return "PeriodoActualOid()" + Environment.NewLine + "Retorna el Oid del periodo de la sesion actual"; }
+            get { return $"PeriodoActualOid(){Environment.NewLine}Retorna el Oid del periodo de la sesion actual"; }
         }
 
         public FunctionCategory Category

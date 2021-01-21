@@ -57,12 +57,12 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
 
         private void DoBeforeExecute(ref PopupWindowShowActionExecuteEventArgs e, int emp, DateTime d1, DateTime d2)
         {
-            ((CierreDiarioParam)e.PopupWindowViewCurrentObject).Bitacora = vParam.Caption + Environment.NewLine;
-            ((CierreDiarioParam)e.PopupWindowViewCurrentObject).Bitacora += string.Format("Hora Inicio: {0:G}", DateTime.Now) + Environment.NewLine;
-            ((CierreDiarioParam)e.PopupWindowViewCurrentObject).Bitacora += Environment.NewLine + "P a r a m e t r o s" + Environment.NewLine;
-            ((CierreDiarioParam)e.PopupWindowViewCurrentObject).Bitacora += string.Format("Empresa ==> {0}", emp) + Environment.NewLine;
-            ((CierreDiarioParam)e.PopupWindowViewCurrentObject).Bitacora += string.Format("Fecha Desde ==> {0:G}", d1) + Environment.NewLine;
-            ((CierreDiarioParam)e.PopupWindowViewCurrentObject).Bitacora += string.Format("Fecha Hasta ==> {0:G}", d2) + Environment.NewLine;
+            ((CierreDiarioParam)e.PopupWindowViewCurrentObject).Bitacora = $"{vParam.Caption}{Environment.NewLine}";
+            ((CierreDiarioParam)e.PopupWindowViewCurrentObject).Bitacora += $"Hora Inicio: {DateTime.Now:G}  {Environment.NewLine}";
+            ((CierreDiarioParam)e.PopupWindowViewCurrentObject).Bitacora += $"{Environment.NewLine}P a r a m e t r o s{Environment.NewLine}";
+            ((CierreDiarioParam)e.PopupWindowViewCurrentObject).Bitacora += $"Empresa ==> {emp} {Environment.NewLine}";
+            ((CierreDiarioParam)e.PopupWindowViewCurrentObject).Bitacora += $"Fecha Desde ==> {d1:G} {Environment.NewLine}";
+            ((CierreDiarioParam)e.PopupWindowViewCurrentObject).Bitacora += $"Fecha Hasta ==> {d2:G} {Environment.NewLine}";
         }
 
         private void PwaCierreDiario_CustomizePopupWindowParams(object sender, CustomizePopupWindowParamsEventArgs e)
@@ -80,15 +80,15 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
             DoBeforeExecute(ref e, EmpresaOid, fechaDesde, fechaHasta);
             if (EmpresaOid <= 0)
             {
-                ((CierreDiarioParam)e.PopupWindowViewCurrentObject).Bitacora += "No tiene valor la variable de la empresa de la sesion" + Environment.NewLine;
-                ((CierreDiarioParam)e.PopupWindowViewCurrentObject).Bitacora += string.Format("Hora Finalizó: {0:G}", DateTime.Now) + Environment.NewLine;
+                ((CierreDiarioParam)e.PopupWindowViewCurrentObject).Bitacora += $"No tiene valor la variable de la empresa de la sesion{Environment.NewLine}";
+                ((CierreDiarioParam)e.PopupWindowViewCurrentObject).Bitacora += $"Hora Finalizó: {DateTime.Now:G} {Environment.NewLine}";
                 throw new UserFriendlyException("No tiene valor la variable de la empresa de la sesion");
             }
-            ((CierreDiarioParam)e.PopupWindowViewCurrentObject).Bitacora += Environment.NewLine + "Ejecutando el Proceso" + Environment.NewLine;
+            ((CierreDiarioParam)e.PopupWindowViewCurrentObject).Bitacora += $"{Environment.NewLine}Ejecutando el Proceso{Environment.NewLine}";
             IObjectSpace ospace = Application.ObjectSpaceProvider.CreateObjectSpace();
             ((XPObjectSpace)ospace).Session.ExecuteNonQuery("exec spConCierreDiario @Empresa, @FechaDesde, @FechaHasta, @Usuario",
                 new string[] { "@Empresa", "@FechaDesde", "@FechaHasta", "@Usuario" }, new object[] { EmpresaOid, fechaDesde, fechaHasta, sUsuario });
-            ((CierreDiarioParam)e.PopupWindowViewCurrentObject).Bitacora += string.Format("Hora Finalizó: {0:G}", DateTime.Now);
+            ((CierreDiarioParam)e.PopupWindowViewCurrentObject).Bitacora += $"Hora Finalizó: {DateTime.Now:G}";
             //var OS = Application.CreateObjectSpace(typeof(AuditoriaProceso));
             var obj = ospace.CreateObject<AuditoriaProceso>();
             obj.AuditarProceso(PwaCierreDiario.Caption, "", ((CierreDiarioParam)e.PopupWindowViewCurrentObject).Bitacora);
@@ -108,15 +108,15 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
             DoBeforeExecute(ref e, EmpresaOid, fechaDesde, fechaHasta);
             if (EmpresaOid <= 0)
             {
-                ((CierreDiarioParam)e.PopupWindowViewCurrentObject).Bitacora += "No tiene valor la variable de la empresa de la sesion" + Environment.NewLine;
-                ((CierreDiarioParam)e.PopupWindowViewCurrentObject).Bitacora += string.Format("Hora Finalizó: {0:G}", DateTime.Now) + Environment.NewLine;
+                ((CierreDiarioParam)e.PopupWindowViewCurrentObject).Bitacora += $"No tiene valor la variable de la empresa de la sesion{Environment.NewLine}";
+                ((CierreDiarioParam)e.PopupWindowViewCurrentObject).Bitacora += $"Hora Finalizó: {DateTime.Now:G}{Environment.NewLine}";
                 throw new UserFriendlyException("No tiene valor la variable de la empresa de la sesion");
             }
-            ((CierreDiarioParam)e.PopupWindowViewCurrentObject).Bitacora += Environment.NewLine + "Ejecutando el Proceso" + Environment.NewLine;
+            ((CierreDiarioParam)e.PopupWindowViewCurrentObject).Bitacora += $"{Environment.NewLine}Ejecutando el Proceso{Environment.NewLine}";
             IObjectSpace ospace = Application.ObjectSpaceProvider.CreateObjectSpace();
             ((XPObjectSpace)ospace).Session.ExecuteNonQuery("exec spConAbrirDias @Empresa, @FechaDesde, @FechaHasta, @Usuario",
                 new string[] { "@Empresa", "@FechaDesde", "@FechaHasta", "@Usuario" }, new object[] { EmpresaOid, fechaDesde, fechaHasta, sUsuario });
-            ((CierreDiarioParam)e.PopupWindowViewCurrentObject).Bitacora += string.Format("Hora Finalizó: {0:G}", DateTime.Now);
+            ((CierreDiarioParam)e.PopupWindowViewCurrentObject).Bitacora += $"Hora Finalizó: {DateTime.Now:G}";
             var obj = ospace.CreateObject<AuditoriaProceso>();
             obj.AuditarProceso(PwaAbrirDias.Caption, "", ((CierreDiarioParam)e.PopupWindowViewCurrentObject).Bitacora);
             (View.ObjectSpace as XPObjectSpace).Refresh();
@@ -142,8 +142,7 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
             {
                 e.Cancel = true;
                 ((CierreDiarioParam)vParam.CurrentObject).Bitacora = result.GetFormattedErrorMessage();
-                MostrarError(string.Format("El proceso no se ejecutó porque el periodo entre {0:G} y {1:G} no es válido",
-                    ((CierreDiarioParam)vParam.CurrentObject).FechaDesde, ((CierreDiarioParam)vParam.CurrentObject).FechaHasta));
+                MostrarError($"El proceso no se ejecutó porque el periodo entre {((CierreDiarioParam)vParam.CurrentObject).FechaDesde:G} y {((CierreDiarioParam)vParam.CurrentObject).FechaHasta:G} no es válido");
             }
         }
 
@@ -178,24 +177,24 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
         {
             var empresaOid = ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid;
             var fechaCierre = ((CierreMesParam)e.PopupWindowViewCurrentObject).FechaCierre;
-            ((CierreMesParam)e.PopupWindowViewCurrentObject).Bitacora = vParam.Caption + Environment.NewLine;
-            ((CierreMesParam)e.PopupWindowViewCurrentObject).Bitacora += string.Format("Hora Inicio: {0:G}", DateTime.Now) + Environment.NewLine;
-            ((CierreMesParam)e.PopupWindowViewCurrentObject).Bitacora += Environment.NewLine + "P a r a m e t r o s" + Environment.NewLine;
-            ((CierreMesParam)e.PopupWindowViewCurrentObject).Bitacora += string.Format("Empresa ==> {0}", empresaOid) + Environment.NewLine;
-            ((CierreMesParam)e.PopupWindowViewCurrentObject).Bitacora += string.Format("Fecha Cierre ==> {0:G}", fechaCierre) + Environment.NewLine;
+            ((CierreMesParam)e.PopupWindowViewCurrentObject).Bitacora = $"{vParam.Caption}{Environment.NewLine}";
+            ((CierreMesParam)e.PopupWindowViewCurrentObject).Bitacora += $"Hora Inicio: {DateTime.Now:G} {Environment.NewLine}";
+            ((CierreMesParam)e.PopupWindowViewCurrentObject).Bitacora += $"{Environment.NewLine}P a r a m e t r o s{Environment.NewLine}";
+            ((CierreMesParam)e.PopupWindowViewCurrentObject).Bitacora += $"Empresa ==> {empresaOid} {Environment.NewLine}";
+            ((CierreMesParam)e.PopupWindowViewCurrentObject).Bitacora += $"Fecha Cierre ==> {fechaCierre:G} {Environment.NewLine}";
             if (empresaOid <= 0)
             {
-                ((CierreMesParam)e.PopupWindowViewCurrentObject).Bitacora += "No tiene valor la variable de la empresa de la sesion" + Environment.NewLine;
-                ((CierreMesParam)e.PopupWindowViewCurrentObject).Bitacora += string.Format("Hora Finalizó: {0:G}", DateTime.Now) + Environment.NewLine;
+                ((CierreMesParam)e.PopupWindowViewCurrentObject).Bitacora += $"No tiene valor la variable de la empresa de la sesion{Environment.NewLine}";
+                ((CierreMesParam)e.PopupWindowViewCurrentObject).Bitacora += $"Hora Finalizó: {DateTime.Now:G} {Environment.NewLine}";
                 MostrarError("No tiene valor la variable de la empresa de la sesion");
             }
-            ((CierreMesParam)e.PopupWindowViewCurrentObject).Bitacora += Environment.NewLine + "Ejecutando el Proceso" + Environment.NewLine;
+            ((CierreMesParam)e.PopupWindowViewCurrentObject).Bitacora += $"{Environment.NewLine}Ejecutando el Proceso{Environment.NewLine}";
             IObjectSpace ospace = Application.ObjectSpaceProvider.CreateObjectSpace();
             // esta parte revisarla, porque no es esto
             ((XPObjectSpace)ospace).Session.ExecuteNonQuery("exec spConAbrirDias @Empresa, @FechaDesde, @FechaHasta, @Usuario",
                 new string[] { "@Empresa", "@FechaDesde", "@FechaHasta", "@Usuario" }, new object[] { empresaOid, fechaCierre });
             // --
-            ((CierreMesParam)e.PopupWindowViewCurrentObject).Bitacora += string.Format("Hora Finalizó: {0:G}", DateTime.Now);
+            ((CierreMesParam)e.PopupWindowViewCurrentObject).Bitacora += $"Hora Finalizó: {DateTime.Now:G}";
             var obj = ospace.CreateObject<AuditoriaProceso>();
             obj.AuditarProceso(PwaAbrirDias.Caption, "", ((CierreMesParam)e.PopupWindowViewCurrentObject).Bitacora);
             (View.ObjectSpace as XPObjectSpace).Refresh();
