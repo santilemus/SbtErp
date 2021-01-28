@@ -6,6 +6,7 @@ using DevExpress.Xpo;
 using DevExpress.Data.Filtering;
 using System;
 using System.ComponentModel;
+using DevExpress.Xpo.Metadata;
 
 namespace SBT.Apps.Base.Module.BusinessObjects
 {
@@ -34,8 +35,11 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             string sCriteria = "Empresa.Oid == ? && GetYear(Fecha) == ?";
             //if (GetType().GetProperty("Caja") != null)
             //    sCriteria += " && Caja.Oid == ?";
-            object max = Session.Evaluate(this.GetType(), CriteriaOperator.Parse("Max(Numero)"), CriteriaOperator.Parse(sCriteria, Empresa.Oid, Fecha));
-            return (max != null) ? Convert.ToInt32(max): 1;
+            using (UnitOfWork uow = new UnitOfWork(Session.DataLayer, null))
+            {
+                object max = uow.Evaluate(this.GetType(), CriteriaOperator.Parse("Max(Numero)"), CriteriaOperator.Parse(sCriteria, Empresa.Oid, Fecha));
+                return (max != null) ? Convert.ToInt32(max) : 1;
+            }
         }
 
         protected override void OnChanged(string propertyName, object oldValue, object newValue)
@@ -74,6 +78,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         }
 
         #region Propiedades
+
         [Browsable(false)]
         private Empresa empresa;
 #if (Firebird)

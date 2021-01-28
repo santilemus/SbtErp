@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Application>
   <SchemaModules>
-    <SchemaModule Name="CloneObjectModule" Version="20.1.4.0" IsNewNode="True" />
-    <SchemaModule Name="SchedulerModuleBase" Version="20.1.4.0" IsNewNode="True" />
-    <SchemaModule Name="SchedulerWindowsFormsModule" Version="20.1.4.0" IsNewNode="True" />
-    <SchemaModule Name="SystemModule" Version="20.1.4.0" IsNewNode="True" />
-    <SchemaModule Name="SystemWindowsFormsModule" Version="20.1.4.0" IsNewNode="True" />
+    <SchemaModule Name="CloneObjectModule" Version="20.2.5.0" IsNewNode="True" />
+    <SchemaModule Name="SchedulerModuleBase" Version="20.2.5.0" IsNewNode="True" />
+    <SchemaModule Name="SchedulerWindowsFormsModule" Version="20.2.5.0" IsNewNode="True" />
+    <SchemaModule Name="SystemModule" Version="20.2.5.0" IsNewNode="True" />
+    <SchemaModule Name="SystemWindowsFormsModule" Version="20.2.5.0" IsNewNode="True" />
   </SchemaModules>
   <Views>
     <ListView Id="Medico_Citas_ListView" EditorTypeName="DevExpress.ExpressApp.Win.Editors.GridListEditor" />

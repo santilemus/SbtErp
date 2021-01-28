@@ -197,6 +197,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         [DevExpress.Xpo.AssociationAttribute("Parientes-Paciente")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Parientes"), Index(4), DevExpress.Xpo.Aggregated]
+        [ToolTip("Parientes, es importante cuando se trata de menores de edad o personas con incapacidad. Además, pueden ser pacientes")]
         public XPCollection<Pariente> Parientes
         {
             get
@@ -206,6 +207,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         }
 
         [DevExpress.Xpo.AssociationAttribute("Medicos-Paciente"), Index(5), DevExpress.Xpo.Aggregated]
+        [ToolTip("Medicos que tratan al paciente. Pueden ser diferentes especialistas")]
         public XPCollection<PacienteMedico> Medicos
         {
             get
@@ -214,6 +216,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
             }
         }
         [DevExpress.Xpo.AssociationAttribute("Vacunas-Paciente"), Index(6), DevExpress.Xpo.Aggregated]
+        [ToolTip("Registro de las Vacunas aplicadas")]
         public XPCollection<PacienteVacuna> Vacunas
         {
             get
@@ -223,6 +226,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         }
         [DevExpress.Xpo.AssociationAttribute("Consultas-Paciente")]
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Consultas"), Index(7), DevExpress.Xpo.Aggregated]
+        [ToolTip("Historial de las consultas medicas")]
         public XPCollection<Consulta> Consultas
         {
             get
@@ -231,6 +235,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
             }
         }
         [DevExpress.Xpo.AssociationAttribute("Paciente-Citas"), Index(8)]
+        [ToolTip("Historial de la programación de citas con el paciente")]
         public XPCollection<Cita> Citas
         {
             get
@@ -241,6 +246,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 
         [Association("Paciente-Recordatorios"), DevExpress.Xpo.Aggregated, ModelDefault("Caption", "Recordatorios"),
             Index(9)]
+        [ToolTip("Recordatorios clínicos. Puede dar clic en la Acción Plan Medico para convertir las reglas del plan en recordatorios clínicos")]
         public XPCollection<RecordatorioClinico> Recordatorios
         {
             get
@@ -250,6 +256,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         }
 
         [Association("Paciente-HistoriaFamiliares"), DevExpress.Xpo.Aggregated, XafDisplayName("Historia Familiar"), Index(10)]
+        [ToolTip("Historial de padecimientos de los parientes más cercanos ")]
         public XPCollection<HistoriaFamiliar> HistoriaFamiliares
         {
             get
@@ -259,6 +266,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         }
 
         [Association("Paciente-EstilosVida"), DevExpress.Xpo.Aggregated, XafDisplayName("Estilo Vida"), Index(11)]
+        [ToolTip("Actividades que realiza el paciente y que impactan su salud")]
         public XPCollection<EstiloVida> EstilosVida
         {
             get
@@ -269,6 +277,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 
         [Association("Paciente-Problemas"), DevExpress.Xpo.Aggregated]
         [XafDisplayName("Problemas Medicos"), Index(13)]
+        [ToolTip("Problemas medicos a los cuales es necesario prestar atención. Se deben a: enfermedades, medicación, lesiones, alergías, etc")]
         public XPCollection<ProblemaMedico> Problemas
         {
             get
@@ -278,6 +287,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         }
 
         [Association("Paciente-ArchivosAdjuntos"), DevExpress.Xpo.Aggregated, XafDisplayName("Archivos Adjuntos"), Index(14)]
+        [ToolTip("Archivos y documentos relacionados al historial medico del paciente")]
         public XPCollection<PacienteFileData> ArchivosAdjuntos => GetCollection<PacienteFileData>(nameof(ArchivosAdjuntos));
     }
 }

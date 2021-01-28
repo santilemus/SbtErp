@@ -116,8 +116,8 @@
     <Compile Include="BusinessObjects\EEstadoOrdenCompra.cs" />
     <Compile Include="BusinessObjects\EOrigenCompra.cs" />
     <Compile Include="BusinessObjects\ETipoCompra.cs" />
-    <Compile Include="BusinessObjects\FacturaCompra.cs" />
-    <Compile Include="BusinessObjects\FacturaCompraDetalle.cs" />
+    <Compile Include="BusinessObjects\CompraFactura.cs" />
+    <Compile Include="BusinessObjects\CompraFacturaDetalle.cs" />
     <Compile Include="BusinessObjects\OrdenCompra.cs" />
     <Compile Include="BusinessObjects\OrdenCompraDetalle.cs" />
     <Compile Include="DatabaseUpdate\Updater.cs" />

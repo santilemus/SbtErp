@@ -52,6 +52,13 @@ namespace SBT.Apps.Medico.Win {
             this.terceroModule1 = new SBT.Apps.Tercero.Module.TerceroModule();
             this.productoModule1 = new SBT.Apps.Producto.Module.ProductoModule();
             this.treeListEditorsModuleBase1 = new DevExpress.ExpressApp.TreeListEditors.TreeListEditorsModuleBase();
+            this.officeModule1 = new DevExpress.ExpressApp.Office.OfficeModule();
+            this.chartModule1 = new DevExpress.ExpressApp.Chart.ChartModule();
+            this.pivotGridModule1 = new DevExpress.ExpressApp.PivotGrid.PivotGridModule();
+            this.chartWindowsFormsModule1 = new DevExpress.ExpressApp.Chart.Win.ChartWindowsFormsModule();
+            this.pivotGridWindowsFormsModule1 = new DevExpress.ExpressApp.PivotGrid.Win.PivotGridWindowsFormsModule();
+            this.pivotChartModuleBase1 = new DevExpress.ExpressApp.PivotChart.PivotChartModuleBase();
+            this.pivotChartWindowsFormsModule1 = new DevExpress.ExpressApp.PivotChart.Win.PivotChartWindowsFormsModule();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             // 
             // securityStrategyComplex1
@@ -97,10 +104,20 @@ namespace SBT.Apps.Medico.Win {
             // 
             this.sqlConnection1.FireInfoMessageEventOnUserErrors = false;
             // 
+            // officeModule1
+            // 
+            this.officeModule1.RichTextMailMergeDataType = null;
+            // 
+            // pivotChartModuleBase1
+            // 
+            this.pivotChartModuleBase1.DataAccessMode = DevExpress.ExpressApp.CollectionSourceDataAccessMode.Client;
+            this.pivotChartModuleBase1.ShowAdditionalNavigation = false;
+            // 
             // medicoWindowsFormsApplication
             // 
             this.ApplicationName = "SBT - Registro de Control Medico";
             this.CheckCompatibilityType = DevExpress.ExpressApp.CheckCompatibilityType.DatabaseSchema;
+            this.DefaultCollectionSourceMode = DevExpress.ExpressApp.CollectionSourceMode.Normal;
             this.Modules.Add(this.module1);
             this.Modules.Add(this.module2);
             this.Modules.Add(this.auditTrailModule);
@@ -113,22 +130,28 @@ namespace SBT.Apps.Medico.Win {
             this.Modules.Add(this.validationModule);
             this.Modules.Add(this.viewVariantsModule);
             this.Modules.Add(this.treeListEditorsModuleBase1);
+            this.Modules.Add(this.officeModule1);
             this.Modules.Add(this.baseModule1);
             this.Modules.Add(this.genericoModule1);
+            this.Modules.Add(this.chartModule1);
             this.Modules.Add(this.expedienteModule1);
             this.Modules.Add(this.empleadoModule1);
             this.Modules.Add(this.terceroModule1);
             this.Modules.Add(this.productoModule1);
+            this.Modules.Add(this.pivotGridModule1);
             this.Modules.Add(this.module3);
             this.Modules.Add(this.fileAttachmentsWindowsFormsModule);
             this.Modules.Add(this.notificationsWindowsFormsModule);
             this.Modules.Add(this.reportsWindowsFormsModuleV2);
             this.Modules.Add(this.schedulerWindowsFormsModule);
             this.Modules.Add(this.validationWindowsFormsModule);
+            this.Modules.Add(this.chartWindowsFormsModule1);
+            this.Modules.Add(this.pivotGridWindowsFormsModule1);
+            this.Modules.Add(this.pivotChartModuleBase1);
+            this.Modules.Add(this.pivotChartWindowsFormsModule1);
             this.Modules.Add(this.module4);
             this.Modules.Add(this.securityModule1);
             this.Security = this.securityStrategyComplex1;
-            this.UseOldTemplates = false;
             this.DatabaseVersionMismatch += new System.EventHandler<DevExpress.ExpressApp.DatabaseVersionMismatchEventArgs>(this.medicoWindowsFormsApplication_DatabaseVersionMismatch);
             this.CustomizeLanguagesList += new System.EventHandler<DevExpress.ExpressApp.CustomizeLanguagesListEventArgs>(this.medicoWindowsFormsApplication_CustomizeLanguagesList);
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
@@ -166,5 +189,12 @@ namespace SBT.Apps.Medico.Win {
         private Tercero.Module.TerceroModule terceroModule1;
         private Producto.Module.ProductoModule productoModule1;
         private DevExpress.ExpressApp.TreeListEditors.TreeListEditorsModuleBase treeListEditorsModuleBase1;
+        private DevExpress.ExpressApp.Office.OfficeModule officeModule1;
+        private DevExpress.ExpressApp.Chart.ChartModule chartModule1;
+        private DevExpress.ExpressApp.PivotGrid.PivotGridModule pivotGridModule1;
+        private DevExpress.ExpressApp.Chart.Win.ChartWindowsFormsModule chartWindowsFormsModule1;
+        private DevExpress.ExpressApp.PivotGrid.Win.PivotGridWindowsFormsModule pivotGridWindowsFormsModule1;
+        private DevExpress.ExpressApp.PivotChart.PivotChartModuleBase pivotChartModuleBase1;
+        private DevExpress.ExpressApp.PivotChart.Win.PivotChartWindowsFormsModule pivotChartWindowsFormsModule1;
     }
 }

@@ -26,7 +26,6 @@ namespace SBT.Apps.Medico.Win {
             
             ((SecurityStrategy)Security).AnonymousAllowedTypes.Add(typeof(SBT.Apps.Base.Module.BusinessObjects.Empresa));
             ((SecurityStrategy)Security).AnonymousAllowedTypes.Add(typeof(SBT.Apps.Base.Module.BusinessObjects.EmpresaUnidad));
-            
             //LoggedOff += LoggedOffEvent;
         }
 
@@ -74,6 +73,11 @@ namespace SBT.Apps.Medico.Win {
                     "for more detailed information. If this doesn't help, please contact our Support Team at http://www.devexpress.com/Support/Center/");
             }
 #endif
+        }
+
+        protected override void OnSetupComplete()
+        {
+            base.OnSetupComplete();
         }
 
         /// <summary>
@@ -136,7 +140,7 @@ namespace SBT.Apps.Medico.Win {
             SesionDataHelper.Agregar("OidSucursal", ((CustomLogonParameters)e.LogonParameters).OidSucursal);
             // agregar aqui otros variables globales para la sesion, por ejemplo: sucursal, bodega, caja, fecha de trabajo etc
 
-            // las siguientes dos lienas son por si se necesitara hacer algo con la informacion del equipo remoto (caso de POS, para identificar las cajas)
+            // las siguientes dos lineas son por si se necesitara hacer algo con la informacion del equipo remoto (caso de POS, para identificar las cajas)
             //Sanrey.Erp.Base.BusinessObjects.SesionDataHelper.Agregar("UserHostName", Request.UserHostName);
             //Sanrey.Erp.Base.BusinessObjects.SesionDataHelper.Agregar("UserHostAddress", Request.UserHostAddress);
             var INavItems = ((IModelApplicationNavigationItems)this.Model).NavigationItems;

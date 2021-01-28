@@ -107,6 +107,7 @@
     <Compile Include="BusinessObjects\ProductoLote.cs" />
     <Compile Include="BusinessObjects\ProductoPrecio.cs" />
     <Compile Include="BusinessObjects\ProductoProveedor.cs" />
+    <Compile Include="BusinessObjects\XPCustomFacturaDetalle.cs" />
     <Compile Include="Controllers\vcProducto.cs">
       <SubType>Component</SubType>
     </Compile>

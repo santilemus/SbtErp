@@ -9,6 +9,8 @@ using DevExpress.Xpo;
 using DevExpress.Persistent.Validation;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Medico.Generico.Module.BusinessObjects;
+using System.ComponentModel;
+using DevExpress.ExpressApp.Model;
 
 namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 {
@@ -16,6 +18,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
     [DevExpress.Persistent.Base.ImageNameAttribute("user_group")]
     [DevExpress.Persistent.Base.CreatableItemAttribute(false)]
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Parientes")]
+    [DefaultProperty(nameof(NombreCompleto))]
     public class Pariente : XPObjectBaseBO
     {
         string comentario;
@@ -47,15 +50,25 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         ///  Esta propiedad tiene valor y es valida cuando el pariente es ademas paciente 
         ///  Cuando el pariente no es paciente  sera nula
         /// </summary>
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute, VisibleInLookupListView(true),
+        [DevExpress.Persistent.Base.ImmediatePostDataAttribute(true), VisibleInLookupListView(true),
             Persistent("IdPariente"), XafDisplayName("Id Pariente")]
         public Paciente IdPariente
         {
             get => _idPariente;
-            set => SetPropertyValue(nameof(IdPariente), ref _idPariente, value);
+            set
+            {
+
+                bool changed = SetPropertyValue(nameof(IdPariente), ref _idPariente, value);
+                if (!IsLoading && !IsSaving && changed)
+                {
+                    Nombres = value.Nombre;
+                    Apellidos = value.Apellido;
+                }
+            }
         }
 
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
+        [XafDisplayName("Parentesco")]
+        [DataSourceCriteria("[Categoria] == 12")]
         public Listas Parentesco
         {
             get
@@ -94,6 +107,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         [DbType("numeric(5,2)"), Persistent("Estatura"), XafDisplayName("Estatura (cm)"),
            RuleRange("Pariente.Estatura_RangoValido", DefaultContexts.Save, 10, 250, ResultType = ValidationResultType.Warning,
             SkipNullOrEmptyValues = true)]
+        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         public decimal Estatura
         {
             get => estatura;
@@ -122,10 +136,10 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 
         /// <summary>
         /// Cuando el paciente es menor de edad, valor true indica que el pariente es el responsable
-        ///
         /// </summary>
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
+        [ToolTip("Marcar cuando el pariente es el responsable de paciente menor de edad o incapaz")]
         public System.Boolean Responsable
         {
             get
@@ -137,6 +151,9 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
                 SetPropertyValue("Responsable", ref _responsable, value);
             }
         }
+
+        [PersistentAlias("[Nombres] + Iif(!IsNullOrEmpty([Apellidos]), ' ' + [Apellidos], '')")]
+        public string NombreCompleto => Convert.ToString(EvaluateAlias(nameof(NombreCompleto)));
 
     }
 }

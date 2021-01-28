@@ -12,8 +12,8 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 {
     [DefaultClassOptions]
     //[ImageName("BO_Contact")]
-    [DefaultProperty("EdadMes"), ModelDefault("Caption", "Percentil Tabla"), CreatableItem(false),
-        Persistent(nameof(PercentilTablaDetalle)), NavigationItem(false)] //NavigationItem("Salud")]  
+    [DefaultProperty(nameof(Oid)), ModelDefault("Caption", "Percentil Tabla"), CreatableItem(false),
+        Persistent(nameof(PercentilTablaDetalle)), NavigationItem(false)]  
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class PercentilTablaDetalle : XPObjectBaseBO
@@ -207,34 +207,32 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
         #endregion
 
         #region Metodos
-        public decimal ObtenerValorPercentil(decimal aValor)
+        public decimal ObtenerPercentil(decimal aValor)
         {
-            if (aValor < p3rd)
-                return P1st;
-            else if (aValor >= P3rd && aValor < P5th)
-                return P3rd;
-            else if (aValor >= P5th && aValor < (P10th != null ? P10th : P15th))
-                return P5th;
-            else if (aValor >= (P10th != null ? P10th : P15th) && aValor < P25th)
-                return P10th != null ? Convert.ToDecimal(P10th) : P15th;
-            else if (aValor >= P15th && aValor < P25th)
-                return P15th;
-            else if (aValor >= P25th && aValor < P50th)
-                return P25th;
-            else if (aValor >= P50th && aValor < P75th)
-                return P50th;
-            else if (aValor >= P75th && aValor < P85th)
-                return P75th;
-            else if (aValor >= p85th && aValor < (P90th != null ? P90th : P95th))
-                return P85th;
-            else if (aValor >= (P90th != null ? P90th : P95th) && aValor < P97th)
-                return P90th != null ? Convert.ToDecimal(P90th) : P95th;
-            else if (aValor >= P95th && aValor < P97th)
-                return P95th;
-            else if (aValor >= P97th && aValor < P99th)
-                return P97th;
+            if (aValor < 3.0m)
+                return 1.0m;
+            else if (aValor >= 3.0m && aValor < 5.0m)
+                return 3.0m;
+            else if (aValor >= 5.0m && aValor < 15.0m)
+                return 5.0m;
+            else if (aValor >= 15.0m && aValor < 25.0m)
+                return 15.0m;
+            else if (aValor >= 25.0m && aValor < 50.0m)
+                return 25.0m;
+            else if (aValor >= 50.0m && aValor < 75.0m)
+                return 50.0m;
+            else if (aValor >= 75.0m && aValor < 85.0m)
+                return 75.0m;
+            else if (aValor >= 85.0m && aValor < 90.0m)
+                return 85.0m;
+            else if (aValor >= 90.0m && aValor < 95.0m)
+                return 90.0m;
+            else if (aValor >= 95.0m && aValor < 97.0m)
+                return 95.0m;
+            else if (aValor >= 97.0m && aValor < 99.0m)
+                return 97.0m;
             else 
-                return P99th;
+                return 99.0m;
         }
 
         #endregion

@@ -19,15 +19,15 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
     /// <summary>
     /// BO que corresponde a los encabezados de las facturas de compra
     /// </summary>
-    [DefaultClassOptions, ModelDefault("Caption", "Factura"), NavigationItem("Compra"), CreatableItem(false)]
+    [DefaultClassOptions, ModelDefault("Caption", "Compra Factura"), NavigationItem("Compra"), CreatableItem(false)]
+    [DefaultProperty(nameof(NumeroDocumento))]
+    [Persistent(nameof(CompraFactura))]
     //[ImageName("BO_Contact")]
-    //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
-    //[Persistent("DatabaseTableName")]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
-    public class FacturaCompra : XPCustomBaseDoc
+    public class CompraFactura : XPCustomFacturaBO
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
-        public FacturaCompra(Session session)
+        public CompraFactura(Session session)
             : base(session)
         {
         }
@@ -41,24 +41,12 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
 
         string concepto;
         string numeroDocumento;
-        int? diasCredito;
-        Listas condicionPago;
-        Listas tipoFactura;
         ETipoCompra tipo = ETipoCompra.Servicio;
         Tercero.Module.BusinessObjects.Tercero proveedor;
         EOrigenCompra origen = EOrigenCompra.Local;
         OrdenCompra ordenCompra;
-        [Persistent(nameof(Oid)), Key(true), DbType("bigint")]
-        long oid = -1;
 
-        /// <summary>
-        /// Oid del BO. Es la llave primaria del registro
-        /// </summary>
-        [PersistentAlias(nameof(oid)), XafDisplayName("Oid"), Index(0)]
-        public long Oid => oid;
-
-
-        [Association("OrdenCompra-Facturas"), XafDisplayName("Orden Compra"), Index(5)]
+        [Association("OrdenCompra-Facturas"), XafDisplayName("Orden Compra"), Persistent(nameof(OrdenCompra)), Index(5)]
         public OrdenCompra OrdenCompra
         {
             get => ordenCompra;
@@ -68,7 +56,7 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
         /// <summary>
         /// Proveedor al cual se gira la orden de compra
         /// </summary>
-        [XafDisplayName("Proveedor"), RuleRequiredField("FacturaCompra.Proveedor_Requerido", DefaultContexts.Save), Index(6)]
+        [XafDisplayName("Proveedor"), RuleRequiredField("CompraFactura.Proveedor_Requerido", DefaultContexts.Save), Index(6)]
         public Tercero.Module.BusinessObjects.Tercero Proveedor
         {
             get => proveedor;
@@ -78,7 +66,7 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
         /// <summary>
         /// Tipo de Compra. Puede ser: Servicio, Producto, ActivoFijo
         /// </summary>
-        [DbType("smallint"), XafDisplayName("Tipo Compra"), RuleRequiredField("FacturaCompra.Tipo_Requerido", "Save"), Index(7)]
+        [DbType("smallint"), XafDisplayName("Tipo Compra"), RuleRequiredField("CompraFactura.Tipo_Requerido", "Save"), Index(7)]
         public ETipoCompra Tipo
         {
             get => tipo;
@@ -92,46 +80,11 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
             set => SetPropertyValue(nameof(Origen), ref origen, value);
         }
 
-        /// <summary>
-        /// Tipo de Factura que el proveedor debe emitir para la orden de compra
-        /// </summary>
-        [XafDisplayName("Tipo Factura"), RuleRequiredField("FacturaCompra.TipoFactura_Requerido", DefaultContexts.Save)]
-        [DataSourceCriteria("[Categoria] == 15 And [Activo] == True"), VisibleInLookupListView(true), Index(9)]
-        public Listas TipoFactura
-        {
-            get => tipoFactura;
-            set => SetPropertyValue(nameof(TipoFactura), ref tipoFactura, value);
-        }
-
         [Size(20), DbType("varchar(20)"), XafDisplayName("No Documento"), Index(10)]
         public string NumeroDocumento
         {
             get => numeroDocumento;
             set => SetPropertyValue(nameof(NumeroDocumento), ref numeroDocumento, value);
-        }
-
-
-        /// <summary>
-        /// Condicion de Pago. Es obligatorio cuando se trata de Credito Fiscal o Factura Consumidor Final
-        /// </summary>
-        [XafDisplayName("Condición Pago"), RuleRequiredField("FacturaCompra.CondicionPago_Requerido", "Save",
-            TargetCriteria = "@This.Tipo.Codigo In ('COVE01', 'COVE02')")]
-        [DataSourceCriteria("[Categoria] == 17 And [Activo] == True")]   // Categoria = 17 es condicion de pago
-        [VisibleInListView(false), Index(11)]
-        public Listas CondicionPago
-        {
-            get => condicionPago;
-            set => SetPropertyValue(nameof(CondicionPago), ref condicionPago, value);
-        }
-
-        /// <summary>
-        /// Dias de crédito, cuando la condicion de pago es al crédito
-        /// </summary>
-        [DbType("smallint"), XafDisplayName("Días Crédito"), Index(12), VisibleInLookupListView(false)]
-        public int? DiasCredito
-        {
-            get => diasCredito;
-            set => SetPropertyValue(nameof(DiasCredito), ref diasCredito, value);
         }
 
         /// <summary>
@@ -145,14 +98,49 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
         }
 
         #endregion
-        //private string _PersistentProperty;
-        //[XafDisplayName("My display name"), ToolTip("My hint message")]
-        //[ModelDefault("EditMask", "(000)-00"), Index(0), VisibleInListView(false)]
-        //[Persistent("DatabaseColumnName"), RuleRequiredField(DefaultContexts.Save)]
-        //public string PersistentProperty {
-        //    get { return _PersistentProperty; }
-        //    set { SetPropertyValue(nameof(PersistentProperty), ref _PersistentProperty, value); }
-        //}
+
+        #region Colecciones
+        [Association("CompraFactura-Detalles"), DevExpress.Xpo.Aggregated, Index(0), ModelDefault("Caption", "Detalles")]
+        public XPCollection<CompraFacturaDetalle> Detalles
+        {
+            get
+            {
+                return GetCollection<CompraFacturaDetalle>(nameof(Detalles));
+            }
+        }
+        #endregion
+
+        #region Metodos
+        public override void UpdateTotalExenta(bool forceChangeEvents)
+        {
+            base.UpdateTotalExenta(forceChangeEvents);
+            decimal? oldExenta = exenta;
+            exenta = Convert.ToDecimal(Evaluate(CriteriaOperator.Parse("[Detalles].Sum([Exenta])")));
+            if (forceChangeEvents)
+                OnChanged(nameof(Exenta), oldExenta, exenta);
+        }
+
+        public override void UpdateTotalGravada(bool forceChangeEvents)
+        {
+            base.UpdateTotalGravada(forceChangeEvents);
+            decimal? oldGravada = gravada;
+            decimal tempGravada = 0.0m;
+            foreach (CompraFacturaDetalle detalle in Detalles)
+                tempGravada += Convert.ToDecimal(detalle.Gravada);
+            gravada = tempGravada;
+            if (forceChangeEvents)
+                OnChanged(nameof(Gravada), oldGravada, gravada);
+        }
+
+        public override void UpdateTotalIva(bool forceChangeEvents)
+        {
+            base.UpdateTotalIva(forceChangeEvents);
+            decimal? oldIva = iva;
+            iva = Convert.ToDecimal(Evaluate(CriteriaOperator.Parse("[Detalles].Sum([Iva])")));
+            if (forceChangeEvents)
+                OnChanged(nameof(Iva), oldIva, iva);
+        }
+        #endregion
 
         //[Action(Caption = "My UI Action", ConfirmationMessage = "Are you sure?", ImageName = "Attention", AutoCommit = true)]
         //public void ActionMethod() {

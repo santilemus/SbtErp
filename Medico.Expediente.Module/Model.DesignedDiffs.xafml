@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Application Title="SBT.Apps.Medico.Expediente.Module" Logo="ExpressAppLogo">
   <SchemaModules>
-    <SchemaModule Name="CloneObjectModule" Version="20.1.4.0" IsNewNode="True" />
-    <SchemaModule Name="SchedulerModuleBase" Version="20.1.4.0" IsNewNode="True" />
-    <SchemaModule Name="SystemModule" Version="20.1.4.0" IsNewNode="True" />
+    <SchemaModule Name="CloneObjectModule" Version="20.2.5.0" IsNewNode="True" />
+    <SchemaModule Name="SchedulerModuleBase" Version="20.2.5.0" IsNewNode="True" />
+    <SchemaModule Name="SystemModule" Version="20.2.5.0" IsNewNode="True" />
   </SchemaModules>
   <Views>
     <DetailView Id="Cita_DetailView">
@@ -617,20 +617,22 @@
         <LayoutGroup Id="Main" RelativeSize="100">
           <LayoutGroup Id="SimpleEditors" RelativeSize="100">
             <LayoutGroup Id="Pariente" RelativeSize="100">
-              <LayoutGroup Id="Pariente_col1" RelativeSize="49.955476402493325">
-                <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="8.3916083916083917" IsNewNode="True" />
-                <LayoutItem Id="IdPariente" Index="1" RelativeSize="6.0606060606060606" />
-                <LayoutItem Id="Parentesco" Index="2" RelativeSize="6.0606060606060606" />
-                <LayoutItem Id="Nombres" Index="3" RelativeSize="6.0606060606060606" />
-                <LayoutItem Id="Apellidos" Index="4" RelativeSize="73.426573426573427" />
+              <LayoutGroup Id="Pariente_col1" RelativeSize="49.826388888888886">
+                <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="4.9382716049382713" IsNewNode="True" />
+                <LayoutItem Id="IdPariente" Index="1" RelativeSize="3.5665294924554183" />
+                <LayoutItem Id="Parentesco" Index="2" RelativeSize="3.5665294924554183" />
+                <LayoutItem Id="Nombres" Index="3" RelativeSize="3.5665294924554183" />
+                <LayoutItem Id="Apellidos" Index="4" RelativeSize="3.5665294924554183" />
                 <LayoutItem Id="FechaNacimiento" Index="5" RelativeSize="20.454545454545453" Removed="True" />
+                <LayoutItem Id="Responsable" ViewItem="Responsable" Index="5" RelativeSize="80.795610425240056" IsNewNode="True" />
               </LayoutGroup>
-              <LayoutGroup Id="Pariente_col2" RelativeSize="50.044523597506675">
-                <LayoutItem Id="FechaNacimiento" ViewItem="FechaNacimiento" Index="0" RelativeSize="8.3916083916083917" IsNewNode="True" />
-                <LayoutItem Id="Estatura" RelativeSize="6.0606060606060606" Index="1" />
-                <LayoutItem Id="Diagnostico" RelativeSize="6.0606060606060606" Index="2" />
-                <LayoutItem Id="Comentario" RelativeSize="6.0606060606060606" Index="3" />
-                <LayoutItem Id="Responsable" RelativeSize="73.426573426573427" Index="4" />
+              <LayoutGroup Id="Pariente_col2" RelativeSize="50.173611111111114">
+                <LayoutItem Id="FechaNacimiento" ViewItem="FechaNacimiento" Index="0" RelativeSize="4.9382716049382713" IsNewNode="True" />
+                <LayoutItem Id="Estatura" RelativeSize="3.5665294924554183" Index="1" />
+                <LayoutItem Id="Diagnostico" RelativeSize="3.5665294924554183" Index="2" />
+                <LayoutItem Id="Comentario" RelativeSize="3.5665294924554183" Index="3" />
+                <LayoutItem Id="NombreCompleto" RelativeSize="84.362139917695472" />
+                <LayoutItem Id="Responsable" RelativeSize="73.426573426573427" Index="4" Removed="True" />
               </LayoutGroup>
             </LayoutGroup>
             <LayoutGroup Id="XPObject" Caption="Oid" Index="1" RelativeSize="60.334029227557409" Removed="True">

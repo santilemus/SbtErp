@@ -32,7 +32,7 @@ namespace SBT.Apps.Medico.Module
                 new BinaryOperator("UserName", customLogonParameters.UserName));
 
             if (usuario == null)
-                throw new ArgumentNullException("Usuario");
+                throw new ArgumentNullException("CustomAuthentication.Authenticate: Usuario es Nulo");
 
             if (!usuario.ComparePassword(customLogonParameters.Password))
                 throw new AuthenticationException(

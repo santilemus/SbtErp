@@ -113,7 +113,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         [PersistentAlias(nameof(imc)), XafDisplayName("IMC")]
         public TablaIMC Imc => imc;
 
-        [PersistentAlias(nameof(percentilTablaDetalle)), XafDisplayName("Percentil")]
+        [PersistentAlias(nameof(percentilTablaDetalle)), XafDisplayName("Percentil Oid")]
         public PercentilTablaDetalle PercentilTablaDetalle => percentilTablaDetalle;
 
         #endregion
@@ -149,7 +149,8 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         {
             ConsultaSigno peso = Consulta.ConsultaSignos.FirstOrDefault<ConsultaSigno>(item => item.Signo.Oid == 1);
             ConsultaSigno estatura = Consulta.ConsultaSignos.FirstOrDefault<ConsultaSigno>(item => item.Signo.Oid == 2);
-            if (Consulta.Paciente.EdadMeses <= 24.00m || peso == null || estatura == null)
+            //if (Consulta.Paciente.EdadMeses <= 24.00m || peso == null || estatura == null)
+            if (peso == null || estatura == null)
                 return 0.0m;
             //BMI(body mass index) = weight in kilograms divided by length or height in meters squared(kg/ m2);
             return peso.Valor / Convert.ToDecimal(Math.Pow((double)estatura.Valor / 100.00, 2.0));

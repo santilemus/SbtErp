@@ -132,7 +132,10 @@ namespace SBT.Apps.Medico.Module.DatabaseUpdate
                 securityAdminRole.AddTypePermission<PermissionPolicyNavigationPermissionObject>(SecurityOperations.FullAccess, SecurityPermissionState.Allow);
                 securityAdminRole.AddTypePermission<PermissionPolicyObjectPermissionsObject>(SecurityOperations.FullAccess, SecurityPermissionState.Allow);
                 securityAdminRole.AddTypePermission<PermissionPolicyTypePermissionObject>(SecurityOperations.FullAccess, SecurityPermissionState.Allow);
-                securityAdminRole.AddTypePermission<ReportDataV2>(SecurityOperations.FullAccess, SecurityPermissionState.Deny);
+                securityAdminRole.AddTypePermission<ReportDataV2>("Create;Write;Delete", SecurityPermissionState.Deny);
+                securityAdminRole.AddTypePermission<ReportDataV2>(SecurityOperations.ReadOnlyAccess, SecurityPermissionState.Allow);
+                securityAdminRole.AddTypePermission<Analysis>("Create;Write;Delete", SecurityPermissionState.Deny);
+                securityAdminRole.AddTypePermission<Analysis>(SecurityOperations.ReadOnlyAccess, SecurityPermissionState.Allow);
                 securityAdminRole.IsAdministrative = false;
                 securityAdminRole.CanEditModel = false;
                 // definimos la estructura de permisos para evitar que puedan escalar a Administrador, pero que siga teniendo role para dar permisos
@@ -141,6 +144,8 @@ namespace SBT.Apps.Medico.Module.DatabaseUpdate
                 securityAdminRole.AddObjectPermission<PermissionPolicyRole>("Read;Write;Delete;Navigate", "[Name] == 'Administrators'", SecurityPermissionState.Deny);
                 securityAdminRole.AddMemberPermission<PermissionPolicyUser>(SecurityOperations.Write, "IsActive;Roles", "[UserName] = 'Admin'", SecurityPermissionState.Deny);
                 securityAdminRole.AddObjectPermission<PermissionPolicyUser>("Read;Write;Delete;Navigate", "[UserName] = 'Admin'", SecurityPermissionState.Deny);
+                securityAdminRole.AddObjectPermission<PermissionPolicyTypePermissionObject>("Write;Delete",
+                    "[TargetType] In ('DevExpress.Persistent.BaseImpl.ReportDataV2', 'DevExpress.Persistent.BaseImpl.Analysis')", SecurityPermissionState.Deny);
                 securityAdminRole.Save();
             }
             return securityAdminRole;

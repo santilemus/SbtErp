@@ -19,13 +19,16 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
     /// <summary>
     /// BO que corresponde al detalle de la orden de compra
     /// </summary>
-    
+    /// <remarks>
+    /// Info en: https://docs.devexpress.com/eXpressAppFramework/113179/task-based-help/business-model-design/express-persistent-objects-xpo/how-to-calculate-a-property-value-based-on-values-from-a-detail-collection
+    /// </remarks>
+
     [DefaultClassOptions, ModelDefault("Caption", "Orden Compra Detalle"), NavigationItem(false), CreatableItem(false),
         DefaultProperty(nameof(Producto)), Persistent(nameof(OrdenCompraDetalle))]
     //[ImageName("BO_Contact")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
-    public class OrdenCompraDetalle : XPCustomBaseBO
+    public class OrdenCompraDetalle : XPCustomFacturaDetalle
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
         public OrdenCompraDetalle(Session session)
             : base(session)
@@ -43,32 +46,11 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
         int? diasGarantia;
         string modelo;
         string marca;
-        [Persistent(nameof(CantidadAnulada))]
-        decimal? cantidadAnulada;
-        [Persistent(nameof(Total))]
-        decimal total;
-        decimal costoUnidad;
         [DbType("numeric(12,2)"), Persistent(nameof(Unidades))]
         decimal unidades;
-        decimal cantidad;
         Presentacion presentacion;
-        Producto.Module.BusinessObjects.Producto producto;
         OrdenCompra ordenCompra;
-        [DbType("bigint"), Persistent(nameof(Oid)), Key(AutoGenerate = true), XafDisplayName("Oid")]
-        long oid = -1;
 
-        [DbType("numeric(14,2)"), Persistent(nameof(Exenta))]
-        decimal exenta;
-        [DbType("numeric(14,2)"), Persistent(nameof(Gravada))]
-        decimal gravada;
-        [DbType("numeric(14,2)"), Persistent(nameof(Iva))]
-        decimal iva;
-
-        /// <summary>
-        /// Oid del detalle de la orden de compra. Es la llave primaria
-        /// </summary>
-        [PersistentAlias(nameof(oid)), Index(0)]
-        public long Oid => oid;
 
         /// <summary>
         /// La asociacion a la orden de compra
@@ -77,19 +59,19 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
         public OrdenCompra OrdenCompra
         {
             get => ordenCompra;
-            set => SetPropertyValue(nameof(OrdenCompra), ref ordenCompra, value);
-        }
-
-        /// <summary>
-        /// Producto requerido en la orden de compra, cuando el tipo de compra es producto para inventario. Solo en 
-        /// ese caso tiene valor y es requerido
-        /// </summary>
-        [XafDisplayName("Producto"), Index(2)]
-        [ToolTip("Producto requerido al proveedor. Solo es obligatorio cuando el tipo de orden es Producto")]
-        public Producto.Module.BusinessObjects.Producto Producto
-        {
-            get => producto;
-            set => SetPropertyValue(nameof(Producto), ref producto, value);
+            set
+            {
+                OrdenCompra oc = ordenCompra;
+                bool changed = SetPropertyValue(nameof(OrdenCompra), ref ordenCompra, value);
+                if (!IsLoading && !IsSaving && oc != ordenCompra & changed)
+                {
+                    oc = oc ?? ordenCompra;
+                    oc.UpdateTotalExenta(true);
+                    oc.UpdateTotalGravada(true);
+                    oc.UpdateTotalIva(true);
+                    oc.UpdateTotalNoSujeta(true);
+                }
+            }
         }
 
         /// <summary>
@@ -116,76 +98,10 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
         }
 
         /// <summary>
-        /// Cantidad por presentacion
-        /// </summary>
-        [XafDisplayName("Presentación Cantidad"), Index(5)]
-        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
-        [ToolTip("Cantidad por presentación")]
-        [RuleValueComparison("OrdenCompraDetalle.Cantidad >= 0", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual, 0, SkipNullOrEmptyValues = true)]
-        public decimal Cantidad
-        {
-            get => cantidad;
-            set
-            {
-                bool changed = SetPropertyValue(nameof(Cantidad), ref cantidad, value);
-                if (!IsLoading && !IsSaving && changed)
-                    unidades = Math.Round(value * this.Presentacion.Unidades, 2);
-            }
-        }
-
-        /// <summary>
         /// Total de unidades para el inventario
         /// </summary>
         [PersistentAlias(nameof(unidades)), XafDisplayName("Unidades"), Index(6)]
         public decimal Unidades => unidades;
-
-        /// <summary>
-        /// Costo por unidad
-        /// </summary>
-        [DbType("numeric(14, 4)"), XafDisplayName("Costo Unidad"), Index(7)]
-        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
-        [ToolTip("Cantidad por presentación")]
-        [RuleValueComparison("OrdenCompraDetalle.CostoUnidad > 0", DefaultContexts.Save, ValueComparisonType.GreaterThan, 0)]
-        public decimal CostoUnidad
-        {
-            get => costoUnidad;
-            set => SetPropertyValue(nameof(CostoUnidad), ref costoUnidad, value);
-        }
-
-        /// <summary>
-        /// Compra exenta
-        /// </summary>
-        [DbType("numeric(14,2)"), XafDisplayName("Exento"), PersistentAlias(nameof(exenta)), Index(8)]
-        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
-        public decimal Exenta => exenta;
-
-        /// <summary>
-        /// Compra gravada
-        /// </summary>
-        [DbType("numeric(14,2)"), XafDisplayName("Gravado"), PersistentAlias(nameof(gravada)), Index(9)]
-        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
-        public decimal Gravada => gravada;
-
-        /// <summary>
-        /// IVA del detalle de la compra
-        /// </summary>
-        [XafDisplayName("Iva"), Index(10), PersistentAlias(nameof(iva))]
-        [ModelDefault("DisplayFormat", "{0:N4}"), ModelDefault("EditMask", "n4")]
-        public decimal Iva => iva;
-
-        /// <summary>
-        /// Total del detalle de la compra
-        /// </summary>
-        [PersistentAlias("[Exenta] + [Gravada] + [Iva]")]
-        [ModelDefault("DisplayFormat", "{0:N2}"), XafDisplayName("Total"), Index(11)]
-        public decimal Total => Convert.ToDecimal(EvaluateAlias(nameof(Total)));
-
-        /// <summary>
-        /// Cantidad anulada
-        /// </summary>
-        [PersistentAlias(nameof(cantidadAnulada)), Index(12), XafDisplayName("Cantidad Anulada")]
-        [ModelDefault("DisplayFormat", "{0:N2}"), VisibleInListView(false), VisibleInLookupListView(false)]
-        public decimal? CantidadAnulada => cantidadAnulada;
 
         /// <summary>
         /// Marca del bien
@@ -224,6 +140,68 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
         {
             get => diasGarantia;
             set => SetPropertyValue(nameof(DiasGarantia), ref diasGarantia, value);
+        }
+
+        #endregion
+
+        #region Metodos
+        protected override void DoCantidadChanged(bool forceChangeEvents)
+        {
+            base.DoCantidadChanged(forceChangeEvents);
+            unidades = Math.Round(Cantidad * this.Presentacion.Unidades, 2);
+        }
+
+        protected override void DoPrecioUnidadChanged(bool forceChangeEvents)
+        {
+            base.DoPrecioUnidadChanged(forceChangeEvents);
+            switch (this.Producto.Clasificacion)
+            {
+                case EClasificacionIVA.Gravado:
+                    if (OrdenCompra.TipoFactura.Codigo == "COVE01")
+                    {
+                        gravada = Math.Round(Unidades * PrecioUnidad, 2);
+                        iva = Math.Round(Convert.ToDecimal(Gravada) * this.Producto.PorcentajeIVA, 2);
+                    }
+                    else
+                    {
+                        gravada = Math.Round(Unidades * PrecioUnidad / (this.Producto.PorcentajeIVA + 1), 2);
+                        iva = Math.Round(Convert.ToDecimal(Gravada) * this.Producto.PorcentajeIVA, 2);
+                    }
+                    break;
+                default:
+                    exenta = Math.Round(Unidades * PrecioUnidad, 2);
+                    iva = 0.0m;
+                    break;
+            }       
+        }
+
+        protected override void DoChangedExenta(bool forceChangeEvents)
+        {
+            base.DoChangedExenta(forceChangeEvents);
+            if (OrdenCompra != null)
+                OrdenCompra.UpdateTotalExenta(forceChangeEvents);
+
+        }
+
+        protected override void DoChangedGravada(bool forceChangedEvents)
+        {
+            base.DoChangedGravada(forceChangedEvents);
+            if (OrdenCompra != null)
+                OrdenCompra.UpdateTotalGravada(forceChangedEvents);
+        }
+
+        protected override void DoChangedIva(bool forceChangeEvents)
+        {
+            base.DoChangedIva(forceChangeEvents);
+            if (OrdenCompra != null)
+                OrdenCompra.UpdateTotalIva(forceChangeEvents);
+        }
+
+        protected override void DoChangedNoSujeta(bool forceChangeEvents)
+        {
+            base.DoChangedNoSujeta(forceChangeEvents);
+            if (OrdenCompra != null)
+                OrdenCompra.UpdateTotalNoSujeta(forceChangeEvents);
         }
 
         #endregion

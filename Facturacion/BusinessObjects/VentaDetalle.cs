@@ -109,6 +109,8 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             }
         }
 
+        
+
         /// <summary>
         /// Bodega de la cual salen los productos, cuando no es servicios
         /// </summary>

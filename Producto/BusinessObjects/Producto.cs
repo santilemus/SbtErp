@@ -1,4 +1,5 @@
 ﻿using DevExpress.ExpressApp.DC;
+using DevExpress.ExpressApp.Model;
 using DevExpress.ExpressApp.SystemModule;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
@@ -32,8 +33,12 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
             Activo = true;
             CantMinima = 0.0m;
             CantMaxima = 0.0m;
+            Constante constante = Session.GetObjectByKey<Constante>("PORCENTAJE_IVA");
+            if (constante != null)
+                porcentajeIVA = Convert.ToDecimal(constante.Valor);
         }
 
+        decimal porcentajeIVA;
         EClasificacionIVA clasificacion = EClasificacionIVA.Gravado;
         Presentacion presentacion;
         private Categoria categoria;
@@ -147,6 +152,15 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         {
             get => clasificacion;
             set => SetPropertyValue(nameof(Clasificacion), ref clasificacion, value);
+        }
+
+        [DbType("numeric(14,4)"), XafDisplayName("Porcentaje IVA")]
+        [ModelDefault("DisplayFormat", "{0:P2}"), ModelDefault("EditMask", "p2")]
+        [VisibleInListView(false), VisibleInLookupListView(false)]
+        public decimal PorcentajeIVA
+        {
+            get => porcentajeIVA;
+            set => SetPropertyValue(nameof(PorcentajeIVA), ref porcentajeIVA, value);
         }
 
         [DevExpress.Xpo.SizeAttribute(200), DbType("varchar(200)"), VisibleInListView(false)]

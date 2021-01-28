@@ -161,16 +161,22 @@ namespace SBT.Apps.Base.Module.BusinessObjects
 
         protected int CorrelativoSQ(string SQName)
         {
+            using (UnitOfWork uow = new UnitOfWork(this.Session.DataLayer, null))
+            {
 #if (Firebird)
-            return Convert.ToInt32(Session.ExecuteScalar("select next value for " + SQName + " from RDB$DATABASE"));
+                return Convert.ToInt32(uow.ExecuteScalar("select next value for " + SQName + " from RDB$DATABASE"));
 #else
-            return Convert.ToInt32(Session.ExecuteScalar($"select next value for {SQName}"));
+                return Convert.ToInt32(uow.ExecuteScalar($"select next value for {SQName}"));
 #endif
+            }
         }
 
         protected int Correlativo(string sSQL)
         {
-            return Convert.ToInt32(Session.ExecuteScalar(sSQL));
+            using (UnitOfWork uow = new UnitOfWork(this.Session.DataLayer, null))
+            {
+                return Convert.ToInt32(uow.ExecuteScalar(sSQL));
+            }
         }
 
         [Action(Caption = "Información de Auditoría", ImageName = "BO_Contact", ToolTip = "Mostrar la Información de Auditoría del Objeto")]

@@ -32,7 +32,7 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
     //[ImageName("BO_Contact")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
-    public class OrdenCompra : XPOBaseDoc
+    public class OrdenCompra : XPCustomFacturaBO
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
         public OrdenCompra(Session session)
             : base(session)
@@ -47,23 +47,13 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
         #region Propiedades
 
         Empleado.Module.BusinessObjects.Empleado aprobo;
-        EEstadoOrdenCompra estado;
+        EEstadoOrdenCompra estadoOrden;
         string concepto;
         Listas tipoFactura;
         ETipoCompra tipo = ETipoCompra.Servicio;
         int? diasCredito;
         Listas condicionPago;
         Tercero.Module.BusinessObjects.Tercero proveedor;
-        [DbType("numeric(14,2)"), Persistent(nameof(CompraGravada))]
-        decimal? compraGravada;
-        [DbType("numeric(14,2)"), Persistent(nameof(CompraExenta))]
-        decimal? compraExenta;
-        [DbType("numeric(14,2)"), Persistent(nameof(Iva))]
-        decimal? iva;
-        [DbType("numeric(14,2)"), Persistent(nameof(IvaRetenido))]
-        decimal? ivaRetenido;
-        [DbType("numeric(14,2)"), Persistent(nameof(IvaPercibido))]
-        decimal? ivaPercibido;
 
         /// <summary>
         /// Proveedor al cual se gira la orden de compra
@@ -86,40 +76,6 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
         }
 
         /// <summary>
-        /// Tipo de Factura que el proveedor debe emitir para la orden de compra
-        /// </summary>
-        [XafDisplayName("Tipo Factura"), RuleRequiredField("OrdenCompra.TipoFactura_Requerido", DefaultContexts.Save)]
-        [DataSourceCriteria("[Categoria] == 15 And [Activo] == True"), VisibleInLookupListView(true), Index(7)]
-        public Listas TipoFactura
-        {
-            get => tipoFactura;
-            set => SetPropertyValue(nameof(TipoFactura), ref tipoFactura, value);
-        }
-
-        /// <summary>
-        /// Condicion de Pago. Es obligatorio cuando se trata de Credito Fiscal o Factura Consumidor Final
-        /// </summary>
-        [XafDisplayName("Condición Pago"), RuleRequiredField("OrdenCompra.CondicionPago_Requerido", "Save",
-            TargetCriteria = "@This.Tipo.Codigo In ('COVE01', 'COVE02')")]
-        [DataSourceCriteria("[Categoria] == 17 And [Activo] == True")]   // Categoria = 17 es condicion de pago
-        [VisibleInListView(false), Index(8)]
-        public Listas CondicionPago
-        {
-            get => condicionPago;
-            set => SetPropertyValue(nameof(CondicionPago), ref condicionPago, value);
-        }
-
-        /// <summary>
-        /// Dias de crédito, cuando la condicion de pago es al crédito
-        /// </summary>
-        [DbType("smallint"), XafDisplayName("Días Crédito"), Index(9), VisibleInLookupListView(false)]
-        public int? DiasCredito
-        {
-            get => diasCredito;
-            set => SetPropertyValue(nameof(DiasCredito), ref diasCredito, value);
-        }
-
-        /// <summary>
         /// Concepto de la compra
         /// </summary>
         [Size(200), DbType("varchar(200)"), XafDisplayName("Concepto"), Index(10)]
@@ -133,10 +89,10 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
         /// Estado de la orden de compra
         /// </summary>
         [DbType("smallint"), XafDisplayName("Estado"), Index(11)]
-        public EEstadoOrdenCompra Estado
+        public EEstadoOrdenCompra EstadoOrden
         {
-            get => estado;
-            set => SetPropertyValue(nameof(Estado), ref estado, value);
+            get => estadoOrden;
+            set => SetPropertyValue(nameof(EstadoOrden), ref estadoOrden, value);
         }
 
         /// <summary>
@@ -150,92 +106,6 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
             set => SetPropertyValue(nameof(Aprobo), ref aprobo, value);
         }
 
-        /// <summary>
-        /// Valor gravado de la orden de compra
-        /// </summary>
-        [PersistentAlias(nameof(compraGravada)), XafDisplayName("Gravado"), Index(13)]
-        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
-        public decimal? CompraGravada
-        {
-            get
-            {
-                if (!IsLoading && !IsSaving && compraGravada == null)
-                    UpdateTotalGravado(false);
-                return compraGravada;
-            }
-        }
-
-        /// <summary>
-        /// Monto del IVA de la orden de compra
-        /// </summary>
-        [PersistentAlias(nameof(iva)), XafDisplayName("IVA"), Index(14)]
-        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
-        public decimal? Iva
-        {
-            get
-            {
-                if (!IsLoading && !IsSaving && iva == null)
-                    UpdateTotalIva(false);
-                return iva;
-            }
-        }
-
-        /// <summary>
-        /// Subtotal Gravado + IVA de la orden de compra
-        /// </summary>
-        [PersistentAlias("[CompraGravada] + [Iva]")]
-        [XafDisplayName("SubTotal"), Index(15)]
-        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
-        public decimal SubTotal
-        {
-            get { return Convert.ToDecimal(EvaluateAlias(nameof(SubTotal))); }
-        }
-
-        /// <summary>
-        ///  IVA Percibido de la orden de compra
-        /// </summary>
-        [PersistentAlias(nameof(ivaPercibido)), XafDisplayName("Iva Percibido"), VisibleInListView(false), Index(16)]
-        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
-        public decimal? IvaPercibido
-        {
-            get { return ivaPercibido; }
-        }
-
-        /// <summary>
-        /// IVA Retenido de la orden de compra
-        /// </summary>
-        [PersistentAlias(nameof(ivaRetenido)), XafDisplayName("Iva Retenido"), VisibleInListView(false), Index(17)]
-        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
-        public decimal? IvaRetenido
-        {
-            get { return ivaRetenido; }
-        }
-
-        /// <summary>
-        /// Monto exento de la orden de compra
-        /// </summary>
-        [PersistentAlias(nameof(compraExenta)), XafDisplayName("Exento"), VisibleInListView(true), Index(18)]
-        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
-        public decimal? CompraExenta
-        {
-            get
-            {
-                if (!IsLoading && !IsSaving && compraExenta == null)
-                    UpdateTotalExento(false);
-                return compraExenta;
-            }
-        }
-
-        /// <summary>
-        ///  Total de la orden de compra
-        /// </summary>
-        [PersistentAlias("[SubTotal] + [IvaPercibido] - [IvaRetenido] + [CompraExenta] ")]
-        [ModelDefault("DisplayFormat", "{0:N2}")]
-        [XafDisplayName("Total"), Index(18)]
-        public decimal Total
-        {
-            get { return Convert.ToDecimal(EvaluateAlias(nameof(Total))); }
-        }
 
         #endregion
 
@@ -250,45 +120,42 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
         }
 
         [Association("OrdenCompra-Facturas"), Index(1)]
-        public XPCollection<FacturaCompra> Facturas
+        public XPCollection<CompraFactura> Facturas
         {
             get
             {
-                return GetCollection<FacturaCompra>(nameof(Facturas));
+                return GetCollection<CompraFactura>(nameof(Facturas));
             }
         }
         #endregion
 
         #region Metodos
-        public void UpdateTotalExento(bool forceChangeEvents)
+        public override void UpdateTotalExenta(bool forceChangeEvents)
         {
-            decimal? oldCompraExenta = compraExenta;
-            decimal tempCompraExenta = 0.0m;
-            foreach (OrdenCompraDetalle detalle in Detalles)
-                tempCompraExenta += detalle.Exenta;
-            compraExenta = tempCompraExenta;
+            base.UpdateTotalExenta(forceChangeEvents);
+            decimal? oldExenta = exenta;
+            exenta = Convert.ToDecimal(Evaluate(CriteriaOperator.Parse("[Detalles].Sum([Exenta])")));
             if (forceChangeEvents)
-                OnChanged(nameof(CompraExenta), oldCompraExenta, compraExenta);
+                OnChanged(nameof(Exenta), oldExenta, exenta);
         }
 
-        public void UpdateTotalGravado(bool forceChangeEvents)
+        public override void UpdateTotalGravada(bool forceChangeEvents)
         {
-            decimal? oldCompraGravada = compraGravada;
-            decimal tempCompraGravada = 0.0m;
+            base.UpdateTotalGravada(forceChangeEvents);
+            decimal? oldGravada = gravada;
+            decimal tempGravada = 0.0m;
             foreach (OrdenCompraDetalle detalle in Detalles)
-                tempCompraGravada += detalle.Gravada;
-            compraGravada = tempCompraGravada;
+                tempGravada += Convert.ToDecimal(detalle.Gravada);
+            gravada = tempGravada;
             if (forceChangeEvents)
-                OnChanged(nameof(CompraGravada), oldCompraGravada, compraGravada);
+                OnChanged(nameof(Gravada), oldGravada, gravada);
         }
 
-        public void UpdateTotalIva(bool forceChangeEvents)
+        public override void UpdateTotalIva(bool forceChangeEvents)
         {
+            base.UpdateTotalIva(forceChangeEvents);
             decimal? oldIva = iva;
-            decimal tempIva = 0.0m;
-            foreach (OrdenCompraDetalle detalle in Detalles)
-                tempIva += detalle.Iva;
-            iva = tempIva;
+            iva = Convert.ToDecimal(Evaluate(CriteriaOperator.Parse("[Detalles].Sum([Iva])")));
             if (forceChangeEvents)
                 OnChanged(nameof(Iva), oldIva, iva);
         }

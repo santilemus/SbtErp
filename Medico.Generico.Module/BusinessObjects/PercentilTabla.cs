@@ -26,7 +26,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
     /// https://apps.who.int/iris/bitstream/handle/10665/43601/9789241595070_GirlsGrowth_eng.pdf?sequence=10&isAllowed=y
     /// https://spa.kyhistotechs.com/using-lms-method-calculate-z-scores-51993705
     /// </remarks>
-    [DefaultClassOptions, ModelDefault("Caption", "Percentil"), NavigationItem("Salud"), CreatableItem(false),
+    [DefaultClassOptions, ModelDefault("Caption", "Percentil"), NavigationItem(false), CreatableItem(false),
         DefaultProperty(nameof(Nombre)), Persistent(nameof(PercentilTabla))]
     //[ImageName("BO_Contact")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
@@ -112,7 +112,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
         {
             PercentilTablaDetalle pd = Detalles.FirstOrDefault<PercentilTablaDetalle>(x => x.EdadMes == edadMeses);
             if (pd != null)
-                return pd.ObtenerValorPercentil(aValor);
+                return pd.ObtenerPercentil(aValor);
             else
                 return 0;
         }

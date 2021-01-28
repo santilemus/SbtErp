@@ -7,10 +7,11 @@ using System;
 using System.ComponentModel;
 using System.Linq;
 using DevExpress.Data.Filtering;
+using DevExpress.ExpressApp.ConditionalAppearance;
 
 namespace SBT.Apps.Base.Module.BusinessObjects
 {
-    [ModelDefault("Caption", "Contacto"), NavigationItem(false), DefaultProperty("Nombre"), Persistent("PersonaContacto")]
+    [ModelDefault("Caption", "Contacto"), NavigationItem(false), DefaultProperty(nameof(Nombre)), Persistent("PersonaContacto")]
     [ImageName(nameof(PersonaContacto))]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class PersonaContacto : XPObjectBaseBO
@@ -53,7 +54,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
                 bool changed = SetPropertyValue(nameof(Contacto), ref contacto, value);
                 if (!IsLoading && !IsSaving && changed)
                 {
-                    Nombre = value != null ? value.Nombre : string.Empty;
+                    Nombre = value != null ? value.Nombre + " " + value.Apellido : string.Empty;
                     Direccion = value != null ? value.Direccion : string.Empty;
                     if (value.Telefonos.Count > 0)
                         Telefono = value != null ? value.Telefonos.FirstOrDefault<PersonaTelefono>().Telefono.Numero : string.Empty;
@@ -63,6 +64,8 @@ namespace SBT.Apps.Base.Module.BusinessObjects
 
 
         [Size(80), DbType("varchar(80)"), Persistent("Nombre"), XafDisplayName("Nombre Contacto")]
+        [Appearance("", Visibility =  DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "Any", 
+            Criteria = "[Contacto] Is not Null", TargetItems = "Nombre")]
         public string Nombre
         {
             get => nombre;

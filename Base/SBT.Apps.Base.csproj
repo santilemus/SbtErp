@@ -151,6 +151,7 @@
     <Compile Include="BusinessObjects\TipoSistemaMedida.cs" />
     <Compile Include="BusinessObjects\TipoUnidadMedida.cs" />
     <Compile Include="BusinessObjects\UnidadMedida.cs" />
+    <Compile Include="BusinessObjects\XPCustomFacturaBO.cs" />
     <Compile Include="Controllers\vcAuditObjectInfo.cs" />
     <Compile Include="Controllers\ViewControllerBase.cs">
       <SubType>Component</SubType>

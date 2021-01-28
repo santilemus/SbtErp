@@ -35,6 +35,7 @@ namespace SBT.Apps.Medico.Module {
             this.AdditionalExportedTypes.Add(typeof(DevExpress.Persistent.BaseImpl.FileAttachmentBase));
             this.AdditionalExportedTypes.Add(typeof(DevExpress.Persistent.BaseImpl.Event));
             this.AdditionalExportedTypes.Add(typeof(DevExpress.Persistent.BaseImpl.Resource));
+            this.AdditionalExportedTypes.Add(typeof(DevExpress.Persistent.BaseImpl.Analysis));
             this.RequiredModuleTypes.Add(typeof(DevExpress.ExpressApp.SystemModule.SystemModule));
             this.RequiredModuleTypes.Add(typeof(DevExpress.ExpressApp.AuditTrail.AuditTrailModule));
             this.RequiredModuleTypes.Add(typeof(DevExpress.ExpressApp.Objects.BusinessClassLibraryCustomizationModule));
@@ -52,6 +53,7 @@ namespace SBT.Apps.Medico.Module {
             this.RequiredModuleTypes.Add(typeof(SBT.Apps.Tercero.Module.TerceroModule));
             this.RequiredModuleTypes.Add(typeof(SBT.Apps.Producto.Module.ProductoModule));
             this.RequiredModuleTypes.Add(typeof(DevExpress.ExpressApp.Chart.ChartModule));
+            this.RequiredModuleTypes.Add(typeof(DevExpress.ExpressApp.PivotGrid.PivotGridModule));
 
 		}
 

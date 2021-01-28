@@ -23,6 +23,7 @@ namespace SBT.Apps.Medico.Web
         }
         protected void Application_Start(Object sender, EventArgs e) {
             SecurityAdapterHelper.Enable();
+            DevExpress.ExpressApp.FrameworkSettings.DefaultSettingsCompatibilityMode = FrameworkSettingsCompatibilityMode.Latest; //DevExpress.ExpressApp.FrameworkSettingsCompatibilityMode.v20_1;
             ASPxWebControl.CallbackError += new EventHandler(Application_Error);
             WebApplication.EnableMultipleBrowserTabsSupport = true;
 
@@ -37,13 +38,12 @@ namespace SBT.Apps.Medico.Web
             Tracing.Initialize();
             WebApplication.SetInstance(Session, new medicoAspNetApplication());
             SecurityStrategy security = (SecurityStrategy)WebApplication.Instance.Security;
-            security.RegisterXPOAdapterProviders();
+            security.RegisterXPOAdapterProviders();           
             DevExpress.ExpressApp.Web.Templates.DefaultVerticalTemplateContentNew.ClearSizeLimit();
             WebApplication.Instance.SwitchToNewStyle();
             if (ConfigurationManager.ConnectionStrings["medico"] != null) {
                 WebApplication.Instance.ConnectionString = ConfigurationManager.ConnectionStrings["medico"].ConnectionString;
             }
-
             WebApplication.Instance.LastLogonParametersWriting += new EventHandler<LastLogonParametersWritingEventArgs>(Instance_LastLogonParametersWriting);
             WebApplication.Instance.LastLogonParametersReading += new EventHandler<LastLogonParametersReadingEventArgs>(Instance_LastLogonParametersReading);
             WebApplication.Instance.LoggedOn += new EventHandler<LogonEventArgs>(Instance_LoggedOn);

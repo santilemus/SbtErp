@@ -11,6 +11,7 @@ using DevExpress.Persistent.Validation;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Tercero.Module.BusinessObjects;
 using SBT.Apps.Medico.Generico.Module.BusinessObjects;
+using DevExpress.ExpressApp.Model;
 
 namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 {
@@ -29,7 +30,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         public override void AfterConstruction()
         {
             base.AfterConstruction();
-            Fecha = DateTime.Now;
+            Fecha = DateTime.Today;
         }
 
         private Tercero.Module.BusinessObjects.Tercero laboratorio;
@@ -54,6 +55,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 
         [RuleRequiredField("ConsultaExamen.Fecha_Requerido", "Save")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
+        [ModelDefault("DisplayFormat", "{0:G}"), ModelDefault("EditMask", "G")]
         public System.DateTime Fecha
         {
             get => fecha;
@@ -63,7 +65,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [RuleValueComparison("ConsultaExamen.FechaPresentacion >= Fecha", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual, "[Fecha]", ParametersMode.Expression,
             TargetCriteria = "[Examen.Categoria.Codigo] != 'EX001'")]
-
+        [ModelDefault("DisplayFormat", "{0:G}"), ModelDefault("EditMask", "G")]
         public Nullable<System.DateTime> FechaPresentacion
         {
             get => fechaPresentacion;

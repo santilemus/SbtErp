@@ -202,6 +202,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         //}
 
         [DevExpress.Xpo.AssociationAttribute("Exámenes-Consulta"), DevExpress.Xpo.Aggregated]
+        [ToolTip("Exámenes practicados al paciente, pueden ser: físicos, pruebas de laboratorio o pruebas medicas")]
         public XPCollection<ConsultaExamen> Exámenes
         {
             get
@@ -211,6 +212,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         }
         [DevExpress.Xpo.AssociationAttribute("ExamenesFisicos-Consulta"), DevExpress.Xpo.Aggregated]
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Exámenes Físicos")]
+        [ToolTip("Exámenes físicos practicados al paciente para la consulta actual")]
         public XPCollection<ConsultaExamenFisico> ExamenesFisicos
         {
             get
@@ -219,6 +221,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
             }
         }
         [DevExpress.Xpo.AssociationAttribute("Diagnostico-Consulta"), DevExpress.Xpo.Aggregated]
+        [ToolTip("Diagnosticos o padecimientos del paciente e identificados en la consulta")]
         public XPCollection<ConsultaDiagnostico> Diagnosticos
         {
             get
@@ -228,10 +231,12 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         }
 
         [Association("ConsultaSigno-Consulta"), DevExpress.Xpo.Aggregated]
+        [ToolTip("Registro de los signos tomados al paciente en la consulta")]
         public XPCollection<ConsultaSigno> ConsultaSignos => GetCollection<ConsultaSigno>(nameof(ConsultaSignos));
 
         [DevExpress.Xpo.AssociationAttribute("Sintomas-Consulta"), DevExpress.Xpo.Aggregated]
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Síntomas")]
+        [ToolTip("Sintomas experimentados por el paciente")]
         public XPCollection<ConsultaSintoma> Sintomas
         {
             get
@@ -241,6 +246,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         }
 
         [DevExpress.Xpo.AssociationAttribute("Receta-Consulta"), DevExpress.Xpo.Aggregated]
+        [ToolTip("Medicamentos recetados")]
         public XPCollection<ConsultaReceta> Receta
         {
             get
@@ -250,6 +256,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         }
 
         [DevExpress.Xpo.AssociationAttribute("Incapacidades-Consulta"), DevExpress.Xpo.Aggregated]
+        [ToolTip("Incapacidades otorgadas")]
         public XPCollection<ConsultaIncapacidad> Incapacidades
         {
             get
@@ -259,9 +266,11 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         }
 
         [Association("Consulta-UltraSonografiaObstetricas"), DevExpress.Xpo.Aggregated, XafDisplayName("Ecografía Obstetrica")]
+        [ToolTip("Información de las ultrasonografías obstetricas practicadas a paciente femenino")]
         public XPCollection<Ginecologia.UltraSonografiaObstetrica> UltrasonografiaObstetricas => GetCollection<Ginecologia.UltraSonografiaObstetrica>(nameof(UltrasonografiaObstetricas));
 
         [Association("Consulta-UltrasonografiaPelvicas"), DevExpress.Xpo.Aggregated, XafDisplayName("Ecografía Pélvica")]
+        [ToolTip("Información de las ultrasonografías pelvicas practicadas a paciente femenino")]
         public XPCollection<Ginecologia.UltrasonografiaPelvica> UltrasonografiaPelvicas => GetCollection<Ginecologia.UltrasonografiaPelvica>(nameof(UltrasonografiaPelvicas));
 
         #region Metodos

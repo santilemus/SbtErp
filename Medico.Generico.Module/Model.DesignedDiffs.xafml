@@ -2,8 +2,8 @@
 <Application Title="SBT.Apps.Medico.Generico.Module" Logo="ExpressAppLogo">
   <Options DataAccessMode="Server" />
   <SchemaModules>
-    <SchemaModule Name="CloneObjectModule" Version="20.1.4.0" IsNewNode="True" />
-    <SchemaModule Name="SystemModule" Version="20.1.4.0" IsNewNode="True" />
+    <SchemaModule Name="CloneObjectModule" Version="20.2.5.0" IsNewNode="True" />
+    <SchemaModule Name="SystemModule" Version="20.2.5.0" IsNewNode="True" />
   </SchemaModules>
   <Views>
     <DetailView Id="CitaBase_DetailView">
@@ -124,36 +124,38 @@
     <DetailView Id="Medicamento_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
-          <LayoutGroup Id="SimpleEditors" RelativeSize="32.299012693935119">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="26.187419768934532">
             <TabbedGroup Id="Item1" CaptionLocation="Top" Index="0" RelativeSize="100" IsNewNode="True">
               <LayoutGroup Id="Producto" ShowCaption="True" Direction="Horizontal" Index="0" RelativeSize="100" IsNewNode="True">
-                <LayoutGroup Id="Producto_col1" ShowCaption="False" Index="0" RelativeSize="49.942329873125722" CaptionLocation="Left" IsNewNode="True">
-                  <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="20.454545454545453" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="Codigo" ViewItem="Codigo" Index="1" RelativeSize="14.772727272727273" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="CodigoBarra" ViewItem="CodigoBarra" Index="2" RelativeSize="14.772727272727273" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="Nombre" ViewItem="Nombre" Index="3" RelativeSize="14.772727272727273" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="Categoria" ViewItem="Categoria" Index="4" RelativeSize="14.772727272727273" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="NombreCorto" ViewItem="NombreCorto" Index="5" RelativeSize="20.454545454545453" CaptionLocation="Left" IsNewNode="True" />
+                <LayoutGroup Id="Producto_col1" ShowCaption="False" Index="0" RelativeSize="49.942987457240591" CaptionLocation="Left" IsNewNode="True">
+                  <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="24" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="Codigo" ViewItem="Codigo" Index="1" RelativeSize="17.333333333333332" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="CodigoBarra" ViewItem="CodigoBarra" Index="2" RelativeSize="17.333333333333332" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="Nombre" ViewItem="Nombre" Index="3" RelativeSize="17.333333333333332" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="Categoria" ViewItem="Categoria" Index="4" RelativeSize="24" CaptionLocation="Left" IsNewNode="True" />
                 </LayoutGroup>
-                <LayoutGroup Id="Producto_col2" ShowCaption="False" Index="1" RelativeSize="50.057670126874278" CaptionLocation="Left" IsNewNode="True">
-                  <LayoutItem Id="UnidadMedida" ViewItem="UnidadMedida" Index="0" RelativeSize="20.454545454545453" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="Presentacion" ViewItem="Presentacion" Index="1" RelativeSize="14.772727272727273" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="CantMinima" ViewItem="CantMinima" Index="2" RelativeSize="14.772727272727273" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="CantMaxima" ViewItem="CantMaxima" Index="3" RelativeSize="14.772727272727273" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="Activo" ViewItem="Activo" Index="4" RelativeSize="35.227272727272727" CaptionLocation="Left" IsNewNode="True" />
+                <LayoutGroup Id="Producto_col2" ShowCaption="False" Index="1" RelativeSize="50.057012542759409" CaptionLocation="Left" IsNewNode="True">
+                  <LayoutItem Id="NombreCorto" ViewItem="NombreCorto" CaptionLocation="Left" Index="0" RelativeSize="24" IsNewNode="True" />
+                  <LayoutItem Id="UnidadMedida" ViewItem="UnidadMedida" Index="1" RelativeSize="17.333333333333332" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="Presentacion" ViewItem="Presentacion" Index="2" RelativeSize="17.333333333333332" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="Clasificacion" ViewItem="Clasificacion" Index="3" RelativeSize="17.333333333333332" IsNewNode="True" />
+                  <LayoutItem Id="PorcentajeIVA" ViewItem="PorcentajeIVA" Index="4" RelativeSize="24" IsNewNode="True" />
                 </LayoutGroup>
               </LayoutGroup>
               <LayoutGroup Id="Medicamento" ShowCaption="True" Direction="Horizontal" Index="1" RelativeSize="100" IsNewNode="True">
-                <LayoutGroup Id="Medicamento_col1" ShowCaption="False" Index="0" RelativeSize="47.174163783160324" IsNewNode="True">
-                  <LayoutItem Id="ContraIndicacion" ViewItem="ContraIndicacion" Index="0" RelativeSize="20.454545454545453" IsNewNode="True" />
-                  <LayoutItem Id="Concentracion" ViewItem="Concentracion" Index="1" RelativeSize="14.772727272727273" IsNewNode="True" />
-                  <LayoutItem Id="Via" ViewItem="Via" Index="2" RelativeSize="14.772727272727273" IsNewNode="True" />
-                  <LayoutItem Id="Prioridad" ViewItem="Prioridad" Index="3" RelativeSize="50" IsNewNode="True" />
+                <LayoutGroup Id="Medicamento_col1" ShowCaption="False" Index="0" RelativeSize="47.092360319270242" IsNewNode="True">
+                  <LayoutItem Id="ContraIndicacion" ViewItem="ContraIndicacion" Index="0" RelativeSize="24" IsNewNode="True" />
+                  <LayoutItem Id="Concentracion" ViewItem="Concentracion" Index="1" RelativeSize="17.333333333333332" IsNewNode="True" />
+                  <LayoutItem Id="Via" ViewItem="Via" Index="2" RelativeSize="17.333333333333332" IsNewNode="True" />
+                  <LayoutItem Id="Prioridad" ViewItem="Prioridad" Index="3" RelativeSize="17.333333333333332" IsNewNode="True" />
+                  <LayoutItem Id="NivelUso" ViewItem="NivelUso" Index="4" RelativeSize="24" IsNewNode="True" />
                 </LayoutGroup>
-                <LayoutGroup Id="Medicamento_col2" ShowCaption="False" Index="1" RelativeSize="52.825836216839676" IsNewNode="True">
-                  <LayoutItem Id="NivelUso" ViewItem="NivelUso" Index="0" RelativeSize="20.454545454545453" IsNewNode="True" />
-                  <LayoutItem Id="CodigoVEN" ViewItem="CodigoVEN" Index="1" RelativeSize="14.772727272727273" IsNewNode="True" />
-                  <LayoutItem Id="Comentario" ViewItem="Comentario" Index="2" RelativeSize="64.772727272727266" IsNewNode="True" />
+                <LayoutGroup Id="Medicamento_col2" ShowCaption="False" Index="1" RelativeSize="52.907639680729758" IsNewNode="True">
+                  <LayoutItem Id="CodigoVEN" ViewItem="CodigoVEN" Index="0" RelativeSize="24" IsNewNode="True" />
+                  <LayoutItem Id="Activo" ViewItem="Activo" CaptionLocation="Left" Index="1" RelativeSize="17.333333333333332" IsNewNode="True" />
+                  <LayoutItem Id="CantMinima" ViewItem="CantMinima" CaptionLocation="Left" Index="2" RelativeSize="17.333333333333332" IsNewNode="True" />
+                  <LayoutItem Id="CantMaxima" ViewItem="CantMaxima" CaptionLocation="Left" Index="3" RelativeSize="17.333333333333332" IsNewNode="True" />
+                  <LayoutItem Id="Comentario" ViewItem="Comentario" Index="4" RelativeSize="24" IsNewNode="True" />
                 </LayoutGroup>
               </LayoutGroup>
             </TabbedGroup>
@@ -174,12 +176,15 @@
             </LayoutGroup>
             <LayoutGroup Id="Producto" Removed="True" />
           </LayoutGroup>
-          <TabbedGroup Id="Tabs" RelativeSize="67.700987306064874" Index="1">
+          <TabbedGroup Id="Tabs" RelativeSize="73.812580231065468" Index="1">
             <LayoutGroup Id="MedicDosis" RelativeSize="100">
               <LayoutItem Id="MedicDosis" RelativeSize="100" />
             </LayoutGroup>
             <LayoutGroup Id="Vacunas" RelativeSize="100">
               <LayoutItem Id="Vacunas" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="Vias" RelativeSize="100">
+              <LayoutItem Id="Vias" RelativeSize="100" />
             </LayoutGroup>
             <LayoutGroup Id="Precios" RelativeSize="100">
               <LayoutItem Id="Precios" RelativeSize="100" />

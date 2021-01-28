@@ -1,20 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Application Title="SBT.Apps.Medico" Logo="ExpressAppLogo">
+  <BOModel>
+    <Class Name="DevExpress.Persistent.BaseImpl.PermissionPolicy.PermissionPolicyTypePermissionObject">
+      <AppearanceRules>
+        <AppearanceRule Id="PermissionPolicyTypePermissionObject_Disable_Create_Write_Delete" Context="Any" TargetItems="CreateState;DeleteState;WriteState" Enabled="False" Criteria="Not IsCurrentUserInRole('Administrators') And [TargetType] In ('DevExpress.Persistent.BaseImpl.ReportDataV2', 'DevExpress.Persistent.BaseImpl.Analysis')" IsNewNode="True" />
+      </AppearanceRules>
+    </Class>
+  </BOModel>
   <NavigationItems>
     <Items>
       <Item Id="Contabilidad" Visible="False" />
       <Item Id="Default">
         <Items>
-          <Item Id="Event_ListView" Visible="False" />
+          <Item Id="Event_ListView" Visible="True" />
         </Items>
       </Item>
     </Items>
   </NavigationItems>
   <Options DataAccessMode="Server" />
   <SchemaModules>
-    <SchemaModule Name="CloneObjectModule" Version="20.1.4.0" IsNewNode="True" />
-    <SchemaModule Name="SchedulerModuleBase" Version="20.1.4.0" IsNewNode="True" />
-    <SchemaModule Name="SystemModule" Version="20.1.4.0" IsNewNode="True" />
+    <SchemaModule Name="CloneObjectModule" Version="20.2.5.0" IsNewNode="True" />
+    <SchemaModule Name="SchedulerModuleBase" Version="20.2.5.0" IsNewNode="True" />
+    <SchemaModule Name="SystemModule" Version="20.2.5.0" IsNewNode="True" />
   </SchemaModules>
   <Views>
     <ListView Id="PercentilTablaDetalle_Chart">

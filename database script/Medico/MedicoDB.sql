@@ -25,7 +25,7 @@ end
 go
 EXEC sp_addrolemember 'admins', 'UsrMedico'
 go
-/****** Object:  UserDefinedFunction [dbo].[InitialCap]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  UserDefinedFunction [dbo].[InitialCap]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -47,7 +47,7 @@ SELECT @String   = STUFF(LOWER(@String),1,1,UPPER(LEFT(@String,1))) COLLATE Lati
                      RETURN @String;
   END ;
 GO
-/****** Object:  Table [dbo].[ActividadEconomica]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[ActividadEconomica]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -69,21 +69,21 @@ CREATE TABLE [dbo].[ActividadEconomica](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Afp]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[Afp]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Afp](
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[Proveedor] [int] NOT NULL,
 	[Siglas] [varchar](10) NULL,
 	[AporteAfiliado] [numeric](10, 4) NULL,
 	[AporteEmpresa] [numeric](10, 4) NULL,
 	[Comision] [numeric](10, 4) NULL,
+	[UsuarioCrea] [varchar](25) NULL,
+	[FechaCrea] [datetime] NULL,
+	[UsuarioMod] [varchar](25) NULL,
+	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_Afp] PRIMARY KEY CLUSTERED 
@@ -93,33 +93,31 @@ CREATE TABLE [dbo].[Afp](
 ) ON [PRIMARY]
 GO
 
-/****** Object:  Table [dbo].[PacienteAdjunto]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[Analysis]    Script Date: 24/1/2021 01:30:12 ******/
 SET ANSI_NULLS ON
 GO
+
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[PacienteAdjunto](
-	[OID] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
-	[Paciente] [int] NULL,
-	[Categoria] [nvarchar](10) NULL,
-	[Descripcion] [varchar](100) NULL,
-	[Fecha] [datetime2](7) NULL,
-	[File] [uniqueidentifier] NULL,
-	[Vigente] [bit] NULL,
+
+CREATE TABLE [dbo].[Analysis](
+	[Oid] [uniqueidentifier] ROWGUIDCOL  NOT NULL,
+	[DimensionPropertiesString] [nvarchar](max) NULL,
+	[Name] [nvarchar](100) NULL,
+	[Criteria] [nvarchar](max) NULL,
+	[ObjectTypeName] [nvarchar](max) NULL,
+	[ChartSettingsContent] [varbinary](max) NULL,
+	[PivotGridSettingsContent] [varbinary](max) NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
- CONSTRAINT [PK_PacienteAdjunto] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_Analysis] PRIMARY KEY CLUSTERED 
 (
-	[OID] ASC
+	[Oid] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
 
-/****** Object:  Table [dbo].[AsociacionProfesional]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[AsociacionProfesional]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -142,8 +140,7 @@ CREATE TABLE [dbo].[AsociacionProfesional](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[AuditDataItemPersistent]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[AuditDataItemPersistent]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -168,8 +165,7 @@ CREATE TABLE [dbo].[AuditDataItemPersistent](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[AuditedObjectWeakReference]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[AuditedObjectWeakReference]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -185,8 +181,7 @@ CREATE TABLE [dbo].[AuditedObjectWeakReference](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[BugReport]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[BugReport]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -197,12 +192,12 @@ CREATE TABLE [dbo].[BugReport](
 	[Url] [varchar](80) NULL,
 	[FechaReporte] [datetime2](7) NULL,
 	[CapturaPantalla] [varbinary](max) NULL,
-	[Descripcion] [varchar](1000) NULL,
+	[Descripcion] [varbinary](max) NULL,
 	[ReportadoPor] [varchar](50) NULL,
 	[Plataforma] [smallint] NULL,
 	[SistemaOperativo] [smallint] NULL,
 	[Navegador] [smallint] NULL,
-	[PasosReproducir] [varchar](1000) NULL,
+	[PasosReproducir] [varchar](max) NULL,
 	[ResultadoEsperado] [varchar](100) NULL,
 	[ResultadoActual] [varchar](100) NULL,
 	[DefectoSeveridad] [smallint] NULL,
@@ -224,19 +219,18 @@ CREATE TABLE [dbo].[BugReport](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[Cargo]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[Cargo]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Cargo](
 	[OID] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
-	[Nombre] [nvarchar](100) NULL,
+	[Nombre] [varchar](100) NULL,
 	[TipoContrato] [int] NULL,
 	[TipoSalario] [int] NULL,
-	[Salario] [money] NULL,
-	[Obligaciones] [nvarchar](500) NULL,
+	[Salario] [numeric](12, 2) NULL,
+	[Obligaciones] [varchar](500) NULL,
 	[Activo] [bit] NULL,
 	[UsuarioCrea] [varchar](25) NULL,
 	[FechaCrea] [datetime] NULL,
@@ -250,36 +244,7 @@ CREATE TABLE [dbo].[Cargo](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[CdoPercentilPesoEstaturaBMI]    Script Date: 19/11/2020 14:08:55 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[CdoPercentilPesoEstaturaBMI](
-	[Oid] [uniqueidentifier] ROWGUIDCOL  NOT NULL,
-	[TipoTabla] [int] NULL,
-	[EdadMes] [numeric](5, 2) NULL,
-	[P3] [numeric](9, 6) NULL,
-	[P5] [numeric](9, 6) NULL,
-	[P10] [numeric](9, 6) NULL,
-	[P25] [numeric](9, 6) NULL,
-	[P50] [numeric](9, 6) NULL,
-	[P75] [numeric](9, 6) NULL,
-	[P85] [numeric](9, 6) NULL,
-	[P90] [numeric](9, 6) NULL,
-	[P95] [numeric](9, 6) NULL,
-	[P97] [numeric](9, 6) NULL,
-	[OptimisticLockField] [int] NULL,
-	[GCRecord] [int] NULL,
- CONSTRAINT [PK_CdoPercentilPesoEstaturaBMI] PRIMARY KEY CLUSTERED 
-(
-	[Oid] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-
-/****** Object:  Table [dbo].[Cita]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[Cita]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -317,73 +282,59 @@ CREATE TABLE [dbo].[Cita](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[ConCatalogo]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[ConCatalogo]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[ConCatalogo](
 	[OID] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
+	[Empresa] [int] NULL,
+	[CodigoCuenta] [varchar](20) NULL,
+	[Nombre] [varchar](150) NULL,
+	[Nivel] [smallint] NULL,
+	[Activa] [bit] NULL,
+	[CtaPadre] [int] NULL,
+	[TipoCuenta] [smallint] NULL,
+	[TipoSaldoCta] [smallint] NULL,
+	[CtaResumen] [bit] NULL,
+	[CtaMayor] [bit] NULL,
 	[UsuarioCrea] [varchar](25) NULL,
 	[FechaCrea] [datetime] NULL,
 	[UsuarioMod] [varchar](25) NULL,
 	[FechaMod] [datetime] NULL,
-	[cod_emp] [int] NULL,
-	[cod_cta_padre] [int] NULL,
-	[cod_cuenta] [varchar](20) NULL,
-	[nombre] [varchar](150) NULL,
-	[tipo_cuenta] [smallint] NULL,
-	[cta_resumen] [bit] NULL,
-	[cta_mayor] [bit] NULL,
-	[tipo_saldo] [varchar](1) NULL,
-	[activa] [bit] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
-	[Nivel] [smallint] NULL,
-	[Empresa] [int] NULL,
-	[CtaPadre] [int] NULL,
-	[CodigoCuenta] [varchar](20) NULL,
-	[TipoCuenta] [smallint] NULL,
-	[CtaResumen] [bit] NULL,
-	[CtaMayor] [bit] NULL,
-	[TipoSaldoCta] [smallint] NULL,
  CONSTRAINT [PK_ConCatalogo] PRIMARY KEY CLUSTERED 
 (
 	[OID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[ConPeriodo]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[ConPeriodo]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[ConPeriodo](
 	[OID] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
+	[FechaInicio] [datetime] NULL,
+	[FechaFin] [datetime] NULL,
+	[Comentario] [varchar](250) NULL,
+	[Activo] [bit] NULL,
 	[UsuarioCrea] [varchar](25) NULL,
 	[FechaCrea] [datetime] NULL,
 	[UsuarioMod] [varchar](25) NULL,
 	[FechaMod] [datetime] NULL,
-	[cod_emp] [int] NULL,
-	[numero] [smallint] NULL,
-	[fecha_inicio] [datetime] NULL,
-	[fecha_fin] [datetime] NULL,
-	[comentario] [varchar](250) NULL,
-	[activo] [bit] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
-	[FechaInicio] [datetime] NULL,
-	[FechaFin] [datetime] NULL,
  CONSTRAINT [PK_ConPeriodo] PRIMARY KEY CLUSTERED 
 (
 	[OID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[Constante]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[Constante]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -405,8 +356,7 @@ CREATE TABLE [dbo].[Constante](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[Consulta]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[Consulta]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -434,8 +384,29 @@ CREATE TABLE [dbo].[Consulta](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[ConsultaExamen]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[ConsultaDiagnostico]    Script Date: 21/1/2021 00:34:31 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ConsultaDiagnostico](
+	[OID] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
+	[Consulta] [int] NULL,
+	[Problema] [int] NULL,
+	[Descripcion] [nvarchar](250) NULL,
+	[UsuarioCrea] [varchar](25) NULL,
+	[FechaCrea] [datetime] NULL,
+	[UsuarioMod] [varchar](25) NULL,
+	[FechaMod] [datetime] NULL,
+	[OptimisticLockField] [int] NULL,
+	[GCRecord] [int] NULL,
+ CONSTRAINT [PK_ConsultaDiagnostico] PRIMARY KEY CLUSTERED 
+(
+	[OID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ConsultaExamen]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -461,8 +432,7 @@ CREATE TABLE [dbo].[ConsultaExamen](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[ConsultaExamenFisico]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[ConsultaExamenFisico]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -486,8 +456,7 @@ CREATE TABLE [dbo].[ConsultaExamenFisico](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[ConsultaIncapacidad]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[ConsultaIncapacidad]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -510,8 +479,7 @@ CREATE TABLE [dbo].[ConsultaIncapacidad](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[ConsultaParametro]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[ConsultaParametro]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -533,76 +501,75 @@ CREATE TABLE [dbo].[ConsultaParametro](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[ConsultaReceta]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[ConsultaReceta]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[ConsultaReceta](
 	[OID] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
+	[Consulta] [int] NULL,
+	[Medicamento] [int] NULL,
+	[Farmaceutica] [int] NULL,
+	[Dosis] [varchar](100) NULL,
+	[Cantidad] [numeric](12, 2) NULL,
+	[ViaAdministracion] [int] NULL,
+	[Frecuencia] [varchar](100) NULL,
+	[Precaucion] [varchar](250) NULL,
+	[MuestraMedica] [bit] NULL,
 	[UsuarioCrea] [varchar](25) NULL,
 	[FechaCrea] [datetime] NULL,
 	[UsuarioMod] [varchar](25) NULL,
 	[FechaMod] [datetime] NULL,
-	[Medicamento] [int] NULL,
-	[Farmaceutica] [int] NULL,
-	[Dosis] [nvarchar](100) NULL,
-	[Frecuencia] [nvarchar](100) NULL,
-	[Precaucion] [nvarchar](250) NULL,
-	[MuestraMedica] [bit] NULL,
-	[Cantidad] [money] NULL,
-	[Consulta] [int] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
-	[ViaAdministracion] [int] NULL,
  CONSTRAINT [PK_ConsultaReceta] PRIMARY KEY CLUSTERED 
 (
 	[OID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[ConsultaDiagnostico]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[ConsultaSigno]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[ConsultaDiagnostico](
+CREATE TABLE [dbo].[ConsultaSigno](
 	[OID] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
+	[Consulta] [int] NULL,
+	[Signo] [int] NULL,
+	[Valor] [numeric](12, 2) NULL,
+	[Imc] [int] NULL,
+	[PercentilTablaDetalle] [int] NULL,
 	[UsuarioCrea] [varchar](25) NULL,
 	[FechaCrea] [datetime] NULL,
 	[UsuarioMod] [varchar](25) NULL,
 	[FechaMod] [datetime] NULL,
-	[Consulta] [int] NULL,
-	[Problema] [int] NULL,
-	[Descripcion] [nvarchar](250) NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
- CONSTRAINT [PK_ConsultaDiagnostico] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_ConsultaSigno] PRIMARY KEY CLUSTERED 
 (
 	[OID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[ConsultaSintoma]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[ConsultaSintoma]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[ConsultaSintoma](
 	[OID] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
+	[Consulta] [int] NULL,
+	[Nombre] [varchar](250) NULL,
+	[Descripcion] [varchar](100) NULL,
+	[Intensidad] [nvarchar](10) NULL,
+	[FechaInicio] [datetime] NULL,
+	[FechaFin] [datetime] NULL,
 	[UsuarioCrea] [varchar](25) NULL,
 	[FechaCrea] [datetime] NULL,
 	[UsuarioMod] [varchar](25) NULL,
 	[FechaMod] [datetime] NULL,
-	[Intensidad] [nvarchar](10) NULL,
-	[Nombre] [nvarchar](250) NULL,
-	[Descripcion] [nvarchar](100) NULL,
-	[FechaInicio] [datetime] NULL,
-	[FechaFin] [datetime] NULL,
-	[Consulta] [int] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_ConsultaSintoma] PRIMARY KEY CLUSTERED 
@@ -611,8 +578,7 @@ CREATE TABLE [dbo].[ConsultaSintoma](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[Empleado]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[Empleado]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -626,11 +592,11 @@ CREATE TABLE [dbo].[Empleado](
 	[Estado] [varchar](12) NULL,
 	[Nacionalidad] [varchar](8) NULL,
 	[TipoCuenta] [int] NULL,
-	[NumeroCuenta] [nvarchar](14) NULL,
+	[NumeroCuenta] [varchar](14) NULL,
 	[Pensionado] [bit] NULL,
-	[NumeroCarne] [nvarchar](10) NULL,
-	[Titulo] [nvarchar](12) NULL,
-	[NumeroJVPM] [nvarchar](10) NULL,
+	[NumeroCarne] [varchar](10) NULL,
+	[Titulo] [varchar](12) NULL,
+	[NumeroJVPM] [varchar](10) NULL,
 	[Cargo] [int] NULL,
 	[TipoContrato] [int] NULL,
 	[Banco] [int] NULL,
@@ -644,23 +610,22 @@ CREATE TABLE [dbo].[Empleado](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[EmpleadoCapacitacion]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[EmpleadoCapacitacion]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[EmpleadoCapacitacion](
 	[OID] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
+	[Empleado] [int] NULL,
+	[Codigo] [varchar](12) NULL,
+	[Descripcion] [varchar](150) NULL,
+	[FechaInicio] [datetime] NULL,
+	[DiasDuracion] [smallint] NULL,
 	[UsuarioCrea] [varchar](25) NULL,
 	[FechaCrea] [datetime] NULL,
 	[UsuarioMod] [varchar](25) NULL,
 	[FechaMod] [datetime] NULL,
-	[Codigo] [varchar](12) NULL,
-	[Descripcion] [nvarchar](150) NULL,
-	[FechaInicio] [datetime] NULL,
-	[DiasDuracion] [smallint] NULL,
-	[Empleado] [int] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_EmpleadoCapacitacion] PRIMARY KEY CLUSTERED 
@@ -669,21 +634,20 @@ CREATE TABLE [dbo].[EmpleadoCapacitacion](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[EmpleadoMembresia]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[EmpleadoMembresia]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[EmpleadoMembresia](
 	[OID] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
+	[Empleado] [int] NULL,
+	[AsociacionProfesional] [int] NULL,
+	[Vigente] [bit] NULL,
 	[UsuarioCrea] [varchar](25) NULL,
 	[FechaCrea] [datetime] NULL,
 	[UsuarioMod] [varchar](25) NULL,
 	[FechaMod] [datetime] NULL,
-	[AsociacionProfesional] [int] NULL,
-	[Vigente] [bit] NULL,
-	[Empleado] [int] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_EmpleadoMembresia] PRIMARY KEY CLUSTERED 
@@ -692,25 +656,24 @@ CREATE TABLE [dbo].[EmpleadoMembresia](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[EmpleadoPariente]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[EmpleadoPariente]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[EmpleadoPariente](
 	[OID] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
+	[Empleado] [int] NULL,
+	[Nombre] [varchar](50) NULL,
+	[Apellido] [varchar](50) NULL,
+	[Tipo] [varchar](12) NULL,
+	[FechaNacimiento] [datetime] NULL,
+	[Beneficiario] [bit] NULL,
+	[Direccion] [varchar](150) NULL,
 	[UsuarioCrea] [varchar](25) NULL,
 	[FechaCrea] [datetime] NULL,
 	[UsuarioMod] [varchar](25) NULL,
 	[FechaMod] [datetime] NULL,
-	[Tipo] [varchar](12) NULL,
-	[Nombre] [nvarchar](50) NULL,
-	[Apellido] [nvarchar](50) NULL,
-	[Beneficiario] [bit] NULL,
-	[FechaNacimiento] [datetime] NULL,
-	[Direccion] [nvarchar](150) NULL,
-	[Empleado] [int] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_EmpleadoPariente] PRIMARY KEY CLUSTERED 
@@ -719,21 +682,20 @@ CREATE TABLE [dbo].[EmpleadoPariente](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[EmpleadoProfesion]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[EmpleadoProfesion]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[EmpleadoProfesion](
 	[OID] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
+	[Empleado] [int] NULL,
+	[Profesion] [int] NULL,
+	[NumeroProfesional] [varchar](12) NULL,
 	[UsuarioCrea] [varchar](25) NULL,
 	[FechaCrea] [datetime] NULL,
 	[UsuarioMod] [varchar](25) NULL,
 	[FechaMod] [datetime] NULL,
-	[Profesion] [int] NULL,
-	[NumeroProfesional] [nvarchar](12) NULL,
-	[Empleado] [int] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_EmpleadoProfesion] PRIMARY KEY CLUSTERED 
@@ -742,8 +704,7 @@ CREATE TABLE [dbo].[EmpleadoProfesion](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[Empresa]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[Empresa]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -756,6 +717,7 @@ CREATE TABLE [dbo].[Empresa](
 	[Ciudad] [varchar](8) NULL,
 	[Direccion] [varchar](200) NULL,
 	[Nit] [varchar](14) NULL,
+	[NRC] [varchar](14) NULL,
 	[EMail] [varchar](60) NULL,
 	[SitioWeb] [varchar](60) NULL,
 	[Activa] [bit] NULL,
@@ -766,28 +728,26 @@ CREATE TABLE [dbo].[Empresa](
 	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
-	[NRC] [nvarchar](14) NULL,
  CONSTRAINT [PK_Empresa] PRIMARY KEY CLUSTERED 
 (
 	[OID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[EmpresaGiro]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[EmpresaGiro]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[EmpresaGiro](
 	[OID] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
+	[Empresa] [int] NULL,
+	[ActEconomica] [varchar](12) NULL,
+	[Vigente] [bit] NULL,
 	[UsuarioCrea] [varchar](25) NULL,
 	[FechaCrea] [datetime] NULL,
 	[UsuarioMod] [varchar](25) NULL,
 	[FechaMod] [datetime] NULL,
-	[Empresa] [int] NULL,
-	[ActEconomica] [varchar](12) NULL,
-	[Vigente] [bit] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_EmpresaGiro] PRIMARY KEY CLUSTERED 
@@ -796,24 +756,24 @@ CREATE TABLE [dbo].[EmpresaGiro](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[EmpresaTelefono]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[EmpresaTelefono]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[EmpresaTelefono](
-	[Numero] [varchar](14) NOT NULL,
+	[Oid] [int] IDENTITY(1,1) NOT NULL,
+	[Telefono] [varchar](14) NOT NULL,
 	[Empresa] [int] NULL,
-	[Tipo] [int] NULL,
+	[OptimisticLockField] [int] NULL,
+	[GCRecord] [int] NULL,
  CONSTRAINT [PK_EmpresaTelefono] PRIMARY KEY CLUSTERED 
 (
-	[Numero] ASC
+	[Oid] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[EmpresaUnidad]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[EmpresaUnidad]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -840,19 +800,18 @@ CREATE TABLE [dbo].[EmpresaUnidad](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[Enfermedad]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[Enfermedad]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Enfermedad](
 	[OID] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
-	[CodigoCie] [nvarchar](6) NULL,
-	[Nombre] [nvarchar](300) NULL,
+	[CodigoCie] [varchar](6) NULL,
+	[Nombre] [varchar](300) NULL,
 	[Categoria] [int] NULL,
 	[EsGrupo] [bit] NULL,
-	[Comentario] [nvarchar](250) NULL,
+	[Comentario] [varchar](250) NULL,
 	[Activo] [bit] NULL,
 	[UsuarioCrea] [varchar](25) NULL,
 	[FechaCrea] [datetime] NULL,
@@ -866,33 +825,7 @@ CREATE TABLE [dbo].[Enfermedad](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[Enfermedad_antes]    Script Date: 19/11/2020 14:08:55 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[Enfermedad_antes](
-	[Codigo] [nvarchar](6) NOT NULL,
-	[Nombre] [nvarchar](300) NULL,
-	[Categoria] [nvarchar](6) NULL,
-	[Comentario] [nvarchar](250) NULL,
-	[Activo] [bit] NULL,
-	[EsGrupo] [bit] NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
-	[OptimisticLockField] [int] NULL,
-	[GCRecord] [int] NULL,
- CONSTRAINT [PK_Enfermedad_antes1] PRIMARY KEY CLUSTERED 
-(
-	[Codigo] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-
-/****** Object:  Table [dbo].[EstiloVida]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[EstiloVida]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -915,8 +848,7 @@ CREATE TABLE [dbo].[EstiloVida](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[Event]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[Event]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -947,8 +879,7 @@ CREATE TABLE [dbo].[Event](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[Examen]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[Examen]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -971,8 +902,7 @@ CREATE TABLE [dbo].[Examen](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[FactorRiesgo]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[FactorRiesgo]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -993,8 +923,7 @@ CREATE TABLE [dbo].[FactorRiesgo](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[FileData]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[FileData]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1012,8 +941,7 @@ CREATE TABLE [dbo].[FileData](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[HistoriaFamiliar]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[HistoriaFamiliar]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1035,51 +963,21 @@ CREATE TABLE [dbo].[HistoriaFamiliar](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[HistorialCrecimiento]    Script Date: 19/11/2020 14:08:55 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[HistorialCrecimiento](
-	[OID] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
-	[Paciente] [int] NULL,
-	[Fecha] [datetime] NULL,
-	[EdadMes] [numeric](5, 2) NULL,
-	[Tabla_0_2Anios] [int] NULL,
-	[Tabla_2_20Anios] [uniqueidentifier] NULL,
-	[Peso] [numeric](5, 2) NULL,
-	[Estatura] [numeric](5, 2) NULL,
-	[BMI] [numeric](9, 6) NULL,
-	[Comentario] [varchar](400) NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
-	[OptimisticLockField] [int] NULL,
-	[GCRecord] [int] NULL,
- CONSTRAINT [PK_HistorialCrecimiento] PRIMARY KEY CLUSTERED 
-(
-	[OID] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-
-/****** Object:  Table [dbo].[Inventario]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[Inventario]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Inventario](
 	[OID] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
+	[Bodega] [int] NULL,
+	[Producto] [int] NULL,
+	[TipoMovimiento] [int] NULL,
+	[Cantidad] [numeric](12, 2) NULL,
 	[UsuarioCrea] [varchar](25) NULL,
 	[FechaCrea] [datetime] NULL,
 	[UsuarioMod] [varchar](25) NULL,
 	[FechaMod] [datetime] NULL,
-	[Cantidad] [money] NULL,
-	[Bodega] [int] NULL,
-	[Producto] [int] NULL,
-	[TipoMovimiento] [int] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_Inventario] PRIMARY KEY CLUSTERED 
@@ -1088,25 +986,24 @@ CREATE TABLE [dbo].[Inventario](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[Kardex]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[Kardex]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Kardex](
+	[Bodega] [int] NULL,
+	[Oid] [bigint] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
+	[Producto] [int] NULL,
+	[Fecha] [datetime] NULL,
+	[TipoMovimiento] [int] NULL,
+	[Cantidad] [numeric](12, 2) NULL,
+	[CostoUnidad] [numeric](16, 8) NULL,
+	[PrecioUnidad] [numeric](14, 4) NULL,
 	[UsuarioCrea] [varchar](25) NULL,
 	[FechaCrea] [datetime] NULL,
 	[UsuarioMod] [varchar](25) NULL,
 	[FechaMod] [datetime] NULL,
-	[Oid] [bigint] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
-	[Bodega] [int] NULL,
-	[Producto] [int] NULL,
-	[Fecha] [datetime] NULL,
-	[TipoMovimiento] [int] NULL,
-	[Cantidad] [money] NULL,
-	[CostoUnidad] [money] NULL,
-	[PrecioUnidad] [money] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_Kardex] PRIMARY KEY CLUSTERED 
@@ -1115,8 +1012,7 @@ CREATE TABLE [dbo].[Kardex](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[Listas]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[Listas]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1139,17 +1035,16 @@ CREATE TABLE [dbo].[Listas](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[Medicamento]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[Medicamento]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Medicamento](
 	[OID] [int] NOT NULL,
-	[ContraIndicacion] [nvarchar](200) NULL,
+	[ContraIndicacion] [varchar](200) NULL,
 	[Concentracion] [varchar](100) NULL,
-	[Via] [nvarchar](25) NULL,
+	[Via] [varchar](25) NULL,
 	[Prioridad] [smallint] NULL,
 	[NivelUso] [smallint] NULL,
  CONSTRAINT [PK_Medicamento] PRIMARY KEY CLUSTERED 
@@ -1158,22 +1053,21 @@ CREATE TABLE [dbo].[Medicamento](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[MedicamentoDosis]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[MedicamentoDosis]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[MedicamentoDosis](
 	[OID] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
+	[Medicamento] [int] NULL,
+	[Dosis] [smallint] NULL,
+	[Edad] [varchar](50) NULL,
+	[Comentario] [varchar](200) NULL,
 	[UsuarioCrea] [varchar](25) NULL,
 	[FechaCrea] [datetime] NULL,
 	[UsuarioMod] [varchar](25) NULL,
 	[FechaMod] [datetime] NULL,
-	[Dosis] [smallint] NULL,
-	[Edad] [nvarchar](50) NULL,
-	[Comentario] [nvarchar](200) NULL,
-	[Medicamento] [int] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_MedicamentoDosis] PRIMARY KEY CLUSTERED 
@@ -1182,8 +1076,7 @@ CREATE TABLE [dbo].[MedicamentoDosis](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[MedicamentoVia]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[MedicamentoVia]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1204,16 +1097,15 @@ CREATE TABLE [dbo].[MedicamentoVia](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[Medico-Citas]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[Medico-Citas]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Medico-Citas](
+	[OID] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
 	[Citas] [int] NULL,
 	[Medicos] [int] NULL,
-	[OID] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
 	[OptimisticLockField] [int] NULL,
  CONSTRAINT [PK_Medico-Citas] PRIMARY KEY CLUSTERED 
 (
@@ -1221,21 +1113,20 @@ CREATE TABLE [dbo].[Medico-Citas](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[MedicoConsultorio]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[MedicoConsultorio]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[MedicoConsultorio](
 	[OID] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
+	[Medico] [int] NULL,
+	[Consultorio] [int] NULL,
+	[Activo] [bit] NULL,
 	[UsuarioCrea] [varchar](25) NULL,
 	[FechaCrea] [datetime] NULL,
 	[UsuarioMod] [varchar](25) NULL,
 	[FechaMod] [datetime] NULL,
-	[Consultorio] [int] NULL,
-	[Activo] [bit] NULL,
-	[Medico] [int] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_MedicoConsultorio] PRIMARY KEY CLUSTERED 
@@ -1244,20 +1135,19 @@ CREATE TABLE [dbo].[MedicoConsultorio](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[MedicoEspecialidad]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[MedicoEspecialidad]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[MedicoEspecialidad](
 	[OID] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
+	[Medico] [int] NULL,
+	[Especialidad] [nvarchar](10) NULL,
 	[UsuarioCrea] [varchar](25) NULL,
 	[FechaCrea] [datetime] NULL,
 	[UsuarioMod] [varchar](25) NULL,
 	[FechaMod] [datetime] NULL,
-	[Especialidad] [nvarchar](10) NULL,
-	[Medico] [int] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_MedicoEspecialidad] PRIMARY KEY CLUSTERED 
@@ -1266,8 +1156,7 @@ CREATE TABLE [dbo].[MedicoEspecialidad](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[MedLista]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[MedLista]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1290,8 +1179,7 @@ CREATE TABLE [dbo].[MedLista](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[ModelDifference]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[ModelDifference]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1309,8 +1197,7 @@ CREATE TABLE [dbo].[ModelDifference](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[ModelDifferenceAspect]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[ModelDifferenceAspect]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1328,8 +1215,7 @@ CREATE TABLE [dbo].[ModelDifferenceAspect](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[ModuleInfo]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[ModuleInfo]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1347,8 +1233,7 @@ CREATE TABLE [dbo].[ModuleInfo](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[Moneda]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[Moneda]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1357,7 +1242,7 @@ CREATE TABLE [dbo].[Moneda](
 	[Codigo] [varchar](3) NOT NULL,
 	[Nombre] [varchar](60) NULL,
 	[Plural] [varchar](25) NULL,
-	[FactorCambio] [money] NULL,
+	[FactorCambio] [numeric](12, 2) NULL,
 	[Activa] [bit] NULL,
 	[UsuarioCrea] [varchar](25) NULL,
 	[FechaCrea] [datetime] NULL,
@@ -1371,8 +1256,7 @@ CREATE TABLE [dbo].[Moneda](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[Paciente]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[Paciente]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1384,7 +1268,6 @@ CREATE TABLE [dbo].[Paciente](
 	[Ocupacion] [varchar](100) NULL,
 	[Patrono] [int] NULL,
 	[PolizaSeguro] [varchar](50) NULL,
-	[Edad] [float] NULL,
 	[TipoSeguro] [varchar](12) NULL,
 	[LugarNacimiento] [varchar](100) NULL,
 	[Referencia] [varchar](200) NULL,
@@ -1396,22 +1279,42 @@ CREATE TABLE [dbo].[Paciente](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[PacienteMedico]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[PacienteFileData]    Script Date: 21/1/2021 00:34:31 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[PacienteFileData](
+	[Oid] [uniqueidentifier] ROWGUIDCOL  NOT NULL,
+	[File] [uniqueidentifier] NULL,
+	[Paciente] [int] NULL,
+	[Categoria] [nvarchar](10) NULL,
+	[Descripcion] [varchar](100) NULL,
+	[Fecha] [datetime2](7) NULL,
+	[Vigente] [bit] NULL,
+	[OptimisticLockField] [int] NULL,
+	[GCRecord] [int] NULL,
+ CONSTRAINT [PK_PacienteFileData] PRIMARY KEY CLUSTERED 
+(
+	[Oid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[PacienteMedico]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[PacienteMedico](
 	[OID] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
+	[Paciente] [int] NULL,
+	[Medico] [int] NULL,
+	[InicioDeRelacion] [datetime] NULL,
+	[Activo] [bit] NULL,
 	[UsuarioCrea] [varchar](25) NULL,
 	[FechaCrea] [datetime] NULL,
 	[UsuarioMod] [varchar](25) NULL,
 	[FechaMod] [datetime] NULL,
-	[Medico] [int] NULL,
-	[InicioDeRelacion] [datetime] NULL,
-	[Activo] [bit] NULL,
-	[Paciente] [int] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_PacienteMedico] PRIMARY KEY CLUSTERED 
@@ -1420,13 +1323,12 @@ CREATE TABLE [dbo].[PacienteMedico](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[PacienteVacunas]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[PacienteVacuna]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[PacienteVacunas](
+CREATE TABLE [dbo].[PacienteVacuna](
 	[OID] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
 	[UsuarioCrea] [varchar](25) NULL,
 	[FechaCrea] [datetime] NULL,
@@ -1452,8 +1354,7 @@ CREATE TABLE [dbo].[PacienteVacunas](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[Pariente]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[Pariente]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1482,8 +1383,67 @@ CREATE TABLE [dbo].[Pariente](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[PermissionPolicyActionPermissionObject]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[PercentilTabla]    Script Date: 21/1/2021 00:34:31 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[PercentilTabla](
+	[OID] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
+	[Genero] [smallint] NULL,
+	[Nombre] [varchar](60) NULL,
+	[Signo] [int] NULL,
+	[UsuarioCrea] [varchar](25) NULL,
+	[FechaCrea] [datetime] NULL,
+	[UsuarioMod] [varchar](25) NULL,
+	[FechaMod] [datetime] NULL,
+	[OptimisticLockField] [int] NULL,
+	[GCRecord] [int] NULL,
+ CONSTRAINT [PK_PercentilTabla] PRIMARY KEY CLUSTERED 
+(
+	[OID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[PercentilTablaDetalle]    Script Date: 21/1/2021 00:34:31 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[PercentilTablaDetalle](
+	[OID] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
+	[PercentilTabla] [int] NOT NULL,
+	[EdadMes] [smallint] NULL,
+	[Lambda] [numeric](8, 5) NULL,
+	[Mu] [numeric](8, 5) NULL,
+	[Sigma] [numeric](8, 5) NULL,
+	[DesviacionStandard] [numeric](8, 5) NULL,
+	[P1st] [numeric](8, 5) NULL,
+	[P3rd] [numeric](8, 5) NULL,
+	[P5th] [numeric](8, 5) NULL,
+	[P10th] [numeric](8, 5) NULL,
+	[P15th] [numeric](8, 5) NULL,
+	[P25th] [numeric](8, 5) NULL,
+	[P50th] [numeric](8, 5) NULL,
+	[P75th] [numeric](8, 5) NULL,
+	[P85th] [numeric](8, 5) NULL,
+	[P90th] [numeric](8, 5) NULL,
+	[P95th] [numeric](8, 5) NULL,
+	[P97th] [numeric](8, 5) NULL,
+	[P99th] [numeric](8, 5) NULL,
+	[UsuarioCrea] [varchar](25) NULL,
+	[FechaCrea] [datetime] NULL,
+	[UsuarioMod] [varchar](25) NULL,
+	[FechaMod] [datetime] NULL,
+	[OptimisticLockField] [int] NULL,
+	[GCRecord] [int] NULL,
+ CONSTRAINT [PK_PercentilTablaDetalle] PRIMARY KEY CLUSTERED 
+(
+	[OID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[PermissionPolicyActionPermissionObject]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1500,8 +1460,7 @@ CREATE TABLE [dbo].[PermissionPolicyActionPermissionObject](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[PermissionPolicyMemberPermissionsObject]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[PermissionPolicyMemberPermissionsObject]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1521,8 +1480,7 @@ CREATE TABLE [dbo].[PermissionPolicyMemberPermissionsObject](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[PermissionPolicyNavigationPermissionsObject]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[PermissionPolicyNavigationPermissionsObject]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1540,8 +1498,7 @@ CREATE TABLE [dbo].[PermissionPolicyNavigationPermissionsObject](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[PermissionPolicyObjectPermissionsObject]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[PermissionPolicyObjectPermissionsObject]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1562,8 +1519,7 @@ CREATE TABLE [dbo].[PermissionPolicyObjectPermissionsObject](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[PermissionPolicyRole]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[PermissionPolicyRole]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1583,8 +1539,7 @@ CREATE TABLE [dbo].[PermissionPolicyRole](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[PermissionPolicyTypePermissionsObject]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[PermissionPolicyTypePermissionsObject]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1606,8 +1561,7 @@ CREATE TABLE [dbo].[PermissionPolicyTypePermissionsObject](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[PermissionPolicyUser]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[PermissionPolicyUser]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1627,8 +1581,7 @@ CREATE TABLE [dbo].[PermissionPolicyUser](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[PermissionPolicyUserUsers_PermissionPolicyRoleRoles]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[PermissionPolicyUserUsers_PermissionPolicyRoleRoles]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1644,8 +1597,7 @@ CREATE TABLE [dbo].[PermissionPolicyUserUsers_PermissionPolicyRoleRoles](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[Persona]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[Persona]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1682,8 +1634,7 @@ CREATE TABLE [dbo].[Persona](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[PersonaContacto]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[PersonaContacto]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1708,8 +1659,7 @@ CREATE TABLE [dbo].[PersonaContacto](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[PersonaDocumento]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[PersonaDocumento]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1735,23 +1685,24 @@ CREATE TABLE [dbo].[PersonaDocumento](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[PersonaTelefono]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[PersonaTelefono]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[PersonaTelefono](
-	[Numero] [varchar](14) NOT NULL,
+	[Oid] [int] IDENTITY(1,1) NOT NULL,
+	[Telefono] [varchar](14) NOT NULL,
 	[Persona] [int] NULL,
+	[OptimisticLockField] [int] NULL,
+	[GCRecord] [int] NULL,
  CONSTRAINT [PK_PersonaTelefono] PRIMARY KEY CLUSTERED 
 (
-	[Numero] ASC
+	[Oid] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[PlanMedico]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[PlanMedico]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1772,8 +1723,7 @@ CREATE TABLE [dbo].[PlanMedico](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[PlanMedicoDetalle]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[PlanMedicoDetalle]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1781,21 +1731,20 @@ GO
 CREATE TABLE [dbo].[PlanMedicoDetalle](
 	[Oid] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
 	[Regla] [int] NULL,
+	[PlanMedico] [int] NULL,
 	[UsuarioCrea] [varchar](25) NULL,
 	[FechaCrea] [datetime] NULL,
 	[UsuarioMod] [varchar](25) NULL,
 	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
-	[PlanMedico] [int] NULL,
  CONSTRAINT [PK_PlanMedicoDetalle] PRIMARY KEY CLUSTERED 
 (
 	[Oid] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[ProblemaMedico]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[ProblemaMedico]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1812,7 +1761,7 @@ CREATE TABLE [dbo].[ProblemaMedico](
 	[Diagnostico] [int] NULL,
 	[Reaccion] [nvarchar](10) NULL,
 	[UsuarioCrea] [varchar](25) NULL,
-	[Comentario] [nvarchar](200) NULL,
+	[Comentario] [varchar](200) NULL,
 	[Resultado] [nvarchar](10) NULL,
 	[FechaCrea] [datetime] NULL,
 	[UsuarioMod] [varchar](25) NULL,
@@ -1825,8 +1774,7 @@ CREATE TABLE [dbo].[ProblemaMedico](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[ProCategoria]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[ProCategoria]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1846,14 +1794,13 @@ CREATE TABLE [dbo].[ProCategoria](
 	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
- CONSTRAINT [PK_CategoriaProducto] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_GloCategoriaProducto] PRIMARY KEY CLUSTERED 
 (
 	[OID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[Producto]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[Producto]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1869,6 +1816,7 @@ CREATE TABLE [dbo].[Producto](
 	[CantMinima] [money] NULL,
 	[CantMaxima] [money] NULL,
 	[UnidadMedida] [varchar](8) NULL,
+	[Clasificacion] [smallint] NULL,
 	[Comentario] [varchar](200) NULL,
 	[Activo] [bit] NULL,
 	[Empresa] [int] NULL,
@@ -1879,15 +1827,13 @@ CREATE TABLE [dbo].[Producto](
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
 	[ObjectType] [int] NULL,
-	[Clasificacion] [smallint] NULL,
  CONSTRAINT [PK_Producto] PRIMARY KEY CLUSTERED 
 (
 	[OID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[ProductoAtributo]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[ProductoAtributo]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1909,8 +1855,7 @@ CREATE TABLE [dbo].[ProductoAtributo](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[ProductoCodigoBarra]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[ProductoCodigoBarra]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1932,8 +1877,7 @@ CREATE TABLE [dbo].[ProductoCodigoBarra](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[ProductoEnsamble]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[ProductoEnsamble]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1942,7 +1886,7 @@ CREATE TABLE [dbo].[ProductoEnsamble](
 	[OID] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
 	[Producto] [int] NULL,
 	[Item] [int] NULL,
-	[Cantidad] [money] NULL,
+	[Cantidad] [numeric](12, 2) NULL,
 	[UsuarioCrea] [varchar](25) NULL,
 	[FechaCrea] [datetime] NULL,
 	[UsuarioMod] [varchar](25) NULL,
@@ -1955,8 +1899,7 @@ CREATE TABLE [dbo].[ProductoEnsamble](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[ProductoEquivalente]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[ProductoEquivalente]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1978,34 +1921,7 @@ CREATE TABLE [dbo].[ProductoEquivalente](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[ProductoImpuesto]    Script Date: 19/11/2020 14:08:55 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[ProductoImpuesto](
-	[OID] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
-	[Producto] [int] NULL,
-	[Codigo] [varchar](12) NULL,
-	[AplicarEn] [int] NULL,
-	[Porcentaje] [money] NULL,
-	[MontoFijo] [money] NULL,
-	[Activo] [bit] NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
-	[OptimisticLockField] [int] NULL,
-	[GCRecord] [int] NULL,
- CONSTRAINT [PK_ProductoImpuesto] PRIMARY KEY CLUSTERED 
-(
-	[OID] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-
-/****** Object:  Table [dbo].[ProductoLote]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[ProductoLote]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2015,11 +1931,11 @@ CREATE TABLE [dbo].[ProductoLote](
 	[Producto] [int] NULL,
 	[Fecha] [datetime] NULL,
 	[NoLote] [int] NULL,
-	[Costo] [money] NULL,
-	[Promedio] [money] NULL,
-	[PromedioAnterior] [money] NULL,
-	[Entrada] [money] NULL,
-	[AcumSalida] [money] NULL,
+	[Costo] [numeric](16, 8) NULL,
+	[Promedio] [numeric](16, 8) NULL,
+	[PromedioAnterior] [numeric](16, 8) NULL,
+	[Entrada] [numeric](12, 2) NULL,
+	[Salida] [numeric](12, 2) NULL,
 	[UsuarioCrea] [varchar](25) NULL,
 	[FechaCrea] [datetime] NULL,
 	[UsuarioMod] [varchar](25) NULL,
@@ -2032,8 +1948,7 @@ CREATE TABLE [dbo].[ProductoLote](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[ProductoPrecio]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[ProductoPrecio]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2043,9 +1958,9 @@ CREATE TABLE [dbo].[ProductoPrecio](
 	[Producto] [int] NULL,
 	[Descripcion] [varchar](100) NULL,
 	[Tipo] [varchar](12) NULL,
-	[PrecioUnitario] [money] NULL,
-	[CantidadDesde] [money] NULL,
-	[CantidadHasta] [money] NULL,
+	[PrecioUnitario] [numeric](14, 4) NULL,
+	[CantidadDesde] [numeric](12, 2) NULL,
+	[CantidadHasta] [numeric](12, 2) NULL,
 	[HoraDesde] [datetime] NULL,
 	[HoraHasta] [datetime] NULL,
 	[Activo] [bit] NULL,
@@ -2061,8 +1976,7 @@ CREATE TABLE [dbo].[ProductoPrecio](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[ProductoProveedor]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[ProductoProveedor]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2087,8 +2001,7 @@ CREATE TABLE [dbo].[ProductoProveedor](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[Profesion]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[Profesion]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2112,8 +2025,7 @@ CREATE TABLE [dbo].[Profesion](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[ProPresentacion]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[ProPresentacion]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2122,7 +2034,7 @@ CREATE TABLE [dbo].[ProPresentacion](
 	[OID] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
 	[Codigo] [varchar](12) NULL,
 	[Nombre] [varchar](50) NULL,
-	[CantUnidadInventa] [int] NULL,
+	[Unidades] [numeric](12, 2) NULL,
 	[Defecto] [bit] NULL,
 	[Activo] [bit] NULL,
 	[UsuarioCrea] [varchar](25) NULL,
@@ -2137,8 +2049,7 @@ CREATE TABLE [dbo].[ProPresentacion](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[RecordatorioClinico]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[RecordatorioClinico]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2160,8 +2071,7 @@ CREATE TABLE [dbo].[RecordatorioClinico](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[Regla]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[Regla]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2183,8 +2093,7 @@ CREATE TABLE [dbo].[Regla](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[ReportDataV2]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[ReportDataV2]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2205,8 +2114,7 @@ CREATE TABLE [dbo].[ReportDataV2](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[Resource]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[Resource]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2223,8 +2131,7 @@ CREATE TABLE [dbo].[Resource](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[ResourceResources_EventEvents]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[ResourceResources_EventEvents]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2240,8 +2147,7 @@ CREATE TABLE [dbo].[ResourceResources_EventEvents](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[SecuritySystemMemberPermissionsObject]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[SecuritySystemMemberPermissionsObject]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2261,8 +2167,7 @@ CREATE TABLE [dbo].[SecuritySystemMemberPermissionsObject](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[SecuritySystemObjectPermissionsObject]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[SecuritySystemObjectPermissionsObject]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2283,8 +2188,7 @@ CREATE TABLE [dbo].[SecuritySystemObjectPermissionsObject](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[SecuritySystemRole]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[SecuritySystemRole]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2303,8 +2207,7 @@ CREATE TABLE [dbo].[SecuritySystemRole](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[SecuritySystemRoleParentRoles_SecuritySystemRoleChildRoles]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[SecuritySystemRoleParentRoles_SecuritySystemRoleChildRoles]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2320,8 +2223,7 @@ CREATE TABLE [dbo].[SecuritySystemRoleParentRoles_SecuritySystemRoleChildRoles](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[SecuritySystemTypePermissionsObject]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[SecuritySystemTypePermissionsObject]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2344,8 +2246,7 @@ CREATE TABLE [dbo].[SecuritySystemTypePermissionsObject](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[SecuritySystemUser]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[SecuritySystemUser]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2365,8 +2266,7 @@ CREATE TABLE [dbo].[SecuritySystemUser](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[SecuritySystemUserUsers_SecuritySystemRoleRoles]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[SecuritySystemUserUsers_SecuritySystemRoleRoles]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2382,8 +2282,30 @@ CREATE TABLE [dbo].[SecuritySystemUserUsers_SecuritySystemRoleRoles](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[SysAuditoriaProceso]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[Signo]    Script Date: 21/1/2021 00:34:31 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Signo](
+	[OID] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
+	[Nombre] [varchar](50) NULL,
+	[Unidad] [varchar](25) NULL,
+	[Activo] [bit] NULL,
+	[Tipo] [smallint] NULL,
+	[UsuarioCrea] [varchar](25) NULL,
+	[FechaCrea] [datetime] NULL,
+	[UsuarioMod] [varchar](25) NULL,
+	[FechaMod] [datetime] NULL,
+	[OptimisticLockField] [int] NULL,
+	[GCRecord] [int] NULL,
+ CONSTRAINT [PK_Signo] PRIMARY KEY CLUSTERED 
+(
+	[OID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[SysAuditoriaProceso]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2401,22 +2323,21 @@ CREATE TABLE [dbo].[SysAuditoriaProceso](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[SysConsulta]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[SysConsulta]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[SysConsulta](
 	[OID] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[Nombre] [varchar](30) NULL,
 	[Descripcion] [varchar](100) NULL,
 	[Ssql] [varchar](2000) NULL,
 	[Activa] [bit] NULL,
+	[UsuarioCrea] [varchar](25) NULL,
+	[FechaCrea] [datetime] NULL,
+	[UsuarioMod] [varchar](25) NULL,
+	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_SysConsulta] PRIMARY KEY CLUSTERED 
@@ -2425,8 +2346,7 @@ CREATE TABLE [dbo].[SysConsulta](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[TablaIMC]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[TablaIMC]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2448,8 +2368,7 @@ CREATE TABLE [dbo].[TablaIMC](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[Telefono]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[Telefono]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2464,15 +2383,13 @@ CREATE TABLE [dbo].[Telefono](
 	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
-	[ObjectType] [int] NULL,
  CONSTRAINT [PK_Telefono] PRIMARY KEY CLUSTERED 
 (
 	[Numero] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[Tercero]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[Tercero]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2484,7 +2401,8 @@ CREATE TABLE [dbo].[Tercero](
 	[TipoContribuyente] [int] NULL,
 	[EMail] [varchar](60) NULL,
 	[SitioWeb] [varchar](60) NULL,
-	[Comision] [money] NULL,
+	[Comision] [numeric](10, 4) NULL,
+	[DireccionPrincipal] [int] NULL,
 	[Activo] [bit] NULL,
 	[ObjectType] [int] NULL,
 	[UsuarioCrea] [varchar](25) NULL,
@@ -2493,15 +2411,13 @@ CREATE TABLE [dbo].[Tercero](
 	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
-	[DireccionPrincipal] [int] NULL,
  CONSTRAINT [PK_Tercero] PRIMARY KEY CLUSTERED 
 (
 	[OID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[TerceroContacto]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[TerceroContacto]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2521,18 +2437,13 @@ CREATE TABLE [dbo].[TerceroContacto](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[TerceroCredito]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[TerceroCredito]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[TerceroCredito](
 	[OID] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[Empresa] [int] NULL,
 	[Cliente] [int] NULL,
 	[Clasificacion] [varchar](4) NULL,
@@ -2544,6 +2455,10 @@ CREATE TABLE [dbo].[TerceroCredito](
 	[FechaCancelacion] [datetime2](7) NULL,
 	[Comentario] [varchar](200) NULL,
 	[Vigente] [bit] NULL,
+	[UsuarioCrea] [varchar](25) NULL,
+	[FechaCrea] [datetime] NULL,
+	[UsuarioMod] [varchar](25) NULL,
+	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_TerceroCredito] PRIMARY KEY CLUSTERED 
@@ -2552,18 +2467,13 @@ CREATE TABLE [dbo].[TerceroCredito](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[TerceroDireccion]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[TerceroDireccion]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[TerceroDireccion](
 	[OID] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[Tercero] [int] NULL,
 	[Pais] [varchar](8) NULL,
 	[Provincia] [varchar](8) NULL,
@@ -2572,24 +2482,23 @@ CREATE TABLE [dbo].[TerceroDireccion](
 	[Activa] [bit] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
+	[UsuarioCrea] [varchar](25) NULL,
+	[FechaCrea] [datetime] NULL,
+	[UsuarioMod] [varchar](25) NULL,
+	[FechaMod] [datetime] NULL,
  CONSTRAINT [PK_TerceroDireccion] PRIMARY KEY CLUSTERED 
 (
 	[OID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[TerceroDocumento]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[TerceroDocumento]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[TerceroDocumento](
 	[OID] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[Tipo] [varchar](12) NULL,
 	[Numero] [varchar](14) NULL,
 	[Nombre] [varchar](80) NULL,
@@ -2599,24 +2508,23 @@ CREATE TABLE [dbo].[TerceroDocumento](
 	[Tercero] [int] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
+	[UsuarioCrea] [varchar](25) NULL,
+	[FechaCrea] [datetime] NULL,
+	[UsuarioMod] [varchar](25) NULL,
+	[FechaMod] [datetime] NULL,
  CONSTRAINT [PK_TerceroDocumento] PRIMARY KEY CLUSTERED 
 (
 	[OID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[TerceroGarantia]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[TerceroGarantia]    Script Date: 21/1/2021 00:34:32 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[TerceroGarantia](
 	[OID] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[Empresa] [int] NULL,
 	[Cliente] [int] NULL,
 	[Tipo] [varchar](12) NULL,
@@ -2626,37 +2534,39 @@ CREATE TABLE [dbo].[TerceroGarantia](
 	[FechaVence] [datetime2](7) NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
+	[UsuarioCrea] [varchar](25) NULL,
+	[FechaCrea] [datetime] NULL,
+	[UsuarioMod] [varchar](25) NULL,
+	[FechaMod] [datetime] NULL,
  CONSTRAINT [PK_TerceroGarantia] PRIMARY KEY CLUSTERED 
 (
 	[OID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[TerceroGiro]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[TerceroGiro]    Script Date: 21/1/2021 00:34:32 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[TerceroGiro](
 	[OID] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[ActEconomica] [varchar](12) NULL,
 	[Vigente] [bit] NULL,
 	[Tercero] [int] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
+	[UsuarioCrea] [varchar](25) NULL,
+	[FechaCrea] [datetime] NULL,
+	[UsuarioMod] [varchar](25) NULL,
+	[FechaMod] [datetime] NULL,
  CONSTRAINT [PK_TerceroGiro] PRIMARY KEY CLUSTERED 
 (
 	[OID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[TerceroNota]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[TerceroNota]    Script Date: 21/1/2021 00:34:32 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2678,8 +2588,7 @@ CREATE TABLE [dbo].[TerceroNota](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[TerceroRole]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[TerceroRole]    Script Date: 21/1/2021 00:34:32 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2703,8 +2612,7 @@ CREATE TABLE [dbo].[TerceroRole](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[TerceroSucursal]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[TerceroSucursal]    Script Date: 21/1/2021 00:34:32 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2729,24 +2637,24 @@ CREATE TABLE [dbo].[TerceroSucursal](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[TerceroTelefono]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[TerceroTelefono]    Script Date: 21/1/2021 00:34:32 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[TerceroTelefono](
-	[Numero] [varchar](14) NOT NULL,
-	[Tipo] [int] NULL,
+	[Oid] [int] IDENTITY(1,1) NOT NULL,
+	[Telefono] [varchar](14) NOT NULL,
 	[Tercero] [int] NULL,
+	[OptimisticLockField] [int] NULL,
+	[GCRecord] [int] NULL,
  CONSTRAINT [PK_TerceroTelefono] PRIMARY KEY CLUSTERED 
 (
-	[Numero] ASC
+	[Oid] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[TerminologiaAnatomica]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[TerminologiaAnatomica]    Script Date: 21/1/2021 00:34:32 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2757,7 +2665,6 @@ CREATE TABLE [dbo].[TerminologiaAnatomica](
 	[CodigoFMA] [varchar](10) NULL,
 	[TerminoAnatomico] [varchar](150) NULL,
 	[Categoria] [nvarchar](10) NULL,
-	[Activo] [bit] NOT NULL,
 	[UsuarioCrea] [varchar](25) NULL,
 	[FechaCrea] [datetime] NULL,
 	[UsuarioMod] [varchar](25) NULL,
@@ -2770,25 +2677,24 @@ CREATE TABLE [dbo].[TerminologiaAnatomica](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[UltraSonografiaObstetrica]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[UltraSonografiaObstetrica]    Script Date: 21/1/2021 00:34:32 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[UltraSonografiaObstetrica](
 	[OID] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[Consulta] [int] NULL,
 	[Tecnico] [int] NULL,
 	[Fecha] [datetime2](7) NULL,
 	[TipoUltrasonografia] [smallint] NULL,
 	[TipoEmbarazo] [smallint] NULL,
 	[Diagnostico] [varchar](200) NULL,
-	[Plan] [varchar](200) NULL,
+	[DatosPlan] [varchar](200) NULL,
+	[UsuarioCrea] [varchar](25) NULL,
+	[FechaCrea] [datetime] NULL,
+	[UsuarioMod] [varchar](25) NULL,
+	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_UltraSonografiaObstetrica] PRIMARY KEY CLUSTERED 
@@ -2797,22 +2703,17 @@ CREATE TABLE [dbo].[UltraSonografiaObstetrica](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[UltrasonografiaObstetricaDetalle]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[UltrasonografiaObstetricaDetalle]    Script Date: 21/1/2021 00:34:32 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[UltrasonografiaObstetricaDetalle](
 	[OID] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[Ultrasonografia] [int] NULL,
 	[Situacion] [smallint] NULL,
-	[Presentación] [smallint] NULL,
-	[Posición] [smallint] NULL,
+	[Presentacion] [smallint] NULL,
+	[Posicion] [smallint] NULL,
 	[Dorso] [smallint] NULL,
 	[Placenta] [smallint] NULL,
 	[FormaPlacentaPrevia] [smallint] NULL,
@@ -2833,6 +2734,10 @@ CREATE TABLE [dbo].[UltrasonografiaObstetricaDetalle](
 	[Fpp] [datetime2](7) NULL,
 	[PF] [numeric](10, 2) NULL,
 	[Pbf] [varchar](50) NULL,
+	[UsuarioCrea] [varchar](25) NULL,
+	[FechaCrea] [datetime] NOT NULL,
+	[UsuarioMod] [varchar](25) NULL,
+	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_UltrasonografiaObstetricaDetalle] PRIMARY KEY CLUSTERED 
@@ -2841,18 +2746,13 @@ CREATE TABLE [dbo].[UltrasonografiaObstetricaDetalle](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[UltrasonografiaPelvica]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[UltrasonografiaPelvica]    Script Date: 21/1/2021 00:34:32 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[UltrasonografiaPelvica](
 	[OID] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[Consulta] [int] NULL,
 	[Tecnico] [int] NULL,
 	[Fecha] [datetime2](7) NULL,
@@ -2864,6 +2764,10 @@ CREATE TABLE [dbo].[UltrasonografiaPelvica](
 	[TrompaFalopioDerecha] [varchar](150) NULL,
 	[FondoSaco] [varchar](150) NULL,
 	[Observaciones] [varchar](250) NULL,
+	[UsuarioCrea] [varchar](25) NULL,
+	[FechaCrea] [datetime] NULL,
+	[UsuarioMod] [varchar](25) NULL,
+	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_UltrasonografiaPelvica] PRIMARY KEY CLUSTERED 
@@ -2872,8 +2776,7 @@ CREATE TABLE [dbo].[UltrasonografiaPelvica](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[UnidadMedida]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[UnidadMedida]    Script Date: 21/1/2021 00:34:32 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2898,8 +2801,7 @@ CREATE TABLE [dbo].[UnidadMedida](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[Usuario]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[Usuario]    Script Date: 21/1/2021 00:34:32 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2915,8 +2817,7 @@ CREATE TABLE [dbo].[Usuario](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[Vacuna]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[Vacuna]    Script Date: 21/1/2021 00:34:32 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2941,8 +2842,7 @@ CREATE TABLE [dbo].[Vacuna](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[WhoPercentilPesoLong]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[WhoPercentilPesoLong]    Script Date: 21/1/2021 00:34:32 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2975,14 +2875,13 @@ CREATE TABLE [dbo].[WhoPercentilPesoLong](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[XPObjectType]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[XPObjectType]    Script Date: 21/1/2021 00:34:32 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[XPObjectType](
-	[OID] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
+	[OID] [int] IDENTITY(1,1) NOT NULL,
 	[TypeName] [nvarchar](254) NULL,
 	[AssemblyName] [nvarchar](254) NULL,
  CONSTRAINT [PK_XPObjectType] PRIMARY KEY CLUSTERED 
@@ -2991,8 +2890,7 @@ CREATE TABLE [dbo].[XPObjectType](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-/****** Object:  Table [dbo].[XPWeakReference]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[XPWeakReference]    Script Date: 21/1/2021 00:34:32 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3010,7 +2908,7 @@ CREATE TABLE [dbo].[XPWeakReference](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ZonaGeografica]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Table [dbo].[ZonaGeografica]    Script Date: 21/1/2021 00:34:32 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3035,84 +2933,57 @@ CREATE TABLE [dbo].[ZonaGeografica](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [iActividadPadre_ActividadEconomica]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iActividadPadre_ActividadEconomica]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iActividadPadre_ActividadEconomica] ON [dbo].[ActividadEconomica]
 (
 	[ActividadPadre] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_ActividadEconomica]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_ActividadEconomica]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_ActividadEconomica] ON [dbo].[ActividadEconomica]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_Afp]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_Afp]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_Afp] ON [dbo].[Afp]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-SET ANSI_PADDING ON
-GO
-/****** Object:  Index [iCategoria_PacienteAdjunto]    Script Date: 19/11/2020 14:08:55 ******/
-CREATE NONCLUSTERED INDEX [iCategoria_PacienteAdjunto] ON [dbo].[PacienteAdjunto]
-(
-	[Categoria] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-/****** Object:  Index [iFile_PacienteAdjunto]    Script Date: 19/11/2020 14:08:55 ******/
-CREATE NONCLUSTERED INDEX [iFile_PacienteAdjunto] ON [dbo].[PacienteAdjunto]
-(
-	[File] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-/****** Object:  Index [iGCRecord_PacienteAdjunto]    Script Date: 19/11/2020 14:08:55 ******/
-CREATE NONCLUSTERED INDEX [iGCRecord_PacienteAdjunto] ON [dbo].[PacienteAdjunto]
-(
-	[GCRecord] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-/****** Object:  Index [iPaciente_PacienteAdjunto]    Script Date: 19/11/2020 14:08:55 ******/
-CREATE NONCLUSTERED INDEX [iPaciente_PacienteAdjunto] ON [dbo].[PacienteAdjunto]
-(
-	[Paciente] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-/****** Object:  Index [iGCRecord_AsociacionProfesional]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_AsociacionProfesional]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_AsociacionProfesional] ON [dbo].[AsociacionProfesional]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iAuditedObject_AuditDataItemPersistent]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iAuditedObject_AuditDataItemPersistent]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iAuditedObject_AuditDataItemPersistent] ON [dbo].[AuditDataItemPersistent]
 (
 	[AuditedObject] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_AuditDataItemPersistent]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_AuditDataItemPersistent]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_AuditDataItemPersistent] ON [dbo].[AuditDataItemPersistent]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iModifiedOn_AuditDataItemPersistent]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iModifiedOn_AuditDataItemPersistent]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iModifiedOn_AuditDataItemPersistent] ON [dbo].[AuditDataItemPersistent]
 (
 	[ModifiedOn] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iNewObject_AuditDataItemPersistent]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iNewObject_AuditDataItemPersistent]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iNewObject_AuditDataItemPersistent] ON [dbo].[AuditDataItemPersistent]
 (
 	[NewObject] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iOldObject_AuditDataItemPersistent]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iOldObject_AuditDataItemPersistent]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iOldObject_AuditDataItemPersistent] ON [dbo].[AuditDataItemPersistent]
 (
 	[OldObject] ASC
@@ -3120,7 +2991,7 @@ CREATE NONCLUSTERED INDEX [iOldObject_AuditDataItemPersistent] ON [dbo].[AuditDa
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [iOperationType_AuditDataItemPersistent]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iOperationType_AuditDataItemPersistent]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iOperationType_AuditDataItemPersistent] ON [dbo].[AuditDataItemPersistent]
 (
 	[OperationType] ASC
@@ -3128,285 +2999,271 @@ CREATE NONCLUSTERED INDEX [iOperationType_AuditDataItemPersistent] ON [dbo].[Aud
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [iUserName_AuditDataItemPersistent]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iUserName_AuditDataItemPersistent]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iUserName_AuditDataItemPersistent] ON [dbo].[AuditDataItemPersistent]
 (
 	[UserName] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_BugReport]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_BugReport]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_BugReport] ON [dbo].[BugReport]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_Cargo]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_Cargo]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_Cargo] ON [dbo].[Cargo]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_CdoPercentilPesoEstaturaBMI]    Script Date: 19/11/2020 14:08:55 ******/
-CREATE NONCLUSTERED INDEX [iGCRecord_CdoPercentilPesoEstaturaBMI] ON [dbo].[CdoPercentilPesoEstaturaBMI]
-(
-	[GCRecord] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-/****** Object:  Index [iTipoTablaEdadMes_CdoPercentilPesoEstaturaBMI]    Script Date: 19/11/2020 14:08:55 ******/
-CREATE NONCLUSTERED INDEX [iTipoTablaEdadMes_CdoPercentilPesoEstaturaBMI] ON [dbo].[CdoPercentilPesoEstaturaBMI]
-(
-	[TipoTabla] ASC,
-	[EdadMes] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-/****** Object:  Index [iEndOn_Cita]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iEndOn_Cita]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iEndOn_Cita] ON [dbo].[Cita]
 (
 	[EndOn] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_Cita]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_Cita]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_Cita] ON [dbo].[Cita]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iObjectType_Cita]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iObjectType_Cita]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iObjectType_Cita] ON [dbo].[Cita]
 (
 	[ObjectType] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iPaciente_Cita]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iPaciente_Cita]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iPaciente_Cita] ON [dbo].[Cita]
 (
 	[Paciente] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iRecurrencePattern_Cita]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iRecurrencePattern_Cita]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iRecurrencePattern_Cita] ON [dbo].[Cita]
 (
 	[RecurrencePattern] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iStartOn_Cita]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iStartOn_Cita]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iStartOn_Cita] ON [dbo].[Cita]
 (
 	[StartOn] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [icod_cta_padre_ConCatalogo]    Script Date: 19/11/2020 14:08:55 ******/
-CREATE NONCLUSTERED INDEX [icod_cta_padre_ConCatalogo] ON [dbo].[ConCatalogo]
-(
-	[cod_cta_padre] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-/****** Object:  Index [icod_emp_ConCatalogo]    Script Date: 19/11/2020 14:08:55 ******/
-CREATE NONCLUSTERED INDEX [icod_emp_ConCatalogo] ON [dbo].[ConCatalogo]
-(
-	[cod_emp] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-/****** Object:  Index [iCtaPadre_ConCatalogo]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iCtaPadre_ConCatalogo]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iCtaPadre_ConCatalogo] ON [dbo].[ConCatalogo]
 (
 	[CtaPadre] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iEmpresa_ConCatalogo]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iEmpresa_ConCatalogo]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iEmpresa_ConCatalogo] ON [dbo].[ConCatalogo]
 (
 	[Empresa] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_ConCatalogo]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_ConCatalogo]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_ConCatalogo] ON [dbo].[ConCatalogo]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [icod_emp_ConPeriodo]    Script Date: 19/11/2020 14:08:55 ******/
-CREATE NONCLUSTERED INDEX [icod_emp_ConPeriodo] ON [dbo].[ConPeriodo]
-(
-	[cod_emp] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-/****** Object:  Index [icod_empnumero_ConPeriodo]    Script Date: 19/11/2020 14:08:55 ******/
-CREATE NONCLUSTERED INDEX [icod_empnumero_ConPeriodo] ON [dbo].[ConPeriodo]
-(
-	[cod_emp] ASC,
-	[numero] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-/****** Object:  Index [iGCRecord_ConPeriodo]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_ConPeriodo]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_ConPeriodo] ON [dbo].[ConPeriodo]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_Constante]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_Constante]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_Constante] ON [dbo].[Constante]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iConsultorio_Consulta]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iConsultorio_Consulta]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iConsultorio_Consulta] ON [dbo].[Consulta]
 (
 	[Consultorio] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iEmpresa_Consulta]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iEmpresa_Consulta]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iEmpresa_Consulta] ON [dbo].[Consulta]
 (
 	[Empresa] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_Consulta]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_Consulta]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_Consulta] ON [dbo].[Consulta]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iMedico_Consulta]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iMedico_Consulta]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iMedico_Consulta] ON [dbo].[Consulta]
 (
 	[Medico] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iPaciente_Consulta]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iPaciente_Consulta]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iPaciente_Consulta] ON [dbo].[Consulta]
 (
 	[Paciente] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iConsulta_ConsultaExamen]    Script Date: 19/11/2020 14:08:55 ******/
-CREATE NONCLUSTERED INDEX [iConsulta_ConsultaExamen] ON [dbo].[ConsultaExamen]
-(
-	[Consulta] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-/****** Object:  Index [iDocumento_ConsultaExamen]    Script Date: 19/11/2020 14:08:55 ******/
-CREATE NONCLUSTERED INDEX [iDocumento_ConsultaExamen] ON [dbo].[ConsultaExamen]
-(
-	[Documento] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-/****** Object:  Index [iExamen_ConsultaExamen]    Script Date: 19/11/2020 14:08:55 ******/
-CREATE NONCLUSTERED INDEX [iExamen_ConsultaExamen] ON [dbo].[ConsultaExamen]
-(
-	[Examen] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-/****** Object:  Index [iGCRecord_ConsultaExamen]    Script Date: 19/11/2020 14:08:55 ******/
-CREATE NONCLUSTERED INDEX [iGCRecord_ConsultaExamen] ON [dbo].[ConsultaExamen]
-(
-	[GCRecord] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-/****** Object:  Index [iLaboratorio_ConsultaExamen]    Script Date: 19/11/2020 14:08:55 ******/
-CREATE NONCLUSTERED INDEX [iLaboratorio_ConsultaExamen] ON [dbo].[ConsultaExamen]
-(
-	[Laboratorio] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-/****** Object:  Index [iConsulta_ConsultaExamenFisico]    Script Date: 19/11/2020 14:08:55 ******/
-CREATE NONCLUSTERED INDEX [iConsulta_ConsultaExamenFisico] ON [dbo].[ConsultaExamenFisico]
-(
-	[Consulta] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-/****** Object:  Index [iDocumento_ConsultaExamenFisico]    Script Date: 19/11/2020 14:08:55 ******/
-CREATE NONCLUSTERED INDEX [iDocumento_ConsultaExamenFisico] ON [dbo].[ConsultaExamenFisico]
-(
-	[Documento] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-/****** Object:  Index [iGCRecord_ConsultaExamenFisico]    Script Date: 19/11/2020 14:08:55 ******/
-CREATE NONCLUSTERED INDEX [iGCRecord_ConsultaExamenFisico] ON [dbo].[ConsultaExamenFisico]
-(
-	[GCRecord] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-/****** Object:  Index [iConsulta_ConsultaIncapacidad]    Script Date: 19/11/2020 14:08:55 ******/
-CREATE NONCLUSTERED INDEX [iConsulta_ConsultaIncapacidad] ON [dbo].[ConsultaIncapacidad]
-(
-	[Consulta] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-/****** Object:  Index [iGCRecord_ConsultaIncapacidad]    Script Date: 19/11/2020 14:08:55 ******/
-CREATE NONCLUSTERED INDEX [iGCRecord_ConsultaIncapacidad] ON [dbo].[ConsultaIncapacidad]
-(
-	[GCRecord] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-/****** Object:  Index [iConsulta_ConsultaParametro]    Script Date: 19/11/2020 14:08:55 ******/
-CREATE NONCLUSTERED INDEX [iConsulta_ConsultaParametro] ON [dbo].[ConsultaParametro]
-(
-	[Consulta] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-/****** Object:  Index [iGCRecord_ConsultaParametro]    Script Date: 19/11/2020 14:08:55 ******/
-CREATE NONCLUSTERED INDEX [iGCRecord_ConsultaParametro] ON [dbo].[ConsultaParametro]
-(
-	[GCRecord] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-/****** Object:  Index [iConsulta_ConsultaReceta]    Script Date: 19/11/2020 14:08:55 ******/
-CREATE NONCLUSTERED INDEX [iConsulta_ConsultaReceta] ON [dbo].[ConsultaReceta]
-(
-	[Consulta] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-/****** Object:  Index [iFarmaceutica_ConsultaReceta]    Script Date: 19/11/2020 14:08:55 ******/
-CREATE NONCLUSTERED INDEX [iFarmaceutica_ConsultaReceta] ON [dbo].[ConsultaReceta]
-(
-	[Farmaceutica] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-/****** Object:  Index [iGCRecord_ConsultaReceta]    Script Date: 19/11/2020 14:08:55 ******/
-CREATE NONCLUSTERED INDEX [iGCRecord_ConsultaReceta] ON [dbo].[ConsultaReceta]
-(
-	[GCRecord] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-/****** Object:  Index [iMedicamento_ConsultaReceta]    Script Date: 19/11/2020 14:08:55 ******/
-CREATE NONCLUSTERED INDEX [iMedicamento_ConsultaReceta] ON [dbo].[ConsultaReceta]
-(
-	[Medicamento] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-/****** Object:  Index [iViaAdministracion_ConsultaReceta]    Script Date: 19/11/2020 14:08:55 ******/
-CREATE NONCLUSTERED INDEX [iViaAdministracion_ConsultaReceta] ON [dbo].[ConsultaReceta]
-(
-	[ViaAdministracion] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-/****** Object:  Index [iConsulta_ConsultaDiagnostico]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iConsulta_ConsultaDiagnostico]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iConsulta_ConsultaDiagnostico] ON [dbo].[ConsultaDiagnostico]
 (
 	[Consulta] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_ConsultaDiagnostico]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_ConsultaDiagnostico]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_ConsultaDiagnostico] ON [dbo].[ConsultaDiagnostico]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iProblema_ConsultaDiagnostico]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iProblema_ConsultaDiagnostico]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iProblema_ConsultaDiagnostico] ON [dbo].[ConsultaDiagnostico]
 (
 	[Problema] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iConsulta_ConsultaSintoma]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iConsulta_ConsultaExamen]    Script Date: 21/1/2021 00:34:32 ******/
+CREATE NONCLUSTERED INDEX [iConsulta_ConsultaExamen] ON [dbo].[ConsultaExamen]
+(
+	[Consulta] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+/****** Object:  Index [iDocumento_ConsultaExamen]    Script Date: 21/1/2021 00:34:32 ******/
+CREATE NONCLUSTERED INDEX [iDocumento_ConsultaExamen] ON [dbo].[ConsultaExamen]
+(
+	[Documento] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+/****** Object:  Index [iExamen_ConsultaExamen]    Script Date: 21/1/2021 00:34:32 ******/
+CREATE NONCLUSTERED INDEX [iExamen_ConsultaExamen] ON [dbo].[ConsultaExamen]
+(
+	[Examen] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+/****** Object:  Index [iGCRecord_ConsultaExamen]    Script Date: 21/1/2021 00:34:32 ******/
+CREATE NONCLUSTERED INDEX [iGCRecord_ConsultaExamen] ON [dbo].[ConsultaExamen]
+(
+	[GCRecord] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+/****** Object:  Index [iLaboratorio_ConsultaExamen]    Script Date: 21/1/2021 00:34:32 ******/
+CREATE NONCLUSTERED INDEX [iLaboratorio_ConsultaExamen] ON [dbo].[ConsultaExamen]
+(
+	[Laboratorio] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+/****** Object:  Index [iConsulta_ConsultaExamenFisico]    Script Date: 21/1/2021 00:34:32 ******/
+CREATE NONCLUSTERED INDEX [iConsulta_ConsultaExamenFisico] ON [dbo].[ConsultaExamenFisico]
+(
+	[Consulta] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+/****** Object:  Index [iDocumento_ConsultaExamenFisico]    Script Date: 21/1/2021 00:34:32 ******/
+CREATE NONCLUSTERED INDEX [iDocumento_ConsultaExamenFisico] ON [dbo].[ConsultaExamenFisico]
+(
+	[Documento] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+/****** Object:  Index [iGCRecord_ConsultaExamenFisico]    Script Date: 21/1/2021 00:34:32 ******/
+CREATE NONCLUSTERED INDEX [iGCRecord_ConsultaExamenFisico] ON [dbo].[ConsultaExamenFisico]
+(
+	[GCRecord] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+/****** Object:  Index [iConsulta_ConsultaIncapacidad]    Script Date: 21/1/2021 00:34:32 ******/
+CREATE NONCLUSTERED INDEX [iConsulta_ConsultaIncapacidad] ON [dbo].[ConsultaIncapacidad]
+(
+	[Consulta] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+/****** Object:  Index [iGCRecord_ConsultaIncapacidad]    Script Date: 21/1/2021 00:34:32 ******/
+CREATE NONCLUSTERED INDEX [iGCRecord_ConsultaIncapacidad] ON [dbo].[ConsultaIncapacidad]
+(
+	[GCRecord] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+/****** Object:  Index [iConsulta_ConsultaParametro]    Script Date: 21/1/2021 00:34:32 ******/
+CREATE NONCLUSTERED INDEX [iConsulta_ConsultaParametro] ON [dbo].[ConsultaParametro]
+(
+	[Consulta] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+/****** Object:  Index [iGCRecord_ConsultaParametro]    Script Date: 21/1/2021 00:34:32 ******/
+CREATE NONCLUSTERED INDEX [iGCRecord_ConsultaParametro] ON [dbo].[ConsultaParametro]
+(
+	[GCRecord] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+/****** Object:  Index [iConsulta_ConsultaReceta]    Script Date: 21/1/2021 00:34:32 ******/
+CREATE NONCLUSTERED INDEX [iConsulta_ConsultaReceta] ON [dbo].[ConsultaReceta]
+(
+	[Consulta] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+/****** Object:  Index [iFarmaceutica_ConsultaReceta]    Script Date: 21/1/2021 00:34:32 ******/
+CREATE NONCLUSTERED INDEX [iFarmaceutica_ConsultaReceta] ON [dbo].[ConsultaReceta]
+(
+	[Farmaceutica] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+/****** Object:  Index [iGCRecord_ConsultaReceta]    Script Date: 21/1/2021 00:34:32 ******/
+CREATE NONCLUSTERED INDEX [iGCRecord_ConsultaReceta] ON [dbo].[ConsultaReceta]
+(
+	[GCRecord] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+/****** Object:  Index [iMedicamento_ConsultaReceta]    Script Date: 21/1/2021 00:34:32 ******/
+CREATE NONCLUSTERED INDEX [iMedicamento_ConsultaReceta] ON [dbo].[ConsultaReceta]
+(
+	[Medicamento] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+/****** Object:  Index [iViaAdministracion_ConsultaReceta]    Script Date: 21/1/2021 00:34:32 ******/
+CREATE NONCLUSTERED INDEX [iViaAdministracion_ConsultaReceta] ON [dbo].[ConsultaReceta]
+(
+	[ViaAdministracion] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+/****** Object:  Index [iConsulta_ConsultaSigno]    Script Date: 21/1/2021 00:34:32 ******/
+CREATE NONCLUSTERED INDEX [iConsulta_ConsultaSigno] ON [dbo].[ConsultaSigno]
+(
+	[Consulta] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+/****** Object:  Index [iGCRecord_ConsultaSigno]    Script Date: 21/1/2021 00:34:32 ******/
+CREATE NONCLUSTERED INDEX [iGCRecord_ConsultaSigno] ON [dbo].[ConsultaSigno]
+(
+	[GCRecord] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+/****** Object:  Index [iImc_ConsultaSigno]    Script Date: 21/1/2021 00:34:32 ******/
+CREATE NONCLUSTERED INDEX [iImc_ConsultaSigno] ON [dbo].[ConsultaSigno]
+(
+	[Imc] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+/****** Object:  Index [iSigno_ConsultaSigno]    Script Date: 21/1/2021 00:34:32 ******/
+CREATE NONCLUSTERED INDEX [iSigno_ConsultaSigno] ON [dbo].[ConsultaSigno]
+(
+	[Signo] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+/****** Object:  Index [iConsulta_ConsultaSintoma]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iConsulta_ConsultaSintoma] ON [dbo].[ConsultaSintoma]
 (
 	[Consulta] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_ConsultaSintoma]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_ConsultaSintoma]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_ConsultaSintoma] ON [dbo].[ConsultaSintoma]
 (
 	[GCRecord] ASC
@@ -3414,25 +3271,31 @@ CREATE NONCLUSTERED INDEX [iGCRecord_ConsultaSintoma] ON [dbo].[ConsultaSintoma]
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [iIntensidad_ConsultaSintoma]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iIntensidad_ConsultaSintoma]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iIntensidad_ConsultaSintoma] ON [dbo].[ConsultaSintoma]
 (
 	[Intensidad] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iAFP_Empleado]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iAFP_Empleado]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iAFP_Empleado] ON [dbo].[Empleado]
 (
 	[AFP] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iBanco_Empleado]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iBanco_Empleado]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iBanco_Empleado] ON [dbo].[Empleado]
 (
 	[Banco] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iEmpresa_Empleado]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iCargo_Empleado]    Script Date: 21/1/2021 00:34:32 ******/
+CREATE NONCLUSTERED INDEX [iCargo_Empleado] ON [dbo].[Empleado]
+(
+	[Cargo] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+/****** Object:  Index [iEmpresa_Empleado]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iEmpresa_Empleado] ON [dbo].[Empleado]
 (
 	[Empresa] ASC
@@ -3440,7 +3303,7 @@ CREATE NONCLUSTERED INDEX [iEmpresa_Empleado] ON [dbo].[Empleado]
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [iEstado_Empleado]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iEstado_Empleado]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iEstado_Empleado] ON [dbo].[Empleado]
 (
 	[Estado] ASC
@@ -3448,13 +3311,13 @@ CREATE NONCLUSTERED INDEX [iEstado_Empleado] ON [dbo].[Empleado]
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [iNacionalidad_Empleado]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iNacionalidad_Empleado]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iNacionalidad_Empleado] ON [dbo].[Empleado]
 (
 	[Nacionalidad] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iUnidad_Empleado]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iUnidad_Empleado]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iUnidad_Empleado] ON [dbo].[Empleado]
 (
 	[Unidad] ASC
@@ -3462,55 +3325,55 @@ CREATE NONCLUSTERED INDEX [iUnidad_Empleado] ON [dbo].[Empleado]
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [iCodigo_EmpleadoCapacitacion]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iCodigo_EmpleadoCapacitacion]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iCodigo_EmpleadoCapacitacion] ON [dbo].[EmpleadoCapacitacion]
 (
 	[Codigo] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iEmpleado_EmpleadoCapacitacion]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iEmpleado_EmpleadoCapacitacion]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iEmpleado_EmpleadoCapacitacion] ON [dbo].[EmpleadoCapacitacion]
 (
 	[Empleado] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_EmpleadoCapacitacion]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_EmpleadoCapacitacion]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_EmpleadoCapacitacion] ON [dbo].[EmpleadoCapacitacion]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iAsociacionProfesional_EmpleadoMembresia]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iAsociacionProfesional_EmpleadoMembresia]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iAsociacionProfesional_EmpleadoMembresia] ON [dbo].[EmpleadoMembresia]
 (
 	[AsociacionProfesional] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iEmpleado_EmpleadoMembresia]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iEmpleado_EmpleadoMembresia]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iEmpleado_EmpleadoMembresia] ON [dbo].[EmpleadoMembresia]
 (
 	[Empleado] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_EmpleadoMembresia]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_EmpleadoMembresia]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_EmpleadoMembresia] ON [dbo].[EmpleadoMembresia]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iEmpleado_EmpleadoPariente]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iEmpleado_EmpleadoPariente]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iEmpleado_EmpleadoPariente] ON [dbo].[EmpleadoPariente]
 (
 	[Empleado] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iFechaNacimiento_EmpleadoPariente]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iFechaNacimiento_EmpleadoPariente]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iFechaNacimiento_EmpleadoPariente] ON [dbo].[EmpleadoPariente]
 (
 	[FechaNacimiento] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_EmpleadoPariente]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_EmpleadoPariente]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_EmpleadoPariente] ON [dbo].[EmpleadoPariente]
 (
 	[GCRecord] ASC
@@ -3518,25 +3381,25 @@ CREATE NONCLUSTERED INDEX [iGCRecord_EmpleadoPariente] ON [dbo].[EmpleadoParient
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [iTipo_EmpleadoPariente]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iTipo_EmpleadoPariente]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iTipo_EmpleadoPariente] ON [dbo].[EmpleadoPariente]
 (
 	[Tipo] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iEmpleado_EmpleadoProfesion]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iEmpleado_EmpleadoProfesion]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iEmpleado_EmpleadoProfesion] ON [dbo].[EmpleadoProfesion]
 (
 	[Empleado] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_EmpleadoProfesion]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_EmpleadoProfesion]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_EmpleadoProfesion] ON [dbo].[EmpleadoProfesion]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iProfesion_EmpleadoProfesion]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iProfesion_EmpleadoProfesion]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iProfesion_EmpleadoProfesion] ON [dbo].[EmpleadoProfesion]
 (
 	[Profesion] ASC
@@ -3544,13 +3407,13 @@ CREATE NONCLUSTERED INDEX [iProfesion_EmpleadoProfesion] ON [dbo].[EmpleadoProfe
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [iCiudad_Empresa]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iCiudad_Empresa]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iCiudad_Empresa] ON [dbo].[Empresa]
 (
 	[Ciudad] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_Empresa]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_Empresa]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_Empresa] ON [dbo].[Empresa]
 (
 	[GCRecord] ASC
@@ -3558,7 +3421,7 @@ CREATE NONCLUSTERED INDEX [iGCRecord_Empresa] ON [dbo].[Empresa]
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [iPais_Empresa]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iPais_Empresa]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iPais_Empresa] ON [dbo].[Empresa]
 (
 	[Pais] ASC
@@ -3566,7 +3429,7 @@ CREATE NONCLUSTERED INDEX [iPais_Empresa] ON [dbo].[Empresa]
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [iProvincia_Empresa]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iProvincia_Empresa]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iProvincia_Empresa] ON [dbo].[Empresa]
 (
 	[Provincia] ASC
@@ -3574,49 +3437,63 @@ CREATE NONCLUSTERED INDEX [iProvincia_Empresa] ON [dbo].[Empresa]
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [iActEconomica_EmpresaGiro]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iActEconomica_EmpresaGiro]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iActEconomica_EmpresaGiro] ON [dbo].[EmpresaGiro]
 (
 	[ActEconomica] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iEmpresa_EmpresaGiro]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iEmpresa_EmpresaGiro]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iEmpresa_EmpresaGiro] ON [dbo].[EmpresaGiro]
 (
 	[Empresa] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_EmpresaGiro]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_EmpresaGiro]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_EmpresaGiro] ON [dbo].[EmpresaGiro]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iEmpresa_EmpresaTelefono]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iEmpresa_EmpresaTelefono]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iEmpresa_EmpresaTelefono] ON [dbo].[EmpresaTelefono]
 (
 	[Empresa] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iEmpresa_EmpresaUnidad]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_EmpresaTelefono]    Script Date: 21/1/2021 00:34:32 ******/
+CREATE NONCLUSTERED INDEX [iGCRecord_EmpresaTelefono] ON [dbo].[EmpresaTelefono]
+(
+	[GCRecord] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [iTelefono_EmpresaTelefono]    Script Date: 21/1/2021 00:34:32 ******/
+CREATE NONCLUSTERED INDEX [iTelefono_EmpresaTelefono] ON [dbo].[EmpresaTelefono]
+(
+	[Telefono] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+/****** Object:  Index [iEmpresa_EmpresaUnidad]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iEmpresa_EmpresaUnidad] ON [dbo].[EmpresaUnidad]
 (
 	[Empresa] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_EmpresaUnidad]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_EmpresaUnidad]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_EmpresaUnidad] ON [dbo].[EmpresaUnidad]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iUnidadPadre_EmpresaUnidad]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iUnidadPadre_EmpresaUnidad]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iUnidadPadre_EmpresaUnidad] ON [dbo].[EmpresaUnidad]
 (
 	[UnidadPadre] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iCategoria_Enfermedad]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iCategoria_Enfermedad]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iCategoria_Enfermedad] ON [dbo].[Enfermedad]
 (
 	[Categoria] ASC
@@ -3624,13 +3501,13 @@ CREATE NONCLUSTERED INDEX [iCategoria_Enfermedad] ON [dbo].[Enfermedad]
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [iCodigoCie_Enfermedad]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iCodigoCie_Enfermedad]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE UNIQUE NONCLUSTERED INDEX [iCodigoCie_Enfermedad] ON [dbo].[Enfermedad]
 (
 	[CodigoCie] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_Enfermedad]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_Enfermedad]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_Enfermedad] ON [dbo].[Enfermedad]
 (
 	[GCRecord] ASC
@@ -3638,57 +3515,43 @@ CREATE NONCLUSTERED INDEX [iGCRecord_Enfermedad] ON [dbo].[Enfermedad]
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [iCategoria_Enfermedad1]    Script Date: 19/11/2020 14:08:55 ******/
-CREATE NONCLUSTERED INDEX [iCategoria_Enfermedad1] ON [dbo].[Enfermedad_antes]
-(
-	[Categoria] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-/****** Object:  Index [iGCRecord_Enfermedad1]    Script Date: 19/11/2020 14:08:55 ******/
-CREATE NONCLUSTERED INDEX [iGCRecord_Enfermedad1] ON [dbo].[Enfermedad_antes]
-(
-	[GCRecord] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-SET ANSI_PADDING ON
-GO
-/****** Object:  Index [iFactor_EstiloVida]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iFactor_EstiloVida]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iFactor_EstiloVida] ON [dbo].[EstiloVida]
 (
 	[Factor] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_EstiloVida]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_EstiloVida]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_EstiloVida] ON [dbo].[EstiloVida]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iPaciente_EstiloVida]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iPaciente_EstiloVida]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iPaciente_EstiloVida] ON [dbo].[EstiloVida]
 (
 	[Paciente] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iEndOn_Event]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iEndOn_Event]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iEndOn_Event] ON [dbo].[Event]
 (
 	[EndOn] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_Event]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_Event]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_Event] ON [dbo].[Event]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iRecurrencePattern_Event]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iRecurrencePattern_Event]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iRecurrencePattern_Event] ON [dbo].[Event]
 (
 	[RecurrencePattern] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iStartOn_Event]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iStartOn_Event]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iStartOn_Event] ON [dbo].[Event]
 (
 	[StartOn] ASC
@@ -3696,133 +3559,109 @@ CREATE NONCLUSTERED INDEX [iStartOn_Event] ON [dbo].[Event]
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [iCategoria_Examen]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iCategoria_Examen]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iCategoria_Examen] ON [dbo].[Examen]
 (
 	[Categoria] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_Examen]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_Examen]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_Examen] ON [dbo].[Examen]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iDiagnostico_FactorRiesgo]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iDiagnostico_FactorRiesgo]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iDiagnostico_FactorRiesgo] ON [dbo].[FactorRiesgo]
 (
 	[Diagnostico] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_FactorRiesgo]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_FactorRiesgo]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_FactorRiesgo] ON [dbo].[FactorRiesgo]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_FileData]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_FileData]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_FileData] ON [dbo].[FileData]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_HistoriaFamiliar]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_HistoriaFamiliar]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_HistoriaFamiliar] ON [dbo].[HistoriaFamiliar]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iPaciente_HistoriaFamiliar]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iPaciente_HistoriaFamiliar]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iPaciente_HistoriaFamiliar] ON [dbo].[HistoriaFamiliar]
 (
 	[Paciente] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_HistorialCrecimiento]    Script Date: 19/11/2020 14:08:55 ******/
-CREATE NONCLUSTERED INDEX [iGCRecord_HistorialCrecimiento] ON [dbo].[HistorialCrecimiento]
-(
-	[GCRecord] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-/****** Object:  Index [iPaciente_HistorialCrecimiento]    Script Date: 19/11/2020 14:08:55 ******/
-CREATE NONCLUSTERED INDEX [iPaciente_HistorialCrecimiento] ON [dbo].[HistorialCrecimiento]
-(
-	[Paciente] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-/****** Object:  Index [iTabla_0_2Anios_HistorialCrecimiento]    Script Date: 19/11/2020 14:08:55 ******/
-CREATE NONCLUSTERED INDEX [iTabla_0_2Anios_HistorialCrecimiento] ON [dbo].[HistorialCrecimiento]
-(
-	[Tabla_0_2Anios] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-/****** Object:  Index [iTabla_2_20Anios_HistorialCrecimiento]    Script Date: 19/11/2020 14:08:55 ******/
-CREATE NONCLUSTERED INDEX [iTabla_2_20Anios_HistorialCrecimiento] ON [dbo].[HistorialCrecimiento]
-(
-	[Tabla_2_20Anios] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-/****** Object:  Index [iBodega_Inventario]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iBodega_Inventario]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iBodega_Inventario] ON [dbo].[Inventario]
 (
 	[Bodega] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_Inventario]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_Inventario]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_Inventario] ON [dbo].[Inventario]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iProducto_Inventario]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iProducto_Inventario]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iProducto_Inventario] ON [dbo].[Inventario]
 (
 	[Producto] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iBodega_Kardex]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iBodega_Kardex]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iBodega_Kardex] ON [dbo].[Kardex]
 (
 	[Bodega] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_Kardex]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_Kardex]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_Kardex] ON [dbo].[Kardex]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iProducto_Kardex]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iProducto_Kardex]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iProducto_Kardex] ON [dbo].[Kardex]
 (
 	[Producto] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_gloListas]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_gloListas]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_gloListas] ON [dbo].[Listas]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_MedicamentoDosis]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_MedicamentoDosis]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_MedicamentoDosis] ON [dbo].[MedicamentoDosis]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iMedicamento_MedicamentoDosis]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iMedicamento_MedicamentoDosis]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iMedicamento_MedicamentoDosis] ON [dbo].[MedicamentoDosis]
 (
 	[Medicamento] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_MedicamentoVia]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_MedicamentoVia]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_MedicamentoVia] ON [dbo].[MedicamentoVia]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iMedicamento_MedicamentoVia]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iMedicamento_MedicamentoVia]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iMedicamento_MedicamentoVia] ON [dbo].[MedicamentoVia]
 (
 	[Medicamento] ASC
@@ -3830,44 +3669,44 @@ CREATE NONCLUSTERED INDEX [iMedicamento_MedicamentoVia] ON [dbo].[MedicamentoVia
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [iVia_MedicamentoVia]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iVia_MedicamentoVia]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iVia_MedicamentoVia] ON [dbo].[MedicamentoVia]
 (
 	[Via] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iCitas_Medico-Citas]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iCitas_Medico-Citas]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iCitas_Medico-Citas] ON [dbo].[Medico-Citas]
 (
 	[Citas] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iCitasMedicos_Medico-Citas]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iCitasMedicos_Medico-Citas]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE UNIQUE NONCLUSTERED INDEX [iCitasMedicos_Medico-Citas] ON [dbo].[Medico-Citas]
 (
 	[Citas] ASC,
 	[Medicos] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iMedicos_Medico-Citas]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iMedicos_Medico-Citas]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iMedicos_Medico-Citas] ON [dbo].[Medico-Citas]
 (
 	[Medicos] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iConsultorio_MedicoConsultorio]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iConsultorio_MedicoConsultorio]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iConsultorio_MedicoConsultorio] ON [dbo].[MedicoConsultorio]
 (
 	[Consultorio] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_MedicoConsultorio]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_MedicoConsultorio]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_MedicoConsultorio] ON [dbo].[MedicoConsultorio]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iMedico_MedicoConsultorio]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iMedico_MedicoConsultorio]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iMedico_MedicoConsultorio] ON [dbo].[MedicoConsultorio]
 (
 	[Medico] ASC
@@ -3875,61 +3714,61 @@ CREATE NONCLUSTERED INDEX [iMedico_MedicoConsultorio] ON [dbo].[MedicoConsultori
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [iEspecialidad_MedicoEspecialidad]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iEspecialidad_MedicoEspecialidad]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iEspecialidad_MedicoEspecialidad] ON [dbo].[MedicoEspecialidad]
 (
 	[Especialidad] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_MedicoEspecialidad]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_MedicoEspecialidad]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_MedicoEspecialidad] ON [dbo].[MedicoEspecialidad]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iMedico_MedicoEspecialidad]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iMedico_MedicoEspecialidad]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iMedico_MedicoEspecialidad] ON [dbo].[MedicoEspecialidad]
 (
 	[Medico] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_MedicoListas]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_MedicoListas]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_MedicoListas] ON [dbo].[MedLista]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_ModelDifference]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_ModelDifference]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_ModelDifference] ON [dbo].[ModelDifference]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_ModelDifferenceAspect]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_ModelDifferenceAspect]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_ModelDifferenceAspect] ON [dbo].[ModelDifferenceAspect]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iOwner_ModelDifferenceAspect]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iOwner_ModelDifferenceAspect]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iOwner_ModelDifferenceAspect] ON [dbo].[ModelDifferenceAspect]
 (
 	[Owner] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_Moneda]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_Moneda]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_Moneda] ON [dbo].[Moneda]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iAseguradora_Paciente]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iAseguradora_Paciente]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iAseguradora_Paciente] ON [dbo].[Paciente]
 (
 	[Aseguradora] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iEmpresa_Paciente]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iEmpresa_Paciente]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iEmpresa_Paciente] ON [dbo].[Paciente]
 (
 	[Empresa] ASC
@@ -3937,13 +3776,13 @@ CREATE NONCLUSTERED INDEX [iEmpresa_Paciente] ON [dbo].[Paciente]
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [iNacionalidad_Paciente]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iNacionalidad_Paciente]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iNacionalidad_Paciente] ON [dbo].[Paciente]
 (
 	[Nacionalidad] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iPatrono_Paciente]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iPatrono_Paciente]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iPatrono_Paciente] ON [dbo].[Paciente]
 (
 	[Patrono] ASC
@@ -3951,79 +3790,105 @@ CREATE NONCLUSTERED INDEX [iPatrono_Paciente] ON [dbo].[Paciente]
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [iTipoSeguro_Paciente]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iTipoSeguro_Paciente]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iTipoSeguro_Paciente] ON [dbo].[Paciente]
 (
 	[TipoSeguro] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_PacienteMedico]    Script Date: 19/11/2020 14:08:55 ******/
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [iCategoria_PacienteFileData]    Script Date: 21/1/2021 00:34:32 ******/
+CREATE NONCLUSTERED INDEX [iCategoria_PacienteFileData] ON [dbo].[PacienteFileData]
+(
+	[Categoria] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+/****** Object:  Index [iFile_PacienteFileData]    Script Date: 21/1/2021 00:34:32 ******/
+CREATE NONCLUSTERED INDEX [iFile_PacienteFileData] ON [dbo].[PacienteFileData]
+(
+	[File] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+/****** Object:  Index [iGCRecord_PacienteFileData]    Script Date: 21/1/2021 00:34:32 ******/
+CREATE NONCLUSTERED INDEX [iGCRecord_PacienteFileData] ON [dbo].[PacienteFileData]
+(
+	[GCRecord] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+/****** Object:  Index [iPaciente_PacienteFileData]    Script Date: 21/1/2021 00:34:32 ******/
+CREATE NONCLUSTERED INDEX [iPaciente_PacienteFileData] ON [dbo].[PacienteFileData]
+(
+	[Paciente] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+/****** Object:  Index [iGCRecord_PacienteMedico]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_PacienteMedico] ON [dbo].[PacienteMedico]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iMedico_PacienteMedico]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iMedico_PacienteMedico]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iMedico_PacienteMedico] ON [dbo].[PacienteMedico]
 (
 	[Medico] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iPaciente_PacienteMedico]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iPaciente_PacienteMedico]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iPaciente_PacienteMedico] ON [dbo].[PacienteMedico]
 (
 	[Paciente] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iFarmaceutica_PacienteVacunas]    Script Date: 19/11/2020 14:08:55 ******/
-CREATE NONCLUSTERED INDEX [iFarmaceutica_PacienteVacunas] ON [dbo].[PacienteVacunas]
+/****** Object:  Index [iFarmaceutica_PacienteVacunas]    Script Date: 21/1/2021 00:34:32 ******/
+CREATE NONCLUSTERED INDEX [iFarmaceutica_PacienteVacunas] ON [dbo].[PacienteVacuna]
 (
 	[Farmaceutica] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_PacienteVacunas]    Script Date: 19/11/2020 14:08:55 ******/
-CREATE NONCLUSTERED INDEX [iGCRecord_PacienteVacunas] ON [dbo].[PacienteVacunas]
+/****** Object:  Index [iGCRecord_PacienteVacunas]    Script Date: 21/1/2021 00:34:32 ******/
+CREATE NONCLUSTERED INDEX [iGCRecord_PacienteVacunas] ON [dbo].[PacienteVacuna]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iPaciente_PacienteVacunas]    Script Date: 19/11/2020 14:08:55 ******/
-CREATE NONCLUSTERED INDEX [iPaciente_PacienteVacunas] ON [dbo].[PacienteVacunas]
+/****** Object:  Index [iPaciente_PacienteVacunas]    Script Date: 21/1/2021 00:34:32 ******/
+CREATE NONCLUSTERED INDEX [iPaciente_PacienteVacunas] ON [dbo].[PacienteVacuna]
 (
 	[Paciente] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iParteDeCuerpo_PacienteVacunas]    Script Date: 19/11/2020 14:08:55 ******/
-CREATE NONCLUSTERED INDEX [iParteDeCuerpo_PacienteVacunas] ON [dbo].[PacienteVacunas]
+/****** Object:  Index [iParteDeCuerpo_PacienteVacunas]    Script Date: 21/1/2021 00:34:32 ******/
+CREATE NONCLUSTERED INDEX [iParteDeCuerpo_PacienteVacunas] ON [dbo].[PacienteVacuna]
 (
 	[ParteDeCuerpo] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iVacuna_PacienteVacunas]    Script Date: 19/11/2020 14:08:55 ******/
-CREATE NONCLUSTERED INDEX [iVacuna_PacienteVacunas] ON [dbo].[PacienteVacunas]
+/****** Object:  Index [iVacuna_PacienteVacunas]    Script Date: 21/1/2021 00:34:32 ******/
+CREATE NONCLUSTERED INDEX [iVacuna_PacienteVacunas] ON [dbo].[PacienteVacuna]
 (
 	[Vacuna] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iDiagnostico_Pariente]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iDiagnostico_Pariente]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iDiagnostico_Pariente] ON [dbo].[Pariente]
 (
 	[Diagnostico] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_Pariente]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_Pariente]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_Pariente] ON [dbo].[Pariente]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iIdPariente_Pariente]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iIdPariente_Pariente]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iIdPariente_Pariente] ON [dbo].[Pariente]
 (
 	[IdPariente] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iPaciente_Pariente]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iPaciente_Pariente]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iPaciente_Pariente] ON [dbo].[Pariente]
 (
 	[Paciente] ASC
@@ -4031,110 +3896,134 @@ CREATE NONCLUSTERED INDEX [iPaciente_Pariente] ON [dbo].[Pariente]
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [iParentesco_Pariente]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iParentesco_Pariente]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iParentesco_Pariente] ON [dbo].[Pariente]
 (
 	[Parentesco] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_PermissionPolicyActionPermissionObject]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_PercentilTabla]    Script Date: 21/1/2021 00:34:32 ******/
+CREATE NONCLUSTERED INDEX [iGCRecord_PercentilTabla] ON [dbo].[PercentilTabla]
+(
+	[GCRecord] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+/****** Object:  Index [iSigno_PercentilTabla]    Script Date: 21/1/2021 00:34:32 ******/
+CREATE NONCLUSTERED INDEX [iSigno_PercentilTabla] ON [dbo].[PercentilTabla]
+(
+	[Signo] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+/****** Object:  Index [iGCRecord_PercentilTablaDetalle]    Script Date: 21/1/2021 00:34:32 ******/
+CREATE NONCLUSTERED INDEX [iGCRecord_PercentilTablaDetalle] ON [dbo].[PercentilTablaDetalle]
+(
+	[GCRecord] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+/****** Object:  Index [iPercentilTabla_PercentilTablaDetalle]    Script Date: 21/1/2021 00:34:32 ******/
+CREATE NONCLUSTERED INDEX [iPercentilTabla_PercentilTablaDetalle] ON [dbo].[PercentilTablaDetalle]
+(
+	[PercentilTabla] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+/****** Object:  Index [iGCRecord_PermissionPolicyActionPermissionObject]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_PermissionPolicyActionPermissionObject] ON [dbo].[PermissionPolicyActionPermissionObject]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iRole_PermissionPolicyActionPermissionObject]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iRole_PermissionPolicyActionPermissionObject]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iRole_PermissionPolicyActionPermissionObject] ON [dbo].[PermissionPolicyActionPermissionObject]
 (
 	[Role] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_PermissionPolicyMemberPermissionsObject]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_PermissionPolicyMemberPermissionsObject]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_PermissionPolicyMemberPermissionsObject] ON [dbo].[PermissionPolicyMemberPermissionsObject]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iTypePermissionObject_PermissionPolicyMemberPermissionsObject]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iTypePermissionObject_PermissionPolicyMemberPermissionsObject]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iTypePermissionObject_PermissionPolicyMemberPermissionsObject] ON [dbo].[PermissionPolicyMemberPermissionsObject]
 (
 	[TypePermissionObject] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_PermissionPolicyNavigationPermissionsObject]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_PermissionPolicyNavigationPermissionsObject]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_PermissionPolicyNavigationPermissionsObject] ON [dbo].[PermissionPolicyNavigationPermissionsObject]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iRole_PermissionPolicyNavigationPermissionsObject]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iRole_PermissionPolicyNavigationPermissionsObject]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iRole_PermissionPolicyNavigationPermissionsObject] ON [dbo].[PermissionPolicyNavigationPermissionsObject]
 (
 	[Role] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_PermissionPolicyObjectPermissionsObject]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_PermissionPolicyObjectPermissionsObject]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_PermissionPolicyObjectPermissionsObject] ON [dbo].[PermissionPolicyObjectPermissionsObject]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iTypePermissionObject_PermissionPolicyObjectPermissionsObject]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iTypePermissionObject_PermissionPolicyObjectPermissionsObject]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iTypePermissionObject_PermissionPolicyObjectPermissionsObject] ON [dbo].[PermissionPolicyObjectPermissionsObject]
 (
 	[TypePermissionObject] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_PermissionPolicyRole]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_PermissionPolicyRole]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_PermissionPolicyRole] ON [dbo].[PermissionPolicyRole]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iObjectType_PermissionPolicyRole]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iObjectType_PermissionPolicyRole]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iObjectType_PermissionPolicyRole] ON [dbo].[PermissionPolicyRole]
 (
 	[ObjectType] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_PermissionPolicyTypePermissionsObject]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_PermissionPolicyTypePermissionsObject]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_PermissionPolicyTypePermissionsObject] ON [dbo].[PermissionPolicyTypePermissionsObject]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iRole_PermissionPolicyTypePermissionsObject]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iRole_PermissionPolicyTypePermissionsObject]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iRole_PermissionPolicyTypePermissionsObject] ON [dbo].[PermissionPolicyTypePermissionsObject]
 (
 	[Role] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_PermissionPolicyUser]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_PermissionPolicyUser]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_PermissionPolicyUser] ON [dbo].[PermissionPolicyUser]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iObjectType_PermissionPolicyUser]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iObjectType_PermissionPolicyUser]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iObjectType_PermissionPolicyUser] ON [dbo].[PermissionPolicyUser]
 (
 	[ObjectType] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iRoles_PermissionPolicyUserUsers_PermissionPolicyRoleRoles]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iRoles_PermissionPolicyUserUsers_PermissionPolicyRoleRoles]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iRoles_PermissionPolicyUserUsers_PermissionPolicyRoleRoles] ON [dbo].[PermissionPolicyUserUsers_PermissionPolicyRoleRoles]
 (
 	[Roles] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iRolesUsers_PermissionPolicyUserUsers_PermissionPolicyRoleRoles]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iRolesUsers_PermissionPolicyUserUsers_PermissionPolicyRoleRoles]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE UNIQUE NONCLUSTERED INDEX [iRolesUsers_PermissionPolicyUserUsers_PermissionPolicyRoleRoles] ON [dbo].[PermissionPolicyUserUsers_PermissionPolicyRoleRoles]
 (
 	[Roles] ASC,
 	[Users] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iUsers_PermissionPolicyUserUsers_PermissionPolicyRoleRoles]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iUsers_PermissionPolicyUserUsers_PermissionPolicyRoleRoles]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iUsers_PermissionPolicyUserUsers_PermissionPolicyRoleRoles] ON [dbo].[PermissionPolicyUserUsers_PermissionPolicyRoleRoles]
 (
 	[Users] ASC
@@ -4142,19 +4031,19 @@ CREATE NONCLUSTERED INDEX [iUsers_PermissionPolicyUserUsers_PermissionPolicyRole
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [iCiudad_Persona]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iCiudad_Persona]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iCiudad_Persona] ON [dbo].[Persona]
 (
 	[Ciudad] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_Persona]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_Persona]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_Persona] ON [dbo].[Persona]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iObjectType_Persona]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iObjectType_Persona]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iObjectType_Persona] ON [dbo].[Persona]
 (
 	[ObjectType] ASC
@@ -4162,7 +4051,7 @@ CREATE NONCLUSTERED INDEX [iObjectType_Persona] ON [dbo].[Persona]
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [iPais_Persona]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iPais_Persona]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iPais_Persona] ON [dbo].[Persona]
 (
 	[Pais] ASC
@@ -4170,7 +4059,7 @@ CREATE NONCLUSTERED INDEX [iPais_Persona] ON [dbo].[Persona]
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [iProvincia_Persona]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iProvincia_Persona]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iProvincia_Persona] ON [dbo].[Persona]
 (
 	[Provincia] ASC
@@ -4178,31 +4067,31 @@ CREATE NONCLUSTERED INDEX [iProvincia_Persona] ON [dbo].[Persona]
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [iTipoSangre_Persona]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iTipoSangre_Persona]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iTipoSangre_Persona] ON [dbo].[Persona]
 (
 	[TipoSangre] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iContacto_PersonaContacto]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iContacto_PersonaContacto]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iContacto_PersonaContacto] ON [dbo].[PersonaContacto]
 (
 	[Contacto] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_PersonaContacto]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_PersonaContacto]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_PersonaContacto] ON [dbo].[PersonaContacto]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iPersona_PersonaContacto]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iPersona_PersonaContacto]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iPersona_PersonaContacto] ON [dbo].[PersonaContacto]
 (
 	[Persona] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_PersonaDocumento]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_PersonaDocumento]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_PersonaDocumento] ON [dbo].[PersonaDocumento]
 (
 	[GCRecord] ASC
@@ -4210,13 +4099,13 @@ CREATE NONCLUSTERED INDEX [iGCRecord_PersonaDocumento] ON [dbo].[PersonaDocument
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [iNombre_PersonaDocumento]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iNombre_PersonaDocumento]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iNombre_PersonaDocumento] ON [dbo].[PersonaDocumento]
 (
 	[Nombre] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iPersona_PersonaDocumento]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iPersona_PersonaDocumento]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iPersona_PersonaDocumento] ON [dbo].[PersonaDocumento]
 (
 	[Persona] ASC
@@ -4224,43 +4113,57 @@ CREATE NONCLUSTERED INDEX [iPersona_PersonaDocumento] ON [dbo].[PersonaDocumento
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [iTipo_PersonaDocumento]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iTipo_PersonaDocumento]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iTipo_PersonaDocumento] ON [dbo].[PersonaDocumento]
 (
 	[Tipo] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iPersona_PersonaTelefono]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_PersonaTelefono]    Script Date: 21/1/2021 00:34:32 ******/
+CREATE NONCLUSTERED INDEX [iGCRecord_PersonaTelefono] ON [dbo].[PersonaTelefono]
+(
+	[GCRecord] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+/****** Object:  Index [iPersona_PersonaTelefono]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iPersona_PersonaTelefono] ON [dbo].[PersonaTelefono]
 (
 	[Persona] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_PlanMedico]    Script Date: 19/11/2020 14:08:55 ******/
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [iTelefono_PersonaTelefono]    Script Date: 21/1/2021 00:34:32 ******/
+CREATE NONCLUSTERED INDEX [iTelefono_PersonaTelefono] ON [dbo].[PersonaTelefono]
+(
+	[Telefono] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+/****** Object:  Index [iGCRecord_PlanMedico]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_PlanMedico] ON [dbo].[PlanMedico]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_PlanMedicoDetalle]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_PlanMedicoDetalle]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_PlanMedicoDetalle] ON [dbo].[PlanMedicoDetalle]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iPlanMedico_PlanMedicoDetalle]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iPlanMedico_PlanMedicoDetalle]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iPlanMedico_PlanMedicoDetalle] ON [dbo].[PlanMedicoDetalle]
 (
 	[PlanMedico] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iRegla_PlanMedicoDetalle]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iRegla_PlanMedicoDetalle]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iRegla_PlanMedicoDetalle] ON [dbo].[PlanMedicoDetalle]
 (
 	[Regla] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iDiagnostico_ProblemaMedico]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iDiagnostico_ProblemaMedico]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iDiagnostico_ProblemaMedico] ON [dbo].[ProblemaMedico]
 (
 	[Diagnostico] ASC
@@ -4268,13 +4171,13 @@ CREATE NONCLUSTERED INDEX [iDiagnostico_ProblemaMedico] ON [dbo].[ProblemaMedico
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [iFrecuencia_ProblemaMedico]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iFrecuencia_ProblemaMedico]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iFrecuencia_ProblemaMedico] ON [dbo].[ProblemaMedico]
 (
 	[Frecuencia] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_ProblemaMedico]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_ProblemaMedico]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_ProblemaMedico] ON [dbo].[ProblemaMedico]
 (
 	[GCRecord] ASC
@@ -4282,13 +4185,13 @@ CREATE NONCLUSTERED INDEX [iGCRecord_ProblemaMedico] ON [dbo].[ProblemaMedico]
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [iGravedad_ProblemaMedico]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGravedad_ProblemaMedico]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGravedad_ProblemaMedico] ON [dbo].[ProblemaMedico]
 (
 	[Gravedad] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iPaciente_ProblemaMedico]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iPaciente_ProblemaMedico]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iPaciente_ProblemaMedico] ON [dbo].[ProblemaMedico]
 (
 	[Paciente] ASC
@@ -4296,7 +4199,7 @@ CREATE NONCLUSTERED INDEX [iPaciente_ProblemaMedico] ON [dbo].[ProblemaMedico]
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [iReaccion_ProblemaMedico]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iReaccion_ProblemaMedico]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iReaccion_ProblemaMedico] ON [dbo].[ProblemaMedico]
 (
 	[Reaccion] ASC
@@ -4304,7 +4207,7 @@ CREATE NONCLUSTERED INDEX [iReaccion_ProblemaMedico] ON [dbo].[ProblemaMedico]
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [iResultado_ProblemaMedico]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iResultado_ProblemaMedico]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iResultado_ProblemaMedico] ON [dbo].[ProblemaMedico]
 (
 	[Resultado] ASC
@@ -4312,49 +4215,49 @@ CREATE NONCLUSTERED INDEX [iResultado_ProblemaMedico] ON [dbo].[ProblemaMedico]
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [iTipo_ProblemaMedico]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iTipo_ProblemaMedico]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iTipo_ProblemaMedico] ON [dbo].[ProblemaMedico]
 (
 	[Tipo] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_GloCategoriaProducto]    Script Date: 19/11/2020 14:08:55 ******/
-CREATE NONCLUSTERED INDEX [iGCRecord_CategoriaProducto] ON [dbo].[ProCategoria]
+/****** Object:  Index [iGCRecord_GloCategoriaProducto]    Script Date: 21/1/2021 00:34:32 ******/
+CREATE NONCLUSTERED INDEX [iGCRecord_GloCategoriaProducto] ON [dbo].[ProCategoria]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iPadre_GloCategoriaProducto]    Script Date: 19/11/2020 14:08:55 ******/
-CREATE NONCLUSTERED INDEX [iPadre_CategoriaProducto] ON [dbo].[ProCategoria]
+/****** Object:  Index [iPadre_GloCategoriaProducto]    Script Date: 21/1/2021 00:34:32 ******/
+CREATE NONCLUSTERED INDEX [iPadre_GloCategoriaProducto] ON [dbo].[ProCategoria]
 (
 	[Padre] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iCategoria_Producto]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iCategoria_Producto]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iCategoria_Producto] ON [dbo].[Producto]
 (
 	[Categoria] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iEmpresa_Producto]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iEmpresa_Producto]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iEmpresa_Producto] ON [dbo].[Producto]
 (
 	[Empresa] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_Producto]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_Producto]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_Producto] ON [dbo].[Producto]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iObjectType_Producto]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iObjectType_Producto]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iObjectType_Producto] ON [dbo].[Producto]
 (
 	[ObjectType] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iPresentacion_Producto]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iPresentacion_Producto]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iPresentacion_Producto] ON [dbo].[Producto]
 (
 	[Presentacion] ASC
@@ -4362,19 +4265,19 @@ CREATE NONCLUSTERED INDEX [iPresentacion_Producto] ON [dbo].[Producto]
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [iAtributo_ProductoAtributo]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iAtributo_ProductoAtributo]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iAtributo_ProductoAtributo] ON [dbo].[ProductoAtributo]
 (
 	[Atributo] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_ProductoAtributo]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_ProductoAtributo]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_ProductoAtributo] ON [dbo].[ProductoAtributo]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iProducto_ProductoAtributo]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iProducto_ProductoAtributo]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iProducto_ProductoAtributo] ON [dbo].[ProductoAtributo]
 (
 	[Producto] ASC
@@ -4382,99 +4285,79 @@ CREATE NONCLUSTERED INDEX [iProducto_ProductoAtributo] ON [dbo].[ProductoAtribut
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [iCodigoBarra_ProductoCodigoBarra]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iCodigoBarra_ProductoCodigoBarra]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE UNIQUE NONCLUSTERED INDEX [iCodigoBarra_ProductoCodigoBarra] ON [dbo].[ProductoCodigoBarra]
 (
 	[CodigoBarra] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_ProductoCodigoBarra]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_ProductoCodigoBarra]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_ProductoCodigoBarra] ON [dbo].[ProductoCodigoBarra]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iProducto_ProductoCodigoBarra]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iProducto_ProductoCodigoBarra]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iProducto_ProductoCodigoBarra] ON [dbo].[ProductoCodigoBarra]
 (
 	[Producto] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_ProductoEnsamble]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_ProductoEnsamble]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_ProductoEnsamble] ON [dbo].[ProductoEnsamble]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iItem_ProductoEnsamble]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iItem_ProductoEnsamble]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iItem_ProductoEnsamble] ON [dbo].[ProductoEnsamble]
 (
 	[Item] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iProducto_ProductoEnsamble]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iProducto_ProductoEnsamble]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iProducto_ProductoEnsamble] ON [dbo].[ProductoEnsamble]
 (
 	[Producto] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iEquivalente_ProductoEquivalente]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iEquivalente_ProductoEquivalente]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iEquivalente_ProductoEquivalente] ON [dbo].[ProductoEquivalente]
 (
 	[Equivalente] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_ProductoEquivalente]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_ProductoEquivalente]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_ProductoEquivalente] ON [dbo].[ProductoEquivalente]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iProducto_ProductoEquivalente]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iProducto_ProductoEquivalente]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iProducto_ProductoEquivalente] ON [dbo].[ProductoEquivalente]
 (
 	[Producto] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-SET ANSI_PADDING ON
-GO
-/****** Object:  Index [iCodigo_ProductoImpuesto]    Script Date: 19/11/2020 14:08:55 ******/
-CREATE NONCLUSTERED INDEX [iCodigo_ProductoImpuesto] ON [dbo].[ProductoImpuesto]
-(
-	[Codigo] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-/****** Object:  Index [iGCRecord_ProductoImpuesto]    Script Date: 19/11/2020 14:08:55 ******/
-CREATE NONCLUSTERED INDEX [iGCRecord_ProductoImpuesto] ON [dbo].[ProductoImpuesto]
-(
-	[GCRecord] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-/****** Object:  Index [iProducto_ProductoImpuesto]    Script Date: 19/11/2020 14:08:55 ******/
-CREATE NONCLUSTERED INDEX [iProducto_ProductoImpuesto] ON [dbo].[ProductoImpuesto]
-(
-	[Producto] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-/****** Object:  Index [iGCRecord_ProductoLote]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_ProductoLote]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_ProductoLote] ON [dbo].[ProductoLote]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iProducto_ProductoLote]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iProducto_ProductoLote]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iProducto_ProductoLote] ON [dbo].[ProductoLote]
 (
 	[Producto] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_ProductoPrecio]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_ProductoPrecio]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_ProductoPrecio] ON [dbo].[ProductoPrecio]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iProducto_ProductoPrecio]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iProducto_ProductoPrecio]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iProducto_ProductoPrecio] ON [dbo].[ProductoPrecio]
 (
 	[Producto] ASC
@@ -4482,19 +4365,19 @@ CREATE NONCLUSTERED INDEX [iProducto_ProductoPrecio] ON [dbo].[ProductoPrecio]
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [iTipo_ProductoPrecio]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iTipo_ProductoPrecio]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iTipo_ProductoPrecio] ON [dbo].[ProductoPrecio]
 (
 	[Tipo] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iFabricante_ProductoProveedor]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iFabricante_ProductoProveedor]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iFabricante_ProductoProveedor] ON [dbo].[ProductoProveedor]
 (
 	[Fabricante] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_ProductoProveedor]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_ProductoProveedor]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_ProductoProveedor] ON [dbo].[ProductoProveedor]
 (
 	[GCRecord] ASC
@@ -4502,274 +4385,274 @@ CREATE NONCLUSTERED INDEX [iGCRecord_ProductoProveedor] ON [dbo].[ProductoProvee
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [iPaisOrigen_ProductoProveedor]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iPaisOrigen_ProductoProveedor]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iPaisOrigen_ProductoProveedor] ON [dbo].[ProductoProveedor]
 (
 	[PaisOrigen] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iProducto_ProductoProveedor]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iProducto_ProductoProveedor]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iProducto_ProductoProveedor] ON [dbo].[ProductoProveedor]
 (
 	[Producto] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iProveedor_ProductoProveedor]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iProveedor_ProductoProveedor]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iProveedor_ProductoProveedor] ON [dbo].[ProductoProveedor]
 (
 	[Proveedor] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_Profesion]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_Profesion]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_Profesion] ON [dbo].[Profesion]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_ProdPresentacion]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_ProdPresentacion]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_ProdPresentacion] ON [dbo].[ProPresentacion]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_RecordatorioClinico]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_RecordatorioClinico]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_RecordatorioClinico] ON [dbo].[RecordatorioClinico]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iPaciente_RecordatorioClinico]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iPaciente_RecordatorioClinico]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iPaciente_RecordatorioClinico] ON [dbo].[RecordatorioClinico]
 (
 	[Paciente] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iRegla_RecordatorioClinico]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iRegla_RecordatorioClinico]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iRegla_RecordatorioClinico] ON [dbo].[RecordatorioClinico]
 (
 	[Regla] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_Regla]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_Regla]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_Regla] ON [dbo].[Regla]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_ReportDataV2]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_ReportDataV2]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_ReportDataV2] ON [dbo].[ReportDataV2]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_Resource]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_Resource]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_Resource] ON [dbo].[Resource]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iEvents_ResourceResources_EventEvents]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iEvents_ResourceResources_EventEvents]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iEvents_ResourceResources_EventEvents] ON [dbo].[ResourceResources_EventEvents]
 (
 	[Events] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iEventsResources_ResourceResources_EventEvents]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iEventsResources_ResourceResources_EventEvents]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE UNIQUE NONCLUSTERED INDEX [iEventsResources_ResourceResources_EventEvents] ON [dbo].[ResourceResources_EventEvents]
 (
 	[Events] ASC,
 	[Resources] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iResources_ResourceResources_EventEvents]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iResources_ResourceResources_EventEvents]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iResources_ResourceResources_EventEvents] ON [dbo].[ResourceResources_EventEvents]
 (
 	[Resources] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_SecuritySystemMemberPermissionsObject]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_SecuritySystemMemberPermissionsObject]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_SecuritySystemMemberPermissionsObject] ON [dbo].[SecuritySystemMemberPermissionsObject]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iOwner_SecuritySystemMemberPermissionsObject]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iOwner_SecuritySystemMemberPermissionsObject]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iOwner_SecuritySystemMemberPermissionsObject] ON [dbo].[SecuritySystemMemberPermissionsObject]
 (
 	[Owner] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_SecuritySystemObjectPermissionsObject]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_SecuritySystemObjectPermissionsObject]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_SecuritySystemObjectPermissionsObject] ON [dbo].[SecuritySystemObjectPermissionsObject]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iOwner_SecuritySystemObjectPermissionsObject]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iOwner_SecuritySystemObjectPermissionsObject]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iOwner_SecuritySystemObjectPermissionsObject] ON [dbo].[SecuritySystemObjectPermissionsObject]
 (
 	[Owner] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_SecuritySystemRole]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_SecuritySystemRole]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_SecuritySystemRole] ON [dbo].[SecuritySystemRole]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iObjectType_SecuritySystemRole]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iObjectType_SecuritySystemRole]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iObjectType_SecuritySystemRole] ON [dbo].[SecuritySystemRole]
 (
 	[ObjectType] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iChildRoles_SecuritySystemRoleParentRoles_SecuritySystemRoleChildRoles]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iChildRoles_SecuritySystemRoleParentRoles_SecuritySystemRoleChildRoles]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iChildRoles_SecuritySystemRoleParentRoles_SecuritySystemRoleChildRoles] ON [dbo].[SecuritySystemRoleParentRoles_SecuritySystemRoleChildRoles]
 (
 	[ChildRoles] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iChildRolesParentRoles_SecuritySystemRoleParentRoles_SecuritySystemRoleChildRoles]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iChildRolesParentRoles_SecuritySystemRoleParentRoles_SecuritySystemRoleChildRoles]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE UNIQUE NONCLUSTERED INDEX [iChildRolesParentRoles_SecuritySystemRoleParentRoles_SecuritySystemRoleChildRoles] ON [dbo].[SecuritySystemRoleParentRoles_SecuritySystemRoleChildRoles]
 (
 	[ChildRoles] ASC,
 	[ParentRoles] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iParentRoles_SecuritySystemRoleParentRoles_SecuritySystemRoleChildRoles]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iParentRoles_SecuritySystemRoleParentRoles_SecuritySystemRoleChildRoles]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iParentRoles_SecuritySystemRoleParentRoles_SecuritySystemRoleChildRoles] ON [dbo].[SecuritySystemRoleParentRoles_SecuritySystemRoleChildRoles]
 (
 	[ParentRoles] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_SecuritySystemTypePermissionsObject]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_SecuritySystemTypePermissionsObject]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_SecuritySystemTypePermissionsObject] ON [dbo].[SecuritySystemTypePermissionsObject]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iObjectType_SecuritySystemTypePermissionsObject]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iObjectType_SecuritySystemTypePermissionsObject]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iObjectType_SecuritySystemTypePermissionsObject] ON [dbo].[SecuritySystemTypePermissionsObject]
 (
 	[ObjectType] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iOwner_SecuritySystemTypePermissionsObject]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iOwner_SecuritySystemTypePermissionsObject]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iOwner_SecuritySystemTypePermissionsObject] ON [dbo].[SecuritySystemTypePermissionsObject]
 (
 	[Owner] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_SecuritySystemUser]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_SecuritySystemUser]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_SecuritySystemUser] ON [dbo].[SecuritySystemUser]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iObjectType_SecuritySystemUser]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iObjectType_SecuritySystemUser]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iObjectType_SecuritySystemUser] ON [dbo].[SecuritySystemUser]
 (
 	[ObjectType] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iRoles_SecuritySystemUserUsers_SecuritySystemRoleRoles]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iRoles_SecuritySystemUserUsers_SecuritySystemRoleRoles]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iRoles_SecuritySystemUserUsers_SecuritySystemRoleRoles] ON [dbo].[SecuritySystemUserUsers_SecuritySystemRoleRoles]
 (
 	[Roles] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iRolesUsers_SecuritySystemUserUsers_SecuritySystemRoleRoles]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iRolesUsers_SecuritySystemUserUsers_SecuritySystemRoleRoles]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE UNIQUE NONCLUSTERED INDEX [iRolesUsers_SecuritySystemUserUsers_SecuritySystemRoleRoles] ON [dbo].[SecuritySystemUserUsers_SecuritySystemRoleRoles]
 (
 	[Roles] ASC,
 	[Users] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iUsers_SecuritySystemUserUsers_SecuritySystemRoleRoles]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iUsers_SecuritySystemUserUsers_SecuritySystemRoleRoles]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iUsers_SecuritySystemUserUsers_SecuritySystemRoleRoles] ON [dbo].[SecuritySystemUserUsers_SecuritySystemRoleRoles]
 (
 	[Users] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iEmpresa_SysAuditoriaProceso]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_Signo]    Script Date: 21/1/2021 00:34:32 ******/
+CREATE NONCLUSTERED INDEX [iGCRecord_Signo] ON [dbo].[Signo]
+(
+	[GCRecord] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+/****** Object:  Index [iEmpresa_SysAuditoriaProceso]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iEmpresa_SysAuditoriaProceso] ON [dbo].[SysAuditoriaProceso]
 (
 	[Empresa] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_SysConsulta]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_SysConsulta]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_SysConsulta] ON [dbo].[SysConsulta]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_TablaIMC]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_TablaIMC]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_TablaIMC] ON [dbo].[TablaIMC]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_Telefono]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iGCRecord_Telefono]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_Telefono] ON [dbo].[Telefono]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iObjectType_Telefono]    Script Date: 19/11/2020 14:08:55 ******/
-CREATE NONCLUSTERED INDEX [iObjectType_Telefono] ON [dbo].[Telefono]
-(
-	[ObjectType] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-/****** Object:  Index [iDireccionPrincipal_Tercero]    Script Date: 19/11/2020 14:08:55 ******/
+/****** Object:  Index [iDireccionPrincipal_Tercero]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iDireccionPrincipal_Tercero] ON [dbo].[Tercero]
 (
 	[DireccionPrincipal] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_Tercero]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [iGCRecord_Tercero]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_Tercero] ON [dbo].[Tercero]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iObjectType_Tercero]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [iObjectType_Tercero]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iObjectType_Tercero] ON [dbo].[Tercero]
 (
 	[ObjectType] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_TerceroContacto]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [iGCRecord_TerceroContacto]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_TerceroContacto] ON [dbo].[TerceroContacto]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iTercero_TerceroContacto]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [iTercero_TerceroContacto]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iTercero_TerceroContacto] ON [dbo].[TerceroContacto]
 (
 	[Tercero] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iCliente_TerceroCredito]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [iCliente_TerceroCredito]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iCliente_TerceroCredito] ON [dbo].[TerceroCredito]
 (
 	[Cliente] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iDireccionCobro_TerceroCredito]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [iDireccionCobro_TerceroCredito]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iDireccionCobro_TerceroCredito] ON [dbo].[TerceroCredito]
 (
 	[DireccionCobro] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iEmpresa_TerceroCredito]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [iEmpresa_TerceroCredito]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iEmpresa_TerceroCredito] ON [dbo].[TerceroCredito]
 (
 	[Empresa] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_TerceroCredito]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [iGCRecord_TerceroCredito]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_TerceroCredito] ON [dbo].[TerceroCredito]
 (
 	[GCRecord] ASC
@@ -4777,13 +4660,13 @@ CREATE NONCLUSTERED INDEX [iGCRecord_TerceroCredito] ON [dbo].[TerceroCredito]
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [iCiudad_TerceroDireccion]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [iCiudad_TerceroDireccion]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iCiudad_TerceroDireccion] ON [dbo].[TerceroDireccion]
 (
 	[Ciudad] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_TerceroDireccion]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [iGCRecord_TerceroDireccion]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_TerceroDireccion] ON [dbo].[TerceroDireccion]
 (
 	[GCRecord] ASC
@@ -4791,7 +4674,7 @@ CREATE NONCLUSTERED INDEX [iGCRecord_TerceroDireccion] ON [dbo].[TerceroDireccio
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [iPais_TerceroDireccion]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [iPais_TerceroDireccion]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iPais_TerceroDireccion] ON [dbo].[TerceroDireccion]
 (
 	[Pais] ASC
@@ -4799,13 +4682,13 @@ CREATE NONCLUSTERED INDEX [iPais_TerceroDireccion] ON [dbo].[TerceroDireccion]
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [iProvincia_TerceroDireccion]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [iProvincia_TerceroDireccion]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iProvincia_TerceroDireccion] ON [dbo].[TerceroDireccion]
 (
 	[Provincia] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iTercero_TerceroDireccion]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [iTercero_TerceroDireccion]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iTercero_TerceroDireccion] ON [dbo].[TerceroDireccion]
 (
 	[Tercero] ASC
@@ -4813,20 +4696,20 @@ CREATE NONCLUSTERED INDEX [iTercero_TerceroDireccion] ON [dbo].[TerceroDireccion
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [idxTerceroNoDocumento]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [idxTerceroNoDocumento]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [idxTerceroNoDocumento] ON [dbo].[TerceroDocumento]
 (
 	[Numero] ASC,
 	[Tipo] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_TerceroDocumento]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [iGCRecord_TerceroDocumento]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_TerceroDocumento] ON [dbo].[TerceroDocumento]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iTercero_TerceroDocumento]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [iTercero_TerceroDocumento]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iTercero_TerceroDocumento] ON [dbo].[TerceroDocumento]
 (
 	[Tercero] ASC
@@ -4834,25 +4717,25 @@ CREATE NONCLUSTERED INDEX [iTercero_TerceroDocumento] ON [dbo].[TerceroDocumento
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [iTipo_TerceroDocumento]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [iTipo_TerceroDocumento]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iTipo_TerceroDocumento] ON [dbo].[TerceroDocumento]
 (
 	[Tipo] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iCliente_TerceroGarantia]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [iCliente_TerceroGarantia]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iCliente_TerceroGarantia] ON [dbo].[TerceroGarantia]
 (
 	[Cliente] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iEmpresa_TerceroGarantia]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [iEmpresa_TerceroGarantia]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iEmpresa_TerceroGarantia] ON [dbo].[TerceroGarantia]
 (
 	[Empresa] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_TerceroGarantia]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [iGCRecord_TerceroGarantia]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_TerceroGarantia] ON [dbo].[TerceroGarantia]
 (
 	[GCRecord] ASC
@@ -4860,7 +4743,7 @@ CREATE NONCLUSTERED INDEX [iGCRecord_TerceroGarantia] ON [dbo].[TerceroGarantia]
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [iTipo_TerceroGarantia]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [iTipo_TerceroGarantia]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iTipo_TerceroGarantia] ON [dbo].[TerceroGarantia]
 (
 	[Tipo] ASC
@@ -4868,61 +4751,75 @@ CREATE NONCLUSTERED INDEX [iTipo_TerceroGarantia] ON [dbo].[TerceroGarantia]
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [iActEconomica_TerceroGiro]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [iActEconomica_TerceroGiro]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iActEconomica_TerceroGiro] ON [dbo].[TerceroGiro]
 (
 	[ActEconomica] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_TerceroGiro]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [iGCRecord_TerceroGiro]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_TerceroGiro] ON [dbo].[TerceroGiro]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iTercero_TerceroGiro]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [iTercero_TerceroGiro]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iTercero_TerceroGiro] ON [dbo].[TerceroGiro]
 (
 	[Tercero] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_TerceroNota]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [iGCRecord_TerceroNota]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_TerceroNota] ON [dbo].[TerceroNota]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iTercero_TerceroNota]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [iTercero_TerceroNota]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iTercero_TerceroNota] ON [dbo].[TerceroNota]
 (
 	[Tercero] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_TerceroRole]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [iGCRecord_TerceroRole]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_TerceroRole] ON [dbo].[TerceroRole]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iTercero_TerceroRole]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [iTercero_TerceroRole]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iTercero_TerceroRole] ON [dbo].[TerceroRole]
 (
 	[Tercero] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_TerceroSucursal]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [iGCRecord_TerceroSucursal]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_TerceroSucursal] ON [dbo].[TerceroSucursal]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iTercero_TerceroSucursal]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [iTercero_TerceroSucursal]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iTercero_TerceroSucursal] ON [dbo].[TerceroSucursal]
 (
 	[Tercero] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iTercero_TerceroTelefono]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [iGCRecord_TerceroTelefono]    Script Date: 21/1/2021 00:34:32 ******/
+CREATE NONCLUSTERED INDEX [iGCRecord_TerceroTelefono] ON [dbo].[TerceroTelefono]
+(
+	[GCRecord] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [iTelefono_TerceroTelefono]    Script Date: 21/1/2021 00:34:32 ******/
+CREATE NONCLUSTERED INDEX [iTelefono_TerceroTelefono] ON [dbo].[TerceroTelefono]
+(
+	[Telefono] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+/****** Object:  Index [iTercero_TerceroTelefono]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iTercero_TerceroTelefono] ON [dbo].[TerceroTelefono]
 (
 	[Tercero] ASC
@@ -4930,7 +4827,7 @@ CREATE NONCLUSTERED INDEX [iTercero_TerceroTelefono] ON [dbo].[TerceroTelefono]
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [iCategoria_TerminologiaAnatomica]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [iCategoria_TerminologiaAnatomica]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iCategoria_TerminologiaAnatomica] ON [dbo].[TerminologiaAnatomica]
 (
 	[Categoria] ASC
@@ -4938,109 +4835,109 @@ CREATE NONCLUSTERED INDEX [iCategoria_TerminologiaAnatomica] ON [dbo].[Terminolo
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [idxTerminologiaAnatomica_CodigoTA]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [idxTerminologiaAnatomica_CodigoTA]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE UNIQUE NONCLUSTERED INDEX [idxTerminologiaAnatomica_CodigoTA] ON [dbo].[TerminologiaAnatomica]
 (
 	[CodigoTA] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_TerminologiaAnatomica]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [iGCRecord_TerminologiaAnatomica]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_TerminologiaAnatomica] ON [dbo].[TerminologiaAnatomica]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iConsulta_UltraSonografiaObstetrica]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [iConsulta_UltraSonografiaObstetrica]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iConsulta_UltraSonografiaObstetrica] ON [dbo].[UltraSonografiaObstetrica]
 (
 	[Consulta] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_UltraSonografiaObstetrica]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [iGCRecord_UltraSonografiaObstetrica]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_UltraSonografiaObstetrica] ON [dbo].[UltraSonografiaObstetrica]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iTecnico_UltraSonografiaObstetrica]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [iTecnico_UltraSonografiaObstetrica]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iTecnico_UltraSonografiaObstetrica] ON [dbo].[UltraSonografiaObstetrica]
 (
 	[Tecnico] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_UltrasonografiaObstetricaDetalle]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [iGCRecord_UltrasonografiaObstetricaDetalle]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_UltrasonografiaObstetricaDetalle] ON [dbo].[UltrasonografiaObstetricaDetalle]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iUltrasonografia_UltrasonografiaObstetricaDetalle]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [iUltrasonografia_UltrasonografiaObstetricaDetalle]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iUltrasonografia_UltrasonografiaObstetricaDetalle] ON [dbo].[UltrasonografiaObstetricaDetalle]
 (
 	[Ultrasonografia] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iConsulta_UltrasonografiaPelvica]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [iConsulta_UltrasonografiaPelvica]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iConsulta_UltrasonografiaPelvica] ON [dbo].[UltrasonografiaPelvica]
 (
 	[Consulta] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_UltrasonografiaPelvica]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [iGCRecord_UltrasonografiaPelvica]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_UltrasonografiaPelvica] ON [dbo].[UltrasonografiaPelvica]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iTecnico_UltrasonografiaPelvica]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [iTecnico_UltrasonografiaPelvica]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iTecnico_UltrasonografiaPelvica] ON [dbo].[UltrasonografiaPelvica]
 (
 	[Tecnico] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_UnidadMedida]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [iGCRecord_UnidadMedida]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_UnidadMedida] ON [dbo].[UnidadMedida]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iAgencia_Usuario]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [iAgencia_Usuario]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iAgencia_Usuario] ON [dbo].[Usuario]
 (
 	[Agencia] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iEmpleado_Usuario]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [iEmpleado_Usuario]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iEmpleado_Usuario] ON [dbo].[Usuario]
 (
 	[Empleado] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iEmpresa_Usuario]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [iEmpresa_Usuario]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iEmpresa_Usuario] ON [dbo].[Usuario]
 (
 	[Empresa] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_Vacuna]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [iGCRecord_Vacuna]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_Vacuna] ON [dbo].[Vacuna]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iMedicamento_Vacuna]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [iMedicamento_Vacuna]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iMedicamento_Vacuna] ON [dbo].[Vacuna]
 (
 	[Medicamento] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_WhoPercentilPesoLong]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [iGCRecord_WhoPercentilPesoLong]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_WhoPercentilPesoLong] ON [dbo].[WhoPercentilPesoLong]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iTipoTablaEdadMes_WhoPercentilPesoLong]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [iTipoTablaEdadMes_WhoPercentilPesoLong]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iTipoTablaEdadMes_WhoPercentilPesoLong] ON [dbo].[WhoPercentilPesoLong]
 (
 	[TipoTabla] ASC,
@@ -5049,31 +4946,31 @@ CREATE NONCLUSTERED INDEX [iTipoTablaEdadMes_WhoPercentilPesoLong] ON [dbo].[Who
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [iTypeName_XPObjectType]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [iTypeName_XPObjectType]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE UNIQUE NONCLUSTERED INDEX [iTypeName_XPObjectType] ON [dbo].[XPObjectType]
 (
 	[TypeName] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_XPWeakReference]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [iGCRecord_XPWeakReference]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_XPWeakReference] ON [dbo].[XPWeakReference]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iObjectType_XPWeakReference]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [iObjectType_XPWeakReference]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iObjectType_XPWeakReference] ON [dbo].[XPWeakReference]
 (
 	[ObjectType] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iTargetType_XPWeakReference]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [iTargetType_XPWeakReference]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iTargetType_XPWeakReference] ON [dbo].[XPWeakReference]
 (
 	[TargetType] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_ZonaGeografica]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [iGCRecord_ZonaGeografica]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_ZonaGeografica] ON [dbo].[ZonaGeografica]
 (
 	[GCRecord] ASC
@@ -5081,7 +4978,7 @@ CREATE NONCLUSTERED INDEX [iGCRecord_ZonaGeografica] ON [dbo].[ZonaGeografica]
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [iMoneda_ZonaGeografica]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [iMoneda_ZonaGeografica]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iMoneda_ZonaGeografica] ON [dbo].[ZonaGeografica]
 (
 	[Moneda] ASC
@@ -5089,7 +4986,7 @@ CREATE NONCLUSTERED INDEX [iMoneda_ZonaGeografica] ON [dbo].[ZonaGeografica]
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [iZonaPadre_ZonaGeografica]    Script Date: 19/11/2020 14:08:56 ******/
+/****** Object:  Index [iZonaPadre_ZonaGeografica]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iZonaPadre_ZonaGeografica] ON [dbo].[ZonaGeografica]
 (
 	[ZonaPadre] ASC
@@ -5108,24 +5005,6 @@ REFERENCES [dbo].[Tercero] ([OID])
 NOT FOR REPLICATION 
 GO
 ALTER TABLE [dbo].[Afp] CHECK CONSTRAINT [FK_Afp_Proveedor]
-GO
-ALTER TABLE [dbo].[PacienteAdjunto]  WITH NOCHECK ADD  CONSTRAINT [FK_PacienteAdjunto_Categoria] FOREIGN KEY([Categoria])
-REFERENCES [dbo].[MedLista] ([Codigo])
-NOT FOR REPLICATION 
-GO
-ALTER TABLE [dbo].[PacienteAdjunto] CHECK CONSTRAINT [FK_PacienteAdjunto_Categoria]
-GO
-ALTER TABLE [dbo].[PacienteAdjunto]  WITH NOCHECK ADD  CONSTRAINT [FK_PacienteAdjunto_File] FOREIGN KEY([File])
-REFERENCES [dbo].[FileData] ([Oid])
-NOT FOR REPLICATION 
-GO
-ALTER TABLE [dbo].[PacienteAdjunto] CHECK CONSTRAINT [FK_PacienteAdjunto_File]
-GO
-ALTER TABLE [dbo].[PacienteAdjunto]  WITH NOCHECK ADD  CONSTRAINT [FK_PacienteAdjunto_Paciente] FOREIGN KEY([Paciente])
-REFERENCES [dbo].[Paciente] ([OID])
-NOT FOR REPLICATION 
-GO
-ALTER TABLE [dbo].[PacienteAdjunto] CHECK CONSTRAINT [FK_PacienteAdjunto_Paciente]
 GO
 ALTER TABLE [dbo].[AuditDataItemPersistent]  WITH NOCHECK ADD  CONSTRAINT [FK_AuditDataItemPersistent_AuditedObject] FOREIGN KEY([AuditedObject])
 REFERENCES [dbo].[AuditedObjectWeakReference] ([Oid])
@@ -5169,18 +5048,6 @@ NOT FOR REPLICATION
 GO
 ALTER TABLE [dbo].[Cita] CHECK CONSTRAINT [FK_Cita_RecurrencePattern]
 GO
-ALTER TABLE [dbo].[ConCatalogo]  WITH NOCHECK ADD  CONSTRAINT [FK_ConCatalogo_cod_cta_padre] FOREIGN KEY([cod_cta_padre])
-REFERENCES [dbo].[ConCatalogo] ([OID])
-NOT FOR REPLICATION 
-GO
-ALTER TABLE [dbo].[ConCatalogo] CHECK CONSTRAINT [FK_ConCatalogo_cod_cta_padre]
-GO
-ALTER TABLE [dbo].[ConCatalogo]  WITH NOCHECK ADD  CONSTRAINT [FK_ConCatalogo_cod_emp] FOREIGN KEY([cod_emp])
-REFERENCES [dbo].[Empresa] ([OID])
-NOT FOR REPLICATION 
-GO
-ALTER TABLE [dbo].[ConCatalogo] CHECK CONSTRAINT [FK_ConCatalogo_cod_emp]
-GO
 ALTER TABLE [dbo].[ConCatalogo]  WITH NOCHECK ADD  CONSTRAINT [FK_ConCatalogo_CtaPadre] FOREIGN KEY([CtaPadre])
 REFERENCES [dbo].[ConCatalogo] ([OID])
 NOT FOR REPLICATION 
@@ -5192,12 +5059,6 @@ REFERENCES [dbo].[Empresa] ([OID])
 NOT FOR REPLICATION 
 GO
 ALTER TABLE [dbo].[ConCatalogo] CHECK CONSTRAINT [FK_ConCatalogo_Empresa]
-GO
-ALTER TABLE [dbo].[ConPeriodo]  WITH NOCHECK ADD  CONSTRAINT [FK_ConPeriodo_cod_emp] FOREIGN KEY([cod_emp])
-REFERENCES [dbo].[Empresa] ([OID])
-NOT FOR REPLICATION 
-GO
-ALTER TABLE [dbo].[ConPeriodo] CHECK CONSTRAINT [FK_ConPeriodo_cod_emp]
 GO
 ALTER TABLE [dbo].[Consulta]  WITH NOCHECK ADD  CONSTRAINT [FK_Consulta_Consultorio] FOREIGN KEY([Consultorio])
 REFERENCES [dbo].[EmpresaUnidad] ([OID])
@@ -5222,6 +5083,18 @@ REFERENCES [dbo].[Paciente] ([OID])
 NOT FOR REPLICATION 
 GO
 ALTER TABLE [dbo].[Consulta] CHECK CONSTRAINT [FK_Consulta_Paciente]
+GO
+ALTER TABLE [dbo].[ConsultaDiagnostico]  WITH NOCHECK ADD  CONSTRAINT [FK_ConsultaDiagnostico_Consulta] FOREIGN KEY([Consulta])
+REFERENCES [dbo].[Consulta] ([OID])
+NOT FOR REPLICATION 
+GO
+ALTER TABLE [dbo].[ConsultaDiagnostico] CHECK CONSTRAINT [FK_ConsultaDiagnostico_Consulta]
+GO
+ALTER TABLE [dbo].[ConsultaDiagnostico]  WITH NOCHECK ADD  CONSTRAINT [FK_ConsultaDiagnostico_Problema] FOREIGN KEY([Problema])
+REFERENCES [dbo].[ProblemaMedico] ([OID])
+NOT FOR REPLICATION 
+GO
+ALTER TABLE [dbo].[ConsultaDiagnostico] CHECK CONSTRAINT [FK_ConsultaDiagnostico_Problema]
 GO
 ALTER TABLE [dbo].[ConsultaExamen]  WITH NOCHECK ADD  CONSTRAINT [FK_ConsultaExamen_Consulta] FOREIGN KEY([Consulta])
 REFERENCES [dbo].[Consulta] ([OID])
@@ -5295,17 +5168,29 @@ NOT FOR REPLICATION
 GO
 ALTER TABLE [dbo].[ConsultaReceta] CHECK CONSTRAINT [FK_ConsultaReceta_ViaAdministracion]
 GO
-ALTER TABLE [dbo].[ConsultaDiagnostico]  WITH NOCHECK ADD  CONSTRAINT [FK_ConsultaDiagnostico_Consulta] FOREIGN KEY([Consulta])
+ALTER TABLE [dbo].[ConsultaSigno]  WITH NOCHECK ADD  CONSTRAINT [FK_ConsultaSigno_Consulta] FOREIGN KEY([Consulta])
 REFERENCES [dbo].[Consulta] ([OID])
 NOT FOR REPLICATION 
 GO
-ALTER TABLE [dbo].[ConsultaDiagnostico] CHECK CONSTRAINT [FK_ConsultaDiagnostico_Consulta]
+ALTER TABLE [dbo].[ConsultaSigno] CHECK CONSTRAINT [FK_ConsultaSigno_Consulta]
 GO
-ALTER TABLE [dbo].[ConsultaDiagnostico]  WITH NOCHECK ADD  CONSTRAINT [FK_ConsultaDiagnostico_Problema] FOREIGN KEY([Problema])
-REFERENCES [dbo].[ProblemaMedico] ([OID])
+ALTER TABLE [dbo].[ConsultaSigno]  WITH NOCHECK ADD  CONSTRAINT [FK_ConsultaSigno_Imc] FOREIGN KEY([Imc])
+REFERENCES [dbo].[TablaIMC] ([OID])
 NOT FOR REPLICATION 
 GO
-ALTER TABLE [dbo].[ConsultaDiagnostico] CHECK CONSTRAINT [FK_ConsultaDiagnostico_Problema]
+ALTER TABLE [dbo].[ConsultaSigno] CHECK CONSTRAINT [FK_ConsultaSigno_Imc]
+GO
+ALTER TABLE [dbo].[ConsultaSigno]  WITH NOCHECK ADD  CONSTRAINT [FK_ConsultaSigno_PercentilTablaDetalle] FOREIGN KEY([PercentilTablaDetalle])
+REFERENCES [dbo].[PercentilTablaDetalle] ([OID])
+NOT FOR REPLICATION 
+GO
+ALTER TABLE [dbo].[ConsultaSigno] CHECK CONSTRAINT [FK_ConsultaSigno_PercentilTablaDetalle]
+GO
+ALTER TABLE [dbo].[ConsultaSigno]  WITH NOCHECK ADD  CONSTRAINT [FK_ConsultaSigno_Signo] FOREIGN KEY([Signo])
+REFERENCES [dbo].[Signo] ([OID])
+NOT FOR REPLICATION 
+GO
+ALTER TABLE [dbo].[ConsultaSigno] CHECK CONSTRAINT [FK_ConsultaSigno_Signo]
 GO
 ALTER TABLE [dbo].[ConsultaSintoma]  WITH NOCHECK ADD  CONSTRAINT [FK_ConsultaSintoma_Consulta] FOREIGN KEY([Consulta])
 REFERENCES [dbo].[Consulta] ([OID])
@@ -5330,6 +5215,12 @@ REFERENCES [dbo].[Tercero] ([OID])
 NOT FOR REPLICATION 
 GO
 ALTER TABLE [dbo].[Empleado] CHECK CONSTRAINT [FK_Empleado_Banco]
+GO
+ALTER TABLE [dbo].[Empleado]  WITH NOCHECK ADD  CONSTRAINT [FK_Empleado_Cargo] FOREIGN KEY([Cargo])
+REFERENCES [dbo].[Cargo] ([OID])
+NOT FOR REPLICATION 
+GO
+ALTER TABLE [dbo].[Empleado] CHECK CONSTRAINT [FK_Empleado_Cargo]
 GO
 ALTER TABLE [dbo].[Empleado]  WITH NOCHECK ADD  CONSTRAINT [FK_Empleado_Empresa] FOREIGN KEY([Empresa])
 REFERENCES [dbo].[Empresa] ([OID])
@@ -5445,11 +5336,10 @@ NOT FOR REPLICATION
 GO
 ALTER TABLE [dbo].[EmpresaTelefono] CHECK CONSTRAINT [FK_EmpresaTelefono_Empresa]
 GO
-ALTER TABLE [dbo].[EmpresaTelefono]  WITH NOCHECK ADD  CONSTRAINT [FK_EmpresaTelefono_Numero] FOREIGN KEY([Numero])
+ALTER TABLE [dbo].[EmpresaTelefono]  WITH CHECK ADD  CONSTRAINT [FK_EmpresaTelefono_Telefono] FOREIGN KEY([Telefono])
 REFERENCES [dbo].[Telefono] ([Numero])
-NOT FOR REPLICATION 
 GO
-ALTER TABLE [dbo].[EmpresaTelefono] CHECK CONSTRAINT [FK_EmpresaTelefono_Numero]
+ALTER TABLE [dbo].[EmpresaTelefono] CHECK CONSTRAINT [FK_EmpresaTelefono_Telefono]
 GO
 ALTER TABLE [dbo].[EmpresaUnidad]  WITH NOCHECK ADD  CONSTRAINT [FK_EmpresaUnidad_Empresa] FOREIGN KEY([Empresa])
 REFERENCES [dbo].[Empresa] ([OID])
@@ -5468,12 +5358,6 @@ REFERENCES [dbo].[Enfermedad] ([OID])
 NOT FOR REPLICATION 
 GO
 ALTER TABLE [dbo].[Enfermedad] CHECK CONSTRAINT [FK_Enfermedad_Categoria]
-GO
-ALTER TABLE [dbo].[Enfermedad_antes]  WITH NOCHECK ADD  CONSTRAINT [FK_Enfermedad_Categoria_antes] FOREIGN KEY([Categoria])
-REFERENCES [dbo].[Enfermedad_antes] ([Codigo])
-NOT FOR REPLICATION 
-GO
-ALTER TABLE [dbo].[Enfermedad_antes] CHECK CONSTRAINT [FK_Enfermedad_Categoria_antes]
 GO
 ALTER TABLE [dbo].[EstiloVida]  WITH NOCHECK ADD  CONSTRAINT [FK_EstiloVida_Factor] FOREIGN KEY([Factor])
 REFERENCES [dbo].[MedLista] ([Codigo])
@@ -5510,24 +5394,6 @@ REFERENCES [dbo].[Paciente] ([OID])
 NOT FOR REPLICATION 
 GO
 ALTER TABLE [dbo].[HistoriaFamiliar] CHECK CONSTRAINT [FK_HistoriaFamiliar_Paciente]
-GO
-ALTER TABLE [dbo].[HistorialCrecimiento]  WITH NOCHECK ADD  CONSTRAINT [FK_HistorialCrecimiento_Paciente] FOREIGN KEY([Paciente])
-REFERENCES [dbo].[Paciente] ([OID])
-NOT FOR REPLICATION 
-GO
-ALTER TABLE [dbo].[HistorialCrecimiento] CHECK CONSTRAINT [FK_HistorialCrecimiento_Paciente]
-GO
-ALTER TABLE [dbo].[HistorialCrecimiento]  WITH NOCHECK ADD  CONSTRAINT [FK_HistorialCrecimiento_Tabla_0_2Anios] FOREIGN KEY([Tabla_0_2Anios])
-REFERENCES [dbo].[WhoPercentilPesoLong] ([OID])
-NOT FOR REPLICATION 
-GO
-ALTER TABLE [dbo].[HistorialCrecimiento] CHECK CONSTRAINT [FK_HistorialCrecimiento_Tabla_0_2Anios]
-GO
-ALTER TABLE [dbo].[HistorialCrecimiento]  WITH NOCHECK ADD  CONSTRAINT [FK_HistorialCrecimiento_Tabla_2_20Anios] FOREIGN KEY([Tabla_2_20Anios])
-REFERENCES [dbo].[CdoPercentilPesoEstaturaBMI] ([Oid])
-NOT FOR REPLICATION 
-GO
-ALTER TABLE [dbo].[HistorialCrecimiento] CHECK CONSTRAINT [FK_HistorialCrecimiento_Tabla_2_20Anios]
 GO
 ALTER TABLE [dbo].[Inventario]  WITH NOCHECK ADD  CONSTRAINT [FK_Inventario_Bodega] FOREIGN KEY([Bodega])
 REFERENCES [dbo].[EmpresaUnidad] ([OID])
@@ -5655,6 +5521,24 @@ NOT FOR REPLICATION
 GO
 ALTER TABLE [dbo].[Paciente] CHECK CONSTRAINT [FK_Paciente_TipoSeguro]
 GO
+ALTER TABLE [dbo].[PacienteFileData]  WITH NOCHECK ADD  CONSTRAINT [FK_PacienteFileData_Categoria] FOREIGN KEY([Categoria])
+REFERENCES [dbo].[MedLista] ([Codigo])
+NOT FOR REPLICATION 
+GO
+ALTER TABLE [dbo].[PacienteFileData] CHECK CONSTRAINT [FK_PacienteFileData_Categoria]
+GO
+ALTER TABLE [dbo].[PacienteFileData]  WITH NOCHECK ADD  CONSTRAINT [FK_PacienteFileData_File] FOREIGN KEY([File])
+REFERENCES [dbo].[FileData] ([Oid])
+NOT FOR REPLICATION 
+GO
+ALTER TABLE [dbo].[PacienteFileData] CHECK CONSTRAINT [FK_PacienteFileData_File]
+GO
+ALTER TABLE [dbo].[PacienteFileData]  WITH NOCHECK ADD  CONSTRAINT [FK_PacienteFileData_Paciente] FOREIGN KEY([Paciente])
+REFERENCES [dbo].[Paciente] ([OID])
+NOT FOR REPLICATION 
+GO
+ALTER TABLE [dbo].[PacienteFileData] CHECK CONSTRAINT [FK_PacienteFileData_Paciente]
+GO
 ALTER TABLE [dbo].[PacienteMedico]  WITH NOCHECK ADD  CONSTRAINT [FK_PacienteMedico_Medico] FOREIGN KEY([Medico])
 REFERENCES [dbo].[Empleado] ([OID])
 NOT FOR REPLICATION 
@@ -5667,29 +5551,29 @@ NOT FOR REPLICATION
 GO
 ALTER TABLE [dbo].[PacienteMedico] CHECK CONSTRAINT [FK_PacienteMedico_Paciente]
 GO
-ALTER TABLE [dbo].[PacienteVacunas]  WITH NOCHECK ADD  CONSTRAINT [FK_PacienteVacunas_Farmaceutica] FOREIGN KEY([Farmaceutica])
+ALTER TABLE [dbo].[PacienteVacuna]  WITH NOCHECK ADD  CONSTRAINT [FK_PacienteVacunas_Farmaceutica] FOREIGN KEY([Farmaceutica])
 REFERENCES [dbo].[Tercero] ([OID])
 NOT FOR REPLICATION 
 GO
-ALTER TABLE [dbo].[PacienteVacunas] CHECK CONSTRAINT [FK_PacienteVacunas_Farmaceutica]
+ALTER TABLE [dbo].[PacienteVacuna] CHECK CONSTRAINT [FK_PacienteVacunas_Farmaceutica]
 GO
-ALTER TABLE [dbo].[PacienteVacunas]  WITH NOCHECK ADD  CONSTRAINT [FK_PacienteVacunas_Paciente] FOREIGN KEY([Paciente])
+ALTER TABLE [dbo].[PacienteVacuna]  WITH NOCHECK ADD  CONSTRAINT [FK_PacienteVacunas_Paciente] FOREIGN KEY([Paciente])
 REFERENCES [dbo].[Paciente] ([OID])
 NOT FOR REPLICATION 
 GO
-ALTER TABLE [dbo].[PacienteVacunas] CHECK CONSTRAINT [FK_PacienteVacunas_Paciente]
+ALTER TABLE [dbo].[PacienteVacuna] CHECK CONSTRAINT [FK_PacienteVacunas_Paciente]
 GO
-ALTER TABLE [dbo].[PacienteVacunas]  WITH NOCHECK ADD  CONSTRAINT [FK_PacienteVacunas_ParteDeCuerpo] FOREIGN KEY([ParteDeCuerpo])
+ALTER TABLE [dbo].[PacienteVacuna]  WITH NOCHECK ADD  CONSTRAINT [FK_PacienteVacunas_ParteDeCuerpo] FOREIGN KEY([ParteDeCuerpo])
 REFERENCES [dbo].[TerminologiaAnatomica] ([OID])
 NOT FOR REPLICATION 
 GO
-ALTER TABLE [dbo].[PacienteVacunas] CHECK CONSTRAINT [FK_PacienteVacunas_ParteDeCuerpo]
+ALTER TABLE [dbo].[PacienteVacuna] CHECK CONSTRAINT [FK_PacienteVacunas_ParteDeCuerpo]
 GO
-ALTER TABLE [dbo].[PacienteVacunas]  WITH NOCHECK ADD  CONSTRAINT [FK_PacienteVacunas_Vacuna] FOREIGN KEY([Vacuna])
+ALTER TABLE [dbo].[PacienteVacuna]  WITH NOCHECK ADD  CONSTRAINT [FK_PacienteVacunas_Vacuna] FOREIGN KEY([Vacuna])
 REFERENCES [dbo].[Medicamento] ([OID])
 NOT FOR REPLICATION 
 GO
-ALTER TABLE [dbo].[PacienteVacunas] CHECK CONSTRAINT [FK_PacienteVacunas_Vacuna]
+ALTER TABLE [dbo].[PacienteVacuna] CHECK CONSTRAINT [FK_PacienteVacunas_Vacuna]
 GO
 ALTER TABLE [dbo].[Pariente]  WITH NOCHECK ADD  CONSTRAINT [FK_Pariente_Diagnostico] FOREIGN KEY([Diagnostico])
 REFERENCES [dbo].[Enfermedad] ([OID])
@@ -5714,6 +5598,16 @@ REFERENCES [dbo].[Listas] ([Codigo])
 NOT FOR REPLICATION 
 GO
 ALTER TABLE [dbo].[Pariente] CHECK CONSTRAINT [FK_Pariente_Parentesco]
+GO
+ALTER TABLE [dbo].[PercentilTabla]  WITH CHECK ADD  CONSTRAINT [FKPercentilTablaSigno] FOREIGN KEY([Signo])
+REFERENCES [dbo].[Signo] ([OID])
+GO
+ALTER TABLE [dbo].[PercentilTabla] CHECK CONSTRAINT [FKPercentilTablaSigno]
+GO
+ALTER TABLE [dbo].[PercentilTablaDetalle]  WITH CHECK ADD  CONSTRAINT [FK_PercentilTablaDetalle_PercentilTabla] FOREIGN KEY([PercentilTabla])
+REFERENCES [dbo].[PercentilTabla] ([OID])
+GO
+ALTER TABLE [dbo].[PercentilTablaDetalle] CHECK CONSTRAINT [FK_PercentilTablaDetalle_PercentilTabla]
 GO
 ALTER TABLE [dbo].[PermissionPolicyActionPermissionObject]  WITH NOCHECK ADD  CONSTRAINT [FK_PermissionPolicyActionPermissionObject_Role] FOREIGN KEY([Role])
 REFERENCES [dbo].[PermissionPolicyRole] ([Oid])
@@ -5823,19 +5717,16 @@ NOT FOR REPLICATION
 GO
 ALTER TABLE [dbo].[PersonaDocumento] CHECK CONSTRAINT [FK_PersonaDocumento_Tipo]
 GO
-ALTER TABLE [dbo].[PersonaTelefono]  WITH NOCHECK ADD  CONSTRAINT [FK_PersonaTelefono_Numero] FOREIGN KEY([Numero])
-REFERENCES [dbo].[Telefono] ([Numero])
-NOT FOR REPLICATION 
-GO
-ALTER TABLE [dbo].[PersonaTelefono] CHECK CONSTRAINT [FK_PersonaTelefono_Numero]
-GO
 ALTER TABLE [dbo].[PersonaTelefono]  WITH NOCHECK ADD  CONSTRAINT [FK_PersonaTelefono_Persona] FOREIGN KEY([Persona])
 REFERENCES [dbo].[Persona] ([OID])
 NOT FOR REPLICATION 
 GO
 ALTER TABLE [dbo].[PersonaTelefono] CHECK CONSTRAINT [FK_PersonaTelefono_Persona]
 GO
-ALTER TABLE [dbo].[PlanMedicoDetalle] CHECK CONSTRAINT [FK_Detalle_PlanMedico]
+ALTER TABLE [dbo].[PersonaTelefono]  WITH CHECK ADD  CONSTRAINT [FK_PersonaTelefono_Telefono] FOREIGN KEY([Telefono])
+REFERENCES [dbo].[Telefono] ([Numero])
+GO
+ALTER TABLE [dbo].[PersonaTelefono] CHECK CONSTRAINT [FK_PersonaTelefono_Telefono]
 GO
 ALTER TABLE [dbo].[PlanMedicoDetalle]  WITH NOCHECK ADD  CONSTRAINT [FK_PlanMedicoDetalle_PlanMedico] FOREIGN KEY([PlanMedico])
 REFERENCES [dbo].[PlanMedico] ([Oid])
@@ -5891,11 +5782,11 @@ NOT FOR REPLICATION
 GO
 ALTER TABLE [dbo].[ProblemaMedico] CHECK CONSTRAINT [FK_ProblemaMedico_Tipo]
 GO
-ALTER TABLE [dbo].[ProCategoria]  WITH NOCHECK ADD  CONSTRAINT [FK_CategoriaProducto_Padre] FOREIGN KEY([Padre])
+ALTER TABLE [dbo].[ProCategoria]  WITH NOCHECK ADD  CONSTRAINT [FK_GloCategoriaProducto_Padre] FOREIGN KEY([Padre])
 REFERENCES [dbo].[ProCategoria] ([OID])
 NOT FOR REPLICATION 
 GO
-ALTER TABLE [dbo].[ProCategoria] CHECK CONSTRAINT [FK_CategoriaProducto_Padre]
+ALTER TABLE [dbo].[ProCategoria] CHECK CONSTRAINT [FK_GloCategoriaProducto_Padre]
 GO
 ALTER TABLE [dbo].[Producto]  WITH NOCHECK ADD  CONSTRAINT [FK_Producto_Categoria] FOREIGN KEY([Categoria])
 REFERENCES [dbo].[ProCategoria] ([OID])
@@ -5962,18 +5853,6 @@ REFERENCES [dbo].[Producto] ([OID])
 NOT FOR REPLICATION 
 GO
 ALTER TABLE [dbo].[ProductoEquivalente] CHECK CONSTRAINT [FK_ProductoEquivalente_Producto]
-GO
-ALTER TABLE [dbo].[ProductoImpuesto]  WITH NOCHECK ADD  CONSTRAINT [FK_ProductoImpuesto_Codigo] FOREIGN KEY([Codigo])
-REFERENCES [dbo].[Listas] ([Codigo])
-NOT FOR REPLICATION 
-GO
-ALTER TABLE [dbo].[ProductoImpuesto] CHECK CONSTRAINT [FK_ProductoImpuesto_Codigo]
-GO
-ALTER TABLE [dbo].[ProductoImpuesto]  WITH NOCHECK ADD  CONSTRAINT [FK_ProductoImpuesto_Producto] FOREIGN KEY([Producto])
-REFERENCES [dbo].[Producto] ([OID])
-NOT FOR REPLICATION 
-GO
-ALTER TABLE [dbo].[ProductoImpuesto] CHECK CONSTRAINT [FK_ProductoImpuesto_Producto]
 GO
 ALTER TABLE [dbo].[ProductoLote]  WITH NOCHECK ADD  CONSTRAINT [FK_ProductoLote_Producto] FOREIGN KEY([Producto])
 REFERENCES [dbo].[Producto] ([OID])
@@ -6107,12 +5986,6 @@ NOT FOR REPLICATION
 GO
 ALTER TABLE [dbo].[SysAuditoriaProceso] CHECK CONSTRAINT [FK_SysAuditoriaProceso_Empresa]
 GO
-ALTER TABLE [dbo].[Telefono]  WITH NOCHECK ADD  CONSTRAINT [FK_Telefono_ObjectType] FOREIGN KEY([ObjectType])
-REFERENCES [dbo].[XPObjectType] ([OID])
-NOT FOR REPLICATION 
-GO
-ALTER TABLE [dbo].[Telefono] CHECK CONSTRAINT [FK_Telefono_ObjectType]
-GO
 ALTER TABLE [dbo].[Tercero]  WITH NOCHECK ADD  CONSTRAINT [FK_Tercero_DireccionPrincipal] FOREIGN KEY([DireccionPrincipal])
 REFERENCES [dbo].[TerceroDireccion] ([OID])
 NOT FOR REPLICATION 
@@ -6233,11 +6106,10 @@ NOT FOR REPLICATION
 GO
 ALTER TABLE [dbo].[TerceroSucursal] CHECK CONSTRAINT [FK_TerceroSucursal_Tercero]
 GO
-ALTER TABLE [dbo].[TerceroTelefono]  WITH NOCHECK ADD  CONSTRAINT [FK_TerceroTelefono_Numero] FOREIGN KEY([Numero])
+ALTER TABLE [dbo].[TerceroTelefono]  WITH CHECK ADD  CONSTRAINT [FK_TerceroTelefono_Telefono] FOREIGN KEY([Telefono])
 REFERENCES [dbo].[Telefono] ([Numero])
-NOT FOR REPLICATION 
 GO
-ALTER TABLE [dbo].[TerceroTelefono] CHECK CONSTRAINT [FK_TerceroTelefono_Numero]
+ALTER TABLE [dbo].[TerceroTelefono] CHECK CONSTRAINT [FK_TerceroTelefono_Telefono]
 GO
 ALTER TABLE [dbo].[TerceroTelefono]  WITH NOCHECK ADD  CONSTRAINT [FK_TerceroTelefono_Tercero] FOREIGN KEY([Tercero])
 REFERENCES [dbo].[Tercero] ([OID])
@@ -6334,3 +6206,4 @@ REFERENCES [dbo].[ZonaGeografica] ([Codigo])
 NOT FOR REPLICATION 
 GO
 ALTER TABLE [dbo].[ZonaGeografica] CHECK CONSTRAINT [FK_ZonaGeografica_ZonaPadre]
+GO

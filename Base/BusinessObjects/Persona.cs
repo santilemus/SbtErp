@@ -307,6 +307,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Teléfonos")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [Index(0)]
+        [ToolTip("Números de teléfono de contacto")]
         public XPCollection<PersonaTelefono> Telefonos
         {
             get
@@ -317,6 +318,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
 
         [DevExpress.Xpo.AssociationAttribute("Documentos-Persona"), Index(1)]
         [DevExpress.Xpo.Aggregated]
+        [ToolTip("Documentos personales y de identificación")]
         public XPCollection<PersonaDocumento> Documentos
         {
             get

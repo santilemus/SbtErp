@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.271
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SBT.Apps.Base", "Base\SBT.Apps.Base.csproj", "{A538FE93-206D-4869-BC40-FDC561F8C1D1}"
 EndProject
@@ -83,9 +83,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SBT.Apps.RecursoHumano", "R
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Medico.Setup", "Medico.Setup\Medico.Setup.vdproj", "{EE947C6D-6552-4D44-BB92-DF3F2619B26C}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Medico.Setup.Web", "Medico.Setup.Web\Medico.Setup.Web.vdproj", "{03A31E8D-40FB-4A4E-82A7-B2549D2CB52C}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SBT.Apps.Compra", "Compra\SBT.Apps.Compra.csproj", "{E300665D-AD47-415F-8AE3-0BDB0D4F0371}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Medico.Setup.Web", "Medico.Setup.Web\Medico.Setup.Web.vdproj", "{B77AD4EE-C72A-4686-A14A-86A2CDA16CAD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -216,15 +216,15 @@ Global
 		{EE947C6D-6552-4D44-BB92-DF3F2619B26C}.Debug|Any CPU.ActiveCfg = Debug
 		{EE947C6D-6552-4D44-BB92-DF3F2619B26C}.EasyTest|Any CPU.ActiveCfg = Release
 		{EE947C6D-6552-4D44-BB92-DF3F2619B26C}.Release|Any CPU.ActiveCfg = Release
-		{03A31E8D-40FB-4A4E-82A7-B2549D2CB52C}.Debug|Any CPU.ActiveCfg = Debug
-		{03A31E8D-40FB-4A4E-82A7-B2549D2CB52C}.EasyTest|Any CPU.ActiveCfg = Release
-		{03A31E8D-40FB-4A4E-82A7-B2549D2CB52C}.Release|Any CPU.ActiveCfg = Release
 		{E300665D-AD47-415F-8AE3-0BDB0D4F0371}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E300665D-AD47-415F-8AE3-0BDB0D4F0371}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E300665D-AD47-415F-8AE3-0BDB0D4F0371}.EasyTest|Any CPU.ActiveCfg = EasyTest|Any CPU
 		{E300665D-AD47-415F-8AE3-0BDB0D4F0371}.EasyTest|Any CPU.Build.0 = EasyTest|Any CPU
 		{E300665D-AD47-415F-8AE3-0BDB0D4F0371}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E300665D-AD47-415F-8AE3-0BDB0D4F0371}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B77AD4EE-C72A-4686-A14A-86A2CDA16CAD}.Debug|Any CPU.ActiveCfg = Debug
+		{B77AD4EE-C72A-4686-A14A-86A2CDA16CAD}.EasyTest|Any CPU.ActiveCfg = Debug
+		{B77AD4EE-C72A-4686-A14A-86A2CDA16CAD}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
