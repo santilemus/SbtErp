@@ -145,64 +145,26 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
         #endregion
 
         #region Metodos
-        protected override void DoCantidadChanged(bool forceChangeEvents)
+        protected override void DoCantidadChanged(bool forceChangeEvents, decimal oldValue)
         {
-            base.DoCantidadChanged(forceChangeEvents);
+            base.DoCantidadChanged(forceChangeEvents, oldValue);
             unidades = Math.Round(Cantidad * this.Presentacion.Unidades, 2);
         }
 
-        protected override void DoPrecioUnidadChanged(bool forceChangeEvents)
+        protected override void DoPrecioUnidadChanged(bool forceChangeEvents, decimal oldValue)
         {
-            base.DoPrecioUnidadChanged(forceChangeEvents);
-            switch (this.Producto.Clasificacion)
-            {
-                case EClasificacionIVA.Gravado:
-                    if (OrdenCompra.TipoFactura.Codigo == "COVE01")
-                    {
-                        gravada = Math.Round(Unidades * PrecioUnidad, 2);
-                        iva = Math.Round(Convert.ToDecimal(Gravada) * this.Producto.PorcentajeIVA, 2);
-                    }
-                    else
-                    {
-                        gravada = Math.Round(Unidades * PrecioUnidad / (this.Producto.PorcentajeIVA + 1), 2);
-                        iva = Math.Round(Convert.ToDecimal(Gravada) * this.Producto.PorcentajeIVA, 2);
-                    }
-                    break;
-                default:
-                    exenta = Math.Round(Unidades * PrecioUnidad, 2);
-                    iva = 0.0m;
-                    break;
-            }       
+            base.DoPrecioUnidadChanged(forceChangeEvents, oldValue);
+            if (OrdenCompra == null)
+                return;
+            OnPrecioUnidadChanged(Unidades, OrdenCompra.TipoFactura.Codigo);
+            if (forceChangeEvents)
+                OnChanged(nameof(PrecioUnidad), oldValue, PrecioUnidad);
+            OrdenCompra.UpdateTotalExenta(true);
+            OrdenCompra.UpdateTotalGravada(true);
+            OrdenCompra.UpdateTotalIva(true);
+            OrdenCompra.UpdateTotalNoSujeta(true);
         }
 
-        protected override void DoChangedExenta(bool forceChangeEvents)
-        {
-            base.DoChangedExenta(forceChangeEvents);
-            if (OrdenCompra != null)
-                OrdenCompra.UpdateTotalExenta(forceChangeEvents);
-
-        }
-
-        protected override void DoChangedGravada(bool forceChangedEvents)
-        {
-            base.DoChangedGravada(forceChangedEvents);
-            if (OrdenCompra != null)
-                OrdenCompra.UpdateTotalGravada(forceChangedEvents);
-        }
-
-        protected override void DoChangedIva(bool forceChangeEvents)
-        {
-            base.DoChangedIva(forceChangeEvents);
-            if (OrdenCompra != null)
-                OrdenCompra.UpdateTotalIva(forceChangeEvents);
-        }
-
-        protected override void DoChangedNoSujeta(bool forceChangeEvents)
-        {
-            base.DoChangedNoSujeta(forceChangeEvents);
-            if (OrdenCompra != null)
-                OrdenCompra.UpdateTotalNoSujeta(forceChangeEvents);
-        }
 
         #endregion
 

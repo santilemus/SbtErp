@@ -76,7 +76,13 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         public Listas TipoFactura
         {
             get => tipoFactura;
-            set => SetPropertyValue(nameof(TipoFactura), ref tipoFactura, value);
+            set
+            {
+                Listas oldTipoFactura = tipoFactura;
+                bool changed = SetPropertyValue(nameof(TipoFactura), ref tipoFactura, value);
+                if (!IsLoading && !IsSaving && changed)
+                    DoTipoFacturaChanged(true, oldTipoFactura);
+            }
         }
 
         /// <summary>
@@ -112,6 +118,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         {
             get
             {
+
                 if (!IsLoading && !IsSaving && gravada == null)
                     UpdateTotalGravada(false);
                 return gravada;
@@ -215,6 +222,18 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         #endregion
 
         #region Metodos
+
+        /// <summary>
+        /// Metodo virtual que se ejecuta cuando cambia el tipo de factura
+        /// </summary>
+        /// <param name="forceChangeEvents">Indica si se deben invocar eventos para propiedades afectadas</param>
+        /// <param name="oldValue">El valor de la propiedad TipoFactura antes del setter</param>
+        protected virtual void DoTipoFacturaChanged(bool forceChangeEvents, Listas oldValue)
+        {
+
+        }
+
+
         /// <summary>
         /// Metodo virtual para actualizar el valor propiedad Exenta a partir de la suma de los valores de la columna equivalente en el detalle
         /// </summary>

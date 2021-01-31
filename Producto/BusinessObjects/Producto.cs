@@ -33,13 +33,9 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
             Activo = true;
             CantMinima = 0.0m;
             CantMaxima = 0.0m;
-            Constante constante = Session.GetObjectByKey<Constante>("PORCENTAJE_IVA");
-            if (constante != null)
-                porcentajeIVA = Convert.ToDecimal(constante.Valor);
         }
 
-        decimal porcentajeIVA;
-        EClasificacionIVA clasificacion = EClasificacionIVA.Gravado;
+        decimal costoPromedio;
         Presentacion presentacion;
         private Categoria categoria;
         private System.String codigo;
@@ -142,25 +138,13 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
             set => SetPropertyValue(nameof(CantMaxima), ref cantMaxima, value);
         }
 
-        /// <summary>
-        /// Clasificacion de los bienes y servicios de acuerdo a la base imponible para el calculo del IVA
-        /// Pueden Ser: Gravados, Exentos, Excluidos. Ver la enumeracion EClasificacionIVA para mas detalle
-        /// </summary>
-        [DbType("smallint"), Persistent(nameof(Clasificacion)), XafDisplayName("Clasificación")]
-        [RuleRequiredField("Producto.Clasificacion_Requerido", "Save"), VisibleInListView(false)]
-        public EClasificacionIVA Clasificacion
+        [DbType("numeric(14, 6)"), XafDisplayName("Costo Promedio")]
+        [RuleValueComparison("Producto.CostoPromedio >= 0", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual, 0.0, 
+            TargetCriteria = "[Categoria.Clasificacion] < 4 && [Activo] == true", CustomMessageTemplate = "El costo promedio debe ser mayor o igual a cero")]
+        public decimal CostoPromedio
         {
-            get => clasificacion;
-            set => SetPropertyValue(nameof(Clasificacion), ref clasificacion, value);
-        }
-
-        [DbType("numeric(14,4)"), XafDisplayName("Porcentaje IVA")]
-        [ModelDefault("DisplayFormat", "{0:P2}"), ModelDefault("EditMask", "p2")]
-        [VisibleInListView(false), VisibleInLookupListView(false)]
-        public decimal PorcentajeIVA
-        {
-            get => porcentajeIVA;
-            set => SetPropertyValue(nameof(PorcentajeIVA), ref porcentajeIVA, value);
+            get => costoPromedio;
+            set => SetPropertyValue(nameof(CostoPromedio), ref costoPromedio, value);
         }
 
         [DevExpress.Xpo.SizeAttribute(200), DbType("varchar(200)"), VisibleInListView(false)]
@@ -169,6 +153,8 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
             get => comentario;
             set => SetPropertyValue(nameof(Comentario), ref comentario, value);
         }
+
+
 
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         public System.Boolean Activo

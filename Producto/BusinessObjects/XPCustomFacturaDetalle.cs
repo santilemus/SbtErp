@@ -62,9 +62,10 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
             get => producto;
             set
             {
+                Producto oldProducto = producto;
                 bool changed = SetPropertyValue(nameof(Producto), ref producto, value);
                 if (!IsLoading && !IsSaving && changed)
-                    DoProductoChanged(true);
+                    DoProductoChanged(true, oldProducto);
             }
         }
 
@@ -81,10 +82,11 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
             get => cantidad;
             set
             {
+                decimal oldCantidad = cantidad;
                 bool changed = SetPropertyValue(nameof(Cantidad), ref cantidad, value);
                 if (!IsLoading && !IsSaving && changed)
                 {
-                    DoCantidadChanged(true);
+                    DoCantidadChanged(true, oldCantidad);
                 }
             }
         }
@@ -102,9 +104,10 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
             get => precioUnidad;
             set
             {
+                decimal oldPrecioUnidad = precioUnidad;
                 bool changed = SetPropertyValue(nameof(PrecioUnidad), ref precioUnidad, value);
                 if (!IsLoading && !IsSaving && changed)
-                    DoPrecioUnidadChanged(true);
+                    DoPrecioUnidadChanged(true, oldPrecioUnidad);
             }
         }
 
@@ -116,12 +119,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         public decimal? Exenta
         { 
             get => exenta;
-            set
-            {
-                bool changed = SetPropertyValue(nameof(Exenta), ref exenta, value);
-                if (!IsLoading && !IsSaving && changed)
-                    DoChangedExenta(true);
-            }
+            set => SetPropertyValue(nameof(Exenta), ref exenta, value);
         }
 
         /// <summary>
@@ -132,12 +130,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         public decimal? Iva
         {
             get => iva;
-            set
-            {
-                bool changed = SetPropertyValue(nameof(Iva), ref iva, value);
-                if (!IsLoading && !IsSaving && changed)
-                    DoChangedIva(true);
-            }
+            set => SetPropertyValue(nameof(Iva), ref iva, value);
         }
 
         [Persistent(nameof(Gravada)), DbType("numeric(14,2)")]
@@ -145,12 +138,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         public decimal? Gravada
         {
             get => gravada;
-            set
-            {
-                bool changed = SetPropertyValue(nameof(Gravada), ref gravada, value);
-                if (!IsLoading && !IsSaving && changed)
-                    DoChangedGravada(true);
-            }
+            set => SetPropertyValue(nameof(Gravada), ref gravada, value);
         }
 
         /// <summary>
@@ -161,12 +149,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         public decimal? NoSujeta
         {
             get => noSujeta;
-            set
-            {
-                bool changed = SetPropertyValue(nameof(NoSujeta), ref noSujeta, value);
-                if (!IsLoading && !IsSaving && changed)
-                    DoChangedNoSujeta(true);
-            }
+            set => SetPropertyValue(nameof(NoSujeta), ref noSujeta, value);
         }
 
         /// <summary>
@@ -191,7 +174,8 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         /// funcionalidad requerida en cada caso
         /// </summary>
         /// <param name="forceChangeEvents"></param>
-        protected virtual void DoProductoChanged(bool forceChangeEvents)
+        /// <param name="oldValue">El valor de la propiedad Producto antes del setter</param>
+        protected virtual void DoProductoChanged(bool forceChangeEvents, Producto oldValue)
         {
 
         }
@@ -201,7 +185,8 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         /// funcionalidad requerida en cada caso
         /// </summary>
         /// <param name="forceChangeEvents">Indica si se deben invocar eventos para propiedades afectadas</param>
-        protected virtual void DoCantidadChanged(bool forceChangeEvents)
+        /// <param name="oldValue">El valor de la propiedad Cantidad antes del setter</param>
+        protected virtual void DoCantidadChanged(bool forceChangeEvents, decimal oldValue)
         {
 
         }
@@ -211,29 +196,37 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         /// requerida en cada caso
         /// </summary>
         /// <param name="forceChangeEvents">Indica si se deben invocar eventos para propiedades afectadas</param>
-        protected virtual void DoPrecioUnidadChanged(bool forceChangeEvents)
+        /// <param name="oldValue">El valor de la propiedad PrecioUnidad antes del setter</param>
+        /// <param name="fUnidades">La cantidad de unidades del producto en el documento</param>
+        /// <param name="codigoTipoFactura">El codigo del tipo de factura al cual corresponde el documento</param>
+        protected virtual void DoPrecioUnidadChanged(bool forceChangeEvents, decimal oldValue)
         {
-
+            InicializarSubtotales();
         }
 
-        protected virtual void DoChangedExenta(bool forceChangeEvents)
+        protected void OnPrecioUnidadChanged(decimal fUnidades, string fTipoFactura)
         {
-
-        }
-
-        protected virtual void DoChangedGravada(bool forceChangedEvents)
-        {
-
-        }
-
-        protected virtual void DoChangedIva(bool forceChangeEvents)
-        {
-
-        }
-
-        protected virtual void DoChangedNoSujeta(bool forceChangeEvents)
-        {
-
+            if (Producto == null)
+                return;
+            switch (Producto.Categoria.ClasificacionIva)
+            {
+                case EClasificacionIVA.Gravado:
+                    if (fTipoFactura == "COVE01")
+                    {
+                        gravada = Math.Round(fUnidades * PrecioUnidad, 2);
+                        iva = Math.Round(Convert.ToDecimal(Gravada) * this.Producto.Categoria.PorcentajeIVA, 2);
+                    }
+                    else
+                    {
+                        gravada = Math.Round(fUnidades * PrecioUnidad / (this.Producto.Categoria.PorcentajeIVA + 1), 2);
+                        iva = Math.Round(Convert.ToDecimal(Gravada) * this.Producto.Categoria.PorcentajeIVA, 2);
+                    }
+                    break;
+                default:
+                    exenta = Math.Round(fUnidades * PrecioUnidad, 2);
+                    iva = 0.0m;
+                    break;
+            }
         }
 
         /// <summary>
@@ -253,12 +246,20 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
 
         }
 
-      #endregion
+        protected void InicializarSubtotales()
+        {
+            gravada = 0.0m;
+            iva = 0.0m;
+            exenta = 0.0m;
+            noSujeta = 0.0m;
+        }
 
-            //[Action(Caption = "My UI Action", ConfirmationMessage = "Are you sure?", ImageName = "Attention", AutoCommit = true)]
-            //public void ActionMethod() {
-            //    // Trigger a custom business logic for the current record in the UI (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112619.aspx).
-            //    this.PersistentProperty = "Paid";
-            //}
+        #endregion
+
+        //[Action(Caption = "My UI Action", ConfirmationMessage = "Are you sure?", ImageName = "Attention", AutoCommit = true)]
+        //public void ActionMethod() {
+        //    // Trigger a custom business logic for the current record in the UI (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112619.aspx).
+        //    this.PersistentProperty = "Paid";
+        //}
     }
 }

@@ -49,10 +49,7 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
         Empleado.Module.BusinessObjects.Empleado aprobo;
         EEstadoOrdenCompra estadoOrden;
         string concepto;
-        Listas tipoFactura;
         ETipoCompra tipo = ETipoCompra.Servicio;
-        int? diasCredito;
-        Listas condicionPago;
         Tercero.Module.BusinessObjects.Tercero proveedor;
 
         /// <summary>

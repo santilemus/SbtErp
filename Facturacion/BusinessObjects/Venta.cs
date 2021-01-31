@@ -33,7 +33,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
     //[ImageName("BO_Contact")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
-    public class Venta : XPCustomBaseDoc
+    public class Venta : XPCustomFacturaBO
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
         public Venta(Session session)
             : base(session)
@@ -55,14 +55,10 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
 
         #region Propiedades
 
-        int? diasCredito;
         SBT.Apps.Tercero.Module.BusinessObjects.TerceroGiro giro;
-        [Persistent(nameof(Oid)), DbType("bigint"), Key(true)]
-        long oid = -1;
         [Persistent(nameof(Agencia))]
         EmpresaUnidad agencia;
         Caja caja;
-        Listas tipoFactura;
         [Persistent(nameof(AutorizacionDocumento))]
         AutorizacionDocumento autorizacionCorrelativo;
         int noFactura;
@@ -72,7 +68,6 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         [Persistent(nameof(NRC))]
         TerceroDocumento nRC;
         TerceroDireccion direccionEntrega;
-        Listas condicionPago;
         SBT.Apps.Empleado.Module.BusinessObjects.Empleado vendedor;
         int notaRemision;
         Listas formaPago;
@@ -80,28 +75,9 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         string noTarjeta;
         SBT.Apps.Tercero.Module.BusinessObjects.Banco banco;
         string noReferenciaPago;
-        [Persistent(nameof(VentaGravada)), DbType("numeric(14,2)")]
-        decimal? ventaGravada;
-        [Persistent(nameof(Iva)), DbType("numeric(14,2)")]
-        decimal? iva;
-        [Persistent(nameof(IvaPercibido)), DbType("numeric(14,2)")]
-        decimal ivaPercibido;
-        [Persistent(nameof(IvaRetenido)), DbType("numeric(14,2)")]
-        decimal? ivaRetenido;
-        [Persistent(nameof(VentaNoSujeta)), DbType("numeric(14,2)")]
-        decimal? ventaNoSujeta;
-        [Persistent(nameof(VentaExenta)), DbType("numeric(14,2)")]
-        decimal? ventaExenta;
         [Persistent(nameof(DiaCerrado)), DbType("bit"), Browsable(false)]
-        bool diaCerrado;
-        [Persistent(nameof(Estado)), DbType("smallint")]
-        EEstadoFactura estado = EEstadoFactura.Debe;
-        [Persistent(nameof(Saldo)), DbType("numeric(14,2)")]
-        decimal? saldo;
+        bool diaCerrado = false;
 
-
-        [PersistentAlias(nameof(oid)), XafDisplayName(nameof(Oid)), Index(0)]
-        public long Oid => oid;
 
         /// <summary>
         /// Agencia o sucursal
@@ -117,31 +93,6 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         {
             get => caja;
             set => SetPropertyValue(nameof(Caja), ref caja, value);
-        }
-
-        [XafDisplayName("Tipo Factura"), RuleRequiredField("Venta.TipoFactura_Requerido", DefaultContexts.Save)]
-        [DataSourceCriteria("[Categoria] == 15 And [Activo] == True"), VisibleInLookupListView(true), Index(3)]
-        public Listas TipoFactura
-        {
-            get => tipoFactura;
-            set
-            {
-                bool changed = SetPropertyValue(nameof(TipoFactura), ref tipoFactura, value);
-                if (!IsLoading && !IsSaving && changed)
-                {
-                    AutorizacionDocumento resolucionDoc = Session.FindObject<AutorizacionDocumento>(
-                        CriteriaOperator.Parse("Agencia.Oid == ? && Caja.Oid == ? && Tipo.Codigo == ? && Activo == True", Agencia.Oid, Caja.Oid, TipoFactura.Codigo));
-                    if (resolucionDoc != null)
-                    {
-                        autorizacionCorrelativo = resolucionDoc;
-                        // evaluar si el correlativo esta bien calcularlo aqui
-                        int noFact = Convert.ToInt32(Session.Evaluate<Venta>(CriteriaOperator.Parse("max(NoFactura)"),
-                            CriteriaOperator.Parse("AutorizacionCorrelativo.Oid == ?", autorizacionCorrelativo.Oid)));
-                        if (noFact >= autorizacionCorrelativo.NoDesde && noFact < autorizacionCorrelativo.NoHasta)
-                            noFactura = noFact + 1;
-                    }
-                }
-            }
         }
 
         /// <summary>
@@ -255,29 +206,6 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         }
 
         /// <summary>
-        /// Condicion de Pago. Es obligatorio cuando se trata de Credito Fiscal o Factura Consumidor Final
-        /// </summary>
-        [XafDisplayName("Condición Pago"), RuleRequiredField("Venta.CondicionPago_Requerido", "Save",
-            TargetCriteria = "@This.Tipo.Codigo In ('COVE01', 'COVE02')")]
-        [DataSourceCriteria("[Categoria] == 17 And [Activo] == True")]   // Categoria = 17 es condicion de pago
-        [VisibleInListView(false), Index(12)]
-        public Listas CondicionPago
-        {
-            get => condicionPago;
-            set => SetPropertyValue(nameof(CondicionPago), ref condicionPago, value);
-        }
-
-        /// <summary>
-        /// Dias de crédito, cuando la condicion de pago es al crédito
-        /// </summary>
-        [DbType("smallint"), XafDisplayName("Días Crédito"), Index(13), VisibleInLookupListView(false)]
-        public int? DiasCredito
-        {
-            get => diasCredito;
-            set => SetPropertyValue(nameof(DiasCredito), ref diasCredito, value);
-        }
-
-        /// <summary>
         /// Vendedor. En los formularios es la columna Venta a Cuenta de
         /// Es requerido cuando el documento es: credito fiscal, factura consumidor final, factura de exportacion
         /// </summary>
@@ -355,95 +283,10 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             set => SetPropertyValue(nameof(NoReferenciaPago), ref noReferenciaPago, value);
         }
 
-        [PersistentAlias(nameof(ventaGravada)), XafDisplayName("Gravado"), Index(21)]
-        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
-        public decimal? VentaGravada
-        {
-            get
-            {
-                if (!IsLoading && !IsSaving && ventaGravada == null)
-                    UpdateTotalGravado(false);
-                return ventaGravada;
-            }
-        }
-
-        [PersistentAlias(nameof(iva)), XafDisplayName("IVA"), Index(22)]
-        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
-        public decimal? Iva
-        {
-            get
-            {
-                if (!IsLoading && !IsSaving && iva == null)
-                    UpdateTotalIva(false);
-                return iva;
-            }
-        }
-
-        [PersistentAlias("[VentaGravada] + [Iva]")]
-        [XafDisplayName("SubTotal"), Index(23)]
-        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
-        public decimal SubTotal
-        {
-            get { return Convert.ToDecimal(EvaluateAlias(nameof(SubTotal))); }
-        }
-
-        [PersistentAlias(nameof(ivaPercibido)), XafDisplayName("Iva Percibido"), VisibleInListView(false), Index(24)]
-        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
-        public decimal? IvaPercibido
-        {
-            get { return ivaPercibido; }
-        }
-
-        [PersistentAlias(nameof(ivaRetenido)), XafDisplayName("Iva Retenido"), VisibleInListView(false), Index(25)]
-        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
-        public decimal? IvaRetenido
-        {
-            get { return ivaRetenido; }
-        }
-
-        [PersistentAlias(nameof(ventaNoSujeta)), XafDisplayName("No Sujeta"), VisibleInListView(false), Index(26)]
-        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
-        public decimal? VentaNoSujeta
-        {
-            get { return ventaNoSujeta; }
-        }
-
-        [PersistentAlias(nameof(ventaExenta)), XafDisplayName("Exento"), VisibleInListView(true), Index(27)]
-        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
-        public decimal? VentaExenta
-        {   get
-            {
-                if (!IsLoading && !IsSaving && ventaExenta == null)
-                    UpdateTotalExento(false);
-                return ventaExenta;
-            }
-        }
-        
-        [PersistentAlias("[SubTotal] + [IvaPercibido] - [IvaRetenido] + [VentaNoSujeta] + [VentaExenta] ")]
-        [ModelDefault("DisplayFormat", "{0:N2}")]
-        [XafDisplayName("Total"), Index(28)]
-        public decimal Total
-        {
-            get { return Convert.ToDecimal(EvaluateAlias(nameof(Total))); }
-        }
-
         [PersistentAlias(nameof(diaCerrado)), XafDisplayName("Día Cerrado"), VisibleInListView(false), Index(29)]
         public bool DiaCerrado
         {
             get { return diaCerrado; }
-        }
-
-        [PersistentAlias(nameof(estado)), XafDisplayName("Estado"), VisibleInListView(false), Index(30)]
-        public EEstadoFactura Estado
-        {
-            get { return estado; }
-        }
-
-        [PersistentAlias(nameof(saldo)), XafDisplayName("Saldo Pendiente"), VisibleInListView(false), VisibleInLookupListView(false)]
-        [Index(31), ModelDefault("DisplayFormat", "{0:N2}")]
-        public decimal ? Saldo
-        {
-            get { return saldo; }
         }
 
 
@@ -493,38 +336,59 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             return (max != null) ? Convert.ToInt32(max) : 1;
         }
 
-
-        public void UpdateTotalExento(bool forceChangeEvents)
+        protected override void DoTipoFacturaChanged(bool forceChangeEvents, Listas oldValue)
         {
-            decimal? oldVentaExenta = ventaExenta;
-            decimal tempVentaExenta = 0.0m;
-            foreach (VentaDetalle detalle in Detalles)
-                tempVentaExenta += detalle.Exenta;
-            ventaExenta = tempVentaExenta;
-            if (forceChangeEvents)
-                OnChanged(nameof(VentaExenta), oldVentaExenta, ventaExenta);
+            base.DoTipoFacturaChanged(forceChangeEvents, oldValue);
+            AutorizacionDocumento resolucionDoc = Session.FindObject<AutorizacionDocumento>(
+                CriteriaOperator.Parse("Agencia.Oid == ? && Caja.Oid == ? && Tipo.Codigo == ? && Activo == True", Agencia.Oid, Caja.Oid, TipoFactura.Codigo));
+            if (resolucionDoc != null)
+            {
+                autorizacionCorrelativo = resolucionDoc;
+                // evaluar si el correlativo esta bien calcularlo aqui
+                int noFact = Convert.ToInt32(Session.Evaluate<Venta>(CriteriaOperator.Parse("max([NoFactura])"),
+                    CriteriaOperator.Parse("AutorizacionCorrelativo.Oid == ?", autorizacionCorrelativo.Oid)));
+                if (noFact >= autorizacionCorrelativo.NoDesde && noFact < autorizacionCorrelativo.NoHasta)
+                    noFactura = noFact + 1;
+            }
         }
 
-        public void UpdateTotalGravado(bool forceChangeEvents)
+        public override void UpdateTotalExenta(bool forceChangeEvents)
         {
-            decimal? oldVentaGravada = ventaGravada;
-            decimal tempVentaGravada = 0.0m;
+            base.UpdateTotalExenta(forceChangeEvents);
+            decimal? oldExenta = exenta;
+            decimal tempExenta = 0.0m;
             foreach (VentaDetalle detalle in Detalles)
-                tempVentaGravada += detalle.Gravada;
-            ventaGravada = tempVentaGravada;
+                tempExenta += Convert.ToDecimal(detalle.Exenta);
+            exenta = tempExenta;
             if (forceChangeEvents)
-                OnChanged(nameof(VentaGravada), oldVentaGravada, ventaGravada);
+                OnChanged(nameof(Exenta), oldExenta, exenta);
         }
 
-        public void UpdateTotalIva(bool forceChangeEvents)
+        public override void UpdateTotalGravada(bool forceChangeEvents)
         {
+            base.UpdateTotalGravada(forceChangeEvents);
+            decimal? oldGravada = gravada;
+            gravada = Convert.ToDecimal(Evaluate(CriteriaOperator.Parse("[Detalles].Sum([Gravada])")));
+            if (forceChangeEvents)
+                OnChanged(nameof(Gravada), oldGravada, gravada);
+        }
+
+        public override void UpdateTotalIva(bool forceChangeEvents)
+        {
+            base.UpdateTotalIva(forceChangeEvents);
             decimal? oldIva = iva;
-            decimal tempIva = 0.0m;
-            foreach (VentaDetalle detalle in Detalles)
-                tempIva += detalle.Iva;
-            iva = tempIva;
+            iva = Convert.ToDecimal(Evaluate(CriteriaOperator.Parse("[Detalles].Sum([Iva])")));
             if (forceChangeEvents)
                 OnChanged(nameof(Iva), oldIva, iva);
+        }
+
+        public override void UpdateTotalNoSujeta(bool forceChangeEvents)
+        {
+            base.UpdateTotalNoSujeta(forceChangeEvents);
+            decimal? oldNoSujeta = noSujeta;
+            noSujeta = Convert.ToDecimal(Evaluate(CriteriaOperator.Parse("[Detalles].Sum([NoSujeta])")));
+            if (forceChangeEvents)
+                OnChanged(nameof(NoSujeta), oldNoSujeta, noSujeta);
         }
 
         #endregion

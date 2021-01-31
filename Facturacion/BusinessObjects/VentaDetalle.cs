@@ -34,7 +34,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
     //[ImageName("BO_Contact")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
-    public class VentaDetalle : XPCustomBaseBO
+    public class VentaDetalle : XPCustomFacturaDetalle
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
         public VentaDetalle(Session session)
             : base(session)
@@ -43,39 +43,21 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         public override void AfterConstruction()
         {
             base.AfterConstruction();
-
+            costo = 0.0m;
             fProdChanged = false;
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
 
-        SBT.Apps.Base.Module.BusinessObjects.EmpresaUnidad bodega;
-        bool fProdChanged;
-
         #region Propiedades
 
+        bool fProdChanged;
+
+        SBT.Apps.Base.Module.BusinessObjects.EmpresaUnidad bodega;       
         Venta venta;
         [Persistent(nameof(Costo)), DbType("numeric(14,6)")]
         decimal costo;
-        [DbType("numeric(14,2)"), Persistent(nameof(NoSujeta))]
-        decimal noSujeta;
-        [DbType("numeric(14,2)"), Persistent(nameof(Gravada))]
-        decimal gravada;
-        [DbType("numeric(14,2)"), Persistent(nameof(Exenta))]
-        decimal exenta;
-        [Persistent(nameof(Iva)), DbType("numeric(14,2)")]
-        decimal iva;
-        decimal precioUnidad;
-        decimal cantidad;
-        SBT.Apps.Producto.Module.BusinessObjects.Producto producto;
         ProductoCodigoBarra codigoBarra;
-        [Persistent(nameof(Oid)), DbType("bigint"), Key(AutoGenerate = true)]
-        long oid = -1;
-        [Persistent(nameof(CantidadAnulada)), DbType("numeric(12,2)")]
-        decimal? cantidadAnulada;
-
-        [PersistentAlias(nameof(oid)), XafDisplayName(nameof(Oid)), Index(0)]
-        public long Oid => oid;
 
         [Size(20), DbType("varchar(20)"), XafDisplayName("Código Barra"), Index(1), ToolTip("Código de barra del producto")]
         public ProductoCodigoBarra CodigoBarra
@@ -94,23 +76,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
                 }
             }
         }
-
-        [XafDisplayName("Producto"), Index(2), RuleRequiredField("VentaDetalle.Producto_Requerido", DefaultContexts.Save)]
-        public SBT.Apps.Producto.Module.BusinessObjects.Producto Producto
-        {
-            get => producto;
-            set
-            {
-                bool changed = SetPropertyValue(nameof(Producto), ref producto, value);
-                // se intenta obtener el codigo de barra y asignarlo solo cuando el usuario cambio el producto, por eso !fProdChanged
-                if (!IsLoading && !IsSaving && changed && !fProdChanged)
-                    CodigoBarra = Producto.CodigosBarra.FirstOrDefault<ProductoCodigoBarra>(ProductoCodigoBarra => ProductoCodigoBarra.Producto.Oid == Producto.Oid);
-                fProdChanged = false;
-            }
-        }
-
         
-
         /// <summary>
         /// Bodega de la cual salen los productos, cuando no es servicios
         /// </summary>
@@ -122,43 +88,9 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             set => SetPropertyValue(nameof(Bodega), ref bodega, value);
         }
 
-        [DbType("numeric(12,2)"), XafDisplayName("Cantidad"), Index(3), VisibleInLookupListView(true),
-            RuleValueComparison("VentaDetalle.Cantidad >= 0", DefaultContexts.Save, ValueComparisonType.GreaterThan, 0.0, SkipNullOrEmptyValues = false)]
-        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
-        public decimal Cantidad
-        {
-            get => cantidad;
-            set => SetPropertyValue(nameof(Cantidad), ref cantidad, value);
-        }
-
-        [DbType("numeric(14,2)"), XafDisplayName("Precio Unidad"), Index(5),
-            RuleValueComparison("VentaDetalle.PrecioUnidad >= 0", DefaultContexts.Save, ValueComparisonType.GreaterThan, 0.0, SkipNullOrEmptyValues = false)]
-        [ModelDefault("DisplayFormat", "{0:N4}"), ModelDefault("EditMask", "n4")]
-        public decimal PrecioUnidad
-        {
-            get => precioUnidad;
-            set => SetPropertyValue(nameof(PrecioUnidad), ref precioUnidad, value);
-        }
-
         [PersistentAlias("[PrecioUnidad] + [IVA]"), XafDisplayName("Precio Con Iva"), Index(6)]
         [ModelDefault("DisplayFormat", "{0:N4}"), ModelDefault("EditMask", "n4")]
         public decimal PrecioConIva => Convert.ToDecimal(EvaluateAlias(nameof(PrecioConIva)));
-
-        [XafDisplayName("Iva"), Index(7), PersistentAlias(nameof(iva))]
-        [ModelDefault("DisplayFormat", "{0:N4}"), ModelDefault("EditMask", "n4")]
-        public decimal Iva => iva;
-
-        [DbType("numeric(14,2)"), XafDisplayName("Venta Exenta"), PersistentAlias(nameof(exenta)), Index(8)]
-        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
-        public decimal Exenta => exenta;
-
-        [DbType("numeric(14,2)"), XafDisplayName("Venta Gravada"), PersistentAlias(nameof(gravada)), Index(9)]
-        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
-        public decimal Gravada => gravada;
-
-        [XafDisplayName("Venta No Sujeta"), Index(10), PersistentAlias(nameof(noSujeta)), VisibleInListView(false)]
-        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
-        public decimal NoSujeta => noSujeta;
 
         [PersistentAlias(nameof(costo)), XafDisplayName("Costo"), Index(11), VisibleInListView(false)]
         [ModelDefault("DisplayFormat", "{0:N6}"), ModelDefault("EditMask", "n6")]
@@ -173,19 +105,16 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             {
                 Venta oldVenta = venta;
                 bool changed = SetPropertyValue(nameof(Venta), ref venta, value);
-                if (!IsLoading && !IsSaving && changed && Venta != null)
+                if (!IsLoading && !IsSaving && changed && oldVenta != venta)
                 {
                     oldVenta = oldVenta ?? venta;
-                    oldVenta.UpdateTotalExento(true);
-                    oldVenta.UpdateTotalGravado(true);
+                    oldVenta.UpdateTotalExenta(true);
+                    oldVenta.UpdateTotalGravada(true);
                     oldVenta.UpdateTotalIva(true);
+                    oldVenta.UpdateTotalNoSujeta(true);
                 }
             }
         }
-
-        
-        [PersistentAlias(nameof(cantidadAnulada)), XafDisplayName("Cantidad Anulada"), Index(13), VisibleInListView(false)]
-        public decimal ? CantidadAnulada => cantidadAnulada;
 
         #endregion
 
@@ -199,7 +128,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         {
             if (Producto != null && Cantidad > 0.0m && PrecioUnidad > 0.0m)
             {
-                if (Producto.Clasificacion == EClasificacionIVA.Gravado)
+                if (Producto.Categoria.ClasificacionIva == EClasificacionIVA.Gravado)
                 {
                     TributoProducto tp = Session.FindObject<TributoProducto>(
                         CriteriaOperator.Parse("Producto.Oid == ? && [Tributo][[^.NombreAbreviado] == 'IVA']", Producto.Oid));
@@ -214,7 +143,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
                 {
                     gravada = 0.0m;
                     iva = 0.0m;
-                    exenta = Math.Round(Cantidad * precioUnidad, 2);
+                    exenta = Math.Round(Cantidad * PrecioUnidad, 2);
                     noSujeta = 0.0m;
                 }
             }
@@ -244,8 +173,39 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             // pendiente de implementar cuando se cambia el producto
 
             if (isObjectMarkedDeleted)
-                ActualizarInventario(Bodega.Oid, Venta.Oid, Producto.Oid, -cantidad);
+                ActualizarInventario(Bodega.Oid, Venta.Oid, Producto.Oid, -Cantidad);
             base.OnSaving();
+        }
+
+        protected override void DoProductoChanged(bool forceChangeEvents, Producto.Module.BusinessObjects.Producto oldValue)
+        {
+            base.DoProductoChanged(forceChangeEvents, oldValue);
+            // intenta obtener codigo de barra y asignarlo solo cuando el usuario cambio el producto, por eso !fProdChanged, Si antes modifico codigo de barra no se ejecuta esta parte
+            if (!fProdChanged)
+                CodigoBarra = Producto.CodigosBarra.FirstOrDefault<ProductoCodigoBarra>(ProductoCodigoBarra => ProductoCodigoBarra.Producto.Oid == Producto.Oid);
+            fProdChanged = false;
+
+            // asignamos el costo
+            costo = ObtenerCosto();
+        }
+
+        protected override void DoCantidadChanged(bool forceChangeEvents, decimal oldValue)
+        {
+            base.DoCantidadChanged(forceChangeEvents, oldValue);
+        }
+
+        protected override void DoPrecioUnidadChanged(bool forceChangeEvents, decimal oldValue)
+        {
+            base.DoPrecioUnidadChanged(forceChangeEvents, oldValue);
+            if (Venta == null)
+                return;
+            OnPrecioUnidadChanged(Cantidad, Venta.TipoFactura.Codigo);
+            if (forceChangeEvents)
+                OnChanged(nameof(PrecioUnidad), oldValue, PrecioUnidad);
+            Venta.UpdateTotalExenta(true);
+            Venta.UpdateTotalGravada(true);
+            Venta.UpdateTotalIva(true);
+            Venta.UpdateTotalNoSujeta(true);
         }
 
         /// <summary>
@@ -259,10 +219,30 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         /// <remarks>
         /// Pendiente de completar, faltan los BO de Inventario 
         /// También esta pendiente cuando sean PEPS o UEPS porque en ese caso falta alli el lote
+        /// OJO: Debe considerar los casos de Nuevo Registro, Modificacion y Eliminacion
         /// </remarks>
-        public void ActualizarInventario(int OidBodega, long OidDocumento, int OidProducto, decimal ACantidad)
+        protected override void ActualizarInventario(int OidBodega, long OidDocumento, int OidProducto, decimal ACantidad)
         {
+            base.ActualizarInventario(OidBodega, OidDocumento, OidProducto, ACantidad);
+        }
 
+        private decimal ObtenerCosto()
+        {
+            switch (Producto.Categoria.MetodoCosteo)
+            {
+                case EMetodoCosteoInventario.Promedio:
+                    return Producto.CostoPromedio;
+                case EMetodoCosteoInventario.PEPS:
+                    var lotep = Producto.Lotes.Where(x => x.Producto.Oid == Producto.Oid && x.Entrada > x.Salida)
+                                             .OrderBy(x => x.Fecha).FirstOrDefault(x => (x.Entrada - x.Salida) >= Cantidad);
+                    return (lotep != null) ? lotep.Costo : 0.0m;
+                case EMetodoCosteoInventario.UEPS:
+                    var loteu = Producto.Lotes.Where(x => x.Producto.Oid == Producto.Oid && x.Entrada > x.Salida)
+                                             .OrderBy(x => x.Fecha).LastOrDefault(x => (x.Entrada - x.Salida) >= Cantidad);
+                    return (loteu != null) ? loteu.Costo : 0.0m;
+                default:
+                    return Producto.Precios.FirstOrDefault<ProductoPrecio>(p => p.Producto.Oid == Producto.Oid && p.Activo == true).PrecioUnitario;
+            }
         }
 
         #endregion

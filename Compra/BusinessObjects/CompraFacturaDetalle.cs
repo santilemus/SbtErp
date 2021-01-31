@@ -69,76 +69,37 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
         #endregion
 
         #region Metodos
-        protected override void DoCantidadChanged(bool forceChangeEvents)
+        protected override void DoCantidadChanged(bool forceChangeEvents, decimal oldValue)
         {
-            base.DoCantidadChanged(forceChangeEvents);
+            base.DoCantidadChanged(forceChangeEvents, oldValue);
+            decimal oldPrecioUnidad = PrecioUnidad;
             unidades = Math.Round(Cantidad * this.Presentacion.Unidades, 2);
-        }
-
-        protected override void DoPrecioUnidadChanged(bool forceChangeEvents)
-        {
-            base.DoPrecioUnidadChanged(forceChangeEvents);
-            switch (this.Producto.Clasificacion)
+            if (PrecioUnidad > 0.0m && forceChangeEvents)
             {
-                case EClasificacionIVA.Gravado:
-                    if (Factura.TipoFactura.Codigo == "COVE01")
-                    {
-                        gravada = Math.Round(Unidades * PrecioUnidad, 2);
-                        iva = Math.Round(Convert.ToDecimal(Gravada) * this.Producto.PorcentajeIVA, 2);
-                    }
-                    else
-                    {
-                        gravada = Math.Round(Unidades * PrecioUnidad / (this.Producto.PorcentajeIVA + 1), 2);
-                        iva = Math.Round(Convert.ToDecimal(Gravada) * this.Producto.PorcentajeIVA, 2);
-                    }
-                    break;
-                default:
-                    exenta = Math.Round(Unidades * PrecioUnidad, 2);
-                    iva = 0.0m;
-                    break;
+                OnChanged(nameof(Cantidad), oldValue, Cantidad);
+                DoPrecioUnidadChanged(true, oldPrecioUnidad);
             }
         }
 
-        protected override void DoChangedExenta(bool forceChangeEvents)
+        protected override void DoPrecioUnidadChanged(bool forceChangeEvents, decimal oldValue)
         {
-            base.DoChangedExenta(forceChangeEvents);
+            base.DoPrecioUnidadChanged(forceChangeEvents, oldValue);
+            if (Factura == null)
+                return;
+            OnPrecioUnidadChanged(Unidades, Factura.TipoFactura.Codigo);
+            if (forceChangeEvents)
+                OnChanged(nameof(PrecioUnidad), oldValue, PrecioUnidad);
             if (Factura != null)
-                Factura.UpdateTotalExenta(forceChangeEvents);
-
-        }
-
-        protected override void DoChangedGravada(bool forceChangedEvents)
-        {
-            base.DoChangedGravada(forceChangedEvents);
-            if (Factura != null)
-                Factura.UpdateTotalGravada(forceChangedEvents);
-        }
-
-        protected override void DoChangedIva(bool forceChangeEvents)
-        {
-            base.DoChangedIva(forceChangeEvents);
-            if (Factura != null)
-                Factura.UpdateTotalIva(forceChangeEvents);
-        }
-
-        protected override void DoChangedNoSujeta(bool forceChangeEvents)
-        {
-            base.DoChangedNoSujeta(forceChangeEvents);
-            if (Factura != null)
-                Factura.UpdateTotalNoSujeta(forceChangeEvents);
+            {
+                factura.UpdateTotalExenta(true);
+                factura.UpdateTotalGravada(true);
+                factura.UpdateTotalIva(true);
+                factura.UpdateTotalNoSujeta(true);
+            }
         }
 
 
         #endregion
-
-        //private string _PersistentProperty;
-        //[XafDisplayName("My display name"), ToolTip("My hint message")]
-        //[ModelDefault("EditMask", "(000)-00"), Index(0), VisibleInListView(false)]
-        //[Persistent("DatabaseColumnName"), RuleRequiredField(DefaultContexts.Save)]
-        //public string PersistentProperty {
-        //    get { return _PersistentProperty; }
-        //    set { SetPropertyValue(nameof(PersistentProperty), ref _PersistentProperty, value); }
-        //}
 
         //[Action(Caption = "My UI Action", ConfirmationMessage = "Are you sure?", ImageName = "Attention", AutoCommit = true)]
         //public void ActionMethod() {

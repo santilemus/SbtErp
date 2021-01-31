@@ -30,6 +30,9 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
             base.AfterConstruction();
             EsGrupo = false;
             Activa = true;
+            Constante constante = Session.GetObjectByKey<Constante>("PORCENTAJE_IVA");
+            if (constante != null)
+                porcentajeIVA = Convert.ToDecimal(constante.Valor);
         }
 
         //protected override void OnChanged(string propertyName, object oldValue, object newValue)
@@ -55,7 +58,9 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
             return Convert.ToInt32(Session.Evaluate<Categoria>(CriteriaOperator.Parse("Count()"), CriteriaOperator.Parse("[Padre.Oid] == ?", aCategoria.Oid)));
         }
 
-
+        EMetodoCosteoInventario metodoCosteo;
+        decimal porcentajeIVA;
+        EClasificacionIVA clasificacionIva = EClasificacionIVA.Gravado;
         private Categoria padre;
         private EClasificacion clasificacion = EClasificacion.ProductoTerminado;
         private System.Boolean esGrupo;
@@ -105,8 +110,11 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
             set => SetPropertyValue(nameof(Nombre), ref nombre, value);
         }
 
+        /// <summary>
+        /// Clasificacion de la categoria de productos. Ejemplos: Producto Terminado, Materia Prima, Servicios, etc.
+        /// </summary>
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Clasificación"), VisibleInLookupListView(false)]
-        [RuleRequiredField("Categoria.Clasificacion_Requerido", "Save")]
+        [RuleRequiredField("Categoria.Clasificacion_Requerido", "Save"), Persistent(nameof(Clasificacion))]
         public EClasificacion Clasificacion
         {
             get => clasificacion;
@@ -121,6 +129,40 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         {
             get => esGrupo;
             set => SetPropertyValue(nameof(EsGrupo), ref esGrupo, value);
+        }
+
+        /// <summary>
+        /// Clasificacion de los bienes y servicios de acuerdo a la base imponible para el calculo del IVA
+        /// Pueden Ser: Gravados, Exentos, Excluidos. Ver la enumeracion EClasificacionIVA para mas detalle
+        /// </summary>
+        [DbType("smallint"), Persistent(nameof(ClasificacionIva)), XafDisplayName("Clasificación Iva")]
+        [RuleRequiredField("Producto.ClasificacionIva_Requerido", "Save"), VisibleInListView(false)]
+        public EClasificacionIVA ClasificacionIva
+        {
+            get => clasificacionIva;
+            set => SetPropertyValue(nameof(Clasificacion), ref clasificacionIva, value);
+        }
+
+        /// <summary>
+        /// Porcentaje de IVA aplicado a la categoria de Productos
+        /// </summary>
+        [DbType("numeric(14,4)"), XafDisplayName("Porcentaje IVA")]
+        [ModelDefault("DisplayFormat", "{0:P2}"), ModelDefault("EditMask", "p2")]
+        [VisibleInListView(false), VisibleInLookupListView(false)]
+        public decimal PorcentajeIVA
+        {
+            get => porcentajeIVA;
+            set => SetPropertyValue(nameof(PorcentajeIVA), ref porcentajeIVA, value);
+        }
+
+        /// <summary>
+        /// Metodo de costeo del inventario para los productos de esta categoria
+        /// </summary>
+        [DbType("smallint"), XafDisplayName("Método Costeo Inventario"), Persistent(nameof(MetodoCosteo))]
+        public EMetodoCosteoInventario MetodoCosteo
+        {
+            get => metodoCosteo;
+            set => SetPropertyValue(nameof(MetodoCosteo), ref metodoCosteo, value);
         }
 
         [XafDisplayName("Nivel")]

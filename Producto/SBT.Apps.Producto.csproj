@@ -95,6 +95,7 @@
     <Compile Include="BusinessObjects\ClasificacionAplicarImpuesto.cs" />
     <Compile Include="BusinessObjects\EClasificacion.cs" />
     <Compile Include="BusinessObjects\EClasificacionIVA.cs" />
+    <Compile Include="BusinessObjects\EMetodoCosteoInventario.cs" />
     <Compile Include="BusinessObjects\ETipoMovimientoInventario.cs" />
     <Compile Include="BusinessObjects\Inventario.cs" />
     <Compile Include="BusinessObjects\Kardex.cs" />
@@ -178,6 +179,12 @@
     <EmbeddedResource Include="Images\ProductoLote_32x32.png" />
     <EmbeddedResource Include="Images\ProductoPrecio.png" />
     <EmbeddedResource Include="Images\ProductoPrecio_32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="UnusableNodes.xml">
+      <DependentUpon>Model.DesignedDiffs.xafml</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
