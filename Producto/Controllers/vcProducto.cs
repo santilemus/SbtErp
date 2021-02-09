@@ -2,6 +2,8 @@
 using DevExpress.ExpressApp;
 using SBT.Apps.Base.Module.BusinessObjects;
 using System;
+using System.Collections;
+using System.ComponentModel;
 using System.Linq;
 
 namespace SBT.Apps.Producto.Module.Controllers
@@ -22,6 +24,9 @@ namespace SBT.Apps.Producto.Module.Controllers
             {
                 ((ListView)View).CollectionSource.Criteria["Empresa Actual"] = new BinaryOperator("Empresa", ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid);
             }
+
+            ObjectSpace.ObjectChanged += ObjectSpace_Changed;
+            ObjectSpace.Committing += ObjectSpace_Committing;
         }
         protected override void OnViewControlsCreated()
         {
@@ -31,7 +36,34 @@ namespace SBT.Apps.Producto.Module.Controllers
         protected override void OnDeactivated()
         {
             // Unsubscribe from previously subscribed events and release other references and resources.
+            ObjectSpace.ObjectChanged -= ObjectSpace_Changed;
+            ObjectSpace.Committing -= ObjectSpace_Committing;
+
             base.OnDeactivated();
+        }
+
+        private void ObjectSpace_Changed(object Sender, ObjectChangedEventArgs e)
+        {
+           string propName = e.PropertyName;
+            string algo = string.Empty;
+            if (ObjectSpace.IsNewObject(View.CurrentObject))
+            {
+                algo = propName;
+            }
+        }
+        
+        private void ObjectSpace_Committing(object Sender, CancelEventArgs﻿ e)
+        {
+            System.Collections.IList objects = ObjectSpace.ModifiedObjects;
+            foreach (object obj in objects)
+            {
+                Type tipo = obj.GetType();
+                if (tipo == typeof(SBT.Apps.Producto.Module.BusinessObjects.ProductoPrecio))
+                {
+                    var pp = ((BusinessObjects.ProductoPrecio)obj).PrecioUnitario;
+                    bool deleted = ((BusinessObjects.ProductoPrecio)obj).IsDeleted;
+                }
+            }
         }
     }
 }

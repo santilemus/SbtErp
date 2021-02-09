@@ -5,7 +5,6 @@ using DevExpress.Xpo;
 using DevExpress.ExpressApp;
 using System.ComponentModel;
 using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
 using DevExpress.Persistent.Base;
 using System.Collections.Generic;
 using DevExpress.ExpressApp.Model;
@@ -14,23 +13,19 @@ using DevExpress.Persistent.Validation;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Producto.Module.BusinessObjects;
 
-namespace SBT.Apps.Facturacion.Module.BusinessObjects
+namespace SBT.Apps.Producto.Module.BusinessObjects
 {
     /// <summary>
-    /// BO TributoProduto
-    /// Es la relacion entre los tributos y los productos a los cuales se aplican
+    /// BO TributoCategoria. Es la relacion entre los tributos y las categorias de productos a los cuales se aplican
     /// </summary>
-    /// <remarks>
-    /// Debe moverse a Productos. Y dinamicamente tendra que manejarse la relacion con la venta, hay que ver el impacto
-    /// </remarks> 
     [DefaultClassOptions, ModelDefault("Caption", "Productos"), NavigationItem(false), CreatableItem(false), 
-        DefaultProperty(nameof(Producto)), Persistent(nameof(TributoProducto))]
+        DefaultProperty(nameof(Categoria)), Persistent(nameof(TributoCategoria))]
     //[ImageName("BO_Contact")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
-    public class TributoProducto : XPObjectBaseBO
+    public class TributoCategoria : XPObjectBaseBO
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
-        public TributoProducto(Session session)
+        public TributoCategoria(Session session)
             : base(session)
         {
         }
@@ -43,17 +38,18 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         #region Propiedades
 
         Tributo tributo;
-        Producto.Module.BusinessObjects.Producto producto;
+        Categoria categoria;
 
-        [XafDisplayName("Producto"), Index(0), RuleRequiredField("TributoProducto.Producto_Requerido", DefaultContexts.Save)]
-        public Producto.Module.BusinessObjects.Producto Producto
+        [XafDisplayName("Categoría"), Index(0), RuleRequiredField("TributoCategoria.Categoria_Requerido", DefaultContexts.Save)]
+        [Association("Categoria-TributosCategoria")]
+        public Categoria Categoria
         {
-            get => producto;
-            set => SetPropertyValue(nameof(Producto), ref producto, value);
+            get => categoria;
+            set => SetPropertyValue(nameof(Categoria), ref categoria, value);
         }
 
         
-        [Association("Tributo-Productos"), XafDisplayName("Tributo")]
+        [Association("Tributo-TributoCategorias"), XafDisplayName("Tributo")]
         public Tributo Tributo
         {
             get => tributo;

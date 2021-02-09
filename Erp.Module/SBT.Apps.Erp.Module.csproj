@@ -168,6 +168,10 @@
       <Project>{A538FE93-206D-4869-BC40-FDC561F8C1D1}</Project>
       <Name>SBT.Apps.Base</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Compra\SBT.Apps.Compra.csproj">
+      <Project>{E300665D-AD47-415F-8AE3-0BDB0D4F0371}</Project>
+      <Name>SBT.Apps.Compra</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Contabilidad\SBT.Apps.Contabilidad.csproj">
       <Project>{F8ACB445-E391-4DC6-9AB3-B30AB53F7646}</Project>
       <Name>SBT.Apps.Contabilidad</Name>

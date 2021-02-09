@@ -42,7 +42,6 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
 
         #region Propiedades
 
-        string descripcion;
         int? diasGarantia;
         string modelo;
         string marca;
@@ -84,17 +83,6 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
         {
             get => presentacion;
             set => SetPropertyValue(nameof(Presentacion), ref presentacion, value);
-        }
-
-        /// <summary>
-        /// Descripcion del bien o servicio que se esta contratando
-        /// </summary>
-        [Size(250), DbType("varchar(250)"), XafDisplayName("Descripción"), Index(4)]
-        [ToolTip("Util solo cuando se trata de ordenes de compra de bienes para activo fijo o servicios")]
-        public string Descripcion
-        {
-            get => descripcion;
-            set => SetPropertyValue(nameof(Descripcion), ref descripcion, value);
         }
 
         /// <summary>
@@ -149,6 +137,7 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
         {
             base.DoCantidadChanged(forceChangeEvents, oldValue);
             unidades = Math.Round(Cantidad * this.Presentacion.Unidades, 2);
+            OnChanged(nameof(Unidades));
         }
 
         protected override void DoPrecioUnidadChanged(bool forceChangeEvents, decimal oldValue)

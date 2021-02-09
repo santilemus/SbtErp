@@ -3,7 +3,7 @@ using System;
 using System.Linq;
 
 
-namespace SBT.Apps.Facturacion.Module.BusinessObjects
+namespace SBT.Apps.Producto.Module.BusinessObjects
 {
     /// <summary>
     /// Enumeracion con las clases de tributos

@@ -39,6 +39,15 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         public override void AfterConstruction()
         {
             base.AfterConstruction();
+            numero = null;
+            autorizacionCorrelativo = null;
+            ventaGravada = 0.0m;
+            cxCTransaccion = null;
+            iva = 0.0m;
+            ivaPercibido = 0.0m;
+            ivaRetenido = 0.0m;
+            ventaNoSujeta = 0.0m;
+            ventaExenta = 0.0m;
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
@@ -46,14 +55,14 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
 
         Venta venta;
         [Persistent(nameof(Numero)), DbType("int")]
-        int numero;
+        int? numero;
         CxCTransaccion cxCTransaccion;
         [Persistent(nameof(AutorizacionCorrelativo))]
         AutorizacionDocumento autorizacionCorrelativo;
         [Persistent(nameof(VentaGravada)), DbType("numeric(14,2)")]
         decimal ventaGravada;
-        [Persistent(nameof(IVA)), DbType("numeric(14,2)")]
-        decimal iVA;
+        [Persistent(nameof(Iva)), DbType("numeric(14,2)")]
+        decimal iva;
         [Persistent(nameof(IvaPercibido)), DbType("numeric(14,2)")]
         decimal ivaPercibido;
         [Persistent(nameof(IvaRetenido)), DbType("numeric(14,2)")]
@@ -84,7 +93,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         /// No de documento o correlativo. Si requiere autorizacion debe estar en el rango de AutorizacionCorrelativo
         /// </summary>
         [PersistentAlias(nameof(numero)), XafDisplayName("Número Documento"), Index(3)]
-        public int Numero => numero;
+        public int? Numero => numero;
      
         [Association("Venta-CxCDocumentos"), XafDisplayName("Venta"), Index(4), VisibleInLookupListView(true)]
         public Venta Venta
@@ -100,11 +109,11 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
             get { return ventaGravada; }
         }
 
-        [PersistentAlias(nameof(iVA)), XafDisplayName("IVA"), Index(10)]
+        [PersistentAlias(nameof(iva)), XafDisplayName("IVA"), Index(10)]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
-        public decimal IVA
+        public decimal Iva
         {
-            get { return iVA; }
+            get { return iva; }
         }
 
         [PersistentAlias("[VentaGravada] + [IVA]")]
@@ -150,15 +159,6 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
 
 
         #endregion
-
-        //private string _PersistentProperty;
-        //[XafDisplayName("My display name"), ToolTip("My hint message")]
-        //[ModelDefault("EditMask", "(000)-00"), Index(0), VisibleInListView(false)]
-        //[Persistent("DatabaseColumnName"), RuleRequiredField(DefaultContexts.Save)]
-        //public string PersistentProperty {
-        //    get { return _PersistentProperty; }
-        //    set { SetPropertyValue("PersistentProperty", ref _PersistentProperty, value); }
-        //}
 
         //[Action(Caption = "My UI Action", ConfirmationMessage = "Are you sure?", ImageName = "Attention", AutoCommit = true)]
         //public void ActionMethod() {

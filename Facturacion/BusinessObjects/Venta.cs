@@ -1,20 +1,16 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
+﻿using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp;
-using System.ComponentModel;
+using DevExpress.ExpressApp.ConditionalAppearance;
 using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
-using DevExpress.Persistent.Base;
-using System.Collections.Generic;
 using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
+using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Tercero.Module.BusinessObjects;
-using SBT.Apps.Empleado.Module.BusinessObjects;
-using DevExpress.ExpressApp.ConditionalAppearance;
+using System;
+using System.ComponentModel;
+using System.Linq;
 
 namespace SBT.Apps.Facturacion.Module.BusinessObjects
 {
@@ -26,10 +22,13 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
     /// </remarks>
     [DefaultClassOptions, ModelDefault("Caption", "Documento de Venta"), NavigationItem("Facturación"), DefaultProperty(nameof(NoFactura))]
     [Persistent("Venta")]
-    [Appearance("Venta.CreditoFiscal", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, 
-        Criteria = "[TipoFactura.Categoria] == 15 && [TipoFactura.Codigo] != 'COVE01'", Context = "*", 
+    [Appearance("Venta.CreditoFiscal", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide,
+        Criteria = "[TipoFactura.Categoria] == 15 && [TipoFactura.Codigo] != 'COVE01'", Context = "*",
         TargetItems = "Caja;NRC;NotaRemision;Iva;IvaPercibido;IvaRetenido;ResumenTributos")]
-    
+    // la siguiente regla de apariencia es para deshabilitar la modificacion de propiedades criticas. Solo es posible cuando es un objeto nuevo
+    [Appearance("Venta - Nuevo Registro", AppearanceItemType = "Any", Enabled = true,
+        TargetItems = "Bodega;Agencia;Caja;TipoFactura;NoFactura;Cliente", Criteria = "IsNewObject(This)")]
+
     //[ImageName("BO_Contact")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
@@ -61,7 +60,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         Caja caja;
         [Persistent(nameof(AutorizacionDocumento))]
         AutorizacionDocumento autorizacionCorrelativo;
-        int noFactura;
+        int? noFactura;
         Tercero.Module.BusinessObjects.Tercero cliente;
         TerceroSucursal clienteAgencia;
         TerceroDocumento clienteDocumento;
@@ -107,7 +106,10 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         }
 
         [DbType("int"), XafDisplayName("No Factura"), RuleRequiredField("Venta.NoFactura_Requerido", "Save"), Index(5)]
-        public int NoFactura
+        [RuleRange("Venta.NoFactura_RangoValido", DefaultContexts.Save, "[AutorizacionCorrelativo.NoDesde]", "[AutorizacionCorrelativo.NoHasta]",
+            ParametersMode.Expression, SkipNullOrEmptyValues = false,
+            CustomMessageTemplate = "El [NoFactura] debe estar en el rango entre [NoDesde] y [NoHasta] de la autorizacion de documentos")]
+        public int? NoFactura
         {
             get => noFactura;
             set => SetPropertyValue(nameof(NoFactura), ref noFactura, value);
@@ -213,7 +215,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         /// PENDIENTE. Completar el DataSourceCriteria con la Unidad = Ventas y Cargo = Vendedor. Puede hacerse en el model
         /// </remarks>
         [XafDisplayName("Vendedor")]
-        [RuleRequiredField("DocumentoVenta.Vendedor_Requerido", "Save", 
+        [RuleRequiredField("DocumentoVenta.Vendedor_Requerido", "Save",
             TargetCriteria = "@This.Tipo.Codigo In ('COVE01', 'COVE02', 'COVE03') ")]
         [DataSourceCriteria("[Empresa] == @This.Empresa And [Unidad] == ? And [Cargo] == ?")]
         [VisibleInListView(false), Index(14)]
@@ -264,7 +266,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
 
         [XafDisplayName("Banco Emisor"), VisibleInListView(false), Index(19)]
         [ToolTip("Banco o tercero relacionado al cheque, tarjeta o pago electrónico", "Banco o Tercero", ToolTipIconType.Information)]
-        [RuleRequiredField("Venta.Banco_Emisor", DefaultContexts.Save, TargetCriteria = "[FormaPago.Codigo] != 'FPA01' And [NoTarjeta] Is Not Null", 
+        [RuleRequiredField("Venta.Banco_Emisor", DefaultContexts.Save, TargetCriteria = "[FormaPago.Codigo] != 'FPA01' And [NoTarjeta] Is Not Null",
             ResultType = ValidationResultType.Warning)]
         public SBT.Apps.Tercero.Module.BusinessObjects.Banco Banco
         {
@@ -275,7 +277,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         /// No de Referencia de Pago: Puede ser el numero de cheque, Id de transferencia, remesa, No de Vaucher por pago con tarjeta, etc.
         /// </summary>
         [Size(25), DbType("varchar(25)"), XafDisplayName("No Referencia Pago"), VisibleInListView(false), Index(20)]
-        [ToolTip("No de referencia del pago: No de cheque, ID Remesa, ID pago electrónico, No vaucher", "Referencia Pago", 
+        [ToolTip("No de referencia del pago: No de cheque, ID Remesa, ID pago electrónico, No vaucher", "Referencia Pago",
             ToolTipIconType.Information)]
         public string NoReferenciaPago
         {
@@ -331,7 +333,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         protected override int CorrelativoDoc()
         {
             string sCriteria = "Empresa.Oid == ? && Caja.Oid == ? && Tipo.Codigo == ? && GetYear(Fecha) == ?";
-            object max = Session.Evaluate<Venta>(CriteriaOperator.Parse("Max(Numero)"), 
+            object max = Session.Evaluate<Venta>(CriteriaOperator.Parse("Max(Numero)"),
                                                         CriteriaOperator.Parse(sCriteria, Empresa.Oid, Caja.Oid, TipoFactura.Codigo, Fecha));
             return (max != null) ? Convert.ToInt32(max) : 1;
         }
@@ -344,11 +346,6 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             if (resolucionDoc != null)
             {
                 autorizacionCorrelativo = resolucionDoc;
-                // evaluar si el correlativo esta bien calcularlo aqui
-                int noFact = Convert.ToInt32(Session.Evaluate<Venta>(CriteriaOperator.Parse("max([NoFactura])"),
-                    CriteriaOperator.Parse("AutorizacionCorrelativo.Oid == ?", autorizacionCorrelativo.Oid)));
-                if (noFact >= autorizacionCorrelativo.NoDesde && noFact < autorizacionCorrelativo.NoHasta)
-                    noFactura = noFact + 1;
             }
         }
 
@@ -389,6 +386,12 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             noSujeta = Convert.ToDecimal(Evaluate(CriteriaOperator.Parse("[Detalles].Sum([NoSujeta])")));
             if (forceChangeEvents)
                 OnChanged(nameof(NoSujeta), oldNoSujeta, noSujeta);
+        }
+
+        protected override void OnSaving()
+        {
+            base.OnSaving();
+
         }
 
         #endregion

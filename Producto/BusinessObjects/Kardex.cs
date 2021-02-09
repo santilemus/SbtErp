@@ -17,7 +17,7 @@ using SBT.Apps.Producto.Module.BusinessObjects;
 namespace SBT.Apps.Inventario.Module.BusinessObjects
 {
     /// <summary>
-    /// BO que corresponde al kardex
+    /// BO que corresponde al kardex o historial de movimientos del inventario
     /// </summary>
     /// <remarks>
     /// NOTA: Evaluar si la hacemos no persistente, solo para tener acceso al objeto porque hay datos
@@ -44,12 +44,14 @@ namespace SBT.Apps.Inventario.Module.BusinessObjects
         }
 
         #region Propiedades
+        object referenciaVenta;
+        object referencia;
         [Persistent(nameof(Oid)), DbType("bigint"), Key(true)]
         long oid = -1;
         EmpresaUnidad bodega;
         Producto.Module.BusinessObjects.Producto producto;
         DateTime fecha;
-        ETipoMovimientoInventario tipoMovimiento;
+        InventarioTipoMovimiento tipoMovimiento;
         decimal cantidad;
         decimal costoUnidad;
         decimal precioUnidad;
@@ -77,10 +79,22 @@ namespace SBT.Apps.Inventario.Module.BusinessObjects
             set => SetPropertyValue(nameof(Fecha), ref fecha, value);
         }
 
-        public ETipoMovimientoInventario TipoMovimiento
+        public InventarioTipoMovimiento TipoMovimiento
         {
             get => tipoMovimiento;
             set => SetPropertyValue(nameof(TipoMovimiento), ref tipoMovimiento, value);
+        }
+
+        /// <summary>
+        /// Documento de referencia de la entrada o salida del producto
+        /// Se tendra hacer casting al correspondiente tipo de documento para relacionarlo
+        /// </summary>
+        [DbType("bigint"), XafDisplayName("Referencia Ingreso")]
+        [Indexed("TipoMovimiento", Name = "idxReferenciaTipoMovimiento_Kardex", Unique = true)]
+        public object Referencia
+        {
+            get => referencia;
+            set => SetPropertyValue(nameof(Referencia), ref referencia, value);
         }
 
         [DbType("numeric(12,2)")]
@@ -90,7 +104,7 @@ namespace SBT.Apps.Inventario.Module.BusinessObjects
             set => SetPropertyValue(nameof(Cantidad), ref cantidad, value);
         }
 
-        [DbType("numeric(16,8)")]
+        [DbType("numeric(14,6)")]
         public decimal CostoUnidad
         {
             get => costoUnidad;
@@ -106,15 +120,6 @@ namespace SBT.Apps.Inventario.Module.BusinessObjects
 
         #endregion
 
-
-        //private string _PersistentProperty;
-        //[XafDisplayName("My display name"), ToolTip("My hint message")]
-        //[ModelDefault("EditMask", "(000)-00"), Index(0), VisibleInListView(false)]
-        //[Persistent("DatabaseColumnName"), RuleRequiredField(DefaultContexts.Save)]
-        //public string PersistentProperty {
-        //    get { return _PersistentProperty; }
-        //    set { SetPropertyValue(nameof(PersistentProperty), ref _PersistentProperty, value); }
-        //}
 
         //[Action(Caption = "My UI Action", ConfirmationMessage = "Are you sure?", ImageName = "Attention", AutoCommit = true)]
         //public void ActionMethod() {

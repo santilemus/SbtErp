@@ -306,12 +306,6 @@
     <EmbeddedResource Include="Images\credito_32x32.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="UnusableNodes.xml">
-      <DependentUpon>Model.DesignedDiffs.xafml</DependentUpon>
-      <SubType>Designer</SubType>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Images\help.png" />
     <EmbeddedResource Include="Images\help_32x32.png" />
   </ItemGroup>

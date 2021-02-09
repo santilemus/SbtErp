@@ -40,18 +40,18 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         #region Propiedades
         [Persistent(nameof(Valor))]
         decimal valor;
-        Tributo tributo;
-        Venta ventaFactura;
+        TributoRegla tributo;
+        Venta venta;
 
-        [Association("Factura-ResumenTributos"), XafDisplayName("Venta")]
-        public Venta VentaFactura
+        [Association("Factura-ResumenTributos"), XafDisplayName("Venta"), Persistent(nameof(Venta))]
+        public Venta Venta
         {
-            get => ventaFactura;
-            set => SetPropertyValue(nameof(VentaFactura), ref ventaFactura, value);
+            get => venta;
+            set => SetPropertyValue(nameof(Venta), ref venta, value);
         }
 
         [Association("Tributo-VentaResumenTributos"), XafDisplayName("Tributo")]
-        public Tributo Tributo
+        public TributoRegla Tributo
         {
             get => tributo;
             set => SetPropertyValue(nameof(Tributo), ref tributo, value);

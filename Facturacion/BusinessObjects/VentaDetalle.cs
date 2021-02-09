@@ -22,14 +22,24 @@ using DevExpress.Xpo.Metadata;
 
 namespace SBT.Apps.Facturacion.Module.BusinessObjects
 {
+    /// <summary>
+    /// BO que corresponde al detalle de los documentos de venta
+    /// </summary>
+    /// <remarks>
+    /// Info del atributo OptimisticLockingReadBehavior en https://docs.devexpress.com/XPO/DevExpress.Xpo.Session.OptimisticLockingReadBehavior
+    /// </remarks>
     [DefaultClassOptions, ModelDefault("Caption", "Venta Detalle"), DefaultProperty(nameof(Producto)), NavigationItem(false),
         Persistent(nameof(VentaDetalle))]
-    [Appearance("Venta Detalle - Credito Fiscal", AppearanceItemType = "ViewItem", TargetItems = "PrecioConIva", 
+    [Appearance("Venta Detalle - Credito Fiscal", AppearanceItemType = "ViewItem", TargetItems = "PrecioConIva",
         Criteria = "[Venta.Tipo.Codigo] == 'COVE01'", Context = "Any", Visibility = ViewItemVisibility.Hide)]
     [Appearance("Venta Detalle - Consumidor Final y Ticket", AppearanceItemType = "ViewItem", TargetItems = "IVA",
         Criteria = "[Venta.Tipo.Codigo] In ('COVE02', 'COVE04', 'COVE05')", Context = "Any", Visibility = ViewItemVisibility.Hide)]
     [Appearance("Venta Detalle - Factura Exportacion", AppearanceItemType = "ViewItem", TargetItems = "IVA;Exenta;NoSujeta",
         Criteria = "[Venta.Tipo.Codigo] == 'COVE03'", Context = "Any", Visibility = ViewItemVisibility.Hide)]
+    // la siguiente regla es para habilitar la edicion de estas propiedades solo cuando es un objeto nuevo. Si tiene que modificarlos
+    // debe borrarlos y crear nuevos, o poner la cantidad a cero
+    [Appearance("Venta Detalle - Nuevo Registro", AppearanceItemType = "Any", Enabled = true, TargetItems = "Bodega;Producto;CodigoBarra",
+        Criteria = "IsNewObject(This)")]
     [OptimisticLockingReadBehavior(OptimisticLockingReadBehavior.Default, true)]
     //[ImageName("BO_Contact")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
@@ -51,9 +61,10 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
 
         #region Propiedades
 
+        ProductoLote lote;
         bool fProdChanged;
 
-        SBT.Apps.Base.Module.BusinessObjects.EmpresaUnidad bodega;       
+        SBT.Apps.Base.Module.BusinessObjects.EmpresaUnidad bodega;
         Venta venta;
         [Persistent(nameof(Costo)), DbType("numeric(14,6)")]
         decimal costo;
@@ -73,14 +84,15 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
                     /// El codigo de barra debe ser asignado desde el producto, solamente cuando el usuario selecciona y
                     /// cambia directamente el producto
                     fProdChanged = true;
+                    OnChanged(nameof(Producto));
                 }
             }
         }
-        
+
         /// <summary>
         /// Bodega de la cual salen los productos, cuando no es servicios
         /// </summary>
-        [XafDisplayName("Bodega"), RuleRequiredField("VentaDetalle.Bodega_Requerida", "Save", 
+        [XafDisplayName("Bodega"), RuleRequiredField("VentaDetalle.Bodega_Requerida", "Save",
             TargetCriteria = "!([Producto.Categoria.Clasificacion] In (4, 5))")]
         public SBT.Apps.Base.Module.BusinessObjects.EmpresaUnidad Bodega
         {
@@ -116,6 +128,50 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             }
         }
 
+        [DbType("int"), XafDisplayName("Lote")]
+        public ProductoLote Lote
+        {
+            get => lote;
+            set => SetPropertyValue(nameof(Lote), ref lote, value);
+        }
+
+        /// <summary>
+        /// regla validar disponibilidad en el lote, cuando el metodo de costeo es PEPS, UEPS
+        /// </summary>
+        [Browsable(false)]
+        [RuleFromBoolProperty("VentaDetalle.Cantidad <= Disponible en el Lote", DefaultContexts.Save, 
+            TargetCriteria = "[Lote] is not null && [Producto.Categoria.MetodoCosteo] In (1, 2) && [Producto.Categoria.Clasificacion] < 4",
+            CustomMessageTemplate = "La Cantidad a vender debe ser menor o igual al dispoible en el lote")]
+        public bool EsCantidadMenorIgualDisponibleEnLote
+        {
+            get
+            {
+                decimal cantVta = Venta.Detalles.Where(x => x.Bodega == Bodega && x.Producto == Producto && x.Lote == Lote).Sum(x => x.Cantidad);
+                decimal totVeta = Convert.ToDecimal(Session.Evaluate<VentaDetalle>(CriteriaOperator.Parse("Sum([Cantidad])"),
+                    CriteriaOperator.Parse("[Bodega.Oid] == ? && [Producto.Oid] == ? && [Lote.Oid] == ? && [Oid] != ?", Bodega.Oid, Producto.Oid, Lote.Oid, Oid)));
+                return cantVta <= (Lote.Entrada - Lote.Salida);
+            }
+        }
+
+        /// <summary>
+        /// Regla validar disponibilidad en el inventario cuando el metodo no es PEPS o UEPS. Ver !([Producto.Categoria.MetodoCosteo] In (1, 2))
+        /// </summary>
+        [Browsable(false)]
+        [RuleFromBoolProperty("VentaDetalle.Cantidad <= Disponible Inventario", DefaultContexts.Save,
+           TargetCriteria = "[Bodega.Oid] is not null && !([Producto.Categoria.MetodoCosteo] In (1, 2)) && [Producto.Categoria.Clasificacion] < 4",
+           CustomMessageTemplate = "La Cantidad a vender debe ser menor o igual al dispoible en el lote")]
+        public bool EsCantidadMenorIgualExistenciaInventario
+        {
+            get
+            {
+                decimal cantVta = Venta.Detalles.Where(x => x.Bodega == Bodega && x.Producto == Producto).Sum(x => x.Cantidad);
+                decimal existencia = Convert.ToDecimal(Session.Evaluate<Inventario.Module.BusinessObjects.Inventario>(
+                    CriteriaOperator.Parse("Sum(Iif([TipoMovimiento.Operacion] In (0, 1), [Cantidad], -[Cantidad]))"),
+                    CriteriaOperator.Parse("[Bodega.Oid] == ? && [Producto.Oid] == ?", Bodega.Oid, Producto.Oid)));
+                return cantVta <= existencia;
+            }
+        }
+
         #endregion
 
         #region Colleciones
@@ -130,11 +186,11 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             {
                 if (Producto.Categoria.ClasificacionIva == EClasificacionIVA.Gravado)
                 {
-                    TributoProducto tp = Session.FindObject<TributoProducto>(
-                        CriteriaOperator.Parse("Producto.Oid == ? && [Tributo][[^.NombreAbreviado] == 'IVA']", Producto.Oid));
+                    TributoCategoria tp = Session.FindObject<TributoCategoria>(
+                        CriteriaOperator.Parse("Producto.Categoria.Oid == ? && [Tributo][[^.NombreAbreviado] == 'IVA']", Producto.Categoria.Oid));
                     if (tp != null)
                     {
-                        ExpressionEvaluator eval = new ExpressionEvaluator(TypeDescriptor.GetProperties(typeof(Venta)), tp.Tributo.Formula);
+                        ExpressionEvaluator eval = new ExpressionEvaluator(TypeDescriptor.GetProperties(typeof(Venta)), ((TributoRegla)tp.Tributo).Formula);
                         iva = Math.Round(Convert.ToDecimal(eval.Evaluate(this)), 2);
 
                     }
@@ -149,49 +205,48 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             }
         }
 
-        /// <summary>
-        /// Ejecuta metodos que actualiza la informacion en otros BO, como el inventario
-        /// </summary>
-        /// <remarks>
-        /// Ver mas info en: https://supportcenter.devexpress.com/ticket/details/t685638/get-the-context-of-an-update-and-trigger-another-db-operation
-        /// </remarks>
-
-        protected override void OnSaving()
-        {
-            bool isObjectMarkedDeleted = this.Session.IsObjectMarkedDeleted(this);
-            bool isNewObject = this.Session.IsNewObject(this);
-            XPMemberInfo cantidadInfo = this.Session.GetClassInfo(this).GetMember(nameof(Cantidad));
-            XPMemberInfo productoInfo = this.Session.GetClassInfo(this).GetMember(nameof(Producto));
-            if (isNewObject)
-                ActualizarInventario(Bodega.Oid, Venta.Oid, Producto.Oid, Cantidad);
-            if (cantidadInfo.GetModified(this))
-            {
-                decimal cantidadOld = Convert.ToDecimal(cantidadInfo.GetOldValue(this));
-                decimal cantidadNew = Convert.ToDecimal(cantidadInfo.GetValue(this));
-                ActualizarInventario(Bodega.Oid, Venta.Oid, Producto.Oid, cantidadNew - cantidadOld);
-            }
-            // pendiente de implementar cuando se cambia el producto
-
-            if (isObjectMarkedDeleted)
-                ActualizarInventario(Bodega.Oid, Venta.Oid, Producto.Oid, -Cantidad);
-            base.OnSaving();
-        }
+        //protected override void OnSaving()
+        //{
+        //    bool isObjectMarkedDeleted = this.Session.IsObjectMarkedDeleted(this);
+        //    bool isNewObject = this.Session.IsNewObject(this);
+        //    XPMemberInfo cantidadInfo = this.Session.GetClassInfo(this).GetMember(nameof(Cantidad));
+        //    XPMemberInfo productoInfo = this.Session.GetClassInfo(this).GetMember(nameof(Producto));
+        //}
 
         protected override void DoProductoChanged(bool forceChangeEvents, Producto.Module.BusinessObjects.Producto oldValue)
         {
             base.DoProductoChanged(forceChangeEvents, oldValue);
             // intenta obtener codigo de barra y asignarlo solo cuando el usuario cambio el producto, por eso !fProdChanged, Si antes modifico codigo de barra no se ejecuta esta parte
             if (!fProdChanged)
+            {
                 CodigoBarra = Producto.CodigosBarra.FirstOrDefault<ProductoCodigoBarra>(ProductoCodigoBarra => ProductoCodigoBarra.Producto.Oid == Producto.Oid);
+                OnChanged(nameof(CodigoBarra));
+            }
             fProdChanged = false;
-
-            // asignamos el costo
-            costo = ObtenerCosto();
+            switch (Producto.Categoria.MetodoCosteo)
+            {
+                case EMetodoCosteoInventario.Promedio:
+                    costo = Producto.CostoPromedio;
+                    break;
+                case EMetodoCosteoInventario.Unitario:
+                    costo = Producto.Precios.FirstOrDefault<ProductoPrecio>(p => p.Producto.Oid == Producto.Oid && p.Activo == true).PrecioUnitario;
+                    break;
+                default:
+                    {
+                        ProductoLote lotep = ObtenerLote();
+                        Lote = lotep;
+                        costo = lotep != null ? lotep.Costo : Producto.CostoPromedio;
+                        break;
+                    }
+            }
+            OnChanged(nameof(Costo));
         }
 
         protected override void DoCantidadChanged(bool forceChangeEvents, decimal oldValue)
         {
             base.DoCantidadChanged(forceChangeEvents, oldValue);
+            decimal oldPrecio = PrecioUnidad;
+            DoPrecioUnidadChanged(true, oldPrecio);
         }
 
         protected override void DoPrecioUnidadChanged(bool forceChangeEvents, decimal oldValue)
@@ -208,41 +263,17 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             Venta.UpdateTotalNoSujeta(true);
         }
 
-        /// <summary>
-        /// Metodo para realizar la actualizacion del inventario. Evaluar si queda aca o se lleva al BO de inventario
-        /// porque el mismo metodo se necesitara para las compras, devoluciones y otros documentos internos que afectan inventario
-        /// </summary>
-        /// <param name="OidBodega">Bodega cuyo inventario será afectado</param>
-        /// <param name="OidDocumento">Oid del documento de referencia. Evaluar si se pasa el Oid de la Venta o el Oid del detalle de la venta</param>
-        /// <param name="OidProducto">Oid del Producto del inventario a actualizar</param>
-        /// <param name="ACantidad">Oid de la cantidad del inventario que sera afectado</param>
-        /// <remarks>
-        /// Pendiente de completar, faltan los BO de Inventario 
-        /// También esta pendiente cuando sean PEPS o UEPS porque en ese caso falta alli el lote
-        /// OJO: Debe considerar los casos de Nuevo Registro, Modificacion y Eliminacion
-        /// </remarks>
-        protected override void ActualizarInventario(int OidBodega, long OidDocumento, int OidProducto, decimal ACantidad)
+        private ProductoLote ObtenerLote()
         {
-            base.ActualizarInventario(OidBodega, OidDocumento, OidProducto, ACantidad);
-        }
-
-        private decimal ObtenerCosto()
-        {
-            switch (Producto.Categoria.MetodoCosteo)
-            {
-                case EMetodoCosteoInventario.Promedio:
-                    return Producto.CostoPromedio;
-                case EMetodoCosteoInventario.PEPS:
-                    var lotep = Producto.Lotes.Where(x => x.Producto.Oid == Producto.Oid && x.Entrada > x.Salida)
-                                             .OrderBy(x => x.Fecha).FirstOrDefault(x => (x.Entrada - x.Salida) >= Cantidad);
-                    return (lotep != null) ? lotep.Costo : 0.0m;
-                case EMetodoCosteoInventario.UEPS:
-                    var loteu = Producto.Lotes.Where(x => x.Producto.Oid == Producto.Oid && x.Entrada > x.Salida)
-                                             .OrderBy(x => x.Fecha).LastOrDefault(x => (x.Entrada - x.Salida) >= Cantidad);
-                    return (loteu != null) ? loteu.Costo : 0.0m;
-                default:
-                    return Producto.Precios.FirstOrDefault<ProductoPrecio>(p => p.Producto.Oid == Producto.Oid && p.Activo == true).PrecioUnitario;
-            }
+            ProductoLote lotep = null;
+            Producto.Lotes.Criteria = CriteriaOperator.Parse("[Producto.Oid] == ? && [Entrada] > [Salida]", Producto.Oid);
+            if (Producto.Categoria.MetodoCosteo == EMetodoCosteoInventario.PEPS)
+                lotep = Producto.Lotes.Where(x => x.Producto.Oid == Producto.Oid && x.Entrada > x.Salida)
+                                         .OrderBy(x => x.Fecha).FirstOrDefault(x => (x.Entrada - x.Salida) >= Cantidad);
+            else
+                lotep = Producto.Lotes.Where(x => x.Producto.Oid == Producto.Oid && x.Entrada > x.Salida)
+                         .OrderBy(x => x.Fecha).LastOrDefault(x => (x.Entrada - x.Salida) >= Cantidad);
+            return lotep;
         }
 
         #endregion

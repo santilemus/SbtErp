@@ -8,6 +8,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         Promedio = 0,
         PEPS = 1,
         UEPS = 2,
-        Unitario = 3
+        Unitario = 3,
+        Ninguno = 4
     }
 }

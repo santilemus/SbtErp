@@ -78,6 +78,7 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
             {
                 OnChanged(nameof(Cantidad), oldValue, Cantidad);
                 DoPrecioUnidadChanged(true, oldPrecioUnidad);
+                OnChanged(nameof(Unidades));
             }
         }
 

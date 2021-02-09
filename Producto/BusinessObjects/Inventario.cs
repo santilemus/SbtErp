@@ -1,11 +1,11 @@
-﻿using DevExpress.ExpressApp.Model;
+﻿using DevExpress.ExpressApp.DC;
+using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using System;
 using System.ComponentModel;
 using System.Linq;
-
 
 namespace SBT.Apps.Inventario.Module.BusinessObjects
 {
@@ -22,6 +22,7 @@ namespace SBT.Apps.Inventario.Module.BusinessObjects
             : base(session)
         {
         }
+
         public override void AfterConstruction()
         {
             base.AfterConstruction();
@@ -32,8 +33,7 @@ namespace SBT.Apps.Inventario.Module.BusinessObjects
         #region Propiedades
         EmpresaUnidad bodega;
         Producto.Module.BusinessObjects.Producto producto;
-        ETipoMovimientoInventario tipoMovimiento = ETipoMovimientoInventario.Inicial;
-        [Persistent(nameof(Cantidad)), DbType("numeric(12,2)")]
+        InventarioTipoMovimiento tipoMovimiento;
         decimal cantidad;
 
 
@@ -43,44 +43,43 @@ namespace SBT.Apps.Inventario.Module.BusinessObjects
             set => SetPropertyValue(nameof(Bodega), ref bodega, value);
         }
 
+        /// <summary>
+        /// Producto al cual corresponde el inventario
+        /// </summary>
+        [Association("Producto-Inventarios"), XafDisplayName("Producto")]
         public Producto.Module.BusinessObjects.Producto Producto
         {
             get => producto;
             set => SetPropertyValue(nameof(Producto), ref producto, value);
         }
 
-        public ETipoMovimientoInventario TipoMovimiento
+        public InventarioTipoMovimiento TipoMovimiento
         {
             get => tipoMovimiento;
             set => SetPropertyValue(nameof(TipoMovimiento), ref tipoMovimiento, value);
         }
 
-        [PersistentAlias(nameof(cantidad))]
-        [ModelDefault("DisplayFormat", "{0:N2}")]
-        public decimal Cantidad => cantidad;
+        [Persistent(nameof(Cantidad)), DbType("numeric(12,2)")]
+        [ModelDefault("DisplayFormat", "{0:N2}"), Browsable(false)]
+        public decimal Cantidad
+        {
+            get => cantidad;
+            set => SetPropertyValue(nameof(Cantidad), ref cantidad, value);
+        }
 
-        [PersistentAlias("Iif([TipoMovimiento] == 0, [Cantidad], 0)")]
+        [PersistentAlias("Iif([TipoMovimiento.Operacion] == 0, [Cantidad], 0)")]
         [ModelDefault("DisplayFormat", "{0:N2}")]
         public decimal Inicial => Convert.ToDecimal(EvaluateAlias(nameof(Inicial)));
 
-        [PersistentAlias("Iif([TipoMovimiento] In (1, 2, 3), [Cantidad], 0)")]
+        [PersistentAlias("Iif([TipoMovimiento.Operacion] == 1, [Cantidad], 0)")]
         [ModelDefault("DisplayFormat", "{0:N2}")]
         public decimal Entrada => Convert.ToDecimal(EvaluateAlias(nameof(Entrada)));
 
-        [PersistentAlias("Iif([TipoMovimiento] In (4, 5), [Cantidad], 0)")]
+        [PersistentAlias("Iif([TipoMovimiento.OPeracion] == 2, [Cantidad], 0)")]
         [ModelDefault("DisplayFormat", "{0:N2}")]
         public decimal Salida => Convert.ToDecimal(Evaluate(nameof(Salida)));
 
         #endregion
-
-        //private string _PersistentProperty;
-        //[XafDisplayName("My display name"), ToolTip("My hint message")]
-        //[ModelDefault("EditMask", "(000)-00"), Index(0), VisibleInListView(false)]
-        //[Persistent("DatabaseColumnName"), RuleRequiredField(DefaultContexts.Save)]
-        //public string PersistentProperty {
-        //    get { return _PersistentProperty; }
-        //    set { SetPropertyValue(nameof(PersistentProperty), ref _PersistentProperty, value); }
-        //}
 
         //[Action(Caption = "My UI Action", ConfirmationMessage = "Are you sure?", ImageName = "Attention", AutoCommit = true)]
         //public void ActionMethod() {

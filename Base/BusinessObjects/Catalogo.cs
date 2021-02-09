@@ -71,7 +71,7 @@ namespace SBT.Apps.Contabilidad.BusinessObjects
         [DbType("smallint"), Persistent("Empresa")]
 #endif
         //[Association("Empresa-Catalogos")]
-        [XafDisplayName("Empresa"), Index(1), RuleRequiredField("Catalogo.Empresa_Requerida", "Save"), Browsable(false)]
+        [XafDisplayName("Empresa"), Index(1), RuleRequiredField("Catalogo.Empresa_Requerida", "Save")]
         public Empresa Empresa
         {
             get => empresa;

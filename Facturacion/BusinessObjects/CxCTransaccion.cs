@@ -46,6 +46,8 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         public override void AfterConstruction()
         {
             base.AfterConstruction();
+            valor = null;
+            fechaAnulacion = null;
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
@@ -63,11 +65,11 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         ECxcTransaccionEstado estado;
         SBT.Apps.Tercero.Module.BusinessObjects.Banco banco;
         string comentario;
-        [Persistent(nameof(NRC))]
-        TerceroDocumento nRC;
+        [Persistent(nameof(Nrc))]
+        TerceroDocumento nrc;
         SBT.Apps.Tercero.Module.BusinessObjects.Tercero cliente;
         [Persistent(nameof(Numero)), DbType("int")]
-        int numero;
+        int? numero;
         [Persistent(nameof(FechaAnulacion)), DbType("datetime2")]
         DateTime? fechaAnulacion;
         [Persistent(nameof(UsuarioAnulo)), DbType("varchar(25)"), Size(25)]
@@ -128,9 +130,9 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
             set => SetPropertyValue(nameof(TipoDocumento), ref tipoDocumento, value);
         }
 
-        [PersistentAlias(nameof(nRC)), XafDisplayName("NRC"), Index(5), VisibleInListView(false)]
+        [PersistentAlias(nameof(nrc)), XafDisplayName("NRC"), Index(5), VisibleInListView(false)]
         [DetailViewLayout("Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
-        public TerceroDocumento NRC => nRC;
+        public TerceroDocumento Nrc => nrc;
 
         /// <summary>
         /// Numero de documento por Concepto (revisar si se maneja una agrupacion de menor nivel, asi podremos tener
@@ -138,7 +140,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         /// </summary>
         [PersistentAlias(nameof(numero)), XafDisplayName("Número"), Index(6)]
         [DetailViewLayout("Datos Transacción", LayoutGroupType.SimpleEditorsGroup, 1)]
-        public int Numero => numero;
+        public int? Numero => numero;
 
         [XafDisplayName("Banco"), Index(6)]
         [DetailViewLayout("Datos Transacción", LayoutGroupType.SimpleEditorsGroup, 1)]
@@ -243,15 +245,86 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
                 return GetCollection<CxCDocumento>(nameof(Documentos));
             }
         }
+
+        // Created/Updated: BETOMOVILASUS\Santiago on BETOMOVILASUS at 4/2/2021 10:14
+        public new class FieldsClass : XPObject.FieldsClass
+        {
+            public FieldsClass()
+            {
+
+            }
+
+            public FieldsClass(string propertyName) : base(propertyName)
+            {
+
+            }
+
+            public OperandProperty factorCambio => new OperandProperty(GetNestedName("factorCambio"));
+
+            public OperandProperty valor => new OperandProperty(GetNestedName("valor"));
+
+            public XPObject.FieldsClass nrc => new XPObject.FieldsClass(GetNestedName("nrc"));
+
+            public OperandProperty numero => new OperandProperty(GetNestedName("numero"));
+
+            public OperandProperty fechaAnulacion => new OperandProperty(GetNestedName("fechaAnulacion"));
+
+            public OperandProperty usuarioAnulo => new OperandProperty(GetNestedName("usuarioAnulo"));
+
+            public XPObject.FieldsClass Cliente => new XPObject.FieldsClass(GetNestedName("Cliente"));
+
+            public OperandProperty Fecha => new OperandProperty(GetNestedName("Fecha"));
+
+            public PersistentBase.FieldsClass Concepto => new PersistentBase.FieldsClass(GetNestedName("Concepto"));
+
+            public XPObject.FieldsClass GestorCobro => new XPObject.FieldsClass(GetNestedName("GestorCobro"));
+
+            public PersistentBase.FieldsClass TipoDocumento => new PersistentBase.FieldsClass(GetNestedName("TipoDocumento"));
+
+            public XPObject.FieldsClass Nrc => new XPObject.FieldsClass(GetNestedName("Nrc"));
+
+            public OperandProperty Numero => new OperandProperty(GetNestedName("Numero"));
+
+            public XPObject.FieldsClass Banco => new XPObject.FieldsClass(GetNestedName("Banco"));
+
+            public OperandProperty NoTarjeta => new OperandProperty(GetNestedName("NoTarjeta"));
+
+            public OperandProperty Referencia => new OperandProperty(GetNestedName("Referencia"));
+
+            public XPObject.FieldsClass BancoTransaccion => new XPObject.FieldsClass(GetNestedName("BancoTransaccion"));
+
+            public PersistentBase.FieldsClass Moneda => new PersistentBase.FieldsClass(GetNestedName("Moneda"));
+
+            public OperandProperty FactorCambio => new OperandProperty(GetNestedName("FactorCambio"));
+
+            public OperandProperty Valor => new OperandProperty(GetNestedName("Valor"));
+
+            public OperandProperty Estado => new OperandProperty(GetNestedName("Estado"));
+
+            public OperandProperty Comentario => new OperandProperty(GetNestedName("Comentario"));
+
+            public OperandProperty UsuarioAnulo => new OperandProperty(GetNestedName("UsuarioAnulo"));
+
+            public OperandProperty FechaAnulacion => new OperandProperty(GetNestedName("FechaAnulacion"));
+
+            public OperandProperty Documentos => new OperandProperty(GetNestedName("Documentos"));
+        }
+
+        public new static FieldsClass Fields
+        {
+            get
+            {
+                if (ReferenceEquals(_Fields, null))
+                {
+                    _Fields = new FieldsClass();
+                }
+
+                return _Fields;
+            }
+        }
+
+        static FieldsClass _Fields;
         #endregion
-        //private string _PersistentProperty;
-        //[XafDisplayName("My display name"), ToolTip("My hint message")]
-        //[ModelDefault("EditMask", "(000)-00"), Index(0), VisibleInListView(false)]
-        //[Persistent("DatabaseColumnName"), RuleRequiredField(DefaultContexts.Save)]
-        //public string PersistentProperty {
-        //    get { return _PersistentProperty; }
-        //    set { SetPropertyValue("PersistentProperty", ref _PersistentProperty, value); }
-        //}
 
         //[Action(Caption = "My UI Action", ConfirmationMessage = "Are you sure?", ImageName = "Attention", AutoCommit = true)]
         //public void ActionMethod() {

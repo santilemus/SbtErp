@@ -181,7 +181,6 @@
         <ColumnInfo Id="Numero" Width="103" />
         <ColumnInfo Id="Venta" Width="101" />
         <ColumnInfo Id="VentaGravada" Width="100" />
-        <ColumnInfo Id="IVA" Width="102" />
         <ColumnInfo Id="SubTotal" Width="105" />
         <ColumnInfo Id="VentaExenta" Width="104" />
         <ColumnInfo Id="Total" Width="113" />
@@ -199,7 +198,6 @@
             <LayoutGroup Id="Generales_col2" RelativeSize="50.137362637362635">
               <LayoutItem Id="GestorCobro" RelativeSize="34" />
               <LayoutItem Id="TipoDocumento" RelativeSize="26" />
-              <LayoutItem Id="NRC" RelativeSize="40" />
             </LayoutGroup>
           </LayoutGroup>
           <LayoutGroup Id="Datos Transacción" RelativeSize="4.5333333333333332" IsCollapsibleGroup="True" IsGroupCollapsed="True">
@@ -260,17 +258,6 @@
             <LayoutGroup Id="Tributo" Removed="True" />
           </LayoutGroup>
           <LayoutItem Id="Formula" ViewItem="Formula" Index="1" RelativeSize="8.8829071332436076" IsNewNode="True" />
-          <LayoutGroup Id="SizeableEditors" RelativeSize="39.030955585464334" Caption="Fórmula" Direction="Horizontal" Index="2" Removed="True">
-            <LayoutItem Id="Formula" RelativeSize="100" Removed="True" />
-          </LayoutGroup>
-          <TabbedGroup Id="Tabs" RelativeSize="78.196500672947508" Index="2">
-            <LayoutGroup Id="Productos" RelativeSize="100">
-              <LayoutItem Id="Productos" RelativeSize="100" />
-            </LayoutGroup>
-            <LayoutGroup Id="VentaTributos" RelativeSize="100">
-              <LayoutItem Id="VentaTributos" RelativeSize="100" />
-            </LayoutGroup>
-          </TabbedGroup>
         </LayoutGroup>
       </Layout>
     </DetailView>
@@ -282,7 +269,6 @@
         <ColumnInfo Id="Numero" Width="131" Index="3" />
         <ColumnInfo Id="CxCTransaccion.Fecha" PropertyName="CxCTransaccion.Fecha" Index="4" Width="94" IsNewNode="True" />
         <ColumnInfo Id="VentaGravada" Width="76" Index="5" />
-        <ColumnInfo Id="IVA" Width="59" Index="6" />
         <ColumnInfo Id="SubTotal" Width="84" Index="7" />
         <ColumnInfo Id="VentaExenta" Width="65" Index="8" />
         <ColumnInfo Id="Total" Width="64" Index="9" />

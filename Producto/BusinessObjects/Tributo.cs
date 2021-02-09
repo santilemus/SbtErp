@@ -5,19 +5,15 @@ using System.ComponentModel;
 using DevExpress.Xpo;
 using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
-using DevExpress.Data.Filtering.Helpers;
 using DevExpress.Persistent.Base;
 using System.Collections.Generic;
 using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.BaseImpl;
 using DevExpress.Persistent.Validation;
-using DevExpress.ExpressApp.Core;
-using DevExpress.ExpressApp.Editors;
 using SBT.Apps.Base.Module.BusinessObjects;
 
 
-namespace SBT.Apps.Facturacion.Module.BusinessObjects
+namespace SBT.Apps.Producto.Module.BusinessObjects
 {
     /// <summary>
     /// Definicion de los impuestos y contribuciones especiales a calcular. No aplica el IVA, sino otros, como Fovial, Contrans, etc
@@ -26,7 +22,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
     /// Debe moverse a Productos. Y dinamicamente tendra que manejarse la relacion con la venta, hay que ver el impacto
     /// Revisar el BO ProductoImpuesto que se excluyo del proyecto SBT.Apps.Producto para validar que todos los datos se han incorporado
     /// </remarks>
-    [DefaultClassOptions, CreatableItem(false), ModelDefault("Caption", "Definición de Tributos"), NavigationItem("Facturación")]
+    [DefaultClassOptions, CreatableItem(false), ModelDefault("Caption", "Definición de Tributos"), NavigationItem(false)]
     [Persistent(nameof(Tributo)), DefaultProperty(nameof(NombreAbreviado))]
     [ImageName(nameof(Tributo))]
     [DefaultListViewOptions(MasterDetailMode.ListViewAndDetailView, false, NewItemRowPosition.None)]
@@ -46,7 +42,6 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         #region Propiedades
 
         bool activo;
-        string formula;
         EClaseTributo clase;
         string nombreAbreviado;
         string nombre;
@@ -74,23 +69,6 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             set => SetPropertyValue(nameof(Clase), ref clase, value);
         }
 
-        [Browsable(false)]
-        public Type CriteriaObjectType
-        {
-            get { return typeof(Venta); }
-        }
-
-        [Size(400), DbType("varchar(400)"), RuleRequiredField("Tributo.Formula_Requerido", "Save"), XafDisplayName("Fórmula")]
-        [ElementTypeProperty("CriteriaObjectType")]
-        [EditorAlias(EditorAliases.PopupExpressionPropertyEditor)]
-        [ModelDefault("Width", "50")]
-        [Index(5), VisibleInListView(false)]
-        public string Formula
-        {
-            get => formula;
-            set => SetPropertyValue(nameof(Formula), ref formula, value);
-        }
-
         [DbType("bit"), XafDisplayName("Activo"), RuleRequiredField("Tributo.Activo_Requerido", DefaultContexts.Save)]
         [Index(6), VisibleInLookupListView(true)]
         public bool Activo
@@ -102,37 +80,10 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         #endregion
 
         #region Colecciones
-        [Association("Tributo-Productos"), DevExpress.Xpo.Aggregated, XafDisplayName("Productos"), Index(0)]
-        public XPCollection<TributoProducto> Productos
-        {
-            get
-            {
-                return GetCollection<TributoProducto>(nameof(Productos));
-            }
-        }
+        [Association("Tributo-TributoCategorias"), DevExpress.Xpo.Aggregated, XafDisplayName("Categorías"), Index(0)]
+        public XPCollection<TributoCategoria> Categorias => GetCollection<TributoCategoria>(nameof(Categorias));
 
-        [Association("Tributo-VentaResumenTributos"), XafDisplayName("Factura Tributos"), Index(1)]
-        public XPCollection<VentaResumenTributo> VentaTributos
-        {
-            get
-            {
-                return GetCollection<VentaResumenTributo>(nameof(VentaTributos));
-            }
-        }
 
-        #endregion
-
-        #region metodos
-        /// <summary>
-        /// Evaluar la formula y retornar el valor calculado
-        /// </summary>
-        /// <param name="theObject"></param>
-        /// <returns></returns>
-        public decimal EvaluarFormula(object theObject)
-        {
-            ExpressionEvaluator eval = new ExpressionEvaluator(TypeDescriptor.GetProperties(typeof(Venta)), Formula);
-            return Math.Round(Convert.ToDecimal(eval.Evaluate(theObject)), 2);
-        }
         #endregion
 
 

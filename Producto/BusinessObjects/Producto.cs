@@ -1,5 +1,5 @@
-﻿using DevExpress.ExpressApp.DC;
-using DevExpress.ExpressApp.Model;
+﻿using DevExpress.ExpressApp.ConditionalAppearance;
+using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.SystemModule;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
@@ -25,6 +25,10 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
     [ListViewFilter("Producto Terminado", "[Categoria.Clasificacion] = 0")]
     [ListViewFilter("Servicios", "[Categoria.Clasificacion] = 4")]
     [ListViewFilter("Todos", "")]
+
+    [Appearance("Productos - Servicios - Intangibles y Otros", AppearanceItemType = "ViewItem", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide,
+            Context = "Any", Criteria = "[Categoria.Clasificacion] >= 4",
+            TargetItems = "CodigoBarra;NombreCorto;UnidadMedida;Presentacion;CantMinima;CantMaxima;CostoPromedio;Atributos;ItemsEnsamble;Equivalentes;Lotes;CodigosBarra;Inventarios")]
     public class Producto : XPObjectBaseBO
     {
         public override void AfterConstruction()
@@ -33,6 +37,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
             Activo = true;
             CantMinima = 0.0m;
             CantMaxima = 0.0m;
+            costoPromedio = 0.0m;
         }
 
         decimal costoPromedio;
@@ -54,6 +59,26 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         }
 
         #region Propiedades
+
+        [DevExpress.Persistent.Base.ToolTipAttribute("Línea del producto")]
+        [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Categoría")]
+        [DevExpress.Xpo.IndexedAttribute]
+        [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
+        [RuleRequiredField("Producto.Categoria_Requerido", DefaultContexts.Save, "La Categoría es requerida")]
+        [DataSourceCriteria("EsGrupo = false And Activa = true")]
+        //[Association("Categoria-Productos")]
+
+        public Categoria Categoria
+        {
+            get => categoria;
+            set
+            {
+                bool changed = SetPropertyValue(nameof(Categoria), ref categoria, value);
+                if (!IsLoading && !IsSaving && changed & Session.IsNewObject(this))
+                    Codigo = Categoria.Codigo;
+            }
+        }
+
         [DevExpress.Xpo.SizeAttribute(20), VisibleInLookupListView(true), DbType("varchar(20)")]
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Código")]
         [ImmediatePostData(true)]
@@ -82,17 +107,6 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
             set => SetPropertyValue(nameof(Nombre), ref nombre, value);
         }
 
-        [DevExpress.Persistent.Base.ToolTipAttribute("Línea del producto")]
-        [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Categoría")]
-        [DevExpress.Xpo.IndexedAttribute]
-        [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
-        [RuleRequiredField("Producto.Categoria_Requerido", DefaultContexts.Save, "La Categoría es requerida")]
-        [DataSourceCriteria("EsGrupo = false And Activa = true")]
-        public Categoria Categoria
-        {
-            get => categoria;
-            set => SetPropertyValue(nameof(Categoria), ref categoria, value);
-        }
 
         [DevExpress.Xpo.SizeAttribute(25), DbType("varchar(25)")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
@@ -105,7 +119,8 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         }
 
         [DbType("varchar(8)"), Persistent("UnidadMedida")]
-        [Size(8), XafDisplayName("Unidad Medida"), RuleRequiredField("Producto.UnidadMedida_Requerido", "Save"), VisibleInLookupListView(false)]
+        [Size(8), XafDisplayName("Unidad Medida")]
+        [RuleRequiredField("Producto.UnidadMedida_Requerido", "Save", TargetCriteria = "[Categoria.Clasificacion] < 4"), VisibleInLookupListView(false)]
         public string UnidadMedida
         {
             get => unidadMedida;
@@ -139,7 +154,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         }
 
         [DbType("numeric(14, 6)"), XafDisplayName("Costo Promedio")]
-        [RuleValueComparison("Producto.CostoPromedio >= 0", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual, 0.0, 
+        [RuleValueComparison("Producto.CostoPromedio >= 0", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual, 0.0,
             TargetCriteria = "[Categoria.Clasificacion] < 4 && [Activo] == true", CustomMessageTemplate = "El costo promedio debe ser mayor o igual a cero")]
         public decimal CostoPromedio
         {
@@ -234,6 +249,24 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
             }
         }
 
+        [Association("Producto-Inventarios"), DevExpress.Xpo.Aggregated, XafDisplayName("Inventario")]
+        public XPCollection<Inventario.Module.BusinessObjects.Inventario> Inventarios
+        {
+            get
+            {
+                return GetCollection<Inventario.Module.BusinessObjects.Inventario>(nameof(Inventarios));
+            }
+        }
+
+        #endregion
+
+        #region Metodos
+        //protected override void OnSaving()
+        //{
+        //    base.OnSaving();
+
+
+        //}
 
         #endregion
 

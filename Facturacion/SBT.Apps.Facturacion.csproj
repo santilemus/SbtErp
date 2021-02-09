@@ -125,13 +125,11 @@
     <Compile Include="BusinessObjects\Concepto.cs" />
     <Compile Include="BusinessObjects\CxCDocumento.cs" />
     <Compile Include="BusinessObjects\CxCTransaccion.cs" />
-    <Compile Include="BusinessObjects\EClaseTributo.cs" />
     <Compile Include="BusinessObjects\ECxcTransaccionEstado.cs" />
     <Compile Include="BusinessObjects\ETipoOperacion.cs" />
-    <Compile Include="BusinessObjects\TributoProducto.cs" />
+    <Compile Include="BusinessObjects\TributoRegla.cs" />
     <Compile Include="BusinessObjects\Venta.cs" />
     <Compile Include="BusinessObjects\AutorizacionDocumento.cs" />
-    <Compile Include="BusinessObjects\Tributo.cs" />
     <Compile Include="BusinessObjects\VentaDetalle.cs" />
     <Compile Include="BusinessObjects\VentaResumenTributo.cs" />
     <Compile Include="Controllers\vcAutorizacionDocumento.cs">
@@ -141,6 +139,12 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controllers\vcCartera.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controllers\vcVenta.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controllers\vcVentaDetalle.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="DatabaseUpdate\Updater.cs" />
@@ -189,12 +193,6 @@
       <Project>{5F15837D-D1E5-44DC-92F0-4F2EBE9C3F8D}</Project>
       <Name>SBT.Apps.Tercero</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="UnusableNodes1.xml">
-      <DependentUpon>Model.DesignedDiffs.xafml</DependentUpon>
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -93,10 +93,10 @@
   <ItemGroup>
     <Compile Include="BusinessObjects\Categoria.cs" />
     <Compile Include="BusinessObjects\ClasificacionAplicarImpuesto.cs" />
+    <Compile Include="BusinessObjects\EClaseTributo.cs" />
     <Compile Include="BusinessObjects\EClasificacion.cs" />
     <Compile Include="BusinessObjects\EClasificacionIVA.cs" />
     <Compile Include="BusinessObjects\EMetodoCosteoInventario.cs" />
-    <Compile Include="BusinessObjects\ETipoMovimientoInventario.cs" />
     <Compile Include="BusinessObjects\Inventario.cs" />
     <Compile Include="BusinessObjects\Kardex.cs" />
     <Compile Include="BusinessObjects\Presentacion.cs" />
@@ -108,12 +108,18 @@
     <Compile Include="BusinessObjects\ProductoLote.cs" />
     <Compile Include="BusinessObjects\ProductoPrecio.cs" />
     <Compile Include="BusinessObjects\ProductoProveedor.cs" />
+    <Compile Include="BusinessObjects\InventarioTipoMovimiento.cs" />
+    <Compile Include="BusinessObjects\Tributo.cs" />
+    <Compile Include="BusinessObjects\TributoCategoria.cs" />
     <Compile Include="BusinessObjects\XPCustomFacturaDetalle.cs" />
     <Compile Include="Controllers\vcProducto.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controllers\vcProducto.Designer.cs">
       <DependentUpon>vcProducto.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\vcProductoPrecio.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="DatabaseUpdate\Updater.cs" />
     <Compile Include="ProductoModule.cs">
@@ -179,12 +185,6 @@
     <EmbeddedResource Include="Images\ProductoLote_32x32.png" />
     <EmbeddedResource Include="Images\ProductoPrecio.png" />
     <EmbeddedResource Include="Images\ProductoPrecio_32x32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="UnusableNodes.xml">
-      <DependentUpon>Model.DesignedDiffs.xafml</DependentUpon>
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

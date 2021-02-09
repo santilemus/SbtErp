@@ -58,5 +58,10 @@ namespace SBT.Apps.Facturacion.Module
             //    }
             //}
         }
+
+        //protected override IEnumerable<Type> GetDeclaredExportedTypes()
+        //{
+        //    return base.GetDeclaredExportedTypes();
+        //}
     }
 }

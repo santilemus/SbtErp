@@ -1,19 +1,12 @@
-﻿using DevExpress.Data.Filtering;
-using DevExpress.ExpressApp;
-using DevExpress.ExpressApp.DC;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
-using DevExpress.Persistent.BaseImpl;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
+using SBT.Apps.Base.Module.BusinessObjects;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using DevExpress.Xpo.Metadata;
-using SBT.Apps.Base.Module.BusinessObjects;
-using SBT.Apps.Producto.Module.BusinessObjects;
 
 namespace SBT.Apps.Producto.Module.BusinessObjects
 {
@@ -36,22 +29,29 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
+        protected override void OnSaving()
+        {
+            base.OnSaving();
+            //DevExpress.Persistent.BaseImpl.DistributedIdGeneratorHelper.Generate()
+        }
+
         #region Propiedades
 
+        string descripcion;
         [Persistent(nameof(Oid)), DbType("bigint"), Key(true)]
         long oid = -1;
         Producto producto;
         [Persistent(nameof(CantidadAnulada))]
         decimal? cantidadAnulada;
         protected decimal? noSujeta;
-        protected decimal? gravada;      
+        protected decimal? gravada;
         protected decimal? iva;
         protected decimal? exenta;
         decimal precioUnidad;
         decimal cantidad;
 
 
-        
+
         [PersistentAlias(nameof(oid)), XafDisplayName("Oid"), Index(0)]
         public long Oid => oid;
 
@@ -117,7 +117,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         [Persistent(nameof(Exenta)), DbType("numeric(14,2)")]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2"), XafDisplayName("Exenta")]
         public decimal? Exenta
-        { 
+        {
             get => exenta;
             set => SetPropertyValue(nameof(Exenta), ref exenta, value);
         }
@@ -165,6 +165,15 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         [PersistentAlias(nameof(cantidadAnulada))]
         [XafDisplayName("Cantidad Anulada"), ModelDefault("DisplayFormat", "{0:N2}"), VisibleInListView(false), VisibleInLookupListView(false)]
         public decimal? CantidadAnulada => cantidadAnulada;
+
+        [Size(120), DbType("varchar(120)"), XafDisplayName("Descripción")]
+        [ToolTip("Util cuando el cliente requiere una descripción personalizada porque no puede usar el nombre del producto, por ejemplo: servicios de consultoría")]
+        public string Descripcion
+        {
+            get => descripcion;
+            set => SetPropertyValue(nameof(Descripcion), ref descripcion, value);
+        }
+
         #endregion
 
         #region Metodos
@@ -227,23 +236,10 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
                     iva = 0.0m;
                     break;
             }
-        }
-
-        /// <summary>
-        /// Metodo para realizar la actualizacion del inventario. Evaluar si queda aca o se lleva al BO de inventario
-        /// porque el mismo metodo se necesitara para las compras, devoluciones y otros documentos internos que afectan inventario
-        /// </summary>
-        /// <param name="OidBodega">Bodega cuyo inventario será afectado</param>
-        /// <param name="OidDocumento">Oid del documento de referencia. Evaluar si se pasa el Oid de la Venta o el Oid del detalle de la venta</param>
-        /// <param name="OidProducto">Oid del Producto del inventario a actualizar</param>
-        /// <param name="ACantidad">Oid de la cantidad del inventario que sera afectado</param>
-        /// <remarks>
-        /// Pendiente de completar, faltan los BO de Inventario 
-        /// También esta pendiente cuando sean PEPS o UEPS porque en ese caso falta alli el lote
-        /// </remarks>
-        protected virtual void ActualizarInventario(int OidBodega, long OidDocumento, int OidProducto, decimal ACantidad)
-        {
-
+            /// Info https://supportcenter.devexpress.com/ticket/details/ka18699/how-to-implement-dependent-and-calculated-properties-in-xpo#
+            OnChanged(nameof(Gravada));
+            OnChanged(nameof(Iva));
+            OnChanged(nameof(Exenta));
         }
 
         protected void InicializarSubtotales()

@@ -58,6 +58,12 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
             return Convert.ToInt32(Session.Evaluate<Categoria>(CriteriaOperator.Parse("Count()"), CriteriaOperator.Parse("[Padre.Oid] == ?", aCategoria.Oid)));
         }
 
+        public Categoria(DevExpress.Xpo.Session session): base(session)
+        {
+        }
+
+        #region Propiedades
+
         EMetodoCosteoInventario metodoCosteo;
         decimal porcentajeIVA;
         EClasificacionIVA clasificacionIva = EClasificacionIVA.Gravado;
@@ -70,11 +76,6 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         [Persistent(nameof(Nivel)), DbType("smallint"), FetchOnly]
         private int nivel = 1;
 
-        public Categoria(DevExpress.Xpo.Session session)
-          : base(session)
-        {
-        }
-
         [ImmediatePostData(true)]
         [RuleRequiredField("Categoria.Padre_Requerido", DefaultContexts.Save, "Padre es requerido", SkipNullOrEmptyValues = true), VisibleInLookupListView(false)]
         public Categoria Padre
@@ -83,7 +84,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
             set
             {
                 bool changed = SetPropertyValue("Padre", ref padre, value);
-                if (!IsLoading && !IsSaving && changed)
+                if (!IsLoading && !IsSaving && changed && Session.IsNewObject(this))
                 {
                     nivel = Padre.Nivel + 1;
                     Codigo = value.Codigo;
@@ -96,6 +97,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         [DevExpress.Xpo.SizeAttribute(20), DbType("varchar(20)")]
         [RuleRequiredField("Categoria.Codigo_Requerido", "Save")]
         [RuleUniqueValue]
+        [VisibleInLookupListView(true)]
         public System.String Codigo
         {
             get => codigo;
@@ -176,6 +178,14 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
             set => SetPropertyValue(nameof(Activa), ref activa, value);
         }
 
+        #endregion
 
+        #region Colecciones
+        //[Association("Categoria-Productos"), DevExpress.Xpo.Aggregated, XafDisplayName("Productos"), Index(0)]
+        //public XPCollection<Producto> Productos => GetCollection<Producto>(nameof(Productos));
+
+        [Association("Categoria-TributosCategoria"), DevExpress.Xpo.Aggregated, XafDisplayName("Tributos"), Index(1)]
+        public XPCollection<TributoCategoria> TributosCategoria => GetCollection<TributoCategoria>(nameof(TributosCategoria));
+        #endregion
     }
 }

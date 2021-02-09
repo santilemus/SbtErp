@@ -268,12 +268,13 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             set => SetPropertyValue(nameof(CausaMuerte), ref causaMuerte, value);
         }
 
-        [PersistentAlias("Nombre + ' ' + Apellido")]
+        [PersistentAlias("concat(Nombre, Apellido)")]
         [DisplayName("Nombre Completo")]
         public string NombreCompleto
         {
-            get { return Convert.ToString(EvaluateAlias("NombreCompleto")); }
-        }
+            //get { return Convert.ToString(EvaluateAlias("NombreCompleto")); }
+            get => ObjectFormatter.Format("{Nombre} {Apellido}", this, EmptyEntriesMode.RemoveDelimiterWhenEntryIsEmpty);
+            }
 
 
         [PersistentAlias("Round(DateDiffMonth([FechaNacimiento], Now())/12.00, 2)")]

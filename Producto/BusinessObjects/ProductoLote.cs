@@ -39,7 +39,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         private Producto _producto;
         private System.Decimal _salida;
         private System.Decimal _entrada;
-        private System.Int32 _noLote;
+        private object noLote;
         private System.Decimal _promedioAnterior;
         private System.Decimal _promedio;
         private System.Decimal _costo;
@@ -56,16 +56,11 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         /// </summary>
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("No Lote")]
         [RuleRequiredField("ProductoLote.NoLote_Requerido", "Save")]
-        public System.Int32 NoLote
+        [DbType("bigint")] // NOTA: Revisar para efectos practicos el lote sera el ingreso
+        public object NoLote
         {
-            get
-            {
-                return _noLote;
-            }
-            set
-            {
-                SetPropertyValue("NoLote", ref _noLote, value);
-            }
+            get => noLote;
+            set => SetPropertyValue(nameof(NoLote), ref noLote, value);
         }
         /// <summary>
         /// Fecha de lote, corresponde a la fecha de la compra, orden de produccion o importacion. Para obtener la ultima fecha de compra,
@@ -89,7 +84,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         /// de esta manera se reemplaza la propiedad Ultimo Costo de Compra del objeto persistene Producto
         /// </summary>
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Costo"), ModelDefault("DisplayFormat", "N6"), ModelDefault("EditMask", "N6")]
-        [DbType("numeric(16,8)")]
+        [DbType("numeric(14,6)")]
         public System.Decimal Costo
         {
             get
@@ -107,7 +102,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         /// y se reemplaza la propiedad Costo Promedio del objeto Persistente Producto
         /// </summary>
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Costo Promedio"), ModelDefault("DisplayFormat", "N6"), ModelDefault("EditMask", "N6")]
-        [DbType("numeric(16,8)")]
+        [DbType("numeric(14,6)")]
         public System.Decimal Promedio
         {
             get
@@ -128,7 +123,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         /// </summary>
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Promedio Anterior")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false), ModelDefault("DisplayFormat", "N6"), ModelDefault("EditMask", "N6")]
-        [DbType("numeric(16,8)")]
+        [DbType("numeric(14,6)")]
         public System.Decimal PromedioAnterior
         {
             get
@@ -182,7 +177,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         /// <summary>
         /// Existencia disponible para el lote. Entrada - AcumSalida
         /// </summary>
-        [PersistentAlias("Entrada - Salida")]
+        [PersistentAlias("[Entrada] - [Salida]")]
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Existencia")]
         [DevExpress.Persistent.Base.VisibleInListViewAttribute(true)]
         public System.Decimal Existencia
