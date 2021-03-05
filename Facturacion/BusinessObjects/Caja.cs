@@ -16,7 +16,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
 
     [DefaultClassOptions, ModelDefault("Caption", "Caja"), NavigationItem("Facturación"), DefaultProperty(nameof(NoCaja))]
     [Persistent("FacCaja")]
-    //[ImageName("BO_Contact")]
+    [ImageName(nameof(Caja))]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class Caja : XPObjectBaseBO
@@ -59,6 +59,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         }
 
         [XafDisplayName("Sucursal"), Persistent(nameof(Agencia)), Index(2), VisibleInLookupListView(true)]
+        [DataSourceCriteria("[Empresa.Oid] = EmpresaActualOid() And [Activa] == True And [Role] == 2")]
         public EmpresaUnidad Agencia
         {
             get => agencia;

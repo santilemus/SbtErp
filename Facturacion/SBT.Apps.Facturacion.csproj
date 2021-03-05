@@ -122,11 +122,10 @@
     <Compile Include="BusinessObjects\Caja.cs" />
     <Compile Include="BusinessObjects\Cartera.cs" />
     <Compile Include="BusinessObjects\CarteraCliente.cs" />
-    <Compile Include="BusinessObjects\Concepto.cs" />
     <Compile Include="BusinessObjects\CxCDocumento.cs" />
+    <Compile Include="BusinessObjects\CxCDocumentoDetalle.cs" />
     <Compile Include="BusinessObjects\CxCTransaccion.cs" />
     <Compile Include="BusinessObjects\ECxcTransaccionEstado.cs" />
-    <Compile Include="BusinessObjects\ETipoOperacion.cs" />
     <Compile Include="BusinessObjects\TributoRegla.cs" />
     <Compile Include="BusinessObjects\Venta.cs" />
     <Compile Include="BusinessObjects\AutorizacionDocumento.cs" />
@@ -139,6 +138,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controllers\vcCartera.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controllers\vcCxCDocumento.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controllers\vcVenta.cs">
@@ -193,6 +195,24 @@
       <Project>{5F15837D-D1E5-44DC-92F0-4F2EBE9C3F8D}</Project>
       <Name>SBT.Apps.Tercero</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Images\caja.png" />
+    <EmbeddedResource Include="Images\caja_32x32.png" />
+    <EmbeddedResource Include="Images\cartera.png" />
+    <EmbeddedResource Include="Images\CarteraCliente.png" />
+    <EmbeddedResource Include="Images\CarteraCliente_32x32.png" />
+    <EmbeddedResource Include="Images\cartera_32x32.png" />
+    <EmbeddedResource Include="Images\CxCDocumento.png" />
+    <EmbeddedResource Include="Images\CxCDocumento_32x32.png" />
+    <EmbeddedResource Include="Images\CxCTransaccion.png" />
+    <EmbeddedResource Include="Images\CxCTransaccion_32x32.png" />
+    <EmbeddedResource Include="Images\TributoRegla.png" />
+    <EmbeddedResource Include="Images\TributoRegla_32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Images\AutorizacionDocumento.png" />
+    <EmbeddedResource Include="Images\AutorizacionDocumento_32x32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -34,7 +34,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
     
     [DefaultClassOptions, ModelDefault("Caption", "CxC Transacción"), NavigationItem("Cuenta por Cobrar")]
     [CreatableItem(false), Persistent(nameof(CxCTransaccion)), DefaultProperty("Numero")]
-    //[ImageName("BO_Contact")]
+    [ImageName(nameof(CxCTransaccion))]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class CxCTransaccion : XPObjectBaseBO
@@ -46,46 +46,25 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         public override void AfterConstruction()
         {
             base.AfterConstruction();
-            valor = null;
-            fechaAnulacion = null;
+            autorizacionCorrelativo = null;
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
         #region Propiedades
 
-        [Persistent(nameof(FactorCambio))]
-        decimal factorCambio = 1.0m;
-        Moneda moneda;
-        [Persistent(nameof(Valor))]
-        decimal ? valor;
+        Cartera cartera;
+        Listas tipoTarjeta;
         BancoTransaccion bancoTransaccion;
-        SBT.Apps.Empleado.Module.BusinessObjects.Empleado gestorCobro;
         string noTarjeta;
         string referencia;
         ECxcTransaccionEstado estado;
         SBT.Apps.Tercero.Module.BusinessObjects.Banco banco;
         string comentario;
-        [Persistent(nameof(Nrc))]
-        TerceroDocumento nrc;
-        SBT.Apps.Tercero.Module.BusinessObjects.Tercero cliente;
-        [Persistent(nameof(Numero)), DbType("int")]
-        int? numero;
-        [Persistent(nameof(FechaAnulacion)), DbType("datetime2")]
-        DateTime? fechaAnulacion;
-        [Persistent(nameof(UsuarioAnulo)), DbType("varchar(25)"), Size(25)]
-        string usuarioAnulo;
         DateTime fecha;
         Concepto concepto;
-        Listas tipoDocumento;
+        [Persistent(nameof(AutorizacionCorrelativo))]
+        AutorizacionDocumento autorizacionCorrelativo;
 
-
-        [XafDisplayName("Cliente"), RuleRequiredField("CxCTransaccion.Cliente_Requerido", DefaultContexts.Save), Index(0)]
-        [DetailViewLayout("Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
-        public SBT.Apps.Tercero.Module.BusinessObjects.Tercero Cliente
-        {
-            get => cliente;
-            set => SetPropertyValue(nameof(Cliente), ref cliente, value);
-        }
 
         [DbType("datetime2"), XafDisplayName("Fecha"), Index(1)]
         [RuleValueComparison("CxCTransaccion.Fecha > Fecha Factura", DefaultContexts.Save,
@@ -100,7 +79,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         /// <summary>
         /// Tipo de concepto o de transaccion de cuenta por cobrar
         /// </summary>
-        [Association("Concepto-Transacciones"), XafDisplayName("Tipo Concepto")]
+        //[Association("Concepto-Transacciones"), XafDisplayName("Tipo Concepto")]
         [RuleRequiredField("CxcTransaccion.Concepto_Requerido", DefaultContexts.Save)]
         [Index(2), VisibleInLookupListView(true)]
         [DetailViewLayout("Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
@@ -110,37 +89,40 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
             set => SetPropertyValue(nameof(Concepto), ref concepto, value);
         }
 
-        [XafDisplayName("Gestor de Cobro"), Index(3)]
-        [DetailViewLayout("Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
-        public SBT.Apps.Empleado.Module.BusinessObjects.Empleado GestorCobro
-        {
-            get => gestorCobro;
-            set => SetPropertyValue(nameof(GestorCobro), ref gestorCobro, value);
-        }
+        /// <summary>
+        /// Algunos tipos de concepto van a requerir una autorizacion de correlativos, habra que identificar en el BO
+        /// CxCTransaccion el tipo de documento o vincularlo al concepto, para que el sistema pueda obener la autorizacion y validar
+        /// que sea la correcta para el tipo de documento, ademas este vigente y el correlativo generado este dentro del 
+        /// rango
+        /// </summary>
+        [XafDisplayName("Autorización Correlativo"), PersistentAlias(nameof(autorizacionCorrelativo)), Index(2)]
+        [VisibleInListView(false)]
+        public AutorizacionDocumento AutorizacionCorrelativo => autorizacionCorrelativo;
 
         /// <summary>
-        /// Solo aplica para los conceptos que requieren de una autorizacion de correlativos
+        /// Cartera de Cuenta por Cobrar o Venta. El vendedor o el cobrador esta relacionado con la cartera y el cliente
+        /// a CarteraCliente
         /// </summary>
-        [XafDisplayName("Tipo Documento"), RuleRequiredField("Venta.TipoDocumento_Requerido", DefaultContexts.Save)]
-        [DataSourceCriteria("[Categoria] == 16 And [Activo] == True"), VisibleInLookupListView(true), Index(4)]
+        [Association("Cartera-CxCTransacciones"), XafDisplayName("Cartera"), Index(3)]
         [DetailViewLayout("Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
-        public Listas TipoDocumento
+        public Cartera Cartera
         {
-            get => tipoDocumento;
-            set => SetPropertyValue(nameof(TipoDocumento), ref tipoDocumento, value);
+            get => cartera;
+            set => SetPropertyValue(nameof(Cartera), ref cartera, value);
         }
 
-        [PersistentAlias(nameof(nrc)), XafDisplayName("NRC"), Index(5), VisibleInListView(false)]
-        [DetailViewLayout("Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
-        public TerceroDocumento Nrc => nrc;
-
-        /// <summary>
-        /// Numero de documento por Concepto (revisar si se maneja una agrupacion de menor nivel, asi podremos tener
-        /// notas de credito==> descuento, devolucion. Pagos ==> Efectivo, Cheque, Transferencia, etc
-        /// </summary>
-        [PersistentAlias(nameof(numero)), XafDisplayName("Número"), Index(6)]
+        
+        [DbType("varchar(12)"), XafDisplayName("Tipo Tarjeta"), Index(6), VisibleInListView(false)]
         [DetailViewLayout("Datos Transacción", LayoutGroupType.SimpleEditorsGroup, 1)]
-        public int? Numero => numero;
+        [DataSourceCriteria("[Categoria] == 6 And [Activo] == True")]   // categoria 6 son tarjetas de credito
+        [RuleRequiredField("CxCTransaccion.TipoTarjeta_Requerido", "Save", TargetCriteria = "[FormaPago.Codigo] In ('FPA03', 'FPA04')",
+             ResultType = ValidationResultType.Warning)]
+
+        public Listas TipoTarjeta
+        {
+            get => tipoTarjeta;
+            set => SetPropertyValue(nameof(TipoTarjeta), ref tipoTarjeta, value);
+        }
 
         [XafDisplayName("Banco"), Index(6)]
         [DetailViewLayout("Datos Transacción", LayoutGroupType.SimpleEditorsGroup, 1)]
@@ -153,7 +135,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         /// <summary>
         /// No de tarjeta de credito o debito
         /// </summary>
-        [Size(25), DbType("varchar(25)"), XafDisplayName("No Tarjeta"), ToolTip("No de Tarjeta de debito o credito, cuando es el medio de pago")]
+        [Size(20), DbType("varchar(20)"), XafDisplayName("No Tarjeta"), ToolTip("No de Tarjeta de debito o credito, cuando es el medio de pago")]
         [Index(7), VisibleInListView(false)]
         [DetailViewLayout("Datos Transacción", LayoutGroupType.SimpleEditorsGroup, 1)]
         public string NoTarjeta
@@ -191,24 +173,6 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
             set => SetPropertyValue(nameof(BancoTransaccion), ref bancoTransaccion, value);
         }
 
-        [XafDisplayName("Moneda"), Index(10), VisibleInListView(false)]
-        [DetailViewLayout("Datos Transacción", LayoutGroupType.SimpleEditorsGroup, 1)]
-        public Moneda Moneda
-        {
-            get => moneda;
-            set => SetPropertyValue(nameof(Moneda), ref moneda, value);
-        }
-
-        
-        [PersistentAlias(nameof(factorCambio)), XafDisplayName("Valor Moneda"), VisibleInListView(false)]
-        [DetailViewLayout("Datos Transacción", LayoutGroupType.SimpleEditorsGroup, 1)]
-        public decimal FactorCambio => factorCambio;
-
-        [PersistentAlias(nameof(valor)), XafDisplayName("Valor"), Index(10)]
-        [DetailViewLayout("Datos Transacción", LayoutGroupType.SimpleEditorsGroup, 1)]
-        public decimal ? Valor => valor;
-
-
         [DbType("smallint"), XafDisplayName("Estado"), Index(15), RuleRequiredField("CxCTransaccion.Estado_Requerido", "Save")]
         [DetailViewLayout("Otros Datos", LayoutGroupType.SimpleEditorsGroup, 2)]
         public ECxcTransaccionEstado Estado
@@ -225,14 +189,6 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
             set => SetPropertyValue(nameof(Comentario), ref comentario, value);
         }
 
-        [PersistentAlias(nameof(usuarioAnulo)), XafDisplayName("Usuario Anulo"), Index(17), VisibleInListView(false)]
-        [DetailViewLayout("Otros Datos", LayoutGroupType.SimpleEditorsGroup, 2)]
-        public string UsuarioAnulo => usuarioAnulo;
-        
-        [PersistentAlias(nameof(fechaAnulacion)), XafDisplayName("Fecha Anulación"), Index(18), VisibleInListView(false)]
-        [DetailViewLayout("Otros Datos", LayoutGroupType.SimpleEditorsGroup, 2)]
-        public DateTime ? FechaAnulacion => fechaAnulacion;
-
         #endregion
 
         #region colecciones
@@ -246,84 +202,6 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
             }
         }
 
-        // Created/Updated: BETOMOVILASUS\Santiago on BETOMOVILASUS at 4/2/2021 10:14
-        public new class FieldsClass : XPObject.FieldsClass
-        {
-            public FieldsClass()
-            {
-
-            }
-
-            public FieldsClass(string propertyName) : base(propertyName)
-            {
-
-            }
-
-            public OperandProperty factorCambio => new OperandProperty(GetNestedName("factorCambio"));
-
-            public OperandProperty valor => new OperandProperty(GetNestedName("valor"));
-
-            public XPObject.FieldsClass nrc => new XPObject.FieldsClass(GetNestedName("nrc"));
-
-            public OperandProperty numero => new OperandProperty(GetNestedName("numero"));
-
-            public OperandProperty fechaAnulacion => new OperandProperty(GetNestedName("fechaAnulacion"));
-
-            public OperandProperty usuarioAnulo => new OperandProperty(GetNestedName("usuarioAnulo"));
-
-            public XPObject.FieldsClass Cliente => new XPObject.FieldsClass(GetNestedName("Cliente"));
-
-            public OperandProperty Fecha => new OperandProperty(GetNestedName("Fecha"));
-
-            public PersistentBase.FieldsClass Concepto => new PersistentBase.FieldsClass(GetNestedName("Concepto"));
-
-            public XPObject.FieldsClass GestorCobro => new XPObject.FieldsClass(GetNestedName("GestorCobro"));
-
-            public PersistentBase.FieldsClass TipoDocumento => new PersistentBase.FieldsClass(GetNestedName("TipoDocumento"));
-
-            public XPObject.FieldsClass Nrc => new XPObject.FieldsClass(GetNestedName("Nrc"));
-
-            public OperandProperty Numero => new OperandProperty(GetNestedName("Numero"));
-
-            public XPObject.FieldsClass Banco => new XPObject.FieldsClass(GetNestedName("Banco"));
-
-            public OperandProperty NoTarjeta => new OperandProperty(GetNestedName("NoTarjeta"));
-
-            public OperandProperty Referencia => new OperandProperty(GetNestedName("Referencia"));
-
-            public XPObject.FieldsClass BancoTransaccion => new XPObject.FieldsClass(GetNestedName("BancoTransaccion"));
-
-            public PersistentBase.FieldsClass Moneda => new PersistentBase.FieldsClass(GetNestedName("Moneda"));
-
-            public OperandProperty FactorCambio => new OperandProperty(GetNestedName("FactorCambio"));
-
-            public OperandProperty Valor => new OperandProperty(GetNestedName("Valor"));
-
-            public OperandProperty Estado => new OperandProperty(GetNestedName("Estado"));
-
-            public OperandProperty Comentario => new OperandProperty(GetNestedName("Comentario"));
-
-            public OperandProperty UsuarioAnulo => new OperandProperty(GetNestedName("UsuarioAnulo"));
-
-            public OperandProperty FechaAnulacion => new OperandProperty(GetNestedName("FechaAnulacion"));
-
-            public OperandProperty Documentos => new OperandProperty(GetNestedName("Documentos"));
-        }
-
-        public new static FieldsClass Fields
-        {
-            get
-            {
-                if (ReferenceEquals(_Fields, null))
-                {
-                    _Fields = new FieldsClass();
-                }
-
-                return _Fields;
-            }
-        }
-
-        static FieldsClass _Fields;
         #endregion
 
         //[Action(Caption = "My UI Action", ConfirmationMessage = "Are you sure?", ImageName = "Attention", AutoCommit = true)]

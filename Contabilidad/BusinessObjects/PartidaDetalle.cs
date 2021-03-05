@@ -22,7 +22,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
     /// <remarks>
     /// Action Info: https://docs.devexpress.com/eXpressAppFramework/112619/task-based-help/actions/how-to-create-an-action-using-the-action-attribute
     /// </remarks>
-    [DefaultClassOptions, NavigationItem(false), ModelDefault("Caption", "Partida Detalle"), ModelDefault("AllowEdit", "True")]
+    [NavigationItem(false), ModelDefault("Caption", "Partida Detalle"), ModelDefault("AllowEdit", "True"), CreatableItem(false)]
     //[ImageName("BO_Contact")]
     //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
     [DefaultListViewOptions(MasterDetailMode.ListViewOnly, true, NewItemRowPosition.Top)]

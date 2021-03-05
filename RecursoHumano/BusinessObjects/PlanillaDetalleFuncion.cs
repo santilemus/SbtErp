@@ -15,7 +15,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
     /// Ampliar y corregir la documentacion del BO cuando se complete la implementacion. Mas informacion de la implementacion 
     /// a realizr en https://docs.devexpress.com/XPO/8914/feature-center/querying-a-data-store/direct-sql-queries
     /// </remarks>
-    [DefaultClassOptions, NonPersistent, NavigationItem(false)]
+    [NonPersistent, NavigationItem(false)]
     //[ImageName("BO_Contact")]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class PlanillaDetalleFuncion : XPLiteObject

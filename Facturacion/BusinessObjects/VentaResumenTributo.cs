@@ -20,7 +20,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
     /// Facturacion
     /// BO con los tributos calculados para una venta
     /// </summary>
-    [DefaultClassOptions, ModelDefault("Caption", "Resumen Tributos"), NavigationItem(false), CreatableItem(false), 
+    [ModelDefault("Caption", "Resumen Tributos"), NavigationItem(false), CreatableItem(false), 
         XafDefaultProperty(nameof(Tributo)), Persistent(nameof(VentaResumenTributo))]
     //[ImageName("BO_Contact")]
     //[DefaultListViewOptions(MasterDetailMode, false, NewItemRowPosition.None)]

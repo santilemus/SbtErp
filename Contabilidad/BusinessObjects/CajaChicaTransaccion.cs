@@ -28,9 +28,12 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         public override void AfterConstruction()
         {
             base.AfterConstruction();
-            minimoDisponible = CajaChica.MinimoDisponible;
-            maximoGasto = CajaChica.MaximoGasto;
-            montoFondo = CajaChica.MontoFondo;
+            fechaLiquidacion = null;
+            bancoTransaccion = null;
+            fechaLiquidacion = null;
+            observaciones = null;
+            valesPendientes = 0.0m;
+            fechaFin = null;
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
@@ -40,7 +43,7 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         [DbType("money"), Persistent(nameof(ValorMoneda))]
         decimal valorMoneda = 1.0m;
         DateTime fechaInicio;
-        DateTime fechaFin;
+        DateTime? fechaFin;
         decimal valesPendientes;
         string observaciones;
         [Persistent(nameof(Responsable))]
@@ -106,7 +109,7 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         [ModelDefault("DisplayFormat", "{0:G}"), ModelDefault("EditMask", "G")]
         [RuleValueComparison("CajaChicaTransaccion.FechaFin >= FechaInicio", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual,
             "FechaInicio", ParametersMode.Expression, SkipNullOrEmptyValues = true), Index(4)]
-        public DateTime FechaFin
+        public DateTime? FechaFin
         {
             get => fechaFin;
             set => SetPropertyValue(nameof(FechaFin), ref fechaFin, value);

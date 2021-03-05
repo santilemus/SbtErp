@@ -24,7 +24,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
     /// </summary>
     
     [MapInheritance(MapInheritanceType.ParentTable)]
-    //[ImageName("BO_Contact")]
+    [ImageName(nameof(TributoRegla))]
     //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     //[Persistent("DatabaseTableName")]

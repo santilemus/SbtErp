@@ -5,6 +5,7 @@ using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
+using SBT.Apps.Inventario.Module.BusinessObjects;
 using System;
 using System.ComponentModel;
 using System.Linq;
@@ -233,11 +234,11 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
             }
         }
         [DevExpress.Xpo.AssociationAttribute("Lotes-Producto"), DevExpress.Xpo.Aggregated, XafDisplayName("Lotes")]
-        public XPCollection<ProductoLote> Lotes
+        public XPCollection<InventarioLote> Lotes
         {
             get
             {
-                return GetCollection<ProductoLote>("Lotes");
+                return GetCollection<InventarioLote>("Lotes");
             }
         }
         [DevExpress.Xpo.AssociationAttribute("CodigosBarra-Producto"), DevExpress.Xpo.AggregatedAttribute, XafDisplayName("Códigos de Barra")]

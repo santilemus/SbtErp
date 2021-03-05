@@ -24,7 +24,7 @@ namespace SBT.Apps.Contabilidad.BusinessObjects
     /// Por eso es de evaluar si agregamos el período, para saber en que año se creo la cuenta.
     /// </remarks>
     [DefaultClassOptions, CreatableItem(false)]
-    //[ImageName("BO_Contact")]
+    [ImageName("CatalogoContable")]
     [ModelDefault("Caption", "Catálogo Contable"), NavigationItem("Contabilidad"), DefaultProperty("CodCuenta"), Persistent("ConCatalogo"), 
         DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None), 
         ListViewFilter("Catálogo de la Empresa de la Sesion", "Empresa.Codigo = EmpresaActualOid()")]

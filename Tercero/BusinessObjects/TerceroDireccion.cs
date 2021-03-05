@@ -15,7 +15,7 @@ using SBT.Apps.Base.Module.BusinessObjects;
 
 namespace SBT.Apps.Tercero.Module.BusinessObjects
 {
-    [DefaultClassOptions, ModelDefault("Caption", "Tercero Dirección"), NavigationItem(false), DefaultProperty(nameof(Direccion))]
+    [ModelDefault("Caption", "Tercero Dirección"), NavigationItem(false), DefaultProperty(nameof(Direccion))]
     [Persistent("TerceroDireccion"), CreatableItem(false)]
     [ImageName("address")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]

@@ -283,6 +283,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ExpressApp.ico" />
+    <None Include="Images\sbt_erp.png" />
     <Content Include="sbt128.ico" />
     <None Include="ReadMe.txt" />
     <None Include="Images\ReadMe.txt" />
@@ -301,6 +302,11 @@
     <Compile Include="ErpWindowsFormsApplication.Designer.cs">
       <DependentUpon>ErpWindowsFormsApplication.cs</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="XafSplashScreen.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -311,6 +317,10 @@
       <DependentUpon>ErpWindowsFormsApplication.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="XafSplashScreen.resx">
       <DependentUpon>XafSplashScreen.cs</DependentUpon>
     </EmbeddedResource>

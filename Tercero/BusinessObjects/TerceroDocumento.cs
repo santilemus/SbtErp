@@ -21,7 +21,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
     /// natural o jurídica, más de un documento. Por ejemplo: NIT, DUI, PASAPORTE. En el caso de personas jurídicas, aplican
     /// NIT y cualquier otro documento vinculado a su personería
     /// </summary>
-    [DefaultClassOptions, ModelDefault("Caption", "Tercero Documentos"), NavigationItem(false), DefaultProperty(nameof(Numero))]
+    [ModelDefault("Caption", "Tercero Documentos"), NavigationItem(false), DefaultProperty(nameof(Numero))]
     [Persistent(nameof(TerceroDocumento)), CreatableItem(false)]
     [ImageName("user_id-info")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
@@ -49,17 +49,11 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
 
         [ImmediatePostData(true), Index(0), VisibleInLookupListView(true)]
         [RuleRequiredField("TerceroDocumento.Tipo_Requerido", DefaultContexts.Save, "Tipo Documento es requerido")]
-        [DataSourceCriteria("Categoria = 'DocumentoIdentidad'"), XafDisplayName("Tipo Documento")]
+        [DataSourceCriteria("[Categoria] = 10"), XafDisplayName("Tipo")]
         public Listas Tipo
         {
             get => tipo;
             set => SetPropertyValue(nameof(Tipo), ref tipo, value);
-        }
-
-        [PersistentAlias("@Tipo.Codigo"), XafDisplayName("Código Documento"), Index(1)]
-        public string CodigoDocumento
-        {
-            get => Convert.ToString(EvaluateAlias("CodigoDocumento"));
         }
 
         [Size(14), DbType("varchar(14)"), XafDisplayName("Número"), Index(2)]
@@ -82,7 +76,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
 
         [XafDisplayName("Lugar Emisión"), ToolTip("Lugar de emisión del documento"), VisibleInListView(false),
             VisibleInLookupListView(false), DbType("varchar(100)"), Index(4)]
-        [RuleRequiredField("TerceroDocumento.LugarEmision_Requerido", "Save")]
+        [RuleRequiredField("TerceroDocumento.LugarEmision_Requerido", "Save", TargetCriteria = "[Tipo.Codigo] In ('DUI', 'PAS', 'RES')")]
         public System.String LugarEmision
         {
             get => lugarEmision;
@@ -90,7 +84,9 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
         }
 
         [XafDisplayName("Fecha Emisión"), VisibleInLookupListView(false)]
-        [RuleRequiredField("TerceroDocumento.FechaEmision_Requerido", "Save")]
+        [RuleRequiredField("TerceroDocumento.FechaEmision_Requerido", "Save", TargetCriteria = "[Tipo.Codigo] In ('DUI', 'PAS', 'RES')")]
+        [RuleRequiredField("TerceroDocumento.LugarEmision_Information", "Save",
+            TargetCriteria = "!([Tipo.Codigo] In ('DUI', 'PAS', 'RES'))", ResultType = ValidationResultType.Information)]
         [Index(5), VisibleInListView(false)]
         public System.DateTime FechaEmision
         {

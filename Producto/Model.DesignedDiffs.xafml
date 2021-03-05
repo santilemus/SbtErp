@@ -51,6 +51,45 @@
     </DetailView>
     <ListView Id="Categoria_ListView" DataAccessMode="Server" />
     <ListView Id="Categoria_LookupListView" DataAccessMode="Server" />
+    <ListView Id="InventarioLote_ListView">
+      <Columns>
+        <ColumnInfo Id="Oid" Width="56" />
+        <ColumnInfo Id="CodigoLote" Width="193" />
+        <ColumnInfo Id="FechaFabricacion" Width="128" />
+        <ColumnInfo Id="FechaVence" Width="134" />
+        <ColumnInfo Id="Costo" Width="107" />
+        <ColumnInfo Id="Entrada" Width="99" />
+        <ColumnInfo Id="Salida" Width="74" />
+        <ColumnInfo Id="Existencia" Width="74" />
+      </Columns>
+    </ListView>
+    <DetailView Id="InventarioTipoMovimiento_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="18.741976893453145">
+            <LayoutGroup Id="InventarioTipoMovimiento" RelativeSize="100">
+              <LayoutGroup Id="InventarioTipoMovimiento_col1" RelativeSize="49.942987457240591">
+                <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="36.734693877551024" IsNewNode="True" />
+                <LayoutItem Id="Nombre" Index="1" RelativeSize="26.530612244897959" />
+                <LayoutItem Id="Padre" Index="2" RelativeSize="36.734693877551024" />
+                <LayoutItem Id="Operacion" Index="3" RelativeSize="29.032258064516128" Removed="True" />
+              </LayoutGroup>
+              <LayoutGroup Id="InventarioTipoMovimiento_col2" RelativeSize="50.057012542759409">
+                <LayoutItem Id="Operacion" ViewItem="Operacion" Index="0" RelativeSize="36.734693877551024" IsNewNode="True" />
+                <LayoutItem Id="Codigo" RelativeSize="26.530612244897959" Index="1" />
+                <LayoutItem Id="Activo" RelativeSize="36.734693877551024" Index="2" />
+              </LayoutGroup>
+            </LayoutGroup>
+            <LayoutGroup Id="XPObject" Caption="Oid" Index="1" RelativeSize="64.52442159383034" Removed="True">
+              <LayoutItem Id="Oid" Removed="True" />
+            </LayoutGroup>
+          </LayoutGroup>
+          <LayoutGroup Id="TipoMovimientos_Group" Direction="Vertical" RelativeSize="81.258023106546858">
+            <LayoutItem Id="TipoMovimientos" RelativeSize="100" />
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
     <DetailView Id="Producto_DetailView">
       <Items>
         <PropertyEditor Id="Categoria" PropertyName="Categoria" IsNewNode="True" />
@@ -185,45 +224,6 @@
             </LayoutGroup>
             <LayoutGroup Id="XPObject" Caption="Oid" Direction="Horizontal" Index="1" RelativeSize="87.079407806191114" Removed="True">
               <LayoutItem Id="Oid" Removed="True" />
-            </LayoutGroup>
-          </LayoutGroup>
-        </LayoutGroup>
-      </Layout>
-    </DetailView>
-    <DetailView Id="ProductoLote_DetailView">
-      <Layout>
-        <LayoutGroup Id="Main" RelativeSize="100">
-          <LayoutGroup Id="SimpleEditors" RelativeSize="100" Direction="Horizontal">
-            <LayoutGroup Id="ProductoLote_col1" ShowCaption="False" Index="0" RelativeSize="50" IsNewNode="True">
-              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="4.8452220726783315" IsNewNode="True" />
-              <LayoutItem Id="Existencia" ViewItem="Existencia" Index="1" RelativeSize="3.4993270524899058" IsNewNode="True" />
-              <LayoutItem Id="NoLote" ViewItem="NoLote" Index="2" RelativeSize="3.4993270524899058" IsNewNode="True" />
-              <LayoutItem Id="Fecha" ViewItem="Fecha" Index="3" RelativeSize="3.4993270524899058" IsNewNode="True" />
-              <LayoutItem Id="Costo" ViewItem="Costo" Index="4" RelativeSize="84.656796769851951" IsNewNode="True" />
-            </LayoutGroup>
-            <LayoutGroup Id="ProductoLote_col2" ShowCaption="False" Index="1" RelativeSize="50" IsNewNode="True">
-              <LayoutItem Id="Promedio" ViewItem="Promedio" Index="0" RelativeSize="4.8452220726783315" IsNewNode="True" />
-              <LayoutItem Id="PromedioAnterior" ViewItem="PromedioAnterior" Index="1" RelativeSize="3.4993270524899058" IsNewNode="True" />
-              <LayoutItem Id="Entrada" ViewItem="Entrada" Index="2" RelativeSize="3.4993270524899058" IsNewNode="True" />
-              <LayoutItem Id="AcumSalida" ViewItem="AcumSalida" Index="3" RelativeSize="88.156123822341854" IsNewNode="True" />
-            </LayoutGroup>
-            <LayoutGroup Id="XPObject" Caption="Oid" Direction="Horizontal" Index="1" RelativeSize="74.562584118438764" Removed="True">
-              <LayoutItem Id="Oid" Removed="True" />
-            </LayoutGroup>
-            <LayoutGroup Id="ProductoLote" RelativeSize="100" Removed="True">
-              <LayoutGroup Id="ProductoLote_col1" RelativeSize="50">
-                <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="5.1873198847262252" IsNewNode="True" />
-                <LayoutItem Id="Existencia" Index="1" RelativeSize="3.7463976945244957" />
-                <LayoutItem Id="NoLote" Index="2" RelativeSize="3.7463976945244957" />
-                <LayoutItem Id="Fecha" Index="3" RelativeSize="3.7463976945244957" />
-                <LayoutItem Id="Costo" Index="4" RelativeSize="83.573487031700282" />
-              </LayoutGroup>
-              <LayoutGroup Id="ProductoLote_col2" RelativeSize="50">
-                <LayoutItem Id="AcumSalida" RelativeSize="87.319884726224785" />
-                <LayoutItem Id="Entrada" RelativeSize="3.7463976945244957" />
-                <LayoutItem Id="Promedio" RelativeSize="5.1873198847262252" />
-                <LayoutItem Id="PromedioAnterior" RelativeSize="3.7463976945244957" />
-              </LayoutGroup>
             </LayoutGroup>
           </LayoutGroup>
         </LayoutGroup>

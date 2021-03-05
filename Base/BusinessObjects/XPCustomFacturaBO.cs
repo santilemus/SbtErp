@@ -65,14 +65,16 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         /// Oid del objeto. Es la llave primaria
         /// </summary>
         [PersistentAlias(nameof(oid)), XafDisplayName("Oid"), Index(0)]
+        [DetailViewLayout("Datos Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
         public long Oid => oid;
 
         /// <summary>
         /// Tipo de Factura emitida
         /// </summary>
         [XafDisplayName("Tipo Factura")]
-        [DataSourceCriteria("[Categoria] == 15 And [Activo] == True"), VisibleInLookupListView(true), Index(9)]
+        [DataSourceProperty(nameof(TiposDeFacturas)), VisibleInLookupListView(true), Index(9)]
         [RuleRequiredField("", DefaultContexts.Save)]
+        [DetailViewLayout("Datos Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
         public Listas TipoFactura
         {
             get => tipoFactura;
@@ -92,6 +94,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [DataSourceCriteria("[Categoria] == 17 And [Activo] == True")]   // Categoria = 17 es condicion de pago
         [RuleRequiredField("", "Save", TargetCriteria = "@This.Tipo.Codigo In ('COVE01', 'COVE02')")]
         [VisibleInListView(false)]
+        [DetailViewLayout("Datos de Pago", LayoutGroupType.SimpleEditorsGroup, 2)]
         public Listas CondicionPago
         {
             get => condicionPago;
@@ -102,6 +105,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         /// Dias de crédito, cuando la condicion de pago es al crédito
         /// </summary>
         [DbType("smallint"), XafDisplayName("Días Crédito"), VisibleInLookupListView(false)]
+        [DetailViewLayout("Datos de Pago", LayoutGroupType.SimpleEditorsGroup, 2)]
         public int? DiasCredito
         {
             get => diasCredito;
@@ -114,6 +118,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [PersistentAlias(nameof(gravada))]
         [XafDisplayName("Gravada")]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
+        [DetailViewLayout("Totales", LayoutGroupType.SimpleEditorsGroup, 10)]
         public decimal? Gravada
         {
             get
@@ -131,6 +136,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [PersistentAlias(nameof(iva))]
         [XafDisplayName("IVA"), Index(22)]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
+        [DetailViewLayout("Totales", LayoutGroupType.SimpleEditorsGroup, 10)]
         public decimal? Iva
         {
             get
@@ -147,6 +153,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [PersistentAlias("[Gravada] + [Iva]")]
         [XafDisplayName("SubTotal"), Index(23)]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
+        [DetailViewLayout("Totales", LayoutGroupType.SimpleEditorsGroup, 10)]
         public decimal SubTotal => Convert.ToDecimal(EvaluateAlias(nameof(SubTotal)));
 
         /// <summary>
@@ -155,6 +162,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [PersistentAlias(nameof(ivaPercibido))]
         [XafDisplayName("Iva Percibido"), VisibleInListView(false)]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
+        [DetailViewLayout("Totales", LayoutGroupType.SimpleEditorsGroup, 10)]
         public decimal? IvaPercibido => ivaPercibido;
 
         /// <summary>
@@ -163,6 +171,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [PersistentAlias(nameof(ivaRetenido))]
         [XafDisplayName("Iva Retenido"), VisibleInListView(false)]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
+        [DetailViewLayout("Totales", LayoutGroupType.SimpleEditorsGroup, 10)]
         public decimal? IvaRetenido => ivaRetenido;
 
         /// <summary>
@@ -171,6 +180,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [PersistentAlias(nameof(noSujeta))]
         [XafDisplayName("No Sujeta"), VisibleInListView(false)]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
+        [DetailViewLayout("Totales", LayoutGroupType.SimpleEditorsGroup, 10)]
         public decimal? NoSujeta
         {
             get
@@ -187,6 +197,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [PersistentAlias(nameof(exenta))]
         [XafDisplayName("Exenta"), VisibleInListView(true)]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
+        [DetailViewLayout("Totales", LayoutGroupType.SimpleEditorsGroup, 10)]
         public decimal? Exenta
         {
             get
@@ -203,12 +214,14 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [PersistentAlias("[SubTotal] + [IvaPercibido] - [IvaRetenido] + [NoSujeta] + [Exenta] ")]
         [ModelDefault("DisplayFormat", "{0:N2}")]
         [XafDisplayName("Total"), Index(28)]
+        [DetailViewLayout("Totales", LayoutGroupType.SimpleEditorsGroup, 10)]
         public decimal Total => Convert.ToDecimal(EvaluateAlias(nameof(Total)));
 
         /// <summary>
         /// Estado del documento
         /// </summary>
         [PersistentAlias(nameof(estado)), XafDisplayName("Estado"), VisibleInListView(false)]
+        [DetailViewLayout("Totales", LayoutGroupType.SimpleEditorsGroup, 10)]
         public EEstadoFactura Estado => estado;
 
         /// <summary>
@@ -217,8 +230,25 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [PersistentAlias(nameof(saldo))]
         [XafDisplayName("Saldo Pendiente"), VisibleInListView(false), VisibleInLookupListView(false)]
         [ModelDefault("DisplayFormat", "{0:N2}")]
+        [DetailViewLayout("Totales", LayoutGroupType.SimpleEditorsGroup, 10)]
         public decimal Saldo => saldo;
 
+
+        protected XPCollection<Listas> fTiposDeFacturas;
+        [Browsable(false)]  // evitar que se muestre la colleccion separada
+        public XPCollection<Listas>TiposDeFacturas
+        {
+            get
+            {
+                if (fTiposDeFacturas == null)
+                {
+                    fTiposDeFacturas = new XPCollection<Listas>(Session);
+                    RefreshTiposDeFacturas();
+                }
+                return fTiposDeFacturas;
+            }
+
+        }
         #endregion
 
         #region Metodos
@@ -273,6 +303,29 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         {
 
         }
+
+        /// <summary>
+        /// Metodo para actualizar el saldo de la factura
+        /// </summary>
+        /// <param name="valor">Valor del nuevo saldo</param>
+        /// <param name="forceChangeEvents">Indica si dee invocar eventos para las propiedades afectadas</param>
+        public virtual void ActualizarSaldo(decimal valor, EEstadoFactura estadoNew, bool forceChangeEvents)
+        {
+            if (saldo == 0 || Estado != EEstadoFactura.Debe)
+                return;
+            decimal oldSaldo = Saldo;
+            saldo += valor;
+            if (oldSaldo == valor)
+                estado = estadoNew;
+            if (forceChangeEvents)
+                OnChanged(nameof(Saldo), oldSaldo, saldo);
+        }
+
+        protected virtual void RefreshTiposDeFacturas()
+        {
+
+        }
+
         #endregion
 
         //[Action(Caption = "My UI Action", ConfirmationMessage = "Are you sure?", ImageName = "Attention", AutoCommit = true)]

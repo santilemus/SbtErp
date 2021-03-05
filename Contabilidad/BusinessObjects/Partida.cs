@@ -18,7 +18,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
     /// <summary>
     /// Contabilidad. BO correspondientes al encabezado de las partidas contables
     /// </summary>
-    [DefaultClassOptions, NavigationItem("Contabilidad"), ModelDefault("Caption", "Partida Contable"), XafDefaultProperty(nameof(Numero))]
+    [NavigationItem("Contabilidad"), ModelDefault("Caption", "Partida Contable"), XafDefaultProperty(nameof(Numero)), CreatableItem(false)]
     [ImageName(nameof(Partida)), MapInheritance(MapInheritanceType.OwnTable)]
     //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]

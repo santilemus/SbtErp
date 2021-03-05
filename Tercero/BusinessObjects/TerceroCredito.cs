@@ -20,7 +20,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
     /// facilita reflejar la historia crediticia del cliente, o diferentes montos de credito
     /// </summary>
 
-    [DefaultClassOptions, ModelDefault("Caption", "Tercero Crédito"), NavigationItem(false), CreatableItem(false), 
+    [ModelDefault("Caption", "Tercero Crédito"), NavigationItem(false), CreatableItem(false), 
        DefaultProperty(nameof(FechaOtorgamiento)), Persistent(nameof(TerceroCredito))]
     [ImageName("credito")]
     //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]

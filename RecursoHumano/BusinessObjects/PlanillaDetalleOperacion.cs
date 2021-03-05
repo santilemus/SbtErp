@@ -15,7 +15,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
     /// BO con los resultados de la ejecucion de calculo de las planillas
     /// </summary>
 
-    [DefaultClassOptions, ModelDefault("Caption", "Operaciones"), NavigationItem(false), DefaultProperty("Operacion")]
+    [ModelDefault("Caption", "Operaciones"), NavigationItem(false), DefaultProperty("Operacion"), CreatableItem(false)]
     [Persistent(nameof(PlanillaDetalleOperacion))]
     //[ImageName("BO_Contact")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]

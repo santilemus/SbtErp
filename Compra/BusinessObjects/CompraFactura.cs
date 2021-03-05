@@ -13,16 +13,20 @@ using DevExpress.Persistent.BaseImpl;
 using DevExpress.Persistent.Validation;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Tercero.Module.BusinessObjects;
+using SBT.Apps.Inventario.Module.BusinessObjects;
+using DevExpress.ExpressApp.ConditionalAppearance;
 
 namespace SBT.Apps.Compra.Module.BusinessObjects
 {
     /// <summary>
     /// BO que corresponde a los encabezados de las facturas de compra
     /// </summary>
-    [DefaultClassOptions, ModelDefault("Caption", "Compra Factura"), NavigationItem("Compra"), CreatableItem(false)]
+    [DefaultClassOptions, ModelDefault("Caption", "Compra Factura"), NavigationItem("Compras"), CreatableItem(false)]
     [DefaultProperty(nameof(NumeroDocumento))]
     [Persistent(nameof(CompraFactura))]
-    //[ImageName("BO_Contact")]
+    [Appearance("CompraFactura_Servicios_Intangibles", AppearanceItemType = "Any", Criteria = "[Tipo] In (0, 2)", 
+        Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, TargetItems = "Detalles;Ingresos")]
+    [ImageName(nameof(CompraFactura))]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class CompraFactura : XPCustomFacturaBO
@@ -47,6 +51,7 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
         OrdenCompra ordenCompra;
 
         [Association("OrdenCompra-Facturas"), XafDisplayName("Orden Compra"), Persistent(nameof(OrdenCompra)), Index(5)]
+        [DetailViewLayout("Datos Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
         public OrdenCompra OrdenCompra
         {
             get => ordenCompra;
@@ -57,6 +62,7 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
         /// Proveedor al cual se gira la orden de compra
         /// </summary>
         [XafDisplayName("Proveedor"), RuleRequiredField("CompraFactura.Proveedor_Requerido", DefaultContexts.Save), Index(6)]
+        [DetailViewLayout("Datos Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
         public Tercero.Module.BusinessObjects.Tercero Proveedor
         {
             get => proveedor;
@@ -67,6 +73,7 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
         /// Tipo de Compra. Puede ser: Servicio, Producto, ActivoFijo
         /// </summary>
         [DbType("smallint"), XafDisplayName("Tipo Compra"), RuleRequiredField("CompraFactura.Tipo_Requerido", "Save"), Index(7)]
+        [DetailViewLayout("Datos Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
         public ETipoCompra Tipo
         {
             get => tipo;
@@ -74,6 +81,7 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
         }
 
         [DbType("smallint"), XafDisplayName("Origen Compra"), Index(8)]
+        [DetailViewLayout("Datos Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
         public EOrigenCompra Origen
         {
             get => origen;
@@ -81,6 +89,7 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
         }
 
         [Size(20), DbType("varchar(20)"), XafDisplayName("No Documento"), Index(10)]
+        [DetailViewLayout("Datos de Pago", LayoutGroupType.SimpleEditorsGroup, 2)]
         public string NumeroDocumento
         {
             get => numeroDocumento;
@@ -91,6 +100,7 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
         /// Concepto de la compra
         /// </summary>
         [Size(200), DbType("varchar(200)"), XafDisplayName("Concepto"), Index(10)]
+        [DetailViewLayout("Datos de Pago", LayoutGroupType.SimpleEditorsGroup, 2)]
         public string Concepto
         {
             get => concepto;
@@ -101,13 +111,10 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
 
         #region Colecciones
         [Association("CompraFactura-Detalles"), DevExpress.Xpo.Aggregated, Index(0), ModelDefault("Caption", "Detalles")]
-        public XPCollection<CompraFacturaDetalle> Detalles
-        {
-            get
-            {
-                return GetCollection<CompraFacturaDetalle>(nameof(Detalles));
-            }
-        }
+        public XPCollection<CompraFacturaDetalle> Detalles => GetCollection<CompraFacturaDetalle>(nameof(Detalles));
+
+        [Association("CompraFactura-Ingresos"), Index(1), ModelDefault("Caption", "Ingresos")]
+        public XPCollection<InventarioMovimiento> Ingresos => GetCollection<InventarioMovimiento>(nameof(Ingresos));
         #endregion
 
         #region Metodos

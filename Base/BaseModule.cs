@@ -29,6 +29,7 @@ namespace SBT.Apps.Base.Module
             //AgenciaActualOidFunction.Register();
             CriteriaOperator.RegisterCustomFunction(new PeriodoActualNumeroFunction());
             //PeriodoActualNumeroFunction.Register();
+            CriteriaOperator.RegisterCustomFunction(new NumberToLetterFunction());
         }
         public override IEnumerable<ModuleUpdater> GetModuleUpdaters(IObjectSpace objectSpace, Version versionFromDB)
         {

@@ -23,10 +23,10 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
     /// Info en: https://docs.devexpress.com/eXpressAppFramework/113179/task-based-help/business-model-design/express-persistent-objects-xpo/how-to-calculate-a-property-value-based-on-values-from-a-detail-collection
     /// </remarks>
 
-    [DefaultClassOptions, ModelDefault("Caption", "Orden Compra Detalle"), NavigationItem(false), CreatableItem(false),
+    [ModelDefault("Caption", "Orden Compra Detalle"), NavigationItem(false), CreatableItem(false),
         DefaultProperty(nameof(Producto)), Persistent(nameof(OrdenCompraDetalle))]
     //[ImageName("BO_Contact")]
-    //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
+    [DefaultListViewOptions(MasterDetailMode.ListViewOnly, true, NewItemRowPosition.Top)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class OrdenCompraDetalle : XPCustomFacturaDetalle
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).

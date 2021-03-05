@@ -21,7 +21,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
     /// </summary>
     [DefaultClassOptions, ModelDefault("Caption", "Cartera CxC"), NavigationItem("Cuenta por Cobrar"), 
         DefaultProperty(nameof(Nombre)), Persistent("CxCCartera")]
-    //[ImageName("BO_Contact")]
+    [ImageName(nameof(Cartera))]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class Cartera : XPObjectBaseBO
@@ -38,6 +38,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
 
         #region Propiedades
 
+        ETipoCartera tipo;
         bool activa = true;
         SBT.Apps.Empleado.Module.BusinessObjects.Empleado vendedor;
         string nombre;
@@ -71,7 +72,14 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
             set => SetPropertyValue(nameof(Vendedor), ref vendedor, value);
         }
 
-        [DbType("bit"), XafDisplayName("Activa"), Index(3), RuleRequiredField("Cartera.Activa_Requerido", DefaultContexts.Save)]
+        [XafDisplayName("Tipo Cartera"), DbType("smallint"), Index(3)]
+        public ETipoCartera Tipo
+        {
+            get => tipo;
+            set => SetPropertyValue(nameof(Tipo), ref tipo, value);
+        }
+
+        [DbType("bit"), XafDisplayName("Activa"), Index(4), RuleRequiredField("Cartera.Activa_Requerido", DefaultContexts.Save)]
         public bool Activa
         {
             get => activa;
@@ -89,6 +97,10 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
                 return GetCollection<CarteraCliente>(nameof(Clientes));
             }
         }
+
+        [Association("Cartera-CxCTransacciones"), XafDisplayName("Transacciones"), Index(1)]
+        public XPCollection<CxCTransaccion> CxCTransacciones => GetCollection<CxCTransaccion>(nameof(CxCTransacciones));
+
         #endregion
 
         //[Action(Caption = "My UI Action", ConfirmationMessage = "Are you sure?", ImageName = "Attention", AutoCommit = true)]
@@ -96,5 +108,11 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         //    // Trigger a custom business logic for the current record in the UI (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112619.aspx).
         //    this.PersistentProperty = "Paid";
         //}
+    }
+
+    public enum ETipoCartera
+    {
+        Ventas = 0,
+        Cobros = 1
     }
 }

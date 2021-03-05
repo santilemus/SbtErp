@@ -12,7 +12,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
     /// <summary>
     /// Objeto Persistente que corresponde a la Representación de los Precios de Productos
     /// </summary>
-    [DefaultClassOptions, CreatableItem(false)]
+    [CreatableItem(false)]
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Precio"), NavigationItem(false), ModelDefault("Caption", "Precio"),
         Persistent("ProductoPrecio"), XafDefaultProperty("Tipo")]
     [ImageName(nameof(ProductoPrecio))]
@@ -29,13 +29,15 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
             Activo = true;
         }
 
-        private System.Decimal _cantidadHasta;
-        private System.Decimal _cantidadDesde;
+        [Persistent(nameof(PrecioUnitarioConIva))]
+        decimal precioUnitarioConIva;
+        private System.Decimal? _cantidadHasta;
+        private System.Decimal? _cantidadDesde;
         private System.Decimal _precioUnitario;
         private Producto _producto;
         private System.Boolean _activo;
-        private DateTime _horaHasta;
-        private DateTime _horaDesde;
+        private DateTime? _horaHasta;
+        private DateTime? _horaDesde;
         private System.String _descripcion;
         private Listas _tipo;
         public ProductoPrecio(DevExpress.Xpo.Session session)
@@ -51,14 +53,8 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         [DataSourceCriteria("Categoria = 'TipoPrecio'")]
         public Listas Tipo
         {
-            get
-            {
-                return _tipo;
-            }
-            set
-            {
-                SetPropertyValue("Tipo", ref _tipo, value);
-            }
+            get => _tipo;
+            set => SetPropertyValue("Tipo", ref _tipo, value);
         }
 
         /// <summary>
@@ -67,14 +63,8 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Descripción"), DbType("varchar(100)")]
         public System.String Descripcion
         {
-            get
-            {
-                return _descripcion;
-            }
-            set
-            {
-                SetPropertyValue("Descripcion", ref _descripcion, value);
-            }
+            get => _descripcion;
+            set => SetPropertyValue("Descripcion", ref _descripcion, value);
         }
 
         /// <summary>
@@ -86,14 +76,8 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         [DbType("numeric(14,4)")]
         public System.Decimal PrecioUnitario
         {
-            get
-            {
-                return _precioUnitario;
-            }
-            set
-            {
-                SetPropertyValue("PrecioUnitario", ref _precioUnitario, value);
-            }
+            get => _precioUnitario;
+            set => SetPropertyValue("PrecioUnitario", ref _precioUnitario, value);
         }
 
         /// <summary>
@@ -103,16 +87,10 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [RuleValueComparison("ProductoPrecio.CantidadDesde_Mayor_Igual_Cero", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual, 0)]
         [DbType("numeric(12,2)")]
-        public System.Decimal CantidadDesde
+        public System.Decimal? CantidadDesde
         {
-            get
-            {
-                return _cantidadDesde;
-            }
-            set
-            {
-                SetPropertyValue("CantidadDesde", ref _cantidadDesde, value);
-            }
+            get => _cantidadDesde;
+            set => SetPropertyValue("CantidadDesde", ref _cantidadDesde, value);
         }
 
         /// <summary>
@@ -121,16 +99,10 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         [XafDisplayName("Cantidad Hasta"), ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [DbType("numeric(12,2)")]
-        public System.Decimal CantidadHasta
+        public System.Decimal? CantidadHasta
         {
-            get
-            {
-                return _cantidadHasta;
-            }
-            set
-            {
-                SetPropertyValue("CantidadHasta", ref _cantidadHasta, value);
-            }
+            get => _cantidadHasta;
+            set => SetPropertyValue("CantidadHasta", ref _cantidadHasta, value);
         }
 
         /// <summary>
@@ -138,16 +110,10 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         /// </summary>
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Hora Desde")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
-        public DateTime HoraDesde
+        public DateTime? HoraDesde
         {
-            get
-            {
-                return _horaDesde;
-            }
-            set
-            {
-                SetPropertyValue("HoraDesde", ref _horaDesde, value);
-            }
+            get => _horaDesde;
+            set => SetPropertyValue("HoraDesde", ref _horaDesde, value);
         }
 
         /// <summary>
@@ -155,16 +121,10 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         /// </summary>
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Hora Hasta")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
-        public DateTime HoraHasta
+        public DateTime? HoraHasta
         {
-            get
-            {
-                return _horaHasta;
-            }
-            set
-            {
-                SetPropertyValue("HoraHasta", ref _horaHasta, value);
-            }
+            get => _horaHasta;
+            set => SetPropertyValue("HoraHasta", ref _horaHasta, value);
         }
 
         /// <summary>
@@ -174,14 +134,8 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         [RuleRequiredField("ProductoPrecio.Activo_Requerido", "Save")]
         public System.Boolean Activo
         {
-            get
-            {
-                return _activo;
-            }
-            set
-            {
-                SetPropertyValue("Activo", ref _activo, value);
-            }
+            get => _activo;
+            set => SetPropertyValue("Activo", ref _activo, value);
         }
 
         /// <summary>
@@ -190,15 +144,13 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         [DevExpress.Xpo.AssociationAttribute("Precios-Producto")]
         public Producto Producto
         {
-            get
-            {
-                return _producto;
-            }
-            set
-            {
-                SetPropertyValue("Producto", ref _producto, value);
-            }
+            get => _producto;
+            set => SetPropertyValue("Producto", ref _producto, value);
         }
+
+
+        [PersistentAlias("Round([PrecioUnitario] + [PrecioUnitario] * [Producto.Categoria.PorcentajeIva], 4)")]
+        public decimal PrecioUnitarioConIva => Convert.ToDecimal(EvaluateAlias(nameof(PrecioUnitarioConIva)));
 
     }
 }

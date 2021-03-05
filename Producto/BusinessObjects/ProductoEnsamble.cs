@@ -13,7 +13,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
     /// y donde cada item del ensamble tiene su propio inventario. Otro ejemplo es un plato de comida, por ejemplo, donde se
     /// descargan del inventario cada uno de los items que componen el plato
     /// </summary>
-    [DefaultClassOptions, CreatableItem(false)]
+    [CreatableItem(false)]
     [ImageName(nameof(ProductoEnsamble))]
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Ensamble"), Persistent("ProductoEnsamble"), NavigationItem(false)]
     public class ProductoEnsamble : XPObjectBaseBO

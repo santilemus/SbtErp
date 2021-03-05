@@ -213,28 +213,30 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
             InicializarSubtotales();
         }
 
+        /// <summary>
+        /// Calula las propiedades Gravado, Iva y Exento cuando cambia el precio. 
+        /// </summary>
+        /// <param name="fUnidades"></param>
+        /// <param name="fTipoFactura"></param>
+        /// <remarks>
+        /// Cuando la clasificacion del producto es gravado, para calcular la propiedad gravada se utilizara el precio sin
+        /// sin iva y sera calculada el iva tanto para credito fiscal como otros documentos de venta. Para efectos de la
+        /// impresion del consumidor final se usara el precio con iva y la columna gravada sera la suma de gravado + iva
+        /// (porque en ese caso el iva no sale separado como es el caso del credito fiscal)
+        /// </remarks>
         protected void OnPrecioUnidadChanged(decimal fUnidades, string fTipoFactura)
         {
             if (Producto == null)
                 return;
-            switch (Producto.Categoria.ClasificacionIva)
+            if (Producto.Categoria.ClasificacionIva == EClasificacionIVA.Gravado)
             {
-                case EClasificacionIVA.Gravado:
-                    if (fTipoFactura == "COVE01")
-                    {
-                        gravada = Math.Round(fUnidades * PrecioUnidad, 2);
-                        iva = Math.Round(Convert.ToDecimal(Gravada) * this.Producto.Categoria.PorcentajeIVA, 2);
-                    }
-                    else
-                    {
-                        gravada = Math.Round(fUnidades * PrecioUnidad / (this.Producto.Categoria.PorcentajeIVA + 1), 2);
-                        iva = Math.Round(Convert.ToDecimal(Gravada) * this.Producto.Categoria.PorcentajeIVA, 2);
-                    }
-                    break;
-                default:
-                    exenta = Math.Round(fUnidades * PrecioUnidad, 2);
-                    iva = 0.0m;
-                    break;
+                gravada = Math.Round(fUnidades * PrecioUnidad, 2);
+                iva = Math.Round(Convert.ToDecimal(Gravada) * this.Producto.Categoria.PorcentajeIVA, 2);
+            }
+            else
+            {
+                exenta = Math.Round(fUnidades * PrecioUnidad, 2);
+                iva = 0.0m;
             }
             /// Info https://supportcenter.devexpress.com/ticket/details/ka18699/how-to-implement-dependent-and-calculated-properties-in-xpo#
             OnChanged(nameof(Gravada));

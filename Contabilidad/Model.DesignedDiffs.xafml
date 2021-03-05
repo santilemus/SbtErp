@@ -137,34 +137,71 @@
       </Layout>
     </DetailView>
     <DetailView Id="BancoTransaccion_DetailView">
+      <Items>
+        <PropertyEditor Id="NumeroCuenta" PropertyName="NumeroCuenta" IsNewNode="True" />
+      </Items>
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
-          <LayoutGroup Id="SimpleEditors" RelativeSize="25.984251968503937">
-            <LayoutGroup Id="BancoTransaccion" RelativeSize="100">
-              <LayoutGroup Id="BancoTransaccion_col1" RelativeSize="49.942987457240591">
-                <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="24" IsNewNode="True" />
-                <LayoutItem Id="Proveedor" RelativeSize="17.333333333333332" Index="1" />
-                <LayoutItem Id="Clasificacion" RelativeSize="17.333333333333332" Index="2" />
-                <LayoutItem Id="Serie" RelativeSize="14.772727272727273" Index="2" Removed="True" />
-                <LayoutItem Id="NumeroPorTipo" RelativeSize="17.333333333333332" Index="3" />
-                <LayoutItem Id="ChequeNo" RelativeSize="24" Index="4" />
-                <LayoutItem Id="Beneficiario" RelativeSize="22.471910112359552" Removed="True" />
-              </LayoutGroup>
-              <LayoutGroup Id="BancoTransaccion_col2" RelativeSize="50.057012542759409">
-                <LayoutItem Id="Beneficiario" ViewItem="Beneficiario" Index="0" RelativeSize="24" IsNewNode="True" />
-                <LayoutItem Id="Monto" RelativeSize="17.333333333333332" Index="1" />
-                <LayoutItem Id="Estado" RelativeSize="17.333333333333332" Index="2" />
-                <LayoutItem Id="PartidaNumero" Index="2" RelativeSize="14.606741573033707" Removed="True" />
-                <LayoutItem Id="Abono" Index="3" RelativeSize="17.333333333333332" />
-                <LayoutItem Id="Cargo" Index="4" RelativeSize="24" />
-                <LayoutItem Id="Partida" Removed="True" />
-              </LayoutGroup>
+          <LayoutGroup Id="SimpleEditors" RelativeSize="33.8255033557047" Direction="Horizontal">
+            <LayoutGroup Id="BancoTransaccion_col1" ShowCaption="False" Index="0" RelativeSize="49.611063094209165" IsNewNode="True">
+              <LayoutItem Id="Oid" ViewItem="Oid" CaptionLocation="Left" Index="0" RelativeSize="14.285714285714287" IsNewNode="True" />
+              <LayoutItem Id="NumeroCuenta" ViewItem="NumeroCuenta" CaptionLocation="Left" Index="1" RelativeSize="10.317460317460318" IsNewNode="True" />
+              <LayoutItem Id="Proveedor" ViewItem="Proveedor" CaptionLocation="Left" Index="2" RelativeSize="10.317460317460318" IsNewNode="True" />
+              <LayoutItem Id="NumeroPorTipo" ViewItem="NumeroPorTipo" CaptionLocation="Left" Index="3" RelativeSize="10.317460317460318" IsNewNode="True" />
+              <LayoutItem Id="Fecha" ViewItem="Fecha" Index="4" RelativeSize="10.317460317460318" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Serie" ViewItem="Serie" CaptionLocation="Left" Index="5" RelativeSize="10.317460317460318" IsNewNode="True" />
+              <LayoutItem Id="ChequeNo" ViewItem="ChequeNo" CaptionLocation="Left" Index="6" RelativeSize="10.317460317460318" IsNewNode="True" />
+              <LayoutItem Id="Clasificacion" ViewItem="Clasificacion" CaptionLocation="Left" Index="7" RelativeSize="10.317460317460318" IsNewNode="True" />
+              <LayoutItem Id="Numero" ViewItem="Numero" CaptionLocation="Left" Index="8" RelativeSize="13.492063492063492" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="BancoTransaccion_col2" ShowCaption="False" Index="1" RelativeSize="50.388936905790835" IsNewNode="True">
+              <LayoutItem Id="Beneficiario" ViewItem="Beneficiario" CaptionLocation="Left" Index="0" RelativeSize="14.285714285714287" IsNewNode="True" />
+              <LayoutItem Id="Moneda" ViewItem="Moneda" Index="1" RelativeSize="10.317460317460318" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="ValorMoneda" ViewItem="ValorMoneda" Index="2" RelativeSize="10.317460317460318" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Monto" ViewItem="Monto" CaptionLocation="Left" Index="3" RelativeSize="10.317460317460318" IsNewNode="True" />
+              <LayoutItem Id="Estado" ViewItem="Estado" CaptionLocation="Left" Index="4" RelativeSize="10.317460317460318" IsNewNode="True" />
+              <LayoutItem Id="Abono" ViewItem="Abono" CaptionLocation="Left" Index="5" RelativeSize="10.317460317460318" IsNewNode="True" />
+              <LayoutItem Id="Cargo" ViewItem="Cargo" CaptionLocation="Left" Index="6" RelativeSize="10.317460317460318" IsNewNode="True" />
+              <LayoutItem Id="Comentario" ViewItem="Comentario" Index="7" RelativeSize="23.80952380952381" CaptionLocation="Left" IsNewNode="True" />
             </LayoutGroup>
             <LayoutGroup Id="XPObject" Index="1" RelativeSize="6.8965517241379306" Caption="Oid" Removed="True">
               <LayoutItem Id="Oid" RelativeSize="100" Removed="True" />
             </LayoutGroup>
+            <LayoutGroup Id="BancoTransaccion" RelativeSize="100" Removed="True">
+              <LayoutGroup Id="BancoTransaccion_col1" RelativeSize="49.823008849557525">
+                <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="20.454545454545453" CaptionLocation="Left" IsNewNode="True" />
+                <LayoutItem Id="NumeroCuenta" ViewItem="NumeroCuenta" Index="1" RelativeSize="14.772727272727273" CaptionLocation="Left" IsNewNode="True" />
+                <LayoutItem Id="Proveedor" RelativeSize="14.772727272727273" Index="2" CaptionLocation="Left" />
+                <LayoutItem Id="Clasificacion" RelativeSize="14.772727272727273" Index="3" Removed="True" />
+                <LayoutItem Id="NumeroPorTipo" RelativeSize="14.772727272727273" Index="3" CaptionLocation="Left" />
+                <LayoutItem Id="Serie" ViewItem="Serie" Index="4" RelativeSize="14.772727272727273" CaptionLocation="Left" IsNewNode="True" Removed="True" />
+                <LayoutItem Id="ChequeNo" RelativeSize="20.454545454545453" Index="5" CaptionLocation="Left" />
+                <LayoutItem Id="Beneficiario" RelativeSize="22.471910112359552" Removed="True" />
+              </LayoutGroup>
+              <LayoutGroup Id="BancoTransaccion_col2" RelativeSize="50.176991150442475">
+                <LayoutItem Id="Clasificacion" ViewItem="Clasificacion" Index="0" RelativeSize="20.454545454545453" CaptionLocation="Left" IsNewNode="True" />
+                <LayoutItem Id="Beneficiario" ViewItem="Beneficiario" Index="1" RelativeSize="14.772727272727273" CaptionLocation="Left" IsNewNode="True" />
+                <LayoutItem Id="Monto" RelativeSize="14.772727272727273" Index="2" CaptionLocation="Left" />
+                <LayoutItem Id="PartidaNumero" Index="2" RelativeSize="14.606741573033707" Removed="True" />
+                <LayoutItem Id="Estado" RelativeSize="14.772727272727273" Index="3" CaptionLocation="Left" />
+                <LayoutItem Id="Abono" Index="4" RelativeSize="14.772727272727273" CaptionLocation="Left" />
+                <LayoutItem Id="Cargo" Index="5" RelativeSize="20.454545454545453" CaptionLocation="Left" />
+                <LayoutItem Id="Partida" Removed="True" />
+              </LayoutGroup>
+            </LayoutGroup>
+            <LayoutGroup Id="XPOBaseDoc" RelativeSize="27.096774193548388" Removed="True">
+              <LayoutGroup Id="XPOBaseDoc_col1" RelativeSize="49.955791335101679" Caption="XPOBaseDoc_col1">
+                <LayoutItem Id="Numero" RelativeSize="100" Index="0" Removed="True" />
+                <LayoutItem Id="Fecha" RelativeSize="50" Index="1" Removed="True" />
+                <LayoutItem Id="Empresa" RelativeSize="36.734693877551024" Removed="True" />
+              </LayoutGroup>
+              <LayoutGroup Id="XPOBaseDoc_col2" RelativeSize="50.044208664898321" Caption="XPOBaseDoc_col2">
+                <LayoutItem Id="ValorMoneda" RelativeSize="100" Index="0" Removed="True" />
+                <LayoutItem Id="Moneda" RelativeSize="50" Removed="True" />
+              </LayoutGroup>
+            </LayoutGroup>
           </LayoutGroup>
-          <TabbedGroup Id="Tabs" RelativeSize="74.015748031496059">
+          <TabbedGroup Id="Tabs" RelativeSize="66.1744966442953">
             <LayoutGroup Id="Detalles" RelativeSize="100">
               <LayoutItem Id="Detalles" RelativeSize="100" />
             </LayoutGroup>

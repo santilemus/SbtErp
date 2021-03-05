@@ -127,6 +127,7 @@
     <Compile Include="BusinessObjects\BugReport.cs" />
     <Compile Include="BusinessObjects\Catalogo.cs" />
     <Compile Include="BusinessObjects\ClasificacionProfesion.cs" />
+    <Compile Include="BusinessObjects\Concepto.cs" />
     <Compile Include="BusinessObjects\Constante.cs" />
     <Compile Include="BusinessObjects\EBugEstado.cs" />
     <Compile Include="BusinessObjects\EBugNavegadorWeb.cs" />
@@ -134,6 +135,9 @@
     <Compile Include="BusinessObjects\EBugPrioridad.cs" />
     <Compile Include="BusinessObjects\EBugSeveridad.cs" />
     <Compile Include="BusinessObjects\EBugSistemaOperativo.cs" />
+    <Compile Include="BusinessObjects\ETipoOperacion.cs" />
+    <Compile Include="NumberToLetterFunction.cs" />
+    <Compile Include="NumeroALetras.cs" />
     <Compile Include="BusinessObjects\SqlObject.cs" />
     <Compile Include="BusinessObjects\ConsultaParametro.cs" />
     <Compile Include="BusinessObjects\CustomLogonParameters.cs" />
@@ -308,6 +312,14 @@
   <ItemGroup>
     <EmbeddedResource Include="Images\help.png" />
     <EmbeddedResource Include="Images\help_32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Images\factura.png" />
+    <EmbeddedResource Include="Images\factura_32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Images\concepto.png" />
+    <EmbeddedResource Include="Images\concepto_32x32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

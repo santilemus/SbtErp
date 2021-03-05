@@ -35,5 +35,6 @@ namespace SBT.Apps.Compra {
             base.CustomizeTypesInfo(typesInfo);
             CalculatedPersistentAliasHelper.CustomizeTypesInfo(typesInfo);
         }
+
     }
 }

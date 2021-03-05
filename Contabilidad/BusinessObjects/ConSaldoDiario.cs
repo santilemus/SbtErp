@@ -20,7 +20,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
     /// <summary>
     /// Contabilidad. BO con los saldos diarios contables. Es calculado por un SP, aqui no se ingresan datos desde la interfaz de usuario
     /// </summary>
-    [ModelDefault("Caption", "Saldos Diarios"), Persistent("ConSaldoDiario"), NavigationItem(false)]
+    [ModelDefault("Caption", "Saldos Diarios"), Persistent("ConSaldoDiario"), NavigationItem(false), CreatableItem(false)]
     //[ImageName("BO_Contact")]
     //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]

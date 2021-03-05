@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace SBT.Apps.Empleado.Module.BusinessObjects
 {
-    [DefaultClassOptions, NavigationItem(false)]
+    [NavigationItem(false)]
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Empleado Capacitación")]
     [DevExpress.Persistent.Base.ImageNameAttribute("employee_man-certificate")]
     [DevExpress.ExpressApp.DC.XafDefaultPropertyAttribute("Descripcion")]

@@ -17,7 +17,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
 
     [DefaultClassOptions, ModelDefault("Caption", "Autorización Documentos"), NavigationItem("Facturación"),
         Persistent("FacAutorizacionDoc"), DefaultProperty("Resolucion")]
-    //[ImageName("BO_Contact")]
+    [ImageName(nameof(AutorizacionDocumento))]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class AutorizacionDocumento : XPObjectBaseBO
@@ -49,6 +49,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
 
 
         [XafDisplayName("Agencia"), RuleRequiredField("ResCorrelativo.Agencia_Requerido", "Save"), Index(0)]
+        [DataSourceCriteria("[Empresa.Oid] = EmpresaActualOid() And [Activa] = True And [Role] == 2")]
         public EmpresaUnidad Agencia
         {
             get => agencia;
@@ -56,7 +57,8 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         }
 
         [Association("Caja-Correlativos"), XafDisplayName("Caja No"), Index(1),
-            RuleRequiredField("ResCorrelativo.Caja_Requerido", DefaultContexts.Save, TargetCriteria = "[TipoDocumento.Codigo] in ('COVE05', 'DACV03')")]
+            RuleRequiredField("ResCorrelativo.Caja_Requerido", DefaultContexts.Save, TargetCriteria = "[Tipo.Codigo] in ('COVE05', 'DACV03')")]
+        [DataSourceCriteria("[Agencia] == '@This.Agencia'")]
         public Caja Caja
         {
             get => caja;
@@ -85,7 +87,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         }
 
         [XafDisplayName("Tipo Documento"), DbType("varchar(12)"), Index(5), VisibleInLookupListView(true)]
-        [DataSourceCriteria("[Categoria] == 15 || [Categoria] == 16 And Activo == True")]
+        [DataSourceCriteria("[Categoria] In (15, 16) && Activo == True && [Codigo] != 'COVE10' && [Codigo] != 'COVE11' && [Codigo] != 'DACV03'")]
         public Listas Tipo
         {
             get => tipo;
@@ -97,7 +99,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         /// </summary>
         [XafDisplayName("Imprenta"), Index(6), VisibleInListView(false),
             RuleRequiredField("ResCorrelativo.Imprenta_Requerido", DefaultContexts.Save,
-            TargetCriteria = "!([TipoDocumento.Codigo] in ('COVE05', 'DACV03'))")]
+            TargetCriteria = "!([Tipo.Codigo] in ('COVE05', 'DACV03'))")]
         public SBT.Apps.Tercero.Module.BusinessObjects.Tercero Imprenta
         {
             get => imprenta;

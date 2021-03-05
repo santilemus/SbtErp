@@ -244,6 +244,18 @@
     <EmbeddedResource Include="Images\PartidaModelo_32x32.png" />
     <EmbeddedResource Include="Images\Partida_32x32.png" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Images\BancoConciliacion.png" />
+    <EmbeddedResource Include="Images\BancoConciliacion_32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Images\CierreDiario.png" />
+    <EmbeddedResource Include="Images\CierreDiario_32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Images\CierreMes.png" />
+    <EmbeddedResource Include="Images\CierreMes_32x32.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

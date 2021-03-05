@@ -20,7 +20,7 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
     /// BO que corresponde al detalle de las conciliaciones bancarias
     /// </summary>
     
-    [DefaultClassOptions, ModelDefault("Caption", "Conciliación Detalle"), NavigationItem(false), DefaultProperty("Transaccion"), 
+    [ModelDefault("Caption", "Conciliación Detalle"), NavigationItem(false), DefaultProperty("Transaccion"), CreatableItem(false),
         Persistent("BanConciliacionDetalle")]
     //[ImageName("BO_Contact")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]

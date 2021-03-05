@@ -32,7 +32,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
             Activa = true;
             Constante constante = Session.GetObjectByKey<Constante>("PORCENTAJE_IVA");
             if (constante != null)
-                porcentajeIVA = Convert.ToDecimal(constante.Valor);
+                porcentajeIva = Convert.ToDecimal(constante.Valor);
         }
 
         //protected override void OnChanged(string propertyName, object oldValue, object newValue)
@@ -65,7 +65,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         #region Propiedades
 
         EMetodoCosteoInventario metodoCosteo;
-        decimal porcentajeIVA;
+        decimal porcentajeIva;
         EClasificacionIVA clasificacionIva = EClasificacionIVA.Gravado;
         private Categoria padre;
         private EClasificacion clasificacion = EClasificacion.ProductoTerminado;
@@ -153,8 +153,8 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         [VisibleInListView(false), VisibleInLookupListView(false)]
         public decimal PorcentajeIVA
         {
-            get => porcentajeIVA;
-            set => SetPropertyValue(nameof(PorcentajeIVA), ref porcentajeIVA, value);
+            get => porcentajeIva;
+            set => SetPropertyValue(nameof(PorcentajeIVA), ref porcentajeIva, value);
         }
 
         /// <summary>

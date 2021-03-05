@@ -40,6 +40,8 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         public override void AfterConstruction()
         {
             base.AfterConstruction();
+            partida = null;
+            numeroPorTipo = null;
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
@@ -217,6 +219,14 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
             Save();
 
         }
+
+        [Action(Caption = "Test")]
+        public void TestNumberToLetter()
+        {
+            Base.Module.NumeroALetras numLetter = new Base.Module.NumeroALetras();
+            this.Comentario = numLetter.Convertir(Monto, Moneda.Plural);
+        }
+
 
         //[Action(Caption = "My UI Action", ConfirmationMessage = "Are you sure?", ImageName = "Attention", AutoCommit = true)]
         //public void ActionMethod() {

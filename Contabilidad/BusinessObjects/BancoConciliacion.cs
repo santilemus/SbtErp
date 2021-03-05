@@ -22,7 +22,7 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
 
     [DefaultClassOptions, ModelDefault("Caption", "Conciliación"), NavigationItem("Banco"), DefaultProperty("Fecha"), 
         Persistent("BanConciliacion")]
-    //[ImageName("BO_Contact")]
+    [ImageName(nameof(BancoConciliacion))]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class BancoConciliacion : XPObjectBaseBO

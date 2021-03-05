@@ -59,7 +59,6 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
 
         [DbType("varchar(100)")]
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Descripción"), Index(2)]
-        [RuleRequiredField("TerceroRole.Descripcion_Requerido", "Save")]
         public System.String Descripcion
         {
             get => descripcion;

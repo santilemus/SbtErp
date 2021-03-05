@@ -131,7 +131,6 @@
     <Compile Include="BusinessObjects\EFormaAplicarTransaccion.cs" />
     <Compile Include="BusinessObjects\EFormaPago.cs" />
     <Compile Include="BusinessObjects\EMetodoAguinaldo.cs" />
-    <Compile Include="BusinessObjects\MiNoPersistenteClass.cs" />
     <Compile Include="BusinessObjects\PlanillaDetalleFuncion.cs" />
     <Compile Include="BusinessObjects\EmpleadoTipoPlanilla.cs" />
     <Compile Include="BusinessObjects\ETablaISR.cs" />

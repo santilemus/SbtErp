@@ -6,9 +6,10 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
 {
     public enum ETipoOperacion
     {
+        Nulo = 0,
         [XafDisplayName("Cargo")]
-        Cargo = 0,
+        Cargo = 1,
         [XafDisplayName("Abono")]
-        Abono = 1
+        Abono = 2,
     }
 }

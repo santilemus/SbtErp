@@ -18,7 +18,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
     /// <summary>
     /// Contabilidad. BO con el detalle de las partidas modelo
     /// </summary>
-    [ModelDefault("Caption", "Partida Modelo - Detalle"), NavigationItem(false), 
+    [ModelDefault("Caption", "Partida Modelo - Detalle"), NavigationItem(false), CreatableItem(false),
         Persistent("ConPartidaModeloDetalle")]
     //[ImageName("BO_Contact")]
     //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]

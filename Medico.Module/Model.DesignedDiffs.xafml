@@ -6,6 +6,7 @@
         <AppearanceRule Id="PermissionPolicyTypePermissionObject_Disable_Create_Write_Delete" Context="Any" TargetItems="CreateState;DeleteState;WriteState" Enabled="False" Criteria="Not IsCurrentUserInRole('Administrators') And [TargetType] In ('DevExpress.Persistent.BaseImpl.ReportDataV2', 'DevExpress.Persistent.BaseImpl.Analysis')" IsNewNode="True" />
       </AppearanceRules>
     </Class>
+    <Class Name="DevExpress.Persistent.BaseImpl.ReportDataV2" IsCloneable="True" />
   </BOModel>
   <NavigationItems>
     <Items>

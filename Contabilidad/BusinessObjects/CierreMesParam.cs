@@ -18,7 +18,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
     /// </summary>
     [DomainComponent]
     [DefaultClassOptions, ModelDefault("Caption", "Cierre de Mes"), NavigationItem("Contabilidad")]
-    //[ImageName("BO_Unknown")]
+    [ImageName("CierreMes")]
     //[DefaultProperty("SampleProperty")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).

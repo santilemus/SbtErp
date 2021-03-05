@@ -25,7 +25,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
     /// En esta version, el objetivo es que sea el usuario el que indique por cada empleado los tipos de planilla en los
     /// cuales estara incluido y reducir la necesidad de hacer cambios.
     /// </summary>
-    [DefaultClassOptions, ModelDefault("Caption", "Empleado-Tipo Planilla"), NavigationItem(false), CreatableItem(false),
+    [ModelDefault("Caption", "Empleado-Tipo Planilla"), NavigationItem(false), CreatableItem(false),
         Persistent(nameof(EmpleadoTipoPlanilla)), XafDefaultProperty(nameof(TipoPlanilla))]
     //[ImageName("BO_Contact")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]

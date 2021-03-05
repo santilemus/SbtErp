@@ -59,10 +59,10 @@ namespace SBT.Apps.Facturacion.Module.Controllers
                     return;
                 }
                 AutorizacionDocumento aud = (AutorizacionDocumento)e.NewValue;
-                int noFact = Convert.ToInt32(((XPObjectSpace)ObjectSpace).Session.Evaluate<AutorizacionDocumento>(CriteriaOperator.Parse("max([NoFactura])"),
-                             CriteriaOperator.Parse("AutorizacionCorrelativo.Oid == ?", aud.Oid)));
+                int noFact = Convert.ToInt32(((XPObjectSpace)ObjectSpace).Session.Evaluate<Venta>(CriteriaOperator.Parse("max([NoFactura])"),
+                             CriteriaOperator.Parse("Oid == ?", aud.Oid))) + 1;
                 if (noFact >= aud.NoDesde && noFact < aud.NoHasta)
-                    ((Venta)View.CurrentObject).NoFactura = noFact + 1;
+                    ((Venta)View.CurrentObject).NoFactura = noFact;
                 else
                     MostrarError($"No hay autorización de correlativo disponible para {((Venta)View.CurrentObject).TipoFactura.Nombre}");
             }
@@ -77,19 +77,33 @@ namespace SBT.Apps.Facturacion.Module.Controllers
         /// <param name="e"></param>
         private void ObjectSpace_Committing(object Sender, CancelEventArgs﻿ e)
         {
-            /// pendiente de reemplazar 1 por el tipo de movimiento correspondiente
-            tipoMovimiento = ObjectSpace.GetObjectByKey<InventarioTipoMovimiento>(1);
-
             System.Collections.IList items = ObjectSpace.ModifiedObjects;
-            foreach (VentaDetalle item in items)
+            if (items.Count > 0)
             {
-                if (item.GetType() != typeof(SBT.Apps.Facturacion.Module.BusinessObjects.VentaDetalle))
-                    continue;
-                DoActualizarInventario(item);
-                DoActualizarKardex(item);
-                if (item.Producto.Categoria.MetodoCosteo == Producto.Module.BusinessObjects.EMetodoCosteoInventario.PEPS ||
-                    item.Producto.Categoria.MetodoCosteo == Producto.Module.BusinessObjects.EMetodoCosteoInventario.UEPS)
-                    DoActualizarLote(item);
+                /// 301 es el Codigo del Tipo de Movimiento de Inventario que corresponde a facturacion
+                tipoMovimiento = ObjectSpace.FindObject<InventarioTipoMovimiento>(CriteriaOperator.And(new BinaryOperator("Codigo", "301"), new BinaryOperator("Activo", true)));
+                if (tipoMovimiento == null)
+                {
+                    MostrarError($"No se encontró Tipo de Movimiento de Inventario con código 301 que debe corresponder a Facturación, el Inventario no se puede actualizar ");
+                    e.Cancel = true;
+                    return;
+                }
+
+                foreach (object item in items)
+                {
+                    if (item.GetType() != typeof(SBT.Apps.Facturacion.Module.BusinessObjects.VentaDetalle))
+                        continue;
+                    VentaDetalle fItem = (VentaDetalle)item;
+                    if (fItem.Producto.Categoria.Clasificacion == Producto.Module.BusinessObjects.EClasificacion.Servicios ||
+                        fItem.Producto.Categoria.Clasificacion == Producto.Module.BusinessObjects.EClasificacion.Intangible ||
+                        fItem.Producto.Categoria.Clasificacion == Producto.Module.BusinessObjects.EClasificacion.Otros)
+                        continue;
+                    DoActualizarInventario(fItem);
+                    DoActualizarKardex(fItem);
+                    if (fItem.Producto.Categoria.MetodoCosteo == Producto.Module.BusinessObjects.EMetodoCosteoInventario.PEPS ||
+                        fItem.Producto.Categoria.MetodoCosteo == Producto.Module.BusinessObjects.EMetodoCosteoInventario.UEPS)
+                        DoActualizarLote(fItem);
+                }
             }
         }
 
@@ -101,7 +115,7 @@ namespace SBT.Apps.Facturacion.Module.Controllers
         /// Cuando se ha eliminado el item de la venta, considerar solo la cantidad acumulada del mes como  se meciono
         /// antes, tiene el mismo efecto que restar de la salida la cantidad del item eliminado del mes
         /// </summary>
-        /// <param name="item">El item del detalle de la venta que esta siendo procesado</param>
+        /// <param name="item">La linea de detalle de la factura (instancia del BO VentaDetalle)</param>
         private void DoActualizarInventario(VentaDetalle item)
         {
             Inventario.Module.BusinessObjects.Inventario inventarioItem = ObjectSpace.FindObject<Inventario.Module.BusinessObjects.Inventario>(
@@ -112,16 +126,17 @@ namespace SBT.Apps.Facturacion.Module.Controllers
                 inventarioItem.Bodega = item.Bodega;
                 inventarioItem.Producto = item.Producto;
                 inventarioItem.TipoMovimiento = tipoMovimiento;
+                inventarioItem.Cantidad = 0.0m;
             }
             if (ObjectSpace.IsNewObject(item))
-                inventarioItem.Cantidad = item.Cantidad;
+                inventarioItem.Cantidad += item.Cantidad;
             else
             {
                 decimal cantidadMes = Convert.ToDecimal(ObjectSpace.Evaluate(typeof(VentaDetalle), CriteriaOperator.Parse("Sum([Cantidad])"),
                      CriteriaOperator.Parse("GetMonth([Venta.Fecha]) == ? && GetYear([Venta.Fecha]) == ? && [Producto.Oid] == ? && [Bodega.Oid] == ? && [Oid] != ?",
                      item.Venta.Fecha.Month, item.Venta.Fecha.Year, item.Producto.Oid, item.Bodega.Oid, item.Oid)));
                 // Si la fila fue borrada, la nueva cantidad (de salidas por venta) es la cantidad acumulada del mes, sin considerar al item [Oid] != item.Oid
-                cantidadMes += ((VentaDetalle)item).IsDeleted ? 0 : item.Cantidad;
+                cantidadMes += item.IsDeleted ? 0 : item.Cantidad;
                 inventarioItem.Cantidad = cantidadMes;
             }
             inventarioItem.Save();
@@ -133,12 +148,16 @@ namespace SBT.Apps.Facturacion.Module.Controllers
         /// Cuando se ha eliminado el item de la venta, considerar solo la cantidad acumulada del mes como  se meciono
         /// antes, tiene el mismo efecto que restar de la salida la cantidad del item eliminado del mes
         /// </summary>
-        /// <param name="item"></param>
+        /// <param name="item">La linea de detalle de la factura (instancia del BO VentaDetalle)</param>
+        /// <remarks>
+        /// Evaluar en las pruebas porque cuando pase por aqui es posible que item.Oid aun no tenga valor, en cuyo caso 
+        /// tendremos que usar otro datos, por ejemplo item.Venta.Oid
+        /// </remarks>
         private void DoActualizarKardex(VentaDetalle item)
         {
             Kardex kardexItem = ObjectSpace.FindObject<Kardex>(
                 CriteriaOperator.Parse("[Producto.Oid] == ? && [TipoMovimiento] == ? && [Fecha] = ? && [Referencia] == ?",
-                item.Producto.Oid, tipoMovimiento.Oid, item.Venta.Fecha, item.Venta.Oid));
+                item.Producto.Oid, tipoMovimiento.Oid, item.Venta.Fecha, item.Oid));
             if (kardexItem == null)
             {
                 kardexItem = ObjectSpace.CreateObject<Kardex>();
@@ -149,28 +168,39 @@ namespace SBT.Apps.Facturacion.Module.Controllers
             kardexItem.Cantidad = item.Cantidad;
             kardexItem.CostoUnidad = item.Costo;
             kardexItem.PrecioUnidad = item.PrecioUnidad;
+            kardexItem.Referencia = item.Oid;
             kardexItem.Save();
         }
 
+        /// <summary>
+        /// Actualizar las salidas del lote cuando el metodo de costeo del inventario es PEPS o UEPS
+        /// </summary>
+        /// <param name="item">La linea de detalle de la factura (instancia del BO VentaDetalle)</param>
         private void DoActualizarLote(VentaDetalle item)
         {
             if (item.Lote != null)
             {
-                Producto.Module.BusinessObjects.ProductoLote lote = ObjectSpace.GetObjectByKey<Producto.Module.BusinessObjects.ProductoLote>(item.Lote.Oid);
+                InventarioLote lote = ObjectSpace.GetObjectByKey<InventarioLote>(item.Lote.Oid);
                 if (lote == null)
                     return;
                 if (ObjectSpace.IsNewObject(item))
                 {
-                    lote.Salida += item.Cantidad;
+                    if (tipoMovimiento.Operacion == ETipoOperacionInventario.Salida)
+                        lote.Salida += item.Cantidad;
+                    else
+                        lote.Entrada += item.Cantidad;
                     lote.Costo = item.Costo;
                 }
                 else
                 {
                     if (item.IsDeleted)
-                        lote.Salida -= item.Cantidad;
-
+                    {
+                        if (tipoMovimiento.Operacion == ETipoOperacionInventario.Salida)
+                            lote.Salida -= item.Cantidad;
+                        else
+                            lote.Entrada -= item.Cantidad;
+                    }
                 }
-
                 lote.Save();
             }
         }

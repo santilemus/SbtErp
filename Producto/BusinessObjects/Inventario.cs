@@ -12,7 +12,7 @@ namespace SBT.Apps.Inventario.Module.BusinessObjects
     /// <summary>
     /// BO que corresponde al maestro de inventarios
     /// </summary>
-    [DefaultClassOptions, ModelDefault("Caption", "Inventario"), NavigationItem("Inventario"), DefaultProperty(nameof(Producto)), CreatableItem(false)]
+    [ModelDefault("Caption", "Inventario"), NavigationItem("Inventario"), DefaultProperty(nameof(Producto)), CreatableItem(false)]
     [Persistent(nameof(Inventario))]
     //[ImageName("BO_Contact")]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).

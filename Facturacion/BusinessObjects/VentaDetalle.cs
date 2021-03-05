@@ -1,24 +1,18 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
+﻿using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp;
-using System.ComponentModel;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
-using DevExpress.Persistent.Base;
-using System.Collections.Generic;
-using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
-using DevExpress.Persistent.Validation;
-using DevExpress.ExpressApp.SystemModule;
-using DevExpress.ExpressApp.ViewVariantsModule;
-using DevExpress.ExpressApp.Editors;
-using DevExpress.Data.Filtering.Helpers;
 using DevExpress.ExpressApp.ConditionalAppearance;
-using SBT.Apps.Base.Module.BusinessObjects;
+using DevExpress.ExpressApp.DC;
+using DevExpress.ExpressApp.Editors;
+using DevExpress.ExpressApp.Model;
+using DevExpress.Persistent.Base;
+using DevExpress.Persistent.Validation;
+using DevExpress.Xpo;
+using SBT.Apps.CxC.Module.BusinessObjects;
 using SBT.Apps.Producto.Module.BusinessObjects;
-using DevExpress.Xpo.Metadata;
+using SBT.Apps.Inventario.Module.BusinessObjects;
+using System;
+using System.ComponentModel;
+using System.Linq;
 
 namespace SBT.Apps.Facturacion.Module.BusinessObjects
 {
@@ -28,8 +22,8 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
     /// <remarks>
     /// Info del atributo OptimisticLockingReadBehavior en https://docs.devexpress.com/XPO/DevExpress.Xpo.Session.OptimisticLockingReadBehavior
     /// </remarks>
-    [DefaultClassOptions, ModelDefault("Caption", "Venta Detalle"), DefaultProperty(nameof(Producto)), NavigationItem(false),
-        Persistent(nameof(VentaDetalle))]
+    [ModelDefault("Caption", "Venta Detalle"), DefaultProperty(nameof(Producto)), NavigationItem(false),
+        Persistent(nameof(VentaDetalle)), CreatableItem(false)]
     [Appearance("Venta Detalle - Credito Fiscal", AppearanceItemType = "ViewItem", TargetItems = "PrecioConIva",
         Criteria = "[Venta.Tipo.Codigo] == 'COVE01'", Context = "Any", Visibility = ViewItemVisibility.Hide)]
     [Appearance("Venta Detalle - Consumidor Final y Ticket", AppearanceItemType = "ViewItem", TargetItems = "IVA",
@@ -42,7 +36,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         Criteria = "IsNewObject(This)")]
     [OptimisticLockingReadBehavior(OptimisticLockingReadBehavior.Default, true)]
     //[ImageName("BO_Contact")]
-    //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
+    [DefaultListViewOptions(MasterDetailMode.ListViewOnly, true, NewItemRowPosition.Top)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class VentaDetalle : XPCustomFacturaDetalle
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
@@ -61,7 +55,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
 
         #region Propiedades
 
-        ProductoLote lote;
+        InventarioLote lote;
         bool fProdChanged;
 
         SBT.Apps.Base.Module.BusinessObjects.EmpresaUnidad bodega;
@@ -100,7 +94,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             set => SetPropertyValue(nameof(Bodega), ref bodega, value);
         }
 
-        [PersistentAlias("[PrecioUnidad] + [IVA]"), XafDisplayName("Precio Con Iva"), Index(6)]
+        [PersistentAlias("[PrecioUnidad] * [Producto.Categoria.PorcentajeIva]"), XafDisplayName("Precio Con Iva"), Index(6)]
         [ModelDefault("DisplayFormat", "{0:N4}"), ModelDefault("EditMask", "n4")]
         public decimal PrecioConIva => Convert.ToDecimal(EvaluateAlias(nameof(PrecioConIva)));
 
@@ -129,7 +123,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         }
 
         [DbType("int"), XafDisplayName("Lote")]
-        public ProductoLote Lote
+        public InventarioLote Lote
         {
             get => lote;
             set => SetPropertyValue(nameof(Lote), ref lote, value);
@@ -139,7 +133,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         /// regla validar disponibilidad en el lote, cuando el metodo de costeo es PEPS, UEPS
         /// </summary>
         [Browsable(false)]
-        [RuleFromBoolProperty("VentaDetalle.Cantidad <= Disponible en el Lote", DefaultContexts.Save, 
+        [RuleFromBoolProperty("VentaDetalle.Cantidad <= Disponible en el Lote", DefaultContexts.Save,
             TargetCriteria = "[Lote] is not null && [Producto.Categoria.MetodoCosteo] In (1, 2) && [Producto.Categoria.Clasificacion] < 4",
             CustomMessageTemplate = "La Cantidad a vender debe ser menor o igual al dispoible en el lote")]
         public bool EsCantidadMenorIgualDisponibleEnLote
@@ -148,7 +142,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             {
                 decimal cantVta = Venta.Detalles.Where(x => x.Bodega == Bodega && x.Producto == Producto && x.Lote == Lote).Sum(x => x.Cantidad);
                 decimal totVeta = Convert.ToDecimal(Session.Evaluate<VentaDetalle>(CriteriaOperator.Parse("Sum([Cantidad])"),
-                    CriteriaOperator.Parse("[Bodega.Oid] == ? && [Producto.Oid] == ? && [Lote.Oid] == ? && [Oid] != ?", Bodega.Oid, Producto.Oid, Lote.Oid, Oid)));
+                    CriteriaOperator.Parse("[Bodega.Oid] == ? && [Producto.Oid] == ? && [Lote.Oid] == ? && [Oid] != ?", Bodega.Oid, Producto.Oid, Lote.IngresoDetalle, Oid)));
                 return cantVta <= (Lote.Entrada - Lote.Salida);
             }
         }
@@ -175,35 +169,12 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         #endregion
 
         #region Colleciones
-
+        [Association("VentaDetalle-CxCDocumentoDetalles"), XafDisplayName("CxC Detalles"), Index(0)]
+        public XPCollection<CxCDocumentoDetalle> CxCDocumentoDetalles => GetCollection<CxCDocumentoDetalle>(nameof(CxCDocumentoDetalles));
 
         #endregion
 
         #region Metodos
-        private void CalcularMontoVenta()
-        {
-            if (Producto != null && Cantidad > 0.0m && PrecioUnidad > 0.0m)
-            {
-                if (Producto.Categoria.ClasificacionIva == EClasificacionIVA.Gravado)
-                {
-                    TributoCategoria tp = Session.FindObject<TributoCategoria>(
-                        CriteriaOperator.Parse("Producto.Categoria.Oid == ? && [Tributo][[^.NombreAbreviado] == 'IVA']", Producto.Categoria.Oid));
-                    if (tp != null)
-                    {
-                        ExpressionEvaluator eval = new ExpressionEvaluator(TypeDescriptor.GetProperties(typeof(Venta)), ((TributoRegla)tp.Tributo).Formula);
-                        iva = Math.Round(Convert.ToDecimal(eval.Evaluate(this)), 2);
-
-                    }
-                }
-                else
-                {
-                    gravada = 0.0m;
-                    iva = 0.0m;
-                    exenta = Math.Round(Cantidad * PrecioUnidad, 2);
-                    noSujeta = 0.0m;
-                }
-            }
-        }
 
         //protected override void OnSaving()
         //{
@@ -233,7 +204,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
                     break;
                 default:
                     {
-                        ProductoLote lotep = ObtenerLote();
+                        InventarioLote lotep = ObtenerLote();
                         Lote = lotep;
                         costo = lotep != null ? lotep.Costo : Producto.CostoPromedio;
                         break;
@@ -246,7 +217,31 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         {
             base.DoCantidadChanged(forceChangeEvents, oldValue);
             decimal oldPrecio = PrecioUnidad;
+            var itemPrecio = ObtenerPrecio();
+            if (oldPrecio != itemPrecio.PrecioUnitario)
+                PrecioUnidad = itemPrecio.PrecioUnitario;
             DoPrecioUnidadChanged(true, oldPrecio);
+        }
+
+        /// <summary>
+        /// obtener el BO del precio que aplica para el detalle del documento de venta
+        /// </summary>
+        /// <returns></returns>
+        private ProductoPrecio ObtenerPrecio()
+        {
+            if (Producto == null || Producto.Precios.Count == 0)
+                return null;
+            ProductoPrecio itemPrecio = Producto.Precios.Where<ProductoPrecio>(x => x.Producto == Producto &&
+            Venta.Fecha >= x.HoraDesde && Venta.Fecha <= x.HoraHasta && Cantidad >= x.CantidadDesde && Cantidad <= x.CantidadHasta && x.Activo == true).
+            FirstOrDefault();
+            if (itemPrecio == null)
+            {
+                itemPrecio = Producto.Precios.Where<ProductoPrecio>(x => x.Producto == Producto &&
+                             Cantidad >= x.CantidadDesde && Cantidad <= x.CantidadHasta && x.Activo == true).FirstOrDefault();
+                if (itemPrecio == null)
+                    itemPrecio = Producto.Precios.FirstOrDefault<ProductoPrecio>(x => x.Producto == Producto && x.Activo == true);
+            }
+            return itemPrecio;
         }
 
         protected override void DoPrecioUnidadChanged(bool forceChangeEvents, decimal oldValue)
@@ -255,24 +250,25 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             if (Venta == null)
                 return;
             OnPrecioUnidadChanged(Cantidad, Venta.TipoFactura.Codigo);
-            if (forceChangeEvents)
-                OnChanged(nameof(PrecioUnidad), oldValue, PrecioUnidad);
+            //SI NO REALIZA LOS CALCULOS al cambiar la cantidad o el precio quitar comentario a las siguientes lineas
+            //if (forceChangeEvents)
+            //    OnChanged(nameof(PrecioUnidad), oldValue, PrecioUnidad);
             Venta.UpdateTotalExenta(true);
             Venta.UpdateTotalGravada(true);
             Venta.UpdateTotalIva(true);
             Venta.UpdateTotalNoSujeta(true);
         }
 
-        private ProductoLote ObtenerLote()
+        private InventarioLote ObtenerLote()
         {
-            ProductoLote lotep = null;
+            InventarioLote lotep = null;
             Producto.Lotes.Criteria = CriteriaOperator.Parse("[Producto.Oid] == ? && [Entrada] > [Salida]", Producto.Oid);
             if (Producto.Categoria.MetodoCosteo == EMetodoCosteoInventario.PEPS)
                 lotep = Producto.Lotes.Where(x => x.Producto.Oid == Producto.Oid && x.Entrada > x.Salida)
-                                         .OrderBy(x => x.Fecha).FirstOrDefault(x => (x.Entrada - x.Salida) >= Cantidad);
+                                         .OrderBy(x => x.FechaVence).FirstOrDefault(x => (x.Entrada - x.Salida) >= Cantidad);
             else
                 lotep = Producto.Lotes.Where(x => x.Producto.Oid == Producto.Oid && x.Entrada > x.Salida)
-                         .OrderBy(x => x.Fecha).LastOrDefault(x => (x.Entrada - x.Salida) >= Cantidad);
+                         .OrderBy(x => x.FechaVence).LastOrDefault(x => (x.Entrada - x.Salida) >= Cantidad);
             return lotep;
         }
 

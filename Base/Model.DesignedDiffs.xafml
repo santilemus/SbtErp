@@ -1,5 +1,50 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Application Title="SBT.App.Base.BaseModule" Logo="ExpressAppLogo">
+  <Localization>
+    <LocalizationGroup Name="Numeros" IsNewNode="True">
+      <LocalizationItem Name="0" Value="cero" IsNewNode="True" />
+      <LocalizationItem Name="1" Value="un" IsNewNode="True" />
+      <LocalizationItem Name="10" Value="diez" IsNewNode="True" />
+      <LocalizationItem Name="100" Value="ciento" IsNewNode="True" />
+      <LocalizationItem Name="11" Value="once" IsNewNode="True" />
+      <LocalizationItem Name="12" Value="doce" IsNewNode="True" />
+      <LocalizationItem Name="13" Value="trece" IsNewNode="True" />
+      <LocalizationItem Name="14" Value="catorce" IsNewNode="True" />
+      <LocalizationItem Name="15" Value="quince" IsNewNode="True" />
+      <LocalizationItem Name="16" Value="dieciséis" IsNewNode="True" />
+      <LocalizationItem Name="17" Value="diecisiete" IsNewNode="True" />
+      <LocalizationItem Name="18" Value="dieciocho" IsNewNode="True" />
+      <LocalizationItem Name="19" Value="diecinueve" IsNewNode="True" />
+      <LocalizationItem Name="2" Value="dos" IsNewNode="True" />
+      <LocalizationItem Name="20" Value="veinte" IsNewNode="True" />
+      <LocalizationItem Name="200" Value="doscientos" IsNewNode="True" />
+      <LocalizationItem Name="3" Value="tres" IsNewNode="True" />
+      <LocalizationItem Name="30" Value="treinta" IsNewNode="True" />
+      <LocalizationItem Name="300" Value="trescientos" IsNewNode="True" />
+      <LocalizationItem Name="4" Value="cuatro" IsNewNode="True" />
+      <LocalizationItem Name="40" Value="cuarenta" IsNewNode="True" />
+      <LocalizationItem Name="400" Value="cuatrocientos" IsNewNode="True" />
+      <LocalizationItem Name="5" Value="cinco" IsNewNode="True" />
+      <LocalizationItem Name="50" Value="cincuenta" IsNewNode="True" />
+      <LocalizationItem Name="500" Value="quinientos" IsNewNode="True" />
+      <LocalizationItem Name="6" Value="seis" IsNewNode="True" />
+      <LocalizationItem Name="60" Value="sesenta" IsNewNode="True" />
+      <LocalizationItem Name="600" Value="seiscientos" IsNewNode="True" />
+      <LocalizationItem Name="7" Value="siete" IsNewNode="True" />
+      <LocalizationItem Name="70" Value="setenta" IsNewNode="True" />
+      <LocalizationItem Name="700" Value="setecientos" IsNewNode="True" />
+      <LocalizationItem Name="8" Value="ocho" IsNewNode="True" />
+      <LocalizationItem Name="80" Value="ochenta" IsNewNode="True" />
+      <LocalizationItem Name="800" Value="ochocientos" IsNewNode="True" />
+      <LocalizationItem Name="9" Value="nueve" IsNewNode="True" />
+      <LocalizationItem Name="90" Value="noventa" IsNewNode="True" />
+      <LocalizationItem Name="900" Value="novecientos" IsNewNode="True" />
+      <LocalizationItem Name="hundred" Value="cien" IsNewNode="True" />
+      <LocalizationItem Name="million" Value="millón" IsNewNode="True" />
+      <LocalizationItem Name="millions" Value="millones" IsNewNode="True" />
+      <LocalizationItem Name="thousand" Value="mil" IsNewNode="True" />
+    </LocalizationGroup>
+  </Localization>
   <SchemaModules>
     <SchemaModule Name="CloneObjectModule" Version="20.2.5.0" IsNewNode="True" />
     <SchemaModule Name="SystemModule" Version="20.2.5.0" IsNewNode="True" />
@@ -121,8 +166,8 @@
     <DetailView Id="Empresa_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
-          <LayoutGroup Id="SimpleEditors" RelativeSize="23.4185733512786" Direction="Horizontal">
-            <LayoutGroup Id="Empresa_col1" ShowCaption="False" Index="0" RelativeSize="49.851632047477743" CaptionLocation="Left" IsNewNode="True">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="22.336328626444161" Direction="Horizontal">
+            <LayoutGroup Id="Empresa_col1" ShowCaption="False" Index="0" RelativeSize="49.7787610619469" CaptionLocation="Left" IsNewNode="True">
               <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="20.689655172413794" CaptionLocation="Left" IsNewNode="True" />
               <LayoutItem Id="RazonSocial" ViewItem="RazonSocial" Index="1" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
               <LayoutItem Id="Pais" ViewItem="Pais" Index="2" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
@@ -130,20 +175,21 @@
               <LayoutItem Id="Ciudad" ViewItem="Ciudad" Index="4" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
               <LayoutItem Id="Direccion" ViewItem="Direccion" Index="5" RelativeSize="19.540229885057471" CaptionLocation="Left" IsNewNode="True" />
             </LayoutGroup>
-            <LayoutGroup Id="Empresa_col2" ShowCaption="False" Index="1" RelativeSize="50.148367952522257" CaptionLocation="Left" IsNewNode="True">
+            <LayoutGroup Id="Empresa_col2" ShowCaption="False" Index="1" RelativeSize="50.2212389380531" CaptionLocation="Left" IsNewNode="True">
               <LayoutItem Id="EMail" ViewItem="EMail" Index="0" RelativeSize="20.689655172413794" CaptionLocation="Left" IsNewNode="True" />
               <LayoutItem Id="SitioWeb" ViewItem="SitioWeb" Index="1" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
               <LayoutItem Id="Nit" ViewItem="Nit" Index="2" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="NRC" ViewItem="NRC" Index="3" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="Activa" ViewItem="Activa" Index="4" RelativeSize="34.482758620689658" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Nrc" ViewItem="Nrc" Index="3" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Activa" ViewItem="Activa" Index="4" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="NRC" ViewItem="NRC" Index="5" RelativeSize="19.540229885057471" CaptionLocation="Left" IsNewNode="True" />
             </LayoutGroup>
             <LayoutGroup Id="Empresa" Removed="True" />
             <LayoutGroup Id="XPObject" RelativeSize="53.475935828877006" Caption="Oid" Direction="Horizontal" Removed="True">
               <LayoutItem Id="Oid" RelativeSize="100" Removed="True" />
             </LayoutGroup>
           </LayoutGroup>
-          <LayoutItem Id="Logo" ViewItem="Logo" CaptionLocation="Left" Index="1" RelativeSize="3.4993270524899058" IsNewNode="True" />
-          <TabbedGroup Id="Tabs" RelativeSize="73.0820995962315" Index="2">
+          <LayoutItem Id="Logo" ViewItem="Logo" CaptionLocation="Left" Index="1" RelativeSize="3.3376123234916562" IsNewNode="True" />
+          <TabbedGroup Id="Tabs" RelativeSize="74.326059050064188" Index="2">
             <LayoutGroup Id="Telefonos" RelativeSize="100">
               <LayoutItem Id="Telefonos" RelativeSize="100" />
             </LayoutGroup>

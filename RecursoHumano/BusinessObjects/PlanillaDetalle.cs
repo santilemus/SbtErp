@@ -17,7 +17,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
     /// BO para el detalle de los empleados incluidos en una planilla calculada por el sistema
     /// </summary>
 
-    [DefaultClassOptions, ModelDefault("Caption", "Planilla Detalle"), NavigationItem(false), DefaultProperty("Empleado")]
+    [ModelDefault("Caption", "Planilla Detalle"), NavigationItem(false), DefaultProperty("Empleado"), CreatableItem(false)]
     [Persistent(nameof(PlanillaDetalle))]
     //[ImageName("BO_Contact")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]

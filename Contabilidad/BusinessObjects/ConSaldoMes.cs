@@ -21,7 +21,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
     /// Contabilidad. BO con los saldos mensuales contables. Es calculado por un SP, aqui no se ingresan datos desde la interfaz de usuario
     /// </summary>
     /// 
-    [ModelDefault("Caption", "Saldo Mensual"), NavigationItem(false), Persistent("ConSaldoMes")]
+    [ModelDefault("Caption", "Saldo Mensual"), NavigationItem(false), Persistent("ConSaldoMes"), CreatableItem(false)]
     //[ImageName("BO_Contact")]
     //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]

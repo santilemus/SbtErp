@@ -118,8 +118,13 @@
     <Compile Include="BusinessObjects\ETipoCompra.cs" />
     <Compile Include="BusinessObjects\CompraFactura.cs" />
     <Compile Include="BusinessObjects\CompraFacturaDetalle.cs" />
+    <Compile Include="BusinessObjects\InventarioMovimiento.cs" />
+    <Compile Include="BusinessObjects\InventarioMovimientoDetalle.cs" />
     <Compile Include="BusinessObjects\OrdenCompra.cs" />
     <Compile Include="BusinessObjects\OrdenCompraDetalle.cs" />
+    <Compile Include="Controllers\vcInventarioMovimiento.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="DatabaseUpdate\Updater.cs" />
     <Compile Include="CompraModule.cs">
       <SubType>Component</SubType>
@@ -160,6 +165,14 @@
       <Project>{5F15837D-D1E5-44DC-92F0-4F2EBE9C3F8D}</Project>
       <Name>SBT.Apps.Tercero</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Images\CompraFactura.png" />
+    <EmbeddedResource Include="Images\CompraFactura_32x32.png" />
+    <EmbeddedResource Include="Images\InventarioMovimiento.png" />
+    <EmbeddedResource Include="Images\InventarioMovimiento_32x32.png" />
+    <EmbeddedResource Include="Images\OrdenCompra.png" />
+    <EmbeddedResource Include="Images\OrdenCompra_32x32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

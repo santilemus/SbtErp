@@ -20,7 +20,7 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
     /// Bancos. BO para el vaucher o detalle de una transacción de bancos
     /// </summary>
 
-    [DefaultClassOptions, ModelDefault("Caption", "Detalle Transacción Bancaria"), Persistent("BanTransaccionDetalle"), NavigationItem(false), 
+    [ModelDefault("Caption", "Detalle Transacción Bancaria"), Persistent("BanTransaccionDetalle"), NavigationItem(false), CreatableItem(false),
         DefaultProperty("CodCuenta")]
     //[ImageName("BO_Contact")]
     //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]

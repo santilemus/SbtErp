@@ -249,20 +249,22 @@
       </Layout>
     </DetailView>
     <DetailView Id="TerceroDocumento_DetailView">
+      <Items>
+        <PropertyEditor Id="Tipo.Codigo" PropertyName="Tipo.Codigo" IsNewNode="True" />
+      </Items>
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
           <LayoutGroup Id="SimpleEditors" RelativeSize="100" Direction="Horizontal">
-            <LayoutGroup Id="TerceroDocumento_col1" ShowCaption="False" Index="0" RelativeSize="49.944629014396455" IsNewNode="True">
-              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="4.8452220726783315" IsNewNode="True" />
-              <LayoutItem Id="Tipo" ViewItem="Tipo" Index="1" RelativeSize="3.4993270524899058" IsNewNode="True" />
-              <LayoutItem Id="CodigoDocumento" ViewItem="CodigoDocumento" Index="2" RelativeSize="3.4993270524899058" IsNewNode="True" />
-              <LayoutItem Id="Numero" ViewItem="Numero" Index="3" RelativeSize="88.156123822341854" IsNewNode="True" />
+            <LayoutGroup Id="TerceroDocumento_col1" ShowCaption="False" Index="0" RelativeSize="49.889380530973455" IsNewNode="True">
+              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="4.6213093709884463" IsNewNode="True" />
+              <LayoutItem Id="Tipo" ViewItem="Tipo" Index="1" RelativeSize="3.3376123234916562" IsNewNode="True" />
+              <LayoutItem Id="Numero" ViewItem="Numero" Index="2" RelativeSize="3.3376123234916562" IsNewNode="True" />
+              <LayoutItem Id="Nombre" ViewItem="Nombre" Index="3" RelativeSize="88.703465982028234" IsNewNode="True" />
             </LayoutGroup>
-            <LayoutGroup Id="TerceroDocumento_col2" ShowCaption="False" Index="1" RelativeSize="50.055370985603545" IsNewNode="True">
-              <LayoutItem Id="Nombre" ViewItem="Nombre" Index="0" RelativeSize="4.8452220726783315" IsNewNode="True" />
-              <LayoutItem Id="FechaEmision" ViewItem="FechaEmision" Index="1" RelativeSize="3.4993270524899058" IsNewNode="True" />
-              <LayoutItem Id="LugarEmision" ViewItem="LugarEmision" Index="2" RelativeSize="3.4993270524899058" IsNewNode="True" />
-              <LayoutItem Id="Vigente" ViewItem="Vigente" Index="3" RelativeSize="88.156123822341854" IsNewNode="True" />
+            <LayoutGroup Id="TerceroDocumento_col2" ShowCaption="False" Index="1" RelativeSize="50.110619469026545" IsNewNode="True">
+              <LayoutItem Id="FechaEmision" ViewItem="FechaEmision" Index="0" RelativeSize="4.6213093709884463" IsNewNode="True" />
+              <LayoutItem Id="LugarEmision" ViewItem="LugarEmision" Index="1" RelativeSize="3.3376123234916562" IsNewNode="True" />
+              <LayoutItem Id="Vigente" ViewItem="Vigente" Index="2" RelativeSize="92.0410783055199" IsNewNode="True" />
             </LayoutGroup>
             <LayoutGroup Id="XPObject" Index="1" RelativeSize="83.58008075370121" Caption="Oid" Direction="Horizontal" Removed="True">
               <LayoutItem Id="Oid" RelativeSize="100" Removed="True" />

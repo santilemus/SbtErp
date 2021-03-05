@@ -13,6 +13,7 @@ using DevExpress.Persistent.BaseImpl;
 using DevExpress.Persistent.Validation;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Tercero.Module.BusinessObjects;
+using SBT.Apps.Inventario.Module.BusinessObjects;
 
 namespace SBT.Apps.Compra.Module.BusinessObjects
 {
@@ -29,7 +30,7 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
     
     [DefaultClassOptions, ModelDefault("Caption", "Orden Compra"), NavigationItem("Compras"), CreatableItem(false), 
         DefaultProperty(nameof(Proveedor)), Persistent("OrdenCompra")]
-    //[ImageName("BO_Contact")]
+    [ImageName(nameof(OrdenCompra))]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class OrdenCompra : XPCustomFacturaBO
@@ -56,6 +57,7 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
         /// Proveedor al cual se gira la orden de compra
         /// </summary>
         [XafDisplayName("Proveedor"), RuleRequiredField("OrdenCompra.Proveedor_Requerido", DefaultContexts.Save), Index(5)]
+        [DetailViewLayout("Datos Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
         public Tercero.Module.BusinessObjects.Tercero Proveedor
         {
             get => proveedor;
@@ -66,6 +68,7 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
         /// Tipo de Compra. Puede ser: Servicio, Producto, ActivoFijo
         /// </summary>
         [DbType("smallint"), XafDisplayName("Tipo Compra"), RuleRequiredField("OrdenCompra.Tipo_Requerido", "Save"), Index(6)]
+        [DetailViewLayout("Datos Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
         public ETipoCompra Tipo
         {
             get => tipo;
@@ -76,6 +79,7 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
         /// Concepto de la compra
         /// </summary>
         [Size(200), DbType("varchar(200)"), XafDisplayName("Concepto"), Index(10)]
+        [DetailViewLayout("Datos de Pago", LayoutGroupType.SimpleEditorsGroup, 2)]
         public string Concepto
         {
             get => concepto;
@@ -85,7 +89,8 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
         /// <summary>
         /// Estado de la orden de compra
         /// </summary>
-        [DbType("smallint"), XafDisplayName("Estado"), Index(11)]
+        [DbType("smallint"), XafDisplayName("Estado Orden"), Index(11)]
+        [DetailViewLayout("Totales", LayoutGroupType.SimpleEditorsGroup, 10)]
         public EEstadoOrdenCompra EstadoOrden
         {
             get => estadoOrden;
@@ -97,6 +102,7 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
         /// </summary>
         [XafDisplayName("Aprobada Por"), VisibleInListView(false), VisibleInLookupListView(false), Index(12)]
         [ExplicitLoading]
+        [DetailViewLayout("Datos de Pago", LayoutGroupType.SimpleEditorsGroup, 2)]
         public Empleado.Module.BusinessObjects.Empleado Aprobo
         {
             get => aprobo;
@@ -108,22 +114,14 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
 
         #region colecciones
         [Association("OrdenCompra-Detalles"), DevExpress.Xpo.Aggregated, XafDisplayName("Detalle Orden Compra"), Index(0)]
-        public XPCollection<OrdenCompraDetalle> Detalles
-        {
-            get
-            {
-                return GetCollection<OrdenCompraDetalle>(nameof(Detalles));
-            }
-        }
+        public XPCollection<OrdenCompraDetalle> Detalles => GetCollection<OrdenCompraDetalle>(nameof(Detalles));
 
         [Association("OrdenCompra-Facturas"), Index(1)]
-        public XPCollection<CompraFactura> Facturas
-        {
-            get
-            {
-                return GetCollection<CompraFactura>(nameof(Facturas));
-            }
-        }
+        public XPCollection<CompraFactura> Facturas => GetCollection<CompraFactura>(nameof(Facturas));
+
+        [Association("OrdenCompra-Ingresos"), Index(2), XafDisplayName("Ingresos")]
+        public XPCollection<InventarioMovimiento> Ingresos => GetCollection<InventarioMovimiento>(nameof(Ingresos));
+
         #endregion
 
         #region Metodos

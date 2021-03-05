@@ -20,7 +20,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
     /// BO que implementa la parametrizacion de las operaciones por tipo de planilla
     /// </summary>
 
-    [DefaultClassOptions, ModelDefault("Caption", "Planilla Operación"), NavigationItem(false), DefaultProperty("Tipo")]
+    [ModelDefault("Caption", "Planilla Operación"), NavigationItem(false), DefaultProperty("Tipo"), CreatableItem(false)]
     [Persistent(nameof(OperacionTipoPlanilla))]
     //[ImageName("BO_Contact")]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).

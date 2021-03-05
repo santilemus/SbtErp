@@ -55,20 +55,20 @@ namespace SBT.Apps.Medico.Expediente.Module.Controllers
             base.OnDeactivated();
         }
 
-        private void pwsActionEnfermedad_CustomizePopupWindowParams(object sender, CustomizePopupWindowParamsEventArgs args)
+        private void pwsActionEnfermedad_CustomizePopupWindowParams(object sender, CustomizePopupWindowParamsEventArgs e)
         {
             IObjectSpace objectSpace = Application.CreateObjectSpace(typeof(Enfermedad));
-            args.View = Application.CreateListView(objectSpace, typeof(Enfermedad), true);
+            e.View = Application.CreateListView(objectSpace, typeof(Enfermedad), true);
             //Optionally customize the window display settings.
             //args.Size = new System.Drawing.Size(600, 400);
             //args.Maximized = true;
             //args.IsSizeable = false;
         }
 
-        private void pwsActionEnfermedad_Execute(object sender, PopupWindowShowActionExecuteEventArgs args)
+        private void pwsActionEnfermedad_Execute(object sender, PopupWindowShowActionExecuteEventArgs e)
         {
             HistoriaFamiliar historia = (HistoriaFamiliar)View.CurrentObject;
-            foreach (Enfermedad enfermedad in args.PopupWindowViewSelectedObjects)
+            foreach (Enfermedad enfermedad in e.PopupWindowViewSelectedObjects)
             {
                 if (!string.IsNullOrEmpty(historia.QuePadecen))
                 {

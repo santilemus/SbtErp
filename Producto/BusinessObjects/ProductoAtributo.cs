@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace SBT.Apps.Producto.Module.BusinessObjects
 {
-    [DefaultClassOptions, CreatableItem(false)]
+    [CreatableItem(false)]
     [ImageName(nameof(ProductoAtributo))]
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Atributo"), NavigationItem(false), Persistent("ProductoAtributo")]
     public class ProductoAtributo : XPObjectBaseBO

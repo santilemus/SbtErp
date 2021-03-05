@@ -1,4 +1,5 @@
-﻿<root>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
   <!-- 
     Microsoft ResX Schema 
     
@@ -633,38 +634,6 @@
         a7eM+xp8Fqh3EHzWcsSHhRFfXUNg7WLRLLxpNtHStVFXSwIiZKYMZ1Z3foSZkC9cb4KrT+RWrrwSNa5M
         96s8bQ/lzzLNl5GJVn8B+q57FT5H0K46ghmy4ZyU/LSXy8RhoPTul/8XRHrdOCcRhyoAAAAASUVORK5C
         YII=
-</value>
-  </data>
-  <assembly alias="DevExpress.Data.v20.2" name="DevExpress.Data.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-  <data name="peLogo.EditValue" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v20.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjE4LjIsIFZlcnNpb249MTguMi44
-        LjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjg4ZDE3NTRkNzAwZTQ5YQUBAAAAHURl
-        dkV4cHJlc3MuVXRpbHMuU3ZnLlN2Z0ltYWdlAQAAAAREYXRhBwICAAAACQMAAAAPAwAAAGkFAAAC77u/
-        PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnPz4NCjxzdmcgeD0iMHB4IiB5PSIwcHgi
-        IHZpZXdCb3g9IjAgMCA3MCAyMCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv
-        MjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBlbmFibGUt
-        YmFja2dyb3VuZD0ibmV3IDAgMCA3MCAyMCIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgaWQ9IkxheWVyXzEi
-        Pg0KICA8cGF0aCBkPSJNNS4yLDIwSDBWMGg1LjJ2Mi4ySDIuN3YxNS42aDIuNVYyMHogTTkuMywxOC4z
-        VjEuOWgzdjEzLjdoNC4xdjIuN0g5LjN6IE0zMS43LDEwLjFjMCwyLjctMC41LDQuOC0xLjUsNi4yICBj
-        LTEsMS41LTIuNCwyLjItNC4zLDIuMmMtMS45LDAtMy4zLTAuNy00LjMtMi4yYy0xLTEuNS0xLjUtMy41
-        LTEuNS02LjNjMC0yLjcsMC41LTQuOCwxLjUtNi4yYzEtMS40LDIuNC0yLjIsNC4zLTIuMiAgYzEuOSww
-        LDMuMywwLjcsNC4zLDIuMkMzMS4yLDUuMywzMS43LDcuNCwzMS43LDEwLjF6IE0yMy4yLDEwLjFjMCwx
-        LjksMC4yLDMuMywwLjcsNC4zYzAuNSwxLDEuMSwxLjUsMiwxLjVjMS44LDAsMi43LTEuOSwyLjctNS43
-        ICBzLTAuOS01LjctMi43LTUuN2MtMC45LDAtMS42LDAuNS0yLjEsMS41QzIzLjQsNi44LDIzLjIsOC4y
-        LDIzLjIsMTAuMXogTTQxLjEsOS4ySDQ2djguNGMtMS40LDAuNi0yLjksMC45LTQuNCwwLjkgIGMtMS45
-        LDAtMy4zLTAuNy00LjMtMi4yYy0xLTEuNC0xLjUtMy41LTEuNS02LjNjMC0yLjYsMC42LTQuNywxLjct
-        Ni4yczIuOC0yLjIsNC44LTIuMmMxLjMsMCwyLjUsMC4zLDMuNywxbC0wLjksMi41ICBjLTAuOS0wLjUt
-        MS44LTAuOC0yLjUtMC44Yy0xLjEsMC0yLDAuNS0yLjcsMS42Yy0wLjcsMS0xLDIuNC0xLDQuMmMwLDEu
-        OCwwLjIsMy4yLDAuNyw0LjJjMC41LDEsMS4yLDEuNSwyLjEsMS41ICBjMC41LDAsMS0wLjEsMS41LTAu
-        MnYtMy44aC0yVjkuMnogTTYxLjgsMTAuMWMwLDIuNy0wLjUsNC44LTEuNSw2LjJzLTIuNCwyLjItNC4z
-        LDIuMmMtMS45LDAtMy4zLTAuNy00LjMtMi4yICBjLTEtMS41LTEuNS0zLjUtMS41LTYuM2MwLTIuNyww
-        LjUtNC44LDEuNS02LjJjMS0xLjQsMi40LTIuMiw0LjMtMi4yYzEuOSwwLDMuMywwLjcsNC4zLDIuMkM2
-        MS4zLDUuMyw2MS44LDcuNCw2MS44LDEwLjF6ICAgTTUzLjMsMTAuMWMwLDEuOSwwLjIsMy4zLDAuNyw0
-        LjNzMS4xLDEuNSwyLDEuNWMxLjgsMCwyLjctMS45LDIuNy01LjdzLTAuOS01LjctMi43LTUuN2MtMC45
-        LDAtMS42LDAuNS0yLjEsMS41ICBTNTMuMyw4LjIsNTMuMywxMC4xeiBNNjQuOCwxNy44aDIuNVYyLjJo
-        LTIuNVYwSDcwdjIwaC01LjJWMTcuOHoiIGZpbGw9IiNGRjcyMDAiIGNsYXNzPSJzdDAiIC8+DQo8L3N2
-        Zz4L
 </value>
   </data>
 </root>

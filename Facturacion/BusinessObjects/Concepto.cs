@@ -20,7 +20,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
     /// por cobrar. Ejemplo: Notas de Credito -> Devolucion, Descuento por Pronto Pago, etc, Pagos -> Pagos Efectivo, Transferencias, etc.
     /// </summary>
 
-    [DefaultClassOptions, ModelDefault("Caption", "Concepto CxC"), DefaultProperty("Nombre"), NavigationItem("Cuenta por Cobrar"), 
+    [DefaultClassOptions, ModelDefault("Caption", "Concepto CxC y CxP"), DefaultProperty("Nombre"), NavigationItem("Cuenta por Cobrar"), 
         Persistent("CxCConcepto")]
     //[ImageName("BO_Contact")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
@@ -42,11 +42,12 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         int oid;
         bool activo = true;
         Concepto padre;
-        ETipoOperacion tipo = ETipoOperacion.Cargo;
+        ETipoOperacion tipoOperacion = ETipoOperacion.Cargo;
         string codigo;
         string nombre;
+        Listas tipoDocumento;
 
-        [DbType("smallint"), Key(false), XafDisplayName("Oid")]
+        [DbType("smallint"), Key(true), XafDisplayName("Oid")]
         public int Oid
         {
             get => oid;
@@ -57,10 +58,20 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         public Concepto Padre
         {
             get => padre;
-            set => SetPropertyValue(nameof(Padre), ref padre, value);
+            set
+            {
+                bool changed = SetPropertyValue(nameof(Padre), ref padre, value);
+                if (!IsLoading && !IsSaving && changed && Session.IsNewObject(this) && Padre != null)
+                {
+                    Codigo = Padre.Codigo;
+                    TipoOperacion = Padre.TipoOperacion;
+                    TipoDocumento = Padre.TipoDocumento;
+                }
+            }
         }
 
         [Size(8), DbType("varchar(8)"), XafDisplayName("Código"), Index(1), RuleRequiredField("CxC-Concepto.Codigo_Requerido", "Save")]
+        [Indexed(Name = "idxCxCConcepto_Codigo")]
         public string Codigo
         {
             get => codigo;
@@ -78,14 +89,27 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         /// <summary>
         /// Indica el tipo de operacion. Puede ser: un cargo o un abono
         /// </summary>
-        [DbType("smallint"), XafDisplayName("Tipo"), Index(3), VisibleInLookupListView(true)]
-        public ETipoOperacion Tipo
+        [DbType("smallint"), XafDisplayName("Tipo Operación"), Index(3), VisibleInLookupListView(true)]
+        public ETipoOperacion TipoOperacion
         {
-            get => tipo;
-            set => SetPropertyValue(nameof(Tipo), ref tipo, value);
+            get => tipoOperacion;
+            set => SetPropertyValue(nameof(TipoOperacion), ref tipoOperacion, value);
         }
 
-        [DbType("bit"), XafDisplayName("Activo"), Index(4), RuleRequiredField("Concepto.Activo_Requerido", "Save")]
+        /// <summary>
+        /// Solo aplica para los conceptos que requieren de una autorizacion de correlativos
+        /// </summary>
+        [XafDisplayName("Tipo Documento")]
+        [RuleRequiredField("Concepto.TipoDocumento_Requerido", DefaultContexts.Save, ResultType = ValidationResultType.Information,
+            CustomMessageTemplate = "Se sugiere que indique el tipo de documento para el registro")]
+        [DataSourceCriteria("[Categoria] == 16 And [Activo] == True"), VisibleInLookupListView(true), Index(4)]
+        public Listas TipoDocumento
+        {
+            get => tipoDocumento;
+            set => SetPropertyValue(nameof(TipoDocumento), ref tipoDocumento, value);
+        }
+
+        [DbType("bit"), XafDisplayName("Activo"), Index(5), RuleRequiredField("Concepto.Activo_Requerido", "Save")]
         public bool Activo
         {
             get => activo;

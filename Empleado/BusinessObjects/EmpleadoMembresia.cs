@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace SBT.Apps.Empleado.Module.BusinessObjects
 {
-    [DefaultClassOptions, NavigationItem(false)]
+    [NavigationItem(false)]
     [DevExpress.Persistent.Base.CreatableItemAttribute(false)]
     [DevExpress.Persistent.Base.ImageNameAttribute("employee_man-info")]
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Empleado Membresías")]

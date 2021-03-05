@@ -19,7 +19,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
     /// Recurso Humano.
     /// BO para el detalle del reporte de horas extras por empleado
     /// </summary>
-    [DefaultClassOptions, ModelDefault("Caption", "HExtra Detalle"), NavigationItem(false), DefaultProperty("FechaTrabajo")]
+    [ModelDefault("Caption", "HExtra Detalle"), NavigationItem(false), DefaultProperty("FechaTrabajo"), CreatableItem(false)]
     [Persistent(nameof(ReporteHoraExtraDetalle))]
     //[ImageName("BO_Contact")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]

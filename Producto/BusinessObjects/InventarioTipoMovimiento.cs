@@ -15,8 +15,7 @@ namespace SBT.Apps.Inventario.Module.BusinessObjects
     /// </summary>
     /// 
     [DefaultClassOptions, ModelDefault("Caption", "Tipo Movimiento Inventario"), NavigationItem("Inventario"), CreatableItem(false)]
-    [DefaultProperty(nameof(Nombre))]
-    //[ImageName("BO_Contact")]
+    [DefaultProperty(nameof(Nombre)), Persistent(nameof(InventarioTipoMovimiento))]
     //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     //[Persistent("DatabaseTableName")]
@@ -55,7 +54,16 @@ namespace SBT.Apps.Inventario.Module.BusinessObjects
         public InventarioTipoMovimiento Padre
         {
             get => padre;
-            set => SetPropertyValue(nameof(Padre), ref padre, value);
+            set
+            {
+                bool changed = SetPropertyValue(nameof(Padre), ref padre, value);
+                if (!IsLoading && !IsSaving && changed && padre != null && Session.IsNewObject(this))
+                {
+                    Codigo = Padre.Codigo;
+                    Operacion = Padre.Operacion;
+                }
+
+            }
         }
 
         [XafDisplayName("Tipo Operación"), DbType("smallint"), RuleRequiredField("InventarioTipoMovimiento.Operacion_Requerido", DefaultContexts.Save)]
@@ -68,6 +76,7 @@ namespace SBT.Apps.Inventario.Module.BusinessObjects
 
         [Size(8), DbType("varchar(8)"), Persistent(nameof(Codigo)), XafDisplayName("Código")]
         [RuleRequiredField("InventarioTipoMovimiento.Codigo_Requerido", "Save")]
+        [Indexed(Name = "idxInventarioTipoMovimiento_Codigo")]
         public string Codigo
         {
             get => codigo;
@@ -94,14 +103,5 @@ namespace SBT.Apps.Inventario.Module.BusinessObjects
         //    // Trigger a custom business logic for the current record in the UI (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112619.aspx).
         //    this.PersistentProperty = "Paid";
         //}
-    }
-
-
-
-    public enum ETipoOperacionInventario
-    {
-        Inicial = 0,
-        Entrada = 1,
-        Salida = 2
     }
 }

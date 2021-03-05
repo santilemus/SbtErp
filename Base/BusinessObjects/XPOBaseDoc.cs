@@ -14,7 +14,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
     /// BO con las propiedades y funcionalidad comun para implementar los encabezados (datos generales) de documentos, cuando
     /// se heredan de XPObject. En este caso el Oid es un entero de 32 bits
     /// </summary>
-    [NonPersistent, MemberDesignTimeVisibility(false)]
+    [NonPersistent]
     [RuleIsReferenced("XPOBaseDoc.Empresa_Referencia", DefaultContexts.Save, typeof(Empresa), nameof(Empresa),
         CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction)]
     public abstract class XPOBaseDoc : XPObjectBaseBO
@@ -185,7 +185,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
 #else
         [DbType("varchar(250)"), Persistent(nameof(Comentario))]
 #endif
-        [Size(250), Index(100), XafDisplayName("Comentario"), ModelDefault("AllowEdit", "False"), Browsable(false)]
+        [Size(250), Index(100), XafDisplayName("Comentario"), ModelDefault("AllowEdit", "False")]
         public string Comentario
         {
             get => comentario;

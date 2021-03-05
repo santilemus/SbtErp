@@ -22,14 +22,15 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
     /// </remarks>
     [DefaultClassOptions, ModelDefault("Caption", "Documento de Venta"), NavigationItem("Facturación"), DefaultProperty(nameof(NoFactura))]
     [Persistent("Venta")]
-    [Appearance("Venta.CreditoFiscal", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide,
+    [Appearance("Venta.CreditoFiscal", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Show,
         Criteria = "[TipoFactura.Categoria] == 15 && [TipoFactura.Codigo] != 'COVE01'", Context = "*",
         TargetItems = "Caja;NRC;NotaRemision;Iva;IvaPercibido;IvaRetenido;ResumenTributos")]
     // la siguiente regla de apariencia es para deshabilitar la modificacion de propiedades criticas. Solo es posible cuando es un objeto nuevo
     [Appearance("Venta - Nuevo Registro", AppearanceItemType = "Any", Enabled = true,
         TargetItems = "Bodega;Agencia;Caja;TipoFactura;NoFactura;Cliente", Criteria = "IsNewObject(This)")]
-
-    //[ImageName("BO_Contact")]
+    [Appearance("Venta - Pago Contado", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, AppearanceItemType = "Any", 
+        Criteria = "[CondicionPago.Codigo] != 'CPA01'", TargetItems = "FormaPago;TipoTarjeta;NoTarjeta;NoReferenciaPago;Banco")]
+    [ImageName("factura")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class Venta : XPCustomFacturaBO
@@ -64,8 +65,8 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         Tercero.Module.BusinessObjects.Tercero cliente;
         TerceroSucursal clienteAgencia;
         TerceroDocumento clienteDocumento;
-        [Persistent(nameof(NRC))]
-        TerceroDocumento nRC;
+        [Persistent(nameof(Nrc))]
+        TerceroDocumento nrc;
         TerceroDireccion direccionEntrega;
         SBT.Apps.Empleado.Module.BusinessObjects.Empleado vendedor;
         int notaRemision;
@@ -82,12 +83,14 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         /// Agencia o sucursal
         /// </summary>
         [XafDisplayName("Agencia"), PersistentAlias(nameof(agencia)), VisibleInListView(false), Index(1)]
+        [DetailViewLayout("Datos Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
         public EmpresaUnidad Agencia
         {
             get => agencia;
         }
 
         [Association("Caja-Facturas"), XafDisplayName("Caja"), Index(2)]
+        [DetailViewLayout("Datos Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
         public Caja Caja
         {
             get => caja;
@@ -100,6 +103,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         [XafDisplayName("Autorización Correlativo"), PersistentAlias(nameof(autorizacionCorrelativo)),
             VisibleInListView(false), Index(4)]
         [RuleRequiredField("Venta.NoResolucion", "Save")]
+        [DetailViewLayout("Datos Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
         public AutorizacionDocumento AutorizacionCorrelativo
         {
             get => autorizacionCorrelativo;
@@ -109,6 +113,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         [RuleRange("Venta.NoFactura_RangoValido", DefaultContexts.Save, "[AutorizacionCorrelativo.NoDesde]", "[AutorizacionCorrelativo.NoHasta]",
             ParametersMode.Expression, SkipNullOrEmptyValues = false,
             CustomMessageTemplate = "El [NoFactura] debe estar en el rango entre [NoDesde] y [NoHasta] de la autorizacion de documentos")]
+        [DetailViewLayout("Datos Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
         public int? NoFactura
         {
             get => noFactura;
@@ -121,6 +126,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         [XafDisplayName("Cliente"), RuleRequiredField("Venta.Cliente_Requerido", DefaultContexts.Save,
             TargetCriteria = "'@This.Tipo.Codigo' In ('COVE01', 'COVE02', 'COVE03')")]
         [Index(6), VisibleInLookupListView(true)]
+        [DetailViewLayout("Datos del Cliente", LayoutGroupType.SimpleEditorsGroup, 1)]
         public Tercero.Module.BusinessObjects.Tercero Cliente
         {
             get => cliente;
@@ -137,7 +143,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
                     {
                         ClienteDocumento = Cliente.Documentos.FirstOrDefault(TerceroDocumento =>
                                           (TerceroDocumento.Tipo.Codigo == "NIT" && TerceroDocumento.Vigente == true));
-                        nRC = Cliente.Documentos.FirstOrDefault(TerceroDocumento =>
+                        nrc = Cliente.Documentos.FirstOrDefault(TerceroDocumento =>
                                           TerceroDocumento.Tipo.Codigo == "NRC" && TerceroDocumento.Vigente == true);
                     }
                     else if (string.Compare(TipoFactura.Codigo, "COVE02", StringComparison.Ordinal) == 0)
@@ -155,6 +161,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
 
 
         [XafDisplayName("Cliente Agencia"), VisibleInListView(false), Index(7)]
+        [DetailViewLayout("Datos del Cliente", LayoutGroupType.SimpleEditorsGroup, 1)]
         public TerceroSucursal ClienteAgencia
         {
             get => clienteAgencia;
@@ -166,15 +173,17 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         /// Implementar una validacion probablemente una RuleFromBoolProperty o una mas compleja
         /// </summary>
         [XafDisplayName("NRC"), ToolTip("No Registro Contribuyente")]
-        [VisibleInListView(false), Index(8), PersistentAlias(nameof(nRC))]
+        [VisibleInListView(false), Index(8), PersistentAlias(nameof(nrc))]
         // Documento de venta a sujeto excluido debe ser el 'COVE08'
         [RuleRequiredField("Venta.NRC_Requerido", DefaultContexts.Save, TargetCriteria = "[TipoFactura.Categoria] == 15 && [TipoFactura.Codigo] In ('COVE01', 'COVE08')")]
-        public TerceroDocumento NRC => nRC;
+        [DetailViewLayout("Datos del Cliente", LayoutGroupType.SimpleEditorsGroup, 1)]
+        public TerceroDocumento Nrc => nrc;
 
 
         [XafDisplayName("Giro"), Index(9), Persistent(nameof(Giro))]
         [RuleRequiredField("Venta.Giro_Requerido", DefaultContexts.Save, TargetCriteria = "'@This.Tipo.Codigo' In ('COVE01', 'COVE06')")]
         [DataSourceProperty("Cliente.Giros"), VisibleInListView(false)]
+        [DetailViewLayout("Datos del Cliente", LayoutGroupType.SimpleEditorsGroup, 1)]
         public SBT.Apps.Tercero.Module.BusinessObjects.TerceroGiro Giro
         {
             get => giro;
@@ -187,6 +196,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         [DataSourceCriteria("Tercero == '@This.Cliente' && Vigente == True")]
         [VisibleInListView(false), Index(10)]
         [RuleRequiredField("Venta.ClienteDocumento_Requerido", DefaultContexts.Save, TargetCriteria = "[TipoFactura.Categoria] == 15 && [TipoFactura.Codigo] In ('COVE01', 'COVE02')")]
+        [DetailViewLayout("Datos del Cliente", LayoutGroupType.SimpleEditorsGroup, 1)]
         public TerceroDocumento ClienteDocumento
         {
             get => clienteDocumento;
@@ -201,6 +211,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         [RuleRequiredField("Venta.DireccionEntrega", DefaultContexts.Save,
             TargetCriteria = "@This.Tipo.Codigo In ('COVE01', 'COVE02', 'COVE03') ")]
         [DataSourceCriteria("Tercero == @This.Cliente And Activa == True")]
+        [DetailViewLayout("Datos del Cliente", LayoutGroupType.SimpleEditorsGroup, 1)]
         public TerceroDireccion DireccionEntrega
         {
             get => direccionEntrega;
@@ -215,10 +226,11 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         /// PENDIENTE. Completar el DataSourceCriteria con la Unidad = Ventas y Cargo = Vendedor. Puede hacerse en el model
         /// </remarks>
         [XafDisplayName("Vendedor")]
-        [RuleRequiredField("DocumentoVenta.Vendedor_Requerido", "Save",
+        [RuleRequiredField("Venta.Vendedor_Requerido", "Save",
             TargetCriteria = "@This.Tipo.Codigo In ('COVE01', 'COVE02', 'COVE03') ")]
         [DataSourceCriteria("[Empresa] == @This.Empresa And [Unidad] == ? And [Cargo] == ?")]
         [VisibleInListView(false), Index(14)]
+        [DetailViewLayout("Datos Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
         public SBT.Apps.Empleado.Module.BusinessObjects.Empleado Vendedor
         {
             get => vendedor;
@@ -232,6 +244,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         /// PENDIENTE. Crear el BO NotaRemision, remplazar int por el tipo correspondiente al BO y crear la asociacion
         /// </remarks>
         [XafDisplayName("Nota Remisión"), VisibleInListView(false), Index(15)]
+        [DetailViewLayout("Datos del Cliente", LayoutGroupType.SimpleEditorsGroup, 1)]
         public int NotaRemision
         {
             get => notaRemision;
@@ -240,6 +253,8 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
 
         [XafDisplayName("Forma de Pago"), DbType("varchar(12)"), Index(16)]
         [DataSourceCriteria("[Categoria] == 5 And [Activo] == True")]   // categoria 5 son las formas de pago
+        [RuleRequiredField("Venta.FormaPago_Requerido", "Save")]
+        [DetailViewLayout("Datos de Pago", LayoutGroupType.SimpleEditorsGroup, 2)]
         public Listas FormaPago
         {
             get => formaPago;
@@ -247,17 +262,19 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         }
         [XafDisplayName("Tipo Tarjeta"), DbType("varchar(12)"), VisibleInListView(false), Index(17)]
         [DataSourceCriteria("[Categoria] == 6 And [Activo] == True")]   // categoria 6 son tarjetas de credito
-        [RuleRequiredField("DocumentoVenta.FomaPago_Requerido", "Save", TargetCriteria = "[FormaPago.Codigo] In ('FPA03', 'FPA04')",
+        [RuleRequiredField("Venta.TipoTarjeta_Requerido", "Save", TargetCriteria = "[FormaPago.Codigo] In ('FPA03', 'FPA04')",
              ResultType = ValidationResultType.Warning)]
+        [DetailViewLayout("Datos de Pago", LayoutGroupType.SimpleEditorsGroup, 2)]
         public Listas TipoTarjeta
         {
             get => tipoTarjeta;
             set => SetPropertyValue(nameof(TipoTarjeta), ref tipoTarjeta, value);
         }
 
-        [Size(25), DbType("varchar(25)"), XafDisplayName("No Tarjeta"), VisibleInListView(false), Index(18)]
+        [Size(20), DbType("varchar(20)"), XafDisplayName("No Tarjeta"), VisibleInListView(false), Index(18)]
         [RuleRequiredField("Venta.NoTarjeta_Requerido", DefaultContexts.Save, TargetCriteria = "[TipoTarjeta] Is Not Null",
              ResultType = ValidationResultType.Warning)]
+        [DetailViewLayout("Datos de Pago", LayoutGroupType.SimpleEditorsGroup, 2)]
         public string NoTarjeta
         {
             get => noTarjeta;
@@ -268,6 +285,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         [ToolTip("Banco o tercero relacionado al cheque, tarjeta o pago electrónico", "Banco o Tercero", ToolTipIconType.Information)]
         [RuleRequiredField("Venta.Banco_Emisor", DefaultContexts.Save, TargetCriteria = "[FormaPago.Codigo] != 'FPA01' And [NoTarjeta] Is Not Null",
             ResultType = ValidationResultType.Warning)]
+        [DetailViewLayout("Datos de Pago", LayoutGroupType.SimpleEditorsGroup, 2)]
         public SBT.Apps.Tercero.Module.BusinessObjects.Banco Banco
         {
             get => banco;
@@ -279,6 +297,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         [Size(25), DbType("varchar(25)"), XafDisplayName("No Referencia Pago"), VisibleInListView(false), Index(20)]
         [ToolTip("No de referencia del pago: No de cheque, ID Remesa, ID pago electrónico, No vaucher", "Referencia Pago",
             ToolTipIconType.Information)]
+        [DetailViewLayout("Datos de Pago", LayoutGroupType.SimpleEditorsGroup, 2)]
         public string NoReferenciaPago
         {
             get => noReferenciaPago;
@@ -286,6 +305,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         }
 
         [PersistentAlias(nameof(diaCerrado)), XafDisplayName("Día Cerrado"), VisibleInListView(false), Index(29)]
+        [DetailViewLayout("Totales", LayoutGroupType.SimpleEditorsGroup, 10)]
         public bool DiaCerrado
         {
             get { return diaCerrado; }
@@ -313,7 +333,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             }
         }
 
-        [Association("Venta-CxCDocumentos"), Index(2)]
+        [Association("Venta-CxCDocumentos"), Index(2), XafDisplayName("Cuenta por Cobrar")]
         public XPCollection<SBT.Apps.CxC.Module.BusinessObjects.CxCDocumento> CxCDocumentos
         {
             get
@@ -341,11 +361,18 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         protected override void DoTipoFacturaChanged(bool forceChangeEvents, Listas oldValue)
         {
             base.DoTipoFacturaChanged(forceChangeEvents, oldValue);
-            AutorizacionDocumento resolucionDoc = Session.FindObject<AutorizacionDocumento>(
-                CriteriaOperator.Parse("Agencia.Oid == ? && Caja.Oid == ? && Tipo.Codigo == ? && Activo == True", Agencia.Oid, Caja.Oid, TipoFactura.Codigo));
-            if (resolucionDoc != null)
+            AutorizacionDocumento resoluc;
+            if (Caja != null)
+                resoluc = Session.FindObject<AutorizacionDocumento>(CriteriaOperator.Parse("Agencia.Oid == ? && Caja.Oid == ? && Tipo.Codigo == ? && Activo == True", 
+                    Agencia.Oid, Caja.Oid, TipoFactura.Codigo));
+            else
+                resoluc = Session.FindObject<AutorizacionDocumento>(CriteriaOperator.Parse("Agencia.Oid == ? && Tipo.Codigo == ? && Activo == True",
+                    Agencia.Oid, TipoFactura.Codigo));
+            if (resoluc != null)
             {
-                autorizacionCorrelativo = resolucionDoc;
+                var oldresoluc = autorizacionCorrelativo;
+                autorizacionCorrelativo = resoluc;
+                OnChanged(nameof(AutorizacionCorrelativo), oldresoluc, resoluc);
             }
         }
 
@@ -392,6 +419,14 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         {
             base.OnSaving();
 
+        }
+
+        protected override void RefreshTiposDeFacturas()
+        {
+            base.RefreshTiposDeFacturas();
+            if (fTiposDeFacturas == null)
+                return;
+            fTiposDeFacturas.Criteria = CriteriaOperator.Parse("[Categoria] == 15 && [Activo] == True && [Codigo] In ('COVE01', 'COVE02', 'COVE03', 'COVE04', 'COVE05', 'COVE06')");
         }
 
         #endregion

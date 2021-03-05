@@ -8,7 +8,6 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
     {
         Digitado = 0,
         Aplicado = 1,
-        Anulado = 2,
-        Rechazado = 3
+        Anulado = 2
     }
 }
