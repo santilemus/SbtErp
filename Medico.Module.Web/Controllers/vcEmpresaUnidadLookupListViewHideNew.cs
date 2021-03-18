@@ -41,5 +41,12 @@ namespace SBT.Apps.Medico.Module.Web.Controllers
             }
             base.OnDeactivated();
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (newController != null)
+                newController.Dispose();
+            base.Dispose(disposing);
+        }
     }
 }

@@ -1,19 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using DevExpress.Data.Filtering;
+﻿using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp;
-using DevExpress.ExpressApp.Actions;
-using DevExpress.ExpressApp.Editors;
-using DevExpress.ExpressApp.Layout;
-using DevExpress.ExpressApp.Model.NodeGenerators;
-using DevExpress.ExpressApp.SystemModule;
-using DevExpress.ExpressApp.Templates;
-using DevExpress.ExpressApp.Utils;
-using DevExpress.Persistent.Base;
-using DevExpress.Persistent.Validation;
 using SBT.Apps.Base.Module.BusinessObjects;
+using System;
+using System.Linq;
 
 namespace SBT.Apps.Base.Module.Controllers
 {
@@ -35,9 +24,9 @@ namespace SBT.Apps.Base.Module.Controllers
         }
         protected override void OnActivated()
         {
-            base.OnActivated();          
-            if ((string.Compare(View.GetType().Name, "ListView", StringComparison.Ordinal) == 0) && (((ListView)View).ObjectTypeInfo.FindMember("Empresa") != null)) 
-                ((ListView)View).CollectionSource.Criteria["Empresa Actual"] = CriteriaOperator.Parse("Empresa = ?", ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid);
+            base.OnActivated();
+            if ((string.Compare(View.GetType().Name, "ListView", StringComparison.Ordinal) == 0) && (((ListView)View).ObjectTypeInfo.FindMember("Empresa") != null))
+                ((ListView)View).CollectionSource.Criteria["Empresa Actual"] = CriteriaOperator.Parse("[Empresa.Oid] = ?", ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid);
             // otra manera es la siguiente
             //((ListView)View).CollectionSource.Criteria["Filtro Defecto"] = CriteriaOperator.Parse("Empresa.Oid = EmpresaActualOid()"); 
             // Perform various tasks depending on the target View.

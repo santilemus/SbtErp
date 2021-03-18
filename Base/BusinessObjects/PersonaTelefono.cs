@@ -1,5 +1,4 @@
 ﻿using DevExpress.ExpressApp.DC;
-using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using System;
@@ -30,10 +29,11 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         public Persona Persona
         {
             get => _persona;
-            set =>SetPropertyValue("Persona", ref _persona, value);
+            set => SetPropertyValue("Persona", ref _persona, value);
         }
 
         [XafDisplayName("Telefono")]
+        [ExplicitLoading]
         public Telefono Telefono
         {
             get => telefono;

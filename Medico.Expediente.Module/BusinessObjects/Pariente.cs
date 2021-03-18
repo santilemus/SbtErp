@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using DevExpress.ExpressApp.DC;
+﻿using DevExpress.ExpressApp.DC;
+using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
-using DevExpress.Persistent.BaseImpl;
-using DevExpress.Xpo;
 using DevExpress.Persistent.Validation;
+using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Medico.Generico.Module.BusinessObjects;
+using System;
 using System.ComponentModel;
-using DevExpress.ExpressApp.Model;
+using System.Linq;
 
 namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 {
@@ -50,8 +47,9 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         ///  Esta propiedad tiene valor y es valida cuando el pariente es ademas paciente 
         ///  Cuando el pariente no es paciente  sera nula
         /// </summary>
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute(true), VisibleInLookupListView(true),
+        [VisibleInLookupListView(true),
             Persistent("IdPariente"), XafDisplayName("Id Pariente")]
+        [ExplicitLoading]
         public Paciente IdPariente
         {
             get => _idPariente;
@@ -69,6 +67,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 
         [XafDisplayName("Parentesco")]
         [DataSourceCriteria("[Categoria] == 12")]
+        [ExplicitLoading]
         public Listas Parentesco
         {
             get
@@ -116,6 +115,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 
 
         [Persistent("Diagnostico"), XafDisplayName("Diagnostico"), ToolTip("Referencia del diagnostico del pariente, para la historia familiar")]
+        [ExplicitLoading]
         public Enfermedad Diagnostico
         {
             get => diagnostico;
@@ -138,7 +138,6 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         /// Cuando el paciente es menor de edad, valor true indica que el pariente es el responsable
         /// </summary>
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
         [ToolTip("Marcar cuando el pariente es el responsable de paciente menor de edad o incapaz")]
         public System.Boolean Responsable
         {

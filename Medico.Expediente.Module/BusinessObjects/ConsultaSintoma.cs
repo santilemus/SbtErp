@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using DevExpress.ExpressApp.DC;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.Persistent.Base;
-using DevExpress.Persistent.BaseImpl;
-using DevExpress.Xpo;
 using DevExpress.Persistent.Validation;
+using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Medico.Generico.Module.BusinessObjects;
+using System;
+using System.Linq;
 
 namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 {
@@ -22,7 +19,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
     [XafDefaultProperty(nameof(Descripcion))]
     [NavigationItem(false)]
     [RuleCriteria("ConsultaSintoma.FechaFin_Valida", DefaultContexts.Save, "Not(IsNull([FechaFin])) And FechaFin >= FechaInicio", "Fecha Fin debe ser mayor o igual Fecha Inicio")]
-    public class ConsultaSintoma: XPObjectBaseBO
+    public class ConsultaSintoma : XPObjectBaseBO
     {
         /// <summary>
         /// Metodo para la inicialización de propiedades y/o objetos del BO. Se ejecuta una sola vez después de la creación del objeto
@@ -46,6 +43,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 
         [RuleRequiredField("ConsultaSintoma.Intensidad_Requerido", "Save")]
         [DataSourceCriteria("[Categoria] == 2")]
+        [ExplicitLoading]
         public MedicoLista Intensidad
         {
             get

@@ -1,20 +1,14 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp;
-using System.ComponentModel;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
-using DevExpress.Persistent.Base;
-using System.Collections.Generic;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
-using DevExpress.Persistent.Validation;
+using DevExpress.Persistent.Base;
+using DevExpress.Xpo;
+using System;
+using System.ComponentModel;
+using System.Linq;
 
 namespace SBT.Apps.Base.Module.BusinessObjects
 {
-    [NavigationItem(false), Persistent("SysAuditoriaProceso"), ModelDefault("Caption", "Auditoría Proceso"), 
+    [NavigationItem(false), Persistent("SysAuditoriaProceso"), ModelDefault("Caption", "Auditoría Proceso"),
         DefaultProperty(nameof(NombreProceso))]
     //[ImageName("BO_Contact")]
     //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
@@ -55,7 +49,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         {
             get => oid;
         }
-     
+
         [PersistentAlias(nameof(empresa)), XafDisplayName("Empresa")]
         public Empresa Empresa
         {

@@ -17,7 +17,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 {
     [DefaultClassOptions, ModelDefault("Caption", "Renta Empleo Anterior"), NavigationItem("Recurso Humano"),
         CreatableItem(false), DefaultProperty(nameof(RazonSocial)), Persistent(nameof(RentaEmpleoAnterior))]
-    //[ImageName("BO_Contact")]
+    [ImageName(nameof(RentaEmpleoAnterior))]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class RentaEmpleoAnterior : XPObjectBaseBO

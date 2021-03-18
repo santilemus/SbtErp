@@ -26,7 +26,7 @@ namespace SBT.Apps.Inventario.Module.BusinessObjects
     /// </remarks>
     [ModelDefault("Caption", "Kardex"), NavigationItem("Inventario"), CreatableItem(false)]
     [Persistent(nameof(Kardex))]
-    //[ImageName("BO_Contact")]
+    [ImageName(nameof(Kardex))]
     //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     //[Persistent("DatabaseTableName")]

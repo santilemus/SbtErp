@@ -33,6 +33,7 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Código")]
         [RuleRequiredField("EmpleadoCapacitacion.Codigo_Requerido", DefaultContexts.Save, "Capacitación es requerida")]
         [DataSourceCriteria("Categoria = 'Capacitacion'")]
+        [ExplicitLoading]
         public Listas Codigo
         {
             get

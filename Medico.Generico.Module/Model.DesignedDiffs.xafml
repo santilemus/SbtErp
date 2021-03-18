@@ -142,7 +142,6 @@
                   <LayoutItem Id="UnidadMedida" ViewItem="UnidadMedida" Index="1" RelativeSize="17.333333333333332" CaptionLocation="Left" IsNewNode="True" />
                   <LayoutItem Id="Presentacion" ViewItem="Presentacion" Index="2" RelativeSize="17.333333333333332" CaptionLocation="Left" IsNewNode="True" />
                   <LayoutItem Id="CostoPromedio" ViewItem="CostoPromedio" Index="3" RelativeSize="17.333333333333332" IsNewNode="True" />
-                  <LayoutItem Id="PorcentajeIVA" ViewItem="PorcentajeIVA" Index="4" RelativeSize="24" IsNewNode="True" />
                 </LayoutGroup>
               </LayoutGroup>
               <LayoutGroup Id="Medicamento" ShowCaption="True" Direction="Horizontal" Index="1" RelativeSize="100" IsNewNode="True">

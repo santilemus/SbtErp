@@ -26,7 +26,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
     [RuleIsReferenced("ZonaGeografica_Referencia", DefaultContexts.Delete, typeof(ZonaGeografica), nameof(Codigo),
         MessageTemplateMustBeReferenced = "Para borrar el objeto '{TargetObject}', debe estar seguro que no es utilizado (referenciado) en ningún lugar.",
         InvertResult = true, FoundObjectMessageFormat = "'{0}'", FoundObjectMessagesSeparator = ";")]
-    public class ZonaGeografica : XPCustomBaseBO //, ITreeNode
+    public class ZonaGeografica : XPCustomObject
     {
         /// <summary>
         /// Metodo para la inicialización de propiedades y/o objetos del BO. Se ejecuta una sola vez después de la creación del objeto

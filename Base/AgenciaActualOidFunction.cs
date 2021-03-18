@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DevExpress.Data.Filtering;
+﻿using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp;
 using SBT.Apps.Base.Module.BusinessObjects;
+using System;
+using System.Linq;
 
 namespace SBT.Apps.Base.Module
 {
     /// <summary>
     /// Implementar función personalizada que retorna el Oid de la sucursal actual (sucursal de la sesion)
     /// </summary>
-    public class AgenciaActualOidFunction: ICustomFunctionOperatorBrowsable
+    public class AgenciaActualOidFunction : ICustomFunctionOperatorBrowsable
     {
         #region Implementacion de ICustomFunctionOperator
         /// <summary>

@@ -149,6 +149,9 @@
     <Compile Include="Controllers\vcVentaDetalle.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controllers\vcVentaViewDetail.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="DatabaseUpdate\Updater.cs" />
     <Compile Include="DBColumn.cs" />
     <Compile Include="FacturacionModule.cs">

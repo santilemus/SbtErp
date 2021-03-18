@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using DevExpress.ExpressApp.DC;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.Persistent.Base;
-using DevExpress.Persistent.BaseImpl;
-using DevExpress.Xpo;
 using DevExpress.Persistent.Validation;
+using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
-using SBT.Apps.Medico.Generico.Module.BusinessObjects;
+using System;
 using System.ComponentModel;
+using System.Linq;
 
 namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 {
@@ -23,7 +19,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
     [DevExpress.Persistent.Base.ImageNameAttribute("signo")]
     [NavigationItem(false)]
     [DefaultProperty(nameof(Consulta))]
-    public class ConsultaDiagnostico: XPObjectBaseBO
+    public class ConsultaDiagnostico : XPObjectBaseBO
     {
         /// <summary>
         /// Metodo para la inicialización de propiedades y/o objetos del BO. Se ejecuta una sola vez después de la creación del objeto
@@ -51,9 +47,10 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
             set => SetPropertyValue(nameof(Consulta), ref _consulta, value);
         }
 
-        [Persistent("Problema"), XafDisplayName("Problema Medico"), Index(1), ]
+        [Persistent("Problema"), XafDisplayName("Problema Medico"), Index(1),]
         [RuleRequiredField("ConsultaSigno.Problema_Requerido", "Save", ResultType = ValidationResultType.Warning)]
         [DataSourceCriteria("[Paciente.Oid] == '@This.Consulta.Paciente.Oid'")]
+        [ExplicitLoading]
         public ProblemaMedico Problema
         {
             get => _problema;

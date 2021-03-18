@@ -22,15 +22,30 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
     /// </remarks>
     [DefaultClassOptions, ModelDefault("Caption", "Documento de Venta"), NavigationItem("Facturación"), DefaultProperty(nameof(NoFactura))]
     [Persistent("Venta")]
-    [Appearance("Venta.CreditoFiscal", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Show,
-        Criteria = "[TipoFactura.Categoria] == 15 && [TipoFactura.Codigo] != 'COVE01'", Context = "*",
+    [Appearance("Venta.CreditoFiscal", Criteria = "[TipoFactura.Categoria] == 15 && [TipoFactura.Codigo] != 'COVE01'",
+        AppearanceItemType = "ViewItem",
+        Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "DetailView", 
         TargetItems = "Caja;NRC;NotaRemision;Iva;IvaPercibido;IvaRetenido;ResumenTributos")]
     // la siguiente regla de apariencia es para deshabilitar la modificacion de propiedades criticas. Solo es posible cuando es un objeto nuevo
-    [Appearance("Venta - Nuevo Registro", AppearanceItemType = "Any", Enabled = true,
+    [Appearance("Venta - Nuevo Registro", AppearanceItemType = "Any", Enabled = true, Context = "DetailView",
         TargetItems = "Bodega;Agencia;Caja;TipoFactura;NoFactura;Cliente", Criteria = "IsNewObject(This)")]
-    [Appearance("Venta - Pago Contado", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, AppearanceItemType = "Any", 
-        Criteria = "[CondicionPago.Codigo] != 'CPA01'", TargetItems = "FormaPago;TipoTarjeta;NoTarjeta;NoReferenciaPago;Banco")]
+
+    [Appearance("Venta - Condicion Pago Contado", Criteria = "[CondicionPago] == 0",
+        Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, AppearanceItemType = "LayoutItem", Context = "DetailView",
+        TargetItems = "DiasCredito;Saldo;CxCDocumentos")]
+    [Appearance("Venta - Condicion Pago Credito", Criteria = "[CondicionPago] == 1",
+        Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, AppearanceItemType = "LayoutItem", Context = "DetailView",
+        TargetItems = "FormaPago;TipoTarjeta;NoTarjeta;Banco;NoReferenciaPago")]
+
+    [Appearance("Venta - Pago en Efectivo", Criteria = "[FormaPago] == 0",
+        Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, AppearanceItemType = "LayoutItem", Context = "DetailView",
+        TargetItems = "TipoTarjeta;NoTarjeta;Banco;NoReferenciaPago")]
+    [Appearance("Venta - Pago con Cheque o Transferencia", Criteria = "[FormaPago] In (1, 3)",
+        Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide,
+        AppearanceItemType = "LayoutItem", Context = "DetailView", TargetItems = "TipoTarjeta;NoTarjeta")]
+
     [ImageName("factura")]
+    [RuleObjectExists("", CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction, LooksFor = typeof(Empresa))]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class Venta : XPCustomFacturaBO
@@ -42,9 +57,6 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         public override void AfterConstruction()
         {
             base.AfterConstruction();
-            Listas fpago = Session.GetObjectByKey<Listas>("FPA01");
-            if (fpago != null)
-                FormaPago = fpago;
             if (((Usuario)SecuritySystem.CurrentUser).Agencia != null)
                 agencia = ((Usuario)SecuritySystem.CurrentUser).Agencia;
             // PENDIENTE asignar la caja de forma automatica, a partir de la agencia
@@ -70,8 +82,8 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         TerceroDireccion direccionEntrega;
         SBT.Apps.Empleado.Module.BusinessObjects.Empleado vendedor;
         int notaRemision;
-        Listas formaPago;
-        Listas tipoTarjeta;
+        EFormaPago formaPago = EFormaPago.Efectivo;
+        ETipoTarjeta tipoTarjeta;
         string noTarjeta;
         SBT.Apps.Tercero.Module.BusinessObjects.Banco banco;
         string noReferenciaPago;
@@ -84,6 +96,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         /// </summary>
         [XafDisplayName("Agencia"), PersistentAlias(nameof(agencia)), VisibleInListView(false), Index(1)]
         [DetailViewLayout("Datos Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
+        [ExplicitLoading]
         public EmpresaUnidad Agencia
         {
             get => agencia;
@@ -104,6 +117,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             VisibleInListView(false), Index(4)]
         [RuleRequiredField("Venta.NoResolucion", "Save")]
         [DetailViewLayout("Datos Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
+        [ExplicitLoading]
         public AutorizacionDocumento AutorizacionCorrelativo
         {
             get => autorizacionCorrelativo;
@@ -124,9 +138,10 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         /// Cliente. Es requerido en el caso de documento es: credito fiscal, factura de consumidor final, factura de exportacion
         /// </summary>
         [XafDisplayName("Cliente"), RuleRequiredField("Venta.Cliente_Requerido", DefaultContexts.Save,
-            TargetCriteria = "'@This.Tipo.Codigo' In ('COVE01', 'COVE02', 'COVE03')")]
+            TargetCriteria = "[TipoFactura.Codigo] In ('COVE01', 'COVE02', 'COVE03')")]
         [Index(6), VisibleInLookupListView(true)]
         [DetailViewLayout("Datos del Cliente", LayoutGroupType.SimpleEditorsGroup, 1)]
+        [ExplicitLoading]
         public Tercero.Module.BusinessObjects.Tercero Cliente
         {
             get => cliente;
@@ -145,6 +160,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
                                           (TerceroDocumento.Tipo.Codigo == "NIT" && TerceroDocumento.Vigente == true));
                         nrc = Cliente.Documentos.FirstOrDefault(TerceroDocumento =>
                                           TerceroDocumento.Tipo.Codigo == "NRC" && TerceroDocumento.Vigente == true);
+                        OnChanged(nameof(Nrc));
                     }
                     else if (string.Compare(TipoFactura.Codigo, "COVE02", StringComparison.Ordinal) == 0)
                     {
@@ -181,7 +197,8 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
 
 
         [XafDisplayName("Giro"), Index(9), Persistent(nameof(Giro))]
-        [RuleRequiredField("Venta.Giro_Requerido", DefaultContexts.Save, TargetCriteria = "'@This.Tipo.Codigo' In ('COVE01', 'COVE06')")]
+        [RuleRequiredField("Venta.Giro_Requerido", DefaultContexts.Save, TargetCriteria = "[TipoFactura.Codigo] In ('COVE01', 'COVE06')", 
+            ResultType = ValidationResultType.Information)]
         [DataSourceProperty("Cliente.Giros"), VisibleInListView(false)]
         [DetailViewLayout("Datos del Cliente", LayoutGroupType.SimpleEditorsGroup, 1)]
         public SBT.Apps.Tercero.Module.BusinessObjects.TerceroGiro Giro
@@ -209,7 +226,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         /// </summary>
         [XafDisplayName("Dirección Entrega"), VisibleInListView(false), Index(11)]
         [RuleRequiredField("Venta.DireccionEntrega", DefaultContexts.Save,
-            TargetCriteria = "@This.Tipo.Codigo In ('COVE01', 'COVE02', 'COVE03') ")]
+            TargetCriteria = "[TipoFactura.Codigo] In ('COVE01', 'COVE02', 'COVE03')", ResultType = ValidationResultType.Information)]
         [DataSourceCriteria("Tercero == @This.Cliente And Activa == True")]
         [DetailViewLayout("Datos del Cliente", LayoutGroupType.SimpleEditorsGroup, 1)]
         public TerceroDireccion DireccionEntrega
@@ -227,10 +244,11 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         /// </remarks>
         [XafDisplayName("Vendedor")]
         [RuleRequiredField("Venta.Vendedor_Requerido", "Save",
-            TargetCriteria = "@This.Tipo.Codigo In ('COVE01', 'COVE02', 'COVE03') ")]
-        [DataSourceCriteria("[Empresa] == @This.Empresa And [Unidad] == ? And [Cargo] == ?")]
+            TargetCriteria = "[TipoFactura.Codigo] In ('COVE01', 'COVE02', 'COVE03') ")]
+        [DataSourceCriteria("[Empresa.Oid] = EmpresaActualOid() And [Unidad] == ? And [Cargo] == ?")]
         [VisibleInListView(false), Index(14)]
         [DetailViewLayout("Datos Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
+        [ExplicitLoading]
         public SBT.Apps.Empleado.Module.BusinessObjects.Empleado Vendedor
         {
             get => vendedor;
@@ -251,21 +269,21 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             set => SetPropertyValue(nameof(NotaRemision), ref notaRemision, value);
         }
 
-        [XafDisplayName("Forma de Pago"), DbType("varchar(12)"), Index(16)]
-        [DataSourceCriteria("[Categoria] == 5 And [Activo] == True")]   // categoria 5 son las formas de pago
+        [XafDisplayName("Forma de Pago"), Index(16)]
+        [DbType("smallint")]
         [RuleRequiredField("Venta.FormaPago_Requerido", "Save")]
         [DetailViewLayout("Datos de Pago", LayoutGroupType.SimpleEditorsGroup, 2)]
-        public Listas FormaPago
+        public EFormaPago FormaPago
         {
             get => formaPago;
             set => SetPropertyValue(nameof(FormaPago), ref formaPago, value);
         }
         [XafDisplayName("Tipo Tarjeta"), DbType("varchar(12)"), VisibleInListView(false), Index(17)]
-        [DataSourceCriteria("[Categoria] == 6 And [Activo] == True")]   // categoria 6 son tarjetas de credito
-        [RuleRequiredField("Venta.TipoTarjeta_Requerido", "Save", TargetCriteria = "[FormaPago.Codigo] In ('FPA03', 'FPA04')",
+        [RuleRequiredField("Venta.TipoTarjeta_Requerido", "Save", TargetCriteria = "[FormaPago] In (2, 3)",
              ResultType = ValidationResultType.Warning)]
         [DetailViewLayout("Datos de Pago", LayoutGroupType.SimpleEditorsGroup, 2)]
-        public Listas TipoTarjeta
+        [ExplicitLoading]
+        public ETipoTarjeta TipoTarjeta
         {
             get => tipoTarjeta;
             set => SetPropertyValue(nameof(TipoTarjeta), ref tipoTarjeta, value);
@@ -283,7 +301,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
 
         [XafDisplayName("Banco Emisor"), VisibleInListView(false), Index(19)]
         [ToolTip("Banco o tercero relacionado al cheque, tarjeta o pago electrónico", "Banco o Tercero", ToolTipIconType.Information)]
-        [RuleRequiredField("Venta.Banco_Emisor", DefaultContexts.Save, TargetCriteria = "[FormaPago.Codigo] != 'FPA01' And [NoTarjeta] Is Not Null",
+        [RuleRequiredField("Venta.Banco_Emisor", DefaultContexts.Save, TargetCriteria = "[FormaPago] != 0 And [NoTarjeta] Is Not Null",
             ResultType = ValidationResultType.Warning)]
         [DetailViewLayout("Datos de Pago", LayoutGroupType.SimpleEditorsGroup, 2)]
         public SBT.Apps.Tercero.Module.BusinessObjects.Banco Banco
@@ -368,12 +386,9 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             else
                 resoluc = Session.FindObject<AutorizacionDocumento>(CriteriaOperator.Parse("Agencia.Oid == ? && Tipo.Codigo == ? && Activo == True",
                     Agencia.Oid, TipoFactura.Codigo));
-            if (resoluc != null)
-            {
-                var oldresoluc = autorizacionCorrelativo;
-                autorizacionCorrelativo = resoluc;
-                OnChanged(nameof(AutorizacionCorrelativo), oldresoluc, resoluc);
-            }
+            var oldresoluc = autorizacionCorrelativo;
+            autorizacionCorrelativo = resoluc;
+            OnChanged(nameof(AutorizacionCorrelativo), oldresoluc, resoluc);
         }
 
         public override void UpdateTotalExenta(bool forceChangeEvents)

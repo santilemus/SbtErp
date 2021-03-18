@@ -43,6 +43,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         }
 
         [DevExpress.Xpo.AssociationAttribute("Paciente-Citas"), ImmediatePostData(true)]
+        [ExplicitLoading]
         public Paciente Paciente
         {
             get => _paciente;

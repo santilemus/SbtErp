@@ -17,7 +17,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 {
     [DefaultClassOptions, ModelDefault("Caption", "Asueto"), NavigationItem("Recurso Humano"), DefaultProperty(nameof(Fecha)), 
         Persistent(nameof(Asueto)), CreatableItem(false)]
-    //[ImageName("BO_Contact")]
+    [ImageName(nameof(Asueto))]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class Asueto : XPObjectBaseBO

@@ -68,7 +68,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         [RuleRequiredField("Producto.Categoria_Requerido", DefaultContexts.Save, "La Categoría es requerida")]
         [DataSourceCriteria("EsGrupo = false And Activa = true")]
         //[Association("Categoria-Productos")]
-
+        [ExplicitLoading]
         public Categoria Categoria
         {
             get => categoria;
@@ -82,7 +82,6 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
 
         [DevExpress.Xpo.SizeAttribute(20), VisibleInLookupListView(true), DbType("varchar(20)")]
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Código")]
-        [ImmediatePostData(true)]
         [RuleRequiredField("Producto.Codigo_Requerido", "Save")]
         public System.String Codigo
         {
@@ -92,15 +91,15 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
 
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Código Barra")]
         [DevExpress.Persistent.Base.ToolTipAttribute("Código de barra principal o por defecto del producto")]
-        [NoForeignKey]
-        //[ImmediatePostData(true)]
+        //[NoForeignKey]
+        [ExplicitLoading]
         public ProductoCodigoBarra CodigoBarra
         {
             get => codigoBarra;
             set => SetPropertyValue(nameof(CodigoBarra), ref codigoBarra, value);
         }
 
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute, DbType("varchar(100)")]
+        [DbType("varchar(100)")]
         [RuleRequiredField("Producto.Nombre_Requerido", "Save")]
         public System.String Nombre
         {
@@ -129,6 +128,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         }
 
         [Association("Presentacion-Productos"), XafDisplayName("Presentación"), Persistent("Presentacion"), VisibleInListView(false)]
+        [ExplicitLoading]
         public Presentacion Presentacion
         {
             get => presentacion;

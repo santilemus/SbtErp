@@ -37,6 +37,8 @@ namespace SBT.Apps.Facturacion.Module.Controllers
         /// <param name="e"></param>
         private void ObjectSpace_ObjectChanged(object Sender, ObjectChangedEventArgs e)
         {
+            if (View == null || View.CurrentObject == null || e.Object == null)
+                return;
             if (View.CurrentObject == e.Object && e.PropertyName == "Cantidad" && ObjectSpace.IsNewObject(View.CurrentObject))
             {
                 if (e.NewValue == null)

@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Persistent.Base;
-using DevExpress.Persistent.BaseImpl;
+﻿using DevExpress.Persistent.Base;
 using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
-using SBT.Apps.Tercero.Module.BusinessObjects;
 using SBT.Apps.Medico.Generico.Module.BusinessObjects;
+using System;
+using System.Linq;
 
 namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 {
@@ -17,7 +12,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
     [DevExpress.Persistent.Base.ImageNameAttribute("vacunas")]
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Vacunas")]
     [Persistent(nameof(PacienteVacuna))]
-    public class PacienteVacuna: XPObjectBaseBO
+    public class PacienteVacuna : XPObjectBaseBO
     {
         private Medicamento _vacuna;
         private System.String _lote;
@@ -35,6 +30,8 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
           : base(session)
         {
         }
+
+        [ExplicitLoading]
         public Medicamento Vacuna
         {
             get
@@ -80,6 +77,8 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
                 SetPropertyValue("Aplicada", ref _aplicada, value);
             }
         }
+
+        [ExplicitLoading]
         public TerminologiaAnatomica ParteDeCuerpo
         {
             get
@@ -113,6 +112,8 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
                 SetPropertyValue("NoRefuerzo", ref _noRefuerzo, value);
             }
         }
+
+        [ExplicitLoading]
         public Tercero.Module.BusinessObjects.Tercero Farmaceutica
         {
             get

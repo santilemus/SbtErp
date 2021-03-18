@@ -15,7 +15,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
     [RuleIsReferenced("Listas_Referencia", DefaultContexts.Delete, typeof(Listas), nameof(Codigo),
         MessageTemplateMustBeReferenced = "Para borrar el objeto '{TargetObject}', debe estar seguro que no es utilizado (referenciado) en ningún lugar.",
         InvertResult = true, FoundObjectMessageFormat = "'{0}'", FoundObjectMessagesSeparator = ";")]
-    public class Listas : XPCustomBaseBO
+    public class Listas : XPCustomObject
     {
         private System.Boolean _activo = true;
         private CategoriaLista _categoria = CategoriaLista.EstadoEmpleado;

@@ -154,9 +154,9 @@ namespace SBT.Apps.Medico.Module.DatabaseUpdate
 
         private Empresa CreateDefaultEmpresa()
         {
-            ObjectSpace.Evaluate(typeof(Empresa), CriteriaOperator.Parse("Count()"), CriteriaOperator.Parse("Activa = true And Oid > 0"));
-            Empresa emp = ObjectSpace.FindObject<Empresa>(CriteriaOperator.Parse("Activa = true And Oid > 0"));
-            if (emp == null)
+            var iCant = ObjectSpace.Evaluate(typeof(Empresa), CriteriaOperator.Parse("Count()"), CriteriaOperator.Parse("Activa = true And Oid > 0"));
+            Empresa emp;
+            if (Convert.ToInt16(iCant) == 0)
             {
                 emp = ObjectSpace.CreateObject<Empresa>();
                 emp.RazonSocial = "Servicios Medicos, S.A de C.V";

@@ -20,7 +20,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 
     [DefaultClassOptions, ModelDefault("Caption", "Operaciones"), NavigationItem("Recurso Humano"), DefaultProperty("Nombre")]
     [Persistent("PlaOperacion")]
-    //[ImageName("BO_Contact")]
+    [ImageName(nameof(Operacion))]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class Operacion : XPObjectBaseBO

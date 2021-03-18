@@ -1,24 +1,19 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp;
-using System.ComponentModel;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
-using DevExpress.Persistent.Base;
-using System.Collections.Generic;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
+using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
+using System;
+using System.ComponentModel;
+using System.Linq;
 
 namespace SBT.Apps.Tercero.Module.BusinessObjects
 {
     /// <summary>
     /// BO que corresponde a las garantías presentadas por terceros que son clientes para obtener crédito
     /// </summary>
-    [ModelDefault("Caption", "Tercero Garantía"), NavigationItem(false), CreatableItem(false), 
+    [ModelDefault("Caption", "Tercero Garantía"), NavigationItem(false), CreatableItem(false),
         DefaultProperty(nameof(Descripcion)), Persistent(nameof(TerceroGarantia))]
     //[ImageName("BO_Contact")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
@@ -65,6 +60,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
         /// </summary>
         [XafDisplayName("Tipo Garantía"), VisibleInLookupListView(true), Index(2)]
         [DataSourceCriteria("[Categoria] == 3 And [Activo] == True")]
+        [ExplicitLoading]
         public Listas Tipo
         {
             get => tipo;
@@ -101,12 +97,12 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
         [RuleValueComparison("TerceroGarantia.FechaVence > FechaInicio", DefaultContexts.Save, ValueComparisonType.GreaterThan,
             "[FechaInicio]", ParametersMode.Expression, SkipNullOrEmptyValues = true)]
         [ModelDefault("DisplayFormat", "{0:G}"), ModelDefault("EditMask", "G")]
-        public DateTime ? FechaVence
+        public DateTime? FechaVence
         {
             get => fechaVence;
             set => SetPropertyValue(nameof(FechaVence), ref fechaVence, value);
         }
-     
+
         [PersistentAlias("([FechaVence] Is Null) || (Now() <= [FechaVence])"), XafDisplayName("Vigente"), Index(7)]
         public bool Vigente => Convert.ToBoolean(EvaluateAlias(nameof(Vigente)));
 

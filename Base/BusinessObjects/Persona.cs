@@ -26,7 +26,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         DateTime fechaMuerte;
         string idioma;
         private Listas _tipoSangre;
-        private byte[] _fotografia;
+        private XPDelayedProperty _fotografia = new XPDelayedProperty();
         private System.DateTime _fechaRetiro;
         private System.DateTime _fechaIngreso;
         private EstadoCivil _estadoCivil;
@@ -100,6 +100,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [RuleRequiredField("Persona.Provincia_Requerido", DefaultContexts.Save, "Provincia es requerido")]
         [DataSourceCriteria("ZonaPadre = '@This.Pais' and Activa = true")]
+        [ExplicitLoading]
         public ZonaGeografica Provincia
         {
             get
@@ -116,6 +117,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [RuleRequiredField("Persona.Ciudad_Requerido", DefaultContexts.Save, "Ciudad es requerido")]
         [DataSourceCriteria("ZonaPadre = '@This.Provincia' and Activa = true")]
+        [ExplicitLoading]
         public ZonaGeografica Ciudad
         {
             get
@@ -231,7 +233,6 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         }
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [DataSourceCriteria("[Categoria] == 2 && [Activo] == True")]
-        [ExplicitLoading]
         public Listas TipoSangre
         {
             get
@@ -288,16 +289,13 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [Size(SizeAttribute.Unlimited), ImageEditor(ListViewImageEditorMode = ImageEditorMode.DropDownPictureEdit,
     DetailViewImageEditorMode = ImageEditorMode.PictureEdit, ListViewImageEditorCustomHeight = 34)]
         [Index(5), DetailViewLayout("Resumen del Error", LayoutGroupType.SimpleEditorsGroup, 1)]
-        //[Delayed(true)]
+        [Delayed(nameof(_fotografia), true)]
         public byte[] Fotografia
         {
-            get
-            {
-                return _fotografia;
-            }
+            get => (byte[])_fotografia.Value;
             set
             {
-                SetPropertyValue("Fotografia", ref _fotografia, value);
+                _fotografia.Value = value;
             }
         }
 

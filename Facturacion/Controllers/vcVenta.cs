@@ -30,15 +30,16 @@ namespace SBT.Apps.Facturacion.Module.Controllers
         protected override void OnActivated()
         {
             base.OnActivated();
+            //newObjectController = Frame.GetController<NewObjectViewController>();
             ObjectSpace.ObjectChanged += ObjectSpace_ObjectChanged;
             ObjectSpace.Committing += ObjectSpace_Committing;
         }
 
         protected override void OnDeactivated()
         {
-            base.OnDeactivated();
             ObjectSpace.ObjectChanged -= ObjectSpace_ObjectChanged;
             ObjectSpace.Committing -= ObjectSpace_Committing;
+            base.OnDeactivated();
         }
 
         /// <summary>
@@ -49,12 +50,15 @@ namespace SBT.Apps.Facturacion.Module.Controllers
         /// <param name="e"></param>
         private void ObjectSpace_ObjectChanged(object Sender, ObjectChangedEventArgs e)
         {
+            if (View == null || View.CurrentObject == null || e.Object == null)
+                return;
             // cuando cambia la propiedad AutorizacionCorrelativo
             if (View.CurrentObject == e.Object && e.PropertyName == "AutorizacionCorrelativo" && ObjectSpace.IsNewObject(View.CurrentObject))
             //(ObjectSpace.IsNewObject(View.CurrentObject) || ObjectSpace.IsModified) && e.OldValue != e.NewValue)
             {
                 if (e.NewValue == null)
                 {
+                    ((Venta)View.CurrentObject).NoFactura = null;
                     MostrarError($"No se encontró la autorización de correlativos para {((Venta)View.CurrentObject).TipoFactura.Nombre}. No conoce el número de documento");
                     return;
                 }
@@ -64,7 +68,10 @@ namespace SBT.Apps.Facturacion.Module.Controllers
                 if (noFact >= aud.NoDesde && noFact < aud.NoHasta)
                     ((Venta)View.CurrentObject).NoFactura = noFact;
                 else
+                {
+                    ((Venta)View.CurrentObject).NoFactura = null;
                     MostrarError($"No hay autorización de correlativo disponible para {((Venta)View.CurrentObject).TipoFactura.Nombre}");
+                }
             }
 
             // agregar aqui si se quiere procesar otros eventos

@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Persistent.Base;
-using DevExpress.Persistent.BaseImpl;
+﻿using DevExpress.Persistent.Base;
 using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
-using SBT.Apps.Medico.Generico.Module.BusinessObjects;
+using System;
+using System.Linq;
 
 namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 {
@@ -15,7 +10,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Medicos del Paciente")]
     [DevExpress.Persistent.Base.ImageNameAttribute("medico")]
     [DevExpress.Persistent.Base.CreatableItemAttribute(false)]
-    public class PacienteMedico: XPObjectBaseBO
+    public class PacienteMedico : XPObjectBaseBO
     {
 
         private Medico.Generico.Module.BusinessObjects.Medico _medico;
@@ -28,6 +23,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         }
 
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Medico")]
+        [ExplicitLoading]
         public Medico.Generico.Module.BusinessObjects.Medico Medico
         {
             get => _medico;

@@ -356,8 +356,26 @@
     <DetailView Id="Partida_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
-          <LayoutGroup Id="SimpleEditors" RelativeSize="19.16010498687664">
-            <LayoutGroup Id="Partida" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="23.355704697986578" Direction="Horizontal">
+            <LayoutGroup Id="Partida_col1" ShowCaption="False" Index="0" RelativeSize="49.72314507198228" IsNewNode="True">
+              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="20.689655172413794" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Numero" ViewItem="Numero" Index="1" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Fecha" ViewItem="Fecha" Index="2" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Tipo" ViewItem="Tipo" Index="3" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Moneda" ViewItem="Moneda" Index="4" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="ValorMoneda" ViewItem="ValorMoneda" CaptionLocation="Left" Index="5" RelativeSize="19.540229885057471" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="Partida_col2" ShowCaption="False" Index="1" RelativeSize="50.27685492801772" IsNewNode="True">
+              <LayoutItem Id="Concepto" ViewItem="Concepto" Index="0" RelativeSize="20.689655172413794" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="TotalDebe" ViewItem="TotalDebe" Index="1" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="TotalHaber" ViewItem="TotalHaber" Index="2" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Elaboro" ViewItem="Elaboro" Index="3" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Comentario" ViewItem="Comentario" Index="4" RelativeSize="34.482758620689658" CaptionLocation="Left" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="XPObject" Caption="Oid" Index="1" RelativeSize="56.955380577427825" Removed="True">
+              <LayoutItem Id="Oid" Removed="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="Partida" RelativeSize="100" Removed="True">
               <LayoutGroup Id="Partida_col1" RelativeSize="49.943246311010213">
                 <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="36.734693877551024" IsNewNode="True" />
                 <LayoutItem Id="Periodo" Index="1" RelativeSize="26.530612244897959" />
@@ -372,11 +390,20 @@
                 <LayoutItem Id="Mayorizada" RelativeSize="29.032258064516128" Index="3" Removed="True" />
               </LayoutGroup>
             </LayoutGroup>
-            <LayoutGroup Id="XPObject" Caption="Oid" Index="1" RelativeSize="56.955380577427825" Removed="True">
-              <LayoutItem Id="Oid" Removed="True" />
+            <LayoutGroup Id="XPOBaseDoc" RelativeSize="25" Removed="True">
+              <LayoutGroup Id="XPOBaseDoc_col1" RelativeSize="49.942987457240591" Caption="XPOBaseDoc_col1">
+                <LayoutItem Id="Fecha" RelativeSize="100" Index="0" Removed="True" />
+                <LayoutItem Id="Numero" RelativeSize="36.734693877551024" Index="0" Removed="True" />
+                <LayoutItem Id="Empresa" RelativeSize="36.734693877551024" Removed="True" />
+              </LayoutGroup>
+              <LayoutGroup Id="XPOBaseDoc_col2" RelativeSize="50.057012542759409" Caption="XPOBaseDoc_col2">
+                <LayoutItem Id="Comentario" RelativeSize="100" Index="0" Removed="True" />
+                <LayoutItem Id="ValorMoneda" RelativeSize="50" Index="0" Removed="True" />
+                <LayoutItem Id="Moneda" RelativeSize="36.734693877551024" Removed="True" />
+              </LayoutGroup>
             </LayoutGroup>
           </LayoutGroup>
-          <LayoutGroup Id="Detalles_Group" Direction="Vertical" RelativeSize="80.839895013123353">
+          <LayoutGroup Id="Detalles_Group" Direction="Vertical" RelativeSize="76.644295302013418">
             <LayoutItem Id="Detalles" RelativeSize="100" />
           </LayoutGroup>
         </LayoutGroup>

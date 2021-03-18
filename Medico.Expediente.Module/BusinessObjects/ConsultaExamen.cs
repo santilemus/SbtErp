@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Persistent.Base;
-using DevExpress.Persistent.BaseImpl;
-using DevExpress.Xpo;
-using SBT.Apps.Medico.Expediente.Module.BusinessObjects;
-using DevExpress.Persistent.Validation;
-using SBT.Apps.Base.Module.BusinessObjects;
-using SBT.Apps.Tercero.Module.BusinessObjects;
-using SBT.Apps.Medico.Generico.Module.BusinessObjects;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
+using DevExpress.Persistent.Base;
+using DevExpress.Persistent.Validation;
+using DevExpress.Xpo;
+using SBT.Apps.Base.Module.BusinessObjects;
+using SBT.Apps.Medico.Generico.Module.BusinessObjects;
+using System;
+using System.Linq;
 
 namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 {
@@ -21,7 +16,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
     [NavigationItem(false), CreatableItem(false)]
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Exámenes")]
     [DevExpress.Persistent.Base.ImageNameAttribute("electrocardiograma")]
-    [RuleCombinationOfPropertiesIsUnique("ConsultaExamen_ExamenFechaUnico", DefaultContexts.Save, "Examen,Fecha", SkipNullOrEmptyValues = false)]  
+    [RuleCombinationOfPropertiesIsUnique("ConsultaExamen_ExamenFechaUnico", DefaultContexts.Save, "Examen,Fecha", SkipNullOrEmptyValues = false)]
     public class ConsultaExamen : XPObjectBaseBO
     {
         /// <summary>
@@ -47,6 +42,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Examen"), ImmediatePostData(true)]
         [RuleRequiredField("ConsultaExamen.Examen_Requerido", "Save")]
+        [ExplicitLoading]
         public Examen Examen
         {
             get => examen;
@@ -75,6 +71,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         [XafDisplayName("Laboratorio")]
         [DataSourceCriteria("[Roles][[IdRole] In (4, 5)]")]
         [RuleRequiredField("ConsultaExamen.Laboratorio_Requerido", DefaultContexts.Save, TargetCriteria = "[Examen.Categoria.Codigo] != 'EX001'")]
+        [ExplicitLoading]
         public Tercero.Module.BusinessObjects.Tercero Laboratorio
         {
             get => laboratorio;

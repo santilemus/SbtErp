@@ -24,7 +24,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
     [ImageName("Concepto")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
-    public class Concepto : XPCustomBaseBO
+    public class Concepto : XPCustomObject
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
         public Concepto(Session session)
             : base(session)

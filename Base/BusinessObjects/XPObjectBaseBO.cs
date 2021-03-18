@@ -14,7 +14,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
     /// <summary>
     /// Para heredar las clases de XPObject, con las propiedades de creación y modificación 
     /// </summary>
-    [NonPersistent, MemberDesignTimeVisibility(false)]
+    [NonPersistent]
     public abstract class XPObjectBaseBO : XPObject
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
         public XPObjectBaseBO(Session session)
@@ -25,9 +25,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         {
             base.AfterConstruction();
             if (this.ClassInfo.FindMember("Empresa") != null)
-            {
-                this["Empresa"] = this.Session.GetObjectByKey<Empresa>(SesionDataHelper.ObtenerValor("OidEmpresa"));
-            }
+                this["Empresa"] = Session.GetObjectByKey<Empresa>(SesionDataHelper.ObtenerValor("OidEmpresa"));
             if (this.GetType().GetProperty("Moneda") != null)
             {
                 Constante constante = Session.GetObjectByKey<Constante>("MONEDA DEFECTO");
@@ -85,9 +83,9 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         /// <summary>
         /// Usuario que creó el registro
         /// </summary>
-        [DevExpress.Xpo.DisplayName(@"Usuario Creó"), VisibleInListView(false), VisibleInLookupListView(false), Browsable(false),
-            VisibleInDetailView(false), PersistentAlias("usuarioCrea"), NonCloneable(), ModelDefault("AllowEdit", "False")]
-        [Delayed(nameof(audit), "audit")]
+        [DevExpress.Xpo.DisplayName(@"Usuario Creó"), VisibleInListView(false), Browsable(false),
+            PersistentAlias("usuarioCrea"), NonCloneable(), ModelDefault("AllowEdit", "False")]
+        [Delayed(true)]
         public string UsuarioCrea
         {
             get => usuarioCrea;
@@ -101,7 +99,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [PersistentAlias("fechaCrea")]
         [DevExpress.Xpo.DisplayName(@"Fecha Creación"), ModelDefault("DisplayFormat", "{0:G}"), ModelDefault("EditMask", "G"),
             Browsable(false)]
-        [Delayed(nameof(audit), "audit")]
+        [Delayed(true)]
         public DateTime? FechaCrea
         {
             get => fechaCrea;
@@ -114,7 +112,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         /// </summary>
 
         [DevExpress.Xpo.DisplayName(@"Usuario Modificó"), Browsable(false), PersistentAlias("usuarioMod")]
-        [Delayed(nameof(audit), "audit")]
+        [Delayed(true)]
         public string UsuarioMod
         {
             get => usuarioMod;
@@ -127,7 +125,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         /// </summary>
         [DevExpress.Xpo.DisplayName(@"Fecha Modificación"), ModelDefault("DisplayFormat", "{0:G}"), ModelDefault("EditMask", "G"),
             PersistentAlias("fechaMod"), Browsable(false)]
-        [Delayed(nameof(audit), "audit")]
+        [Delayed(true)]
         public DateTime? FechaMod
         {
             get => fechaMod;

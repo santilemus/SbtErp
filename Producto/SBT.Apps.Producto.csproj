@@ -182,10 +182,18 @@
     <EmbeddedResource Include="Images\ProductoEquivalente_32x32.png" />
     <EmbeddedResource Include="Images\Tributo.png" />
     <EmbeddedResource Include="Images\ProductoImpuesto_32x32.png" />
-    <EmbeddedResource Include="Images\ProductoLote.png" />
-    <EmbeddedResource Include="Images\ProductoLote_32x32.png" />
     <EmbeddedResource Include="Images\ProductoPrecio.png" />
     <EmbeddedResource Include="Images\ProductoPrecio_32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Images\inventario.png" />
+    <EmbeddedResource Include="Images\InventarioLote.png" />
+    <EmbeddedResource Include="Images\InventarioLote_32x32.png" />
+    <EmbeddedResource Include="Images\InventarioTipoMovimiento.png" />
+    <EmbeddedResource Include="Images\InventarioTipoMovimiento_32x32.png" />
+    <EmbeddedResource Include="Images\inventario_32x32.png" />
+    <EmbeddedResource Include="Images\kardex.png" />
+    <EmbeddedResource Include="Images\kardex_32x32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

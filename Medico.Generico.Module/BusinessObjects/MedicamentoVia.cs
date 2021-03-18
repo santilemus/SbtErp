@@ -1,18 +1,12 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp;
-using System.ComponentModel;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
-using DevExpress.Persistent.Base;
-using System.Collections.Generic;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
+using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
-using SBT.Apps.Medico.Generico.Module.BusinessObjects;
+using System;
+using System.ComponentModel;
+using System.Linq;
 
 namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 {
@@ -20,7 +14,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
     /// BO que corresponde a las vías de administración de los medicamentos
     /// </summary>
 
-    [DefaultClassOptions, NavigationItem(false), ModelDefault("Caption", "Vía Administración"), CreatableItem(false), 
+    [DefaultClassOptions, NavigationItem(false), ModelDefault("Caption", "Vía Administración"), CreatableItem(false),
         DefaultProperty(nameof(Via))]
     //[ImageName("BO_Contact")]
     //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
@@ -53,6 +47,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 
         [DataSourceCriteria("[Categoria] == 6"), XafDisplayName("Vía Administración"), Index(1),
             RuleRequiredField("MedicamentoVia.Via_Requerido", "Save")]
+        [ExplicitLoading]
         public MedicoLista Via
         {
             get => via;

@@ -14,7 +14,7 @@ namespace SBT.Apps.Inventario.Module.BusinessObjects
     /// </summary>
     [ModelDefault("Caption", "Inventario"), NavigationItem("Inventario"), DefaultProperty(nameof(Producto)), CreatableItem(false)]
     [Persistent(nameof(Inventario))]
-    //[ImageName("BO_Contact")]
+    [ImageName(nameof(Inventario))]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class Inventario : XPObjectBaseBO
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).

@@ -1,16 +1,13 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using System.ComponentModel;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp;
+﻿using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.DC;
-using DevExpress.Persistent.Base;
-using System.Collections.Generic;
 using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
+using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
+using System;
+using System.ComponentModel;
+using System.Linq;
 
 
 namespace SBT.Apps.Producto.Module.BusinessObjects
@@ -54,7 +51,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         }
 
 
-        [Size(12), DbType("varchar(12)"), Index(1), XafDisplayName("Nombre Abreviado"), VisibleInLookupListView(true),  
+        [Size(12), DbType("varchar(12)"), Index(1), XafDisplayName("Nombre Abreviado"), VisibleInLookupListView(true),
             RuleRequiredField("Impuesto.NombreAbreviado_Requerido", "Save"), Indexed(Name = "idx_TributoNombreCorto", Unique = true)]
         public string NombreAbreviado
         {

@@ -16,9 +16,8 @@ namespace SBT.Apps.Inventario.Module.BusinessObjects
     /// 
     [DefaultClassOptions, ModelDefault("Caption", "Tipo Movimiento Inventario"), NavigationItem("Inventario"), CreatableItem(false)]
     [DefaultProperty(nameof(Nombre)), Persistent(nameof(InventarioTipoMovimiento))]
-    //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
+    [ImageName(nameof(InventarioTipoMovimiento))]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
-    //[Persistent("DatabaseTableName")]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class InventarioTipoMovimiento : XPObjectBaseBO
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).

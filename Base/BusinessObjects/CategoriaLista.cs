@@ -32,11 +32,15 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [XafDisplayName("Tipos de Seguro")]
         TipoSeguro = 4,
 
-        /// <summary>
-        /// Formas de Pago. Manera de codificarlas Ejemplo: FPA01 --> Efectivo, FPA02 --> Cheque
-        /// </summary>
-        [XafDisplayName("Forma Pago")]
-        FormaPago = 5,
+        ///// <summary>
+        ///// Formas de Pago. Manera de codificarlas Ejemplo: FPA01 --> Efectivo, FPA02 --> Cheque
+        ///// </summary>
+        ///// <remarks>
+        ///// FUERA DE USO, porque las sentencias Select de las transacciones se vuelven muy complejas cuando se usa
+        ///// frecuentemente Listas por ejemplo para el BO Ventas. Se reemplazo por enum ECondicionPago
+        ///// </remarks>
+        //[XafDisplayName("Forma Pago")]
+        //FormaPago = 5,
 
         /// <summary>
         /// Tipos de Tarjetas. Forma de codificarlas: TTAXXXXXXXX. Ejemplo: TTA01, TTA02
@@ -116,13 +120,17 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [XafDisplayName("Aplicados a Compra Venta")]
         AplicadosCompraVenta = 16,
 
-        /// <summary>
-        ///  La condición de pago de una compra o venta
-        ///  Ejemplo: Crédito, Contado, etc
-        ///  La manera de codificarlos es: CPAXXXXXXXX. Ejemplo: CPA01 => Contado, CPA02 => Credito, etc.
-        /// </summary>
-        [XafDisplayName("Condición Pago")]
-        CondicionPago = 17,
+        ///// <summary>
+        /////  La condición de pago de una compra o venta
+        /////  Ejemplo: Crédito, Contado, etc
+        /////  La manera de codificarlos es: CPAXXXXXXXX. Ejemplo: CPA01 => Contado, CPA02 => Credito, etc.
+        ///// </summary>
+        ///// <remarks>
+        ///// FUERA DE USO, porque las sentencias Select de las transacciones se vuelven muy complejas cuando se usa
+        ///// frecuentemente Listas por ejemplo para el BO Ventas. Se reemplazo por enum ECondicionPago
+        ///// </remarks>
+        //[XafDisplayName("Condición Pago")]
+        //CondicionPago = 17,
 
         /// <summary>
         /// Codificacion de las transacciones de ingreso que pueden aplicarse al empleado y que son gravadas o sujetas de calculo de aportes sociales

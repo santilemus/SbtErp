@@ -24,6 +24,7 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
         }
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Profesión")]
         [RuleRequiredField("EmpleadoProfesion_Profesion", DefaultContexts.Save, "Profesión es requerida")]
+        [ExplicitLoading]
         public Profesion Profesion
         {
             get

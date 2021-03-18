@@ -1,5 +1,6 @@
 ﻿using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
+using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using System;
 using System.Linq;
@@ -27,6 +28,7 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
         }
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Código Membresía")]
         [RuleRequiredField("EmpleadoMembresia.Codigo_Requerido", DefaultContexts.Save, "Membresía es requerido")]
+        [ExplicitLoading]
         public AsociacionProfesional AsociacionProfesional
         {
             get => asociacionProfesional;

@@ -1,24 +1,17 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using System.Xml;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp;
-using System.ComponentModel;
+﻿using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
-using DevExpress.Persistent.Base;
-using System.Collections.Generic;
 using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
-using DevExpress.Persistent.Validation;
-using DevExpress.Xpo.Metadata;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Base.General;
+using DevExpress.Persistent.Validation;
+using DevExpress.Xpo;
+using DevExpress.Xpo.Metadata;
 using DevExpress.XtraScheduler.Xml;
-using DevExpress.ExpressApp.SystemModule.Notifications;
-using DevExpress.ExpressApp.Filtering;
-using DevExpress.XtraScheduler.Compatibility;
 using SBT.Apps.Base.Module.BusinessObjects;
+using System;
+using System.ComponentModel;
+using System.Linq;
+using System.Xml;
 
 
 namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
@@ -176,8 +169,8 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
         }
 
         [NonPersistent, Browsable(false)]
-        [RuleFromBoolProperty("CitaBase_EsIntervaloValido", DefaultContexts.Save, 
-            "La fecha y hora de inicio debe ser menor que la fecha y hora de finalización", 
+        [RuleFromBoolProperty("CitaBase_EsIntervaloValido", DefaultContexts.Save,
+            "La fecha y hora de inicio debe ser menor que la fecha y hora de finalización",
             SkipNullOrEmptyValues = false, UsedProperties = "StartOn, EndOn")]
         public bool EsIntervaloValido { get { return StartOn <= EndOn; } }
 
@@ -266,7 +259,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 
 
         #endregion
-                        
+
         [Association("Medico-Citas", UseAssociationNameAsIntermediateTableName = true)]
         public XPCollection<Medico> Medicos
         {
@@ -384,19 +377,6 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
         }
 
         public event EventHandler<CustomizeNotificationsPostponeTimeListEventArgs> CustomizeReminderTimeLookup;
-        private IList<PostponeTime> CreatePostponeTimes()
-        {
-            IList<PostponeTime> result = PostponeTime.CreateDefaultPostponeTimesList();
-            result.Add(new PostponeTime("None", null, "None"));
-            result.Add(new PostponeTime("AtStartTime", TimeSpan.Zero, "0 minutes"));
-            CustomizeNotificationsPostponeTimeListEventArgs args = new CustomizeNotificationsPostponeTimeListEventArgs(result);
-            if (CustomizeReminderTimeLookup != null)
-            {
-                CustomizeReminderTimeLookup(this, args);
-            }
-            PostponeTime.SortPostponeTimesList(args.PostponeTimesList);
-            return args.PostponeTimesList;
-        }
 
         #endregion
     }

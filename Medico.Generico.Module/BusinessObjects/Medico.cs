@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using DevExpress.Xpo;
-using System.Linq;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Persistent.Base;
-using DevExpress.Persistent.BaseImpl;
-using DevExpress.Persistent.Validation;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
-using SBT.Apps.Empleado.Module.BusinessObjects;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Base.General;
+using DevExpress.Persistent.Validation;
+using DevExpress.Xpo;
+using System;
 using System.ComponentModel;
 using System.Drawing;
+using System.Linq;
 
 namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 {
@@ -25,7 +21,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
     [RuleIsReferenced("Medico_Referencia", DefaultContexts.Delete, typeof(Medico), nameof(Oid),
         MessageTemplateMustBeReferenced = "Para borrar el objeto '{TargetObject}', debe estar seguro que no es utilizado (referenciado) en ningún lugar.",
         InvertResult = true, FoundObjectMessageFormat = "'{0}'", FoundObjectMessagesSeparator = ";")]
-    public class Medico: SBT.Apps.Empleado.Module.BusinessObjects.Empleado, IResource
+    public class Medico : SBT.Apps.Empleado.Module.BusinessObjects.Empleado, IResource
     {
         public override void AfterConstruction()
         {
@@ -58,7 +54,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 
         [PersistentAlias("[Oid]"), Browsable(false)]
         public object Id => EvaluateAlias(nameof(Id));
-        
+
         [Size(100), DbType("varchar(100)"), XafDisplayName("SubTitulo")]
         public string Caption
         {
@@ -73,22 +69,22 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
         }
 
         [Association("Especialidades-Medico"), DevExpress.Xpo.Aggregated]
-		public XPCollection<MedicoEspecialidad> Especialidades
-		{
-		  get
-		  {
-			return GetCollection<MedicoEspecialidad>("Especialidades");
-		  }
-		}
-		
-		[Association("Consultorios-Medico"), DevExpress.Xpo.Aggregated]
-		public XPCollection<MedicoConsultorio> Consultorios
-		{
-		  get
-		  {
-			return GetCollection<MedicoConsultorio>("Consultorios");
-		  }
-		}
+        public XPCollection<MedicoEspecialidad> Especialidades
+        {
+            get
+            {
+                return GetCollection<MedicoEspecialidad>("Especialidades");
+            }
+        }
+
+        [Association("Consultorios-Medico"), DevExpress.Xpo.Aggregated]
+        public XPCollection<MedicoConsultorio> Consultorios
+        {
+            get
+            {
+                return GetCollection<MedicoConsultorio>("Consultorios");
+            }
+        }
 
         [Association("Medico-Citas", UseAssociationNameAsIntermediateTableName = true), XafDisplayName("Citas")]
         public XPCollection<CitaBase> Citas

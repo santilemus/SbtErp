@@ -38,6 +38,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         /// </summary>
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Proveedor")]
         [RuleRequiredField("ProductoProveedor.Proveedor_Requerido", DefaultContexts.Save, "Proveedor es requerido")]
+        [ExplicitLoading]
         public Tercero.Module.BusinessObjects.Tercero Proveedor
         {
             get
@@ -69,6 +70,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         /// Fabricante del Producto. Es un tercero
         /// </summary>
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Fabricante")]
+        [ExplicitLoading]
         public Tercero.Module.BusinessObjects.Tercero Fabricante
         {
             get
@@ -85,6 +87,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         /// </summary>
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("País de Origen")]
         [DataSourceCriteria("ZonaPadre is null And Activa = True")]
+        [ExplicitLoading]
         public ZonaGeografica PaisOrigen
         {
             get

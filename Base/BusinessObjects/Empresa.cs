@@ -18,10 +18,10 @@ namespace SBT.Apps.Base.Module.BusinessObjects
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Empresa")]
     [DevExpress.ExpressApp.DC.XafDefaultPropertyAttribute("RazonSocial")]
     [DevExpress.Persistent.Base.ImageNameAttribute("company-info")]
-    [RuleIsReferenced("Empresa_Referencia", DefaultContexts.Delete, typeof(Empresa), nameof(Oid), 
-        MessageTemplateMustBeReferenced = "Para borrar el objeto '{TargetObject}', debe estar seguro que no es utilizado (referenciado) en ningún lugar.", 
-        InvertResult = true, FoundObjectMessageFormat = "'{0}'", FoundObjectMessagesSeparator = ";")]
-    public class Empresa : XPObjectBaseBO
+    //[RuleIsReferenced("Empresa_Referencia", DefaultContexts.Delete, typeof(Empresa), nameof(Oid),
+    //    MessageTemplateMustBeReferenced = "Para borrar el objeto '{TargetObject}', debe estar seguro que no es utilizado (referenciado) en ningún lugar.",
+    //    InvertResult = true, FoundObjectMessageFormat = "'{0}'", FoundObjectMessagesSeparator = ";")]
+    public class Empresa : XPObject
     {
         public override void AfterConstruction()
         {
@@ -31,7 +31,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
 
         string nrc;
         private System.Boolean _activa;
-        private System.Drawing.Image _logo;
+        private XPDelayedProperty _logo = new XPDelayedProperty();
         private System.String _nit;
         private System.String _sitioWeb;
         private System.String _eMail;
@@ -40,6 +40,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         private ZonaGeografica _ciudad;
         private ZonaGeografica _pais;
         private System.String _razonSocial;
+
         public Empresa(DevExpress.Xpo.Session session)
           : base(session)
         {
@@ -82,7 +83,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false), VisibleInListView(false)]
         [RuleRequiredField("Empresa.Provincia_Requerido", DefaultContexts.Save, "Provincia es Requerido")]
         [DataSourceCriteria("[ZonaPadre] == '@This.Pais' and [Activa] == True")]
-        //[ExplicitLoading]
+        [ExplicitLoading]
         public ZonaGeografica Provincia
         {
             get
@@ -95,9 +96,10 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             }
         }
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Ciudad")]
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
+        //[DevExpress.Persistent.Base.ImmediatePostDataAttribute]
         [RuleRequiredField("Empresa.Ciudad_Requerido", DefaultContexts.Save, "Ciudad es Requerido")]
         [DataSourceCriteria("[ZonaPadre] == '@This.Provincia' and [Activa] == True")]
+        [ExplicitLoading]
         public ZonaGeografica Ciudad
         {
             get
@@ -165,7 +167,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
                 SetPropertyValue("Nit", ref _nit, value);
             }
         }
-    
+
         [Size(14), DbType("varchar(14)"), XafDisplayName("NRC"), RuleRequiredField("Empresa.NRC_Requerido", "Save")]
         public string Nrc
         {
@@ -193,18 +195,17 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         /// <remarks>
         /// Se carga cuando se requiere ver info en https://docs.devexpress.com/XPO/2024/feature-center/data-exchange-and-manipulation/delayed-loading
         /// </remarks>
-        [DevExpress.Xpo.ValueConverterAttribute(typeof(DevExpress.Xpo.Metadata.ImageValueConverter))]
+        //[DevExpress.Xpo.ValueConverterAttribute(typeof(DevExpress.Xpo.Metadata.ImageValueConverter))]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [DevExpress.Persistent.Base.VisibleInListViewAttribute(false)]
-        public System.Drawing.Image Logo
+        [ImageEditor(ListViewImageEditorMode = ImageEditorMode.PopupPictureEdit, DetailViewImageEditorMode = ImageEditorMode.PopupPictureEdit, ListViewImageEditorCustomHeight = 34)]
+        [Delayed(nameof(_logo), true)]
+        public byte[] Logo
         {
-            get
+            get => (byte[])_logo.Value; 
+            set 
             {
-                return _logo;
-            }
-            set
-            {
-                SetPropertyValue("Logo", ref _logo, value);
+                _logo.Value = value;
             }
         }
 

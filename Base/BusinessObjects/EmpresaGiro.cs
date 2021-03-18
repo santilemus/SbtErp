@@ -35,6 +35,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [VisibleInListView(true), VisibleInLookupListView(true)]
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Actividad Económica")]
         [RuleRequiredField("RegistroFiscal.ActEconomica_Requerido", DefaultContexts.Save, "Actividad Económica es requerida")]
+        [ExplicitLoading]
         public ActividadEconomica ActEconomica
         {
             get => actEconomica;

@@ -82,10 +82,11 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         /// <summary>
         /// Usuario que creó el registro
         /// </summary>
-        [DevExpress.Xpo.DisplayName(@"Usuario Creó"), VisibleInListView(false), Browsable(false)]
+        [DevExpress.Xpo.DisplayName(@"Usuario Creó"), Browsable(false)]
+        [Delayed(true)]
         public string UsuarioCrea
         {
-            get { return usuarioCrea; }
+            get => usuarioCrea;
         }
 
         [Persistent(@"FechaCrea"), DbType("datetime"), NonCloneable, ModelDefault("AllowEdit", "False")]
@@ -95,10 +96,12 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         /// </summary>
         [DevExpress.Xpo.DisplayName(@"Fecha Creación"), ModelDefault("DisplayFormat", "{0:G}"), ModelDefault("EditMask", "G"),
             Browsable(false), PersistentAlias("fechaCrea")]
+        [Delayed(true)]
         public DateTime? FechaCrea
         {
-            get { return fechaCrea; }
+            get => fechaCrea;
         }
+
         [Size(25)]
         [Persistent(@"UsuarioMod"), DbType("varchar(25)"), NonCloneable, ModelDefault("AllowEdit", "False")]
         string usuarioMod;
@@ -106,9 +109,10 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         /// Usuario que realizó la última modificación
         /// </summary>
         [DevExpress.Xpo.DisplayName(@"Usuario Modificó"), Browsable(false)]
+        [Delayed(true)]
         public string UsuarioMod
         {
-            get { return usuarioMod; }
+            get => usuarioMod;
         }
         [Persistent(@"FechaMod"), DbType("datetime"), NonCloneable, ModelDefault("AllowEdit", "False")]
         DateTime? fechaMod;
@@ -116,9 +120,10 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         /// Fecha y Hora de la última modificación
         /// </summary>
         [DevExpress.Xpo.DisplayName(@"Fecha Modificación"), ModelDefault("DisplayFormat", "{0:G}"), ModelDefault("EditMask", "G"), Browsable(false)]
+        [Delayed(true)]
         public DateTime? FechaMod
         {
-            get { return fechaMod; }
+            get => fechaMod;
         }
 
         #endregion

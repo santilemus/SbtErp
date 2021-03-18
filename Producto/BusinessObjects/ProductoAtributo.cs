@@ -23,6 +23,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [RuleRequiredField("ProductoAtributo.Atributo_Requerido", DefaultContexts.Save, "Atributo es requerido")]
         [DataSourceCriteria("[Categoria] = 13")]
+        [ExplicitLoading]
         public Listas Atributo
         {
             get

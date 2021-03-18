@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DevExpress.Data.Filtering;
+﻿using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp;
 using SBT.Apps.Base.Module.BusinessObjects;
+using System;
+using System.Linq;
 
 namespace SBT.Apps.Base.Module
 {
@@ -17,7 +14,7 @@ namespace SBT.Apps.Base.Module
     /// la funcion este disponible para el usuario final en el editor de expresiones. Si quiere usar la funcion como un CriteriaOperator
     /// para los criterios del lado del servidor (consultar a la base de datos), implementar ademas, ICustomFunctionOperatorFormattable.
     /// </remarks>
-    public class EmpresaActualOidFunction: ICustomFunctionOperatorBrowsable
+    public class EmpresaActualOidFunction : ICustomFunctionOperatorBrowsable
     {
         #region Implementacion de ICustomFunctionOperator
         /// <summary>

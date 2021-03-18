@@ -1,17 +1,12 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp;
-using System.ComponentModel;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
-using DevExpress.Persistent.Base;
-using System.Collections.Generic;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
+using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
+using System;
+using System.ComponentModel;
+using System.Linq;
 
 namespace SBT.Apps.Tercero.Module.BusinessObjects
 {
@@ -50,7 +45,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
         [VisibleInLookupListView(false), XafDisplayName("País"), ImmediatePostData, Index(1), VisibleInListView(false)]
         [DataSourceCriteria("ZonaPadre is null and Activa = true")]
         [ExplicitLoading]
-        
+
         public ZonaGeografica Pais
         {
             get => pais;
@@ -59,6 +54,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
 
         [XafDisplayName("Provincia"), ImmediatePostData(true), VisibleInLookupListView(false), Index(2)]
         [DataSourceCriteria("ZonaPadre = '@This.Pais' and Activa = true")]
+        [ExplicitLoading]
         public ZonaGeografica Provincia
         {
             get => provincia;
@@ -67,6 +63,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
 
         [XafDisplayName("Ciudad"), VisibleInLookupListView(true), Index(4)]
         [DataSourceCriteria("ZonaPadre = '@This.Provincia' and Activa = true")]
+        [ExplicitLoading]
         public ZonaGeografica Ciudad
         {
             get => ciudad;
@@ -81,7 +78,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
             set => SetPropertyValue(nameof(Direccion), ref direccion, value);
         }
 
-        [DbType("bit"), XafDisplayName("Activa"), RuleRequiredField("TerceroDireccion.Activa", "Save"), Index(6), 
+        [DbType("bit"), XafDisplayName("Activa"), RuleRequiredField("TerceroDireccion.Activa", "Save"), Index(6),
             VisibleInListView(false), VisibleInLookupListView(false)]
         public bool Activa
         {

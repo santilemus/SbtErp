@@ -95,6 +95,7 @@
       <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
     </Reference>
+    <Reference Include="DevExpress.ExpressApp.Office.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.ExpressApp.ReportsV2.v20.2">
       <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
@@ -164,6 +165,7 @@
       <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
     </Reference>
+    <Reference Include="DevExpress.Spreadsheet.v20.2.Core, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Utils.v20.2">
       <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
@@ -335,6 +337,10 @@
       <Project>{A538FE93-206D-4869-BC40-FDC561F8C1D1}</Project>
       <Name>SBT.Apps.Base</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Compra\SBT.Apps.Compra.csproj">
+      <Project>{E300665D-AD47-415F-8AE3-0BDB0D4F0371}</Project>
+      <Name>SBT.Apps.Compra</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Contabilidad\SBT.Apps.Contabilidad.csproj">
       <Project>{F8ACB445-E391-4DC6-9AB3-B30AB53F7646}</Project>
       <Name>SBT.Apps.Contabilidad</Name>
@@ -350,6 +356,10 @@
     <ProjectReference Include="..\Erp.Module\SBT.Apps.Erp.Module.csproj">
       <Project>{4AF29138-6DDE-4467-96B1-E7F300EF69C5}</Project>
       <Name>SBT.Apps.Erp.Module</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Facturacion\SBT.Apps.Facturacion.csproj">
+      <Project>{079B99E0-C217-4989-9F00-43770CFD1AE7}</Project>
+      <Name>SBT.Apps.Facturacion</Name>
     </ProjectReference>
     <ProjectReference Include="..\Producto\SBT.Apps.Producto.csproj">
       <Project>{90D73CB9-2F45-473C-8FEE-AF118BB56C89}</Project>

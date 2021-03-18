@@ -41,6 +41,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
         }
 
         [XafDisplayName("Teléfono")]
+        [ExplicitLoading]
         public Telefono Telefono
         {
             get => telefono;

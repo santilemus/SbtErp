@@ -1,5 +1,4 @@
 ﻿using DevExpress.ExpressApp.DC;
-using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using System;
@@ -10,7 +9,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Unidad")]
     [DevExpress.Persistent.Base.ImageNameAttribute("company-employee")]
     [DevExpress.ExpressApp.DC.XafDefaultPropertyAttribute("Nombre")]
-    public class EmpresaUnidad : XPObjectBaseBO
+    public class EmpresaUnidad : XPObject
     {
         public override void AfterConstruction()
         {
@@ -44,6 +43,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
                 SetPropertyValue("UnidadPadre", ref _unidadPadre, value);
             }
         }
+
         [DevExpress.Xpo.AssociationAttribute("Unidades-Empresa")]
         public Empresa Empresa
         {
@@ -56,6 +56,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
                 SetPropertyValue("Empresa", ref _empresa, value);
             }
         }
+
         [Size(100), DbType("varchar(100)")]
         [RuleRequiredField("EmpresaUnidad.Nombre_Requerido", "Save")]
         public System.String Nombre

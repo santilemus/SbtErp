@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using DevExpress.ExpressApp.DC;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.Persistent.Base;
-using DevExpress.Persistent.BaseImpl;
-using DevExpress.Xpo;
-using SBT.Apps.Medico.Expediente.Module.BusinessObjects;
 using DevExpress.Persistent.Validation;
+using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
-using SBT.Apps.Tercero.Module.BusinessObjects;
 using SBT.Apps.Medico.Generico.Module.BusinessObjects;
+using System;
+using System.Linq;
 
 namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 {
@@ -22,7 +17,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Receta")]
     [DevExpress.Persistent.Base.ImageNameAttribute("BO_Contract")]
     [RuleCombinationOfPropertiesIsUnique("ConsultaReceta.ConsultaMedicamentoUnico", DefaultContexts.Save, "Consulta,Medicamento", SkipNullOrEmptyValues = false)]
-    public class ConsultaReceta: XPObjectBaseBO
+    public class ConsultaReceta : XPObjectBaseBO
     {
         /// <summary>
         /// Metodo para la inicialización de propiedades y/o objetos del BO. Se ejecuta una sola vez después de la creación del objeto
@@ -62,7 +57,8 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         }
 
         [RuleRequiredField("ConsultaReceta.ViaAdministracion_Requerido", "Save")]
-        [DataSourceProperty("Medicamento.Vias"), ImmediatePostData(true)]
+        [DataSourceProperty("Medicamento.Vias")]
+        [ExplicitLoading]
         public MedicamentoVia ViaAdministracion
         {
             get
@@ -77,6 +73,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Farmáceutica")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [DataSourceCriteria("[TipoPersona] == 2 && [Activo] == True && [Roles][[IdRole] In (4, 8) And [Activo] == True]")]
+        [ExplicitLoading]
         public Tercero.Module.BusinessObjects.Tercero Farmaceutica
         {
             get

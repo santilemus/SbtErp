@@ -27,6 +27,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
         [VisibleInListView(true), VisibleInLookupListView(true)]
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Actividad Económica")]
         [RuleRequiredField("TerceroGiro.ActEconomica_Requerido", DefaultContexts.Save, "Actividad Económica es requerida")]
+        [ExplicitLoading]
         public ActividadEconomica ActEconomica
         {
             get => actEconomica;

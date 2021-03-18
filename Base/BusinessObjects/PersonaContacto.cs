@@ -1,4 +1,5 @@
-﻿using DevExpress.ExpressApp.DC;
+﻿using DevExpress.ExpressApp.ConditionalAppearance;
+using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
@@ -6,8 +7,6 @@ using DevExpress.Xpo;
 using System;
 using System.ComponentModel;
 using System.Linq;
-using DevExpress.Data.Filtering;
-using DevExpress.ExpressApp.ConditionalAppearance;
 
 namespace SBT.Apps.Base.Module.BusinessObjects
 {
@@ -64,7 +63,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
 
 
         [Size(80), DbType("varchar(80)"), Persistent("Nombre"), XafDisplayName("Nombre Contacto")]
-        [Appearance("", Visibility =  DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "Any", 
+        [Appearance("", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "Any",
             Criteria = "[Contacto] Is not Null", TargetItems = "Nombre")]
         public string Nombre
         {

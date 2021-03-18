@@ -1,17 +1,12 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp;
-using System.ComponentModel;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
-using DevExpress.Persistent.Base;
-using System.Collections.Generic;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
+using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
+using System;
+using System.ComponentModel;
+using System.Linq;
 
 namespace SBT.Apps.Tercero.Module.BusinessObjects
 {
@@ -50,6 +45,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
         [ImmediatePostData(true), Index(0), VisibleInLookupListView(true)]
         [RuleRequiredField("TerceroDocumento.Tipo_Requerido", DefaultContexts.Save, "Tipo Documento es requerido")]
         [DataSourceCriteria("[Categoria] = 10"), XafDisplayName("Tipo")]
+        [ExplicitLoading]
         public Listas Tipo
         {
             get => tipo;
@@ -102,7 +98,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
             set => SetPropertyValue(nameof(Vigente), ref vigente, value);
         }
 
-        
+
         [Association("Tercero-Documentos"), XafDisplayName("Tercero"), VisibleInListView(false), VisibleInLookupListView(false), Index(7)]
         public Tercero Tercero
         {

@@ -1,27 +1,27 @@
-using System;
-using System.Configuration;
-using System.Web.Configuration;
-using System.Web;
 using DevExpress.ExpressApp;
-using DevExpress.Persistent.Base;
-using DevExpress.Persistent.BaseImpl;
 using DevExpress.ExpressApp.Security;
-using DevExpress.ExpressApp.Web;
-using DevExpress.Web;
 using DevExpress.ExpressApp.SystemModule;
+using DevExpress.ExpressApp.Web;
 using DevExpress.ExpressApp.Web.SystemModule;
-using SBT.Apps.Base.Module.BusinessObjects;
+using DevExpress.Persistent.Base;
 using DevExpress.Security.Resources;
+using DevExpress.Web;
 using DevExpress.XtraReports.Security;
 using DevExpress.XtraReports.UI;
+using SBT.Apps.Base.Module.BusinessObjects;
+using System;
+using System.Configuration;
 
 namespace SBT.Apps.Medico.Web
 {
-    public class Global : System.Web.HttpApplication {
-        public Global() {
+    public class Global : System.Web.HttpApplication
+    {
+        public Global()
+        {
             InitializeComponent();
         }
-        protected void Application_Start(Object sender, EventArgs e) {
+        protected void Application_Start(Object sender, EventArgs e)
+        {
             SecurityAdapterHelper.Enable();
             DevExpress.ExpressApp.FrameworkSettings.DefaultSettingsCompatibilityMode = FrameworkSettingsCompatibilityMode.Latest; //DevExpress.ExpressApp.FrameworkSettingsCompatibilityMode.v20_1;
             ASPxWebControl.CallbackError += new EventHandler(Application_Error);
@@ -34,14 +34,16 @@ namespace SBT.Apps.Medico.Web
             DevExpress.ExpressApp.Web.TestScripts.TestScriptsManager.EasyTestEnabled = true;
 #endif
         }
-        protected void Session_Start(Object sender, EventArgs e) {
+        protected void Session_Start(Object sender, EventArgs e)
+        {
             Tracing.Initialize();
             WebApplication.SetInstance(Session, new medicoAspNetApplication());
             SecurityStrategy security = (SecurityStrategy)WebApplication.Instance.Security;
-            security.RegisterXPOAdapterProviders();           
+            security.RegisterXPOAdapterProviders();
             DevExpress.ExpressApp.Web.Templates.DefaultVerticalTemplateContentNew.ClearSizeLimit();
             WebApplication.Instance.SwitchToNewStyle();
-            if (ConfigurationManager.ConnectionStrings["medico"] != null) {
+            if (ConfigurationManager.ConnectionStrings["medico"] != null)
+            {
                 WebApplication.Instance.ConnectionString = ConfigurationManager.ConnectionStrings["medico"].ConnectionString;
             }
             WebApplication.Instance.LastLogonParametersWriting += new EventHandler<LastLogonParametersWritingEventArgs>(Instance_LastLogonParametersWriting);
@@ -64,20 +66,26 @@ namespace SBT.Apps.Medico.Web
             WebApplication.Instance.Setup();
             WebApplication.Instance.Start();
         }
-        protected void Application_BeginRequest(Object sender, EventArgs e) {
+        protected void Application_BeginRequest(Object sender, EventArgs e)
+        {
         }
-        protected void Application_EndRequest(Object sender, EventArgs e) {
+        protected void Application_EndRequest(Object sender, EventArgs e)
+        {
         }
-        protected void Application_AuthenticateRequest(Object sender, EventArgs e) {
+        protected void Application_AuthenticateRequest(Object sender, EventArgs e)
+        {
         }
-        protected void Application_Error(Object sender, EventArgs e) {
+        protected void Application_Error(Object sender, EventArgs e)
+        {
             ErrorHandling.Instance.ProcessApplicationError();
         }
-        protected void Session_End(Object sender, EventArgs e) {
+        protected void Session_End(Object sender, EventArgs e)
+        {
             WebApplication.LogOff(Session);
             WebApplication.DisposeInstance(Session);
         }
-        protected void Application_End(Object sender, EventArgs e) {
+        protected void Application_End(Object sender, EventArgs e)
+        {
         }
 
         static void Instance_CustomizeFormattingCulture(object sender, CustomizeFormattingCultureEventArgs e)
@@ -171,9 +179,9 @@ namespace SBT.Apps.Medico.Web
 
                 //WebApplication.Instance.Model.AboutInfoString = "{0:ProductName} - {0:Description}<br>{0:Version}<br>{0:Copyright}";
                 WebApplication.Instance.Model.AboutInfoString = "{0:ProductName}, {0:Version}<br>{0:Description}";
-                
+
                 //WebApplication.Instance.Title += WebApplication.Instance.Title + " [" + ((CustomLogonParameters)e.LogonParameters).Empresa.RazonSocial + "]";
-               // WebApplication.Instance.Model.Description = ((CustomLogonParameters)e.LogonParameters).Empresa.RazonSocial;
+                // WebApplication.Instance.Model.Description = ((CustomLogonParameters)e.LogonParameters).Empresa.RazonSocial;
             }
         }
 
@@ -183,7 +191,8 @@ namespace SBT.Apps.Medico.Web
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent() {
+        private void InitializeComponent()
+        {
         }
         #endregion
     }

@@ -16,11 +16,8 @@ namespace SBT.Apps.Base.Module.BusinessObjects
     /// mas grande que un entero de 32 bits, o cuya logica para calcularla es diferente a un identity o secuencia. 
     /// Otro caso es cuando se llama distinto (no es Oid), porque corresponde a una tabla que ya existía previamente
     /// </summary>
-    [NonPersistent,
-    RuleIsReferenced("XPCustomBaseDoc.Empresa_Referencia", DefaultContexts.Save, typeof(Empresa), nameof(Empresa),
-        CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction),
-    RuleObjectExists("XPCustomBaseDoc.Empresa_Existe", CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction, LooksFor = typeof(Empresa))]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
+    [NonPersistent]
     public abstract class XPCustomBaseDoc : XPCustomBaseBO
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
         public XPCustomBaseDoc(Session session)
@@ -81,7 +78,6 @@ namespace SBT.Apps.Base.Module.BusinessObjects
 #else
         [DbType("smallint"), Persistent("Empresa")]
 #endif
-        //[Association("Empresa-Docs")]
         [Index(0), ModelDefault("AllowEdit", "False")]
         public Empresa Empresa
         {
@@ -127,8 +123,8 @@ namespace SBT.Apps.Base.Module.BusinessObjects
 #else
         [DbType("varchar(3)"), Persistent(nameof(Moneda))]
 #endif
-        //[Association("Moneda-Docs")]
         [Index(3), XafDisplayName("Moneda"), RuleRequiredField("XPCustomBaseDocs.Moneda_Requerida", DefaultContexts.Save)]
+        [ExplicitLoading]
         public Moneda Moneda
         {
             get => moneda;

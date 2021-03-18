@@ -7,6 +7,7 @@ using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Tercero.Module.BusinessObjects;
 using System;
+using System.ComponentModel;
 using System.Linq;
 
 
@@ -57,10 +58,9 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
 
         #region Propiedades
 
-        [XafDisplayName("Empresa"), ImmediatePostData(true), VisibleInLookupListView(false), VisibleInListView(false), VisibleInDetailView(true),
-            VisibleInReports(true)]
+        [XafDisplayName("Empresa"), VisibleInReports(true)]
         [RuleRequiredField("Empleado.CodEmpresa_requerido", DefaultContexts.Save, "Empresa es requerida")]
-        [ExplicitLoading]
+        [Browsable(false)]
         public Empresa Empresa
         {
             get => empresa;
@@ -71,6 +71,7 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
             VisibleInReports(true)]
         [RuleRequiredField("Empleado.CodUnidad_requerido", DefaultContexts.Save, "Unidad asignada es requerida")]
         [DataSourceCriteria("[Empresa.Oid] == '@This.Empresa'")]
+        [ExplicitLoading]
         public EmpresaUnidad Unidad
         {
             get => unidad;
@@ -86,7 +87,7 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
         /// </remarks>
 
         [XafDisplayName("Cargo"), RuleRequiredField("Empleado.Cargo_Requerido", DefaultContexts.Save), ImmediatePostData(true)]
-        //[DevExpress.Xpo.NoForeignKey]
+        [ExplicitLoading]
         public Cargo Cargo
         {
             get => cargo;
@@ -143,7 +144,7 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
 
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [DataSourceCriteria("[ZonaPadre] is null and [Activa] = true")]
-        [ExplicitLoading]
+        //[ExplicitLoading]
         public ZonaGeografica Nacionalidad
         {
             get => nacionalidad;
@@ -213,7 +214,6 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
 
 
         [XafDisplayName("AFP"), VisibleInListView(false)]
-        [ExplicitLoading]
         public AFP AFP
         {
             get => aFP;

@@ -35,6 +35,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [VisibleInListView(true), Index(0), VisibleInLookupListView(true)]
         [RuleRequiredField("PersonaDocumento.Tipo_Requerido", DefaultContexts.Save, "Tipo Documento es requerido")]
         [DataSourceCriteria("Categoria = 'DocumentoIdentidad'"), XafDisplayName("Tipo Documento")]
+        [ExplicitLoading]
         public Listas Tipo
         {
             get => tipo;

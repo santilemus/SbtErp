@@ -1,5 +1,4 @@
-﻿using System.Web.UI.WebControls;
-using DevExpress.ExpressApp;
+﻿using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.Web;
 using DevExpress.ExpressApp.Web.Controls;
 
@@ -11,7 +10,7 @@ namespace SBT.Apps.Erp.Module.Web.Controllers
     /// <remarks>
     /// mas info en: https://docs.devexpress.com/eXpressAppFramework/113456/task-based-help/miscellaneous-ui-customizations/how-to-adjust-the-size-and-style-of-pop-up-dialogs-asp-net
     /// </remarks>
-    public class PopupWindowController: WindowController
+    public class PopupWindowController : WindowController
     {
         public PopupWindowController()
         {
@@ -51,7 +50,7 @@ namespace SBT.Apps.Erp.Module.Web.Controllers
             //    e.Height = new Unit(450);
             //    e.ShowPopupMode = ShowPopupMode.Centered;
             //}
-            e.Handled = true;             
+            e.Handled = true;
         }
 
         /// <summary>
@@ -60,7 +59,7 @@ namespace SBT.Apps.Erp.Module.Web.Controllers
         protected override void OnDeactivated()
         {
             ((WebApplication)Application).PopupWindowManager.PopupShowing -= PopupWindowManager_PopupShowing;
-            base.OnDeactivated(); 
+            base.OnDeactivated();
         }
     }
 }

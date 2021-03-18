@@ -1,17 +1,12 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp;
-using System.ComponentModel;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
-using DevExpress.Persistent.Base;
-using System.Collections.Generic;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
+using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
+using System;
+using System.ComponentModel;
+using System.Linq;
 
 namespace SBT.Apps.Tercero.Module.BusinessObjects
 {
@@ -20,7 +15,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
     /// facilita reflejar la historia crediticia del cliente, o diferentes montos de credito
     /// </summary>
 
-    [ModelDefault("Caption", "Tercero Crédito"), NavigationItem(false), CreatableItem(false), 
+    [ModelDefault("Caption", "Tercero Crédito"), NavigationItem(false), CreatableItem(false),
        DefaultProperty(nameof(FechaOtorgamiento)), Persistent(nameof(TerceroCredito))]
     [ImageName("credito")]
     //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
@@ -128,6 +123,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
         /// Direccion de cobro del cliente
         /// </summary>
         [XafDisplayName("Dirección Cobro"), Index(6), VisibleInListView(false)]
+        [ExplicitLoading]
         public TerceroDireccion DireccionCobro
         {
             get => direccionCobro;
@@ -140,7 +136,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
         [DbType("datetime2"), XafDisplayName("Fecha Cancelación"), Index(7)]
         [ToolTip("Fecha de cancelación del crédito al cliente")]
         [ModelDefault("DisplayFormat", "{0:G}"), ModelDefault("EditMask", "G")]
-        public DateTime ? FechaCancelacion
+        public DateTime? FechaCancelacion
         {
             get => fechaCancelacion;
             set => SetPropertyValue(nameof(FechaCancelacion), ref fechaCancelacion, value);

@@ -36,7 +36,6 @@
                 </LayoutGroup>
                 <LayoutGroup Id="Producto_col2">
                   <LayoutItem Id="CostoPromedio" CaptionLocation="Left" />
-                  <LayoutItem Id="PorcentajeIVA" CaptionLocation="Left" />
                 </LayoutGroup>
               </LayoutGroup>
               <LayoutGroup Id="Medicamento">

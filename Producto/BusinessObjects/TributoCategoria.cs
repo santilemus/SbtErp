@@ -1,24 +1,19 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp;
-using System.ComponentModel;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Persistent.Base;
-using System.Collections.Generic;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
+using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
-using SBT.Apps.Producto.Module.BusinessObjects;
+using System;
+using System.ComponentModel;
+using System.Linq;
 
 namespace SBT.Apps.Producto.Module.BusinessObjects
 {
     /// <summary>
     /// BO TributoCategoria. Es la relacion entre los tributos y las categorias de productos a los cuales se aplican
     /// </summary>
-    [DefaultClassOptions, ModelDefault("Caption", "Productos"), NavigationItem(false), CreatableItem(false), 
+    [DefaultClassOptions, ModelDefault("Caption", "Productos"), NavigationItem(false), CreatableItem(false),
         DefaultProperty(nameof(Categoria)), Persistent(nameof(TributoCategoria))]
     //[ImageName("BO_Contact")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
@@ -42,14 +37,16 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
 
         [XafDisplayName("Categoría"), Index(0), RuleRequiredField("TributoCategoria.Categoria_Requerido", DefaultContexts.Save)]
         [Association("Categoria-TributosCategoria")]
+        [ExplicitLoading]
         public Categoria Categoria
         {
             get => categoria;
             set => SetPropertyValue(nameof(Categoria), ref categoria, value);
         }
 
-        
+
         [Association("Tributo-TributoCategorias"), XafDisplayName("Tributo")]
+        [ExplicitLoading]
         public Tributo Tributo
         {
             get => tributo;

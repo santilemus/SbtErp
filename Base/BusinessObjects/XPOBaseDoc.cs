@@ -1,12 +1,11 @@
-﻿using DevExpress.ExpressApp.DC;
+﻿using DevExpress.Data.Filtering;
+using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
-using DevExpress.Data.Filtering;
 using System;
 using System.ComponentModel;
-using DevExpress.Xpo.Metadata;
 
 namespace SBT.Apps.Base.Module.BusinessObjects
 {
@@ -15,8 +14,6 @@ namespace SBT.Apps.Base.Module.BusinessObjects
     /// se heredan de XPObject. En este caso el Oid es un entero de 32 bits
     /// </summary>
     [NonPersistent]
-    [RuleIsReferenced("XPOBaseDoc.Empresa_Referencia", DefaultContexts.Save, typeof(Empresa), nameof(Empresa),
-        CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction)]
     public abstract class XPOBaseDoc : XPObjectBaseBO
     {
 
@@ -31,7 +28,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         /// </summary>
         /// <returns>Entero que representa un correlativo de documento en un objeto persistente</returns>
         protected virtual int CorrelativoDoc()
-        {          
+        {
             string sCriteria = "Empresa.Oid == ? && GetYear(Fecha) == ?";
             //if (GetType().GetProperty("Caja") != null)
             //    sCriteria += " && Caja.Oid == ?";

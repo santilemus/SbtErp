@@ -1,18 +1,14 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp;
-using System.ComponentModel;
+﻿using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
-using DevExpress.Persistent.Base;
-using System.Collections.Generic;
 using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
-using DevExpress.Persistent.Validation;
-using SBT.Apps.Base.Module.BusinessObjects;
 using DevExpress.ExpressApp.SystemModule;
+using DevExpress.Persistent.Base;
+using DevExpress.Persistent.Validation;
+using DevExpress.Xpo;
+using SBT.Apps.Base.Module.BusinessObjects;
+using System;
+using System.ComponentModel;
+using System.Linq;
 
 namespace SBT.Apps.Contabilidad.BusinessObjects
 {
@@ -25,8 +21,8 @@ namespace SBT.Apps.Contabilidad.BusinessObjects
     /// </remarks>
     [DefaultClassOptions, CreatableItem(false)]
     [ImageName("CatalogoContable")]
-    [ModelDefault("Caption", "Catálogo Contable"), NavigationItem("Contabilidad"), DefaultProperty("CodCuenta"), Persistent("ConCatalogo"), 
-        DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None), 
+    [ModelDefault("Caption", "Catálogo Contable"), NavigationItem("Contabilidad"), DefaultProperty("CodCuenta"), Persistent("ConCatalogo"),
+        DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None),
         ListViewFilter("Catálogo de la Empresa de la Sesion", "Empresa.Codigo = EmpresaActualOid()")]
     //[Indices("CodCuenta")]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).

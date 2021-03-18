@@ -32,11 +32,11 @@ namespace SBT.Apps.Erp.Web
         private Empleado.Module.EmpleadoModule empleadoModule1;
         private Producto.Module.ProductoModule productoModule1;
         private Contabilidad.ContabilidadModule contabilidadModule2;
-        private DevExpress.ExpressApp.TreeListEditors.TreeListEditorsModuleBase treeListEditorsModuleBase1;
         private RecursoHumano.RecursoHumanoModule recursoHumanoModule1;
         private Facturacion.Module.FacturacionModule facturacionModule1;
         private DevExpress.ExpressApp.Office.OfficeModule officeModule1;
         private DevExpress.ExpressApp.Office.Web.OfficeAspNetModule officeAspNetModule1;
+        private Compra.CompraModule compraModule1;
         private DevExpress.ExpressApp.ViewVariantsModule.ViewVariantsModule viewVariantsModule;
 
         #region Default XAF configuration options (https://www.devexpress.com/kb=T501418)
@@ -147,11 +147,11 @@ namespace SBT.Apps.Erp.Web
             this.empleadoModule1 = new SBT.Apps.Empleado.Module.EmpleadoModule();
             this.productoModule1 = new SBT.Apps.Producto.Module.ProductoModule();
             this.contabilidadModule2 = new SBT.Apps.Contabilidad.ContabilidadModule();
-            this.treeListEditorsModuleBase1 = new DevExpress.ExpressApp.TreeListEditors.TreeListEditorsModuleBase();
             this.recursoHumanoModule1 = new SBT.Apps.RecursoHumano.RecursoHumanoModule();
             this.facturacionModule1 = new SBT.Apps.Facturacion.Module.FacturacionModule();
             this.officeModule1 = new DevExpress.ExpressApp.Office.OfficeModule();
             this.officeAspNetModule1 = new DevExpress.ExpressApp.Office.Web.OfficeAspNetModule();
+            this.compraModule1 = new SBT.Apps.Compra.CompraModule();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             // 
             // securityStrategyComplex1
@@ -185,6 +185,7 @@ namespace SBT.Apps.Erp.Web
             // reportsAspNetModuleV2
             // 
             this.reportsAspNetModuleV2.ReportViewerType = DevExpress.ExpressApp.ReportsV2.Web.ReportViewerTypes.HTML5;
+            this.reportsAspNetModuleV2.ShowReportDesignerActionTarget = DevExpress.ExpressApp.ReportsV2.Web.ActionTarget.NewTab;
             // 
             // validationModule
             // 
@@ -221,7 +222,6 @@ namespace SBT.Apps.Erp.Web
             this.Modules.Add(this.validationAspNetModule);
             this.Modules.Add(this.viewVariantsModule);
             this.Modules.Add(this.auditTrailModule1);
-            this.Modules.Add(this.treeListEditorsModuleBase1);
             this.Modules.Add(this.officeModule1);
             this.Modules.Add(this.baseModule1);
             this.Modules.Add(this.terceroModule1);
@@ -229,8 +229,9 @@ namespace SBT.Apps.Erp.Web
             this.Modules.Add(this.productoModule1);
             this.Modules.Add(this.contabilidadModule2);
             this.Modules.Add(this.recursoHumanoModule1);
-            this.Modules.Add(this.erpModule1);
             this.Modules.Add(this.facturacionModule1);
+            this.Modules.Add(this.compraModule1);
+            this.Modules.Add(this.erpModule1);
             this.Modules.Add(this.officeAspNetModule1);
             this.Modules.Add(this.erpAspNetModule1);
             this.Security = this.securityStrategyComplex1;

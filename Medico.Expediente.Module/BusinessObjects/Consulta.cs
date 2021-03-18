@@ -1,15 +1,13 @@
 ﻿using DevExpress.ExpressApp;
+using DevExpress.ExpressApp.ConditionalAppearance;
+using DevExpress.ExpressApp.DC;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using System;
-using System.Linq;
-using DevExpress.ExpressApp.DC;
-using SBT.Apps.Medico.Generico.Module.BusinessObjects;
 using System.ComponentModel;
-using DevExpress.Data.Filtering;
-using DevExpress.ExpressApp.ConditionalAppearance;
+using System.Linq;
 
 namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 {
@@ -47,7 +45,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
             // para obtener el medico de la sesion y asignarlo en caso que se trate de un medico
             var ci = ((Usuario)SecuritySystem.CurrentUser).ClassInfo;
             if (ci.FindMember("Empleado") == null)
-                return;   
+                return;
             Empleado.Module.BusinessObjects.Empleado empleado = (((Usuario)SecuritySystem.CurrentUser).GetMemberValue("Empleado") as Empleado.Module.BusinessObjects.Empleado);
             if (empleado == null)
                 return;   // la propiedad existe, pero no tiene valor
@@ -56,8 +54,8 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
                 Medico = doc;
         }
 
-     //   SBT.Apps.Producto.Module.BusinessObjects.ProductoPrecio precio;
-     //   SBT.Apps.Producto.Module.BusinessObjects.Producto producto;
+        //   SBT.Apps.Producto.Module.BusinessObjects.ProductoPrecio precio;
+        //   SBT.Apps.Producto.Module.BusinessObjects.Producto producto;
         private Generico.Module.BusinessObjects.Medico _medico;
         private Paciente _paciente;
         private System.String _unidadDeRemision;
@@ -86,6 +84,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         }
 
         [RuleRequiredField("Consulta.Medico_Requerido", "Save")]
+        [ExplicitLoading]
         public Generico.Module.BusinessObjects.Medico Medico
         {
             get => _medico;
@@ -160,6 +159,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 
         [RuleRequiredField("Consulta.Consultorio_Requerido", "Save")]
         [DataSourceCriteria("[Role] == 2")]
+        [ExplicitLoading]
         public EmpresaUnidad Consultorio
         {
             get
@@ -192,7 +192,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         //    get => producto;
         //    set => SetPropertyValue(nameof(Producto), ref producto, value);
         //}
-      
+
         //[DevExpress.ExpressApp.DC.XafDisplayName("Precio")]
         //[DataSourceProperty("Precios")]
         //public SBT.Apps.Producto.Module.BusinessObjects.ProductoPrecio Precio

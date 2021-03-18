@@ -42,6 +42,7 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Tipo Pariente")]
         [RuleRequiredField("EmpleadoPariente.CodTipo_requerido", DefaultContexts.Save, "Tipo Pariente es requerido")]
         [DataSourceCriteria("Categoria = 12")]
+        [ExplicitLoading]
         public Listas Tipo
         {
             get

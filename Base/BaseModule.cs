@@ -1,3 +1,4 @@
+using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Updating;
@@ -6,8 +7,6 @@ using DevExpress.Persistent.BaseImpl;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using DevExpress.Data.Filtering;
-using SBT.Apps.Base.Module.BusinessObjects;
 
 namespace SBT.Apps.Base.Module
 {

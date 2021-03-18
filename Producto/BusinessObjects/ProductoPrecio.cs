@@ -26,6 +26,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
             CantidadDesde = 0.0m;
             CantidadHasta = 0.0m;
             PrecioUnitario = 0.0m;
+            precioUnitarioConIva = 0.0m;
             Activo = true;
         }
 
@@ -51,6 +52,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Tipo")]
         [RuleRequiredField("ProductoPrecio.Tipo_Requerido", DefaultContexts.Save, "Tipo Precio es Requerido")]
         [DataSourceCriteria("Categoria = 'TipoPrecio'")]
+        [ExplicitLoading]
         public Listas Tipo
         {
             get => _tipo;

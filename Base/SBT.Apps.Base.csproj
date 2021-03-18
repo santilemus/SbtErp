@@ -135,7 +135,13 @@
     <Compile Include="BusinessObjects\EBugPrioridad.cs" />
     <Compile Include="BusinessObjects\EBugSeveridad.cs" />
     <Compile Include="BusinessObjects\EBugSistemaOperativo.cs" />
+    <Compile Include="BusinessObjects\ECondicionPago.cs" />
+    <Compile Include="BusinessObjects\EFormaPago.cs" />
     <Compile Include="BusinessObjects\ETipoOperacion.cs" />
+    <Compile Include="BusinessObjects\ETipoTarjeta.cs" />
+    <Compile Include="Controllers\vcPermissionPolicyUser.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="NumberToLetterFunction.cs" />
     <Compile Include="NumeroALetras.cs" />
     <Compile Include="BusinessObjects\SqlObject.cs" />
@@ -314,12 +320,12 @@
     <EmbeddedResource Include="Images\help_32x32.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Images\factura.png" />
-    <EmbeddedResource Include="Images\factura_32x32.png" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Images\concepto.png" />
     <EmbeddedResource Include="Images\concepto_32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Images\factura.png" />
+    <EmbeddedResource Include="Images\factura_32x32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

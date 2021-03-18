@@ -17,7 +17,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         MessageTemplateMustBeReferenced = "Para borrar el objeto '{TargetObject}', debe estar seguro que no es utilizado (referenciado) en ningún lugar.",
         InvertResult = true, FoundObjectMessageFormat = "'{0}'", FoundObjectMessagesSeparator = ";")]
 
-    public class Moneda : XPCustomBaseBO
+    public class Moneda : XPCustomObject
     {
         public override void AfterConstruction()
         {

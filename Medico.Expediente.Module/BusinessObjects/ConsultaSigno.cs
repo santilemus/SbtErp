@@ -49,9 +49,9 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 
 
         #region Propiedades
-        [Persistent(nameof(PercentilTablaDetalle))]
+        [Persistent(nameof(PercentilTablaDetalle)), ExplicitLoading]
         PercentilTablaDetalle percentilTablaDetalle;
-        [Persistent(nameof(Imc))]
+        [Persistent(nameof(Imc)), ExplicitLoading]
         TablaIMC imc;
         private Consulta consulta;
         private Signo signo;
@@ -65,6 +65,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         }
 
         [ImmediatePostData(true), RuleRequiredField("ConsultaSigno.Signo_Requerido", DefaultContexts.Save)]
+        [ExplicitLoading]
         public Signo Signo
         {
             get => signo;

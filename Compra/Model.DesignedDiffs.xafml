@@ -174,7 +174,6 @@
         <ColumnInfo Id="Unidades" Width="106" Index="2" />
         <ColumnInfo Id="CodigoLote" Width="146" Index="3" />
         <ColumnInfo Id="FechaFabricacion" Width="123" />
-        <ColumnInfo Id="FechaVenceLote" Width="118" Index="4" />
       </Columns>
     </ListView>
     <ListView Id="InventarioMovimiento_ListView">
@@ -203,7 +202,6 @@
               <LayoutGroup Id="InventarioMovimientoDetalle_col2">
                 <LayoutItem Id="CodigoLote" CaptionLocation="Left" />
                 <LayoutItem Id="FechaFabricacion" CaptionLocation="Left" />
-                <LayoutItem Id="FechaVenceLote" CaptionLocation="Left" />
                 <LayoutItem Id="CantidadAnulada" CaptionLocation="Left" />
               </LayoutGroup>
             </LayoutGroup>
@@ -217,7 +215,6 @@
         <ColumnInfo Id="Movimiento" Width="119" />
         <ColumnInfo Id="CodigoLote" Width="181" />
         <ColumnInfo Id="FechaFabricacion" Width="117" />
-        <ColumnInfo Id="FechaVenceLote" Width="121" />
       </Columns>
     </ListView>
     <DetailView Id="OrdenCompra_DetailView">

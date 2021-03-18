@@ -1,16 +1,11 @@
-﻿using DevExpress.Data.Filtering;
-using DevExpress.ExpressApp;
-using DevExpress.ExpressApp.DC;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
-using DevExpress.Persistent.BaseImpl;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
 
 namespace SBT.Apps.Base.Module.BusinessObjects
 {
@@ -58,7 +53,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [Persistent(nameof(Estado)), DbType("smallint")]
         EEstadoFactura estado = EEstadoFactura.Debe;
         int? diasCredito;
-        Listas condicionPago;
+        ECondicionPago condicionPago;
         Listas tipoFactura;
 
         /// <summary>
@@ -75,6 +70,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [DataSourceProperty(nameof(TiposDeFacturas)), VisibleInLookupListView(true), Index(9)]
         [RuleRequiredField("", DefaultContexts.Save)]
         [DetailViewLayout("Datos Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
+        [ExplicitLoading]
         public Listas TipoFactura
         {
             get => tipoFactura;
@@ -91,11 +87,11 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         /// Condicion de Pago. Es obligatorio cuando se trata de Credito Fiscal o Factura Consumidor Final
         /// </summary>
         [XafDisplayName("Condición Pago")]
-        [DataSourceCriteria("[Categoria] == 17 And [Activo] == True")]   // Categoria = 17 es condicion de pago
-        [RuleRequiredField("", "Save", TargetCriteria = "@This.Tipo.Codigo In ('COVE01', 'COVE02')")]
+        [DbType("smallint")]
+        [RuleRequiredField("", "Save", TargetCriteria = "[TipoFactura.Codigo] In ('COVE01', 'COVE02')")]
         [VisibleInListView(false)]
         [DetailViewLayout("Datos de Pago", LayoutGroupType.SimpleEditorsGroup, 2)]
-        public Listas CondicionPago
+        public ECondicionPago CondicionPago
         {
             get => condicionPago;
             set => SetPropertyValue(nameof(CondicionPago), ref condicionPago, value);
@@ -123,7 +119,6 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         {
             get
             {
-
                 if (!IsLoading && !IsSaving && gravada == null)
                     UpdateTotalGravada(false);
                 return gravada;
@@ -222,6 +217,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         /// </summary>
         [PersistentAlias(nameof(estado)), XafDisplayName("Estado"), VisibleInListView(false)]
         [DetailViewLayout("Totales", LayoutGroupType.SimpleEditorsGroup, 10)]
+        [DbType("smallint")]
         public EEstadoFactura Estado => estado;
 
         /// <summary>
@@ -236,7 +232,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
 
         protected XPCollection<Listas> fTiposDeFacturas;
         [Browsable(false)]  // evitar que se muestre la colleccion separada
-        public XPCollection<Listas>TiposDeFacturas
+        public XPCollection<Listas> TiposDeFacturas
         {
             get
             {

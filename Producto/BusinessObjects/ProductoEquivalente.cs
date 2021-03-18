@@ -34,6 +34,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         /// </summary>
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Equivalente")]
         [RuleRequiredField("ProductoEquivalente.Equivalente_Requerido", DefaultContexts.Save, "Producto equivalente es requerido")]
+        [ExplicitLoading]
         public Producto Equivalente
         {
             get

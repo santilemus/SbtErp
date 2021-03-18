@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using DevExpress.Xpo;
-using System.Linq;
+﻿using DevExpress.ExpressApp.ConditionalAppearance;
 using DevExpress.ExpressApp.DC;
 using DevExpress.Persistent.Base;
-using DevExpress.Persistent.BaseImpl;
 using DevExpress.Persistent.Validation;
-using SBT.Apps.Producto.Module.BusinessObjects;
-using DevExpress.Data.Filtering;
-using DevExpress.ExpressApp.SystemModule;
-using DevExpress.ExpressApp.ConditionalAppearance;
+using DevExpress.Xpo;
+using System;
+using System.Linq;
 
 namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 {
@@ -23,20 +17,20 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
     [DevExpress.Persistent.Base.ImageNameAttribute("medicamento")]
     [DevExpress.ExpressApp.DC.XafDefaultPropertyAttribute("Nombre")]
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Medicamentos")]
-    [DevExpress.Persistent.Base.NavigationItemAttribute("Inventario")]  
+    [DevExpress.Persistent.Base.NavigationItemAttribute("Inventario")]
     //[MapInheritance(MapInheritanceType.ParentTable)]
     [RuleIsReferenced("Medicamente_Referencia", DefaultContexts.Delete, typeof(Medicamento), nameof(Oid),
         MessageTemplateMustBeReferenced = "Para borrar el objeto '{TargetObject}', debe estar seguro que no es utilizado (referenciado) en ningún lugar.",
         InvertResult = true, FoundObjectMessageFormat = "'{0}'", FoundObjectMessagesSeparator = ";")]
-    [Appearance("MedicamentosDosisHide", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "MedicamentoDosis_ListView", 
+    [Appearance("MedicamentosDosisHide", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "MedicamentoDosis_ListView",
         Criteria = "[Categoria.Clasificacion] != 0", TargetItems = "MedicDosis")]
-    [Appearance("MedicamentosDosisShow", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Show, Context = "MedicamentoDosis_ListView", 
+    [Appearance("MedicamentosDosisShow", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Show, Context = "MedicamentoDosis_ListView",
         Criteria = "[Categoria.Clasificacion] = 0", TargetItems = "MedicDosis")]
     [Appearance("MedicamentoVacunaHide", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "Medicamento_Vacunas_ListView",
         Criteria = "[Categoria.Clasificacion] != 0", TargetItems = "Vacunas")]
     [Appearance("MedicamentosVacunaShow", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Show, Context = "Medicamento_Vacunas_ListView",
         Criteria = "[Categoria.Clasificacion] = 0", TargetItems = "Vacunas")]
-    public class Medicamento: Producto.Module.BusinessObjects.Producto
+    public class Medicamento : Producto.Module.BusinessObjects.Producto
     {
         public override void AfterConstruction()
         {
@@ -95,7 +89,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
             }
         }
 
-        [DbType("smallint"), Persistent("Prioridad"), XafDisplayName("Prioridad"), 
+        [DbType("smallint"), Persistent("Prioridad"), XafDisplayName("Prioridad"),
             RuleRequiredField("Medicamento.Prioridad_Requerido", DefaultContexts.Save)]
         public EClasificacionVEN Prioridad
         {
@@ -103,7 +97,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
             set => SetPropertyValue(nameof(Prioridad), ref prioridad, value);
         }
 
-        [DbType("smallint"), Persistent("NivelUso"), XafDisplayName("Nivel Uso"), 
+        [DbType("smallint"), Persistent("NivelUso"), XafDisplayName("Nivel Uso"),
             RuleRequiredField("Medicamento.NivelUso_Requerido", "Save")]
         public ENivelUsoMedicamento NivelUso
         {
@@ -123,14 +117,14 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
         #region Colecciones
 
         [DevExpress.Xpo.AssociationAttribute("MedicamentoDosises-Medicamento"), DevExpress.Xpo.Aggregated]
-		[DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Medicamento Dosis"), Index(0)]
-		public XPCollection<MedicamentoDosis> MedicDosis
-		{
-		  get
-		  {
-			return GetCollection<MedicamentoDosis>("MedicDosis");
-		  }
-		}
+        [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Medicamento Dosis"), Index(0)]
+        public XPCollection<MedicamentoDosis> MedicDosis
+        {
+            get
+            {
+                return GetCollection<MedicamentoDosis>("MedicDosis");
+            }
+        }
 
         /// <summary>
         /// No puede ser Agregated la relacion porque no existe un producto para todas las vacunas y además porque nos

@@ -37,6 +37,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         /// </summary>
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Item"), Persistent(nameof(Item))]
         [RuleRequiredField("ProductoEnsamble.Item_Requerido", DefaultContexts.Save, "Item es requerido")]
+        [ExplicitLoading]
         public Producto Item
         {
             get => _item;

@@ -45,6 +45,7 @@
       <LocalizationItem Name="thousand" Value="mil" IsNewNode="True" />
     </LocalizationGroup>
   </Localization>
+  <Options DataAccessMode="Server" />
   <SchemaModules>
     <SchemaModule Name="CloneObjectModule" Version="20.2.5.0" IsNewNode="True" />
     <SchemaModule Name="SystemModule" Version="20.2.5.0" IsNewNode="True" />
@@ -167,7 +168,7 @@
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
           <LayoutGroup Id="SimpleEditors" RelativeSize="22.336328626444161" Direction="Horizontal">
-            <LayoutGroup Id="Empresa_col1" ShowCaption="False" Index="0" RelativeSize="49.7787610619469" CaptionLocation="Left" IsNewNode="True">
+            <LayoutGroup Id="Empresa_col1" ShowCaption="False" Index="0" RelativeSize="49.446902654867259" CaptionLocation="Left" IsNewNode="True">
               <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="20.689655172413794" CaptionLocation="Left" IsNewNode="True" />
               <LayoutItem Id="RazonSocial" ViewItem="RazonSocial" Index="1" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
               <LayoutItem Id="Pais" ViewItem="Pais" Index="2" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
@@ -175,21 +176,20 @@
               <LayoutItem Id="Ciudad" ViewItem="Ciudad" Index="4" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
               <LayoutItem Id="Direccion" ViewItem="Direccion" Index="5" RelativeSize="19.540229885057471" CaptionLocation="Left" IsNewNode="True" />
             </LayoutGroup>
-            <LayoutGroup Id="Empresa_col2" ShowCaption="False" Index="1" RelativeSize="50.2212389380531" CaptionLocation="Left" IsNewNode="True">
+            <LayoutGroup Id="Empresa_col2" ShowCaption="False" Index="1" RelativeSize="50.553097345132741" CaptionLocation="Left" IsNewNode="True">
               <LayoutItem Id="EMail" ViewItem="EMail" Index="0" RelativeSize="20.689655172413794" CaptionLocation="Left" IsNewNode="True" />
               <LayoutItem Id="SitioWeb" ViewItem="SitioWeb" Index="1" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
               <LayoutItem Id="Nit" ViewItem="Nit" Index="2" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
               <LayoutItem Id="Nrc" ViewItem="Nrc" Index="3" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
               <LayoutItem Id="Activa" ViewItem="Activa" Index="4" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="NRC" ViewItem="NRC" Index="5" RelativeSize="19.540229885057471" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Logo" ViewItem="Logo" CaptionLocation="Left" Index="5" RelativeSize="19.540229885057471" IsNewNode="True" />
             </LayoutGroup>
             <LayoutGroup Id="Empresa" Removed="True" />
             <LayoutGroup Id="XPObject" RelativeSize="53.475935828877006" Caption="Oid" Direction="Horizontal" Removed="True">
               <LayoutItem Id="Oid" RelativeSize="100" Removed="True" />
             </LayoutGroup>
           </LayoutGroup>
-          <LayoutItem Id="Logo" ViewItem="Logo" CaptionLocation="Left" Index="1" RelativeSize="3.3376123234916562" IsNewNode="True" />
-          <TabbedGroup Id="Tabs" RelativeSize="74.326059050064188" Index="2">
+          <TabbedGroup Id="Tabs" RelativeSize="77.663671373555843" Index="1">
             <LayoutGroup Id="Telefonos" RelativeSize="100">
               <LayoutItem Id="Telefonos" RelativeSize="100" />
             </LayoutGroup>
@@ -206,6 +206,7 @@
         </LayoutGroup>
       </Layout>
     </DetailView>
+    <ListView Id="Empresa_ListView" DataAccessMode="DataView" />
     <ListView Id="Empresa_LookupListView" AllowDelete="False" />
     <DetailView Id="EmpresaGiro_DetailView">
       <Layout>
@@ -508,12 +509,12 @@
         </LayoutGroup>
       </Layout>
     </DetailView>
-    <ListView Id="ZonaGeografica_ListView" DataAccessMode="Server">
+    <ListView Id="ZonaGeografica_ListView" DataAccessMode="DataView">
       <Columns>
         <ColumnInfo Id="CodigoTelefonico" Width="121" />
       </Columns>
     </ListView>
-    <ListView Id="ZonaGeografica_LookupListView" DataAccessMode="Server" ShowAutoFilterRow="False" />
+    <ListView Id="ZonaGeografica_LookupListView" DataAccessMode="DataView" ShowAutoFilterRow="False" />
     <ListView Id="ZonaGeografica_Zonas_ListView" DataAccessMode="Server" />
   </Views>
 </Application>
