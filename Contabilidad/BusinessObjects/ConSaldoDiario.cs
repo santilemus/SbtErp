@@ -1,19 +1,12 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp;
-using System.ComponentModel;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
-using DevExpress.Persistent.Base;
-using System.Collections.Generic;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
-using DevExpress.Persistent.Validation;
+using DevExpress.Persistent.Base;
+using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Contabilidad.BusinessObjects;
-using SBT.Apps.Contabilidad.Module.BusinessObjects;
+using System;
+using System.ComponentModel;
+using System.Linq;
 
 namespace SBT.Apps.Contabilidad.Module.BusinessObjects
 {
@@ -25,7 +18,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
     //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
-    public class ConSaldoDiario : XPCustomBaseBO
+    public class ConSaldoDiario : XPCustomObject
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
         public ConSaldoDiario(Session session)
             : base(session)
@@ -67,7 +60,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             get => oid;
         }
 
-        
+
         [PersistentAlias(nameof(empresa)), XafDisplayName("Empresa"), Browsable(false)]
         public Empresa Empresa
         {
@@ -86,54 +79,54 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             get { return cuenta; }
         }
 
-        
+
         [PersistentAlias("[Cuenta.Nombre]")]
         public string Nombre
         {
             get { return Convert.ToString(EvaluateAlias(nameof(Nombre))); }
         }
-        
+
         [PersistentAlias(nameof(fecha)), XafDisplayName("Fecha")]
         [ModelDefault("DisplayFormat", "{0:G}"), ModelDefault("EditMask", "G")]
         public DateTime Fecha
         {
             get { return fecha; }
         }
-        
+
         [PersistentAlias(nameof(debe)), XafDisplayName("Valor Debe")]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         public decimal Debe
         {
             get { return debe; }
         }
-        
+
         [PersistentAlias(nameof(haber)), XafDisplayName("Valor Haber")]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         public decimal Haber
         {
             get { return haber; }
         }
-        
+
         [PersistentAlias(nameof(tipoSaldoDia)), XafDisplayName("Tipo Saldo")]
         public ETipoSaldoDia TipoSaldoDia
         {
             get { return tipoSaldoDia; }
         }
-        
+
         [PersistentAlias(nameof(debeAjusteConsolida)), XafDisplayName("Debe Ajuste")]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         public decimal DebeAjusteConsolida
         {
             get { return debeAjusteConsolida; }
         }
-        
+
         [PersistentAlias(nameof(haberAjusteConsolida)), XafDisplayName("Haber Ajuste")]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         public decimal HaberAjusteConsolida
         {
             get { return haberAjusteConsolida; }
         }
-        
+
         #endregion
 
 

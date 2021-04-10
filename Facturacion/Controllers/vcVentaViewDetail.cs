@@ -1,19 +1,19 @@
-﻿using System;
-using System.ComponentModel;
-using DevExpress.ExpressApp;
+﻿using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.SystemModule;
 using DevExpress.ExpressApp.ViewVariantsModule;
-using DevExpress.Xpo;
 using SBT.Apps.Base.Module.Controllers;
-using DevExpress.ExpressApp.Actions;
 using SBT.Apps.Facturacion.Module.BusinessObjects;
+using System;
 
 namespace SBT.Apps.Facturacion.Module.Controllers
 {
+    /// <summary>
+    /// ViewController que se aplica a la vista de detalle del BO Venta;
+    /// </summary>
     public class vcVentaViewDetail : ViewControllerBase
     {
         private NewObjectViewController newObjectController;
-        private ChangeVariantController changeVariantController;       
+        private ChangeVariantController changeVariantController;
 
         public vcVentaViewDetail()
         {
@@ -40,14 +40,6 @@ namespace SBT.Apps.Facturacion.Module.Controllers
             ViewControlsCreated -= VentaViewDetail_ViewControlsCreated;
             changeVariantController.ChangeVariantAction.Executing -= ChangeVariantAction_Executing;
             base.OnDeactivated();
-        }
-
-        private void NewObjectController_ObjectCreated(object sender, ObjectCreatedEventArgs e)
-        {
-            if (e.CreatedObject is Venta)
-            {
-                AsignarTipoFactura(e.CreatedObject, e.ObjectSpace);
-            }
         }
 
         private void VentaViewDetail_ViewControlsCreated(object sender, EventArgs e)

@@ -7,6 +7,7 @@ using SBT.Apps.Inventario.Module.BusinessObjects;
 using System;
 using System.ComponentModel;
 using System.Linq;
+using DevExpress.Xpo;
 
 namespace SBT.Apps.Facturacion.Module.Controllers
 {
@@ -210,6 +211,10 @@ namespace SBT.Apps.Facturacion.Module.Controllers
                 }
                 lote.Save();
             }
+        }
+
+        private void ExportSalesIvaF07(DateTime ADesde, DateTime AHasta)
+        {
         }
 
     }

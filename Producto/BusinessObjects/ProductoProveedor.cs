@@ -15,7 +15,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
     [ImageName("Tercero")]
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Producto Proveedor"), NavigationItem(false), Persistent("ProductoProveedor"),
         XafDefaultProperty("Proveedor")]
-    public class ProductoProveedor : XPObjectBaseBO
+    public class ProductoProveedor : XPObject
     {
         public override void AfterConstruction()
         {

@@ -1,7 +1,6 @@
 ﻿using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
-using SBT.Apps.Base.Module.BusinessObjects;
 using System;
 using System.Linq;
 
@@ -11,7 +10,7 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
     [DevExpress.Persistent.Base.CreatableItemAttribute(false)]
     [DevExpress.Persistent.Base.ImageNameAttribute("employee_man-info")]
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Empleado Membresías")]
-    public class EmpleadoMembresia : XPObjectBaseBO
+    public class EmpleadoMembresia : XPObject
     {
         public override void AfterConstruction()
         {

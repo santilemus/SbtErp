@@ -8,6 +8,7 @@ using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Inventario.Module.BusinessObjects;
 using System;
 using System.ComponentModel;
+using DevExpress.ExpressApp.Model;
 using System.Linq;
 
 namespace SBT.Apps.Producto.Module.BusinessObjects
@@ -138,6 +139,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Cantidad Mínima")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [DevExpress.Persistent.Base.VisibleInListViewAttribute(false)]
+        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         [RuleValueComparison("Producto.CantidadMinima_Mayor_o_Igual_0", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual, 0)]
         public System.Decimal CantMinima
         {
@@ -147,6 +149,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
 
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Cantidad Máxima")]
+        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         [DevExpress.Persistent.Base.VisibleInListViewAttribute(false)]
         public System.Decimal CantMaxima
         {

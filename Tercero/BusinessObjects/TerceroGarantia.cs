@@ -13,6 +13,9 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
     /// <summary>
     /// BO que corresponde a las garantías presentadas por terceros que son clientes para obtener crédito
     /// </summary>
+    /// <remarks>
+    /// NOTA: Se hereda de XPobjectBaseBO por la propiedad Empresa
+    /// </remarks>
     [ModelDefault("Caption", "Tercero Garantía"), NavigationItem(false), CreatableItem(false),
         DefaultProperty(nameof(Descripcion)), Persistent(nameof(TerceroGarantia))]
     //[ImageName("BO_Contact")]

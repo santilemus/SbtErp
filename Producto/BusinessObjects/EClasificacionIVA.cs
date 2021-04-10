@@ -1,5 +1,4 @@
 ﻿using System;
-using DevExpress.ExpressApp.DC;
 
 namespace SBT.Apps.Producto.Module.BusinessObjects
 {

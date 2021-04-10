@@ -16,7 +16,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
     [DevExpress.Persistent.Base.CreatableItemAttribute(false)]
     [DevExpress.Persistent.Base.ImageNameAttribute("phone")]
     [DefaultProperty(nameof(Numero))]
-    public class Telefono : XPCustomBaseBO
+    public class Telefono : XPCustomObject
     {
         public override void AfterConstruction()
         {

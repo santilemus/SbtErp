@@ -10,7 +10,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
     [CreatableItem(false)]
     [ImageName(nameof(ProductoAtributo))]
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Atributo"), NavigationItem(false), Persistent("ProductoAtributo")]
-    public class ProductoAtributo : XPObjectBaseBO
+    public class ProductoAtributo : XPObject
     {
         private Producto _producto;
         private System.String _descripcion;

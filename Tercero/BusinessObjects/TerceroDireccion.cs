@@ -15,7 +15,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
     [ImageName("address")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
-    public class TerceroDireccion : XPObjectBaseBO
+    public class TerceroDireccion : XPObject
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
         public TerceroDireccion(Session session)
             : base(session)

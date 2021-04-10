@@ -9,7 +9,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Registro Fiscal")]
     [DevExpress.Persistent.Base.ImageNameAttribute("bill-key")]
     [Persistent(nameof(EmpresaGiro))]
-    public class EmpresaGiro : XPObjectBaseBO
+    public class EmpresaGiro : XPObject
     {
         public override void AfterConstruction()
         {

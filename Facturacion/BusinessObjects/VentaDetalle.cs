@@ -13,6 +13,7 @@ using SBT.Apps.Inventario.Module.BusinessObjects;
 using System;
 using System.ComponentModel;
 using System.Linq;
+using SBT.Apps.Base.Module.BusinessObjects;
 
 namespace SBT.Apps.Facturacion.Module.BusinessObjects
 {
@@ -24,16 +25,16 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
     /// </remarks>
     [ModelDefault("Caption", "Venta Detalle"), DefaultProperty(nameof(Producto)), NavigationItem(false),
         Persistent(nameof(VentaDetalle)), CreatableItem(false)]
-    [Appearance("Venta Detalle - Credito Fiscal", AppearanceItemType = "ViewItem", TargetItems = "PrecioConIva",
-        Criteria = "[Venta.Tipo.Codigo] == 'COVE01'", Context = "Any", Visibility = ViewItemVisibility.Hide)]
-    [Appearance("Venta Detalle - Consumidor Final y Ticket", AppearanceItemType = "ViewItem", TargetItems = "IVA",
-        Criteria = "[Venta.Tipo.Codigo] In ('COVE02', 'COVE04', 'COVE05')", Context = "Any", Visibility = ViewItemVisibility.Hide)]
+    [Appearance("Venta Detalle - Credito Fiscal", AppearanceItemType = "Any", TargetItems = "PrecioConIva",
+        Criteria = "[Venta.TipoFactura.Codigo] == 'COVE01'", Context = "Any", Visibility = ViewItemVisibility.Hide)]
+    [Appearance("Venta Detalle - Consumidor Final y Ticket", AppearanceItemType = "Any", TargetItems = "IVA",
+        Criteria = "[Venta.TipoFactura.Codigo] In ('COVE02', 'COVE04', 'COVE05')", Context = "Any", Visibility = ViewItemVisibility.Hide)]
     [Appearance("Venta Detalle - Factura Exportacion", AppearanceItemType = "ViewItem", TargetItems = "IVA;Exenta;NoSujeta",
-        Criteria = "[Venta.Tipo.Codigo] == 'COVE03'", Context = "Any", Visibility = ViewItemVisibility.Hide)]
+        Criteria = "[Venta.TipoFactura.Codigo] == 'COVE03'", Context = "Any", Visibility = ViewItemVisibility.Hide)]
     // la siguiente regla es para habilitar la edicion de estas propiedades solo cuando es un objeto nuevo. Si tiene que modificarlos
     // debe borrarlos y crear nuevos, o poner la cantidad a cero
-    [Appearance("Venta Detalle - Nuevo Registro", AppearanceItemType = "Any", Enabled = true, TargetItems = "Bodega;Producto;CodigoBarra",
-        Criteria = "IsNewObject(This)")]
+    //[Appearance("Venta Detalle - Nuevo Registro", AppearanceItemType = "Any", Enabled = true, TargetItems = "Bodega;CodigoBarra",
+    //    Criteria = "IsNewObject(This) && [Producto.Categoria.Clasificacion] <= 3")]
     [OptimisticLockingReadBehavior(OptimisticLockingReadBehavior.Default, true)]
     //[ImageName("BO_Contact")]
     [DefaultListViewOptions(MasterDetailMode.ListViewOnly, true, NewItemRowPosition.Top)]
@@ -60,7 +61,6 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
 
         SBT.Apps.Base.Module.BusinessObjects.EmpresaUnidad bodega;
         Venta venta;
-        [Persistent(nameof(Costo)), DbType("numeric(14,6)")]
         decimal costo;
         ProductoCodigoBarra codigoBarra;
 
@@ -88,19 +88,29 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         /// </summary>
         [XafDisplayName("Bodega"), RuleRequiredField("VentaDetalle.Bodega_Requerida", "Save",
             TargetCriteria = "!([Producto.Categoria.Clasificacion] In (4, 5))")]
+        [Appearance("VentaDetalle_Bodega_Hide", AppearanceItemType = "ViewItem", Criteria = "[Producto.Categoria.Clasificacion] > 3",
+            Visibility = ViewItemVisibility.Hide, Context = "Any")]
+        [Appearance("VentaDetalle_Bodega_Show", AppearanceItemType = "ViewItem", Criteria = "[Producto.Categoria.Clasificacion] <= 3",
+            Visibility = ViewItemVisibility.Show, Context = "Any")]
         public SBT.Apps.Base.Module.BusinessObjects.EmpresaUnidad Bodega
         {
             get => bodega;
             set => SetPropertyValue(nameof(Bodega), ref bodega, value);
         }
 
-        [PersistentAlias("[PrecioUnidad] * [Producto.Categoria.PorcentajeIva]"), XafDisplayName("Precio Con Iva"), Index(6)]
+        [PersistentAlias("[PrecioUnidad] * [Producto.Categoria.PorcentajeIVA]"), XafDisplayName("Precio Con Iva"), Index(6)]
         [ModelDefault("DisplayFormat", "{0:N4}"), ModelDefault("EditMask", "n4")]
         public decimal PrecioConIva => Convert.ToDecimal(EvaluateAlias(nameof(PrecioConIva)));
 
-        [PersistentAlias(nameof(costo)), XafDisplayName("Costo"), Index(11), VisibleInListView(false)]
+        [XafDisplayName("Costo"), Index(11)]
         [ModelDefault("DisplayFormat", "{0:N6}"), ModelDefault("EditMask", "n6")]
-        public decimal Costo => costo;
+        [Persistent(nameof(Costo)), DbType("numeric(14,6)")]
+        [ModelDefault("AllowEdit", "false"), Browsable(false)]
+        public decimal Costo
+        {
+            get => costo;
+            set => SetPropertyValue(nameof(Costo), ref costo, value);
+        }
 
 
         [Association("Venta-Detalles"), XafDisplayName("Venta"), Index(12)]
@@ -123,6 +133,9 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         }
 
         [DbType("int"), XafDisplayName("Lote")]
+        [Appearance("VentaDetalle_Lote_Hide", AppearanceItemType = "ViewItem",
+            Criteria = "[Producto.Categoria.Clasificacion] > 3 || [Producto.Categoria.MetodoCosteo] In (0, 3, 4)",
+            Visibility = ViewItemVisibility.Hide, Context = "*")]
         public InventarioLote Lote
         {
             get => lote;
@@ -194,22 +207,10 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
                 OnChanged(nameof(CodigoBarra));
             }
             fProdChanged = false;
-            switch (Producto.Categoria.MetodoCosteo)
-            {
-                case EMetodoCosteoInventario.Promedio:
-                    costo = Producto.CostoPromedio;
-                    break;
-                case EMetodoCosteoInventario.Unitario:
-                    costo = Producto.Precios.FirstOrDefault<ProductoPrecio>(p => p.Producto.Oid == Producto.Oid && p.Activo == true).PrecioUnitario;
-                    break;
-                default:
-                    {
-                        InventarioLote lotep = ObtenerLote();
-                        Lote = lotep;
-                        costo = lotep != null ? lotep.Costo : Producto.CostoPromedio;
-                        break;
-                    }
-            }
+            decimal pu = Producto.Precios.FirstOrDefault<ProductoPrecio>(p => p.Producto.Oid == Producto.Oid &&
+                         p.Tipo.Categoria == CategoriaLista.TipoPrecio && p.Tipo.Codigo == "TPR001" && p.Activo == true).PrecioUnitario;
+            if (PrecioUnidad == 0.0m)
+                PrecioUnidad = pu;
             OnChanged(nameof(Costo));
         }
 
@@ -259,7 +260,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             Venta.UpdateTotalNoSujeta(true);
         }
 
-        private InventarioLote ObtenerLote()
+        public InventarioLote ObtenerLote()
         {
             InventarioLote lotep = null;
             Producto.Lotes.Criteria = CriteriaOperator.Parse("[Producto.Oid] == ? && [Entrada] > [Salida]", Producto.Oid);

@@ -1,13 +1,11 @@
-﻿using DevExpress.ExpressApp.Model;
+﻿using DevExpress.ExpressApp;
+using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using DevExpress.Xpo;
+using DevExpress.Xpo.Metadata;
 using System;
 using System.ComponentModel;
 using System.Linq;
-using System.Collections.Generic;
-using DevExpress.Persistent.Validation;
-using DevExpress.Xpo.Metadata;
-using DevExpress.ExpressApp;
 
 namespace SBT.Apps.Base.Module.BusinessObjects
 {
@@ -76,7 +74,6 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         private XPMemberInfo defaultPropertyMemberInfo;
 
         #region Propiedades
-        private XPDelayedProperty audit = new XPDelayedProperty();
 
         [Size(25), Persistent(@"UsuarioCrea"), DbType("varchar(25)"), NonCloneable(), ModelDefault("AllowEdit", "False")]
         string usuarioCrea = DevExpress.ExpressApp.SecuritySystem.CurrentUserName;

@@ -23,7 +23,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         InvertResult = true, FoundObjectMessageFormat = "'{0}'", FoundObjectMessagesSeparator = ";")]
     [ImageName("CategoriaProducto")]
     [Persistent("ProCategoria")]
-    public class Categoria : XPObjectBaseBO
+    public class Categoria : XPObject
     {
         public override void AfterConstruction()
         {

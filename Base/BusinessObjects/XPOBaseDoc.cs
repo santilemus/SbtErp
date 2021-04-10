@@ -34,8 +34,8 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             //    sCriteria += " && Caja.Oid == ?";
             using (UnitOfWork uow = new UnitOfWork(Session.DataLayer, null))
             {
-                object max = uow.Evaluate(this.GetType(), CriteriaOperator.Parse("Max(Numero)"), CriteriaOperator.Parse(sCriteria, Empresa.Oid, Fecha));
-                return (max != null) ? Convert.ToInt32(max) : 1;
+                object max = uow.Evaluate(this.GetType(), CriteriaOperator.Parse("Max(Numero) + 1"), CriteriaOperator.Parse(sCriteria, Empresa.Oid, Fecha));
+                return Convert.ToInt32(max ?? 1); 
             }
         }
 
@@ -50,9 +50,9 @@ namespace SBT.Apps.Base.Module.BusinessObjects
 
         protected override void OnSaving()
         {
-            base.OnSaving();
             if (!(Session is NestedUnitOfWork) && Session.IsNewObject(this))
                 Numero = CorrelativoDoc();
+            base.OnSaving();
         }
 
         public override void AfterConstruction()

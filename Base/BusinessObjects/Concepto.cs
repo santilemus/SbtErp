@@ -1,16 +1,11 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp;
-using System.ComponentModel;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
-using DevExpress.Persistent.Base;
-using System.Collections.Generic;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
+using DevExpress.Xpo;
+using System;
+using System.ComponentModel;
+using System.Linq;
 
 namespace SBT.Apps.Base.Module.BusinessObjects
 {
@@ -19,7 +14,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
     /// por cobrar. Ejemplo: Notas de Credito -> Devolucion, Descuento por Pronto Pago, etc, Pagos -> Pagos Efectivo, Transferencias, etc.
     /// </summary>
 
-    [DefaultClassOptions, ModelDefault("Caption", "Conceptos Cuenta x Cobrar"), DefaultProperty("Nombre"), NavigationItem("Cuenta por Cobrar"), 
+    [DefaultClassOptions, ModelDefault("Caption", "Conceptos Cuenta x Cobrar"), DefaultProperty("Nombre"), NavigationItem("Cuenta por Cobrar"),
         Persistent("CxCConcepto")]
     [ImageName("Concepto")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]

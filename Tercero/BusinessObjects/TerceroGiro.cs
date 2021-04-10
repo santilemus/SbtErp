@@ -13,7 +13,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Registro Fiscal")]
     [DevExpress.Persistent.Base.CreatableItemAttribute(false)]
     [DevExpress.Persistent.Base.ImageNameAttribute("bill-key")]
-    public class TerceroGiro : XPObjectBaseBO
+    public class TerceroGiro : XPObject
     {
         private Tercero tercero;
         bool vigente = true;

@@ -113,6 +113,12 @@
     <Compile Include="BusinessObjects\Tributo.cs" />
     <Compile Include="BusinessObjects\TributoCategoria.cs" />
     <Compile Include="BusinessObjects\XPCustomFacturaDetalle.cs" />
+    <Compile Include="Controllers\vcInventario.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controllers\vcKardex.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controllers\vcProducto.cs">
       <SubType>Component</SubType>
     </Compile>

@@ -16,7 +16,7 @@ namespace SBT.Apps.Inventario.Module.BusinessObjects
     [Persistent(nameof(Inventario))]
     [ImageName(nameof(Inventario))]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
-    public class Inventario : XPObjectBaseBO
+    public class Inventario : XPObject
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
         public Inventario(Session session)
             : base(session)

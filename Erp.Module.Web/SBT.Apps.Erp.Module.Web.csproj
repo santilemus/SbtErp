@@ -224,6 +224,9 @@
     <Compile Include="Controllers\vcTerceroWeb.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controllers\vcVentaWeb.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controllers\vcZonaGeograficaWeb.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -236,6 +239,7 @@
     <Compile Include="ErpAspNetModule.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="FileDownloadHttpHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ErpAspNetModule.Designer.cs">
       <DependentUpon>ErpAspNetModule.cs</DependentUpon>

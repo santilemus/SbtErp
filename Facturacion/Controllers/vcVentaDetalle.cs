@@ -1,11 +1,9 @@
-﻿using DevExpress.ExpressApp;
+﻿using DevExpress.Data.Filtering;
+using DevExpress.ExpressApp;
 using SBT.Apps.Base.Module.Controllers;
+using SBT.Apps.Facturacion.Module.BusinessObjects;
 using System;
 using System.Linq;
-using SBT.Apps.Facturacion.Module.BusinessObjects;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp.Xpo;
-using DevExpress.Data.Filtering;
 
 namespace SBT.Apps.Facturacion.Module.Controllers
 {
@@ -47,6 +45,8 @@ namespace SBT.Apps.Facturacion.Module.Controllers
                 if (itemVenta.Producto.Categoria.Clasificacion >= Producto.Module.BusinessObjects.EClasificacion.Servicios)
                     return;
                 if (itemVenta.Producto.Categoria.MetodoCosteo == Producto.Module.BusinessObjects.EMetodoCosteoInventario.Ninguno)
+                    return;
+                if (itemVenta.Bodega == null)
                     return;
                 decimal cantVta;
                 if (itemVenta.Producto.Categoria.MetodoCosteo == Producto.Module.BusinessObjects.EMetodoCosteoInventario.PEPS ||

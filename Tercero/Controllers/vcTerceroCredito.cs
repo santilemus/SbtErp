@@ -1,27 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using SBT.Apps.Base.Module.Controllers;
+using System;
 using System.Linq;
-using System.Text;
-using DevExpress.Data.Filtering;
-using DevExpress.ExpressApp;
-using DevExpress.ExpressApp.Actions;
-using DevExpress.ExpressApp.Editors;
-using DevExpress.ExpressApp.Layout;
-using DevExpress.ExpressApp.Model.NodeGenerators;
-using DevExpress.ExpressApp.SystemModule;
-using DevExpress.ExpressApp.Templates;
-using DevExpress.ExpressApp.Utils;
-using DevExpress.Persistent.Base;
-using DevExpress.Persistent.Validation;
-using SBT.Apps.Base.Module.Controllers;
-using SBT.Apps.Tercero.Module.BusinessObjects;
 
 namespace SBT.Apps.Tercero.Module.Controllers
 {
     /// <summary>
     /// Controlador que corresponde a TerceroCredito
     /// </summary>
-    public class vcTerceroCredito: ViewControllerBase
+    public class vcTerceroCredito : ViewControllerBase
     {
         public vcTerceroCredito() : base()
         {

@@ -15,7 +15,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
     [ImageName(nameof(ProductoEquivalente))]
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Equivalente"), XafDefaultProperty("Equivalente"), NavigationItem(false),
         Persistent("ProductoEquivalente")]
-    public class ProductoEquivalente : XPObjectBaseBO
+    public class ProductoEquivalente : XPObject
     {
         public override void AfterConstruction()
         {

@@ -1,17 +1,11 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp;
-using System.ComponentModel;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
-using DevExpress.Persistent.Base;
-using System.Collections.Generic;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
+using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
+using System;
+using System.Linq;
 
 
 namespace SBT.Apps.Banco.Module.BusinessObjects
@@ -64,7 +58,7 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
 
         [DbType("datetime"), Persistent("FechaFin"), XafDisplayName("Fecha Fin")]
         [ModelDefault("DisplayFormat", "{0:G}"), ModelDefault("EditMask", "G")]
-        [RuleValueComparison("Chequera.FechaFin >= FechaInicio", DefaultContexts.Save, ValueComparisonType.GreaterThan, "FechaInicio", 
+        [RuleValueComparison("Chequera.FechaFin >= FechaInicio", DefaultContexts.Save, ValueComparisonType.GreaterThan, "FechaInicio",
             ParametersMode.Expression, SkipNullOrEmptyValues = true)]
         public DateTime FechaFin
         {
@@ -95,7 +89,7 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
             set => SetPropertyValue(nameof(NumeroActual), ref numeroActual, value);
         }
 
-        
+
         [Size(8), DbType("varchar(8)"), Persistent("Serie"), XafDisplayName("No Serie")]
         public string Serie
         {

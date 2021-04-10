@@ -12,7 +12,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
     [DevExpress.Persistent.Base.CreatableItemAttribute(false)]
     [DevExpress.Persistent.Base.ImageNameAttribute("user_id-info")]
     [RuleCombinationOfPropertiesIsUnique("PersonaDocumento_DocumentoUnico", DefaultContexts.Save, "Tipo,Oid", SkipNullOrEmptyValues = false)]
-    public class PersonaDocumento : XPObjectBaseBO
+    public class PersonaDocumento : XPObject
     {
         public override void AfterConstruction()
         {

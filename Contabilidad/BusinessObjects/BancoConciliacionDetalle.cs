@@ -1,17 +1,12 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp;
-using System.ComponentModel;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
-using DevExpress.Persistent.Base;
-using System.Collections.Generic;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
+using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
+using System;
+using System.ComponentModel;
+using System.Linq;
 
 namespace SBT.Apps.Banco.Module.BusinessObjects
 {
@@ -19,7 +14,7 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
     /// Bancos
     /// BO que corresponde al detalle de las conciliaciones bancarias
     /// </summary>
-    
+
     [ModelDefault("Caption", "Conciliación Detalle"), NavigationItem(false), DefaultProperty("Transaccion"), CreatableItem(false),
         Persistent("BanConciliacionDetalle")]
     //[ImageName("BO_Contact")]
@@ -72,7 +67,7 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
             get { return Convert.ToInt32(EvaluateAlias(nameof(ChequeNo))); }
         }
 
-        [DbType("datetime2"), XafDisplayName("Fecha"), Index(4), 
+        [DbType("datetime2"), XafDisplayName("Fecha"), Index(4),
             RuleRequiredField("BancoConciliacionDetalle.Fecha_Requerido", DefaultContexts.Save)]
         [ModelDefault("DisplayFormat", "{0:G}"), ModelDefault("EditMask", "G")]
         public DateTime Fecha
@@ -103,7 +98,7 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         {
             get { return (BancoClasificacionTransac)(EvaluateAlias(nameof(Clasificacion))); }
         }
-        
+
         [DbType("smallint"), XafDisplayName("Estado"), Index(8)]
         public EConciliacionDetalleEstado Estado
         {
@@ -113,15 +108,6 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
 
 
         #endregion
-
-        //private string _PersistentProperty;
-        //[XafDisplayName("My display name"), ToolTip("My hint message")]
-        //[ModelDefault("EditMask", "(000)-00"), Index(0), VisibleInListView(false)]
-        //[Persistent("DatabaseColumnName"), RuleRequiredField(DefaultContexts.Save)]
-        //public string PersistentProperty {
-        //    get { return _PersistentProperty; }
-        //    set { SetPropertyValue("PersistentProperty", ref _PersistentProperty, value); }
-        //}
 
         //[Action(Caption = "My UI Action", ConfirmationMessage = "Are you sure?", ImageName = "Attention", AutoCommit = true)]
         //public void ActionMethod() {

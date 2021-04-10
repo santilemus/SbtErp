@@ -35,6 +35,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         #region Propiedades
 
 
+        EClaseDocumentoCompraVenta clase;
         EmpresaUnidad agencia;
         Caja caja;
         string noSolicitud;
@@ -71,7 +72,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             get => noSolicitud;
             set => SetPropertyValue(nameof(NoSolicitud), ref noSolicitud, value);
         }
-        [Size(30), DbType("varchar(30)"), XafDisplayName("No Resolución"), Index(3),
+        [Size(20), DbType("varchar(30)"), XafDisplayName("No Resolución"), Index(3),
             RuleRequiredField("ResCorrelativo.Resolucion_Requerido", "Save")]
         public string Resolucion
         {
@@ -127,6 +128,13 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             set => SetPropertyValue(nameof(NoHasta), ref noHasta, value);
         }
 
+        [XafDisplayName("Clase Documento"), DbType("smallint")]
+        public EClaseDocumentoCompraVenta Clase
+        {
+            get => clase;
+            set => SetPropertyValue(nameof(Clase), ref clase, value);
+        }
+
         [DbType("bit"), XafDisplayName("Activo"), RuleRequiredField("ResCorrelativo.Activa_Requerido", "Save"), Index(10)]
         public bool Activo
         {
@@ -135,14 +143,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         }
 
         #endregion
-        //private string _PersistentProperty;
-        //[XafDisplayName("My display name"), ToolTip("My hint message")]
-        //[ModelDefault("EditMask", "(000)-00"), Index(0), VisibleInListView(false)]
-        //[Persistent("DatabaseColumnName"), RuleRequiredField(DefaultContexts.Save)]
-        //public string PersistentProperty {
-        //    get { return _PersistentProperty; }
-        //    set { SetPropertyValue("PersistentProperty", ref _PersistentProperty, value); }
-        //}
+
 
         //[Action(Caption = "My UI Action", ConfirmationMessage = "Are you sure?", ImageName = "Attention", AutoCommit = true)]
         //public void ActionMethod() {

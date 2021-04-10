@@ -1,29 +1,23 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp;
-using System.ComponentModel;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.Persistent.Base;
-using System.Collections.Generic;
-using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
 using DevExpress.Persistent.Validation;
+using DevExpress.Xpo;
+using System;
+using System.ComponentModel;
+using System.Linq;
 
 
 namespace SBT.Apps.Base.Module.BusinessObjects
 {
     [DefaultClassOptions, CreatableItem(false)]
     //[ImageName("BO_Contact")]
-    [Persistent("ConPeriodo"), RuleCriteria("Periodo.Empresa Sesion", DefaultContexts.Save, "Empresa.Codigo = EmpresaActualOid()"), 
-        DefaultProperty("Oid"), NavigationItem(false)] 
+    [Persistent("ConPeriodo"), RuleCriteria("Periodo.Empresa Sesion", DefaultContexts.Save, "Empresa.Codigo = EmpresaActualOid()"),
+        DefaultProperty("Oid"), NavigationItem(false)]
     //[RuleCombinationOfPropertiesIsUnique("Periodo.Empresa_Numero_Unico", DefaultContexts.Save, "Empresa, Oid", 
     //    CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction)]
     //[Indices("empresa;Oid")]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
-    public class Periodo : XPCustomBaseBO
+    public class Periodo : XPCustomObject
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
         public Periodo(Session session)
             : base(session)
@@ -70,7 +64,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
 #else
         [DbType("datetime"), Persistent("FechaFin")]
 #endif
-        [XafDisplayName("Fecha Fin"), Index(3), RuleValueComparison("Periodo.FechaFin >= FechaInicio", DefaultContexts.Save, 
+        [XafDisplayName("Fecha Fin"), Index(3), RuleValueComparison("Periodo.FechaFin >= FechaInicio", DefaultContexts.Save,
             ValueComparisonType.GreaterThan, "FechaInicio", ParametersMode.Expression, SkipNullOrEmptyValues = false)]
         public DateTime FechaFin
         {

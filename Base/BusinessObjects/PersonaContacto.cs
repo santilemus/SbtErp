@@ -13,7 +13,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
     [ModelDefault("Caption", "Contacto"), NavigationItem(false), DefaultProperty(nameof(Nombre)), Persistent("PersonaContacto")]
     [ImageName(nameof(PersonaContacto))]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
-    public class PersonaContacto : XPObjectBaseBO
+    public class PersonaContacto : XPObject
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
         public PersonaContacto(Session session)
             : base(session)

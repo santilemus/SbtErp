@@ -1,19 +1,12 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp;
-using System.ComponentModel;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
-using DevExpress.Persistent.Base;
-using System.Collections.Generic;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
-using DevExpress.Persistent.Validation;
+using DevExpress.Persistent.Base;
+using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Contabilidad.BusinessObjects;
-using SBT.Apps.Contabilidad.Module.BusinessObjects;
+using System;
+using System.ComponentModel;
+using System.Linq;
 
 namespace SBT.Apps.Contabilidad.Module.BusinessObjects
 {
@@ -26,7 +19,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
     //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
-    public class ConSaldoMes : XPCustomBaseBO
+    public class ConSaldoMes : XPCustomObject
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
         public ConSaldoMes(Session session)
             : base(session)
@@ -94,13 +87,13 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             get => cuenta;
         }
 
-        
+
         [PersistentAlias(nameof(mes)), XafDisplayName("Mes")]
         public int Mes
         {
             get { return mes; }
         }
-        
+
         [PersistentAlias("[Cuenta.Nombre]")]
         public string Nombre
         {
@@ -113,7 +106,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         {
             get { return saldoInicio; }
         }
-        
+
         [PersistentAlias(nameof(debe)), XafDisplayName("Debe")]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         public decimal Debe
@@ -127,14 +120,14 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         {
             get { return haber; }
         }
-       
+
         [PersistentAlias(nameof(saldoFin)), XafDisplayName("Saldo Fin Mes")]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         public decimal SaldoFin
         {
             get { return saldoFin; }
         }
-        
+
 
         [PersistentAlias("[SaldoFin] - [SaldoInicio]"), XafDisplayName("Movimiento Mes")]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
@@ -142,7 +135,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         {
             get { return Convert.ToDecimal(EvaluateAlias(nameof(MovimientoMes))); }
         }
-        
+
         #endregion
 
         //private string _PersistentProperty;

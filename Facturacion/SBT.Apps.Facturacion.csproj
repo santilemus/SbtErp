@@ -126,6 +126,8 @@
     <Compile Include="BusinessObjects\CxCDocumentoDetalle.cs" />
     <Compile Include="BusinessObjects\CxCTransaccion.cs" />
     <Compile Include="BusinessObjects\ECxcTransaccionEstado.cs" />
+    <Compile Include="BusinessObjects\LibroVentaConsumidor.cs" />
+    <Compile Include="BusinessObjects\LibroVentaContribuyente.cs" />
     <Compile Include="BusinessObjects\TributoRegla.cs" />
     <Compile Include="BusinessObjects\Venta.cs" />
     <Compile Include="BusinessObjects\AutorizacionDocumento.cs" />

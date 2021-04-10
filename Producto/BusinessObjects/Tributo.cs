@@ -4,7 +4,6 @@ using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
-using SBT.Apps.Base.Module.BusinessObjects;
 using System;
 using System.ComponentModel;
 using System.Linq;
@@ -24,7 +23,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
     [ImageName(nameof(Tributo))]
     [DefaultListViewOptions(MasterDetailMode.ListViewAndDetailView, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
-    public class Tributo : XPObjectBaseBO
+    public class Tributo : XPObject
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
         public Tributo(Session session)
             : base(session)

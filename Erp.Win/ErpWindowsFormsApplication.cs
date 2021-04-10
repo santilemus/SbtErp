@@ -142,8 +142,6 @@ namespace SBT.Apps.Erp.Win {
             //((IModelRootNavigationItems)INavItems).ShowNavigationOnStart = true;
 
             Model.AboutInfoString = "{0:ProductName} - {0:Description}<br>{0:Version}<br>{0:Copyright}";
-            if (!Model.Title.Contains(((CustomLogonParameters)e.LogonParameters).Empresa.RazonSocial))
-                Model.Title = $"{Model.Title} - {((CustomLogonParameters)e.LogonParameters).Empresa.RazonSocial}";
             Model.Description = ((CustomLogonParameters)e.LogonParameters).Empresa.RazonSocial;
         }
     }

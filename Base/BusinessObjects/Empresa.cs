@@ -198,7 +198,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         //[DevExpress.Xpo.ValueConverterAttribute(typeof(DevExpress.Xpo.Metadata.ImageValueConverter))]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [DevExpress.Persistent.Base.VisibleInListViewAttribute(false)]
-        [ImageEditor(ListViewImageEditorMode = ImageEditorMode.PopupPictureEdit, DetailViewImageEditorMode = ImageEditorMode.PopupPictureEdit, ListViewImageEditorCustomHeight = 34)]
+        [ImageEditor(ListViewImageEditorMode = ImageEditorMode.PopupPictureEdit, DetailViewImageEditorMode = ImageEditorMode.PopupPictureEdit, ImageSizeMode = ImageSizeMode.StretchImage)]
         [Delayed(nameof(_logo), true)]
         public byte[] Logo
         {

@@ -14,7 +14,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
     [DevExpress.Persistent.Base.CreatableItemAttribute(false)]
     [DevExpress.Persistent.Base.ImageNameAttribute("comment-info")]
     [DevExpress.ExpressApp.DC.XafDefaultProperty(nameof(Fecha))]
-    public class TerceroNota : XPObjectBaseBO
+    public class TerceroNota : XPObject
     {
         /// <summary>
         /// Metodo para la inicialización de propiedades y/o objetos del BO. Se ejecuta una sola vez después de la creación del objeto

@@ -14,7 +14,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
     /// </summary>
     [ModelDefault("Caption", "Sucursal"), Persistent("TerceroSucursal"), XafDefaultProperty("Nombre"),
         NavigationItem(false), ImageName("company-employee")]
-    public class TerceroSucursal : XPObjectBaseBO
+    public class TerceroSucursal : XPObject
     {
         /// <summary>
         /// Metodo para la inicialización de propiedades y/o objetos del BO. Se ejecuta una sola vez después de la creación del objeto

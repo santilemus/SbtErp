@@ -14,6 +14,9 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
     /// Información Crediticia del Tercero. El diseño permite que se ingrese más de un registro por tercero, lo cual 
     /// facilita reflejar la historia crediticia del cliente, o diferentes montos de credito
     /// </summary>
+    /// <remarks>
+    /// Se hereda de XPObjectBaseBO por el atributo empresa
+    /// </remarks>
 
     [ModelDefault("Caption", "Tercero Crédito"), NavigationItem(false), CreatableItem(false),
        DefaultProperty(nameof(FechaOtorgamiento)), Persistent(nameof(TerceroCredito))]

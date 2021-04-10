@@ -3,10 +3,8 @@ using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
-using SBT.Apps.Base.Module.BusinessObjects;
 using System;
 using System.Linq;
-using SBT.Apps.Producto.Module.BusinessObjects;
 
 namespace SBT.Apps.Inventario.Module.BusinessObjects
 {
@@ -41,7 +39,7 @@ namespace SBT.Apps.Inventario.Module.BusinessObjects
         private Producto.Module.BusinessObjects.Producto _producto;
         private System.Decimal _salida;
         private System.Decimal _entrada;
-        private object ingresoDetalle; 
+        private object ingresoDetalle;
         private System.Decimal _costo;
 
         public InventarioLote(DevExpress.Xpo.Session session)

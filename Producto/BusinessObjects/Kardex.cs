@@ -1,18 +1,11 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp;
-using System.ComponentModel;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
-using DevExpress.Persistent.Base;
-using System.Collections.Generic;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
-using DevExpress.Persistent.Validation;
+using DevExpress.Persistent.Base;
+using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
-using SBT.Apps.Producto.Module.BusinessObjects;
+using System;
+using System.ComponentModel;
+using System.Linq;
 
 namespace SBT.Apps.Inventario.Module.BusinessObjects
 {
@@ -31,7 +24,7 @@ namespace SBT.Apps.Inventario.Module.BusinessObjects
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     //[Persistent("DatabaseTableName")]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
-    public class Kardex : XPCustomBaseBO
+    public class Kardex : XPCustomObject
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
         public Kardex(Session session)
             : base(session)
@@ -44,7 +37,6 @@ namespace SBT.Apps.Inventario.Module.BusinessObjects
         }
 
         #region Propiedades
-        object referenciaVenta;
         object referencia;
         [Persistent(nameof(Oid)), DbType("bigint"), Key(true)]
         long oid = -1;

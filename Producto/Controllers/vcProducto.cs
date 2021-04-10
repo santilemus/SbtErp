@@ -2,7 +2,6 @@
 using DevExpress.ExpressApp;
 using SBT.Apps.Base.Module.BusinessObjects;
 using System;
-using System.Collections;
 using System.ComponentModel;
 using System.Linq;
 
@@ -44,14 +43,14 @@ namespace SBT.Apps.Producto.Module.Controllers
 
         private void ObjectSpace_Changed(object Sender, ObjectChangedEventArgs e)
         {
-           string propName = e.PropertyName;
+            string propName = e.PropertyName;
             string algo = string.Empty;
             if (ObjectSpace.IsNewObject(View.CurrentObject))
             {
                 algo = propName;
             }
         }
-        
+
         private void ObjectSpace_Committing(object Sender, CancelEventArgs﻿ e)
         {
             System.Collections.IList objects = ObjectSpace.ModifiedObjects;

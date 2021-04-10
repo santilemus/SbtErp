@@ -3,7 +3,6 @@ using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
-using SBT.Apps.Base.Module.BusinessObjects;
 using System;
 using System.Linq;
 
@@ -14,7 +13,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
     /// </summary>
     [NavigationItem(false), ModelDefault("Caption", "Código de Barra"), XafDefaultProperty("CodigoBarra"), Persistent("ProductoCodigoBarra")]
     [ImageName(nameof(ProductoCodigoBarra)), CreatableItem(false)]
-    public class ProductoCodigoBarra : XPObjectBaseBO
+    public class ProductoCodigoBarra : XPObject
     {
         public override void AfterConstruction()
         {

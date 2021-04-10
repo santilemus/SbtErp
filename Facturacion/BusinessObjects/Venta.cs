@@ -7,6 +7,8 @@ using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
+using SBT.Apps.Inventario.Module.BusinessObjects;
+using SBT.Apps.Producto.Module.BusinessObjects;
 using SBT.Apps.Tercero.Module.BusinessObjects;
 using System;
 using System.ComponentModel;
@@ -46,6 +48,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
 
     [ImageName("factura")]
     [RuleObjectExists("", CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction, LooksFor = typeof(Empresa))]
+    [OptimisticLockingReadBehavior(OptimisticLockingReadBehavior.Default, true)]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class Venta : XPCustomFacturaBO
@@ -244,7 +247,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         /// </remarks>
         [XafDisplayName("Vendedor")]
         [RuleRequiredField("Venta.Vendedor_Requerido", "Save",
-            TargetCriteria = "[TipoFactura.Codigo] In ('COVE01', 'COVE02', 'COVE03') ")]
+            TargetCriteria = "[TipoFactura.Codigo] In ('COVE01', 'COVE02', 'COVE03') ", SkipNullOrEmptyValues = true)]
         [DataSourceCriteria("[Empresa.Oid] = EmpresaActualOid() And [Unidad] == ? And [Cargo] == ?")]
         [VisibleInListView(false), Index(14)]
         [DetailViewLayout("Datos Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
@@ -370,7 +373,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         /// <returns></returns>
         protected override int CorrelativoDoc()
         {
-            string sCriteria = "Empresa.Oid == ? && Caja.Oid == ? && Tipo.Codigo == ? && GetYear(Fecha) == ?";
+            string sCriteria = "Empresa.Oid == ? && Caja.Oid == ? && TipoFactura.Codigo == ? && GetYear(Fecha) == ?";
             object max = Session.Evaluate<Venta>(CriteriaOperator.Parse("Max(Numero)"),
                                                         CriteriaOperator.Parse(sCriteria, Empresa.Oid, Caja.Oid, TipoFactura.Codigo, Fecha));
             return (max != null) ? Convert.ToInt32(max) : 1;
@@ -432,8 +435,28 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
 
         protected override void OnSaving()
         {
+            foreach (VentaDetalle item in Detalles)
+            {
+                if (!Session.IsNewObject(item))
+                    continue;
+                switch (item.Producto.Categoria.MetodoCosteo)
+                {
+                    case EMetodoCosteoInventario.Promedio:
+                        item.Costo = item.Producto.CostoPromedio;
+                        break;
+                    case EMetodoCosteoInventario.Unitario:
+                        item.Costo = item.PrecioUnidad;
+                        break;
+                    default:
+                        {
+                            InventarioLote lotep = item.ObtenerLote();
+                            item.Lote = lotep;
+                            item.Costo = lotep != null ? lotep.Costo : item.Producto.CostoPromedio;
+                            break;
+                        }
+                }
+            }
             base.OnSaving();
-
         }
 
         protected override void RefreshTiposDeFacturas()

@@ -12,7 +12,7 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
     [DevExpress.Persistent.Base.ImageNameAttribute("user_id-certificate")]
     [DevExpress.Persistent.Base.CreatableItemAttribute(false)]
     [RuleCombinationOfPropertiesIsUnique("EmpleadoProfesion_Unico", DefaultContexts.Save, "Profesion,NumeroProfesional", SkipNullOrEmptyValues = false)]
-    public class EmpleadoProfesion : XPObjectBaseBO
+    public class EmpleadoProfesion : XPObject
     {
 
         private Profesion _profesion;

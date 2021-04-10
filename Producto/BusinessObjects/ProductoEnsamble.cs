@@ -16,7 +16,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
     [CreatableItem(false)]
     [ImageName(nameof(ProductoEnsamble))]
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Ensamble"), Persistent("ProductoEnsamble"), NavigationItem(false)]
-    public class ProductoEnsamble : XPObjectBaseBO
+    public class ProductoEnsamble : XPObject
     {
         public override void AfterConstruction()
         {

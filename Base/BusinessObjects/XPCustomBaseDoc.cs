@@ -32,8 +32,11 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         protected virtual int CorrelativoDoc()
         {
             string sCriteria = "Empresa.Oid == ? && GetYear(Fecha) == ?";
-            object max = Session.Evaluate(this.GetType(), CriteriaOperator.Parse("Max(Numero)"), CriteriaOperator.Parse(sCriteria, Empresa.Oid, Fecha));
-            return (max != null) ? Convert.ToInt32(max) : 1;
+            using (UnitOfWork uow = new UnitOfWork(Session.DataLayer, null))
+            {
+                object max = uow.Evaluate(this.GetType(), CriteriaOperator.Parse("Max(Numero) + 1"), CriteriaOperator.Parse(sCriteria, Empresa.Oid, Fecha));
+                return Convert.ToInt32(max ?? 1);
+            }
         }
 
         public override void AfterConstruction()
@@ -53,9 +56,9 @@ namespace SBT.Apps.Base.Module.BusinessObjects
 
         protected override void OnSaving()
         {
-            base.OnSaving();
-            if (Session.IsNewObject(this))
+            if (!(Session is NestedUnitOfWork) && Session.IsNewObject(this))
                 Numero = CorrelativoDoc();
+            base.OnSaving();
         }
 
         /// <summary>

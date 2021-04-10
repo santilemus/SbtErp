@@ -3,8 +3,6 @@ using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using System;
 using System.Linq;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
 
 namespace SBT.Apps.Base.Module.BusinessObjects
 {

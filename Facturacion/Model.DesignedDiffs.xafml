@@ -395,7 +395,7 @@
         <PropertyEditor Id="Comentario" PropertyName="Comentario" IsNewNode="True" />
         <PropertyEditor Id="CondicionPago" PropertyName="CondicionPago" IsNewNode="True" />
         <PropertyEditor Id="CxCDocumentos" PropertyName="CxCDocumentos" View="Venta_CxCDocumentos_ListView" IsNewNode="True" />
-        <PropertyEditor Id="Detalles" PropertyName="Detalles" View="Venta_Detalles_ListView" IsNewNode="True" />
+        <PropertyEditor Id="Detalles" PropertyName="Detalles" View="Venta_Detalles_ListView_ccf" IsNewNode="True" />
         <PropertyEditor Id="DiaCerrado" PropertyName="DiaCerrado" IsNewNode="True" />
         <PropertyEditor Id="DiasCredito" PropertyName="DiasCredito" IsNewNode="True" />
         <PropertyEditor Id="DireccionEntrega" PropertyName="DireccionEntrega" IsNewNode="True" />
@@ -625,7 +625,7 @@
         <PropertyEditor Id="Comentario" PropertyName="Comentario" IsNewNode="True" />
         <PropertyEditor Id="CondicionPago" PropertyName="CondicionPago" IsNewNode="True" />
         <PropertyEditor Id="CxCDocumentos" PropertyName="CxCDocumentos" View="Venta_CxCDocumentos_ListView" IsNewNode="True" />
-        <PropertyEditor Id="Detalles" PropertyName="Detalles" View="Venta_Detalles_ListView" IsNewNode="True" />
+        <PropertyEditor Id="Detalles" PropertyName="Detalles" View="Venta_Detalles_ListView_fcf" IsNewNode="True" />
         <PropertyEditor Id="DiaCerrado" PropertyName="DiaCerrado" IsNewNode="True" />
         <PropertyEditor Id="DiasCredito" PropertyName="DiasCredito" IsNewNode="True" />
         <PropertyEditor Id="DireccionEntrega" PropertyName="DireccionEntrega" IsNewNode="True" />
@@ -985,6 +985,46 @@
         <ColumnInfo Id="Exenta" Width="74" Index="6" />
         <ColumnInfo Id="Gravada" Width="86" Index="7" />
         <ColumnInfo Id="Lote" Index="8" />
+      </Columns>
+    </ListView>
+    <ListView Id="Venta_Detalles_ListView_ccf" ClassName="SBT.Apps.Facturacion.Module.BusinessObjects.VentaDetalle" DataAccessMode="Client" IsNewNode="True">
+      <Columns IsNewNode="True">
+        <ColumnInfo Id="CantidadAnulada" PropertyName="CantidadAnulada" Width="96" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="CodigoBarra" PropertyName="CodigoBarra" Width="96" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Costo" PropertyName="Costo" Width="68" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Descripcion" PropertyName="Descripcion" Width="70" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="NoSujeta" PropertyName="NoSujeta" Width="68" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Oid" PropertyName="Oid" Width="96" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="PrecioConIva" PropertyName="PrecioConIva" Width="103" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Venta" PropertyName="Venta" Width="96" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Producto" PropertyName="Producto" Width="349" Index="0" IsNewNode="True" />
+        <ColumnInfo Id="Bodega" PropertyName="Bodega" Width="181" Index="1" IsNewNode="True" />
+        <ColumnInfo Id="Cantidad" PropertyName="Cantidad" Width="67" Index="2" IsNewNode="True" />
+        <ColumnInfo Id="PrecioUnidad" PropertyName="PrecioUnidad" Width="97" Index="3" IsNewNode="True" />
+        <ColumnInfo Id="Exenta" PropertyName="Exenta" Width="74" Index="4" IsNewNode="True" />
+        <ColumnInfo Id="Gravada" PropertyName="Gravada" Width="86" Index="5" IsNewNode="True" />
+        <ColumnInfo Id="Iva" PropertyName="Iva" Width="86" Index="6" IsNewNode="True" />
+        <ColumnInfo Id="Lote" PropertyName="Lote" Width="161" Index="7" IsNewNode="True" />
+      </Columns>
+    </ListView>
+    <ListView Id="Venta_Detalles_ListView_fcf" ClassName="SBT.Apps.Facturacion.Module.BusinessObjects.VentaDetalle" DataAccessMode="Client" IsNewNode="True">
+      <Columns IsNewNode="True">
+        <ColumnInfo Id="CantidadAnulada" PropertyName="CantidadAnulada" Width="96" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="CodigoBarra" PropertyName="CodigoBarra" Width="96" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Costo" PropertyName="Costo" Width="68" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Descripcion" PropertyName="Descripcion" Width="70" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="NoSujeta" PropertyName="NoSujeta" Width="68" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Oid" PropertyName="Oid" Width="96" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="PrecioUnidad" PropertyName="PrecioUnidad" Width="97" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Venta" PropertyName="Venta" Width="96" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Producto" PropertyName="Producto" Width="349" Index="0" IsNewNode="True" />
+        <ColumnInfo Id="Bodega" PropertyName="Bodega" Width="181" Index="1" IsNewNode="True" />
+        <ColumnInfo Id="Cantidad" PropertyName="Cantidad" Width="67" Index="2" IsNewNode="True" />
+        <ColumnInfo Id="PrecioConIva" PropertyName="PrecioConIva" Width="103" Index="3" IsNewNode="True" />
+        <ColumnInfo Id="Exenta" PropertyName="Exenta" Width="74" Index="4" IsNewNode="True" />
+        <ColumnInfo Id="Gravada" PropertyName="Gravada" Width="86" Index="5" IsNewNode="True" />
+        <ColumnInfo Id="Iva" PropertyName="Iva" Width="0" Index="6" IsNewNode="True" />
+        <ColumnInfo Id="Lote" PropertyName="Lote" Width="70" Index="7" IsNewNode="True" />
       </Columns>
     </ListView>
     <ListView Id="Venta_ListView">

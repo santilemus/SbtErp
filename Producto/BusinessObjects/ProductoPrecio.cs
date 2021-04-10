@@ -18,7 +18,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
     [ImageName(nameof(ProductoPrecio))]
     [RuleCriteria("ProductoPrecio.CantidadDesde_CantidadHasta", DefaultContexts.Save, @"CantidadHasta >= CantidadDesde", "Cantidad Hasta >= Cantidad Desde"),
      RuleCriteria("ProductoPrecio.HoraDesde_HoraHasta", DefaultContexts.Save, @"HoraHasta >= HoraDesde", "Hora Hasta >= Hora Desde")]
-    public class ProductoPrecio : XPObjectBaseBO
+    public class ProductoPrecio : XPObject
     {
         public override void AfterConstruction()
         {
@@ -26,12 +26,10 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
             CantidadDesde = 0.0m;
             CantidadHasta = 0.0m;
             PrecioUnitario = 0.0m;
-            precioUnitarioConIva = 0.0m;
             Activo = true;
         }
 
         [Persistent(nameof(PrecioUnitarioConIva))]
-        decimal precioUnitarioConIva;
         private System.Decimal? _cantidadHasta;
         private System.Decimal? _cantidadDesde;
         private System.Decimal _precioUnitario;
@@ -85,7 +83,8 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         /// <summary>
         /// Cantidad Desde. Cuando el precio se aplica en función de la cantidad comprada
         /// </summary>
-        [XafDisplayName("Cantidad Desde"), ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
+        [XafDisplayName("Cantidad Desde")]
+        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [RuleValueComparison("ProductoPrecio.CantidadDesde_Mayor_Igual_Cero", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual, 0)]
         [DbType("numeric(12,2)")]
@@ -98,7 +97,8 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         /// <summary>
         /// Cantidad Hasta. Cuando el precio se aplica en función de la cantidad de compra (se encuentra dentro de un rango)
         /// </summary>
-        [XafDisplayName("Cantidad Hasta"), ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
+        [XafDisplayName("Cantidad Hasta")]
+        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [DbType("numeric(12,2)")]
         public System.Decimal? CantidadHasta
@@ -112,6 +112,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         /// </summary>
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Hora Desde")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
+        [ModelDefault("DisplayFormat", "{0:g}"), ModelDefault("EditMask", "g")]
         public DateTime? HoraDesde
         {
             get => _horaDesde;
@@ -123,6 +124,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         /// </summary>
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Hora Hasta")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
+        [ModelDefault("DisplayFormat", "{0:g}"), ModelDefault("EditMask", "g")]
         public DateTime? HoraHasta
         {
             get => _horaHasta;
@@ -151,7 +153,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         }
 
 
-        [PersistentAlias("Round([PrecioUnitario] + [PrecioUnitario] * [Producto.Categoria.PorcentajeIva], 4)")]
+        [PersistentAlias("Round([PrecioUnitario] + [PrecioUnitario] * [Producto.Categoria.PorcentajeIVA], 4)")]
         public decimal PrecioUnitarioConIva => Convert.ToDecimal(EvaluateAlias(nameof(PrecioUnitarioConIva)));
 
     }

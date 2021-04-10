@@ -1,5 +1,6 @@
 ﻿using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp;
+using DevExpress.ExpressApp.Actions;
 using SBT.Apps.Base.Module.BusinessObjects;
 using System;
 using System.Linq;
@@ -23,7 +24,7 @@ namespace SBT.Apps.Base.Module.Controllers
     /// </remarks>
     public class ViewControllerBase : ViewController
     {
-
+        private SimpleAction saPurgeRecord;
         public ViewControllerBase()
         {
             DoInitializeComponent();
@@ -37,12 +38,38 @@ namespace SBT.Apps.Base.Module.Controllers
             if ((string.Compare(View.GetType().Name, "ListView", StringComparison.Ordinal) == 0) && (((ListView)View).ObjectTypeInfo.FindMember("Empresa") != null) &&
                 !(((ListView)View).CollectionSource.Criteria.ContainsKey("Empresa Actual")))
                 ((ListView)View).CollectionSource.Criteria["Empresa Actual"] = CriteriaOperator.Parse("[Empresa.Oid] = ?", ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid);
+        }
 
+        protected override void OnDeactivated()
+        {
+            base.OnDeactivated();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (saPurgeRecord != null)
+                saPurgeRecord.Dispose();
+            base.Dispose(disposing);
         }
 
         protected virtual void DoInitializeComponent()
         {
 
+        }
+
+        /// <summary>
+        /// Crea el Action para pugar los registros
+        /// </summary>
+        protected void CreatePurgeRecordAction()
+        {
+            string sName = "saPurge";
+            saPurgeRecord = new SimpleAction(this, sName, DevExpress.Persistent.Base.PredefinedCategory.RecordEdit);
+            saPurgeRecord.Caption = "Purgar";
+            saPurgeRecord.ImageName = "trash-bin";
+            saPurgeRecord.TargetViewType = ViewType.ListView;
+            saPurgeRecord.PaintStyle = DevExpress.ExpressApp.Templates.ActionItemPaintStyle.Image;
+            saPurgeRecord.SelectionDependencyType = SelectionDependencyType.Independent;
+            saPurgeRecord.ConfirmationMessage = "Esta seguro de purgar los objetos borrados?";
         }
 
         /// <summary>
@@ -89,7 +116,5 @@ namespace SBT.Apps.Base.Module.Controllers
         {
             DoMensaje(InformationType.Warning, AMsg, "Advertencia");
         }
-
-
     }
 }

@@ -120,6 +120,7 @@
     <Compile Include="BusinessObjects\CompraFacturaDetalle.cs" />
     <Compile Include="BusinessObjects\InventarioMovimiento.cs" />
     <Compile Include="BusinessObjects\InventarioMovimientoDetalle.cs" />
+    <Compile Include="BusinessObjects\LibroCompra.cs" />
     <Compile Include="BusinessObjects\OrdenCompra.cs" />
     <Compile Include="BusinessObjects\OrdenCompraDetalle.cs" />
     <Compile Include="Controllers\vcInventarioMovimiento.cs">
@@ -142,6 +143,7 @@
     <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="BusinessObjects\ReadMe.txt" />
     <None Include="Controllers\ReadMe.txt" />
     <None Include="DatabaseUpdate\ReadMe.txt" />

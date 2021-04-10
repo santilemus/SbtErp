@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Application Title="SBT - Sistema Administrativo Financiero" Description="Sistema Administrativo Financiero" Company="Smart Business Technology" Copyright="© Santiago Enrique Lemus">
+<Application Title="Sistema Administrativo Financiero" Description="Sistema Administrativo Financiero" Company="Smart Business Technology" Copyright="© Santiago Enrique Lemus">
   <BOModel>
     <Class Name="DevExpress.Persistent.BaseImpl.ReportDataV2" IsCloneable="True" />
   </BOModel>

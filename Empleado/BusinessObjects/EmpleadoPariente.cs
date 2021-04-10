@@ -12,7 +12,7 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
     [DevExpress.Persistent.Base.ImageNameAttribute("employee_woman-favorite2")]
     [DevExpress.ExpressApp.DC.XafDefaultPropertyAttribute("NombreCompleto")]
     [DevExpress.Persistent.Base.CreatableItemAttribute(false)]
-    public class EmpleadoPariente : XPObjectBaseBO
+    public class EmpleadoPariente : XPObject
     {
         [PersistentAlias("Nombre + ' ' + Apellido")]
         [DisplayName("Nombre Completo")]

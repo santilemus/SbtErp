@@ -1,12 +1,10 @@
-﻿using DevExpress.Persistent.Base;
+﻿using DevExpress.ExpressApp.DC;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
-using System;
-using System.Linq;
-using DevExpress.ExpressApp.DC;
-using DevExpress.ExpressApp.Xpo;
 using DevExpress.Xpo;
-using DevExpress.Persistent.BaseImpl;
+using System;
 using System.ComponentModel;
+using System.Linq;
 
 namespace SBT.Apps.Base.Module.BusinessObjects
 {
@@ -22,7 +20,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         MessageTemplateMustBeReferenced = "Para borrar el objeto '{TargetObject}', debe estar seguro que no es utilizado (referenciado) en ningún lugar.",
         InvertResult = true, FoundObjectMessageFormat = "'{0}'", FoundObjectMessagesSeparator = ";")]
     [DefaultProperty(nameof(Descripcion))]
-    public class Profesion : XPObjectBaseBO
+    public class Profesion : XPObject
     {
         public override void AfterConstruction()
         {
