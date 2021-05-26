@@ -34,13 +34,18 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
         public override void AfterConstruction()
         {
             base.AfterConstruction();
+            oid = -1;
             claseDocumento = "1";    
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
         #region Propiedades
 
-        decimal totalCompra;
+        decimal retencionTercero;
+        decimal compraExcluido;
+        decimal ivaPercibido;
+        Tercero.Module.BusinessObjects.Tercero proveedor;
+        CompraFactura compraFactura;
         decimal creditoFiscal;
         decimal importacionGravadaServicio;
         decimal importacionGravadaBien;
@@ -49,17 +54,16 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
         decimal importacionExenta;
         decimal internacionExenta;
         decimal internaExenta;
-        string nombreProveedor;
         string nit;
         string numero;
         string tipoDocumento;
         string claseDocumento;
         DateTime fechaEmision;
-        [Persistent(nameof(Importación)), DbType("bigint"), Key(true)]
+        [Persistent(nameof(Oid)), DbType("bigint"), Key(true)]
         long oid;
 
         [PersistentAlias(nameof(oid)), XafDisplayName("Oid")]
-        public long Importación => oid;
+        public long Oid => oid;
 
         [DbType("datetime"), XafDisplayName("Fecha Emisión")]
         public DateTime FechaEmision
@@ -96,11 +100,12 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
             set => SetPropertyValue(nameof(Nit), ref nit, value);
         }
 
-        [Size(200), DbType("varchar(200)"), XafDisplayName("NombreProveedor")]
-        public string NombreProveedor
+
+        [XafDisplayName("Proveedor")]
+        public Tercero.Module.BusinessObjects.Tercero Proveedor
         {
-            get => nombreProveedor;
-            set => SetPropertyValue(nameof(NombreProveedor), ref nombreProveedor, value);
+            get => proveedor;
+            set => SetPropertyValue(nameof(Proveedor), ref proveedor, value);
         }
 
         [DbType("numeric(14,2)"), XafDisplayName("Interna Exenta")]
@@ -159,11 +164,38 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
             set => SetPropertyValue(nameof(CreditoFiscal), ref creditoFiscal, value);
         }
 
-        [DbType("numeric(14,2)"), XafDisplayName("Total Compra")]
-        public decimal TotalCompra
+        [DbType("numeric(14,2)"), XafDisplayName("Iva Percibido")]
+        public decimal IvaPercibido
         {
-            get => totalCompra;
-            set => SetPropertyValue(nameof(TotalCompra), ref totalCompra, value);
+            get => ivaPercibido;
+            set => SetPropertyValue(nameof(IvaPercibido), ref ivaPercibido, value);
+        }
+
+        [DbType("numeric(14,2)"), XafDisplayName("Total Compra")]
+        [PersistentAlias("[InternaExenta] + [InternacionExenta] + [ImportacionExenta] + [InternaGravada] +[InternacionGravadaBien] + [ImportacionGravadaBien] + [ImportacionGravadaServicio]")]
+        public decimal Total => Convert.ToDecimal(EvaluateAlias(nameof(Total)));
+
+        [DbType("numeric(14,2)"), XafDisplayName("Retención a Tercero")]
+        [ToolTip("Retención IVA del 1% o 13% aterceros domiciliados efectuada por el declarente (en compras). En este caso es un gran contribuyente que retiene a medianos y pequeños")]
+        public decimal RetencionTercero
+        {
+            get => retencionTercero;
+            set => SetPropertyValue(nameof(RetencionTercero), ref retencionTercero, value);
+        }
+
+        [DbType("numeric(14,2)"), XafDisplayName("Compra Sujeto Excluido")]
+        [ToolTip("Compras a sujetos excluidos")]
+        public decimal CompraExcluido
+        {
+            get => compraExcluido;
+            set => SetPropertyValue(nameof(CompraExcluido), ref compraExcluido, value);
+        }
+
+        [XafDisplayName("Compra Factura")]
+        public CompraFactura CompraFactura
+        {
+            get => compraFactura;
+            set => SetPropertyValue(nameof(CompraFactura), ref compraFactura, value);
         }
 
         [XafDisplayName("No de Anexo"), PersistentAlias("3")]

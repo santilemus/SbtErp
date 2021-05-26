@@ -1,18 +1,14 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp;
-using System.ComponentModel;
+﻿using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
-using DevExpress.Persistent.Base;
-using System.Collections.Generic;
 using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
+using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Contabilidad.BusinessObjects;
+using System;
+using System.ComponentModel;
+using System.Linq;
 
 namespace SBT.Apps.Contabilidad.Module.BusinessObjects
 {
@@ -28,7 +24,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
     [DefaultListViewOptions(MasterDetailMode.ListViewOnly, true, NewItemRowPosition.Top)]
     [Persistent("ConPartidaDetalle")]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
-    public class PartidaDetalle : XPObjectBaseBO
+    public class PartidaDetalle : XPObjectCustom
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
         public PartidaDetalle(Session session)
             : base(session)
@@ -42,7 +38,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
 
         #region Propiedades
         Partida partida;
-        Catalogo catalogo;
+        Catalogo cuenta;
         string concepto;
         decimal valorDebe;
         decimal valorHaber;
@@ -57,7 +53,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             {
                 Partida oldPartida = partida;
                 bool changed = SetPropertyValue(nameof(Partida), ref partida, value);
-                if (!IsLoading && !IsSaving && changed && Partida != null)
+                if (!IsLoading && !IsSaving && changed && partida != oldPartida)
                 {
                     oldPartida = oldPartida ?? partida;
                     oldPartida.UpdateTotDebe(true);
@@ -68,10 +64,13 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
 
 
         [DbType("int"), Persistent("Cuenta"), XafDisplayName("Cuenta")]
+        [DataSourceCriteria("[CtaResumen] == False && [Activa] == True")]
+        [ExplicitLoading]
+        [EditorAlias("StringPropertyEditor")]
         public Catalogo Cuenta
         {
-            get => catalogo;
-            set => SetPropertyValue(nameof(Cuenta), ref catalogo, value);
+            get => cuenta;
+            set => SetPropertyValue(nameof(Cuenta), ref cuenta, value);
         }
 
 
@@ -91,6 +90,8 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
 
         [DbType("money"), Persistent("Debe"), XafDisplayName("Debe")]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
+        [RuleValueComparison("PartidaDetalle.ValorDebe >= 0", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual, 0,
+            "'{TargetPropertyName}' tiene el siguiente valor: '{TargetValue}'. Este debería de ser Mayor o Igual a '{RightOperand}'.")]
         public decimal ValorDebe
         {
             get => valorDebe;
@@ -104,6 +105,8 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
 
         [DbType("money"), Persistent("Haber"), XafDisplayName("Haber")]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
+        [RuleValueComparison("PartidaDetalle.ValorHaber >= 0", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual, 0,
+            "'{TargetPropertyName}' tiene el siguiente valor: '{TargetValue}'. Este debería de ser Mayor o Igual a '{RightOperand}'.")]
         public decimal ValorHaber
         {
             get => valorHaber;

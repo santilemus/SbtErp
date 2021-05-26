@@ -248,12 +248,25 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         protected override void DoPrecioUnidadChanged(bool forceChangeEvents, decimal oldValue)
         {
             base.DoPrecioUnidadChanged(forceChangeEvents, oldValue);
-            if (Venta == null)
+            if (Venta == null || Producto == null)
                 return;
-            OnPrecioUnidadChanged(Cantidad, Venta.TipoFactura.Codigo);
-            //SI NO REALIZA LOS CALCULOS al cambiar la cantidad o el precio quitar comentario a las siguientes lineas
-            //if (forceChangeEvents)
-            //    OnChanged(nameof(PrecioUnidad), oldValue, PrecioUnidad);
+            if (Producto.Categoria.ClasificacionIva == EClasificacionIVA.Gravado)
+            {
+                gravada = Math.Round(Cantidad * PrecioUnidad, 2);
+                // cuando la factura es diferente de exportacion ("COVE03")
+                if (Venta.Cliente.TipoContribuyente == ETipoContribuyente.Gravado && Venta.TipoFactura.Codigo != "COVE03")
+                    iva = Math.Round(Convert.ToDecimal(Gravada) * this.Producto.Categoria.PorcentajeIVA, 2);
+            }
+            else
+                exenta = Math.Round(Cantidad * PrecioUnidad, 2);
+            if (forceChangeEvents)
+            {
+                OnChanged(nameof(PrecioUnidad), oldValue, PrecioUnidad);
+                /// Info https://supportcenter.devexpress.com/ticket/details/ka18699/how-to-implement-dependent-and-calculated-properties-in-xpo#
+                OnChanged(nameof(Gravada));
+                OnChanged(nameof(Iva));
+                OnChanged(nameof(Exenta));
+            }
             Venta.UpdateTotalExenta(true);
             Venta.UpdateTotalGravada(true);
             Venta.UpdateTotalIva(true);

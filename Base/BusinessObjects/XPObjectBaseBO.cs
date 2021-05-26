@@ -29,12 +29,14 @@ namespace SBT.Apps.Base.Module.BusinessObjects
                 Constante constante = Session.GetObjectByKey<Constante>("MONEDA DEFECTO");
                 Moneda moneda = null;
                 if (constante != null)
-                    moneda = this.Session.GetObjectByKey<Moneda>(constante.Valor.Trim());
-                if (moneda == null)
                 {
-                    this["Moneda"] = moneda;
-                    if (this.GetType().GetProperty("ValorMoneda") != null)
-                        this["ValorMoneda"] = moneda.FactorCambio;
+                    moneda = this.Session.GetObjectByKey<Moneda>(constante.Valor.Trim());
+                    if (moneda != null)
+                    {
+                        this["Moneda"] = moneda;
+                        if (this.GetType().GetProperty("ValorMoneda") != null)
+                            this["ValorMoneda"] = moneda.FactorCambio;
+                    }
                 }
             }
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).

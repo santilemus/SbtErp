@@ -46,7 +46,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         public override void AfterConstruction()
         {
             base.AfterConstruction();
-            autorizacionCorrelativo = null;
+            autorizacionDocumento = null;
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
@@ -62,8 +62,8 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         string comentario;
         DateTime fecha;
         Concepto concepto;
-        [Persistent(nameof(AutorizacionCorrelativo))]
-        AutorizacionDocumento autorizacionCorrelativo;
+        [Persistent(nameof(AutorizacionDocumento))]
+        AutorizacionDocumento autorizacionDocumento;
 
 
         [DbType("datetime2"), XafDisplayName("Fecha"), Index(1)]
@@ -95,9 +95,9 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         /// que sea la correcta para el tipo de documento, ademas este vigente y el correlativo generado este dentro del 
         /// rango
         /// </summary>
-        [XafDisplayName("Autorización Correlativo"), PersistentAlias(nameof(autorizacionCorrelativo)), Index(2)]
+        [XafDisplayName("Autorización Documento"), PersistentAlias(nameof(autorizacionDocumento)), Index(2)]
         [VisibleInListView(false)]
-        public AutorizacionDocumento AutorizacionCorrelativo => autorizacionCorrelativo;
+        public AutorizacionDocumento AutorizacionDocumento => autorizacionDocumento;
 
         /// <summary>
         /// Cartera de Cuenta por Cobrar o Venta. El vendedor o el cobrador esta relacionado con la cartera y el cliente

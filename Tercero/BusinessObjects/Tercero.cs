@@ -21,12 +21,13 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
         {
             base.AfterConstruction();
             TipoPersona = TipoPersona.Natural;
-            TipoContribuyente = TipoContribuyente.Gravado;
+            TipoContribuyente = ETipoContribuyente.Gravado;
             Activo = true;
         }
 
+        EClasificacionContribuyente clasificacion;
         private System.Boolean activo;
-        private TipoContribuyente tipoContribuyente;
+        private ETipoContribuyente tipoContribuyente;
         private TipoPersona tipoPersona;
         private System.String sitioWeb;
         private System.String eMail;
@@ -81,10 +82,20 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
         }
 
         [RuleRequiredField("Tercero.TipoContribuyente_Requerido", "Save"), VisibleInListView(false), Index(5)]
-        public TipoContribuyente TipoContribuyente
+        [XafDisplayName("Tipo Contribuyente")]
+        public ETipoContribuyente TipoContribuyente
         {
             get => tipoContribuyente;
             set => SetPropertyValue(nameof(TipoContribuyente), ref tipoContribuyente, value);
+        }
+
+        [DbType("smallint"), XafDisplayName("Clasificación")]
+        [ToolTip("Clasificación del tercero como contribuyente")]
+        [VisibleInListView(false), VisibleInLookupListView(false)]
+        public EClasificacionContribuyente Clasificacion
+        {
+            get => clasificacion;
+            set => SetPropertyValue(nameof(Clasificacion), ref clasificacion, value);
         }
 
         [Index(6), VisibleInLookupListView(true)]

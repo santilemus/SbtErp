@@ -159,10 +159,15 @@
     <Compile Include="BusinessObjects\EBugSeveridad.cs" />
     <Compile Include="BusinessObjects\EBugSistemaOperativo.cs" />
     <Compile Include="BusinessObjects\EClaseDocumentoCompraVenta.cs" />
+    <Compile Include="BusinessObjects\EClasificacionContribuyente.cs" />
     <Compile Include="BusinessObjects\ECondicionPago.cs" />
     <Compile Include="BusinessObjects\EFormaPago.cs" />
     <Compile Include="BusinessObjects\ETipoOperacion.cs" />
     <Compile Include="BusinessObjects\ETipoTarjeta.cs" />
+    <Compile Include="BusinessObjects\XPObjectCustom.cs" />
+    <Compile Include="Controllers\vcCatalogo.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controllers\vcPermissionPolicyUser.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -226,7 +231,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DatabaseUpdate\Updater.cs" />
     <Compile Include="BusinessObjects\TipoConstante.cs" />
-    <Compile Include="BusinessObjects\TipoContribuyente.cs" />
+    <Compile Include="BusinessObjects\ETipoContribuyente.cs" />
     <Compile Include="BusinessObjects\ETipoCuentaBanco.cs" />
     <Compile Include="BusinessObjects\TipoGenero.cs" />
     <Compile Include="BusinessObjects\TipoPersona.cs" />

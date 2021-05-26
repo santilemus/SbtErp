@@ -21,12 +21,15 @@ namespace SBT.Apps.Contabilidad.BusinessObjects
     /// </remarks>
     [DefaultClassOptions, CreatableItem(false)]
     [ImageName("CatalogoContable")]
-    [ModelDefault("Caption", "Catálogo Contable"), NavigationItem("Contabilidad"), DefaultProperty("CodCuenta"), Persistent("ConCatalogo"),
+    [ModelDefault("Caption", "Catálogo Contable"), NavigationItem("Contabilidad"), DefaultProperty(nameof(CodigoCuenta)), Persistent("ConCatalogo"),
         DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None),
-        ListViewFilter("Catálogo de la Empresa de la Sesion", "Empresa.Codigo = EmpresaActualOid()")]
-    //[Indices("CodCuenta")]
+        ListViewFilter("Catálogo de la Empresa de la Sesion", "Empresa.Oid = EmpresaActualOid()")]
+    [RuleCriteria("Catalogo [Padre] != [Cuenta]", DefaultContexts.Save, "[CodigoCuenta] != [Padre.CodigoCuenta]", 
+        "Codigo Cuenta debe ser diferente de Padre", TargetCriteria = "!IsNull([Padre])")]
+    [RuleCriteria("Catalogo - Cuenta de Mayor", DefaultContexts.Save, "Len([CodigoCuenta]) == 4 && CtaMayor = True && [CtaResumen] == True",
+        "Las cuentas de 4 digitdos deben ser De Resumen y de Mayor", ResultType = ValidationResultType.Warning, TargetCriteria = "Len([CodigoCuenta]) == 4")]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
-    public class Catalogo : XPObjectBaseBO
+    public class Catalogo : XPObjectCustom
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
         public Catalogo(Session session)
             : base(session)
@@ -35,16 +38,15 @@ namespace SBT.Apps.Contabilidad.BusinessObjects
         public override void AfterConstruction()
         {
             base.AfterConstruction();
+            CtaResumen = true;
+            CtaMayor = false;
+            activa = true;
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
         protected override void OnSaving()
         {
             base.OnSaving();
-            if (Padre != null)
-                nivelCta = Padre.Nivel + 1;
-            else
-                nivelCta = 1;
         }
 
         #region Propiedades
@@ -54,12 +56,10 @@ namespace SBT.Apps.Contabilidad.BusinessObjects
         string nombre;
         Catalogo padre;
         ETipoCuentaCatalogo tipoCuenta = ETipoCuentaCatalogo.Activo;
-        bool ctaResumen = true;
+        bool ctaResumen;
         bool ctaMayor;
         ETipoSaldoCuenta tipoSaldoCta = ETipoSaldoCuenta.Deudor;
-        [Persistent(nameof(Nivel)), DbType("smallint")]
-        int nivelCta = 1;
-        bool activa = true;
+        bool activa;
 
 #if Firebird
         [DbType("DM_ENTERO_CORTO"), Persistent("COD_EMP")]
@@ -67,7 +67,8 @@ namespace SBT.Apps.Contabilidad.BusinessObjects
         [DbType("smallint"), Persistent("Empresa")]
 #endif
         //[Association("Empresa-Catalogos")]
-        [XafDisplayName("Empresa"), Index(1), RuleRequiredField("Catalogo.Empresa_Requerida", "Save")]
+        [XafDisplayName("Empresa"), Index(1), RuleRequiredField("Catalogo.Empresa_Requerida", "Save"), VisibleInListView(false)]
+        [Browsable(false)]
         public Empresa Empresa
         {
             get => empresa;
@@ -79,13 +80,26 @@ namespace SBT.Apps.Contabilidad.BusinessObjects
 #else
         [DbType("varchar(20)"), Persistent("CtaPadre")]
 #endif
-        [Size(20), XafDisplayName("Código Cuenta"), RuleRequiredField("Catalogo.CuentaPadre_Requerido", "Save"), Index(2),
-            VisibleInLookupListView(true), ImmediatePostData(true)]
-        [Association("Padre-Cuentas"), DataSourceCriteria("CtaResumen == True and CodCuenta != '@This.CodCuenta'")]
+        [Size(20), XafDisplayName("Cuenta Padre"), RuleRequiredField("Catalogo.CuentaPadre_Requerido", "Save"), Index(2)]
+        [Association("Padre-Cuentas"), DataSourceCriteria("[CtaResumen] == True && [Activa] == True")]
+        [ExplicitLoading]
         public Catalogo Padre
         {
             get => padre;
-            set => SetPropertyValue(nameof(Padre), ref padre, value);
+            set
+            {
+                bool changed = SetPropertyValue(nameof(Padre), ref padre, value);
+                if (!IsLoading && !IsSaving && changed)
+                {
+                    var oldTipoCta = TipoCuenta;
+                    var oldTipoSaldoCta = TipoSaldoCta;
+                    CodigoCuenta = padre.CodigoCuenta;
+                    TipoCuenta = padre.TipoCuenta;
+                    TipoSaldoCta = padre.TipoSaldoCta;
+                    OnChanged(nameof(TipoCuenta), oldTipoCta, CodigoCuenta);
+                    OnChanged(nameof(TipoSaldoCta), oldTipoSaldoCta, TipoSaldoCta);
+                }
+            }
         }
 
 
@@ -94,8 +108,9 @@ namespace SBT.Apps.Contabilidad.BusinessObjects
 #else
         [DbType("varchar(20)"), Persistent(nameof(CodigoCuenta))]
 #endif
-        [Size(20), XafDisplayName("Código Cuenta"), RuleRequiredField("Catalogo.CodCuenta_Requerido", "Save"), Index(3),
-            VisibleInLookupListView(true), NonCloneable]
+        [Size(20), XafDisplayName("Código Cuenta"), RuleRequiredField("Catalogo.CodigoCuenta_Requerido", "Save"), Index(3),
+            NonCloneable]
+        [Indexed(nameof(Empresa), Name = "idxCodigoCuenta_Catalogo", Unique = true)]
         public string CodigoCuenta
         {
             get => codigoCuenta;
@@ -117,7 +132,7 @@ namespace SBT.Apps.Contabilidad.BusinessObjects
 
         [XafDisplayName("Nivel"), VisibleInLookupListView(false)]
         [PersistentAlias("Iif(!IsNull([Padre]), [Padre].Nivel + 1, 1)")]
-        public System.Int16 Nivel
+        public int Nivel
         {
             get { return Convert.ToInt16(EvaluateAlias("Nivel")); }
         }
@@ -127,7 +142,7 @@ namespace SBT.Apps.Contabilidad.BusinessObjects
 #else
         [DbType("smallint"), Persistent("TipoCuenta")]
 #endif
-        [XafDisplayName("Tipo Cuenta"), Index(6), VisibleInLookupListView(true), RuleRequiredField("Catalogo.TipoCuenta_Requerido", "Save")]
+        [XafDisplayName("Tipo Cuenta"), Index(6), VisibleInLookupListView(false), RuleRequiredField("Catalogo.TipoCuenta_Requerido", "Save")]
         public ETipoCuentaCatalogo TipoCuenta
         {
             get => tipoCuenta;
@@ -154,6 +169,9 @@ namespace SBT.Apps.Contabilidad.BusinessObjects
         [DbType("bit"), Persistent("CtaMayor")]
 #endif
         [XafDisplayName("Cuenta Mayor"), Index(8), VisibleInLookupListView(false), RuleRequiredField("Catalogo.CtaMayor_Requerido", DefaultContexts.Save)]
+        //[RuleRequiredField("Catalogo.CtaMayor_Requerido", DefaultContexts.Save, TargetCriteria = "[CtaResumen] == true")]
+        [RuleValueComparison("Catalogo.CtaMayor es falso", DefaultContexts.Save, ValueComparisonType.Equals, false, 
+            TargetCriteria = "[CtaResumen] == false", CustomMessageTemplate = "'{TargetObject}' debe ser False cuando CtaResumen es False")]
         public bool CtaMayor
         {
             get => ctaMayor;
@@ -165,7 +183,8 @@ namespace SBT.Apps.Contabilidad.BusinessObjects
 #else
         [DbType("smallint"), Persistent(nameof(TipoSaldoCta))]
 #endif
-        [XafDisplayName("Tipo Saldo"), Index(9), VisibleInLookupListView(false), RuleRequiredField("Catalogo.TipoSaldo_Requerido", "Save")]
+        [XafDisplayName("Tipo Saldo"), Index(9), RuleRequiredField("Catalogo.TipoSaldo_Requerido", "Save")]
+        [VisibleInLookupListView(true)]
         public ETipoSaldoCuenta TipoSaldoCta
         {
             get => tipoSaldoCta;
@@ -188,7 +207,7 @@ namespace SBT.Apps.Contabilidad.BusinessObjects
         #endregion
 
         #region Colecciones
-        [Association("Padre-Cuentas")]
+        [Association("Padre-Cuentas"), XafDisplayName("Cuentas Hijas")]
         public XPCollection<Catalogo> Cuentas
         {
             get

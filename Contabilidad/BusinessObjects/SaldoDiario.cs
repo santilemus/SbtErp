@@ -5,7 +5,6 @@ using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Contabilidad.BusinessObjects;
 using System;
-using System.ComponentModel;
 using System.Linq;
 
 namespace SBT.Apps.Contabilidad.Module.BusinessObjects
@@ -13,20 +12,42 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
     /// <summary>
     /// Contabilidad. BO con los saldos diarios contables. Es calculado por un SP, aqui no se ingresan datos desde la interfaz de usuario
     /// </summary>
-    [ModelDefault("Caption", "Saldos Diarios"), Persistent("ConSaldoDiario"), NavigationItem(false), CreatableItem(false)]
+    [ModelDefault("Caption", "Saldo Diario"), Persistent("ConSaldoDiario"), NavigationItem(false), CreatableItem(false), VisibleInReports(true)]
     //[ImageName("BO_Contact")]
     //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
-    public class ConSaldoDiario : XPCustomObject
+    public class SaldoDiario : XPCustomObject
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
-        public ConSaldoDiario(Session session)
+        public SaldoDiario(Session session)
             : base(session)
         {
+        }
+
+        public SaldoDiario(Session session, Empresa emp, Periodo per, Catalogo cta, DateTime dia, decimal valdebe, decimal valhaber, ETipoSaldoDia tipo,
+            decimal debeAjusteCons, decimal haberAjusteCons)
+            : base(session)
+        {
+            empresa = emp;
+            periodo = per;
+            cuenta = cta;
+            fecha = dia;
+            debe = valdebe;
+            haber = valhaber;
+            tipoSaldoDia = tipo;
+            debeAjusteConsolida = debeAjusteCons;
+            haberAjusteConsolida = haberAjusteCons;
         }
         public override void AfterConstruction()
         {
             base.AfterConstruction();
+            empresa = null;
+            periodo = null;
+            cuenta = null;
+            debe = 0.0m;
+            haber = 0.0m;
+            debeAjusteConsolida = 0.0m;
+            haberAjusteConsolida = 0.0m;
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
@@ -39,7 +60,6 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         Empresa empresa;
         [DbType("int"), Persistent(nameof(Periodo)), FetchOnly]
         Periodo periodo;
-        [Persistent(nameof(Cuenta)), DbType("int"), Indexed(nameof(fecha), Name = "idx_Cuenta_Fecha")]
         Catalogo cuenta;
         [Persistent(nameof(Fecha)), DbType("datetime"), FetchOnly]
         DateTime fecha = DateTime.Today;
@@ -47,7 +67,6 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         decimal debe;
         [Persistent(nameof(Haber)), DbType("money"), FetchOnly]
         decimal haber;
-        [Persistent(nameof(TipoSaldoDia)), DbType("smallint"), FetchOnly]
         ETipoSaldoDia tipoSaldoDia = ETipoSaldoDia.Operaciones;
         [Persistent(nameof(DebeAjusteConsolida)), DbType("money"), FetchOnly]
         decimal debeAjusteConsolida;
@@ -60,8 +79,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             get => oid;
         }
 
-
-        [PersistentAlias(nameof(empresa)), XafDisplayName("Empresa"), Browsable(false)]
+        [PersistentAlias(nameof(empresa)), XafDisplayName("Empresa")]
         public Empresa Empresa
         {
             get => empresa;
@@ -73,12 +91,13 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             get => periodo;
         }
 
-        [PersistentAlias(nameof(cuenta)), XafDisplayName("Cuenta")]
+        [XafDisplayName("Cuenta")]
+        [Indexed(nameof(fecha), nameof(TipoSaldoDia), Name = "idxCuentaFecha_ConSaldoDiario", Unique = true)]
         public Catalogo Cuenta
         {
-            get { return cuenta; }
+            get => cuenta;
+            set => SetPropertyValue(nameof(Cuenta), ref cuenta, value);
         }
-
 
         [PersistentAlias("[Cuenta.Nombre]")]
         public string Nombre
@@ -107,10 +126,11 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             get { return haber; }
         }
 
-        [PersistentAlias(nameof(tipoSaldoDia)), XafDisplayName("Tipo Saldo")]
+        [XafDisplayName("Tipo Saldo")]
         public ETipoSaldoDia TipoSaldoDia
         {
-            get { return tipoSaldoDia; }
+            get => tipoSaldoDia;
+            set => SetPropertyValue(nameof(TipoSaldoDia), ref tipoSaldoDia, value);
         }
 
         [PersistentAlias(nameof(debeAjusteConsolida)), XafDisplayName("Debe Ajuste")]
@@ -128,6 +148,16 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         }
 
         #endregion
+
+        #region Metodos
+        public void Update(decimal totDebe, decimal totHaber, decimal ajusteDebe, decimal ajusteHaber)
+        {
+            debe = totDebe;
+            haber = totHaber;
+            debeAjusteConsolida = ajusteDebe;
+            haberAjusteConsolida = ajusteHaber;
+        }
+        #endregion 
 
 
         //[Action(Caption = "My UI Action", ConfirmationMessage = "Are you sure?", ImageName = "Attention", AutoCommit = true)]

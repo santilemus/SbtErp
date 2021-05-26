@@ -201,47 +201,20 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         }
 
         /// <summary>
-        /// Metodo que se ejecuta cambia el precio. Reescribirlo en las clases heredadas para implementar la funcionalidad
-        /// requerida en cada caso
+        /// Metodo que se ejecuta cambia el precio, incluye el calculo de las propiedades Gravada, Iva, Exenta, NoSujeta. 
+        /// Reescribirlo en las clases heredadas para implementar la funcionalidad requerida en cada caso 
         /// </summary>
         /// <param name="forceChangeEvents">Indica si se deben invocar eventos para propiedades afectadas</param>
         /// <param name="oldValue">El valor de la propiedad PrecioUnidad antes del setter</param>
-        /// <param name="fUnidades">La cantidad de unidades del producto en el documento</param>
-        /// <param name="codigoTipoFactura">El codigo del tipo de factura al cual corresponde el documento</param>
-        protected virtual void DoPrecioUnidadChanged(bool forceChangeEvents, decimal oldValue)
-        {
-            InicializarSubtotales();
-        }
-
-        /// <summary>
-        /// Calula las propiedades Gravado, Iva y Exento cuando cambia el precio. 
-        /// </summary>
-        /// <param name="fUnidades"></param>
-        /// <param name="fTipoFactura"></param>
         /// <remarks>
         /// Cuando la clasificacion del producto es gravado, para calcular la propiedad gravada se utilizara el precio sin
         /// sin iva y sera calculada el iva tanto para credito fiscal como otros documentos de venta. Para efectos de la
         /// impresion del consumidor final se usara el precio con iva y la columna gravada sera la suma de gravado + iva
         /// (porque en ese caso el iva no sale separado como es el caso del credito fiscal)
-        /// </remarks>
-        protected void OnPrecioUnidadChanged(decimal fUnidades, string fTipoFactura)
+        /// </remarks> 
+        protected virtual void DoPrecioUnidadChanged(bool forceChangeEvents, decimal oldValue)
         {
-            if (Producto == null)
-                return;
-            if (Producto.Categoria.ClasificacionIva == EClasificacionIVA.Gravado)
-            {
-                gravada = Math.Round(fUnidades * PrecioUnidad, 2);
-                iva = Math.Round(Convert.ToDecimal(Gravada) * this.Producto.Categoria.PorcentajeIVA, 2);
-            }
-            else
-            {
-                exenta = Math.Round(fUnidades * PrecioUnidad, 2);
-                iva = 0.0m;
-            }
-            /// Info https://supportcenter.devexpress.com/ticket/details/ka18699/how-to-implement-dependent-and-calculated-properties-in-xpo#
-            OnChanged(nameof(Gravada));
-            OnChanged(nameof(Iva));
-            OnChanged(nameof(Exenta));
+            InicializarSubtotales();
         }
 
         protected void InicializarSubtotales()

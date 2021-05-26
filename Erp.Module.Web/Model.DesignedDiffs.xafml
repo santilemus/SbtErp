@@ -12,7 +12,7 @@
     </PropertyEditor>
   </ViewItems>
   <Views>
-    <ListView Id="Partida_Detalles_ListView" DetailRowMode="None" DataAccessMode="Server" IsFooterVisible="True" />
+    <ListView Id="Partida_Detalles_ListView" DetailRowMode="None" DataAccessMode="Server" IsFooterVisible="True" IsAdaptive="True" />
     <ListView Id="PartidaDetalle_ListView" DetailRowMode="None" />
   </Views>
 </Application>

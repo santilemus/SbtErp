@@ -175,6 +175,18 @@
     <Compile Include="Controllers\PopupWindowController.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controllers\vcActivoCatalogoWeb.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controllers\vcActivoCategoria.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controllers\vcActivoMejora.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controllers\vcActivoMovimiento.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controllers\vcBancoConciliacionWeb.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -266,6 +278,10 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Activo\SBT.Apps.Activo.csproj">
+      <Project>{579e294d-47b3-4e8a-94b8-a81a514f7405}</Project>
+      <Name>SBT.Apps.Activo</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Base\SBT.Apps.Base.csproj">
       <Project>{A538FE93-206D-4869-BC40-FDC561F8C1D1}</Project>
       <Name>SBT.Apps.Base</Name>

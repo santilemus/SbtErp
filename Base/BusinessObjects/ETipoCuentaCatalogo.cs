@@ -12,15 +12,17 @@ namespace SBT.Apps.Contabilidad.BusinessObjects
         Activo = 1,
         [XafDisplayName("Pasivo")]
         Pasivo = 2,
-        [XafDisplayName("Capital")]
+        [XafDisplayName("Patrimonio")]
         Capital = 3,
-        [XafDisplayName("Ingreso")]
+        [XafDisplayName("Costos")]
         Ingreso = 4,
-        [XafDisplayName("Gasto")]
+        [XafDisplayName("Gastos")]
         Gasto = 5,
-        [XafDisplayName("Costo")]
+        [XafDisplayName("Producto")]
         Costo = 6,
+        [XafDisplayName("Resultados")]
+        Resultado = 7,
         [XafDisplayName("Orden")]
-        Orden = 7
+        Orden = 8
     }
 }

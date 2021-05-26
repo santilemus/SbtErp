@@ -58,7 +58,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
             return Convert.ToInt32(Session.Evaluate<Categoria>(CriteriaOperator.Parse("Count()"), CriteriaOperator.Parse("[Padre.Oid] == ?", aCategoria.Oid)));
         }
 
-        public Categoria(DevExpress.Xpo.Session session): base(session)
+        public Categoria(DevExpress.Xpo.Session session) : base(session)
         {
         }
 
@@ -73,8 +73,6 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         private System.Boolean activa = true;
         private System.String nombre;
         private System.String codigo;
-        [Persistent(nameof(Nivel)), DbType("smallint"), FetchOnly]
-        private int nivel = 1;
 
         [ImmediatePostData(true)]
         [RuleRequiredField("Categoria.Padre_Requerido", DefaultContexts.Save, "Padre es requerido", SkipNullOrEmptyValues = true), VisibleInLookupListView(false)]
@@ -87,7 +85,6 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
                 bool changed = SetPropertyValue("Padre", ref padre, value);
                 if (!IsLoading && !IsSaving && changed && Session.IsNewObject(this))
                 {
-                    nivel = Padre.Nivel + 1;
                     Codigo = value.Codigo;
                     Clasificacion = value.Clasificacion;
                 }
@@ -169,8 +166,8 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         }
 
         [XafDisplayName("Nivel")]
-        [PersistentAlias(nameof(nivel))]
-        public int Nivel => nivel;
+        [PersistentAlias("Iif(!IsNull([Padre]), [Padre.Nivel] + 1, 1)")]
+        public int Nivel => Convert.ToInt16(nameof(Nivel));
 
         [RuleRequiredField("Categoria.Activa_Requerido", "Save"), XafDisplayName("Activa")]
         public System.Boolean Activa

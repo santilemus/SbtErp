@@ -26,6 +26,7 @@ namespace SBT.Apps.Facturacion.Module.Controllers
         {
             TargetObjectType = typeof(SBT.Apps.Facturacion.Module.BusinessObjects.Venta);
             TargetViewType = ViewType.Any;
+            TargetViewNesting = Nesting.Root;
         }
 
         protected override void OnActivated()

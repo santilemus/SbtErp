@@ -27,15 +27,20 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         /// Retornar el siguiente correlativo de documento para un Persistent Object. El correlativo es por empresa y año
         /// </summary>
         /// <returns>Entero que representa un correlativo de documento en un objeto persistente</returns>
+        /// <remarks>
+        /// 28/04/2021. De ser necesario debe reescribirlo en cada caso en las clases heredadas
+        /// </remarks>
         protected virtual int CorrelativoDoc()
         {
-            string sCriteria = "Empresa.Oid == ? && GetYear(Fecha) == ?";
+            //string sSQL = $"select Max(coalesce(Numero, 0)) + 1 from {ClassInfo.TableName} where Empresa = @Empresa And Year(Fecha) = @Fecha";
+            string sCriteria = "[Empresa.Oid] == ? && GetYear([Fecha]) == ?";
             //if (GetType().GetProperty("Caja") != null)
             //    sCriteria += " && Caja.Oid == ?";
             using (UnitOfWork uow = new UnitOfWork(Session.DataLayer, null))
             {
-                object max = uow.Evaluate(this.GetType(), CriteriaOperator.Parse("Max(Numero) + 1"), CriteriaOperator.Parse(sCriteria, Empresa.Oid, Fecha));
-                return Convert.ToInt32(max ?? 1); 
+                object max = uow.Evaluate(this.GetType(), CriteriaOperator.Parse("Max([Numero]) + 1"), CriteriaOperator.Parse(sCriteria, Empresa.Oid, Fecha.Year));
+                //object max = uow.ExecuteScalar(sSQL, new string[] { "@Empresa", "@Fecha" }, new object[] { Empresa.Oid, Fecha});
+                return Convert.ToInt32(max ?? 1);
             }
         }
 
@@ -116,7 +121,13 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         public DateTime Fecha
         {
             get => fecha;
-            set => SetPropertyValue(nameof(Fecha), ref fecha, value);
+            set
+            {
+                var oldfecha = fecha;
+                bool changed = SetPropertyValue(nameof(Fecha), ref fecha, value);
+                if (!IsLoading && !IsSaving && changed)
+                    DoFechaChange(true, oldfecha);
+            }
         }
 
         private Moneda moneda;
@@ -187,6 +198,19 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         {
             get => comentario;
             set => SetPropertyValue(nameof(Comentario), ref comentario, value);
+        }
+
+        #endregion
+
+        #region Metodos
+        /// <summary>
+        /// Metodo que se dispara cuando cambia la propiedad fecha
+        /// </summary>
+        /// <param name="forceChangeEvents"></param>
+        protected virtual void DoFechaChange(bool forceChangeEvents, DateTime oldValue)
+        {
+            if (forceChangeEvents)
+                OnChanged(nameof(Fecha), oldValue, Fecha);
         }
 
         #endregion

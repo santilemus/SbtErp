@@ -13,11 +13,11 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         /// </summary>
         Gravado = 0,
         /// <summary>
-        /// Gravados con tasa cero
+        /// Exentos del impuesto al valor agregado. El calculo de Cantidad * precio va en columna Exenta(o)
         /// </summary>
         Exento = 1,
         /// <summary>
-        /// Aquellos que por disposicion legal no estan gravados. Para efectos practicos en ES, los exentos y excluidos se comportan igual
+        /// Aquellos que por disposicion legal no estan gravados. Para efectos practicos en ES exento y excluidos se comportan igual
         /// </summary>
         Excluido = 2
     }

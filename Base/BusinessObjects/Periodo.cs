@@ -1,4 +1,5 @@
 ﻿using DevExpress.ExpressApp.DC;
+using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
@@ -11,12 +12,12 @@ namespace SBT.Apps.Base.Module.BusinessObjects
 {
     [DefaultClassOptions, CreatableItem(false)]
     //[ImageName("BO_Contact")]
-    [Persistent("ConPeriodo"), RuleCriteria("Periodo.Empresa Sesion", DefaultContexts.Save, "Empresa.Codigo = EmpresaActualOid()"),
-        DefaultProperty("Oid"), NavigationItem(false)]
+    [Persistent("ConPeriodo"), DefaultProperty("Oid"), NavigationItem("Catalogos"), ModelDefault("Caption", "Períodos")]
     //[RuleCombinationOfPropertiesIsUnique("Periodo.Empresa_Numero_Unico", DefaultContexts.Save, "Empresa, Oid", 
     //    CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction)]
-    //[Indices("empresa;Oid")]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
+    [RuleCriteria("Periodo.Oid = Year", DefaultContexts.Save, "[Oid] == GetYear([FechaInicio] && GetYear([FechaInicio] == GetYear([FechaFin])", 
+        "Fecha Inicio y Fecha Fin deben corresponder al mismo año y Oid debe ser igual al año", SkipNullOrEmptyValues = false)]
     public class Periodo : XPCustomObject
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
         public Periodo(Session session)
@@ -55,7 +56,14 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         public DateTime FechaInicio
         {
             get => fechaInicio;
-            set => SetPropertyValue(nameof(FechaInicio), ref fechaInicio, value);
+            set
+            {
+                bool changed = SetPropertyValue(nameof(FechaInicio), ref fechaInicio, value);
+                if (!IsLoading && !IsSaving && changed)
+                {
+                    FechaFin = new DateTime(FechaInicio.Year, 12, 31);
+                }
+            }
         }
 
         DateTime fechaFin;

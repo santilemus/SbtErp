@@ -101,18 +101,19 @@
     <DetailView Id="Tercero_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
-          <LayoutGroup Id="SimpleEditors" RelativeSize="16.41991924629879" Direction="Horizontal">
-            <LayoutGroup Id="Tercero_col1" ShowCaption="False" Index="0" RelativeSize="49.72436604189636" CaptionLocation="Left" IsNewNode="True">
-              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="29.508196721311474" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="Nombre" ViewItem="Nombre" Index="1" RelativeSize="21.311475409836067" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="DireccionPrincipal" ViewItem="DireccionPrincipal" Index="2" RelativeSize="21.311475409836067" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="EMail" ViewItem="EMail" CaptionLocation="Left" Index="3" RelativeSize="27.868852459016395" IsNewNode="True" />
+          <LayoutGroup Id="SimpleEditors" RelativeSize="18.998716302952502" Direction="Horizontal">
+            <LayoutGroup Id="Tercero_col1" ShowCaption="False" Index="0" RelativeSize="49.6124031007752" CaptionLocation="Left" IsNewNode="True">
+              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="24.324324324324323" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Nombre" ViewItem="Nombre" Index="1" RelativeSize="17.567567567567568" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="DireccionPrincipal" ViewItem="DireccionPrincipal" Index="2" RelativeSize="17.567567567567568" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="EMail" ViewItem="EMail" CaptionLocation="Left" Index="3" RelativeSize="17.567567567567568" IsNewNode="True" />
+              <LayoutItem Id="SitioWeb" ViewItem="SitioWeb" CaptionLocation="Left" Index="4" RelativeSize="22.972972972972972" IsNewNode="True" />
             </LayoutGroup>
-            <LayoutGroup Id="Tercero_col2" ShowCaption="False" Index="1" RelativeSize="50.27563395810364" CaptionLocation="Left" IsNewNode="True">
-              <LayoutItem Id="SitioWeb" ViewItem="SitioWeb" CaptionLocation="Left" Index="0" RelativeSize="29.508196721311474" IsNewNode="True" />
-              <LayoutItem Id="TipoPersona" ViewItem="TipoPersona" Index="1" RelativeSize="21.311475409836067" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="TipoContribuyente" ViewItem="TipoContribuyente" Index="2" RelativeSize="21.311475409836067" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="Activo" ViewItem="Activo" Index="3" RelativeSize="27.868852459016395" CaptionLocation="Left" IsNewNode="True" />
+            <LayoutGroup Id="Tercero_col2" ShowCaption="False" Index="1" RelativeSize="50.3875968992248" CaptionLocation="Left" IsNewNode="True">
+              <LayoutItem Id="TipoPersona" ViewItem="TipoPersona" Index="0" RelativeSize="24.324324324324323" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="TipoContribuyente" ViewItem="TipoContribuyente" Index="1" RelativeSize="17.567567567567568" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Clasificacion" ViewItem="Clasificacion" Index="2" RelativeSize="17.567567567567568" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Activo" ViewItem="Activo" Index="3" RelativeSize="40.54054054054054" CaptionLocation="Left" IsNewNode="True" />
             </LayoutGroup>
             <LayoutGroup Id="XPObject" Caption="Oid" Direction="Horizontal" Index="1" RelativeSize="35.040431266846362" Removed="True">
               <LayoutItem Id="Oid" Removed="True" />
@@ -134,9 +135,12 @@
               </LayoutGroup>
             </LayoutGroup>
           </LayoutGroup>
-          <TabbedGroup Id="Tabs" RelativeSize="83.58008075370121" Index="1">
+          <TabbedGroup Id="Tabs" RelativeSize="81.0012836970475" Index="1">
             <LayoutGroup Id="Telefonos" RelativeSize="100">
               <LayoutItem Id="Telefonos" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="Giros" RelativeSize="100">
+              <LayoutItem Id="Giros" RelativeSize="100" />
             </LayoutGroup>
             <LayoutGroup Id="Contactos" RelativeSize="100">
               <LayoutItem Id="Contactos" RelativeSize="100" />

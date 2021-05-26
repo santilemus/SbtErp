@@ -8,7 +8,7 @@ namespace SBT.Apps.Contabilidad.BusinessObjects
     /// </summary>
     public enum ETipoSaldoCuenta
     {
-        Deudor, 
-        Acreedor
+        Deudor = 0, 
+        Acreedor = 1
     }
 }

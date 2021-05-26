@@ -7,10 +7,10 @@ namespace SBT.Apps.Base.Module.BusinessObjects
     public enum CategoriaLista
     {
         // <summary>
-        // DISPONIBLE, REUTILIZAR CON OTRA COSA, CAMBIAR EL DISPLAYNAME Y LA ETIQUETA DEL ITEM DEL ENUM
+        // Activo Fijo. Estado de Uso de los Activos. Forma de Codificacion: UA001, UA002...UA0nn.
         // </summary>
-        //[XafDisplayName("Clasificacion Profesiones")]
-        //ClasificacionProfesion = 1,
+        [XafDisplayName("Estado Uso Activo")]
+        EstadoUsoActivo = 1,
 
         /// <summary>
         /// Tipos de sangre. Manera de codificarlos:  GSAXXXXXXXX. Ejemplos: GSA01

@@ -62,6 +62,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             base.AfterConstruction();
             if (((Usuario)SecuritySystem.CurrentUser).Agencia != null)
                 agencia = ((Usuario)SecuritySystem.CurrentUser).Agencia;
+            giro = null;
             // PENDIENTE asignar la caja de forma automatica, a partir de la agencia
 
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
@@ -70,6 +71,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
 
         #region Propiedades
 
+        bool gravadaTasaCero;
         SBT.Apps.Tercero.Module.BusinessObjects.TerceroGiro giro;
         [Persistent(nameof(Agencia))]
         EmpresaUnidad agencia;
@@ -200,7 +202,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
 
 
         [XafDisplayName("Giro"), Index(9), Persistent(nameof(Giro))]
-        [RuleRequiredField("Venta.Giro_Requerido", DefaultContexts.Save, TargetCriteria = "[TipoFactura.Codigo] In ('COVE01', 'COVE06')", 
+        [RuleRequiredField("Venta.Giro_Requerido", DefaultContexts.Save, TargetCriteria = "[TipoFactura.Codigo] In ('COVE01', 'COVE06')",
             ResultType = ValidationResultType.Information)]
         [DataSourceProperty("Cliente.Giros"), VisibleInListView(false)]
         [DetailViewLayout("Datos del Cliente", LayoutGroupType.SimpleEditorsGroup, 1)]
@@ -331,7 +333,40 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         {
             get { return diaCerrado; }
         }
+   
+        [XafDisplayName("Tercero no Domiciliado"), VisibleInListView(false), VisibleInLookupListView(false)]
+        [ToolTip("La venta es a cuenta de este Tercero No Domiciliado")]
+        [Delayed(true)]
+        [DataSourceCriteria("[Activo] == True && [TipoContribuyente] == 0 && [DireccionPrincipal.Pais] != 'SLV'")]
+        public Tercero.Module.BusinessObjects.Tercero TerceroNoDomiciliado
+        {
+            get => GetDelayedPropertyValue<Tercero.Module.BusinessObjects.Tercero>(nameof(TerceroNoDomiciliado));
+            set => SetDelayedPropertyValue<Tercero.Module.BusinessObjects.Tercero>(nameof(TerceroNoDomiciliado), value);
+        }
 
+        /// <summary>
+        /// Ventas gravadas con tasa cero, normalmente son ventas a zonas francas y depositos de perfeccionamiento de activos (DPA)
+        /// </summary>
+        /// <remarks>
+        /// Originalmente se habia agregado una clasificacion de TipoContribuyente para el tercero (cliente), pero no a todos
+        /// los bienes o servicios que adquiere el cliente se le aplica la tasa cero. 
+        /// Se intento agregar la clasificacion en Producto.Categoria.ClasificacionIva, pero no aplica por producto, porque
+        /// la ley establece que solo se debe aplicar a los bienes y servicios necesarios para la transformacion de los bienes 
+        /// que fabrica el cliente, de esta manera solo en algunos casos puntuales un bien se aplica tasa cero.
+        /// Se opto por dejarlo como propiedad de la Venta porque si bien se comportan como si fuesen exportaciones, no 
+        /// siempre se emite un comprobante de este tipo; puede ser factura de consumidor final y trasladado a la columna
+        /// de exportaciones en el libro de ventas.
+        /// Mas info en: https://www.mh.gob.sv/downloads/pdf/DC9226_Ley_del_Impuesto_a_la_Transferencia_de_Bienes_Muebles_y_a_la_Prestacion_de_Servicios.pdf art. 65
+        ///              https://elsalvador.eregulations.org/media/DACG-006-2008%20Zonas%20francas.pdf -- inciso primero art. 25
+        ///              http://ri.ues.edu.sv/id/eprint/19810/1/Trabajo%20de%20Graduaci%C3%B3n%20T3%202018.pdf pagina 77
+        /// </remarks>
+        [XafDisplayName("Gravada Tasa Cero"), DbType("bit")]
+        [ToolTip("Ventas gravadas con tasa cero a zonas francas y depositos para perfeccionamiento de activo (DPA)")]
+        public bool GravadaTasaCero
+        {
+            get => gravadaTasaCero;
+            set => SetPropertyValue(nameof(GravadaTasaCero), ref gravadaTasaCero, value);
+        }
 
         #endregion
 

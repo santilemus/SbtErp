@@ -44,6 +44,7 @@
             this.RequiredModuleTypes.Add(typeof(SBT.Apps.RecursoHumano.RecursoHumanoModule));
             this.RequiredModuleTypes.Add(typeof(SBT.Apps.Facturacion.Module.FacturacionModule));
             this.RequiredModuleTypes.Add(typeof(SBT.Apps.Compra.CompraModule));
+            this.RequiredModuleTypes.Add(typeof(SBT.Apps.Activo.ActivoModule));
 
 		}
 

@@ -30,6 +30,8 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
     [ListViewFilter("Partidas de Días Abiertos", "[Mayorizada] == False")]
     [ListViewFilter("Partidas Incompletas", "([TotalDebe] Is Null || [TotalDebe] == 0) || ([TotalHaber] Is Null || [TotalHaber] == 0) || ([TotalDebe] != [TotalHaber])")]
     [ListViewFilter("Partidas Ultimo 30 Días", "[Fecha] >= ADDDAYS(LocalDateTimeToday(), -30)")]
+    [RuleCriteria("Partida Cuadre", DefaultContexts.Save, "[TotalDebe] == [TotalHaber]", 
+        "Debe cuadrar la Partida Contable, antes de guardar")]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class Partida : XPOBaseDoc
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
@@ -40,10 +42,23 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         public override void AfterConstruction()
         {
             base.AfterConstruction();
-            
+            mayorizada = false;
+            elaboro = null;
+            Oid = -1;
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
+        protected override void OnLoaded()
+        {
+            Reset();
+            base.OnLoaded();
+        }
+
+        private void Reset()
+        {
+            totalDebe = null;
+            totalHaber = null;
+        }
 
         #region Propiedades
 
@@ -53,14 +68,15 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         string concepto;
         [Persistent(nameof(Elaboro))]
         SBT.Apps.Empleado.Module.BusinessObjects.Empleado elaboro;
-        [Persistent(nameof(TotalHaber))]
+        //[Persistent(nameof(TotalHaber))]
         decimal? totalHaber;
-        [Persistent(nameof(TotalDebe))]
+        //[Persistent(nameof(TotalDebe))]
         decimal? totalDebe;
         [Persistent(nameof(Mayorizada)), DbType("bit")]
         bool mayorizada;
 
         [DbType("int"), Persistent("Periodo"), XafDisplayName("Período"), VisibleInLookupListView(false), VisibleInListView(false)]
+        [RuleRequiredField("Partida.Periodo_Requerido", "Save", SkipNullOrEmptyValues = false)]
         public Periodo Periodo
         {
             get => periodo;
@@ -111,7 +127,8 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         /// https://docs.devexpress.com/eXpressAppFramework/113179/task-based-help/business-model-design/express-persistent-objects-xpo/how-to-calculate-a-property-value-based-on-values-from-a-detail-collection
         /// https://supportcenter.devexpress.com/ticket/details/KA18699/how-to-implement-dependent-and-calculated-properties-in-xpo
         /// </remarks>
-        [PersistentAlias(nameof(totalDebe)), XafDisplayName("Debe")]
+        //[PersistentAlias(nameof(totalDebe))]
+        [XafDisplayName("Debe")]
         public decimal? TotalDebe
         {
             get
@@ -123,7 +140,8 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             }
         }
 
-        [PersistentAlias(nameof(totalHaber)), XafDisplayName("Haber")]
+        //[PersistentAlias(nameof(totalHaber))]
+        [XafDisplayName("Haber")]
         public decimal? TotalHaber
         {
             get
@@ -237,7 +255,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         {
             get
             {
-                if (Fecha == null)
+                if (Fecha == null || Periodo == null)
                     return false;
                 var obj = Session.Evaluate<CierreDiario>(CriteriaOperator.Parse("Count()"),
                     CriteriaOperator.Parse("[Empresa] == ? && [FechaCierre] == ? && [DiaCerrado] = True", Empresa.Oid, Fecha));
@@ -245,6 +263,25 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             }
         }
         #endregion
+
+        protected override void OnSaving()
+        {
+            base.OnSaving();
+            if (Session.IsNewObject(this))
+            {
+                Empleado.Module.BusinessObjects.Empleado empleado = (((Usuario)SecuritySystem.CurrentUser).GetMemberValue("Empleado") as Empleado.Module.BusinessObjects.Empleado);
+                if (empleado != null)
+                    elaboro = Session.GetObjectByKey<Empleado.Module.BusinessObjects.Empleado>(empleado.Oid);
+            }
+        }
+
+        protected override void DoFechaChange(bool forceChangeEvents, DateTime oldValue)
+        {
+            Periodo pp = Session.GetObjectByKey<Periodo>(Fecha.Year);
+            if (pp != null)
+                Periodo = pp;
+            base.DoFechaChange(forceChangeEvents, oldValue);           
+        }
 
 
         //[Action(Caption = "My UI Action", ConfirmationMessage = "Are you sure?", ImageName = "Attention", AutoCommit = true)]

@@ -19,6 +19,10 @@ using SBT.Apps.Base.Module.Controllers;
 
 namespace SBT.Apps.Facturacion.Module.Controllers
 {
+    /// <summary>
+    /// View Controller para el BO AutorizacionDocumento que contiene las autorizaciones para la emision de documentos
+    /// de la autoridad tributaria
+    /// </summary>
     public class vcAutorizacionDocumento: ViewControllerBase
     {
         public vcAutorizacionDocumento(): base()
@@ -29,9 +33,9 @@ namespace SBT.Apps.Facturacion.Module.Controllers
         protected override void OnActivated()
         {
             base.OnActivated();
-            if (string.Compare(View.GetType().Name, "ListView", StringComparison.Ordinal) == 0)
-                ((ListView)View).CollectionSource.Criteria["Empresa Actual"] = CriteriaOperator.Parse("[Agencia.Empresa.Oid] == ?", ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid);
-
+            // el filtro ya se hace en ViewControllerBase
+            //if (string.Compare(View.GetType().Name, "ListView", StringComparison.Ordinal) == 0)
+            //    ((ListView)View).CollectionSource.Criteria["Empresa Actual"] = CriteriaOperator.Parse("[Agencia.Empresa.Oid] == ?", ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid);
         }
 
         protected override void OnDeactivated()

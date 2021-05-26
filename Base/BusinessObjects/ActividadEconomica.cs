@@ -11,7 +11,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
     [DevExpress.ExpressApp.DC.XafDefaultPropertyAttribute("Concepto")]
     [DevExpress.Persistent.Base.ImageNameAttribute("business_report")]
     [DevExpress.Persistent.Base.NavigationItemAttribute("Catalogos")]
-    public class ActividadEconomica : XPCustomBaseBO
+    public class ActividadEconomica : XPCustomObject
     {
 
         public override void AfterConstruction()

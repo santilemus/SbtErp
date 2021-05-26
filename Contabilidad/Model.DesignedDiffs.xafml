@@ -1,5 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Application>
+  <BOModel>
+    <Class Name="SBT.Apps.Contabilidad.Module.BusinessObjects.Partida" IsCloneable="True" />
+    <Class Name="SBT.Apps.Contabilidad.Module.BusinessObjects.PartidaDetalle" IsCloneable="True" />
+  </BOModel>
   <Options>
     <LayoutManagerOptions RequiredFieldMark="*" />
   </Options>
@@ -321,6 +325,38 @@
         </LayoutGroup>
       </Layout>
     </DetailView>
+    <ListView Id="Catalogo_Cuentas_ListView">
+      <Columns>
+        <ColumnInfo Id="CodigoCuenta" Width="135" />
+        <ColumnInfo Id="Nombre" Width="288" />
+        <ColumnInfo Id="TipoCuenta" Width="82" />
+        <ColumnInfo Id="TipoSaldoCta" Index="3" Width="72" />
+        <ColumnInfo Id="CtaResumen" Width="107" Index="4" />
+        <ColumnInfo Id="CtaMayor" Width="97" Index="5" />
+        <ColumnInfo Id="Activa" Width="97" />
+      </Columns>
+    </ListView>
+    <DetailView Id="Catalogo_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="18.998716302952502" />
+          <TabbedGroup Id="Tabs" Index="1" RelativeSize="81.0012836970475">
+            <LayoutGroup Id="Cuentas" Direction="Vertical" RelativeSize="100" Caption="Cuentas">
+              <LayoutItem Id="Cuentas" ViewItem="Cuentas" Index="0" RelativeSize="100" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="Partidas" RelativeSize="100">
+              <LayoutItem Id="Partidas" RelativeSize="100" />
+            </LayoutGroup>
+          </TabbedGroup>
+          <LayoutGroup Id="Cuentas_Group" Removed="True" />
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="Catalogo_Partidas_ListView">
+      <Columns>
+        <ColumnInfo Id="NombreCuenta" Width="211" />
+      </Columns>
+    </ListView>
     <DetailView Id="CierreDiarioParam_DetailView">
       <Items>
         <StaticText Id="Informacion" Text="El período entre Fecha Desde y Fecha Hasta debe ser de un mes y período contable abierto" Caption="Información" IsNewNode="True" />
@@ -356,21 +392,19 @@
     <DetailView Id="Partida_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
-          <LayoutGroup Id="SimpleEditors" RelativeSize="23.355704697986578" Direction="Horizontal">
-            <LayoutGroup Id="Partida_col1" ShowCaption="False" Index="0" RelativeSize="49.72314507198228" IsNewNode="True">
-              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="20.689655172413794" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="Numero" ViewItem="Numero" Index="1" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="Fecha" ViewItem="Fecha" Index="2" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="Tipo" ViewItem="Tipo" Index="3" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="Moneda" ViewItem="Moneda" Index="4" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="ValorMoneda" ViewItem="ValorMoneda" CaptionLocation="Left" Index="5" RelativeSize="19.540229885057471" IsNewNode="True" />
+          <LayoutGroup Id="SimpleEditors" RelativeSize="19.865771812080538" Direction="Horizontal">
+            <LayoutGroup Id="Partida_col1" ShowCaption="False" Index="0" RelativeSize="49.448123620309048" IsNewNode="True">
+              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="24.324324324324323" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Numero" ViewItem="Numero" Index="1" RelativeSize="17.567567567567568" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Fecha" ViewItem="Fecha" Index="2" RelativeSize="17.567567567567568" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Tipo" ViewItem="Tipo" Index="3" RelativeSize="17.567567567567568" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Moneda" ViewItem="Moneda" Index="4" RelativeSize="22.972972972972972" CaptionLocation="Left" IsNewNode="True" />
             </LayoutGroup>
-            <LayoutGroup Id="Partida_col2" ShowCaption="False" Index="1" RelativeSize="50.27685492801772" IsNewNode="True">
-              <LayoutItem Id="Concepto" ViewItem="Concepto" Index="0" RelativeSize="20.689655172413794" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="TotalDebe" ViewItem="TotalDebe" Index="1" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="TotalHaber" ViewItem="TotalHaber" Index="2" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="Elaboro" ViewItem="Elaboro" Index="3" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="Comentario" ViewItem="Comentario" Index="4" RelativeSize="34.482758620689658" CaptionLocation="Left" IsNewNode="True" />
+            <LayoutGroup Id="Partida_col2" ShowCaption="False" Index="1" RelativeSize="50.551876379690952" IsNewNode="True">
+              <LayoutItem Id="ValorMoneda" ViewItem="ValorMoneda" CaptionLocation="Left" Index="0" RelativeSize="24.324324324324323" IsNewNode="True" />
+              <LayoutItem Id="Concepto" ViewItem="Concepto" Index="1" RelativeSize="17.567567567567568" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Elaboro" ViewItem="Elaboro" Index="2" RelativeSize="17.567567567567568" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Comentario" ViewItem="Comentario" Index="3" RelativeSize="40.54054054054054" CaptionLocation="Left" IsNewNode="True" />
             </LayoutGroup>
             <LayoutGroup Id="XPObject" Caption="Oid" Index="1" RelativeSize="56.955380577427825" Removed="True">
               <LayoutItem Id="Oid" Removed="True" />
@@ -403,13 +437,17 @@
               </LayoutGroup>
             </LayoutGroup>
           </LayoutGroup>
-          <LayoutGroup Id="Detalles_Group" Direction="Vertical" RelativeSize="76.644295302013418">
+          <LayoutGroup Id="Detalles_Group" Direction="Vertical" RelativeSize="75.302013422818789">
             <LayoutItem Id="Detalles" RelativeSize="100" />
+          </LayoutGroup>
+          <LayoutGroup Id="Autod836c3fd-d255-4461-86e5-e3cce92c3776" ShowCaption="False" Caption="" Direction="Horizontal" Index="2" RelativeSize="4.8322147651006713" IsNewNode="True">
+            <LayoutItem Id="TotalDebe" ViewItem="TotalDebe" Index="0" RelativeSize="50" IsNewNode="True" />
+            <LayoutItem Id="TotalHaber" ViewItem="TotalHaber" Index="1" RelativeSize="50" IsNewNode="True" />
           </LayoutGroup>
         </LayoutGroup>
       </Layout>
     </DetailView>
-    <ListView Id="Partida_Detalles_ListView" IsFooterVisible="True" DataAccessMode="Server">
+    <ListView Id="Partida_Detalles_ListView" IsFooterVisible="False" DataAccessMode="Server" NewItemRowPosition="Top">
       <Columns>
         <ColumnInfo Id="CtaPresupuesto" Width="93" Index="-1" />
         <ColumnInfo Id="NombreCuenta" Index="-1" />
@@ -432,8 +470,6 @@
       <Columns>
         <ColumnInfo Id="Tipo" Index="1" Width="186" />
         <ColumnInfo Id="Concepto" Index="2" Width="439" />
-        <ColumnInfo Id="TotalDebe" Width="91" />
-        <ColumnInfo Id="TotalHaber" Width="81" />
         <ColumnInfo Id="Mayorizada" Width="90" />
       </Columns>
     </ListView>

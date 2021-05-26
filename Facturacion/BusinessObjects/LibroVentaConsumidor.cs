@@ -12,6 +12,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using SBT.Apps.Base.Module.BusinessObjects;
+using SBT.Apps.Facturacion.Module.BusinessObjects;
 
 namespace SBT.Apps.Iva.Module.BusinessObjects
 {
@@ -36,31 +37,32 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
         {
             base.AfterConstruction();
             oid = -1;
-            claseDocumento = "1";
+            moneda = null;
+            valorMoneda = 0.0m;
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
         #region Propiedades
 
-        decimal totalVenta;
-        decimal ventaTerceroNoDomiciliado;
+        [Persistent(nameof(ValorMoneda))]
+        decimal valorMoneda;
+        [Persistent(nameof(Moneda))]
+        Moneda moneda;
+        AutorizacionDocumento autorizacionDocumento;
+        decimal ventaTercero;
         decimal ventaZonaFranca;
         decimal exportacionServicio;
         decimal exportacionFueraCA;
         decimal exportacionCA;
-        decimal ventaGravadaLocal;
-        decimal ventaNoSujeta;
-        decimal ventaInternaExenta;
-        decimal ventaExenta;
-        string noCaja;
+        decimal gravadaLocal;
+        decimal noSujeta;
+        decimal internaExenta;
+        decimal exenta;
         string noDocumentoAl;
         string noDocumentoDel;
         string noControlInternoAl;
         string noControlInternoDel;
-        string noSerie;
-        string noResolucion;
         string tipoDocumento;
-        string claseDocumento;
         DateTime fechaEmision;
         [Persistent(nameof(Oid)), DbType("int"), Key(true)]
         int oid;
@@ -69,17 +71,21 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
         public int Oid => oid;
 
         [DbType("datetime"), XafDisplayName("Fecha Emisión")]
+        [Indexed(nameof(AutorizacionDocumento), Name = "idxFechaEmisionAutorizacion_LibroCompra")]
         public DateTime FechaEmision
         {
             get => fechaEmision;
             set => SetPropertyValue(nameof(FechaEmision), ref fechaEmision, value);
         }
 
-        [Size(1), DbType("varchar(1)"), XafDisplayName("Clase Documento")]
-        public string ClaseDocumento
+        /// <summary>
+        /// Para relacionar con AutorizacionDocumento y obtener de alli: ClaseDocumento, NoResolucion, NoSerie, NoCaja
+        /// </summary>
+        [XafDisplayName("Autorización Documento")]
+        public AutorizacionDocumento AutorizacionDocumento
         {
-            get => claseDocumento;
-            set => SetPropertyValue(nameof(ClaseDocumento), ref claseDocumento, value);
+            get => autorizacionDocumento;
+            set => SetPropertyValue(nameof(AutorizacionDocumento), ref autorizacionDocumento, value);
         }
 
         [Size(2), DbType("varchar(2)"), XafDisplayName("Tipo Documento")]
@@ -87,20 +93,6 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
         {
             get => tipoDocumento;
             set => SetPropertyValue(nameof(TipoDocumento), ref tipoDocumento, value);
-        }
-
-        [Size(19), DbType("varchar(19)"), XafDisplayName("No Resolución")]
-        public string NoResolucion
-        {
-            get => noResolucion;
-            set => SetPropertyValue(nameof(NoResolucion), ref noResolucion, value);
-        }
-
-        [Size(8), DbType("varchar(8)"), XafDisplayName("No Serie")]
-        public string NoSerie
-        {
-            get => noSerie;
-            set => SetPropertyValue(nameof(NoSerie), ref noSerie, value);
         }
 
         [Size(14), DbType("varchar(14)"), XafDisplayName("No Control Interno Del")]
@@ -131,41 +123,33 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
             set => SetPropertyValue(nameof(NoDocumentoAl), ref noDocumentoAl, value);
         }
 
-        [Size(14), DbType("varchar(14)"), XafDisplayName("No Caja")]
-        [ToolTip("No de máquina registradora")]
-        public string NoCaja
-        {
-            get => noCaja;
-            set => SetPropertyValue(nameof(NoCaja), ref noCaja, value);
-        }
-
         [DbType("numeric(14,2)"), XafDisplayName("Venta Exenta")]
-        public decimal VentaExenta
+        public decimal Exenta
         {
-            get => ventaExenta;
-            set => SetPropertyValue(nameof(VentaExenta), ref ventaExenta, value);
+            get => exenta;
+            set => SetPropertyValue(nameof(Exenta), ref exenta, value);
         }
 
         [DbType("numeric(14,2)"), XafDisplayName("Venta Interna Exenta")]
         [ToolTip("Ventas internas exentas no sujetas a proporcionalidad")]
-        public decimal VentaInternaExenta
+        public decimal InternaExenta
         {
-            get => ventaInternaExenta;
-            set => SetPropertyValue(nameof(VentaInternaExenta), ref ventaInternaExenta, value);
+            get => internaExenta;
+            set => SetPropertyValue(nameof(InternaExenta), ref internaExenta, value);
         }
 
         [DbType("numeric(14,2)"), XafDisplayName("Venta No Sujeta")]
-        public decimal VentaNoSujeta
+        public decimal NoSujeta
         {
-            get => ventaNoSujeta;
-            set => SetPropertyValue(nameof(VentaNoSujeta), ref ventaNoSujeta, value);
+            get => noSujeta;
+            set => SetPropertyValue(nameof(NoSujeta), ref noSujeta, value);
         }
 
         [DbType("numeric(14,2)"), XafDisplayName("Venta Gravada Local")]
-        public decimal VentaGravadaLocal
+        public decimal GravadaLocal
         {
-            get => ventaGravadaLocal;
-            set => SetPropertyValue(nameof(VentaGravadaLocal), ref ventaGravadaLocal, value);
+            get => gravadaLocal;
+            set => SetPropertyValue(nameof(GravadaLocal), ref gravadaLocal, value);
         }
 
         [DbType("numeric(14,2)"), XafDisplayName("Exportación CA")]
@@ -197,21 +181,24 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
         }
 
         [DbType("numeric(14,2)"), XafDisplayName("Venta Tercero No Domiciliado")]
-        public decimal VentaTerceroNoDomiciliado
+        public decimal VentaTercero
         {
-            get => ventaTerceroNoDomiciliado;
-            set => SetPropertyValue(nameof(VentaTerceroNoDomiciliado), ref ventaTerceroNoDomiciliado, value);
+            get => ventaTercero;
+            set => SetPropertyValue(nameof(VentaTercero), ref ventaTercero, value);
         }
 
-        [DbType("numeric(14,2)"), XafDisplayName("Total Venta")]
-        public decimal TotalVenta
-        {
-            get => totalVenta;
-            set => SetPropertyValue(nameof(TotalVenta), ref totalVenta, value);
-        }
+        [DbType("numeric(14,2)"), XafDisplayName("Total Venta"),
+            PersistentAlias("[Exenta] + [NoSujeta] + [GravadaLocal] + [ExportacionCA] + [ExportacionFueraCA] + [ExportacionServicio] + [VentaZonaFranca] + [VentaTerceroNoDomiciliado]")]
+        public decimal Total => Convert.ToDecimal(EvaluateAlias(nameof(Total)));
 
         [XafDisplayName("No de Anexo"), PersistentAlias("2")]
         public string NumeroAnexo => Convert.ToString(EvaluateAlias(nameof(NumeroAnexo)));
+
+        [XafDisplayName("Moneda"), PersistentAlias(nameof(moneda))]
+        public Moneda Moneda => moneda;
+        
+        [PersistentAlias(nameof(valorMoneda)), XafDisplayName("Valor Moneda"), Browsable(false)]
+        public decimal ValorMoneda => valorMoneda;
 
         #endregion
 

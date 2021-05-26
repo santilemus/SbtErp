@@ -3,6 +3,7 @@ using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using DevExpress.Xpo;
+using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Producto.Module.BusinessObjects;
 using System;
 using System.ComponentModel;
@@ -78,18 +79,27 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
         protected override void DoPrecioUnidadChanged(bool forceChangeEvents, decimal oldValue)
         {
             base.DoPrecioUnidadChanged(forceChangeEvents, oldValue);
-            if (Factura == null)
+            if (Factura == null || Producto == null)
                 return;
-            OnPrecioUnidadChanged(Unidades, Factura.TipoFactura.Codigo);
-            if (forceChangeEvents)
-                OnChanged(nameof(PrecioUnidad), oldValue, PrecioUnidad);
-            if (Factura != null)
+            if (Producto.Categoria.ClasificacionIva == EClasificacionIVA.Gravado)
             {
-                factura.UpdateTotalExenta(true);
-                factura.UpdateTotalGravada(true);
-                factura.UpdateTotalIva(true);
-                factura.UpdateTotalNoSujeta(true);
+                gravada = Math.Round(Cantidad * PrecioUnidad, 2);
+                iva = Math.Round(Convert.ToDecimal(Gravada) * this.Producto.Categoria.PorcentajeIVA, 2);
             }
+            else
+                exenta = Math.Round(Cantidad * PrecioUnidad, 2);
+            if (forceChangeEvents)
+            {
+                OnChanged(nameof(PrecioUnidad), oldValue, PrecioUnidad);
+                /// Info https://supportcenter.devexpress.com/ticket/details/ka18699/how-to-implement-dependent-and-calculated-properties-in-xpo#
+                OnChanged(nameof(Gravada));
+                OnChanged(nameof(Iva));
+                OnChanged(nameof(Exenta));
+            }
+            factura.UpdateTotalExenta(true);
+            factura.UpdateTotalGravada(true);
+            factura.UpdateTotalIva(true);
+            factura.UpdateTotalNoSujeta(true);
         }
 
 

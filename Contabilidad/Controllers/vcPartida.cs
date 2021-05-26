@@ -1,12 +1,19 @@
-﻿using DevExpress.ExpressApp;
+﻿using DevExpress.Data.Filtering;
+using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.Actions;
 using DevExpress.ExpressApp.Xpo;
 using DevExpress.Persistent.Validation;
+using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Base.Module.Controllers;
 using SBT.Apps.Contabilidad.Module.BusinessObjects;
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Linq.Expressions;
+
 
 
 namespace SBT.Apps.Contabilidad.Module.Controllers
@@ -18,6 +25,7 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
         public vcPartida()
         {
             InitializeComponent();
+            TargetViewNesting = Nesting.Root;
             // Target required Views (via the TargetXXX properties) and create their Actions.
         }
 
@@ -28,6 +36,7 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
             PwaCierreDiario.Executing += Pwa_Executing;
             PwaAbrirDias.Executing += Pwa_Executing;
             PwaCierreDiario.Executing += PwaCierreMes_Executing;
+            ObjectSpace.Committed += ObjectSpace_Commited;
         }
         protected override void OnViewControlsCreated()
         {
@@ -40,6 +49,7 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
             PwaCierreDiario.Executing -= Pwa_Executing;
             PwaAbrirDias.Executing -= Pwa_Executing;
             PwaCierreMes.Executing -= PwaCierreMes_Executing;
+            ObjectSpace.Committed -= ObjectSpace_Commited;
             base.OnDeactivated();
         }
 
@@ -50,7 +60,7 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
             //pa.FechaDesde = DateTime.Now;
             //pa.FechaHasta = DateTime.Now;
             e.View = Application.CreateDetailView(objectSpace, pa);
-            e.Size = new System.Drawing.Size(500, 200);
+            e.Size = new System.Drawing.Size(500, 400);
             e.IsSizeable = false;
             vParam = e.View;
         }
@@ -153,7 +163,7 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
             //pa.FechaDesde = DateTime.Now;
             //pa.FechaHasta = DateTime.Now;
             e.View = Application.CreateDetailView(objectSpace, pa);
-            e.Size = new System.Drawing.Size(500, 200);
+            e.Size = new System.Drawing.Size(500, 400);
             e.IsSizeable = false;
             vParam = e.View;
         }
@@ -203,5 +213,141 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
             View.ObjectSpace.Refresh();
         }
 
+        /// <summary>
+        /// Actualizar el saldo de las cuentas de control. Pendiente de actualizar las cuentas padre
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ObjectSpace_Commited(object sender, EventArgs e)
+        {
+            //var detalles = ObjectSpace.ModifiedObjects
+            //                 .Cast<PartidaDetalle>()
+            //                 .Where(x => x.GetType() == typeof(SBT.Apps.Contabilidad.Module.BusinessObjects.PartidaDetalle));
+            using (UnitOfWork uow = new UnitOfWork(((XPObjectSpace)ObjectSpace).Session.DataLayer))
+            {
+                var res = from d in (View.CurrentObject as Partida).Detalles
+                          group d by new { d.Partida.Empresa, d.Partida.Periodo, d.Cuenta, Fecha = d.Partida.Fecha.Date } into x
+                          select new
+                          {
+                              Empresa = x.Key.Empresa,
+                              Periodo = x.Key.Periodo,
+                              Fecha = x.Key.Fecha,
+                              Cuenta = x.Key.Cuenta,
+                              TotDebe = x.Sum(y => y.ValorDebe),
+                              TotHaber = x.Sum(y => y.ValorHaber),
+                              AjusteDebe = x.Where(y => y.AjusteConsolidacion == ETipoOperacionConsolidacion.Cargo).Sum(y => y.ValorHaber),
+                              AjusteHaber = x.Where(y => y.AjusteConsolidacion == ETipoOperacionConsolidacion.Abono).Sum(y => y.ValorDebe)
+                          };
+                foreach (var item in res)
+                {
+                    SaldoDiario sd = uow.FindObject<SaldoDiario>(
+                        CriteriaOperator.Parse("[Fecha] == ? && [Cuenta.Oid] == ? && [TipoSaldoDia] == 1", item.Fecha, item.Cuenta.Oid));
+                    if (sd == null)
+                        sd = new SaldoDiario(uow, item.Empresa, item.Periodo, item.Cuenta, item.Fecha, item.TotDebe, item.TotHaber, ETipoSaldoDia.Operaciones, 
+                            item.AjusteDebe, item.AjusteHaber);
+                    else
+                        sd.Update(item.TotDebe, item.TotHaber, item.AjusteDebe, item.AjusteHaber);
+                    sd.Save();
+                }
+                uow.CommitChanges();
+                var ctas = (from cta in (View.CurrentObject as Partida).Detalles
+                            select cta.Cuenta).Distinct().ToList<SBT.Apps.Contabilidad.BusinessObjects.Catalogo>();
+                // acumular en los niveles de resumen, hasta llegar al nivel 1, por eso la funcion AcumularSaldos es recursiva
+                IList<SBT.Apps.Contabilidad.BusinessObjects.Catalogo> cctas = ctas;
+                AcumularSaldosDiarios(ctas, ref cctas);
+                AcumularSaldosMes(cctas);
+            }
+        }
+
+        private void AcumularSaldosDiarios(IList<SBT.Apps.Contabilidad.BusinessObjects.Catalogo> cuentas, ref IList<SBT.Apps.Contabilidad.BusinessObjects.Catalogo> ouctas)
+        {
+            if (cuentas == null && cuentas.Count == 0)
+                return;
+            var emp = (View.CurrentObject as Partida).Empresa;
+            using (UnitOfWork uow = new UnitOfWork((ObjectSpace as XPObjectSpace).Session.DataLayer))
+            {
+                var q1 = uow.Query<SaldoDiario>();
+                var sdos = (from sc in q1
+                            where sc.Empresa == emp && sc.Fecha.Date == (View.CurrentObject as Partida).Fecha.Date && cuentas.Any(x => x.Oid == sc.Cuenta.Oid)
+                            group sc by new { sc.Empresa, sc.Periodo, sc.Cuenta.Padre, sc.Fecha } into z
+                            select new
+                            {
+                                Empresa = z.Key.Empresa,
+                                Periodo = z.Key.Periodo,
+                                Fecha = z.Key.Fecha.Date,
+                                Cuenta = z.Key.Padre,
+                                Debe = z.Sum(x => x.Debe),
+                                Haber = z.Sum(x => x.Haber),
+                                DebeAjuste = z.Sum(x => x.DebeAjusteConsolida),
+                                HaberAjuste = z.Sum(x => x.HaberAjusteConsolida)
+                            });
+                if (sdos.Count() > 0)
+                {
+                    foreach (var item in sdos)
+                    {
+                        var saldoCta = uow.FindObject<SaldoDiario>(CriteriaOperator.Parse("GetDate([Fecha]) == ?  && [Cuenta.Oid] == ? && [TipoSaldoDia] == 1",
+                                       item.Fecha, item.Cuenta.Oid));
+                        if (saldoCta == null)
+                            saldoCta = new SaldoDiario(uow, item.Empresa, item.Periodo, item.Cuenta, item.Fecha, item.Debe, item.Haber,
+                                ETipoSaldoDia.Operaciones, item.DebeAjuste, item.HaberAjuste);
+                        else
+                            saldoCta.Update(item.Debe, item.Haber, item.DebeAjuste, item.HaberAjuste);
+                        uow.Save(saldoCta);
+                    }
+                    uow.CommitChangesAsync();
+                    var ctas = (from cta in sdos select cta.Cuenta).Distinct().ToList<SBT.Apps.Contabilidad.BusinessObjects.Catalogo>();
+                    // para concatenar las cuentas de los diferentes niveles; que se usaran para actualizar o generar los saldos mensuales
+                    var cta2 = (IList<SBT.Apps.Contabilidad.BusinessObjects.Catalogo>)ouctas.Concat(ctas);
+                    // acumular en los niveles superiores
+                    AcumularSaldosDiarios(ctas, ref cta2);
+                }
+            }
+        }
+
+        private void AcumularSaldosMes(IList<SBT.Apps.Contabilidad.BusinessObjects.Catalogo> cuentas)
+        {
+            var emp = (View.CurrentObject as Partida).Empresa;
+            var per = (View.CurrentObject as Partida).Periodo;
+            var fecha = (View.CurrentObject as Partida).Fecha;
+            using (UnitOfWork uow = new UnitOfWork((ObjectSpace as XPObjectSpace).Session.DataLayer))
+            {
+                var q1 = uow.Query<SaldoMes>();
+                var sdos = (from sc in q1
+                            where sc.Empresa == emp && sc.Periodo == per && sc.Mes == (View.CurrentObject as Partida).Fecha.Month && cuentas.Any(x => x.Oid == sc.Cuenta.Oid)
+                            group sc by new { sc.Empresa, sc.Periodo, sc.Cuenta.Padre, sc.Mes } into z
+                            select new
+                            {
+                                Empresa = z.Key.Empresa,
+                                Periodo = z.Key.Periodo,
+                                Mes     = z.Key.Mes,
+                                Cuenta = z.Key.Padre,
+                                Debe = z.Sum(x => x.Debe),
+                                Haber = z.Sum(x => x.Haber)
+                            });
+                if (sdos.Count() > 0)
+                {
+                    foreach (var item in sdos)
+                    {
+                        var saldoCtaMes = uow.FindObject<SaldoMes>(CriteriaOperator.Parse("[Periodo.Oid] == ? && [Mes] == ? && [Cuenta.Oid] == ?",
+                                       per.Oid, item.Mes, item.Cuenta.Oid));
+                        if (saldoCtaMes == null)
+                            saldoCtaMes = new SaldoMes(uow, item.Empresa, item.Periodo, item.Cuenta, fecha, item.Debe, item.Haber);
+                        else
+                            saldoCtaMes.Update(item.Debe, item.Haber);
+                        uow.Save(saldoCtaMes);
+                    }
+                    uow.CommitChangesAsync();
+                }
+            }
+        }
+    }
+
+    public class ResumenSaldos
+    {
+        public SBT.Apps.Contabilidad.BusinessObjects.Catalogo Cuenta { get; set; }
+        public decimal TotDebe { get; set; }
+        public decimal TotHaber { get; set; }
+        public decimal AjusteDebe { get; set; }
+        public decimal AjusteHaber { get; set; }
     }
 }

@@ -5,7 +5,6 @@ using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Contabilidad.BusinessObjects;
 using System;
-using System.ComponentModel;
 using System.Linq;
 
 namespace SBT.Apps.Contabilidad.Module.BusinessObjects
@@ -14,20 +13,41 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
     /// Contabilidad. BO con los saldos mensuales contables. Es calculado por un SP, aqui no se ingresan datos desde la interfaz de usuario
     /// </summary>
     /// 
-    [ModelDefault("Caption", "Saldo Mensual"), NavigationItem(false), Persistent("ConSaldoMes"), CreatableItem(false)]
+    [ModelDefault("Caption", "Saldo Mensual"), NavigationItem("Contabilidad"), Persistent("ConSaldoMes"), CreatableItem(false), VisibleInReports(true)]
     //[ImageName("BO_Contact")]
     //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
-    public class ConSaldoMes : XPCustomObject
+    public class SaldoMes : XPCustomObject
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
-        public ConSaldoMes(Session session)
+        public SaldoMes(Session session)
             : base(session)
         {
         }
+
+        public SaldoMes(Session session, Empresa emp, Periodo per, Catalogo cta, DateTime dia, decimal valdebe, decimal valhaber)
+            : base(session)
+        {
+            empresa = emp;
+            periodo = per;
+            cuenta = cta;
+            mes = dia.Month;
+            mesAnio = Convert.ToInt32(string.Format("{0:D}{1:MMyyyy}", emp.Oid, dia));
+            debe = valdebe;
+            haber = valhaber;
+        }
+
         public override void AfterConstruction()
         {
             base.AfterConstruction();
+            empresa = null;
+            periodo = null;
+            mesAnio = 0;
+            cuenta = null;
+            saldoInicio = 0.0m;
+            debe = 0.0m;
+            haber = 0.0m;
+            saldoFin = 0.0m;
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
@@ -39,7 +59,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         Empresa empresa;
         [DbType("int"), Persistent(nameof(Periodo)), FetchOnly]
         Periodo periodo;
-        [Persistent(nameof(MesAnio)), DbType("int"), FetchOnly, Indexed(nameof(cuenta), Name = "idx_MesAnio_Cuenta")]
+        [Persistent(nameof(MesAnio)), DbType("int"), FetchOnly, Indexed(nameof(cuenta), Name = "idxMesAnioCuenta_SaldoMes", Unique = true)]
         int mesAnio;
         [Persistent(nameof(Cuenta))]
         Catalogo cuenta;
@@ -62,7 +82,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         }
 
 
-        [PersistentAlias(nameof(empresa)), XafDisplayName("Empresa"), Browsable(false)]
+        [PersistentAlias(nameof(empresa)), XafDisplayName("Empresa")]
         public Empresa Empresa
         {
             get { return empresa; }
@@ -75,7 +95,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             get => periodo;
         }
 
-        [PersistentAlias(nameof(mesAnio)), XafDisplayName("Mes y Año")]
+        [PersistentAlias(nameof(mesAnio)), XafDisplayName("Mes y Año"), ModelDefault("DisplayFormat", "{0:0#####}")]
         public int MesAnio
         {
             get { return mesAnio; }
@@ -87,17 +107,15 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             get => cuenta;
         }
 
-
         [PersistentAlias(nameof(mes)), XafDisplayName("Mes")]
         public int Mes
         {
             get { return mes; }
         }
 
-        [PersistentAlias("[Cuenta.Nombre]")]
         public string Nombre
         {
-            get { return Convert.ToString(EvaluateAlias(nameof(Nombre))); }
+            get { return Cuenta.Nombre; }
         }
 
         [PersistentAlias(nameof(saldoInicio)), XafDisplayName("Saldo Inicio Mes")]
@@ -136,16 +154,26 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             get { return Convert.ToDecimal(EvaluateAlias(nameof(MovimientoMes))); }
         }
 
+
+        [Size(20)]
+        public string NombreMes
+        {
+            get
+            {
+                string mmyy = Convert.ToString(MesAnio);
+                return string.Format("{0:MMMM}", new DateTime(Convert.ToInt32(mmyy.Substring(mmyy.Length - 4, 4)), Mes, 01));
+            }
+        }
+
         #endregion
 
-        //private string _PersistentProperty;
-        //[XafDisplayName("My display name"), ToolTip("My hint message")]
-        //[ModelDefault("EditMask", "(000)-00"), Index(0), VisibleInListView(false)]
-        //[Persistent("DatabaseColumnName"), RuleRequiredField(DefaultContexts.Save)]
-        //public string PersistentProperty {
-        //    get { return _PersistentProperty; }
-        //    set { SetPropertyValue("PersistentProperty", ref _PersistentProperty, value); }
-        //}
+        #region Metodos
+        public void Update(decimal totDebe, decimal totHaber)
+        {
+            debe = totDebe;
+            haber = totHaber;
+        }
+        #endregion
 
         //[Action(Caption = "My UI Action", ConfirmationMessage = "Are you sure?", ImageName = "Attention", AutoCommit = true)]
         //public void ActionMethod() {

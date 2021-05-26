@@ -27,8 +27,10 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         {
             base.AfterConstruction();
             Activa = true;
+            Clasificacion = EClasificacionContribuyente.Otro;
         }
 
+        EClasificacionContribuyente clasificacion;
         string nrc;
         private System.Boolean _activa;
         private XPDelayedProperty _logo = new XPDelayedProperty();
@@ -187,6 +189,14 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             {
                 SetPropertyValue("Activa", ref _activa, value);
             }
+        }
+
+        [DbType("smallint"), XafDisplayName("Clasificación"), VisibleInListView(false), VisibleInLookupListView(false)]
+        [ToolTip("Clasificación de la empresa como contribuyente")]
+        public EClasificacionContribuyente Clasificacion
+        {
+            get => clasificacion;
+            set => SetPropertyValue(nameof(Clasificacion), ref clasificacion, value);
         }
 
         /// <summary>
