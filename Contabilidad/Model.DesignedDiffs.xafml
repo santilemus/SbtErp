@@ -4,6 +4,15 @@
     <Class Name="SBT.Apps.Contabilidad.Module.BusinessObjects.Partida" IsCloneable="True" />
     <Class Name="SBT.Apps.Contabilidad.Module.BusinessObjects.PartidaDetalle" IsCloneable="True" />
   </BOModel>
+  <NavigationItems>
+    <Items>
+      <Item Id="Contabilidad">
+        <Items>
+          <Item Id="CierreMesParam_ListView" ViewId="CierreMesParam_DetailView" />
+        </Items>
+      </Item>
+    </Items>
+  </NavigationItems>
   <Options>
     <LayoutManagerOptions RequiredFieldMark="*" />
   </Options>
@@ -389,6 +398,7 @@
         </LayoutGroup>
       </Layout>
     </DetailView>
+    <ListView Id="CierreMesParam_ListView" DataAccessMode="Client" />
     <DetailView Id="Partida_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">

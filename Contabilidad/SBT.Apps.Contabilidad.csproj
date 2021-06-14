@@ -129,6 +129,8 @@
     <Compile Include="BusinessObjects\CierreDiarioParam.cs" />
     <Compile Include="BusinessObjects\CierreMesParam.cs" />
     <Compile Include="BusinessObjects\BancoConciliacionDetalle.cs" />
+    <Compile Include="BusinessObjects\EmpresaCuenta.cs" />
+    <Compile Include="BusinessObjects\PartidaAutomatica.cs" />
     <Compile Include="BusinessObjects\SaldoDiario.cs" />
     <Compile Include="BusinessObjects\SaldoMes.cs" />
     <Compile Include="BusinessObjects\EBancoTipoTransaccion.cs" />

@@ -14,10 +14,6 @@
           <LayoutGroup Id="SimpleEditors" RelativeSize="100">
             <LayoutGroup Id="ActivoAjuste" RelativeSize="100">
               <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="4.6213093709884463" IsNewNode="True" />
-              <LayoutItem Id="Fecha" Index="1" RelativeSize="3.3376123234916562" />
-              <LayoutItem Id="ValorMoneda" Index="2" RelativeSize="3.3376123234916562" />
-              <LayoutItem Id="Valor" Index="3" RelativeSize="3.3376123234916562" />
-              <LayoutItem Id="Comentario" Index="4" RelativeSize="85.365853658536579" />
             </LayoutGroup>
             <LayoutGroup Id="XPObject" Caption="Oid" Index="1" RelativeSize="81.0012836970475" Removed="True">
               <LayoutItem Id="Oid" Removed="True" />
@@ -45,53 +41,52 @@
     <DetailView Id="ActivoCatalogo_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
-          <LayoutGroup Id="SimpleEditors" RelativeSize="61.874197689345316">
-            <LayoutGroup Id="ActivoCatalogo" RelativeSize="60.995850622406635" Caption="Datos Generales" IsCollapsibleGroup="True">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="65.211810012836978">
+            <LayoutGroup Id="ActivoCatalogo" RelativeSize="62.99212598425197" Caption="Datos Generales" IsCollapsibleGroup="True">
               <LayoutGroup Id="ActivoCatalogo_col1" RelativeSize="50">
-                <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="14.173228346456693" CaptionLocation="Left" IsNewNode="True" />
-                <LayoutItem Id="Codigo" RelativeSize="10.236220472440945" Index="1" CaptionLocation="Left" />
+                <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="12.857142857142858" CaptionLocation="Left" IsNewNode="True" />
+                <LayoutItem Id="Codigo" RelativeSize="9.2857142857142865" Index="1" CaptionLocation="Left" />
                 <LayoutItem Id="Foto" RelativeSize="9.2857142857142865" Index="1" Removed="True" />
-                <LayoutItem Id="Nombre" RelativeSize="10.236220472440945" Index="2" CaptionLocation="Left" />
-                <LayoutItem Id="Unidad" RelativeSize="10.236220472440945" Index="3" CaptionLocation="Left" />
-                <LayoutItem Id="Empleado" RelativeSize="10.236220472440945" Index="4" CaptionLocation="Left" />
-                <LayoutItem Id="Tercero" RelativeSize="10.236220472440945" Index="5" CaptionLocation="Left" />
-                <LayoutItem Id="FechaCompra" RelativeSize="10.236220472440945" Index="6" CaptionLocation="Left" />
+                <LayoutItem Id="Nombre" RelativeSize="9.2857142857142865" Index="2" CaptionLocation="Left" />
+                <LayoutItem Id="Unidad" RelativeSize="9.2857142857142865" Index="3" CaptionLocation="Left" />
+                <LayoutItem Id="Empleado" RelativeSize="9.2857142857142865" Index="4" CaptionLocation="Left" />
+                <LayoutItem Id="Proveedor" CaptionLocation="Left" RelativeSize="9.2857142857142865" />
+                <LayoutItem Id="FechaCompra" RelativeSize="9.2857142857142865" Index="6" CaptionLocation="Left" />
                 <LayoutItem Id="Modelo" RelativeSize="9.2857142857142865" Index="7" Removed="True" />
-                <LayoutItem Id="NoSerie" RelativeSize="10.236220472440945" Index="7" CaptionLocation="Left" />
-                <LayoutItem Id="InicioDepreciacion" RelativeSize="14.173228346456693" Index="8" CaptionLocation="Left" />
-                <LayoutItem Id="Moneda" ViewItem="Moneda" Index="10" RelativeSize="11.764705882352942" Removed="True" />
+                <LayoutItem Id="NoSerie" RelativeSize="9.2857142857142865" Index="7" CaptionLocation="Left" />
+                <LayoutItem Id="InicioDepreciacion" RelativeSize="9.2857142857142865" Index="8" CaptionLocation="Left" />
+                <LayoutItem Id="Moneda" ViewItem="Moneda" CaptionLocation="Left" Index="9" RelativeSize="12.857142857142858" IsNewNode="True" Removed="True" />
                 <LayoutItem Id="Marca" RelativeSize="8.49673202614379" Removed="True" />
                 <LayoutItem Id="ValorMoneda" RelativeSize="10.05586592178771" Removed="True" />
                 <LayoutItem Id="VidaUtil" RelativeSize="9.375" Removed="True" />
               </LayoutGroup>
               <LayoutGroup Id="ActivoCatalogo_col2" RelativeSize="50">
-                <LayoutItem Id="Moneda" ViewItem="Moneda" Index="0" RelativeSize="14.173228346456693" IsNewNode="True" />
-                <LayoutItem Id="ValorMoneda" ViewItem="ValorMoneda" Index="1" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
-                <LayoutItem Id="VidaUtil" ViewItem="VidaUtil" Index="2" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
-                <LayoutItem Id="ValorCompra" RelativeSize="10.236220472440945" Index="3" CaptionLocation="Left" />
-                <LayoutItem Id="TotalAjuste" RelativeSize="10.236220472440945" Index="4" CaptionLocation="Left" />
-                <LayoutItem Id="TotalMejora" RelativeSize="10.236220472440945" Index="5" CaptionLocation="Left" />
+                <LayoutItem Id="ValorMoneda" ViewItem="ValorMoneda" Index="0" RelativeSize="12.857142857142858" CaptionLocation="Left" IsNewNode="True" />
+                <LayoutItem Id="VidaUtil" ViewItem="VidaUtil" Index="1" RelativeSize="9.2857142857142865" CaptionLocation="Left" IsNewNode="True" />
+                <LayoutItem Id="ValorCompra" RelativeSize="9.2857142857142865" Index="2" CaptionLocation="Left" />
+                <LayoutItem Id="TotalAjuste" RelativeSize="9.2857142857142865" Index="3" CaptionLocation="Left" />
+                <LayoutItem Id="TotalMejora" RelativeSize="9.2857142857142865" Index="4" CaptionLocation="Left" />
+                <LayoutItem Id="TotalDepreciacion" RelativeSize="9.2857142857142865" Index="5" CaptionLocation="Left" />
                 <LayoutItem Id="FechaFinGarantia" RelativeSize="6.770833333333333" Index="6" CaptionLocation="Left" Removed="True" />
                 <LayoutItem Id="MesesGarantia" RelativeSize="6.770833333333333" Index="6" CaptionLocation="Left" Removed="True" />
-                <LayoutItem Id="TotalDepreciacion" RelativeSize="10.236220472440945" Index="6" CaptionLocation="Left" />
+                <LayoutItem Id="ValorResidual" RelativeSize="9.2857142857142865" Index="6" CaptionLocation="Left" />
+                <LayoutItem Id="EstadoDepreciacion" RelativeSize="9.2857142857142865" Index="7" CaptionLocation="Left" />
                 <LayoutItem Id="FechaInicioGarantia" RelativeSize="6.770833333333333" Index="7" CaptionLocation="Left" Removed="True" />
-                <LayoutItem Id="ValorResidual" RelativeSize="10.236220472440945" Index="7" CaptionLocation="Left" />
-                <LayoutItem Id="EstadoDepreciacion" RelativeSize="14.173228346456693" Index="8" CaptionLocation="Left" />
-                <LayoutItem Id="EstadoUsoActivo" RelativeSize="12.857142857142858" Index="9" CaptionLocation="Left" Removed="True" />
+                <LayoutItem Id="EstadoUso" CaptionLocation="Left" Index="8" RelativeSize="22.142857142857142" />
                 <LayoutItem Id="FechaDescarga" RelativeSize="6.770833333333333" CaptionLocation="Left" Removed="True" />
                 <LayoutItem Id="Observaciones" CaptionLocation="Left" Removed="True" />
                 <LayoutItem Id="OrdenCompra" RelativeSize="22.916666666666668" CaptionLocation="Left" Removed="True" />
               </LayoutGroup>
             </LayoutGroup>
-            <LayoutGroup Id="XPObject" ShowCaption="True" IsCollapsibleGroup="True" Caption="Otros Datos" Direction="Horizontal" Index="1" RelativeSize="39.004149377593365">
-              <LayoutGroup Id="Autoee0640c0-5123-4e1d-9e33-03b12fc45a6c" ShowCaption="False" Caption="" Index="0" RelativeSize="50" IsNewNode="True">
+            <LayoutGroup Id="XPObject" ShowCaption="True" IsCollapsibleGroup="True" Caption="Otros Datos" Direction="Horizontal" Index="1" RelativeSize="37.00787401574803">
+              <LayoutGroup Id="Autoee0640c0-5123-4e1d-9e33-03b12fc45a6c" ShowCaption="False" Caption="Autoee0640c0-5123-4e1d-9e33-03b12fc45a6c(26)" Index="0" RelativeSize="50" IsNewNode="True">
                 <LayoutItem Id="EstadoUsoActivo" ViewItem="EstadoUsoActivo" Index="0" RelativeSize="24" CaptionLocation="Left" IsNewNode="True" />
                 <LayoutItem Id="OrdenCompra" ViewItem="OrdenCompra" Index="1" RelativeSize="17.333333333333332" CaptionLocation="Left" IsNewNode="True" />
                 <LayoutItem Id="Marca" ViewItem="Marca" Index="2" RelativeSize="17.333333333333332" CaptionLocation="Left" IsNewNode="True" />
                 <LayoutItem Id="Modelo" ViewItem="Modelo" Index="3" RelativeSize="17.333333333333332" CaptionLocation="Left" IsNewNode="True" />
                 <LayoutItem Id="FechaDescarga" ViewItem="FechaDescarga" Index="4" RelativeSize="24" CaptionLocation="Left" IsNewNode="True" />
               </LayoutGroup>
-              <LayoutGroup Id="Auto5eeedf88-9970-4f3e-995b-b1d14d3880db" ShowCaption="False" Caption="" Index="1" RelativeSize="50" IsNewNode="True">
+              <LayoutGroup Id="Auto5eeedf88-9970-4f3e-995b-b1d14d3880db" ShowCaption="False" Caption="Auto5eeedf88-9970-4f3e-995b-b1d14d3880db(32)" Index="1" RelativeSize="50" IsNewNode="True">
                 <LayoutItem Id="MesesGarantia" ViewItem="MesesGarantia" Index="0" RelativeSize="24" CaptionLocation="Left" IsNewNode="True" />
                 <LayoutItem Id="FechaInicioGarantia" ViewItem="FechaInicioGarantia" Index="1" RelativeSize="17.333333333333332" CaptionLocation="Left" IsNewNode="True" />
                 <LayoutItem Id="FechaFinGarantia" ViewItem="FechaFinGarantia" Index="2" RelativeSize="17.333333333333332" CaptionLocation="Left" IsNewNode="True" />
@@ -101,12 +96,9 @@
               <LayoutItem Id="Oid" RelativeSize="50" Removed="True" />
             </LayoutGroup>
           </LayoutGroup>
-          <TabbedGroup Id="Tabs" RelativeSize="38.125802310654684">
+          <TabbedGroup Id="Tabs" RelativeSize="34.78818998716303">
             <LayoutGroup Id="Atributos" RelativeSize="100">
               <LayoutItem Id="Atributos" RelativeSize="100" />
-            </LayoutGroup>
-            <LayoutGroup Id="Ajustes" RelativeSize="100">
-              <LayoutItem Id="Ajustes" RelativeSize="100" />
             </LayoutGroup>
             <LayoutGroup Id="Depreciaciones" RelativeSize="100">
               <LayoutItem Id="Depreciaciones" RelativeSize="100" />

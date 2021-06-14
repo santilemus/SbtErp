@@ -22,21 +22,20 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
     //[DefaultProperty("SampleProperty")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
-    public class CierreMesParam : IXafEntityObject, IObjectSpaceLink, INotifyPropertyChanged
+    public class CierreMesParam 
     {
-        private IObjectSpace objectSpace;
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
         public CierreMesParam()
         {
         }
 
-        [XafDisplayName("Fecha de Cierre"), ModelDefault("DisplayFormat", "{0:G}"), ModelDefault("EditMask", "G")]
+        [Browsable(false)]
+        [DevExpress.ExpressApp.Data.Key]
+        public int Oid { get; set; }
+
+        [XafDisplayName("Fecha de Cierre"), ModelDefault("DisplayFormat", "{0:D}"), ModelDefault("EditMask", "d")]
         public DateTime FechaCierre { get; set; }
 
-        [FieldSize(2000), XafDisplayName("Bitácora"), ModelDefault("RowCount", "10"), DevExpress.Persistent.Base.ImmediatePostData(true), Browsable(false)]
+        [FieldSize(2000), XafDisplayName("Bitácora"), ModelDefault("RowCount", "10")]
         public string Bitacora { get; set; }
 
         //private string sampleProperty;
@@ -62,34 +61,5 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         //    this.SampleProperty = "Paid";
         //}
 
-        #region IXafEntityObject members (see https://documentation.devexpress.com/eXpressAppFramework/clsDevExpressExpressAppIXafEntityObjecttopic.aspx)
-        void IXafEntityObject.OnCreated()
-        {
-            // Place the entity initialization code here.
-            // You can initialize reference properties using Object Space methods; e.g.:
-            // this.Address = objectSpace.CreateObject<Address>();
-        }
-        void IXafEntityObject.OnLoaded()
-        {
-            // Place the code that is executed each time the entity is loaded here.
-        }
-        void IXafEntityObject.OnSaving()
-        {
-            // Place the code that is executed each time the entity is saved here.
-        }
-        #endregion
-
-        #region IObjectSpaceLink members (see https://documentation.devexpress.com/eXpressAppFramework/clsDevExpressExpressAppIObjectSpaceLinktopic.aspx)
-        // Use the Object Space to access other entities from IXafEntityObject methods (see https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113707.aspx).
-        IObjectSpace IObjectSpaceLink.ObjectSpace
-        {
-            get { return objectSpace; }
-            set { objectSpace = value; }
-        }
-        #endregion
-
-        #region INotifyPropertyChanged members (see http://msdn.microsoft.com/en-us/library/system.componentmodel.inotifypropertychanged(v=vs.110).aspx)
-        public event PropertyChangedEventHandler PropertyChanged;
-        #endregion
     }
 }

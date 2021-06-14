@@ -13,7 +13,7 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
 {
     [DefaultClassOptions]
     [ModelDefault("Caption", "Catálogo Activos"), NavigationItem("Activo Fijo"), CreatableItem(false), DefaultProperty(nameof(Nombre))]
-    [Persistent(nameof(Catalogo))]
+    [Persistent(nameof(ActivoCatalogo))]
     //[ImageName("BO_Contact")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
@@ -43,7 +43,7 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
         private XPDelayedProperty foto = new XPDelayedProperty();
         string observaciones;
         long ordenCompra;
-        Listas estadoUsoActivo;
+        Listas estadoUso;
         DateTime fechaInicioGarantia;
         int mesesGarantia;
         DateTime fechaDescarga;
@@ -64,7 +64,7 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
         string modelo;
         string marca;
         DateTime fechaCompra;
-        Tercero.Module.BusinessObjects.Tercero tercero;
+        Tercero.Module.BusinessObjects.Tercero proveedor;
         Empleado.Module.BusinessObjects.Empleado empleado;
         EmpresaUnidad unidad;
         ActivoCategoria categoria;
@@ -117,10 +117,10 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
         }
 
         [XafDisplayName("Proveedor")]
-        public Tercero.Module.BusinessObjects.Tercero Tercero
+        public Tercero.Module.BusinessObjects.Tercero Proveedor
         {
-            get => tercero;
-            set => SetPropertyValue(nameof(Tercero), ref tercero, value);
+            get => proveedor;
+            set => SetPropertyValue(nameof(Proveedor), ref proveedor, value);
         }
 
         [XafDisplayName("Fecha Compra"), RuleRequiredField("ActivoCatalogo.FechaCompra_Requerido", DefaultContexts.Save)]
@@ -256,10 +256,10 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
 
         [XafDisplayName("Estado Uso Activo")]
         [DataSourceCriteria("[Categoria] == 1 && [Activo] == true")]
-        public Listas EstadoUsoActivo
+        public Listas EstadoUso
         {
-            get => estadoUsoActivo;
-            set => SetPropertyValue(nameof(EstadoUsoActivo), ref estadoUsoActivo, value);
+            get => estadoUso;
+            set => SetPropertyValue(nameof(EstadoUso), ref estadoUso, value);
         }
 
         /// <summary>
@@ -282,7 +282,7 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
         }
 
         [Size(SizeAttribute.Unlimited), ImageEditor(ListViewImageEditorMode = ImageEditorMode.PopupPictureEdit,
-          DetailViewImageEditorMode = ImageEditorMode.PopupPictureEdit, ListViewImageEditorCustomHeight = 34)]
+          DetailViewImageEditorMode = ImageEditorMode.PopupPictureEdit, ImageSizeMode = ImageSizeMode.StretchImage, ListViewImageEditorCustomHeight = 34)]
         [Index(5)]
         [Delayed(nameof(foto), true)]
         public byte[] Foto
@@ -300,7 +300,7 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
         public XPCollection<ActivoAtributo> Atributos => GetCollection<ActivoAtributo>(nameof(Atributos));
 
         [Association("ActivoCatalogo-Ajustes"), DevExpress.Xpo.Aggregated, Index(1), XafDisplayName("Ajustes")]
-        public XPCollection<ActivoAjuste> Ajustes => GetCollection<ActivoAjuste>(nameof(ActivoAjuste));
+        public XPCollection<ActivoAjuste> Ajustes => GetCollection<ActivoAjuste>(nameof(Ajustes));
 
         [Association("ActivoCatalogo-Depreciaciones"), DevExpress.Xpo.Aggregated, Index(2), XafDisplayName("Depreciaciones")]
         public XPCollection<ActivoDepreciacion> Depreciaciones => GetCollection<ActivoDepreciacion>(nameof(Depreciaciones));

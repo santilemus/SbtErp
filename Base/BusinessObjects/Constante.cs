@@ -12,6 +12,8 @@ namespace SBT.Apps.Base.Module.BusinessObjects
     [DevExpress.Persistent.Base.ImageNameAttribute("list-key")]
     [DevExpress.ExpressApp.DC.XafDefaultPropertyAttribute("Nombre")]
     [DevExpress.Persistent.Base.NavigationItemAttribute("Catalogos")]
+    [OptimisticLockingReadBehavior(OptimisticLockingReadBehavior.Default, true)]
+    [DevExpress.Xpo.OptimisticLocking(LockingKind = OptimisticLockingBehavior.ConsiderOptimisticLockingField)]
     public class Constante : XPCustomBaseBO
     {
         public override void AfterConstruction()
@@ -33,6 +35,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [DevExpress.Xpo.KeyAttribute, VisibleInLookupListView(true)]
         [RuleRequiredField("Constante.Codigo_Requerido", "Save")]
         [RuleUniqueValue("Constante.Codigo_Unico", DefaultContexts.Save, CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction)]
+        [DevExpress.Xpo.OptimisticLockingIgnored]
         public System.String Codigo
         {
             get

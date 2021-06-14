@@ -2,6 +2,7 @@
 using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.Security;
 using DevExpress.ExpressApp.Updating;
+using DevExpress.ExpressApp.Xpo;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.BaseImpl;
 using DevExpress.Persistent.BaseImpl.PermissionPolicy;
@@ -9,6 +10,7 @@ using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using System;
 using System.Linq;
+
 
 namespace SBT.Apps.Erp.Module.DatabaseUpdate
 {
@@ -22,12 +24,7 @@ namespace SBT.Apps.Erp.Module.DatabaseUpdate
         public override void UpdateDatabaseAfterUpdateSchema()
         {
             base.UpdateDatabaseAfterUpdateSchema();
-            //string name = "MyName";
-            //DomainObject1 theObject = ObjectSpace.FindObject<DomainObject1>(CriteriaOperator.Parse("Name=?", name));
-            //if(theObject == null) {
-            //    theObject = ObjectSpace.CreateObject<DomainObject1>();
-            //    theObject.Name = name;
-            //}
+            CreateDatabaseObjects();
 
             var empresa = CreateDefaultEmpresa();
             // If a role with the Administrators name doesn't exist in the database, create this role
@@ -98,7 +95,6 @@ namespace SBT.Apps.Erp.Module.DatabaseUpdate
             return defaultRole;
         }
 
-
         private Empresa CreateDefaultEmpresa()
         {
             var iCant = ObjectSpace.Evaluate(typeof(Empresa), CriteriaOperator.Parse("Count()"), CriteriaOperator.Parse("Activa = true And Oid > 0"));
@@ -133,5 +129,29 @@ namespace SBT.Apps.Erp.Module.DatabaseUpdate
             else
                 return null;
         }
+
+        private void CreateDatabaseObjects()
+        {
+            var Os = (XPObjectSpace)this.ObjectSpace;
+            var DataLayer = Os.Session.DataLayer as DevExpress.Xpo.SimpleDataLayer;
+            var provider = DataLayer.Connection.ConnectionString.Split(new char[] { ';' }).FirstOrDefault(z => z.Contains("XpoProvider"));
+            if (provider == "MSSqlServer")
+            {
+                AddComputedColumnSqlServer("ConCatalogo", "Nivel", "(case when [CtaPadre] IS NULL then (1) else len(ltrim(rtrim([CodigoCuenta])))/(2)+(1) end)");
+            }
+        }
+
+        /// <summary>
+        /// Agregar columnas calculadas a algunas tablas cuando el provider es MSSqlServer
+        /// </summary>
+        private void AddComputedColumnSqlServer(string tableName, string colName, string expression)
+        {
+            if (string.IsNullOrEmpty(tableName) || string.IsNullOrEmpty(colName) || string.IsNullOrEmpty(expression))
+                return;
+            string ddl = $"if not exists(select * from INFORMATION_SCHEMA.COLUMNS where TABLE_NAME = '{tableName}' and COLUMN_NAME = '{colName}') " +
+                $"alter table {tableName} add {colName} as {expression}";
+            this.ExecuteNonQueryCommand(ddl, true);
+        }
+
     }
 }

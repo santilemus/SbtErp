@@ -165,6 +165,7 @@
     <Compile Include="BusinessObjects\ETipoOperacion.cs" />
     <Compile Include="BusinessObjects\ETipoTarjeta.cs" />
     <Compile Include="BusinessObjects\XPObjectCustom.cs" />
+    <Compile Include="BusinessObjects\ClaseSociedad.cs" />
     <Compile Include="Controllers\vcCatalogo.cs">
       <SubType>Component</SubType>
     </Compile>

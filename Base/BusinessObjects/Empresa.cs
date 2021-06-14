@@ -30,6 +30,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             Clasificacion = EClasificacionContribuyente.Otro;
         }
 
+        ClaseSociedad claseSociedad;
         EClasificacionContribuyente clasificacion;
         string nrc;
         private System.Boolean _activa;
@@ -199,6 +200,14 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             set => SetPropertyValue(nameof(Clasificacion), ref clasificacion, value);
         }
 
+
+        [XafDisplayName("Clase Sociedad"), RuleRequiredField("Empresa.ClaseSociedad_Requerido", "Save")]
+        public ClaseSociedad ClaseSociedad
+        {
+            get => claseSociedad;
+            set => SetPropertyValue(nameof(ClaseSociedad), ref claseSociedad, value);
+        }
+
         /// <summary>
         /// Imagen que corresponde al logo de la empresa
         /// </summary>
@@ -255,6 +264,6 @@ namespace SBT.Apps.Base.Module.BusinessObjects
                 return GetCollection<Usuario>(nameof(Usuarios));
             }
         }
-
     }
+
 }

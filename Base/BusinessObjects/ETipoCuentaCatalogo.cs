@@ -13,14 +13,14 @@ namespace SBT.Apps.Contabilidad.BusinessObjects
         [XafDisplayName("Pasivo")]
         Pasivo = 2,
         [XafDisplayName("Patrimonio")]
-        Capital = 3,
-        [XafDisplayName("Costos")]
-        Ingreso = 4,
-        [XafDisplayName("Gastos")]
+        Patrimonio = 3,
+        [XafDisplayName("Costo")]
+        Costo = 4,
+        [XafDisplayName("Gasto")]
         Gasto = 5,
-        [XafDisplayName("Producto")]
-        Costo = 6,
-        [XafDisplayName("Resultados")]
+        [XafDisplayName("Ingreso")]
+        Ingreso = 6,
+        [XafDisplayName("Resultado")]
         Resultado = 7,
         [XafDisplayName("Orden")]
         Orden = 8

@@ -342,12 +342,5 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
         }
     }
 
-    public class ResumenSaldos
-    {
-        public SBT.Apps.Contabilidad.BusinessObjects.Catalogo Cuenta { get; set; }
-        public decimal TotDebe { get; set; }
-        public decimal TotHaber { get; set; }
-        public decimal AjusteDebe { get; set; }
-        public decimal AjusteHaber { get; set; }
-    }
+
 }
