@@ -11,6 +11,9 @@ using SBT.Apps.Contabilidad.BusinessObjects;
 
 namespace SBT.Apps.Contabilidad.Module.BusinessObjects
 {
+    /// <summary>
+    /// Implementar la generacion de partidas automaticas
+    /// </summary>
     public class PartidaAutomatica
     {
         UnitOfWork uow;
@@ -23,25 +26,31 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             fEmpresa = empresa;
         }
 
-        public bool EsValidoGenerarPartida(DateTime fecha, ETipoPartida tipo, out string msg)
+        /// <summary>
+        /// Validar que es permitido generar una partida automatica, cuando la partida no existe
+        /// </summary>
+        /// <param name="partida">del Tipo BO Partida y corresponde a los datos generales de la partida contable a generar</param>
+        /// <param name="msg">Mensaje retornado por el metodo al realizar la validacion</param>
+        /// <returns>Verdadero (true) cuando es permitido generar una partida, de otro modo retorna false</returns>
+        public bool EsValidoGenerarPartida(Partida partida, out string msg)
         {
-            var Periodo = uow.GetObjectByKey<Periodo>(fecha.Year);
-            if (Periodo == null)
+            if (partida.Periodo == null)
             {
                 msg = "Periodo no existe";
                 return false;
             }
 
             var ptda = uow.FindObject<Partida>(CriteriaOperator.Parse("[Empresa.Oid] == ? && [Periodo.Oid] == ? && [Tipo] == ?",
-                ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid, fecha.Year, tipo));
-            if (ptda != null)
+                ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid, partida.Fecha.Year, partida.Tipo));
+            if (ptda != null && ptda.Detalles.Count > 0)
             {
-                msg = string.Format("Ya existe una partida de {0}. No puede generar otra", Enum.GetName(typeof(SBT.Apps.Contabilidad.Module.BusinessObjects.ETipoPartida), tipo));
+                msg = string.Format("Ya existe una partida de {0}. No puede generar otra", Enum.GetName(typeof(SBT.Apps.Contabilidad.Module.BusinessObjects.ETipoPartida), partida.Tipo));
                 return false;
             }
             msg = string.Empty;
             return true;
         }
+
 
         private decimal ObtenerSaldoCuenta(ETipoEmpresaCuenta tipo)
         {
@@ -68,26 +77,30 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             return partidaDetalle;
         }
 
-        public void PartidaLiquidacionOCierre(DateTime fecha, ETipoPartida tipo, string concepto, out string msg)
+        /// <summary>
+        /// Metodo a invocar para generar la partida de liquidación o de cierre
+        /// </summary>
+        /// <param name="partida">BO del Tipo Partida y corresponde a los datos generales de la partida</param>
+        /// <param name="msg">Mensaje retornado por el metodo</param>
+        /// <remarks>
+        /// Los datos generales de la partida (encabezado) deben existir y el detalle vacío para que el metodo se ejecute satisfactoriamente
+        /// </remarks>
+        public void PartidaLiquidacionOCierre(Partida partida, out string msg)
         {
-            saldosMes = uow.Query<SaldoMes>().Where(x => x.Empresa.Oid == fEmpresa.Oid && x.Periodo.Oid == fecha.Year && x.Mes == x.Periodo.FechaFin.Month);
+            saldosMes = uow.Query<SaldoMes>().Where(x => x.Empresa.Oid == fEmpresa.Oid && x.Periodo.Oid == partida.Periodo.Oid && x.Mes == x.Periodo.FechaFin.Month);
             if (saldosMes == null || saldosMes.Count() == 0)
             {
-                msg = string.Format("No hay datos para generar la partida de {0}", Convert.ToString(tipo));
+                msg = string.Format("No hay datos para generar la partida de {0}", Convert.ToString(partida.Fecha));
+                return;
             }
-
-            Partida ptda = new Partida(uow)
-            {
-                Fecha = fecha,
-                Tipo = tipo,
-                Concepto = concepto
-            };
 
             foreach (var item in saldosMes)
             {
-                ptda.Detalles.Add(CreateDetalle(item, concepto));
+                partida.Detalles.Add(CreateDetalle(item, partida.Concepto));
             }
-            if (tipo == ETipoPartida.Liquidacion)
+            /// cuando es partida de liquidacion se generan las entradas correspondiente al resultado del ejercicio y la liquidacion de 
+            /// la perdidad o ganancia
+            if (partida.Tipo == ETipoPartida.Liquidacion)
             {
                 var fIngreso = saldosMes.Where(x => x.Cuenta.TipoCuenta == Contabilidad.BusinessObjects.ETipoCuentaCatalogo.Ingreso
                                 && x.Cuenta.Nivel == 1).FirstOrDefault();
@@ -102,11 +115,11 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
                     var reservaLegal = CalcularReservaLegal(empresaCuentas, resultadoOperacion);
                     reserva = reservaLegal.ValorHaber;
                     if (reservaLegal != null)
-                        ptda.Detalles.Add(reservaLegal);
+                        partida.Detalles.Add(reservaLegal);
                     var rentaItem = CalcularImpuestoRenta(empresaCuentas, resultadoOperacion, reserva);
                     renta = rentaItem.ValorHaber;
                     if (rentaItem != null)
-                        ptda.Detalles.Add(rentaItem);
+                        partida.Detalles.Add(rentaItem);
                 }
                 var ctaLiquida = empresaCuentas.FirstOrDefault(x => x.TipoCuenta == ETipoEmpresaCuenta.Liquidacion);
                 if (ctaLiquida != null)
@@ -118,7 +131,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
                         liquidaItem.ValorHaber = resultadoOperacion - reserva - renta;
                     else
                         liquidaItem.ValorDebe = resultadoOperacion;
-                    ptda.Detalles.Add(liquidaItem);
+                    partida.Detalles.Add(liquidaItem);
                     // aplicar la ganancia o la perdida
                     PartidaDetalle item = new PartidaDetalle(uow);
                     EmpresaCuenta cta;
@@ -134,10 +147,10 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
                     }
                     item.Cuenta = cta.Cuenta;
                     item.Concepto = cta.Concepto;
-                    ptda.Detalles.Add(item);
+                    partida.Detalles.Add(item);
                 }
             }
-            ptda.Save();
+            partida.Save();
             uow.CommitChanges();
             msg = string.Empty;
         }
@@ -176,6 +189,40 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             }
             else
                 return null;
+        }
+
+        /// <summary>
+        /// Generar la partida de apertura del periodo actual a partir de la partida de cierre del periodo anterior
+        /// </summary>
+        /// <param name="partida">instancia del BO que se esta creando y que corresponde con la partida de apertura</param>
+        /// <param name="msg">Mensaje retornado por el metodo</param>
+        public void PartidaApertura(Partida partida, out string msg)
+        {
+            if (uow.GetObjectByKey<Periodo>(partida.Periodo.Oid - 1) == null)
+            {
+                msg = $"Periodo {partida.Periodo.Oid - 1} no existe";
+                return;
+            }
+            Partida partidaCierre = uow.FindObject<Partida>(CriteriaOperator.Parse("[Empresa.Oid] == ? && [Periodo.Oid] == ? && [Tipo] == ?",
+                                        partida.Empresa.Oid, partida.Periodo.Oid - 1, ETipoPartida.Cierre));
+            if (partidaCierre == null)
+            {
+                msg = $"Partida {Convert.ToString(ETipoPartida.Cierre)} del Periodo {partida.Periodo.Oid - 1} no existe para generar partida de Apertura";
+                return;
+            }
+            foreach (var item in partidaCierre.Detalles)
+            {
+                PartidaDetalle partidaDetalle = new PartidaDetalle(partida.Session);
+                partidaDetalle.Cuenta = item.Cuenta;
+                partidaDetalle.Concepto = partida.Concepto;
+                if (item.Cuenta.TipoSaldoCta == Contabilidad.BusinessObjects.ETipoSaldoCuenta.Deudor)
+                    partidaDetalle.ValorDebe = item.ValorHaber;
+                else
+                    partidaDetalle.ValorHaber = item.ValorDebe;
+                partida.Detalles.Add(partidaDetalle);
+            }
+            partida.Save();
+            msg = string.Empty;
         }
 
     }
