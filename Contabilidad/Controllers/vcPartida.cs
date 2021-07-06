@@ -15,17 +15,26 @@ using System.Linq;
 using System.Linq.Expressions;
 
 
-
 namespace SBT.Apps.Contabilidad.Module.Controllers
 {
     // For more typical usage scenarios, be sure to check out https://documentation.devexpress.com/eXpressAppFramework/clsDevExpressExpressAppViewControllertopic.aspx.
-    public partial class vcPartida : ViewControllerBase
+    public class vcPartida : ViewControllerBase
     {
         DevExpress.ExpressApp.View vParam;
-        public vcPartida()
+
+        private PopupWindowShowAction pwaCierreDiario;
+        private PopupWindowShowAction pwaAbrirDias;
+        private PopupWindowShowAction pwaCierreMes;
+        private SimpleAction saApertura;
+        private SimpleAction saLiquidacionCierre;
+
+        public vcPartida(): base()
         {
-            InitializeComponent();
             TargetViewNesting = Nesting.Root;
+            // vcPartida
+            // 
+            TargetObjectType = typeof(SBT.Apps.Contabilidad.Module.BusinessObjects.Partida);
+            //
             // Target required Views (via the TargetXXX properties) and create their Actions.
         }
 
@@ -33,9 +42,15 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
         {
             base.OnActivated();
             // Perform various tasks depending on the target View.
-            PwaCierreDiario.Executing += Pwa_Executing;
-            PwaAbrirDias.Executing += Pwa_Executing;
-            PwaCierreDiario.Executing += PwaCierreMes_Executing;
+            pwaCierreDiario.Executing += PwaAbrirCierre_Executing;
+            pwaAbrirDias.Executing += PwaAbrirCierre_Executing;
+            pwaAbrirDias.Execute += PwaAbrirDias_Execute;
+            pwaCierreDiario.Executing += PwaCierreMes_Executing;
+            pwaCierreDiario.Execute += PwaCierreDiario_Execute;
+            saApertura.Execute += saPartidaApertura_Execute;
+            saApertura.Executing += saPartidaApertura_Executing;
+            saLiquidacionCierre.Execute += saPartidaLiquidacionCierre_Execute;
+            saLiquidacionCierre.Executing += saPartidaApertura_Executing;
             ObjectSpace.Committed += ObjectSpace_Commited;
         }
         protected override void OnViewControlsCreated()
@@ -46,11 +61,145 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
         protected override void OnDeactivated()
         {
             // Unsubscribe from previously subscribed events and release other references and resources.
-            PwaCierreDiario.Executing -= Pwa_Executing;
-            PwaAbrirDias.Executing -= Pwa_Executing;
-            PwaCierreMes.Executing -= PwaCierreMes_Executing;
+            pwaCierreDiario.Executing -= PwaAbrirCierre_Executing;
+            pwaCierreDiario.Execute -= PwaCierreDiario_Execute;
+            pwaAbrirDias.Executing -= PwaAbrirCierre_Executing;
+            pwaAbrirDias.Execute -= PwaAbrirDias_Execute;
+            pwaCierreMes.Executing -= PwaCierreMes_Executing;
+            saApertura.Execute -= saPartidaApertura_Execute;
+            saApertura.Executing -= saPartidaApertura_Executing;
+            saLiquidacionCierre.Execute -= saPartidaLiquidacionCierre_Execute;
+            saLiquidacionCierre.Executing -= saPartidaApertura_Executing;
             ObjectSpace.Committed -= ObjectSpace_Commited;
             base.OnDeactivated();
+        }
+
+        protected override void DoInitializeComponent()
+        {
+            base.DoInitializeComponent();
+            // PwaCierreDiario
+            pwaCierreDiario = new PopupWindowShowAction(this, "Partida_pwaCierreDiario", DevExpress.Persistent.Base.PredefinedCategory.RecordsNavigation);
+            pwaCierreDiario.AcceptButtonCaption = "Aceptar";
+            pwaCierreDiario.ActionMeaning = DevExpress.ExpressApp.Actions.ActionMeaning.Accept;
+            pwaCierreDiario.CancelButtonCaption = "Cerrar";
+            pwaCierreDiario.Caption = "Cierre Diario";
+            pwaCierreDiario.ImageName = "CierreDiario";
+            pwaCierreDiario.TargetObjectType = typeof(SBT.Apps.Contabilidad.Module.BusinessObjects.Partida);
+            pwaCierreDiario.TargetViewType = DevExpress.ExpressApp.ViewType.ListView;
+            pwaCierreDiario.ToolTip = "Realizar el cierre diario contable";
+            pwaCierreDiario.TypeOfView = typeof(DevExpress.ExpressApp.ListView);
+            pwaCierreDiario.CustomizePopupWindowParams += new DevExpress.ExpressApp.Actions.CustomizePopupWindowParamsEventHandler(this.PwaCierreDiario_CustomizePopupWindowParams);
+            pwaCierreDiario.Execute += new DevExpress.ExpressApp.Actions.PopupWindowShowActionExecuteEventHandler(this.PwaCierreDiario_Execute);
+            // PwaAbrirDias
+            pwaAbrirDias = new PopupWindowShowAction(this, "Partida_pwaAbrirDias", DevExpress.Persistent.Base.PredefinedCategory.RecordsNavigation);
+            pwaAbrirDias.AcceptButtonCaption = "Aceptar";
+            pwaAbrirDias.ActionMeaning = DevExpress.ExpressApp.Actions.ActionMeaning.Accept;
+            pwaAbrirDias.CancelButtonCaption = "Cerrar";
+            pwaAbrirDias.Caption = "Abrir Días";
+            pwaAbrirDias.ImageName = "abrircaja";
+            pwaAbrirDias.TargetObjectType = typeof(SBT.Apps.Contabilidad.Module.BusinessObjects.Partida);
+            pwaAbrirDias.TargetViewType = DevExpress.ExpressApp.ViewType.ListView;
+            pwaAbrirDias.ToolTip = "Abrir rango de dias que ya se encuentran cerrados";
+            pwaAbrirDias.TypeOfView = typeof(DevExpress.ExpressApp.ListView);
+            pwaAbrirDias.CustomizePopupWindowParams += new DevExpress.ExpressApp.Actions.CustomizePopupWindowParamsEventHandler(this.PwaAbrirDias_CustomizePopupWindowParams);
+            pwaAbrirDias.Execute += new DevExpress.ExpressApp.Actions.PopupWindowShowActionExecuteEventHandler(this.PwaAbrirDias_Execute);
+            // PwaCierreMes
+            pwaCierreMes = new PopupWindowShowAction(this, "Partida_pwaCierreMes", DevExpress.Persistent.Base.PredefinedCategory.RecordsNavigation);
+            pwaCierreMes.AcceptButtonCaption = "Aceptar";
+            pwaCierreMes.ActionMeaning = DevExpress.ExpressApp.Actions.ActionMeaning.Accept;
+            pwaCierreMes.CancelButtonCaption = "Cerrar";
+            pwaCierreMes.Caption = "Cierre de Mes";
+            pwaCierreMes.ImageName = "service";
+            pwaCierreMes.TargetObjectType = typeof(SBT.Apps.Contabilidad.Module.BusinessObjects.Partida);
+            pwaCierreMes.TargetViewType = DevExpress.ExpressApp.ViewType.ListView;
+            pwaCierreMes.ToolTip = "Cierre contable de un Mes. Este proceso no puede revertirse";
+            pwaCierreMes.TypeOfView = typeof(DevExpress.ExpressApp.ListView);
+            pwaCierreMes.CustomizePopupWindowParams += new DevExpress.ExpressApp.Actions.CustomizePopupWindowParamsEventHandler(this.PwaCierreMes_CustomizePopupWindowParams);
+            pwaCierreMes.Execute += new DevExpress.ExpressApp.Actions.PopupWindowShowActionExecuteEventHandler(this.PwaCierreMes_Execute);
+            // saPartidaApertura
+            saApertura = new SimpleAction(this, "saPartidaApertura", DevExpress.Persistent.Base.PredefinedCategory.ObjectsCreation);
+            saApertura.Caption = "Partida de Apertura";
+            saApertura.TargetObjectType = typeof(SBT.Apps.Contabilidad.Module.BusinessObjects.Partida);
+            saApertura.TargetViewType = ViewType.DetailView;
+            saApertura.ToolTip = "Clic para generar la partida de apertura del período a partir de la partida de cierre del período anterior";
+            saApertura.TargetObjectsCriteria = "[Tipo] ==  0 And [Detalles][].Count() == 0";
+            saApertura.TargetObjectsCriteriaMode = TargetObjectsCriteriaMode.TrueForAll;
+            saApertura.ConfirmationMessage = "Desea generar Partida de Apertura?";
+            saApertura.ImageName = "book";
+            // saPartidaLiquidacion
+            saLiquidacionCierre = new SimpleAction(this, "saPartidaLiquidacion", DevExpress.Persistent.Base.PredefinedCategory.ObjectsCreation);
+            saLiquidacionCierre.Caption = "Partida Liquidación";
+            saLiquidacionCierre.TargetObjectType = typeof(SBT.Apps.Contabilidad.Module.BusinessObjects.Partida);
+            saLiquidacionCierre.TargetViewType = ViewType.DetailView;
+            saLiquidacionCierre.ToolTip = "Clic para generar la partida de Liquidación o de cierre del período";
+            saLiquidacionCierre.TargetObjectsCriteria = "[Tipo] == 4 && [Detalles][].Count() == 0";
+            saLiquidacionCierre.TargetObjectsCriteriaMode = TargetObjectsCriteriaMode.TrueForAll;
+            saLiquidacionCierre.ConfirmationMessage = "Confirmar que desea generar la Partida?";
+            saLiquidacionCierre.ImageName = "recibo";
+        }
+
+        protected override void DoDispose()
+        {
+            pwaCierreDiario.Dispose();
+            pwaAbrirDias.Dispose();
+            pwaCierreMes.Dispose();
+
+            saApertura.Dispose();
+            saLiquidacionCierre.Dispose();
+        }
+
+        private void saPartidaApertura_Execute(Object sender, SimpleActionExecuteEventArgs e)
+        {
+            Partida ptda = (e.CurrentObject as Partida);
+            if (ptda.Detalles.Count() == 0)
+                return;
+            UnitOfWork uow = new UnitOfWork(((XPObjectSpace)ObjectSpace).Session.DataLayer);
+            PartidaAutomatica partidaAutomatica = new PartidaAutomatica(uow, ptda.Empresa);
+            string sMsg = string.Empty;
+            partidaAutomatica.PartidaApertura(ptda, out sMsg);
+        }
+
+        /// <summary>
+        /// Validar previo a la ejecucion de la generacion de partidas de Apertura, Liquidacion o Cierre que no exista otra similar
+        /// </summary>
+        /// <param name="sender">El BO que dispara el evento</param>
+        /// <param name="e">los parametros del evento</param>
+        private void saPartidaApertura_Executing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if ((View.CurrentObject == null || (View.CurrentObject as Partida).Empresa == null || (View.CurrentObject as Partida).Periodo == null))
+            {
+                e.Cancel = true;
+                MostrarError($"El proceso se cancela porque una propiedad para buscar la partida de {Convert.ToString((View.CurrentObject as Partida).Tipo)} en el período actual es nula");
+            }
+            var ptda = ObjectSpace.FindObject<Partida>(CriteriaOperator.Parse("[Empresa.Oid] == ? && [Periodo.Oid] == ? && [Tipo] == 0",
+                (View.CurrentObject as Partida).Empresa.Oid, (View.CurrentObject as Partida).Periodo.Oid));
+            if (ptda != null)
+            {
+                e.Cancel = true;
+                MostrarError($"Ya existe una partida de {Convert.ToString((View.CurrentObject as Partida).Tipo)}. Solo puede existir una por período");
+            }
+        }
+
+        private void saPartidaLiquidacionCierre_Execute(Object sender, SimpleActionExecuteEventArgs e)
+        {
+            Partida ptda = (e.CurrentObject as Partida);
+            if (ptda.Detalles.Count() == 0)
+                return;
+            UnitOfWork uow = new UnitOfWork(((XPObjectSpace)ObjectSpace).Session.DataLayer);
+            PartidaAutomatica partidaAutomatica = new PartidaAutomatica(uow, ptda.Empresa);
+            string sMsg = string.Empty;
+            partidaAutomatica.PartidaLiquidacionOCierre(ptda, out sMsg);
+        }
+
+        private void saPartidaCierre_Execute(Object sender, SimpleActionExecuteEventArgs e)
+        {
+            Partida ptda = (e.CurrentObject as Partida);
+            if (ptda.Detalles.Count() == 0)
+                return;
+            UnitOfWork uow = new UnitOfWork(((XPObjectSpace)ObjectSpace).Session.DataLayer);
+            PartidaAutomatica partidaAutomatica = new PartidaAutomatica(uow, ptda.Empresa);
+            string sMsg = string.Empty;
+            partidaAutomatica.PartidaLiquidacionOCierre(ptda, out sMsg);
         }
 
         private void DoCustomizePopupWindowCierre(object sender, CustomizePopupWindowParamsEventArgs e)
@@ -101,7 +250,7 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
             ((CierreDiarioParam)e.PopupWindowViewCurrentObject).Bitacora += $"Hora Finalizó: {DateTime.Now:G}";
             //var OS = Application.CreateObjectSpace(typeof(AuditoriaProceso));
             var obj = ospace.CreateObject<AuditoriaProceso>();
-            obj.AuditarProceso(PwaCierreDiario.Caption, "", ((CierreDiarioParam)e.PopupWindowViewCurrentObject).Bitacora);
+            obj.AuditarProceso(pwaCierreDiario.Caption, "", ((CierreDiarioParam)e.PopupWindowViewCurrentObject).Bitacora);
             (View.ObjectSpace as XPObjectSpace).Refresh();
             e.CanCloseWindow = false;
             ospace.Dispose();
@@ -128,7 +277,7 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
                 new string[] { "@Empresa", "@FechaDesde", "@FechaHasta", "@Usuario" }, new object[] { EmpresaOid, fechaDesde, fechaHasta, sUsuario });
             ((CierreDiarioParam)e.PopupWindowViewCurrentObject).Bitacora += $"Hora Finalizó: {DateTime.Now:G}";
             var obj = ospace.CreateObject<AuditoriaProceso>();
-            obj.AuditarProceso(PwaAbrirDias.Caption, "", ((CierreDiarioParam)e.PopupWindowViewCurrentObject).Bitacora);
+            obj.AuditarProceso(pwaAbrirDias.Caption, "", ((CierreDiarioParam)e.PopupWindowViewCurrentObject).Bitacora);
             (View.ObjectSpace as XPObjectSpace).Refresh();
             e.CanCloseWindow = false;
             ospace.Dispose();
@@ -142,7 +291,7 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
             e.View.Caption = "Abrir Días";
         }
 
-        private void Pwa_Executing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void PwaAbrirCierre_Executing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             RuleSetValidationResult result = Validator.RuleSet.ValidateTarget(vParam.ObjectSpace, vParam.CurrentObject, "Accept");
             if (!((CierreDiarioParam)vParam.CurrentObject).ValidarPeriodo)
@@ -206,7 +355,7 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
             // --
             ((CierreMesParam)e.PopupWindowViewCurrentObject).Bitacora += $"Hora Finalizó: {DateTime.Now:G}";
             var obj = ospace.CreateObject<AuditoriaProceso>();
-            obj.AuditarProceso(PwaAbrirDias.Caption, "", ((CierreMesParam)e.PopupWindowViewCurrentObject).Bitacora);
+            obj.AuditarProceso(pwaAbrirDias.Caption, "", ((CierreMesParam)e.PopupWindowViewCurrentObject).Bitacora);
             (View.ObjectSpace as XPObjectSpace).Refresh();
             e.CanCloseWindow = false;
             ospace.Dispose();
@@ -214,7 +363,7 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
         }
 
         /// <summary>
-        /// Actualizar el saldo de las cuentas de control. Pendiente de actualizar las cuentas padre
+        /// Actualizar el saldo de las cuentas de control.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -259,6 +408,12 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
             }
         }
 
+        /// <summary>
+        /// Acumular el saldo de las cuentas del detalle de la partida en sus cuentas padre de forma recursiva hasta llegar al nivel 1.
+        /// El objetivo es realizar la mayorización cuando se guarda la partida y no tener que esperar hasta el cierre del dia
+        /// </summary>
+        /// <param name="cuentas">Lista de Cuentas Contables cuyos saldos del dia seran acumulados</param>
+        /// <param name="ouctas">Cuentas padre del parametro cuentas que seran acumuladas en la siguiente iteraccion hasta llegar al nivel 1</param>
         private void AcumularSaldosDiarios(IList<SBT.Apps.Contabilidad.BusinessObjects.Catalogo> cuentas, ref IList<SBT.Apps.Contabilidad.BusinessObjects.Catalogo> ouctas)
         {
             if (cuentas == null && cuentas.Count == 0)
@@ -304,6 +459,12 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
             }
         }
 
+        /// <summary>
+        /// Acumular y actualizar los saldos mensuales para las cuentas involucradas en una partida contable y sus cuentas padres
+        /// hasta el nivel 1.
+        /// </summary>
+        /// <param name="cuentas">Cuentas desde el nivel de detalle hasta el nivel 1 que fueron afectadas por la partida
+        /// y quedeben actualizarse en los saldos mensuales</param>
         private void AcumularSaldosMes(IList<SBT.Apps.Contabilidad.BusinessObjects.Catalogo> cuentas)
         {
             var emp = (View.CurrentObject as Partida).Empresa;

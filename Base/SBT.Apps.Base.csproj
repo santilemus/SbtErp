@@ -363,6 +363,12 @@
     <EmbeddedResource Include="Images\trash-bin.png" />
     <EmbeddedResource Include="Images\trash-bin_32x32.png" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Images\book.png" />
+    <EmbeddedResource Include="Images\book_32x32.png" />
+    <EmbeddedResource Include="Images\recibo.png" />
+    <EmbeddedResource Include="Images\recibo_32x32.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

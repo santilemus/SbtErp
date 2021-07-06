@@ -167,9 +167,6 @@
     <Compile Include="Controllers\vcPartida.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controllers\vcPartida.Designer.cs">
-      <DependentUpon>vcPartida.cs</DependentUpon>
-    </Compile>
     <Compile Include="Controllers\vcPartidaModelo.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -195,9 +192,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controllers\vcCajaChicaTransaccion.resx">
       <DependentUpon>vcCajaChicaTransaccion.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controllers\vcPartida.resx">
-      <DependentUpon>vcPartida.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controllers\vcPartidaModelo.resx">
       <DependentUpon>vcPartidaModelo.cs</DependentUpon>

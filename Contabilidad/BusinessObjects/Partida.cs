@@ -30,8 +30,8 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
     [ListViewFilter("Partidas de Días Abiertos", "[Mayorizada] == False")]
     [ListViewFilter("Partidas Incompletas", "([TotalDebe] Is Null || [TotalDebe] == 0) || ([TotalHaber] Is Null || [TotalHaber] == 0) || ([TotalDebe] != [TotalHaber])")]
     [ListViewFilter("Partidas Ultimo 30 Días", "[Fecha] >= ADDDAYS(LocalDateTimeToday(), -30)")]
-    [RuleCriteria("Partida Cuadre", DefaultContexts.Save, "[TotalDebe] == [TotalHaber]", 
-        "Debe cuadrar la Partida Contable, antes de guardar")]
+    [RuleCriteria("Partida Cuadre", DefaultContexts.Save, "[Detalles][].Count() > 0 && [TotalDebe] == [TotalHaber]", 
+        "Debe cuadrar la Partida Contable y asegurarse que no este vacía, antes de guardar", UsedProperties = "TotalDebe,TotalHaber")]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class Partida : XPOBaseDoc
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
@@ -84,6 +84,8 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         }
 
         [DbType("smallint"), Persistent("Tipo"), XafDisplayName("Tipo"), RuleRequiredField("Partida.Tipo_Requerido", DefaultContexts.Save)]
+        [RuleUniqueValue("Partida.Tipo_AperturaLiquidacionCierreUnico", DefaultContexts.Save, CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.InTransaction, 
+            TargetCriteria = "[Tipo] == 0 || [Tipo] == 4 || [Tipo] == 5")]
         public ETipoPartida Tipo
         {
             get => tipo;
@@ -129,6 +131,9 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         /// </remarks>
         //[PersistentAlias(nameof(totalDebe))]
         [XafDisplayName("Debe")]
+        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
+        [RuleValueComparison("Partida.TotalDebe = TotalHaber", DefaultContexts.Save, ValueComparisonType.Equals, "[TotalHaber]", ParametersMode.Expression, 
+            CustomMessageTemplate = "La Partida {TargetObject.Numero} no esta cuadrada")]
         public decimal? TotalDebe
         {
             get
@@ -142,6 +147,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
 
         //[PersistentAlias(nameof(totalHaber))]
         [XafDisplayName("Haber")]
+        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         public decimal? TotalHaber
         {
             get
@@ -230,7 +236,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         [Browsable(false)]
         [RuleFromBoolProperty("Partida.Tipo No Valido", DefaultContexts.Save, 
             "Tipo de Partida no es válido porque ya existe o porque ya existe una partida de liquidación",
-            SkipNullOrEmptyValues = false, UsedProperties = "Tipo", TargetCriteria = "[Tipo] <= 4")]
+            SkipNullOrEmptyValues = false, UsedProperties = "Tipo", TargetCriteria = "[Tipo] <= 4 && [Periodo] != Null")]
         public bool TipoPartidaValida
         {
             get

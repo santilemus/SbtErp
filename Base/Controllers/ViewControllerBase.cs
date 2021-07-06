@@ -49,10 +49,16 @@ namespace SBT.Apps.Base.Module.Controllers
         {
             if (saPurgeRecord != null)
                 saPurgeRecord.Dispose();
+            DoDispose();
             base.Dispose(disposing);
         }
 
         protected virtual void DoInitializeComponent()
+        {
+
+        }
+
+        protected virtual void DoDispose()
         {
 
         }
