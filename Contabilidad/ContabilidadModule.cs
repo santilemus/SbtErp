@@ -115,5 +115,42 @@ namespace SBT.Apps.Contabilidad {
             ((XafMemberInfo)mInfoSaldos).Refresh();
             ((XafMemberInfo)mInfoCuenta).Refresh();
         }
-    }
+
+        /// <summary>
+        /// Crear la propiedad (coleccion) SaldosMeses en el BO SBT.Apps.Contabilidad.BusinessObjects.Catalogo cuando no existe
+        /// y agregar los atributos que corresponden a la Asociation, Aggregated y DisplayName.
+        /// En el BO SBT.Apps.Contabilidad.Module.BusinessObjects.SaldoMes crea la propiedade Cuenta cuando no existe
+        /// y agrega los atributos que corresponde a: Asociation y DisplayName
+        /// </summary>
+        /// <param name="typesInfo"></param>
+        /// <remarks>
+        /// mas info en: 
+        /// https://docs.devexpress.com/eXpressAppFramework/113583/concepts/business-model-design/types-info-subsystem/use-metadata-to-customize-business-classes-dynamically
+        /// https://supportcenter.devexpress.com/ticket/details/T284822/how-to-create-business-classes-at-runtime-based-on-predefined-configurations-or-allow
+        /// </remarks>
+        private void CreateAsociacionCatalogoSaldoMes(ITypesInfo typesInfo)
+        {
+            ITypeInfo tInfoCatalogo = typesInfo.FindTypeInfo(typeof(SBT.Apps.Contabilidad.BusinessObjects.Catalogo));
+            IMemberInfo mInfoSaldosMes = tInfoCatalogo.FindMember("SaldosMeses");
+            ITypeInfo tInfoSaldoMes = typesInfo.FindTypeInfo(typeof(SBT.Apps.Contabilidad.Module.BusinessObjects.SaldoMes));
+            IMemberInfo mInfoCuenta = tInfoSaldoMes.FindMember("Cuenta");
+            if (mInfoSaldosMes == null)
+            {
+                mInfoSaldosMes = tInfoCatalogo.CreateMember("SaldosMeses", typeof(XPCollection<SBT.Apps.Contabilidad.Module.BusinessObjects.SaldoMes>));
+                mInfoSaldosMes.AddAttribute(new DevExpress.Xpo.AssociationAttribute("Catalogo-SaldosMeses",
+                                                     typeof(SBT.Apps.Contabilidad.Module.BusinessObjects.SaldoMes)), true);
+                mInfoSaldosMes.AddAttribute(new DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Saldos Meses"), true);
+            }
+            if (mInfoCuenta == null)
+                mInfoCuenta = tInfoSaldoMes.CreateMember("Cuenta", typeof(SBT.Apps.Contabilidad.BusinessObjects.Catalogo));
+            if (mInfoCuenta.FindAttribute<DevExpress.Xpo.AssociationAttribute>() == null)
+                mInfoCuenta.AddAttribute(new DevExpress.Xpo.AssociationAttribute("Catalogo-SaldosMeses",
+                                                     typeof(SBT.Apps.Contabilidad.BusinessObjects.Catalogo)), true);
+            if (mInfoCuenta.FindAttribute<DevExpress.ExpressApp.DC.XafDisplayNameAttribute>() == null)
+                mInfoCuenta.AddAttribute(new DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Cuenta"), true);
+            ((XafMemberInfo)mInfoSaldosMes).Refresh();
+            ((XafMemberInfo)mInfoCuenta).Refresh();
+        }
+
+        }
 }
