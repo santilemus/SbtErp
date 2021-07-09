@@ -18,6 +18,7 @@ using DevExpress.ExpressApp.Core;
 
 namespace SBT.Apps.Contabilidad.Module.BusinessObjects
 {
+    [NonPersistent]
     [NavigationItem(false), CreatableItem(false), ModelDefault("Caption", "Estado Financiero Detalle")]
     //[ImageName("BO_Contact")]
     //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
@@ -46,7 +47,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         Type tipoBO;
         EstadoFinanciero estadoFinanciero;
 
-        [Association("EstadoFinanciero-Detalles"), XafDisplayName("Estado Financiero")]
+        //[Association("EstadoFinanciero-Detalles"), XafDisplayName("Estado Financiero")]
         public EstadoFinanciero EstadoFinanciero
         {
             get => estadoFinanciero;

@@ -42,6 +42,7 @@ namespace SBT.Apps.Contabilidad {
             CalculatedPersistentAliasHelper.CustomizeTypesInfo(typesInfo);
             CreateAsociacionCatalogoPartidaDetalle(typesInfo);
             CreateAsociacionCatalogoSaldoDiario(typesInfo);
+            CreateAsociacionCatalogoSaldoMes(typesInfo);
         }
 
         /// <summary>
@@ -139,7 +140,7 @@ namespace SBT.Apps.Contabilidad {
                 mInfoSaldosMes = tInfoCatalogo.CreateMember("SaldosMeses", typeof(XPCollection<SBT.Apps.Contabilidad.Module.BusinessObjects.SaldoMes>));
                 mInfoSaldosMes.AddAttribute(new DevExpress.Xpo.AssociationAttribute("Catalogo-SaldosMeses",
                                                      typeof(SBT.Apps.Contabilidad.Module.BusinessObjects.SaldoMes)), true);
-                mInfoSaldosMes.AddAttribute(new DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Saldos Meses"), true);
+                mInfoSaldosMes.AddAttribute(new DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Saldos Mensuales"), true);
             }
             if (mInfoCuenta == null)
                 mInfoCuenta = tInfoSaldoMes.CreateMember("Cuenta", typeof(SBT.Apps.Contabilidad.BusinessObjects.Catalogo));

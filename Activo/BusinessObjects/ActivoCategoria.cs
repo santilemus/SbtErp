@@ -14,7 +14,7 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
     [DefaultClassOptions]
     [ModelDefault("Caption", "Categoría Activo"), NavigationItem("Activo Fijo"), CreatableItem(false)]
     [DefaultProperty(nameof(Nombre)), Persistent(nameof(ActivoCategoria))]
-    //[ImageName("BO_Contact")]
+    [ImageName("CategoriaProducto")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class ActivoCategoria : XPObjectCustom

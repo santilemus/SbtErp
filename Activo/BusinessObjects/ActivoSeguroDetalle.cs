@@ -10,7 +10,7 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
 {
     [DefaultClassOptions, ModelDefault("Caption", "Seguro Detalle"), NavigationItem(false), CreatableItem(false)]
     [DefaultProperty(nameof(Activo)), Persistent(nameof(ActivoSeguroDetalle))]
-    //[ImageName("BO_Contact")]
+    [ImageName(nameof(ActivoSeguroDetalle))]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class ActivoSeguroDetalle : XPObject

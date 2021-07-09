@@ -12,7 +12,7 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
 {
     [DefaultClassOptions, ModelDefault("Caption", "Seguro de Activo"), NavigationItem("Activo Fijo")]
     [DefaultProperty(nameof(NumeroPoliza)), Persistent(nameof(ActivoSeguro))]
-    //[ImageName("BO_Contact")]
+    [ImageName(nameof(ActivoSeguro))]
     //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).

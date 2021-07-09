@@ -147,10 +147,20 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="UnusableNodes.xml">
-      <DependentUpon>Model.DesignedDiffs.xafml</DependentUpon>
-      <SubType>Designer</SubType>
-    </None>
+    <EmbeddedResource Include="Images\ActivoAjuste.png" />
+    <EmbeddedResource Include="Images\ActivoAjuste_32x32.png" />
+    <EmbeddedResource Include="Images\ActivoAtributo.png" />
+    <EmbeddedResource Include="Images\ActivoAtributo_32x32.png" />
+    <EmbeddedResource Include="Images\ActivoDepreciacion.png" />
+    <EmbeddedResource Include="Images\ActivoDepreciacion_32x32.png" />
+    <EmbeddedResource Include="Images\ActivoMejora.png" />
+    <EmbeddedResource Include="Images\ActivoMejora_32x32.png" />
+    <EmbeddedResource Include="Images\ActivoMovimiento.png" />
+    <EmbeddedResource Include="Images\ActivoMovimiento_32x32.png" />
+    <EmbeddedResource Include="Images\ActivoSeguro.png" />
+    <EmbeddedResource Include="Images\ActivoSeguroDetalle.png" />
+    <EmbeddedResource Include="Images\ActivoSeguroDetalle_32x32.png" />
+    <EmbeddedResource Include="Images\ActivoSeguro_32x32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

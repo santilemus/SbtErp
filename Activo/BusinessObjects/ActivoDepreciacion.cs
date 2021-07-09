@@ -11,7 +11,7 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
 {
     [DefaultClassOptions, ModelDefault("Caption", "Depreciación"), NavigationItem(false), CreatableItem(false)]
     [Persistent(nameof(ActivoDepreciacion)), DefaultProperty(nameof(Fecha))]
-    //[ImageName("BO_Contact")]
+    [ImageName(nameof(ActivoDepreciacion))]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class ActivoDepreciacion : XPObject

@@ -1030,12 +1030,18 @@
     </ListView>
     <ListView Id="Venta_ListView">
       <Columns>
-        <ColumnInfo Id="Fecha" Index="2" />
-        <ColumnInfo Id="NoFactura" Index="3" Width="107" />
-        <ColumnInfo Id="Cliente" Index="4" Width="246" />
-        <ColumnInfo Id="FormaPago" Index="5" Width="97" />
-        <ColumnInfo Id="SubTotal" Index="8" />
-        <ColumnInfo Id="Total" Index="10" />
+        <ColumnInfo Id="Caja" Width="55" />
+        <ColumnInfo Id="NoFactura" Width="85" />
+        <ColumnInfo Id="Fecha" Index="2" Width="77" />
+        <ColumnInfo Id="Cliente" Width="341" Index="3" />
+        <ColumnInfo Id="FormaPago" Width="110" Index="4" />
+        <ColumnInfo Id="TipoFactura" Width="100" Index="5" />
+        <ColumnInfo Id="Exenta" Index="6" Width="91" />
+        <ColumnInfo Id="Gravada" Index="7" Width="88" />
+        <ColumnInfo Id="Iva" Index="8" Width="77" />
+        <ColumnInfo Id="Total" Index="8" Width="102" />
+        <ColumnInfo Id="Estado" Index="9" />
+        <ColumnInfo Id="Saldo" Width="108" />
       </Columns>
     </ListView>
     <ListView Id="Venta_LookupListView">

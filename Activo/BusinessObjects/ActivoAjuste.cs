@@ -12,7 +12,7 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
 {
     [DefaultClassOptions, ModelDefault("Caption", "Ajuste"), NavigationItem(false), CreatableItem(false)]
     [DefaultProperty(nameof(Fecha)), Persistent(nameof(ActivoAjuste))]
-    //[ImageName("BO_Contact")]
+    [ImageName(nameof(ActivoAjuste))]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class ActivoAjuste : XPObjectCustom

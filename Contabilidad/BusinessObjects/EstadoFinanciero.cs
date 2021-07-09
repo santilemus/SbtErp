@@ -10,8 +10,9 @@ using System.Linq;
 
 namespace SBT.Apps.Contabilidad.Module.BusinessObjects
 {
+    [NonPersistent]
     [ModelDefault("Caption", "Estados Financieros"), DefaultProperty(nameof(Nombre)), NavigationItem("Contabilidad")]
-    [Persistent(nameof(EstadoFinanciero))]
+    //[Persistent(nameof(EstadoFinanciero))]
     //[ImageName("BO_Contact")]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class EstadoFinanciero : XPObjectCustom
@@ -73,6 +74,11 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             set => SetPropertyValue(nameof(Activo), ref activo, value);
         }
 
+        #endregion
+
+        #region Collecciones
+        //[Association("EstadoFinanciero-Detalles"), XafDisplayName("Detalles"), DevExpress.Xpo.Aggregated]
+        //public XPCollection<EstadoFinanciero> Detalles => GetCollection<EstadoFinanciero>(nameof(Detalles));
         #endregion
 
         //[Action(Caption = "My UI Action", ConfirmationMessage = "Are you sure?", ImageName = "Attention", AutoCommit = true)]

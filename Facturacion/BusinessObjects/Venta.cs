@@ -362,6 +362,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         /// </remarks>
         [XafDisplayName("Gravada Tasa Cero"), DbType("bit")]
         [ToolTip("Ventas gravadas con tasa cero a zonas francas y depositos para perfeccionamiento de activo (DPA)")]
+        [VisibleInListView(false)]
         public bool GravadaTasaCero
         {
             get => gravadaTasaCero;

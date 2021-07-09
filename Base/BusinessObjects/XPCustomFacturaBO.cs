@@ -67,9 +67,10 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         /// Tipo de Factura emitida
         /// </summary>
         [XafDisplayName("Tipo Factura")]
-        [DataSourceProperty(nameof(TiposDeFacturas)), VisibleInLookupListView(true), Index(9)]
+        [DataSourceProperty(nameof(TiposDeFacturas)), Index(9)]
         [RuleRequiredField("", DefaultContexts.Save)]
         [DetailViewLayout("Datos Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
+        [VisibleInListView(true), VisibleInLookupListView(true)]
         [ExplicitLoading]
         public Listas TipoFactura
         {
@@ -114,6 +115,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [PersistentAlias(nameof(gravada))]
         [XafDisplayName("Gravada")]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
+        [VisibleInListView(true)]
         [DetailViewLayout("Totales", LayoutGroupType.SimpleEditorsGroup, 10)]
         public decimal? Gravada
         {
@@ -132,6 +134,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [XafDisplayName("IVA"), Index(22)]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         [DetailViewLayout("Totales", LayoutGroupType.SimpleEditorsGroup, 10)]
+        [VisibleInListView(true)]
         public decimal? Iva
         {
             get
@@ -210,12 +213,13 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [ModelDefault("DisplayFormat", "{0:N2}")]
         [XafDisplayName("Total"), Index(28)]
         [DetailViewLayout("Totales", LayoutGroupType.SimpleEditorsGroup, 10)]
+        [VisibleInListView(true)]
         public decimal Total => Convert.ToDecimal(EvaluateAlias(nameof(Total)));
 
         /// <summary>
         /// Estado del documento
         /// </summary>
-        [PersistentAlias(nameof(estado)), XafDisplayName("Estado"), VisibleInListView(false)]
+        [PersistentAlias(nameof(estado)), XafDisplayName("Estado"), VisibleInListView(true)]
         [DetailViewLayout("Totales", LayoutGroupType.SimpleEditorsGroup, 10)]
         [DbType("smallint")]
         public EEstadoFactura Estado => estado;
@@ -224,7 +228,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         /// Saldo del documento
         /// </summary>
         [PersistentAlias(nameof(saldo))]
-        [XafDisplayName("Saldo Pendiente"), VisibleInListView(false), VisibleInLookupListView(false)]
+        [XafDisplayName("Saldo Pendiente"), VisibleInListView(true), VisibleInLookupListView(false)]
         [ModelDefault("DisplayFormat", "{0:N2}")]
         [DetailViewLayout("Totales", LayoutGroupType.SimpleEditorsGroup, 10)]
         public decimal Saldo => saldo;

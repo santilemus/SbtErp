@@ -14,7 +14,7 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
     [DefaultClassOptions]
     [ModelDefault("Caption", "Catálogo Activos"), NavigationItem("Activo Fijo"), CreatableItem(false), DefaultProperty(nameof(Nombre))]
     [Persistent(nameof(ActivoCatalogo))]
-    //[ImageName("BO_Contact")]
+    [ImageName("book")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class ActivoCatalogo : XPObjectBaseBO
@@ -72,7 +72,7 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
         string codigo;
         Empresa empresa;
 
-        [XafDisplayName("Empresa"), Browsable(false)]
+        [XafDisplayName("Empresa"), Browsable(false), Index(0)]
         public Empresa Empresa
         {
             get => empresa;
@@ -81,7 +81,7 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
 
         [Size(20), DbType("varchar(20)"), XafDisplayName("Código"), RuleRequiredField("ActivoCatalogo.Codigo_Requerido", "Save")]
         [Indexed(nameof(Empresa), Name = "idxEmpresaActivo_ActivoCatalogo", Unique = true)]
-        [VisibleInLookupListView(true)]
+        [VisibleInLookupListView(true), Index(1)]
         public string Codigo
         {
             get => codigo;
@@ -89,6 +89,7 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
         }
 
         [Size(120), DbType("varchar(120)"), XafDisplayName("Nombre"), RuleRequiredField("ActivoCatalogo.Nombre_Requerido", "Save")]
+        [VisibleInListView(true), Index(2)]
         public string Nombre
         {
             get => nombre;
@@ -96,6 +97,7 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
         }
 
         [Association("Categoria-Activos"), XafDisplayName("Categoría"), RuleRequiredField("ActivoCatalogo.Categoria_Requerido", "Save")]
+        [Index(3)]
         public ActivoCategoria Categoria
         {
             get => categoria;
@@ -103,6 +105,7 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
         }
 
         [XafDisplayName("Unidad"), RuleRequiredField("ActivoCatalogo.Unidad_Requerido", "Save")]
+        [Index(4), VisibleInListView(false)]
         public EmpresaUnidad Unidad
         {
             get => unidad;
@@ -110,6 +113,7 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
         }
 
         [XafDisplayName("Empleado")]
+        [VisibleInListView(false), Index(5)]
         public Empleado.Module.BusinessObjects.Empleado Empleado
         {
             get => empleado;
@@ -117,6 +121,7 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
         }
 
         [XafDisplayName("Proveedor")]
+        [VisibleInListView(false), Index(6)]
         public Tercero.Module.BusinessObjects.Tercero Proveedor
         {
             get => proveedor;
@@ -126,6 +131,7 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
         [XafDisplayName("Fecha Compra"), RuleRequiredField("ActivoCatalogo.FechaCompra_Requerido", DefaultContexts.Save)]
         [DbType("datetime")]
         [ModelDefault("DisplayFormat", "{0:d}"), ModelDefault("EditMask", "d")]
+        [Index(7)]
         public DateTime FechaCompra
         {
             get => fechaCompra;
@@ -133,6 +139,7 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
         }
 
         [Size(40), DbType("varchar(40)"), XafDisplayName("Marca")]
+        [Index(8), VisibleInListView(false)]
         public string Marca
         {
             get => marca;
@@ -140,6 +147,7 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
         }
 
         [Size(40), DbType("varchar(40)"), XafDisplayName("Modelo")]
+        [VisibleInListView(false), Index(9)]
         public string Modelo
         {
             get => modelo;
@@ -147,6 +155,7 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
         }
 
         [Size(25), DbType("varchar(25)"), XafDisplayName("No Serie")]
+        [VisibleInListView(false), Index(10)]
         public string NoSerie
         {
             get => noSerie;
@@ -156,6 +165,7 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
         [DbType("datetime"), XafDisplayName("Inicio Depreciación")]
         [RuleRequiredField("ActivoCatalogo.InicioDepreciacion_Requerido", DefaultContexts.Save)]
         [ModelDefault("DisplayFormat", "{0:d}"), ModelDefault("EditMask", "d")]
+        [Index(11)]
         public DateTime InicioDepreciacion
         {
             get => inicioDepreciacion;
@@ -163,6 +173,7 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
         }
 
         [XafDisplayName("Moneda"), RuleRequiredField("ActivoCatalogo.Moneda_Requerido", DefaultContexts.Save)]
+        [Index(12)]
         public Moneda Moneda
         {
             get => moneda;
@@ -170,6 +181,7 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
         }
         [DbType("numeric(14,2)"), XafDisplayName("Valor Moneda"), RuleRequiredField("ActivoCatalogo.ValorMoneda_Requerido", DefaultContexts.Save)]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
+        [VisibleInListView(false), Index(13)]
         public decimal ValorMoneda
         {
             get => valorMoneda;
@@ -177,7 +189,7 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
         }
 
         [XafDisplayName("Vida Útil (meses)"), RuleRequiredField("ActivoCatalogo.VidaUtil_Requerido", "Save")]
-        [DbType("smallint")]
+        [DbType("smallint"), Index(14)]
         public int VidaUtil
         {
             get => vidaUtil;
@@ -188,6 +200,7 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
         [ToolTip("Valor de compra del activo")]
         [RuleValueComparison("ActivoCatalogo.ValorCompra >= 0", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual, 0, SkipNullOrEmptyValues = false)]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
+        [Index(15)]
         public decimal ValorCompra
         {
             get => valorCompra;
@@ -196,22 +209,26 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
 
         [XafDisplayName("Ajustes"), PersistentAlias(nameof(totalAjuste))]
         [ToolTip("Total acumulado de ajustes al valor de compra del activo")]
-        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
+        [ModelDefault("DisplayFormat", "{0:N2}")]
+        [Index(16), VisibleInListView(false)]
         public decimal TotalAjuste => totalAjuste;
 
         [PersistentAlias(nameof(totalMejora)), XafDisplayName("Mejoras")]
         [ToolTip("Total acumulado de las mejoras realizadas al activo")]
-        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
+        [ModelDefault("DisplayFormat", "{0:N2}")]
+        [Index(17), VisibleInListView(false)]
         public decimal TotalMejora => totalMejora;
 
         [PersistentAlias(nameof(totalDepreciacion)), XafDisplayName("Depreciaciones")]
         [ToolTip("Total acumulado de las depreciaciones aplicadas al activo")]
-        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
+        [ModelDefault("DisplayFormat", "{0:N2}")]
+        [Index(18)]
         public decimal TotalDepreciacion => totalDepreciacion;
 
         [XafDisplayName("Valor Residual"), RuleRequiredField("ActivoCatalogo.ValorResidual_Requerido", DefaultContexts.Save)]
         [RuleValueComparison("ActivoCatalogo.ValorResidual >= 0", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual, 0, SkipNullOrEmptyValues = false)]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
+        [VisibleInListView(false), Index(19)]
         public decimal ValorResidual
         {
             get => valorResidual;
@@ -219,6 +236,7 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
         }
 
         [XafDisplayName("Estado Depreciación"), DbType("smallint"), RuleRequiredField("ActivoCatalogo.EstadoDepreciacion_Requerido", "Save")]
+        [Index(20), VisibleInListView(false)]
         public EEstadoDepreciacion EstadoDepreciacion
         {
             get => estadoDepreciacion;
@@ -227,6 +245,7 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
 
         [DbType("datetime"), XafDisplayName("Fecha Descarga")]
         [ModelDefault("DisplayFormat", "{0:d}"), ModelDefault("EditMask", "d")]
+        [VisibleInListView(false), Index(21)]
         public DateTime FechaDescarga
         {
             get => fechaDescarga;
@@ -234,6 +253,7 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
         }
 
         [DbType("smallint"), XafDisplayName("Meses Garantía")]
+        [VisibleInListView(false), Index(22)]
         public int MesesGarantia
         {
             get => mesesGarantia;
@@ -243,6 +263,7 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
 
         [DbType("datetime"), XafDisplayName("Fecha Inicio Garantía")]
         [ModelDefault("DisplayFormat", "{0:d}"), ModelDefault("EditMask", "d")]
+        [VisibleInListView(false), Index(23)]
         public DateTime FechaInicioGarantia
         {
             get => fechaInicioGarantia;
@@ -251,11 +272,13 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
 
         [PersistentAlias("AddMonths([FechaInicioGarantia], [MesesGarantia])")]
         [ModelDefault("DisplayFormat", "{0:d}"), ModelDefault("EditMask", "d")]
+        [VisibleInListView(false), Index(24)]
         public DateTime FechaFinGarantia => Convert.ToDateTime(EvaluateAlias(nameof(FechaFinGarantia)));
 
 
         [XafDisplayName("Estado Uso Activo")]
         [DataSourceCriteria("[Categoria] == 1 && [Activo] == true")]
+        [Index(25)]
         public Listas EstadoUso
         {
             get => estadoUso;
@@ -267,6 +290,7 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
         /// </summary>
         [DbType("bigint"), XafDisplayName("Orden de Compra")]
         [ToolTip("Orden de compra que corresponde a la adquisición del activo")]
+        [VisibleInListView(false), Index(26)]
         public long OrdenCompra
         {
             get => ordenCompra;
@@ -275,6 +299,7 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
 
 
         [Size(250), DbType("varchar(250)"), XafDisplayName("Observaciones")]
+        [VisibleInListView(false), Index(27)]
         public string Observaciones
         {
             get => observaciones;
@@ -285,6 +310,7 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
           DetailViewImageEditorMode = ImageEditorMode.PopupPictureEdit, ImageSizeMode = ImageSizeMode.StretchImage, ListViewImageEditorCustomHeight = 34)]
         [Index(5)]
         [Delayed(nameof(foto), true)]
+        [VisibleInListView(false)]
         public byte[] Foto
         {
             get => (byte[])foto.Value;

@@ -11,7 +11,7 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
 {
     [DefaultClassOptions, ModelDefault("Caption", "Mejora"), NavigationItem(false), DefaultProperty(nameof(Nombre))]
     [CreatableItem(false), Persistent(nameof(ActivoMejora))]
-    //[ImageName("BO_Contact")]
+    [ImageName(nameof(ActivoMejora))]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class ActivoMejora : XPObject

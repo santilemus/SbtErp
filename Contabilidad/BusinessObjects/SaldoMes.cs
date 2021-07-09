@@ -5,6 +5,7 @@ using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Contabilidad.BusinessObjects;
 using System;
+using System.ComponentModel;
 using System.Linq;
 
 namespace SBT.Apps.Contabilidad.Module.BusinessObjects
@@ -59,9 +60,8 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         Empresa empresa;
         [DbType("int"), Persistent(nameof(Periodo)), FetchOnly]
         Periodo periodo;
-        [Persistent(nameof(MesAnio)), DbType("int"), FetchOnly, Indexed(nameof(cuenta), Name = "idxMesAnioCuenta_SaldoMes", Unique = true)]
+        [Persistent(nameof(MesAnio)), DbType("int"), FetchOnly, Indexed(nameof(Cuenta), Name = "idxMesAnioCuenta_SaldoMes", Unique = true)]
         int mesAnio;
-        [Persistent(nameof(Cuenta))]
         Catalogo cuenta;
         [Persistent(nameof(Mes)), DbType("smallint"), FetchOnly]
         int mes = 1;
@@ -82,51 +82,52 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         }
 
 
-        [PersistentAlias(nameof(empresa)), XafDisplayName("Empresa")]
+        [PersistentAlias(nameof(empresa)), XafDisplayName("Empresa"), Browsable(false), Index(0)]
         public Empresa Empresa
         {
             get { return empresa; }
         }
 
 
-        [PersistentAlias(nameof(periodo)), XafDisplayName("Período")]
+        [PersistentAlias(nameof(periodo)), XafDisplayName("Período"), Index(1)]
         public Periodo Periodo
         {
             get => periodo;
         }
 
         [PersistentAlias(nameof(mesAnio)), XafDisplayName("Mes y Año"), ModelDefault("DisplayFormat", "{0:0#####}")]
+        [VisibleInListView(false), Index(2)]
         public int MesAnio
         {
             get { return mesAnio; }
         }
 
-        [PersistentAlias(nameof(cuenta)), XafDisplayName("Cuenta")]
+        [Persistent(nameof(Cuenta)), XafDisplayName("Cuenta"), VisibleInListView(true), Index(3)]
         public Catalogo Cuenta
         {
             get => cuenta;
+            set => SetPropertyValue(nameof(Cuenta), ref cuenta, value);
         }
 
-        [PersistentAlias(nameof(mes)), XafDisplayName("Mes")]
+        [PersistentAlias(nameof(mes)), XafDisplayName("Mes"), Index(4)]
         public int Mes
         {
             get { return mes; }
         }
 
-        public string Nombre
-        {
-            get { return Cuenta.Nombre; }
-        }
+        [Size(20), Index(5)]
+        public string NombreMes => string.Format("{0:MMMM}", new DateTime(Periodo.Oid, Mes, 01));
 
         [PersistentAlias(nameof(saldoInicio)), XafDisplayName("Saldo Inicio Mes")]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
+        [Index(6)]
         public decimal SaldoInicio
         {
             get { return saldoInicio; }
         }
 
         [PersistentAlias(nameof(debe)), XafDisplayName("Debe")]
-        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
+        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2"), Index(7)]
         public decimal Debe
         {
             get { return debe; }
@@ -134,6 +135,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
 
         [PersistentAlias(nameof(haber)), XafDisplayName("Haber")]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
+        [Index(8)]
         public decimal Haber
         {
             get { return haber; }
@@ -141,6 +143,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
 
         [PersistentAlias(nameof(saldoFin)), XafDisplayName("Saldo Fin Mes")]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
+        [Index(9)]
         public decimal SaldoFin
         {
             get { return saldoFin; }
@@ -149,21 +152,12 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
 
         [PersistentAlias("[SaldoFin] - [SaldoInicio]"), XafDisplayName("Movimiento Mes")]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
+        [VisibleInListView(false), Index(10)]
         public decimal MovimientoMes
         {
             get { return Convert.ToDecimal(EvaluateAlias(nameof(MovimientoMes))); }
         }
 
-
-        [Size(20)]
-        public string NombreMes
-        {
-            get
-            {
-                string mmyy = Convert.ToString(MesAnio);
-                return string.Format("{0:MMMM}", new DateTime(Convert.ToInt32(mmyy.Substring(mmyy.Length - 4, 4)), Mes, 01));
-            }
-        }
 
         #endregion
 
