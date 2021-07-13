@@ -4,6 +4,7 @@ using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using System;
+using System.ComponentModel;
 using System.Linq;
 
 namespace SBT.Apps.Inventario.Module.BusinessObjects
@@ -20,7 +21,7 @@ namespace SBT.Apps.Inventario.Module.BusinessObjects
         MessageTemplateMustBeReferenced = "Para borrar el objeto '{TargetObject}', debe estar seguro que no es utilizado (referenciado) en ningún lugar.",
         InvertResult = true, FoundObjectMessageFormat = "'{0}'", FoundObjectMessagesSeparator = ";")]
     [RuleCriteria("ProductoLote.Entrada_Mayor_o_Igual_Salidas", DefaultContexts.Save, @"Entrada >= Salida", "Entrada >= Acumulado Salidas")]
-    [ModelDefault("Caption", "Lote"), NavigationItem(false), XafDefaultProperty("NoLote"), Persistent("ProductoLote")]
+    [ModelDefault("Caption", "Lote"), NavigationItem(false), DefaultProperty(nameof(CodigoLote)), Persistent("ProductoLote")]
     public class InventarioLote : XPObject
     {
 

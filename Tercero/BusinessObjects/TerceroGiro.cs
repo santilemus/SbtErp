@@ -4,6 +4,7 @@ using DevExpress.Persistent.Validation;
 using SBT.Apps.Base.Module.BusinessObjects;
 using System;
 using System.Linq;
+using System.ComponentModel;
 
 namespace SBT.Apps.Tercero.Module.BusinessObjects
 {
@@ -13,6 +14,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Registro Fiscal")]
     [DevExpress.Persistent.Base.CreatableItemAttribute(false)]
     [DevExpress.Persistent.Base.ImageNameAttribute("bill-key")]
+    [DefaultProperty(nameof(ActEconomica))]
     public class TerceroGiro : XPObject
     {
         private Tercero tercero;

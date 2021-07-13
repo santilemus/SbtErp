@@ -14,6 +14,9 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
     [DevExpress.Persistent.Base.CreatableItemAttribute(false)]
     [DevExpress.Persistent.Base.ImageNameAttribute("credit_card-to_bank")]
     [DevExpress.ExpressApp.DC.XafDefaultProperty(nameof(Descripcion))]
+    [RuleCombinationOfPropertiesIsUnique("TerceroRole.IdRoleCodigo_Unico", DefaultContexts.Save, "IdRole;Codigo",
+           CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction, SkipNullOrEmptyValues = true,
+            MessageTemplateCombinationOfPropertiesMustBeUnique = "Objectos con la misma combinación de las propiedades 'IdRole' y 'Codigo' no deben existir")]
     public class TerceroRole : XPObjectBaseBO
     {
         /// <summary>
@@ -23,6 +26,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
         {
             base.AfterConstruction();
             this.Activo = true;
+            this.codigo = null;
         }
 
         private Apps.Tercero.Module.BusinessObjects.Tercero tercero;
@@ -36,7 +40,6 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
 
         [Index(0), XafDisplayNameAttribute("Id Role")]
         [RuleRequiredField("TerceroRole.IdRole_Requerido", "Save")]
-        [RuleUniqueValue("TerceroRole.IdRole_Unico", DefaultContexts.Save, CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction)]
         public TipoRoleTercero IdRole
         {
             get => idRole;
@@ -49,8 +52,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
 #else
         [DbType("varchar(10)"), Persistent("Codigo")]
 #endif
-        [Size(10), XafDisplayName("Código"), Index(1), VisibleInLookupListView(true),
-            RuleUniqueValue("TerceroRole.Codigo_Unico", DefaultContexts.Save, SkipNullOrEmptyValues = true)]
+        [Size(10), XafDisplayName("Código"), Index(1), VisibleInLookupListView(true)]
         public string Codigo
         {
             get => codigo;

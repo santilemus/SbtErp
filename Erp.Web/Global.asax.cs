@@ -29,6 +29,7 @@ namespace SBT.Apps.Erp.Web {
         }
         protected void Session_Start(Object sender, EventArgs e) {
             Tracing.Initialize();
+            FrameworkSettings.DefaultSettingsCompatibilityMode = FrameworkSettingsCompatibilityMode.Latest;
             WebApplication.SetInstance(Session, new ErpAspNetApplication());
             SecurityStrategy security = (SecurityStrategy)WebApplication.Instance.Security;
             security.RegisterXPOAdapterProviders();

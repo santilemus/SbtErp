@@ -50,6 +50,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
 
 
         [XafDisplayName("Dirección Principal"), Index(1)]
+        [DataSourceCriteria("[Tercero] == '@This.Oid'")]
         public TerceroDireccion DireccionPrincipal
         {
             get => direccionPrincipal;

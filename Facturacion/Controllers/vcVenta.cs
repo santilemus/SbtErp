@@ -87,6 +87,9 @@ namespace SBT.Apps.Facturacion.Module.Controllers
         private void ObjectSpace_Committing(object Sender, CancelEventArgs﻿ e)
         {
             System.Collections.IList items = ObjectSpace.ModifiedObjects;
+            if (items.Count == 1 && items.GetType() != typeof(SBT.Apps.Facturacion.Module.BusinessObjects.VentaDetalle))
+                return;
+
             if (items.Count > 0)
             {
                 /// 301 es el Codigo del Tipo de Movimiento de Inventario que corresponde a facturacion

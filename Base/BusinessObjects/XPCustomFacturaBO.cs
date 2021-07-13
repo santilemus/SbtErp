@@ -29,7 +29,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             base.AfterConstruction();
             saldo = 0.0m;
             ivaRetenido = 0.0m;
-            ivaPercibido = 0.0m;
+            ivaPercibido = 0.0m;            
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
@@ -95,7 +95,13 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         public ECondicionPago CondicionPago
         {
             get => condicionPago;
-            set => SetPropertyValue(nameof(CondicionPago), ref condicionPago, value);
+            set
+            {
+                ECondicionPago oldCondicionPago = condicionPago;
+                bool changed = SetPropertyValue(nameof(CondicionPago), ref condicionPago, value);
+                if (!IsLoading && !IsSaving && changed)
+                    DoCondicionPagoChanged(true, oldCondicionPago);
+            }
         }
 
         /// <summary>
@@ -263,6 +269,12 @@ namespace SBT.Apps.Base.Module.BusinessObjects
 
         }
 
+        protected virtual void DoCondicionPagoChanged(bool forceChangeEvents, ECondicionPago oldValue)
+        {
+            estado = (CondicionPago == ECondicionPago.Credito) ? EEstadoFactura.Debe : EEstadoFactura.Pagado;
+            if (forceChangeEvents)
+                OnChanged(nameof(Estado));
+        }
 
         /// <summary>
         /// Metodo virtual para actualizar el valor propiedad Exenta a partir de la suma de los valores de la columna equivalente en el detalle
@@ -325,6 +337,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         {
 
         }
+
 
         #endregion
 

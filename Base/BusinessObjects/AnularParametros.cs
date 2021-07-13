@@ -2,6 +2,7 @@
 using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using DevExpress.Xpo;
+using System;
 
 namespace SBT.Apps.Base.Module.BusinessObjects
 {
@@ -18,8 +19,8 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         {
 
         }
-
+        public DateTime FechaAnulacion { get; set; }
         [Size(250)]
-        public string Comentario { get; set; }
+        public string Comentario { get; set; }       
     }
 }

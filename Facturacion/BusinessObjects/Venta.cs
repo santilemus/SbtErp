@@ -61,8 +61,12 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         {
             base.AfterConstruction();
             if (((Usuario)SecuritySystem.CurrentUser).Agencia != null)
-                agencia = ((Usuario)SecuritySystem.CurrentUser).Agencia;
+            {
+                var unidad = this.Session.GetObjectByKey<EmpresaUnidad>(((Usuario)SecuritySystem.CurrentUser).Agencia.Oid);
+                agencia = unidad;
+            }
             giro = null;
+            formaPago = EFormaPago.Efectivo;
             // PENDIENTE asignar la caja de forma automatica, a partir de la agencia
 
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
@@ -88,7 +92,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         SBT.Apps.Empleado.Module.BusinessObjects.Empleado vendedor;
         int notaRemision;
         EFormaPago formaPago = EFormaPago.Efectivo;
-        ETipoTarjeta tipoTarjeta;
+        ETipoTarjeta ? tipoTarjeta;
         string noTarjeta;
         SBT.Apps.Tercero.Module.BusinessObjects.Banco banco;
         string noReferenciaPago;
@@ -157,6 +161,8 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
                 {
                     if (Cliente.DireccionPrincipal != null)
                         DireccionEntrega = Cliente.DireccionPrincipal;
+                    else if (Cliente.Direcciones.Count > 0)
+                        DireccionEntrega = Cliente.Direcciones.FirstOrDefault<TerceroDireccion>();
                     if (Cliente.Giros.Count > 0)
                         Giro = Cliente.Giros.FirstOrDefault<TerceroGiro>();
                     if (string.Compare(TipoFactura.Codigo, "COVE01", StringComparison.Ordinal) == 0 || TipoFactura.Codigo == "COVE06")
@@ -232,7 +238,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         [XafDisplayName("Dirección Entrega"), VisibleInListView(false), Index(11)]
         [RuleRequiredField("Venta.DireccionEntrega", DefaultContexts.Save,
             TargetCriteria = "[TipoFactura.Codigo] In ('COVE01', 'COVE02', 'COVE03')", ResultType = ValidationResultType.Information)]
-        [DataSourceCriteria("Tercero == @This.Cliente And Activa == True")]
+        [DataSourceCriteria("[Tercero] == '@This.Cliente' And Activa == True")]
         [DetailViewLayout("Datos del Cliente", LayoutGroupType.SimpleEditorsGroup, 1)]
         public TerceroDireccion DireccionEntrega
         {
@@ -250,7 +256,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         [XafDisplayName("Vendedor")]
         [RuleRequiredField("Venta.Vendedor_Requerido", "Save",
             TargetCriteria = "[TipoFactura.Codigo] In ('COVE01', 'COVE02', 'COVE03') ", SkipNullOrEmptyValues = true)]
-        [DataSourceCriteria("[Empresa.Oid] = EmpresaActualOid() And [Unidad] == ? And [Cargo] == ?")]
+        [DataSourceCriteria("[Empresa.Oid] = EmpresaActualOid()")] // And [Unidad] == ? And [Cargo] == ?")]
         [VisibleInListView(false), Index(14)]
         [DetailViewLayout("Datos Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
         [ExplicitLoading]
@@ -281,14 +287,32 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         public EFormaPago FormaPago
         {
             get => formaPago;
-            set => SetPropertyValue(nameof(FormaPago), ref formaPago, value);
+            set
+            {
+                bool changed = SetPropertyValue(nameof(FormaPago), ref formaPago, value);
+                if (!IsLoading && !IsSaving && changed)
+                {
+                    if (FormaPago == EFormaPago.Efectivo || FormaPago == EFormaPago.Otro)
+                    {
+                        Banco = null;
+                        NoReferenciaPago = null;
+                    }
+                    if (FormaPago == EFormaPago.Tarjeta)
+                        TipoTarjeta = ETipoTarjeta.Debito;
+                    else
+                    {
+                        TipoTarjeta = null;
+                        NoTarjeta = null;
+                    }
+                }
+            }
         }
         [XafDisplayName("Tipo Tarjeta"), DbType("varchar(12)"), VisibleInListView(false), Index(17)]
-        [RuleRequiredField("Venta.TipoTarjeta_Requerido", "Save", TargetCriteria = "[FormaPago] In (2, 3)",
+        [RuleRequiredField("Venta.TipoTarjeta_Requerido", "Save", TargetCriteria = "[FormaPago] == 2",
              ResultType = ValidationResultType.Warning)]
         [DetailViewLayout("Datos de Pago", LayoutGroupType.SimpleEditorsGroup, 2)]
         [ExplicitLoading]
-        public ETipoTarjeta TipoTarjeta
+        public ETipoTarjeta? TipoTarjeta
         {
             get => tipoTarjeta;
             set => SetPropertyValue(nameof(TipoTarjeta), ref tipoTarjeta, value);
@@ -409,10 +433,18 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         /// <returns></returns>
         protected override int CorrelativoDoc()
         {
-            string sCriteria = "Empresa.Oid == ? && Caja.Oid == ? && TipoFactura.Codigo == ? && GetYear(Fecha) == ?";
-            object max = Session.Evaluate<Venta>(CriteriaOperator.Parse("Max(Numero)"),
-                                                        CriteriaOperator.Parse(sCriteria, Empresa.Oid, Caja.Oid, TipoFactura.Codigo, Fecha));
-            return (max != null) ? Convert.ToInt32(max) : 1;
+            object max;
+            string sCriteria = "Empresa.Oid == ? && TipoFactura.Codigo == ? && GetYear(Fecha) == ?";
+            if (Caja != null)
+            {
+                sCriteria = "Empresa.Oid == ? && Caja.Oid == ? && TipoFactura.Codigo == ? && GetYear(Fecha) == ?";
+                max = Session.Evaluate<Venta>(CriteriaOperator.Parse("Max(Numero)"),
+                                              CriteriaOperator.Parse(sCriteria, Empresa.Oid, Caja.Oid, TipoFactura.Codigo, Fecha));
+            }
+            else
+                max = Session.Evaluate<Venta>(CriteriaOperator.Parse("Max(Numero)"),
+                                              CriteriaOperator.Parse(sCriteria, Empresa.Oid, TipoFactura.Codigo, Fecha));
+            return Convert.ToInt32(max ?? 1);
         }
 
         protected override void DoTipoFacturaChanged(bool forceChangeEvents, Listas oldValue)
@@ -501,6 +533,12 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             if (fTiposDeFacturas == null)
                 return;
             fTiposDeFacturas.Criteria = CriteriaOperator.Parse("[Categoria] == 15 && [Activo] == True && [Codigo] In ('COVE01', 'COVE02', 'COVE03', 'COVE04', 'COVE05', 'COVE06')");
+        }
+
+        [Action(Caption = "Anular", ConfirmationMessage = "Esta Segur@? de Anular el Documento", ImageName = "Attention", AutoCommit = true)]
+        public override void Anular(AnularParametros AnularParams)
+        {            
+            base.Anular(AnularParams);
         }
 
         #endregion
