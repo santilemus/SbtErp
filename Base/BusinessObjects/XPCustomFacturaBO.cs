@@ -29,7 +29,9 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             base.AfterConstruction();
             saldo = 0.0m;
             ivaRetenido = 0.0m;
-            ivaPercibido = 0.0m;            
+            ivaPercibido = 0.0m;
+            condicionPago = ECondicionPago.Contado;
+            estado = EEstadoFactura.Pagado;
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
@@ -51,7 +53,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [Persistent(nameof(Gravada)), DbType("numeric(14,2)")]
         protected decimal? gravada;
         [Persistent(nameof(Estado)), DbType("smallint")]
-        EEstadoFactura estado = EEstadoFactura.Debe;
+        EEstadoFactura estado;
         int? diasCredito;
         ECondicionPago condicionPago;
         Listas tipoFactura;
@@ -271,9 +273,25 @@ namespace SBT.Apps.Base.Module.BusinessObjects
 
         protected virtual void DoCondicionPagoChanged(bool forceChangeEvents, ECondicionPago oldValue)
         {
-            estado = (CondicionPago == ECondicionPago.Credito) ? EEstadoFactura.Debe : EEstadoFactura.Pagado;
+            if (CondicionPago == ECondicionPago.Credito)
+            {
+                estado = EEstadoFactura.Debe;
+                saldo = Total;
+            }
+            else
+            {
+                estado = EEstadoFactura.Pagado;
+                saldo = 0.0m;
+            }
             if (forceChangeEvents)
                 OnChanged(nameof(Estado));
+        }
+
+        protected virtual void DoAnular()
+        {
+            estado = EEstadoFactura.Anulado;
+            OnChanged(nameof(Estado));
+            Save();
         }
 
         /// <summary>
@@ -321,14 +339,11 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         /// </summary>
         /// <param name="valor">Valor del nuevo saldo</param>
         /// <param name="forceChangeEvents">Indica si dee invocar eventos para las propiedades afectadas</param>
-        public virtual void ActualizarSaldo(decimal valor, EEstadoFactura estadoNew, bool forceChangeEvents)
+        public virtual void ActualizarSaldo(decimal valor, EEstadoFactura status, bool forceChangeEvents)
         {
-            if (saldo == 0 || Estado != EEstadoFactura.Debe)
-                return;
             decimal oldSaldo = Saldo;
-            saldo += valor;
-            if (oldSaldo == valor)
-                estado = estadoNew;
+            saldo = valor;
+            estado = status;
             if (forceChangeEvents)
                 OnChanged(nameof(Saldo), oldSaldo, saldo);
         }

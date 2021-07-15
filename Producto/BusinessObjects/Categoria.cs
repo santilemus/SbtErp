@@ -167,7 +167,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
 
         [XafDisplayName("Nivel")]
         [PersistentAlias("Iif(!IsNull([Padre]), [Padre.Nivel] + 1, 1)")]
-        public int Nivel => Convert.ToInt16(nameof(Nivel));
+        public int Nivel => Convert.ToInt16(EvaluateAlias(nameof(Nivel)));
 
         [RuleRequiredField("Categoria.Activa_Requerido", "Save"), XafDisplayName("Activa")]
         public System.Boolean Activa

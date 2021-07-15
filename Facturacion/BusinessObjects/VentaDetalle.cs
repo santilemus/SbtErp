@@ -207,11 +207,14 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
                 OnChanged(nameof(CodigoBarra));
             }
             fProdChanged = false;
-            decimal pu = Producto.Precios.FirstOrDefault<ProductoPrecio>(p => p.Producto.Oid == Producto.Oid &&
-                         p.Tipo.Categoria == CategoriaLista.TipoPrecio && p.Tipo.Codigo == "TPR001" && p.Activo == true).PrecioUnitario;
-            if (PrecioUnidad == 0.0m)
-                PrecioUnidad = pu;
-            OnChanged(nameof(Costo));
+            if (Producto.Precios.Count > 0)
+            {
+                decimal pu = Producto.Precios.FirstOrDefault<ProductoPrecio>(p => p.Producto.Oid == Producto.Oid &&
+                             p.Tipo.Categoria == CategoriaLista.TipoPrecio && p.Tipo.Codigo == "TPR001" && p.Activo == true).PrecioUnitario;
+                if (PrecioUnidad == 0.0m)
+                    PrecioUnidad = pu;
+                OnChanged(nameof(Costo));
+            }
         }
 
         protected override void DoCantidadChanged(bool forceChangeEvents, decimal oldValue)
@@ -219,8 +222,11 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             base.DoCantidadChanged(forceChangeEvents, oldValue);
             decimal oldPrecio = PrecioUnidad;
             var itemPrecio = ObtenerPrecio();
-            if (oldPrecio != itemPrecio.PrecioUnitario)
-                PrecioUnidad = itemPrecio.PrecioUnitario;
+            if (itemPrecio != null)
+            {
+                if (oldPrecio != itemPrecio.PrecioUnitario)
+                    PrecioUnidad = itemPrecio.PrecioUnitario;
+            }
             DoPrecioUnidadChanged(true, oldPrecio);
         }
 

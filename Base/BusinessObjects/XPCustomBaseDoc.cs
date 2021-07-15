@@ -69,7 +69,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         public virtual void Anular(AnularParametros AnularParams)
         {
             comentario += $"{Environment.NewLine}{AnularParams.Comentario}";
-            fechaAnula = DateTime.Now;
+            fechaAnula = AnularParams.FechaAnulacion;
             usuarioAnulo = DevExpress.ExpressApp.SecuritySystem.CurrentUserName;
         }
 

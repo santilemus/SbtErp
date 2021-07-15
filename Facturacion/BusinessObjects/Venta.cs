@@ -26,7 +26,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
     [Persistent("Venta")]
     [Appearance("Venta.CreditoFiscal", Criteria = "[TipoFactura.Categoria] == 15 && [TipoFactura.Codigo] != 'COVE01'",
         AppearanceItemType = "ViewItem",
-        Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "DetailView", 
+        Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "DetailView",
         TargetItems = "Caja;NRC;NotaRemision;Iva;IvaPercibido;IvaRetenido;ResumenTributos")]
     // la siguiente regla de apariencia es para deshabilitar la modificacion de propiedades criticas. Solo es posible cuando es un objeto nuevo
     [Appearance("Venta - Nuevo Registro", AppearanceItemType = "Any", Enabled = true, Context = "DetailView",
@@ -81,7 +81,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         EmpresaUnidad agencia;
         Caja caja;
         [Persistent(nameof(AutorizacionDocumento))]
-        AutorizacionDocumento autorizacionCorrelativo;
+        AutorizacionDocumento autorizacionDocumento;
         int? noFactura;
         Tercero.Module.BusinessObjects.Tercero cliente;
         TerceroSucursal clienteAgencia;
@@ -92,7 +92,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         SBT.Apps.Empleado.Module.BusinessObjects.Empleado vendedor;
         int notaRemision;
         EFormaPago formaPago = EFormaPago.Efectivo;
-        ETipoTarjeta ? tipoTarjeta;
+        ETipoTarjeta? tipoTarjeta;
         string noTarjeta;
         SBT.Apps.Tercero.Module.BusinessObjects.Banco banco;
         string noReferenciaPago;
@@ -122,18 +122,18 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         /// <summary>
         /// Autorizacion de los correlativos de documentos
         /// </summary>
-        [XafDisplayName("Autorización Correlativo"), PersistentAlias(nameof(autorizacionCorrelativo)),
+        [XafDisplayName("Autorización Correlativo"), PersistentAlias(nameof(autorizacionDocumento)),
             VisibleInListView(false), Index(4)]
         [RuleRequiredField("Venta.NoResolucion", "Save")]
         [DetailViewLayout("Datos Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
         [ExplicitLoading]
-        public AutorizacionDocumento AutorizacionCorrelativo
+        public AutorizacionDocumento AutorizacionDocumento
         {
-            get => autorizacionCorrelativo;
+            get => autorizacionDocumento;
         }
 
         [DbType("int"), XafDisplayName("No Factura"), RuleRequiredField("Venta.NoFactura_Requerido", "Save"), Index(5)]
-        [RuleRange("Venta.NoFactura_RangoValido", DefaultContexts.Save, "[AutorizacionCorrelativo.NoDesde]", "[AutorizacionCorrelativo.NoHasta]",
+        [RuleRange("Venta.NoFactura_RangoValido", DefaultContexts.Save, "[AutorizacionDocumento.NoDesde]", "[AutorizacionDocumento.NoHasta]",
             ParametersMode.Expression, SkipNullOrEmptyValues = false,
             CustomMessageTemplate = "El [NoFactura] debe estar en el rango entre [NoDesde] y [NoHasta] de la autorizacion de documentos")]
         [DetailViewLayout("Datos Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
@@ -357,7 +357,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         {
             get { return diaCerrado; }
         }
-   
+
         [XafDisplayName("Tercero no Domiciliado"), VisibleInListView(false), VisibleInLookupListView(false)]
         [ToolTip("La venta es a cuenta de este Tercero No Domiciliado")]
         [Delayed(true)]
@@ -439,12 +439,24 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             {
                 sCriteria = "Empresa.Oid == ? && Caja.Oid == ? && TipoFactura.Codigo == ? && GetYear(Fecha) == ?";
                 max = Session.Evaluate<Venta>(CriteriaOperator.Parse("Max(Numero)"),
-                                              CriteriaOperator.Parse(sCriteria, Empresa.Oid, Caja.Oid, TipoFactura.Codigo, Fecha));
+                                              CriteriaOperator.Parse(sCriteria, Empresa.Oid, Caja.Oid, TipoFactura.Codigo, Fecha.Year));
             }
             else
                 max = Session.Evaluate<Venta>(CriteriaOperator.Parse("Max(Numero)"),
-                                              CriteriaOperator.Parse(sCriteria, Empresa.Oid, TipoFactura.Codigo, Fecha));
-            return Convert.ToInt32(max ?? 1);
+                                              CriteriaOperator.Parse(sCriteria, Empresa.Oid, TipoFactura.Codigo, Fecha.Year));
+            return Convert.ToInt32(max ?? 0) + 1;
+        }
+
+        private int? GetNoFactura(int autorizacionCorrelat)
+        {
+            if (AutorizacionDocumento != null)
+            {
+                string sCriteria = "Empresa.Oid == ? && TipoFactura.Codigo == ? && AutorizacionDocumento.Oid == ?";
+                return Convert.ToInt32(Session.Evaluate<Venta>(CriteriaOperator.Parse("Max(NoFactura) + 1"),
+                    CriteriaOperator.Parse(sCriteria, Empresa.Oid, TipoFactura.Codigo, autorizacionCorrelat)));
+            }
+            else
+                return null;
         }
 
         protected override void DoTipoFacturaChanged(bool forceChangeEvents, Listas oldValue)
@@ -452,14 +464,19 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             base.DoTipoFacturaChanged(forceChangeEvents, oldValue);
             AutorizacionDocumento resoluc;
             if (Caja != null)
-                resoluc = Session.FindObject<AutorizacionDocumento>(CriteriaOperator.Parse("Agencia.Oid == ? && Caja.Oid == ? && Tipo.Codigo == ? && Activo == True", 
+                resoluc = Session.FindObject<AutorizacionDocumento>(CriteriaOperator.Parse("Agencia.Oid == ? && Caja.Oid == ? && Tipo.Codigo == ? && Activo == True",
                     Agencia.Oid, Caja.Oid, TipoFactura.Codigo));
             else
                 resoluc = Session.FindObject<AutorizacionDocumento>(CriteriaOperator.Parse("Agencia.Oid == ? && Tipo.Codigo == ? && Activo == True",
                     Agencia.Oid, TipoFactura.Codigo));
-            var oldresoluc = autorizacionCorrelativo;
-            autorizacionCorrelativo = resoluc;
-            OnChanged(nameof(AutorizacionCorrelativo), oldresoluc, resoluc);
+            var oldresoluc = autorizacionDocumento;
+            autorizacionDocumento = resoluc;
+            OnChanged(nameof(AutorizacionDocumento), oldresoluc, resoluc);
+            if (autorizacionDocumento != null)
+            {
+                NoFactura = GetNoFactura(autorizacionDocumento.Oid);
+                OnChanged(nameof(NoFactura));
+            }
         }
 
         public override void UpdateTotalExenta(bool forceChangeEvents)
@@ -472,6 +489,8 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             exenta = tempExenta;
             if (forceChangeEvents)
                 OnChanged(nameof(Exenta), oldExenta, exenta);
+            ActualizarSaldo(Convert.ToDecimal(exenta) + SubTotal + Convert.ToDecimal(IvaPercibido) -
+                    Convert.ToDecimal(IvaRetenido) + Convert.ToDecimal(NoSujeta), EEstadoFactura.Debe, true);
         }
 
         public override void UpdateTotalGravada(bool forceChangeEvents)
@@ -481,6 +500,8 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             gravada = Convert.ToDecimal(Evaluate(CriteriaOperator.Parse("[Detalles].Sum([Gravada])")));
             if (forceChangeEvents)
                 OnChanged(nameof(Gravada), oldGravada, gravada);
+            ActualizarSaldo(Convert.ToDecimal(exenta) + SubTotal + Convert.ToDecimal(IvaPercibido) -
+                    Convert.ToDecimal(IvaRetenido) + Convert.ToDecimal(NoSujeta), EEstadoFactura.Debe, true);
         }
 
         public override void UpdateTotalIva(bool forceChangeEvents)
@@ -490,6 +511,8 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             iva = Convert.ToDecimal(Evaluate(CriteriaOperator.Parse("[Detalles].Sum([Iva])")));
             if (forceChangeEvents)
                 OnChanged(nameof(Iva), oldIva, iva);
+            ActualizarSaldo(Convert.ToDecimal(exenta) + SubTotal + Convert.ToDecimal(IvaPercibido) -
+                    Convert.ToDecimal(IvaRetenido) + Convert.ToDecimal(NoSujeta), EEstadoFactura.Debe, true);
         }
 
         public override void UpdateTotalNoSujeta(bool forceChangeEvents)
@@ -499,10 +522,20 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             noSujeta = Convert.ToDecimal(Evaluate(CriteriaOperator.Parse("[Detalles].Sum([NoSujeta])")));
             if (forceChangeEvents)
                 OnChanged(nameof(NoSujeta), oldNoSujeta, noSujeta);
+            ActualizarSaldo(Convert.ToDecimal(exenta) + SubTotal + Convert.ToDecimal(IvaPercibido) -
+                    Convert.ToDecimal(IvaRetenido) + Convert.ToDecimal(NoSujeta), EEstadoFactura.Debe, true);
+        }
+
+        public override void ActualizarSaldo(decimal valor, EEstadoFactura status, bool forceChangeEvents)
+        {
+            if (CondicionPago == ECondicionPago.Credito)
+                base.ActualizarSaldo(valor, status, forceChangeEvents);
         }
 
         protected override void OnSaving()
         {
+            if (Session is NestedUnitOfWork)
+                return;
             foreach (VentaDetalle item in Detalles)
             {
                 if (!Session.IsNewObject(item))
@@ -524,7 +557,8 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
                         }
                 }
             }
-            base.OnSaving();
+            if (Session.IsNewObject(this))
+                Numero = CorrelativoDoc();
         }
 
         protected override void RefreshTiposDeFacturas()
@@ -537,8 +571,16 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
 
         [Action(Caption = "Anular", ConfirmationMessage = "Esta Segur@? de Anular el Documento", ImageName = "Attention", AutoCommit = true)]
         public override void Anular(AnularParametros AnularParams)
-        {            
-            base.Anular(AnularParams);
+        {
+            try
+            {
+                base.Anular(AnularParams);
+                DoAnular();
+            }
+            catch (Exception ex)
+            {
+                throw new UserFriendlyException("Error al anular el documento", ex);
+            }
         }
 
         #endregion
