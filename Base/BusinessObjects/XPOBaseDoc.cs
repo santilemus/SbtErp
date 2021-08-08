@@ -96,15 +96,15 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         }
 
         [Browsable(false)]
-        private int numero;
+        private int ? numero;
 #if (Firebird)
         [DbType("DM_ENTERO_LARGO"), Persistent("NUMERO")]
 #else
         [DbType("int"), Persistent("Numero")]
 #endif
-        [Index(1), XafDisplayName("Número"), ModelDefault("AllowEdit", "False"), RuleRequiredField("XPOBaseDocs.Numero_Requerido", "Save"),
-            NonCloneable]
-        public int Numero
+        [Index(1), XafDisplayName("Número"), RuleRequiredField("XPOBaseDocs.Numero_Requerido", "Save"), NonCloneable]
+        [ModelDefault("AllowEdit", "False")]
+        public int ? Numero
         {
             get => numero;
             set => SetPropertyValue(nameof(Numero), ref numero, value);
@@ -138,6 +138,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
 #endif
         //[Association("Moneda-Docs"), 
         [Index(3), XafDisplayName("Moneda"), RuleRequiredField("XPOBaseDoc.Moneda_Requerida", DefaultContexts.Save)]
+        [ExplicitLoading]
         public Moneda Moneda
         {
             get => moneda;
@@ -167,6 +168,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         private DateTime? fechaAnula;
         [XafDisplayName("Fecha Anulación"), ModelDefault("DisplayFormat", "{0:G}"), ModelDefault("EditMask", "G"), Index(98), ModelDefault("AllowEdit", "False")]
         [PersistentAlias("fechaAnula"), Browsable(false)]
+        [Delayed(true)]
         public DateTime? FechaAnula
         {
             get => fechaAnula;
@@ -181,6 +183,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         private string usuarioAnulo;
         [Size(25), Index(99), XafDisplayName("Usuario Anuló"), ModelDefault("AllowEdit", "False"),
             PersistentAlias("usuarioAnulo"), Browsable(false)]
+        [Delayed(true)]
         public string UsuarioAnulo
         {
             get => usuarioAnulo;
@@ -193,7 +196,9 @@ namespace SBT.Apps.Base.Module.BusinessObjects
 #else
         [DbType("varchar(250)"), Persistent(nameof(Comentario))]
 #endif
-        [Size(250), Index(100), XafDisplayName("Comentario"), ModelDefault("AllowEdit", "False")]
+        [Size(250), Index(100), XafDisplayName("Comentario")]
+        [ModelDefault("AllowEdit", "False")]
+        [Delayed(true)]
         public string Comentario
         {
             get => comentario;

@@ -21,7 +21,7 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
     /// </summary>
 
     [DefaultClassOptions, ModelDefault("Caption", "Conciliación"), NavigationItem("Banco"), DefaultProperty("Fecha"), 
-        Persistent("BanConciliacion")]
+        Persistent(nameof(BancoConciliacion))]
     [ImageName(nameof(BancoConciliacion))]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
@@ -34,15 +34,19 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         public override void AfterConstruction()
         {
             base.AfterConstruction();
+            saldoLibro = 0.0m;
+            saldoEstadoCuenta = 0.0m;
+            autorizo = null;
+            elaboro = null;
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
         #region Propiedades
 
-        BancoCuenta numeroCuenta;
+        BancoCuenta bancoCuenta;
         DateTime fecha;
         DateTime fechaInicio;
-        DateTime fechaFin;
+        DateTime? fechaFin;
         SBT.Apps.Empleado.Module.BusinessObjects.Empleado elaboro;
         decimal saldoEstadoCuenta;
         [Persistent(nameof(SaldoLibro)), DbType("numeric(14,2)")]
@@ -53,10 +57,10 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
 
 
         [Association("BancoCuenta-Conciliaciones"), Index(0), XafDisplayName("Número Cuenta"), VisibleInLookupListView(true)]
-        public BancoCuenta NumeroCuenta
+        public BancoCuenta BancoCuenta
         {
-            get => numeroCuenta;
-            set => SetPropertyValue(nameof(NumeroCuenta), ref numeroCuenta, value);
+            get => bancoCuenta;
+            set => SetPropertyValue(nameof(BancoCuenta), ref bancoCuenta, value);
         }
 
         [DbType("datetime2"), XafDisplayName("Fecha"), Index(1)]
@@ -77,7 +81,7 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
 
         [DbType("datetime2"), XafDisplayName("Fecha Fin"), Index(3)]
         [ModelDefault("DisplayFormat", "{0:G}"), ModelDefault("EditMask", "G")]
-        public DateTime FechaFin
+        public DateTime? FechaFin
         {
             get => fechaFin;
             set => SetPropertyValue(nameof(FechaFin), ref fechaFin, value);

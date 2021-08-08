@@ -152,8 +152,8 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
         }
 
 
-        [XafDisplayName("Banco")]
-        [DataSourceCriteria("[Roles][[IdRole] = 2]"), VisibleInListView(false)]
+        [XafDisplayName("Banco"), VisibleInListView(false)]
+        //[DataSourceCriteria("[Roles][[IdRole] = 2]")]
         [ExplicitLoading]
         public Banco Banco
         {

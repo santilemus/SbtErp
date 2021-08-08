@@ -16,7 +16,7 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
     /// </summary>
 
     [ModelDefault("Caption", "Conciliación Detalle"), NavigationItem(false), DefaultProperty("Transaccion"), CreatableItem(false),
-        Persistent("BanConciliacionDetalle")]
+        Persistent(nameof(BancoConciliacionDetalle))]
     //[ImageName("BO_Contact")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
@@ -35,9 +35,6 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         #region Propiedades
 
         EConciliacionDetalleEstado estado = EConciliacionDetalleEstado.AplicadoYContabilizado;
-        decimal monto;
-        string beneficiario;
-        DateTime fecha;
         BancoTransaccion transaccion;
         BancoConciliacion conciliacion;
 
@@ -53,51 +50,7 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         {
             get => transaccion;
             set => SetPropertyValue(nameof(Transaccion), ref transaccion, value);
-        }
-
-        [PersistentAlias("Transaccion.NumeroPorTipo"), XafDisplayName("Número x Clasificación"), Index(2)]
-        public int NumeroPorTipo
-        {
-            get { return Convert.ToInt32(EvaluateAlias(nameof(NumeroPorTipo))); }
-        }
-
-        [PersistentAlias("Transaccion.ChequeNo"), XafDisplayName("Cheque No"), Index(3)]
-        public int ChequeNo
-        {
-            get { return Convert.ToInt32(EvaluateAlias(nameof(ChequeNo))); }
-        }
-
-        [DbType("datetime2"), XafDisplayName("Fecha"), Index(4),
-            RuleRequiredField("BancoConciliacionDetalle.Fecha_Requerido", DefaultContexts.Save)]
-        [ModelDefault("DisplayFormat", "{0:G}"), ModelDefault("EditMask", "G")]
-        public DateTime Fecha
-        {
-            get => fecha;
-            set => SetPropertyValue(nameof(Fecha), ref fecha, value);
-        }
-
-        [Size(150), DbType("varchar(150)"), XafDisplayName("Beneficiario"), Index(5)]
-        public string Beneficiario
-        {
-            get => beneficiario;
-            set => SetPropertyValue(nameof(Beneficiario), ref beneficiario, value);
-        }
-
-        [DbType("numeric(14,2)"), XafDisplayName("Monto"), Index(6),
-            RuleValueComparison("BancoConciliacionDetalle.Monto >= 0", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual, 0,
-            SkipNullOrEmptyValues = false)]
-        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
-        public decimal Monto
-        {
-            get => monto;
-            set => SetPropertyValue(nameof(Monto), ref monto, value);
-        }
-
-        [PersistentAlias("Transaccion.Clasificacion"), XafDisplayName("Clasificación"), Index(7)]
-        public BancoClasificacionTransac Clasificacion
-        {
-            get { return (BancoClasificacionTransac)(EvaluateAlias(nameof(Clasificacion))); }
-        }
+        }          
 
         [DbType("smallint"), XafDisplayName("Estado"), Index(8)]
         public EConciliacionDetalleEstado Estado

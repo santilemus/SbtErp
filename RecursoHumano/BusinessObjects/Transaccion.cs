@@ -18,7 +18,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
     /// </summary>
     [DefaultClassOptions, ImageName("TransaccionEmpleado")]
     [DefaultProperty("Descripcion"), DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None),
-        Persistent("PlaTransaccion"), ModelDefault("Caption", "Transacciones de Planillas"), NavigationItem("Recurso Humano")]
+        Persistent("PlanillaTransaccion"), ModelDefault("Caption", "Transacciones de Planillas"), NavigationItem("Recurso Humano")]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class Transaccion : XPObjectBaseBO
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
@@ -67,7 +67,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 #if Firebird
         [DbType("DM_ENTERO"), Persistent("NUMERO")]
 #else
-        [DbType("int"), Persistent("Oid")]
+        [DbType("int"), Persistent(nameof(Numero))]
 #endif 
         [XafDisplayName("No Empresa"), Index(2), VisibleInDetailView(false), VisibleInLookupListView(false)]
         [DetailViewLayout(LayoutColumnPosition.Left, LayoutGroupType.SimpleEditorsGroup)]

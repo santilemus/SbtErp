@@ -22,9 +22,9 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
     /// <summary>
     /// Bancos. BO para las cuentas bancarias
     /// </summary>
-    [DefaultClassOptions, ModelDefault("Caption", "Cuenta Bancaria"), NavigationItem("Banco"), Persistent("BanCuenta"), 
-        DefaultProperty("Numero")]
-    [RuleCombinationOfPropertiesIsUnique("BancoCuenta.Banco_NumeroCta", DefaultContexts.Save, "Banco,Oid",
+    [DefaultClassOptions, ModelDefault("Caption", "Cuenta Bancaria"), NavigationItem("Banco"), Persistent(nameof(BancoCuenta)), 
+        DefaultProperty(nameof(Numero))]
+    [RuleCombinationOfPropertiesIsUnique("BancoCuenta.Banco_Numero", DefaultContexts.Save, "Banco,Numero",
         CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction, SkipNullOrEmptyValues = false)]
     [ImageName(nameof(BancoCuenta))]
     //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
@@ -45,18 +45,18 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
 
         #region Propiedades
         Empresa empresa;
-        SBT.Apps.Tercero.Module.BusinessObjects.Tercero banco;
+        Tercero.Module.BusinessObjects.Banco banco;
         string numero;
         string nombre;
         ETipoCuentaBanco tipo = ETipoCuentaBanco.Corriente;
         Moneda moneda;
         DateTime fechaApertura;
         DateTime fechaCierre;
-        Catalogo cuentaConta;
+        Catalogo cuentaContable;
         DevExpress.Persistent.BaseImpl.ReportDataV2 reporteCheque;
         decimal saldo;
 
-        [Persistent("Empresa"), DbType("int"), XafDisplayName("Empresa"), Browsable(false), Index(0)]
+        [Persistent("Empresa"), DbType("int"), XafDisplayName("Empresa"), Index(0), VisibleInListView(false)]
         public Empresa Empresa
         {
             get => empresa;
@@ -64,9 +64,11 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         }
 
         [DbType("int"), Persistent("Banco"), XafDisplayName("Banco"), RuleRequiredField("BancoCuenta.Banco_Requerido", "Save")]
-        [DataSourceCriteria("[Roles][[IdRole] = 2]")]
+        //[DataSourceCriteria("[Roles][[IdRole] = 2]")]
+        [DataSourceCriteria("[Activo] == true")]
         [Index(1), VisibleInLookupListView(true)]
-        public SBT.Apps.Tercero.Module.BusinessObjects.Tercero Banco
+        [ExplicitLoading]
+        public Tercero.Module.BusinessObjects.Banco Banco
         {
             get => banco;
             set => SetPropertyValue(nameof(Banco), ref banco, value);
@@ -78,8 +80,9 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
             get => tipo;
             set => SetPropertyValue(nameof(Tipo), ref tipo, value);
         }
-        [Size(25), DbType("varchar(25)"), Persistent("Oid"), XafDisplayName("Número Cuenta"), Index(3), 
+        [Size(25), DbType("varchar(25)"), XafDisplayName("Número Cuenta"), Index(3), 
             RuleRequiredField("BancoCuenta.Numero_Requerido", DefaultContexts.Save)]
+        [Persistent(nameof(Numero)), Indexed(nameof(Banco), Name = "idxBancoCuenta", Unique = true)]
         public string Numero
         {
             get => numero;
@@ -124,11 +127,12 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         }
 
 
-        [Persistent("CuentaConta"), XafDisplayName("Cuenta Contable"), Index(8), VisibleInListView(false)]
-        public Catalogo CuentaConta
+        [Persistent(nameof(CuentaContable)), XafDisplayName("Cuenta Contable"), Index(8), VisibleInListView(false)]
+        [ExplicitLoading]
+        public Catalogo CuentaContable
         {
-            get => cuentaConta;
-            set => SetPropertyValue(nameof(CuentaConta), ref cuentaConta, value);
+            get => cuentaContable;
+            set => SetPropertyValue(nameof(CuentaContable), ref cuentaContable, value);
         }
 
         

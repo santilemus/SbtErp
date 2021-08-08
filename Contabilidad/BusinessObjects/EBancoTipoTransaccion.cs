@@ -8,9 +8,11 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
     /// </summary>
     public enum EBancoTipoTransaccion
     {
+        [XafDisplayName("Nota de Abono")]
         Abono = 1,
         Remesa = 2,
         Cheque = 3,
+        [XafDisplayName("Nota de Cargo")]
         Cargo = 4
     }
 }

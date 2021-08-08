@@ -1,6 +1,8 @@
+
 USE [Sbt_Erp]
 GO
-
+drop function [dbo].[fnBanSaldoCuenta] 
+go
 /****** Object:  UserDefinedFunction [dbo].[banSaldoCuenta]    Script Date: 12/5/2020 16:00:19 ******/
 SET ANSI_NULLS ON
 GO
@@ -26,8 +28,8 @@ begin
 
   select @valor = sum(iif(c.Tipo = 1 or c.Tipo = 2, coalesce(Monto, 0) / coalesce(ValorMoneda, 1),
                           -coalesce(Monto, 0) / coalesce(ValorMoneda, 1)))
-    from BanTransaccion t
-   inner join BanClasifTransaccion c
+    from BancoTransaccion t
+   inner join BancoTipoTransaccion c
       on t.Clasificacion = c.OID
    where t.NumeroCuenta = @OidCuenta
      and t.Fecha  <= @FechaHasta

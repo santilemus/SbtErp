@@ -10,10 +10,10 @@ using System.Linq;
 namespace SBT.Apps.Tercero.Module.BusinessObjects
 {
     [DefaultClassOptions, NavigationItem("Catalogos"), ModelDefault("Caption", "AFP"), DefaultProperty("Proveedor")]
-    [ImageName("afp")]
-    [Persistent("Afp"), CreatableItem(false)]
+    [ImageName("afp"), CreatableItem(false)]
+    [DevExpress.Xpo.MapInheritance(DevExpress.Xpo.MapInheritanceType.ParentTable)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
-    public class AFP : XPCustomObject
+    public class AFP : Tercero
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
         public AFP(Session session)
             : base(session)
@@ -27,26 +27,10 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
 
 
         #region Propiedades
-        Tercero proveedor;
-        string siglas;
         decimal aporteAfiliado;
         decimal aporteEmpresa;
         decimal comision;
 
-        [XafDisplayName("Proveedor"), DbType("int"), Key(false), RuleRequiredField("AFP.Proveedor_Requrido", "Save")]
-        [DataSourceCriteria("[Roles][[IdRole] = 10 And [Activo] = True]")]
-        public Tercero Proveedor
-        {
-            get => proveedor;
-            set => SetPropertyValue(nameof(Proveedor), ref proveedor, value);
-        }
-
-        [Size(10), DbType("Varchar(10)"), XafDisplayName("Siglas"), RuleRequiredField("AFP.Siglas_Requerido", DefaultContexts.Save)]
-        public string Siglas
-        {
-            get => siglas;
-            set => SetPropertyValue(nameof(Siglas), ref siglas, value);
-        }
 
         [DbType("numeric(10,4)"), XafDisplayName("Porc. Aporte Afiliado"), ToolTip("Porcentaje del aporte del afiliado")]
         [ModelDefault("DisplayFormat", "{0:P2}"), ModelDefault("EditMask", "n2")]
@@ -58,7 +42,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
             set => SetPropertyValue(nameof(AporteAfiliado), ref aporteAfiliado, value);
         }
 
-        [DbType("numeric(10,4)"), XafDisplayName(" Aporte Empresa"), ToolTip("Porcentaje del aporte de la empresa")]
+        [DbType("numeric(10,4)"), XafDisplayName("Aporte Empresa"), ToolTip("Porcentaje del aporte de la empresa")]
         [ModelDefault("DisplayFormat", "{0:P2}"), ModelDefault("EditMask", "n2")]
         [VisibleInLookupListView(false)]
         public decimal AporteEmpresa

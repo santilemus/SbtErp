@@ -20,7 +20,7 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
     /// Bancos. BO para el vaucher o detalle de una transacción de bancos
     /// </summary>
 
-    [ModelDefault("Caption", "Detalle Transacción Bancaria"), Persistent("BanTransaccionDetalle"), NavigationItem(false), CreatableItem(false),
+    [ModelDefault("Caption", "Detalle Transacción Bancaria"), Persistent(nameof(BancoTransaccionDetalle)), NavigationItem(false), CreatableItem(false),
         DefaultProperty("CodCuenta")]
     //[ImageName("BO_Contact")]
     //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
@@ -59,19 +59,7 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         {
             get => cuentaContable;
             set => SetPropertyValue(nameof(CuentaContable), ref cuentaContable, value);
-        }
-
-        [PersistentAlias("[Catalogo.CodCuenta]"), XafDisplayName("Código Cuenta")]
-        public string CodCuenta
-        {
-            get { return Convert.ToString(EvaluateAlias(nameof(CodCuenta))); }
-        }
-       
-        [PersistentAlias("[Catalogo.Nombre]")]
-        public string Nombre
-        {
-            get { return Convert.ToString(EvaluateAlias(nameof(Nombre))); }
-        }
+        }     
         
         [DbType("money"), Persistent("Debe"), XafDisplayName("Debe")]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]

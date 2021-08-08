@@ -116,7 +116,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BusinessObjects\BancoClasificacionTransac.cs" />
+    <Compile Include="BusinessObjects\BancoTipoTransaccion.cs" />
     <Compile Include="BusinessObjects\BancoConciliacion.cs" />
     <Compile Include="BusinessObjects\BancoTransaccion.cs" />
     <Compile Include="BusinessObjects\BancoTransaccionDetalle.cs" />
@@ -151,20 +151,14 @@
     <Compile Include="Controllers\vcBancoCuenta.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controllers\vcBancoCuenta.Designer.cs">
-      <DependentUpon>vcBancoCuenta.cs</DependentUpon>
+    <Compile Include="Controllers\vcBancoTransaccion.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controllers\vcCajaChica.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controllers\vcCajaChica.Designer.cs">
-      <DependentUpon>vcCajaChica.cs</DependentUpon>
-    </Compile>
     <Compile Include="Controllers\vcCajaChicaTransaccion.cs">
       <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controllers\vcCajaChicaTransaccion.Designer.cs">
-      <DependentUpon>vcCajaChicaTransaccion.cs</DependentUpon>
     </Compile>
     <Compile Include="Controllers\vcPartida.cs">
       <SubType>Component</SubType>
@@ -186,15 +180,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Controllers\vcBancoCuenta.resx">
-      <DependentUpon>vcBancoCuenta.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controllers\vcCajaChica.resx">
-      <DependentUpon>vcCajaChica.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controllers\vcCajaChicaTransaccion.resx">
-      <DependentUpon>vcCajaChicaTransaccion.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Controllers\vcPartidaModelo.resx">
       <DependentUpon>vcPartidaModelo.cs</DependentUpon>
     </EmbeddedResource>

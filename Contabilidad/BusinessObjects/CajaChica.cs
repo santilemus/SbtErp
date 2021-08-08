@@ -20,7 +20,7 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
     /// Bancos. BO para definir la parametrizacion de la caja chica
     /// </summary>
 
-    [DefaultClassOptions, ModelDefault("Caption", "Parámetros Caja Chica"), NavigationItem("Banco"), Persistent("BanCajaChica")]
+    [DefaultClassOptions, ModelDefault("Caption", "Parámetros Caja Chica"), NavigationItem("Banco"), Persistent(nameof(CajaChica))]
     [RuleCombinationOfPropertiesIsUnique("CajaChica_EmpresaCodigo_Unico", DefaultContexts.Save, "Empresa,Codigo",
         CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction)]
     [CreatableItem(false), DefaultProperty(nameof(Codigo))]

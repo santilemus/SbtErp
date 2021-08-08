@@ -1,5 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Application>
+  <BOModel>
+    <Class Name="SBT.Apps.Tercero.Module.BusinessObjects.Tercero" IsCloneable="True" />
+  </BOModel>
   <Options>
     <LayoutManagerOptions RequiredFieldMark="*" />
   </Options>
@@ -11,34 +14,73 @@
     <DetailView Id="AFP_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
-          <LayoutGroup Id="SimpleEditors" Direction="Horizontal" RelativeSize="100">
-            <LayoutGroup Id="AFP_col1" ShowCaption="False" Index="0" RelativeSize="50" IsNewNode="True">
-              <LayoutItem Id="Proveedor" ViewItem="Proveedor" Index="0" RelativeSize="4.5333333333333332" IsNewNode="True" />
-              <LayoutItem Id="Siglas" ViewItem="Siglas" Index="1" RelativeSize="3.4666666666666668" IsNewNode="True" />
-              <LayoutItem Id="AporteAfiliado" ViewItem="AporteAfiliado" Index="2" RelativeSize="92" IsNewNode="True" />
+          <LayoutGroup Id="SimpleEditors" RelativeSize="22.336328626444161" Direction="Horizontal">
+            <LayoutGroup Id="Tercero_col1" ShowCaption="False" Index="0" RelativeSize="50" IsNewNode="True">
+              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="20.689655172413794" IsNewNode="True" />
+              <LayoutItem Id="Nombre" ViewItem="Nombre" Index="1" RelativeSize="14.942528735632184" IsNewNode="True" />
+              <LayoutItem Id="DireccionPrincipal" ViewItem="DireccionPrincipal" Index="2" RelativeSize="14.942528735632184" IsNewNode="True" />
+              <LayoutItem Id="EMail" ViewItem="EMail" Index="3" RelativeSize="14.942528735632184" IsNewNode="True" />
+              <LayoutItem Id="SitioWeb" ViewItem="SitioWeb" Index="4" RelativeSize="14.942528735632184" IsNewNode="True" />
+              <LayoutItem Id="TipoPersona" ViewItem="TipoPersona" Index="5" RelativeSize="19.540229885057471" IsNewNode="True" />
             </LayoutGroup>
-            <LayoutGroup Id="AFP_col2" ShowCaption="False" Index="1" RelativeSize="50" IsNewNode="True">
-              <LayoutItem Id="AporteEmpresa" ViewItem="AporteEmpresa" Index="0" RelativeSize="4.5333333333333332" IsNewNode="True" />
-              <LayoutItem Id="Comision" ViewItem="Comision" Index="1" RelativeSize="95.466666666666669" IsNewNode="True" />
+            <LayoutGroup Id="Tercero_col2" ShowCaption="False" Index="1" RelativeSize="50" IsNewNode="True">
+              <LayoutItem Id="TipoContribuyente" ViewItem="TipoContribuyente" Index="0" RelativeSize="20.689655172413794" IsNewNode="True" />
+              <LayoutItem Id="Activo" ViewItem="Activo" Index="1" RelativeSize="14.942528735632184" IsNewNode="True" />
+              <LayoutItem Id="Clasificacion" ViewItem="Clasificacion" Index="2" RelativeSize="14.942528735632184" IsNewNode="True" />
+              <LayoutItem Id="AporteAfiliado" ViewItem="AporteAfiliado" Index="3" RelativeSize="14.942528735632184" IsNewNode="True" />
+              <LayoutItem Id="AporteEmpresa" ViewItem="AporteEmpresa" Index="4" RelativeSize="14.942528735632184" IsNewNode="True" />
+              <LayoutItem Id="Comision" ViewItem="Comision" Index="5" RelativeSize="19.540229885057471" IsNewNode="True" />
             </LayoutGroup>
-            <LayoutGroup Id="AFP" Removed="True" />
+            <LayoutGroup Id="XPObject" Index="2" RelativeSize="45.501285347043705" Caption="Oid" Removed="True">
+              <LayoutItem Id="Oid" RelativeSize="100" Removed="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="AFP" RelativeSize="55.7840616966581" Caption="AFP" Removed="True">
+              <LayoutItem Id="AporteAfiliado" RelativeSize="39.130434782608695" Index="0" Removed="True" />
+              <LayoutItem Id="AporteEmpresa" RelativeSize="54.545454545454547" Index="0" Removed="True" />
+              <LayoutItem Id="Comision" RelativeSize="100" Index="0" Removed="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="Tercero" Removed="True" />
           </LayoutGroup>
+          <TabbedGroup Id="Tabs" RelativeSize="77.663671373555843">
+            <LayoutGroup Id="Telefonos" RelativeSize="100">
+              <LayoutItem Id="Telefonos" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="Giros" RelativeSize="100">
+              <LayoutItem Id="Giros" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="Contactos" RelativeSize="100">
+              <LayoutItem Id="Contactos" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="Roles" RelativeSize="100">
+              <LayoutItem Id="Roles" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="Notas" RelativeSize="100">
+              <LayoutItem Id="Notas" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="Sucursales" RelativeSize="100">
+              <LayoutItem Id="Sucursales" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="Direcciones" RelativeSize="100">
+              <LayoutItem Id="Direcciones" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="Documentos" RelativeSize="100">
+              <LayoutItem Id="Documentos" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="Creditos" RelativeSize="100" Removed="True">
+              <LayoutItem Id="Creditos" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="Garantias" RelativeSize="100" Removed="True">
+              <LayoutItem Id="Garantias" RelativeSize="100" />
+            </LayoutGroup>
+          </TabbedGroup>
         </LayoutGroup>
       </Layout>
     </DetailView>
     <ListView Id="AFP_ListView">
       <Columns>
-        <ColumnInfo Id="ProveedorNombre" PropertyName="Proveedor.Nombre" Index="0" IsNewNode="True" />
-        <ColumnInfo Id="Siglas" Index="1" />
         <ColumnInfo Id="AporteAfiliado" Index="2" />
         <ColumnInfo Id="AporteEmpresa" Index="3" />
         <ColumnInfo Id="Comision" Index="4" />
-      </Columns>
-    </ListView>
-    <ListView Id="AFP_LookupListView">
-      <Columns>
-        <ColumnInfo Id="ProveedorNombre" PropertyName="Proveedor.Nombre" Index="0" IsNewNode="True" />
-        <ColumnInfo Id="Siglas" Index="1" />
       </Columns>
     </ListView>
     <DetailView Id="Banco_DetailView">
@@ -170,6 +212,12 @@
         </LayoutGroup>
       </Layout>
     </DetailView>
+    <ListView Id="Tercero_Sucursales_ListView">
+      <Columns>
+        <ColumnInfo Id="Nombre" SortIndex="-1" SortOrder="None" />
+        <ColumnInfo Id="Telefono" SortIndex="0" SortOrder="Ascending" />
+      </Columns>
+    </ListView>
     <DetailView Id="TerceroContacto_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">

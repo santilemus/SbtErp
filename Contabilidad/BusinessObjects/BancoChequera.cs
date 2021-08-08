@@ -14,7 +14,7 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
     /// Bancos. BO para las chequeras correspondientes a las cuentas bancarias de las cuales se emiten cheques
     /// </summary>
     /// 
-    [ModelDefault("Caption", "Chequera"), NavigationItem(false), Persistent("BanChequera"), CreatableItem(false)]
+    [ModelDefault("Caption", "Chequera"), NavigationItem(false), Persistent(nameof(BancoChequera)), CreatableItem(false)]
     //[ImageName("BO_Contact")]
     //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]

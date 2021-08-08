@@ -20,7 +20,7 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
     /// Bancos. BO para el detalle de las transacciones de caja chica
     /// </summary>
     [ModelDefault("Caption", "Caja Chica - Transacción Detalle"), NavigationItem(false), CreatableItem(false),
-        Persistent("BanCajaChicaTransaccionDetalle"), DefaultProperty("Proveedor")]
+        Persistent(nameof(CajaChicaTransaccionDetalle)), DefaultProperty("Proveedor")]
     //[ImageName("BO_Contact")]
     //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]

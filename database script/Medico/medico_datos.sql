@@ -3,27 +3,21 @@ set identity_insert dbo.XPObjectType on
 go
 insert into dbo.XPObjectType (OID, TypeName, AssemblyName)
 values 
-  (1, N'DevExpress.ExpressApp.Security.Strategy.SecuritySystemUser', N'DevExpress.ExpressApp.Security.Xpo.v20.1'),
-  (2, N'DevExpress.ExpressApp.Security.Strategy.SecuritySystemRole', N'DevExpress.ExpressApp.Security.Xpo.v20.1'),
-  (3, N'DevExpress.ExpressApp.Security.Strategy.SecuritySystemTypePermissionObject', N'DevExpress.ExpressApp.Security.Xpo.v20.1'),
-  (4, N'DevExpress.ExpressApp.Security.Strategy.SecuritySystemObjectPermissionsObject', N'DevExpress.ExpressApp.Security.Xpo.v20.1'),
-  (5, N'DevExpress.ExpressApp.Security.Strategy.SecuritySystemMemberPermissionsObject', N'DevExpress.ExpressApp.Security.Xpo.v20.1'),
-  (6, N'SecuritySystemUserUsers_SecuritySystemRoleRoles', N''),
   (7, N'DevExpress.Persistent.BaseImpl.ModelDifference', N'DevExpress.Persistent.BaseImpl.v20.1'),
   (8, N'DevExpress.Persistent.BaseImpl.ModelDifferenceAspect', N'DevExpress.Persistent.BaseImpl.v20.1'),
   (9, N'DevExpress.Persistent.BaseImpl.AuditDataItemPersistent', N'DevExpress.Persistent.BaseImpl.v20.1'),
   (10, N'DevExpress.Persistent.BaseImpl.AuditedObjectWeakReference', N'DevExpress.Persistent.BaseImpl.v20.1'),
   (11, N'DevExpress.Xpo.XPWeakReference', N'DevExpress.Xpo.v20.1'),
-  (12, N'Visible.Medico.Generico.Module.BusinessObjects.Medico', N'Visible.Medico.Generico.Module'),
-  (13, N'Visible.Medico.Generico.Module.BusinessObjects.Medicamento', N'Visible.Medico.Generico.Module'),
+  (12, N'SBT.Apps.Medico.Expediente.Module.BusinessObjects.RecordatorioClinico', N'SBT.Apps.Medico.Expediente.Module'),
+  (13, N'SBT.Apps.Medico.Expediente.Module.BusinessObjects.PacienteFileData', N'SBT.Apps.Medico.Expediente.Module'),
   (14, N'DevExpress.Persistent.BaseImpl.PermissionPolicy.PermissionPolicyRole', N'DevExpress.Persistent.BaseImpl.v20.1'),
   (15, N'DevExpress.Persistent.BaseImpl.PermissionPolicy.PermissionPolicyTypePermissionObject', N'DevExpress.Persistent.BaseImpl.v20.1'),
   (16, N'DevExpress.Persistent.BaseImpl.PermissionPolicy.PermissionPolicyObjectPermissionsObject', N'DevExpress.Persistent.BaseImpl.v20.1'),
   (17, N'DevExpress.Persistent.BaseImpl.PermissionPolicy.PermissionPolicyMemberPermissionsObject', N'DevExpress.Persistent.BaseImpl.v20.1'),
-  (18, N'Visible.Catalogos.Module.BusinessObjects.UsuarioEmpresa', N'Visible.Catalogos.Module'),
+  (18, N'DevExpress.Persistent.BaseImpl.FileData', N'DevExpress.Persistent.BaseImpl.v20.1')
   (19, N'PermissionPolicyUserUsers_PermissionPolicyRoleRoles', N''),
-  (20, N'Visible.Catalogos.Module.BusinessObjects.Empresa', N'Visible.Catalogos.Module'),
-  (21, N'Visible.Catalogos.Module.BusinessObjects.EmpresaUnidad', N'Visible.Catalogos.Module'),
+  (20, N'SBT.Apps.Tercero.Module.BusinessObjects.TerceroTelefono', N'SBT.Apps.Tercero.Module'),
+  (21, N'SBT.Apps.Tercero.Module.BusinessObjects.TerceroRole', N'SBT.Apps.Tercero.Module'),
   (22, N'SBT.Apps.Base.Module.BusinessObjects.UsuarioEmpresa', N'SBT.Apps.Base.Module'),
   (23, N'SBT.Apps.Base.Module.BusinessObjects.Empresa', N'SBT.Apps.Base.Module'),
   (24, N'SBT.Apps.Base.Module.BusinessObjects.EmpresaUnidad', N'SBT.Apps.Base.Module'),
@@ -71,13 +65,9 @@ values
   (66, N'SBT.Apps.Medico.Expediente.Module.BusinessObjects.ConsultaExamen', N'SBT.Apps.Medico.Expediente.Module'),
   (67, N'SBT.Apps.Medico.Expediente.Module.BusinessObjects.ConsultaSigno', N'SBT.Apps.Medico.Expediente.Module'),
   (68, N'SBT.Apps.Medico.Generico.Module.BusinessObjects.Examen', N'SBT.Apps.Medico.Generico.Module'),
-  (69, N'SBT.Apps.Tercero.Module.BusinessObjects.TerceroDireccion', N'SBT.Apps.Tercero.Module'),
-  (70, N'SBT.Apps.Tercero.Module.BusinessObjects.TerceroTelefono', N'SBT.Apps.Tercero.Module'),
-  (71, N'SBT.Apps.Tercero.Module.BusinessObjects.TerceroRole', N'SBT.Apps.Tercero.Module'),
-  (72, N'SBT.Apps.Medico.Expediente.Module.BusinessObjects.ArchivoAdjunto', N'SBT.Apps.Medico.Expediente.Module'),
-  (73, N'DevExpress.Persistent.BaseImpl.FileData', N'DevExpress.Persistent.BaseImpl.v20.1'),
-  (74, N'SBT.Apps.Medico.Expediente.Module.BusinessObjects.RecordatorioClinico', N'SBT.Apps.Medico.Expediente.Module'),
-  (75, N'SBT.Apps.Medico.Expediente.Module.BusinessObjects.PacienteFileData', N'SBT.Apps.Medico.Expediente.Module')
+  (69, N'SBT.Apps.Tercero.Module.BusinessObjects.TerceroDireccion', N'SBT.Apps.Tercero.Module')
+
+
 go
 set identity_insert dbo.XPObjectType off
 go
