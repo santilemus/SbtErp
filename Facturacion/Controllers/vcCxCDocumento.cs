@@ -181,9 +181,9 @@ namespace SBT.Apps.Facturacion.Module.Controllers
             //    CriteriaOperator.Parse("Sum(Iif([CxCTransaccion.Concepto.Tipo] == 1, [Total] + [Valor], -[Total] - [Valor]))"),
             //    CriteriaOperator.Parse("[Venta.Oid] == ? && [CxCTransaccion.Estado] != 2", item.Venta.Oid)));
 
-            decimal fCargo = Convert.ToDecimal(item.Venta.CxCDocumentos.Where(x => x.Venta == item.Venta && x.CxCTransaccion.Concepto.TipoOperacion == ETipoOperacion.Cargo &&
+            decimal fCargo = Convert.ToDecimal(item.Venta.CxCDocumentos.Where(x => x.Venta == item.Venta && x.CxCTransaccion.Tipo.TipoOperacion == ETipoOperacion.Cargo &&
                                                            x.CxCTransaccion.Estado != ECxcTransaccionEstado.Anulado).Sum(x => x.Total + x.Valor));
-            decimal fAbono = Convert.ToDecimal(item.Venta.CxCDocumentos.Where(x => x.Venta == item.Venta && x.CxCTransaccion.Concepto.TipoOperacion == ETipoOperacion.Abono &&
+            decimal fAbono = Convert.ToDecimal(item.Venta.CxCDocumentos.Where(x => x.Venta == item.Venta && x.CxCTransaccion.Tipo.TipoOperacion == ETipoOperacion.Abono &&
                                                            x.CxCTransaccion.Estado != ECxcTransaccionEstado.Anulado).Sum(x => x.Total + x.Valor));
             decimal monto = Math.Abs(fCargo - fAbono);
             if ((item.Venta.Saldo - monto) == 0.0m)
@@ -206,7 +206,7 @@ namespace SBT.Apps.Facturacion.Module.Controllers
             {
                 var cxcDocumento = (CxCDocumento)View.CurrentObject;
                 if (cxcDocumento.Venta.Saldo <= 0.0m || cxcDocumento.Venta.Estado != EEstadoFactura.Debe)
-                    MostrarError($"La venta con {cxcDocumento.Venta.TipoFactura.Nombre} debe tener saldo >= 0 y Estado Debe para aplicarle {cxcDocumento.CxCTransaccion.Concepto}");
+                    MostrarError($"La venta con {cxcDocumento.Venta.TipoFactura.Nombre} debe tener saldo >= 0 y Estado Debe para aplicarle {cxcDocumento.CxCTransaccion.Tipo}");
             }
         }
     }

@@ -1,21 +1,14 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp;
-using System.ComponentModel;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
-using DevExpress.Persistent.Base;
-using System.Collections.Generic;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
-using SBT.Apps.Base.Module.BusinessObjects;
-using SBT.Apps.Tercero.Module.BusinessObjects;
-using SBT.Apps.Empleado.Module.BusinessObjects;
-using SBT.Apps.Facturacion.Module.BusinessObjects;
+using DevExpress.Xpo;
 using SBT.Apps.Banco.Module.BusinessObjects;
+using SBT.Apps.Base.Module.BusinessObjects;
+using SBT.Apps.Facturacion.Module.BusinessObjects;
+using System;
+using System.ComponentModel;
+using System.Linq;
 
 
 namespace SBT.Apps.CxC.Module.BusinessObjects
@@ -31,7 +24,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
     ///                                      moneda.  (evaluar que otros datos harian falta)
     ///                                  
     /// </remarks>
-    
+
     [DefaultClassOptions, ModelDefault("Caption", "CxC Transacción"), NavigationItem("Cuenta por Cobrar")]
     [CreatableItem(false), Persistent(nameof(CxCTransaccion)), DefaultProperty("Numero")]
     [ImageName(nameof(CxCTransaccion))]
@@ -61,7 +54,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         SBT.Apps.Tercero.Module.BusinessObjects.Banco banco;
         string comentario;
         DateTime fecha;
-        Concepto concepto;
+        CxCTipoTransaccion tipo;
         [Persistent(nameof(AutorizacionDocumento))]
         AutorizacionDocumento autorizacionDocumento;
 
@@ -79,14 +72,14 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         /// <summary>
         /// Tipo de concepto o de transaccion de cuenta por cobrar
         /// </summary>
-        //[Association("Concepto-Transacciones"), XafDisplayName("Tipo Concepto")]
-        [RuleRequiredField("CxcTransaccion.Concepto_Requerido", DefaultContexts.Save)]
+        //[Association("TipoTransaccion-Transacciones"), XafDisplayName("Tipo Concepto")]
+        [RuleRequiredField("CxcTransaccion.Tipo_Requerido", DefaultContexts.Save)]
         [Index(2), VisibleInLookupListView(true)]
         [DetailViewLayout("Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
-        public Concepto Concepto
+        public CxCTipoTransaccion Tipo
         {
-            get => concepto;
-            set => SetPropertyValue(nameof(Concepto), ref concepto, value);
+            get => tipo;
+            set => SetPropertyValue(nameof(Tipo), ref tipo, value);
         }
 
         /// <summary>
@@ -111,7 +104,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
             set => SetPropertyValue(nameof(Cartera), ref cartera, value);
         }
 
-        
+
         [DbType("varchar(12)"), XafDisplayName("Tipo Tarjeta"), Index(6), VisibleInListView(false)]
         [DetailViewLayout("Datos Transacción", LayoutGroupType.SimpleEditorsGroup, 1)]
         [DataSourceCriteria("[Categoria] == 6 And [Activo] == True")]   // categoria 6 son tarjetas de credito
@@ -193,7 +186,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
 
         #region colecciones
         [Association("CxCTransaccion-Documentos"), DevExpress.Xpo.Aggregated, XafDisplayName("Documentos"), Index(0)]
-        
+
         public XPCollection<CxCDocumento> Documentos
         {
             get

@@ -1,7 +1,6 @@
 ﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
-using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using System;
@@ -50,7 +49,7 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         {
             get => transaccion;
             set => SetPropertyValue(nameof(Transaccion), ref transaccion, value);
-        }          
+        }
 
         [DbType("smallint"), XafDisplayName("Estado"), Index(8)]
         public EConciliacionDetalleEstado Estado

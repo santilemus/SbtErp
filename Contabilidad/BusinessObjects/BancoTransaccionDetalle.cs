@@ -1,18 +1,13 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp;
-using System.ComponentModel;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
-using DevExpress.Persistent.Base;
-using System.Collections.Generic;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
-using SBT.Apps.Contabilidad.BusinessObjects;
+using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
+using SBT.Apps.Contabilidad.BusinessObjects;
+using System;
+using System.ComponentModel;
+using System.Linq;
 
 namespace SBT.Apps.Banco.Module.BusinessObjects
 {
@@ -59,8 +54,8 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         {
             get => cuentaContable;
             set => SetPropertyValue(nameof(CuentaContable), ref cuentaContable, value);
-        }     
-        
+        }
+
         [DbType("money"), Persistent("Debe"), XafDisplayName("Debe")]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         public decimal Debe

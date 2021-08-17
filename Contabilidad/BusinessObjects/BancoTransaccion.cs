@@ -1,19 +1,15 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp;
-using System.ComponentModel;
+﻿using DevExpress.Data.Filtering;
+using DevExpress.ExpressApp.ConditionalAppearance;
 using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
-using DevExpress.Persistent.Base;
-using System.Collections.Generic;
 using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
+using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
-using SBT.Apps.Empleado.Module.BusinessObjects;
-using SBT.Apps.Tercero.Module.BusinessObjects;
+using SBT.Apps.Contabilidad.Module.BusinessObjects;
+using System;
+using System.ComponentModel;
+using System.Linq;
 
 namespace SBT.Apps.Banco.Module.BusinessObjects
 {
@@ -25,17 +21,21 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         DefaultProperty(nameof(Numero))]  // revisar si es la propiedad por default adecuada
     [RuleCombinationOfPropertiesIsUnique("BancoTransaccion.Cuenta_Clasificacion_Numero", DefaultContexts.Save,
         "BancoCuenta,Clasificacion,Numero", CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction, SkipNullOrEmptyValues = true)]
-    [RuleIsReferenced("BancoTransaccion.Reference_Delete", DefaultContexts.Delete, typeof(BancoConciliacionDetalle), "Transaccion", 
+    [RuleIsReferenced("BancoTransaccion.Reference_Delete", DefaultContexts.Delete, typeof(BancoConciliacionDetalle), "Transaccion",
         InvertResult = true, CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction,
         MessageTemplateMustBeReferenced = "El objeto {TargetObject} no debe tener referencias.")]
     [RuleIsReferenced("BancoTransaccion.Reference_Editar", DefaultContexts.Save, typeof(BancoConciliacionDetalle), "Transaccion",
         InvertResult = true, CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction,
         MessageTemplateMustBeReferenced = "El objeto {TargetObject} no debe tener referencias.")]
 
+    [Appearance("BancoTransaccion.Cheque y Cargo", Criteria = "[Clasificacion.Tipo] == 3 || [Clasificacion.Tipo] == 4", AppearanceItemType = "ViewItem",
+        Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "DetailView", TargetItems = "Abono;IdReferencia")]
+    [Appearance("BancoTransaccion.Remesa y Abono", Criteria = "[Clasificacion.Tipo] == 1 || [Clasificacion.Tipo] == 2", AppearanceItemType = "ViewItem",
+        Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "DetailView", TargetItems = "ChequeNo;Proveedor;Beneficiario;Cargo")]
+
     [ImageName(nameof(BancoTransaccion))]
     [DevExpress.Xpo.OptimisticLocking(Enabled = true, LockingKind = OptimisticLockingBehavior.ConsiderOptimisticLockingField)]
     [DevExpress.Xpo.OptimisticLockingReadBehavior(OptimisticLockingReadBehavior.ReloadObject, true)]
-    //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class BancoTransaccion : XPObjectBaseBO
@@ -47,7 +47,6 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         public override void AfterConstruction()
         {
             base.AfterConstruction();
-            partida = null;
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
@@ -95,9 +94,6 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         string beneficiario;
         decimal monto;
         EBancoTransaccionEstado estado = EBancoTransaccionEstado.Digitado;
-        [Persistent("Partida")]
-        SBT.Apps.Contabilidad.Module.BusinessObjects.Partida partida;
-        // otros fields
         BancoChequera chequera;
 
         [Association("BancoCuenta-Transacciones"), Persistent(nameof(BancoCuenta)), XafDisplayName("Cuenta"), Index(0)]
@@ -162,7 +158,7 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
             }
         }
 
-        [DbType("numeric(12,2)"), Persistent(nameof(ValorMoneda))]
+        [DbType("numeric(12,2)"), Persistent(nameof(ValorMoneda)), VisibleInListView(false)]
         [XafDisplayName("Valor Moneda"), Index(5), ModelDefault("AllowEdit", "False")]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         public decimal ValorMoneda
@@ -192,7 +188,7 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         }
 
         [Size(150), DbType("varchar(150)"), Persistent("Beneficiario"), XafDisplayName("Paguese A"), Index(8)]
-        [VisibleInLookupListView(true)]
+        [VisibleInLookupListView(true), VisibleInListView(false)]
         public string Beneficiario
         {
             get => beneficiario;
@@ -229,13 +225,6 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
             set => SetPropertyValue(nameof(Estado), ref estado, value);
         }
 
-        [PersistentAlias(nameof(partida)), XafDisplayName("Partida"), Index(13), VisibleInListView(false)]
-        [ExplicitLoading]
-        public SBT.Apps.Contabilidad.Module.BusinessObjects.Partida Partida
-        {
-            get => partida;
-        }
-
         [PersistentAlias("Iif([Clasificacion.Tipo] = 1 Or [Clasificacion.Tipo] = 2, [Monto], 0)")]
         [XafDisplayName("Abono"), ModelDefault("DisplayFormat", "{0:N2}"), Index(14)]
         public decimal Abono
@@ -260,7 +249,7 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
             PersistentAlias(nameof(usuarioAnulo)), Browsable(false)]
         [Delayed(true)]
         public string UsuarioAnulo => usuarioAnulo;
-        
+
         [PersistentAlias(nameof(comentario))]
         [Size(250), Index(18), XafDisplayName("Comentario")]
         [Delayed(true)]
@@ -269,7 +258,11 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         #endregion
 
         #region Colecciones
-        [Association("BancoTransaccion-Detalles"), DevExpress.Xpo.Aggregated, XafDisplayName("Detalle")]
+
+        //[Association("BancoTransaccion-Pagos"), XafDisplayName("Pagos"), Index(0), DevExpress.Xpo.Aggregated]
+        //public XPCollection<BancoTransaccionPago> Pagos => GetCollection<BancoTransaccionPago>(nameof(Pagos));
+
+        [Association("BancoTransaccion-Detalles"), DevExpress.Xpo.Aggregated, XafDisplayName("Detalle"), Index(1)]
         public XPCollection<BancoTransaccionDetalle> Detalles
         {
             get
@@ -278,7 +271,7 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
             }
         }
 
-        [Association("BancoTransaccion-Conciliaciones"), XafDisplayName("Conciliaciones")]
+        [Association("BancoTransaccion-Conciliaciones"), XafDisplayName("Conciliaciones"), Index(2)]
         public XPCollection<BancoConciliacionDetalle> Conciliaciones
         {
             get
@@ -286,10 +279,16 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
                 return GetCollection<BancoConciliacionDetalle>(nameof(Conciliaciones));
             }
         }
+
+        [Association("BancoTransaccion-BancoTransaccionPartidas"), XafDisplayName("Partidas"), DevExpress.Xpo.Aggregated, Index(3)]
+        public XPCollection<BancoTransaccionPartida> BancoTransaccionPartidas => GetCollection<BancoTransaccionPartida>(nameof(BancoTransaccionPartidas));
+
         #endregion
+
         [Action(Caption = "Entregar Cheque", ConfirmationMessage = "Esta Seguro?", TargetObjectsCriteria = "Clasificacion.Tipo = 3",
             SelectionDependencyType = MethodActionSelectionDependencyType.RequireSingleObject, ImageName = "Attention", AutoCommit = true,
             ToolTip = "Marcar el cheque seleccionado como entregado")]
+
         public void Entregado()
         {
             Estado = EBancoTransaccionEstado.Entregado;

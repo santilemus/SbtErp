@@ -1,17 +1,12 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp;
-using System.ComponentModel;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
-using DevExpress.Persistent.Base;
-using System.Collections.Generic;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
+using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
+using System;
+using System.ComponentModel;
+using System.Linq;
 
 namespace SBT.Apps.Banco.Module.BusinessObjects
 {
@@ -19,7 +14,7 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
     /// Bancos. BO Clasificacion de las transacciones de bancos, para tener una identificacion mas amplia que la proporcionada
     /// por el enum EBancoTipoTransaccion
     /// </summary>
-    [DefaultClassOptions, NavigationItem("Banco"), ModelDefault("Caption", "Clasificación Transacción"), 
+    [DefaultClassOptions, NavigationItem("Banco"), ModelDefault("Caption", "Clasificación Transacción"),
         Persistent(nameof(BancoTipoTransaccion)), DefaultProperty("Nombre")]
     [ImageName("BancoClasificacionTransac")]
     //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
@@ -57,8 +52,8 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
             get => tipo;
             set => SetPropertyValue(nameof(Tipo), ref tipo, value);
         }
-        
-        [DbType("bit"), Persistent("Activa"), XafDisplayName("Activa"), 
+
+        [DbType("bit"), Persistent("Activa"), XafDisplayName("Activa"),
             RuleRequiredField("BancoClasificacionTransac.Activa_Requerido", DefaultContexts.Save)]
         public bool Activa
         {

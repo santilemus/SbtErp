@@ -176,6 +176,10 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
                 return GetCollection<PartidaDetalle>(nameof(Detalles));
             }
         }
+
+        [Association("Partida-BancoTransaccionPartidas"), XafDisplayName("Banco Transacciones")]
+        public XPCollection<BancoTransaccionPartida> BancoTransaccionPartidas => GetCollection<BancoTransaccionPartida>(nameof(BancoTransaccionPartidas));
+
         #endregion
 
         #region Metodos

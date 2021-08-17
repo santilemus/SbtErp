@@ -1,40 +1,30 @@
-﻿using DevExpress.ExpressApp;
-using DevExpress.ExpressApp.DC;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
-using SBT.Apps.Base.Module.BusinessObjects;
-using SBT.Apps.Facturacion.Module.BusinessObjects;
+using SBT.Apps.Compra.Module.BusinessObjects;
 using SBT.Apps.Producto.Module.BusinessObjects;
 using System;
-using System.ComponentModel;
 using System.Linq;
 
-
-namespace SBT.Apps.CxC.Module.BusinessObjects
+namespace SBT.Apps.CxP.Module.BusinessObjects
 {
-    /// <summary>
-    /// BO que corresponde al detalle de la cuenta por cobrar cuando existe y esta relacionado con el detalle de la venta.
-    /// Ejemplos: detalle de la nota de credito, detalle nota de debito
-    /// </summary>
-
-    [ModelDefault("Caption", "CxC Detalle"), NavigationItem(false), CreatableItem(false),
-        DefaultProperty(nameof(VentaDetalle))]
+    [DefaultClassOptions]
     //[ImageName("BO_Contact")]
-    [DefaultListViewOptions(MasterDetailMode.ListViewOnly, true, NewItemRowPosition.Top)]
-    [Persistent(nameof(CxCDocumentoDetalle))]
+    //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
+    //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
+    //[Persistent("DatabaseTableName")]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
-    public class CxCDocumentoDetalle : XPObjectBaseBO
+    public class CxPDocumentoDetalle : XPObject
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
-        public CxCDocumentoDetalle(Session session)
+        public CxPDocumentoDetalle(Session session)
             : base(session)
         {
         }
         public override void AfterConstruction()
         {
             base.AfterConstruction();
-            cantidadAnulada = null;
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
@@ -48,22 +38,23 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         protected decimal? exenta;
         decimal precioUnidad;
         decimal cantidad;
-        VentaDetalle ventaDetalle;
-        CxC.Module.BusinessObjects.CxCDocumento cxCDocumento;
+        CompraFacturaDetalle facturaDetalle;
+        CxPDocumento documento;
 
-        [Association("CxCDocumento-Detalles"), XafDisplayName("CxC Documento"), Index(0)]
-        public CxC.Module.BusinessObjects.CxCDocumento CxCDocumento
+        [Association("CxPDocumento-Detalles")]
+        [XafDisplayName("Documento")]
+        public CxPDocumento Documento
         {
-            get => cxCDocumento;
-            set => SetPropertyValue(nameof(CxCDocumento), ref cxCDocumento, value);
+            get => documento;
+            set => SetPropertyValue(nameof(Documento), ref documento, value);
         }
 
-
-        [Association("VentaDetalle-CxCDocumentoDetalles"), XafDisplayName("Venta Detalle"), Index(1)]
-        public VentaDetalle VentaDetalle
+        //[Association("CompraFacturaDetalle-CxPDetalles")]
+        [XafDisplayName("Factura Detalle")]
+        public CompraFacturaDetalle FacturaDetalle
         {
-            get => ventaDetalle;
-            set => SetPropertyValue(nameof(VentaDetalle), ref ventaDetalle, value);
+            get => facturaDetalle;
+            set => SetPropertyValue(nameof(FacturaDetalle), ref facturaDetalle, value);
         }
 
         /// <summary>
@@ -152,13 +143,6 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         }
 
         /// <summary>
-        /// Total
-        /// </summary>
-        [PersistentAlias("[Exenta] + [Iva] + [Gravada] + [NoSujeta]"), Browsable(false), XafDisplayName("Total")]
-        [ModelDefault("DisplayFormat", "{0:N2}")]
-        public decimal Total => Convert.ToDecimal(EvaluateAlias(nameof(Total)));
-
-        /// <summary>
         /// Cantidad anulada
         /// </summary>
         [PersistentAlias(nameof(cantidadAnulada))]
@@ -181,20 +165,20 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
             iva = 0.0m;
             exenta = 0.0m;
             noSujeta = 0.0m;
-            if (CxCDocumento == null || VentaDetalle.Producto == null)
+            if (Documento == null || FacturaDetalle.Producto == null)
                 return;
-            switch (VentaDetalle.Producto.Categoria.ClasificacionIva)
+            switch (FacturaDetalle.Producto.Categoria.ClasificacionIva)
             {
                 case EClasificacionIVA.Gravado:
-                    if (VentaDetalle.Venta.TipoFactura.Codigo == "COVE01")
+                    if (FacturaDetalle.Factura.TipoFactura.Codigo == "COVE01")
                     {
                         gravada = Math.Round(Cantidad * PrecioUnidad, 2);
-                        iva = Math.Round(Convert.ToDecimal(Gravada) * VentaDetalle.Producto.Categoria.PorcentajeIVA, 2);
+                        iva = Math.Round(Convert.ToDecimal(Gravada) * FacturaDetalle.Producto.Categoria.PorcentajeIVA, 2);
                     }
                     else
                     {
-                        gravada = Math.Round(Cantidad * PrecioUnidad / (VentaDetalle.Producto.Categoria.PorcentajeIVA + 1), 2);
-                        iva = Math.Round(Convert.ToDecimal(Gravada) * VentaDetalle.Producto.Categoria.PorcentajeIVA, 2);
+                        gravada = Math.Round(Cantidad * PrecioUnidad / (FacturaDetalle.Producto.Categoria.PorcentajeIVA + 1), 2);
+                        iva = Math.Round(Convert.ToDecimal(Gravada) * FacturaDetalle.Producto.Categoria.PorcentajeIVA, 2);
                     }
                     break;
                 default:
@@ -208,21 +192,13 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
             OnChanged(nameof(Exenta));
             //if (forceChangeEvents)
             //    OnChanged(nameof(PrecioUnidad), oldValue, PrecioUnidad);
-            CxCDocumento.UpdateTotalExenta(true);
-            CxCDocumento.UpdateTotalGravada(true);
-            CxCDocumento.UpdateTotalIva(true);
-            CxCDocumento.UpdateTotalNoSujeta(true);
+            Documento.UpdateTotalExenta(true);
+            Documento.UpdateTotalGravada(true);
+            Documento.UpdateTotalIva(true);
+            Documento.UpdateTotalNoSujeta(true);
         }
 
         #endregion
-        //private string _PersistentProperty;
-        //[XafDisplayName("My display name"), ToolTip("My hint message")]
-        //[ModelDefault("EditMask", "(000)-00"), Index(0), VisibleInListView(false)]
-        //[Persistent("DatabaseColumnName"), RuleRequiredField(DefaultContexts.Save)]
-        //public string PersistentProperty {
-        //    get { return _PersistentProperty; }
-        //    set { SetPropertyValue(nameof(PersistentProperty), ref _PersistentProperty, value); }
-        //}
 
         //[Action(Caption = "My UI Action", ConfirmationMessage = "Are you sure?", ImageName = "Attention", AutoCommit = true)]
         //public void ActionMethod() {

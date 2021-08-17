@@ -102,6 +102,23 @@
         <ColumnInfo Id="NoSujeta" Index="8" />
       </Columns>
     </ListView>
+    <ListView Id="CompraFactura_ListView">
+      <Columns>
+        <ColumnInfo Id="Origen" Width="98" Index="-1" />
+        <ColumnInfo Id="Tipo" Width="88" Index="-1" />
+        <ColumnInfo Id="TipoFactura" Index="-1" Width="106" />
+        <ColumnInfo Id="Fecha" Index="1" />
+        <ColumnInfo Id="Proveedor" Width="227" Index="2" />
+        <ColumnInfo Id="NumeroDocumento" Width="116" Index="3" />
+        <ColumnInfo Id="Concepto" Index="4" Width="304" />
+        <ColumnInfo Id="Exenta" Index="5" Width="67" />
+        <ColumnInfo Id="Gravada" Index="6" Width="88" />
+        <ColumnInfo Id="Iva" Index="7" />
+        <ColumnInfo Id="Total" Index="8" Width="93" />
+        <ColumnInfo Id="Estado" Index="9" />
+        <ColumnInfo Id="Saldo" Index="10" Width="102" />
+      </Columns>
+    </ListView>
     <DetailView Id="CompraFacturaDetalle_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
@@ -337,6 +354,22 @@
         <ColumnInfo Id="Iva" Index="7" Width="92" />
         <ColumnInfo Id="Total" Index="8" Width="101" />
         <ColumnInfo Id="Saldo" Index="9" Width="114" />
+      </Columns>
+    </ListView>
+    <ListView Id="OrdenCompra_ListView">
+      <Columns>
+        <ColumnInfo Id="Estado" Index="-1" />
+        <ColumnInfo Id="Saldo" Index="-1" Width="79" />
+        <ColumnInfo Id="TipoFactura" Index="-1" />
+        <ColumnInfo Id="Fecha" Index="0" />
+        <ColumnInfo Id="Proveedor" SortIndex="-1" SortOrder="None" Index="1" />
+        <ColumnInfo Id="Tipo" Index="2" Width="90" />
+        <ColumnInfo Id="Concepto" Index="3" Width="275" />
+        <ColumnInfo Id="Exenta" Index="4" Width="83" />
+        <ColumnInfo Id="Gravada" Index="5" Width="89" />
+        <ColumnInfo Id="Iva" Index="6" Width="73" />
+        <ColumnInfo Id="Total" Index="7" SortIndex="0" SortOrder="Ascending" Width="101" />
+        <ColumnInfo Id="EstadoOrden" Index="8" Width="91" />
       </Columns>
     </ListView>
     <DetailView Id="OrdenCompraDetalle_DetailView">

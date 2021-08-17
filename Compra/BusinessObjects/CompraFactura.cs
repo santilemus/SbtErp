@@ -1,20 +1,16 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp;
-using System.ComponentModel;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
-using DevExpress.Persistent.Base;
-using System.Collections.Generic;
-using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
-using DevExpress.Persistent.Validation;
-using SBT.Apps.Base.Module.BusinessObjects;
-using SBT.Apps.Tercero.Module.BusinessObjects;
-using SBT.Apps.Inventario.Module.BusinessObjects;
+﻿using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp.ConditionalAppearance;
+using DevExpress.ExpressApp.DC;
+using DevExpress.ExpressApp.Model;
+using DevExpress.Persistent.Base;
+using DevExpress.Persistent.Validation;
+using DevExpress.Xpo;
+using SBT.Apps.Base.Module.BusinessObjects;
+using SBT.Apps.CxP.Module.BusinessObjects;
+using SBT.Apps.Inventario.Module.BusinessObjects;
+using System;
+using System.ComponentModel;
+using System.Linq;
 
 namespace SBT.Apps.Compra.Module.BusinessObjects
 {
@@ -24,7 +20,7 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
     [DefaultClassOptions, ModelDefault("Caption", "Compra Factura"), NavigationItem("Compras"), CreatableItem(false)]
     [DefaultProperty(nameof(NumeroDocumento))]
     [Persistent(nameof(CompraFactura))]
-    [Appearance("CompraFactura_Servicios_Intangibles", AppearanceItemType = "Any", Criteria = "[Tipo] In (0, 2)", 
+    [Appearance("CompraFactura_Servicios_Intangibles", AppearanceItemType = "Any", Criteria = "[Tipo] In (0, 2)",
         Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, TargetItems = "Detalles;Ingresos")]
     [ImageName(nameof(CompraFactura))]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
@@ -115,6 +111,8 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
 
         [Association("CompraFactura-Ingresos"), Index(1), ModelDefault("Caption", "Ingresos")]
         public XPCollection<InventarioMovimiento> Ingresos => GetCollection<InventarioMovimiento>(nameof(Ingresos));
+        [Association("CompraFactura-CxPTransacciones"), Index(2), XafDisplayName("CxP Transacciones")]
+        public XPCollection<CxPTransaccion> CxPTransacciones => GetCollection<CxPTransaccion>(nameof(CxPTransacciones));
         #endregion
 
         #region Metodos

@@ -175,6 +175,7 @@
   <ItemGroup>
     <Compile Include="Classes\WebDocumentViewer.cs" />
     <Compile Include="Controllers\ETipoAjusteColumnaListView.cs" />
+    <Compile Include="Controllers\vcCitaWeb.cs" />
     <Compile Include="Controllers\vcConsultaWeb.cs">
       <SubType>Component</SubType>
     </Compile>

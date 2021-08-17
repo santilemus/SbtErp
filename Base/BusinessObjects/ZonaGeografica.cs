@@ -1,12 +1,10 @@
-﻿using DevExpress.ExpressApp.DC;
+﻿using DevExpress.ExpressApp.ConditionalAppearance;
+using DevExpress.ExpressApp.DC;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using System;
 using System.Linq;
-using DevExpress.ExpressApp.ConditionalAppearance;
-using DevExpress.Persistent.Base.General;
-using System.ComponentModel;
 
 namespace SBT.Apps.Base.Module.BusinessObjects
 {

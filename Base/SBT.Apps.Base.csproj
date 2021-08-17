@@ -150,7 +150,7 @@
     <Compile Include="BusinessObjects\BugReport.cs" />
     <Compile Include="BusinessObjects\Catalogo.cs" />
     <Compile Include="BusinessObjects\ClasificacionProfesion.cs" />
-    <Compile Include="BusinessObjects\Concepto.cs" />
+    <Compile Include="BusinessObjects\CxCTipoTransaccion.cs" />
     <Compile Include="BusinessObjects\Constante.cs" />
     <Compile Include="BusinessObjects\EBugEstado.cs" />
     <Compile Include="BusinessObjects\EBugNavegadorWeb.cs" />

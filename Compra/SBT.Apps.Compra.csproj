@@ -113,6 +113,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessObjects\CxPDocumento.cs" />
+    <Compile Include="BusinessObjects\CxPDocumentoDetalle.cs" />
+    <Compile Include="BusinessObjects\CxPTransaccion.cs" />
     <Compile Include="BusinessObjects\EEstadoOrdenCompra.cs" />
     <Compile Include="BusinessObjects\EOrigenCompra.cs" />
     <Compile Include="BusinessObjects\ETipoCompra.cs" />

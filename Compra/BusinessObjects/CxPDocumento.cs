@@ -2,54 +2,33 @@
 using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
-using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
-using SBT.Apps.Base.Module.BusinessObjects;
-using SBT.Apps.Facturacion.Module.BusinessObjects;
 using System;
-using System.ComponentModel;
 using System.Linq;
 
-
-namespace SBT.Apps.CxC.Module.BusinessObjects
+namespace SBT.Apps.CxP.Module.BusinessObjects
 {
-    /// <summary>
-    /// Cuenta por Cobrar
-    /// BO que corresponde al encabezado de los documentos de la cuenta por cobrar (algunos no tienen detalle como los pagos).
-    /// En todo caso es el detalle de BO CxcTransaccion
-    /// </summary>
-
-    [DefaultClassOptions, ModelDefault(@"Caption", @"CxC Documento"), NavigationItem(false), CreatableItem(false),
-        Persistent(nameof(CxCDocumento)), DefaultProperty(nameof(Numero))]
-    [ImageName(nameof(CxCDocumento))]
-    [RuleCriteria("CxCDocumento.SaldoPendiente > 0 y Estado = Debe", DefaultContexts.Save, "[Venta.Estado] == 0 && [Venta.Saldo] <> 0.0",
-        CustomMessageTemplate = "El estado de la factura debe ser Debe y el Saldo <> 0.0 para aplicarle una transacción de Cuenta por Cobrar")]
+    [DefaultClassOptions]
+    [MapInheritance(MapInheritanceType.ParentTable)]
+    //[ImageName("BO_Contact")]
+    //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
+    //[Persistent("DatabaseTableName")]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
-    public class CxCDocumento : XPOBaseDoc
+    public class CxPDocumento : CxPTransaccion
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
-        public CxCDocumento(Session session)
+        public CxPDocumento(Session session)
             : base(session)
         {
         }
         public override void AfterConstruction()
         {
             base.AfterConstruction();
-            gravada = 0.0m;
-            cxCTransaccion = null;
-            iva = 0.0m;
-            ivaPercibido = 0.0m;
-            ivaRetenido = 0.0m;
-            noSujeta = 0.0m;
-            exenta = 0.0m;
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
         #region Propiedades
 
-        decimal? valor;
-        Venta venta;
-        CxCTransaccion cxCTransaccion;
         [Persistent(nameof(Gravada)), DbType("numeric(14,2)")]
         decimal gravada;
         [Persistent(nameof(Iva)), DbType("numeric(14,2)")]
@@ -62,20 +41,6 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         decimal noSujeta;
         [Persistent(nameof(Exenta)), DbType("numeric(14,2)")]
         decimal exenta;
-
-        [Association("CxCTransaccion-Documentos"), XafDisplayName("Transacción"), Index(0)]
-        public CxCTransaccion CxCTransaccion
-        {
-            get => cxCTransaccion;
-            set => SetPropertyValue(nameof(CxCTransaccion), ref cxCTransaccion, value);
-        }
-
-        [Association("Venta-CxCDocumentos"), XafDisplayName("Venta"), Index(4), VisibleInLookupListView(true)]
-        public Venta Venta
-        {
-            get => venta;
-            set => SetPropertyValue(nameof(Venta), ref venta, value);
-        }
 
         [PersistentAlias(nameof(gravada)), XafDisplayName("Gravado"), Index(9)]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
@@ -125,16 +90,8 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         public decimal Exenta => exenta;
 
         /// <summary>
-        /// Valor de las transacciones que no se separan en exento, gravado, etc. Por ejemplo: Pagos, cheques rechazados, etc
+        /// revisar porque puede ser la misma propiedad que Monto en el BO ancestro
         /// </summary>
-        [DbType("numeric(14,2)"), XafDisplayName("Valor")]
-        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
-        public decimal? Valor
-        {
-            get => valor;
-            set => SetPropertyValue(nameof(Valor), ref valor, value);
-        }
-
         [PersistentAlias("[SubTotal] - [IvaRetenido] + [IvaPercibido]  + [VentaNoSujeta] + [VentaExenta] ")]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         [XafDisplayName("Total"), Index(16)]
@@ -142,13 +99,12 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         {
             get { return Convert.ToDecimal(EvaluateAlias(nameof(Total))); }
         }
-
-
         #endregion
 
-        #region Colecciones
-        [Association("CxCDocumento-Detalles"), DevExpress.Xpo.Aggregated, XafDisplayName("Detalle"), Index(0)]
-        public XPCollection<CxCDocumentoDetalle> Detalles => GetCollection<CxCDocumentoDetalle>(nameof(Detalles));
+        #region Collecciones
+        [Association("CxPDocumento-CxPDocumentos"), DevExpress.Xpo.Aggregated, XafDisplayName("Detalles"), Index(0)]
+        public XPCollection<CxPDocumentoDetalle> Detalles => GetCollection<CxPDocumentoDetalle>(nameof(Detalles));
+
         #endregion
 
         #region Metodos
@@ -183,7 +139,6 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
             if (forceChangeEvents)
                 OnChanged(nameof(NoSujeta), oldNoSujeta, noSujeta);
         }
-
         #endregion
 
         //[Action(Caption = "My UI Action", ConfirmationMessage = "Are you sure?", ImageName = "Attention", AutoCommit = true)]

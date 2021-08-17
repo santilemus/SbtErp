@@ -8,11 +8,8 @@ using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Base.Module.Controllers;
 using SBT.Apps.Contabilidad.Module.BusinessObjects;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Linq.Expressions;
 
 
 namespace SBT.Apps.Contabilidad.Module.Controllers
@@ -28,7 +25,7 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
         private SimpleAction saApertura;
         private SimpleAction saLiquidacionCierre;
 
-        public vcPartida(): base()
+        public vcPartida() : base()
         {
             TargetViewNesting = Nesting.Root;
             // vcPartida
@@ -181,17 +178,6 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
         }
 
         private void saPartidaLiquidacionCierre_Execute(Object sender, SimpleActionExecuteEventArgs e)
-        {
-            Partida ptda = (e.CurrentObject as Partida);
-            if (ptda.Detalles.Count() == 0)
-                return;
-            UnitOfWork uow = new UnitOfWork(((XPObjectSpace)ObjectSpace).Session.DataLayer);
-            PartidaAutomatica partidaAutomatica = new PartidaAutomatica(uow, ptda.Empresa);
-            string sMsg = string.Empty;
-            partidaAutomatica.PartidaLiquidacionOCierre(ptda, out sMsg);
-        }
-
-        private void saPartidaCierre_Execute(Object sender, SimpleActionExecuteEventArgs e)
         {
             Partida ptda = (e.CurrentObject as Partida);
             if (ptda.Detalles.Count() == 0)
@@ -392,7 +378,7 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
                     SaldoDiario sd = uow.FindObject<SaldoDiario>(
                         CriteriaOperator.Parse("[Fecha] == ? && [Cuenta.Oid] == ? && [TipoSaldoDia] == 1", item.Fecha, item.Cuenta.Oid));
                     if (sd == null)
-                        sd = new SaldoDiario(uow, item.Empresa, item.Periodo, item.Cuenta, item.Fecha, item.TotDebe, item.TotHaber, ETipoSaldoDia.Operaciones, 
+                        sd = new SaldoDiario(uow, item.Empresa, item.Periodo, item.Cuenta, item.Fecha, item.TotDebe, item.TotHaber, ETipoSaldoDia.Operaciones,
                             item.AjusteDebe, item.AjusteHaber);
                     else
                         sd.Update(item.TotDebe, item.TotHaber, item.AjusteDebe, item.AjusteHaber);
@@ -480,7 +466,7 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
                             {
                                 Empresa = z.Key.Empresa,
                                 Periodo = z.Key.Periodo,
-                                Mes     = z.Key.Mes,
+                                Mes = z.Key.Mes,
                                 Cuenta = z.Key.Padre,
                                 Debe = z.Sum(x => x.Debe),
                                 Haber = z.Sum(x => x.Haber)

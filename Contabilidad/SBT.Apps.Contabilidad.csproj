@@ -120,6 +120,7 @@
     <Compile Include="BusinessObjects\BancoConciliacion.cs" />
     <Compile Include="BusinessObjects\BancoTransaccion.cs" />
     <Compile Include="BusinessObjects\BancoTransaccionDetalle.cs" />
+    <Compile Include="BusinessObjects\BancoTransaccionPartida.cs" />
     <Compile Include="BusinessObjects\CajaChica.cs" />
     <Compile Include="BusinessObjects\CajaChicaTransaccion.cs" />
     <Compile Include="BusinessObjects\CajaChicaTransaccionDetalle.cs" />

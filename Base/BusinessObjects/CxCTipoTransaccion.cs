@@ -10,18 +10,18 @@ using System.Linq;
 namespace SBT.Apps.Base.Module.BusinessObjects
 {
     /// <summary>
-    /// BO Conceptos de Cuentas por Cobrar. Contiene la parametrizacion de las diferentes tipos de transacciones de cuentas
-    /// por cobrar. Ejemplo: Notas de Credito -> Devolucion, Descuento por Pronto Pago, etc, Pagos -> Pagos Efectivo, Transferencias, etc.
+    /// BO Conceptos de Cuentas por Cobrar y por Pagar. Contiene la parametrizacion de las diferentes tipos de transacciones de cuentas
+    /// por cobrar y pagar. Ejemplo: Notas de Credito -> Devolucion, Descuento por Pronto Pago, etc, Pagos -> Pagos Efectivo, Transferencias, etc.
     /// </summary>
 
-    [DefaultClassOptions, ModelDefault("Caption", "Conceptos Cuenta x Cobrar"), DefaultProperty("Nombre"), NavigationItem("Cuenta por Cobrar"),
-        Persistent("CxCConcepto")]
+    [DefaultClassOptions, ModelDefault("Caption", "CxC Tipo Transaccion"), DefaultProperty("Nombre"), NavigationItem("Cuenta por Cobrar"),
+        Persistent(nameof(CxCTipoTransaccion))]
     [ImageName("Concepto")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
-    public class Concepto : XPCustomObject
+    public class CxCTipoTransaccion : XPCustomObject
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
-        public Concepto(Session session)
+        public CxCTipoTransaccion(Session session)
             : base(session)
         {
         }
@@ -35,7 +35,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
 
         int oid;
         bool activo = true;
-        Concepto padre;
+        CxCTipoTransaccion padre;
         ETipoOperacion tipoOperacion = ETipoOperacion.Cargo;
         string codigo;
         string nombre;
@@ -48,8 +48,8 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             set => SetPropertyValue(nameof(Oid), ref oid, value);
         }
 
-        [Association("Concepto-Conceptos"), XafDisplayName("Concepto Padre"), Index(0)]
-        public Concepto Padre
+        [Association("TipoTransaccion-TipoTransacciones"), XafDisplayName("Transacción Padre"), Index(0)]
+        public CxCTipoTransaccion Padre
         {
             get => padre;
             set
@@ -113,16 +113,16 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         #endregion
 
         #region Colecciones
-        [Association("Concepto-Conceptos"), XafDisplayName("Conceptos Hijos"), Index(0)]
-        public XPCollection<Concepto> Conceptos
+        [Association("TipoTransaccion-TipoTransacciones"), XafDisplayName("Transacciones Hijas"), Index(0)]
+        public XPCollection<CxCTipoTransaccion> Conceptos
         {
             get
             {
-                return GetCollection<Concepto>(nameof(Conceptos));
+                return GetCollection<CxCTipoTransaccion>(nameof(Conceptos));
             }
         }
 
-        //[Association("Concepto-Transacciones"), XafDisplayName("Transacciones"), Index(1)]
+        //[Association("TipoTransaccion-Transacciones"), XafDisplayName("Transacciones"), Index(1)]
         //public XPCollection<CxCTransaccion> Transacciones
         //{
         //    get
