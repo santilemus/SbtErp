@@ -34,11 +34,14 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
         public override void AfterConstruction()
         {
             base.AfterConstruction();
+            renta = 0.0m;
+
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
         #region Propiedades
 
+        decimal renta;
         string concepto;
         string numeroDocumento;
         ETipoCompra tipo = ETipoCompra.Servicio;
@@ -103,6 +106,15 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
             set => SetPropertyValue(nameof(Concepto), ref concepto, value);
         }
 
+        [DbType("numeric(14,2)"), XafDisplayName("Renta Retenida")]
+        [ToolTip("Monto de la retención de renta cuando es compra de servicios a personas naturales, compra de intangibles o de sujetos no domiciliados")]
+        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
+        public decimal Renta
+        {
+            get => renta;
+            set => SetPropertyValue(nameof(Renta), ref renta, value);
+        }
+
         #endregion
 
         #region Colecciones
@@ -144,6 +156,22 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
             iva = Convert.ToDecimal(Evaluate(CriteriaOperator.Parse("[Detalles].Sum([Iva])")));
             if (forceChangeEvents)
                 OnChanged(nameof(Iva), oldIva, iva);
+        }
+
+        /// <summary>
+        ///  calcular la renta cuando son compras de personas naturales
+        /// </summary>
+        public void UpdateRenta()
+        {
+            if (Proveedor.TipoPersona == TipoPersona.Juridica &&
+                (Proveedor.DireccionPrincipal == null || Proveedor.DireccionPrincipal.Pais.Codigo == "SLV"))
+                return;
+            // pendiente revisar con el caso de los intangibles, como se van a determinar
+            if ((Tipo == ETipoCompra.Servicio) || 
+                (Proveedor.DireccionPrincipal != null && Proveedor.DireccionPrincipal.Pais.Codigo != "SLV"))
+            {
+                // calcular aqui la renta, revisar las condiciones
+            }
         }
         #endregion
 

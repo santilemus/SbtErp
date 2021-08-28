@@ -25,7 +25,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
     [ImageName("FactorRiesgo")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
-    public class FactorRiesgo : XPObjectBaseBO
+    public class FactorRiesgo : XPObject
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
         public FactorRiesgo(Session session)
             : base(session)

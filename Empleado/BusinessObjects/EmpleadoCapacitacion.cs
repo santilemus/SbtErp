@@ -12,7 +12,7 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
     [DevExpress.Persistent.Base.ImageNameAttribute("employee_man-certificate")]
     [DevExpress.ExpressApp.DC.XafDefaultPropertyAttribute("Descripcion")]
     [DevExpress.Persistent.Base.CreatableItemAttribute(false)]
-    public class EmpleadoCapacitacion : XPObjectBaseBO
+    public class EmpleadoCapacitacion : XPObject
     {
         public override void AfterConstruction()
         {

@@ -26,7 +26,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     //[Persistent("DatabaseTableName")]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
-    public class SqlObject : XPObjectBaseBO
+    public class SqlObject : XPObject
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
         public SqlObject(Session session)
             : base(session)

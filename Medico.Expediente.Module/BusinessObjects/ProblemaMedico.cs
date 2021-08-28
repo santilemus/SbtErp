@@ -21,7 +21,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
     [ImageName(nameof(ProblemaMedico))]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
-    public class ProblemaMedico : XPObjectBaseBO
+    public class ProblemaMedico : XPObject
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
         public ProblemaMedico(Session session)
             : base(session)

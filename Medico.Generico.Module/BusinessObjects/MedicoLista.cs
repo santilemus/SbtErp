@@ -23,7 +23,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
     [RuleIsReferenced("MedicoListas_Referencia", DefaultContexts.Delete, typeof(MedicoLista), nameof(Codigo),
         MessageTemplateMustBeReferenced = "Para borrar el objeto '{TargetObject}', debe estar seguro que no es utilizado (referenciado) en ningún lugar.",
         InvertResult = true, FoundObjectMessageFormat = "'{0}'", FoundObjectMessagesSeparator = ";")]
-    public class MedicoLista: XPCustomBaseBO 
+    public class MedicoLista: XPCustomObject
     {
         /// <summary>
         /// Metodo para la inicialización de propiedades y/o objetos del BO. Se ejecuta una sola vez después de la creación del objeto

@@ -58,9 +58,8 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
 
         #region Propiedades
 
-        [XafDisplayName("Empresa"), VisibleInReports(true)]
+        [XafDisplayName("Empresa"), VisibleInReports(true), VisibleInListView(false), VisibleInDetailView(false)]
         [RuleRequiredField("Empleado.CodEmpresa_requerido", DefaultContexts.Save, "Empresa es requerida")]
-        [Browsable(false)]
         public Empresa Empresa
         {
             get => empresa;

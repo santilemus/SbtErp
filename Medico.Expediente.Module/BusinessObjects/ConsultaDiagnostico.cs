@@ -19,7 +19,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
     [DevExpress.Persistent.Base.ImageNameAttribute("signo")]
     [NavigationItem(false)]
     [DefaultProperty(nameof(Consulta))]
-    public class ConsultaDiagnostico : XPObjectBaseBO
+    public class ConsultaDiagnostico : XPObject
     {
         /// <summary>
         /// Metodo para la inicialización de propiedades y/o objetos del BO. Se ejecuta una sola vez después de la creación del objeto
@@ -41,6 +41,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         #region Propiedades
         [DevExpress.Xpo.AssociationAttribute("Diagnostico-Consulta"), Index(0), Persistent("Consulta"), XafDisplayName("Consulta"),
             RuleRequiredField("ConsultaSigno.Consulta_Requerido", "Save")]
+        [VisibleInListView(false)]
         public Consulta Consulta
         {
             get => _consulta;

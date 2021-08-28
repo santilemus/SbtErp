@@ -22,7 +22,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
     [RuleIsReferenced("Examen_Referencia", DefaultContexts.Delete, typeof(Examen), nameof(Oid),
         MessageTemplateMustBeReferenced = "Para borrar el objeto '{TargetObject}', debe estar seguro que no es utilizado (referenciado) en ningún lugar.",
         InvertResult = true, FoundObjectMessageFormat = "'{0}'", FoundObjectMessagesSeparator = ";")]
-    public class Examen: XPObjectBaseBO
+    public class Examen: XPObject
     {
         /// <summary>
         /// Metodo para la inicialización de propiedades y/o objetos del BO. Se ejecuta una sola vez después de la creación del objeto

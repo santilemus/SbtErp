@@ -90,6 +90,33 @@
         </LayoutGroup>
       </Layout>
     </DetailView>
+    <DetailView Id="Presentacion_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="18.741976893453145">
+            <LayoutGroup Id="Presentacion" RelativeSize="100">
+              <LayoutGroup Id="Presentacion_col1" RelativeSize="49.886621315192741">
+                <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="36.734693877551024" CaptionLocation="Left" IsNewNode="True" />
+                <LayoutItem Id="Codigo" Index="1" RelativeSize="26.530612244897959" CaptionLocation="Left" />
+                <LayoutItem Id="Nombre" Index="2" RelativeSize="36.734693877551024" CaptionLocation="Left" />
+                <LayoutItem Id="Unidades" Index="3" RelativeSize="29.032258064516128" Removed="True" />
+              </LayoutGroup>
+              <LayoutGroup Id="Presentacion_col2" RelativeSize="50.113378684807259">
+                <LayoutItem Id="Unidades" ViewItem="Unidades" Index="0" RelativeSize="36.734693877551024" CaptionLocation="Left" IsNewNode="True" />
+                <LayoutItem Id="Activo" RelativeSize="26.530612244897959" Index="1" CaptionLocation="Left" />
+                <LayoutItem Id="Defecto" RelativeSize="36.734693877551024" Index="2" CaptionLocation="Left" />
+              </LayoutGroup>
+            </LayoutGroup>
+            <LayoutGroup Id="XPObject" Caption="Oid" RelativeSize="57.840616966580974" Removed="True">
+              <LayoutItem Id="Oid" Removed="True" />
+            </LayoutGroup>
+          </LayoutGroup>
+          <LayoutGroup Id="Productos_Group" Direction="Vertical" RelativeSize="81.258023106546858">
+            <LayoutItem Id="Productos" RelativeSize="100" />
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
     <DetailView Id="Producto_DetailView">
       <Items>
         <PropertyEditor Id="Categoria" PropertyName="Categoria" IsNewNode="True" />

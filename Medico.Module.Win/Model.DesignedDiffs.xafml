@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Application>
+  <NavigationItems StartupNavigationItem="" />
   <SchemaModules>
     <SchemaModule Name="CloneObjectModule" Version="20.2.5.0" IsNewNode="True" />
     <SchemaModule Name="SchedulerModuleBase" Version="20.2.5.0" IsNewNode="True" />
@@ -9,6 +10,18 @@
   </SchemaModules>
   <Views>
     <ListView Id="Medico_Citas_ListView" EditorTypeName="DevExpress.ExpressApp.Win.Editors.GridListEditor" />
+    <DashboardView Id="MyDashboard" Caption="Mi DashBoard" AllowEdit="True" IsNewNode="True">
+      <Items IsNewNode="True">
+        <DashboardViewItem Id="Citas" ViewId="Cita_ListView" Criteria="[Paciente.Empresa] = EMPRESAACTUALOID() And [StartOn] &gt;= CURRENTDATETIME()" ActionsToolbarVisibility="Show" Caption="Citas Pendientes" IsNewNode="True" />
+        <DashboardViewItem Id="Consultas del día" ViewId="Consulta_ListView" Criteria="[Medico.Empresa.Oid] = EMPRESAACTUALOID() And [Fecha] = CURRENTDATE()" ActionsToolbarVisibility="Show" Caption="Consultas del día" IsNewNode="True" />
+      </Items>
+      <Layout IsNewNode="True">
+        <LayoutGroup Id="Main" ShowCaption="False" TextAlignMode="AlignWithChildren" Index="0" RelativeSize="43.260590500641847" IsNewNode="True">
+          <LayoutItem Id="Citas" ViewItem="Citas" Index="0" RelativeSize="100" IsNewNode="True" />
+        </LayoutGroup>
+        <LayoutItem Id="Consultas del día" ViewItem="Consultas del día" Index="1" RelativeSize="56.739409499358153" IsNewNode="True" />
+      </Layout>
+    </DashboardView>
     <ListView Id="Paciente_Citas_ListView" EditorTypeName="DevExpress.ExpressApp.Win.Editors.GridListEditor" />
     <ListView Id="PercentilTablaDetalle_Chart" EditorTypeName="DevExpress.ExpressApp.Chart.Win.ChartListEditor" />
   </Views>

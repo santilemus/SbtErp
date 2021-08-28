@@ -13,7 +13,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
     /// </summary>
     [ModelDefault("Caption", "Unidad de Medida"), NavigationItem("Catalogos"), Persistent("UnidadMedida"), XafDefaultProperty("Nombre")]
     [ImageName("UnidadMedida")]
-    public class UnidadMedida : XPObjectBaseBO
+    public class UnidadMedida : XPObject
     {
         public UnidadMedida(Session session) : base(session) { }
 

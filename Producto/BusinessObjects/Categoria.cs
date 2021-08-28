@@ -17,7 +17,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
     /// Lo anterior es para no hacer jerarquico el catálogo de productos, sino el atributo de agrupamiento
     /// </summary>
     [DefaultClassOptions, XafDefaultProperty(nameof(Nombre)), CreatableItem(false)]
-    [ModelDefault("Caption", "Categoría Productos"), NavigationItem("Catalogos")]
+    [ModelDefault("Caption", "Categoría Productos"), NavigationItem("Inventario")]
     [RuleIsReferenced("Categoria_Referencia", DefaultContexts.Delete, typeof(Categoria), nameof(Oid),
         MessageTemplateMustBeReferenced = "Para borrar el objeto '{TargetObject}', debe estar seguro que no es utilizado (referenciado) en ningún lugar.",
         InvertResult = true, FoundObjectMessageFormat = "'{0}'", FoundObjectMessagesSeparator = ";")]

@@ -17,7 +17,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Receta")]
     [DevExpress.Persistent.Base.ImageNameAttribute("BO_Contract")]
     [RuleCombinationOfPropertiesIsUnique("ConsultaReceta.ConsultaMedicamentoUnico", DefaultContexts.Save, "Consulta,Medicamento", SkipNullOrEmptyValues = false)]
-    public class ConsultaReceta : XPObjectBaseBO
+    public class ConsultaReceta : XPObject
     {
         /// <summary>
         /// Metodo para la inicialización de propiedades y/o objetos del BO. Se ejecuta una sola vez después de la creación del objeto
@@ -72,6 +72,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         }
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Farmáceutica")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
+        [VisibleInListView(false)]
         [DataSourceCriteria("[TipoPersona] == 2 && [Activo] == True && [Roles][[IdRole] In (4, 8) And [Activo] == True]")]
         [ExplicitLoading]
         public Tercero.Module.BusinessObjects.Tercero Farmaceutica
@@ -116,6 +117,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Precaución")]
         [DevExpress.Xpo.SizeAttribute(250), DbType("varchar(250)")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
+        [VisibleInListView(false)]
         public System.String Precaucion
         {
             get
@@ -129,6 +131,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         }
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Muestra Médica")]
         [RuleRequiredField("ConsultaReceta.MuestraMedica_Requerido", "Save")]
+        [VisibleInListView(false)]
         public System.Boolean MuestraMedica
         {
             get

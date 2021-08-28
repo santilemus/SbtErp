@@ -17,8 +17,8 @@ using System.Xml;
 namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 {
     [Persistent("Cita"), NavigationItem(false), DefaultProperty(nameof(Subject))]
-    // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
-    public class CitaBase : XPObjectBaseBO, IEvent, IRecurrentEvent, IReminderEvent
+    // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701). 
+    public class CitaBase : XPObject, IEvent, IRecurrentEvent, IReminderEvent
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
         public CitaBase(Session session)
             : base(session)

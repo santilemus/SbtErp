@@ -21,7 +21,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
     [DefaultClassOptions, Persistent("Vacuna"), DefaultProperty("Nombre"), ModelDefault("Caption", "Vacuna"), NavigationItem("Salud"),]
     [ImageName(nameof(Vacuna)),  CreatableItem(false)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
-    public class Vacuna : XPObjectBaseBO
+    public class Vacuna : XPObject
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
         public Vacuna(Session session)
             : base(session)

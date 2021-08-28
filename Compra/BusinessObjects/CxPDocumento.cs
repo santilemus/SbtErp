@@ -102,7 +102,7 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
         #endregion
 
         #region Collecciones
-        [Association("CxPDocumento-CxPDocumentos"), DevExpress.Xpo.Aggregated, XafDisplayName("Detalles"), Index(0)]
+        [Association("CxPDocumento-Detalles"), DevExpress.Xpo.Aggregated, XafDisplayName("Detalles"), Index(0)]
         public XPCollection<CxPDocumentoDetalle> Detalles => GetCollection<CxPDocumentoDetalle>(nameof(Detalles));
 
         #endregion
@@ -140,6 +140,9 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
                 OnChanged(nameof(NoSujeta), oldNoSujeta, noSujeta);
         }
         #endregion
+
+
+
 
         //[Action(Caption = "My UI Action", ConfirmationMessage = "Are you sure?", ImageName = "Attention", AutoCommit = true)]
         //public void ActionMethod() {

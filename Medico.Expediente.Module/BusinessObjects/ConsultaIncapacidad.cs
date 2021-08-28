@@ -16,7 +16,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Incapacidades")]
     [RuleCombinationOfPropertiesIsUnique("ConsultaIncapacidad_ConsultaFechaInicioFechaFin", DefaultContexts.Save, "Consulta,FechaInicio,FechaFin", SkipNullOrEmptyValues = false)]
     [RuleCriteria("ConsultaIncapacidad.FechaFinValida", DefaultContexts.Save, "Not(IsNull([FechaFin])) And FechaFin >= FechaInicio", "Fecha Fin debe ser mayor o igual a Fecha Inicio")]
-    public class ConsultaIncapacidad : XPObjectBaseBO
+    public class ConsultaIncapacidad : XPObject
     {
         /// <summary>
         /// Metodo para la inicialización de propiedades y/o objetos del BO. Se ejecuta una sola vez después de la creación del objeto

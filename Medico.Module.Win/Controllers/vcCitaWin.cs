@@ -211,23 +211,23 @@ namespace SBT.Apps.Medico.Module.Win.Controllers
             /// en caso que no funcione probar sin el mapeo porque el BO esta vinculado al control schedule y puede
             /// que no sea necesario
             AppointmentMappingInfo aptmappings = listEditor.Appointments.Mappings;
-            aptmappings.Start = "StartTime";
-            aptmappings.End = "EndTime";
+            aptmappings.Start = "StartOn";
+            aptmappings.End = "EndOn";
             aptmappings.Subject = "Subject";
             aptmappings.AllDay = "AllDay";
             aptmappings.Description = "Description";
             aptmappings.Label = "Label";
             aptmappings.Location = "Location";
-            aptmappings.RecurrenceInfo = "RecurrenceInfo";
-            aptmappings.ReminderInfo = "ReminderInfo";
+            aptmappings.RecurrenceInfo = "RecurrencePattern";
+            aptmappings.ReminderInfo = "ReminderInfoXml";
             aptmappings.Status = "Status";
-            aptmappings.Type = "EventType";
-            aptmappings.ResourceId = "OwnerId";
+            aptmappings.Type = "Type";
+            aptmappings.ResourceId = "ResourceId";
 
             ResourceMappingInfo resmappings = listEditor.Resources.Mappings;
-            resmappings.Id = "ResID";
-            resmappings.Caption = "Name";
-            resmappings.Color = "ResColor";
+            resmappings.Id = "Oid";
+            resmappings.Caption = "Caption";
+            resmappings.Color = "Color";
         }
     }
 }

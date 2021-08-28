@@ -136,6 +136,8 @@ namespace SBT.Apps.Medico.Module.DatabaseUpdate
                 securityAdminRole.AddTypePermission<ReportDataV2>(SecurityOperations.ReadOnlyAccess, SecurityPermissionState.Allow);
                 securityAdminRole.AddTypePermission<Analysis>("Create;Write;Delete", SecurityPermissionState.Deny);
                 securityAdminRole.AddTypePermission<Analysis>(SecurityOperations.ReadOnlyAccess, SecurityPermissionState.Allow);
+                securityAdminRole.AddTypePermission<DashboardData>("Create;Write;Delete", SecurityPermissionState.Deny);
+                securityAdminRole.AddTypePermission<DashboardData>(SecurityOperations.ReadOnlyAccess, SecurityPermissionState.Allow);
                 securityAdminRole.IsAdministrative = false;
                 securityAdminRole.CanEditModel = false;
                 // definimos la estructura de permisos para evitar que puedan escalar a Administrador, pero que siga teniendo role para dar permisos

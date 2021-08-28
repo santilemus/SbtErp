@@ -56,11 +56,7 @@ CREATE TABLE [dbo].[ActividadEconomica](
 	[Codigo] [varchar](12) NOT NULL,
 	[Concepto] [varchar](200) NULL,
 	[ActividadPadre] [varchar](12) NULL,
-	[Activa] [bit] NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
+	[Activa] [bit] NULL
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_ActividadEconomica] PRIMARY KEY CLUSTERED 
@@ -69,29 +65,7 @@ CREATE TABLE [dbo].[ActividadEconomica](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Afp]    Script Date: 21/1/2021 00:34:31 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[Afp](
-	[Proveedor] [int] NOT NULL,
-	[Siglas] [varchar](10) NULL,
-	[AporteAfiliado] [numeric](10, 4) NULL,
-	[AporteEmpresa] [numeric](10, 4) NULL,
-	[Comision] [numeric](10, 4) NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
-	[OptimisticLockField] [int] NULL,
-	[GCRecord] [int] NULL,
- CONSTRAINT [PK_Afp] PRIMARY KEY CLUSTERED 
-(
-	[Proveedor] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-GO
+
 
 /****** Object:  Table [dbo].[Analysis]    Script Date: 24/1/2021 01:30:12 ******/
 SET ANSI_NULLS ON
@@ -128,10 +102,6 @@ CREATE TABLE [dbo].[AsociacionProfesional](
 	[Direccion] [varchar](150) NULL,
 	[Telefono] [varchar](25) NULL,
 	[Activa] [bit] NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_AsociacionProfesional] PRIMARY KEY CLUSTERED 
@@ -232,10 +202,6 @@ CREATE TABLE [dbo].[Cargo](
 	[Salario] [numeric](12, 2) NULL,
 	[Obligaciones] [varchar](500) NULL,
 	[Activo] [bit] NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_Cargo] PRIMARY KEY CLUSTERED 
@@ -267,10 +233,6 @@ CREATE TABLE [dbo].[Cita](
 	[RecurrenceInfoXml] [nvarchar](max) NULL,
 	[ReminderInfoXml] [nvarchar](200) NULL,
 	[IsPostponed] [bit] NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
 	[ObjectType] [int] NULL,
@@ -299,10 +261,6 @@ CREATE TABLE [dbo].[ConCatalogo](
 	[TipoSaldoCta] [smallint] NULL,
 	[CtaResumen] [bit] NULL,
 	[CtaMayor] [bit] NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_ConCatalogo] PRIMARY KEY CLUSTERED 
@@ -322,10 +280,6 @@ CREATE TABLE [dbo].[ConPeriodo](
 	[FechaFin] [datetime] NULL,
 	[Comentario] [varchar](250) NULL,
 	[Activo] [bit] NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_ConPeriodo] PRIMARY KEY CLUSTERED 
@@ -394,10 +348,6 @@ CREATE TABLE [dbo].[ConsultaDiagnostico](
 	[Consulta] [int] NULL,
 	[Problema] [int] NULL,
 	[Descripcion] [nvarchar](250) NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_ConsultaDiagnostico] PRIMARY KEY CLUSTERED 
@@ -420,10 +370,6 @@ CREATE TABLE [dbo].[ConsultaExamen](
 	[FechaPresentacion] [datetime] NULL,
 	[Documento] [uniqueidentifier] NULL,
 	[Resultado] [varchar](400) NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_ConsultaExamen] PRIMARY KEY CLUSTERED 
@@ -444,10 +390,6 @@ CREATE TABLE [dbo].[ConsultaExamenFisico](
 	[Descripcion] [varchar](250) NULL,
 	[Resultado] [varchar](400) NULL,
 	[Documento] [uniqueidentifier] NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_ConsultaExamenFisico] PRIMARY KEY CLUSTERED 
@@ -467,10 +409,6 @@ CREATE TABLE [dbo].[ConsultaIncapacidad](
 	[FechaInicio] [datetime] NULL,
 	[FechaFin] [datetime] NULL,
 	[Motivo] [varchar](300) NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NOT NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_ConsultaIncapacidad] PRIMARY KEY CLUSTERED 
@@ -517,10 +455,6 @@ CREATE TABLE [dbo].[ConsultaReceta](
 	[Frecuencia] [varchar](100) NULL,
 	[Precaucion] [varchar](250) NULL,
 	[MuestraMedica] [bit] NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_ConsultaReceta] PRIMARY KEY CLUSTERED 
@@ -541,10 +475,6 @@ CREATE TABLE [dbo].[ConsultaSigno](
 	[Valor] [numeric](12, 2) NULL,
 	[Imc] [int] NULL,
 	[PercentilTablaDetalle] [int] NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_ConsultaSigno] PRIMARY KEY CLUSTERED 
@@ -566,10 +496,6 @@ CREATE TABLE [dbo].[ConsultaSintoma](
 	[Intensidad] [nvarchar](10) NULL,
 	[FechaInicio] [datetime] NULL,
 	[FechaFin] [datetime] NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_ConsultaSintoma] PRIMARY KEY CLUSTERED 
@@ -622,10 +548,6 @@ CREATE TABLE [dbo].[EmpleadoCapacitacion](
 	[Descripcion] [varchar](150) NULL,
 	[FechaInicio] [datetime] NULL,
 	[DiasDuracion] [smallint] NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_EmpleadoCapacitacion] PRIMARY KEY CLUSTERED 
@@ -644,10 +566,6 @@ CREATE TABLE [dbo].[EmpleadoMembresia](
 	[Empleado] [int] NULL,
 	[AsociacionProfesional] [int] NULL,
 	[Vigente] [bit] NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_EmpleadoMembresia] PRIMARY KEY CLUSTERED 
@@ -670,10 +588,6 @@ CREATE TABLE [dbo].[EmpleadoPariente](
 	[FechaNacimiento] [datetime] NULL,
 	[Beneficiario] [bit] NULL,
 	[Direccion] [varchar](150) NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_EmpleadoPariente] PRIMARY KEY CLUSTERED 
@@ -692,10 +606,6 @@ CREATE TABLE [dbo].[EmpleadoProfesion](
 	[Empleado] [int] NULL,
 	[Profesion] [int] NULL,
 	[NumeroProfesional] [varchar](12) NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_EmpleadoProfesion] PRIMARY KEY CLUSTERED 
@@ -722,10 +632,6 @@ CREATE TABLE [dbo].[Empresa](
 	[SitioWeb] [varchar](60) NULL,
 	[Activa] [bit] NULL,
 	[Logo] [varbinary](max) NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_Empresa] PRIMARY KEY CLUSTERED 
@@ -744,10 +650,6 @@ CREATE TABLE [dbo].[EmpresaGiro](
 	[Empresa] [int] NULL,
 	[ActEconomica] [varchar](12) NULL,
 	[Vigente] [bit] NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_EmpresaGiro] PRIMARY KEY CLUSTERED 
@@ -788,10 +690,6 @@ CREATE TABLE [dbo].[EmpresaUnidad](
 	[IdRole] [smallint] NULL,
 	[Codigo] [varchar](6) NULL,
 	[Activa] [bit] NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_EmpresaUnidad] PRIMARY KEY CLUSTERED 
@@ -813,10 +711,6 @@ CREATE TABLE [dbo].[Enfermedad](
 	[EsGrupo] [bit] NULL,
 	[Comentario] [varchar](250) NULL,
 	[Activo] [bit] NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_Enfermedad] PRIMARY KEY CLUSTERED 
@@ -836,10 +730,6 @@ CREATE TABLE [dbo].[EstiloVida](
 	[Descripcion] [varchar](200) NULL,
 	[Factor] [nvarchar](10) NULL,
 	[Estado] [smallint] NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_EstiloVida] PRIMARY KEY CLUSTERED 
@@ -890,10 +780,6 @@ CREATE TABLE [dbo].[Examen](
 	[Categoria] [nvarchar](10) NULL,
 	[Comentario] [varchar](250) NULL,
 	[Activo] [bit] NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_Examen] PRIMARY KEY CLUSTERED 
@@ -911,10 +797,6 @@ CREATE TABLE [dbo].[FactorRiesgo](
 	[OID] [int] IDENTITY(1,1) NOT NULL,
 	[Diagnostico] [int] NULL,
 	[Descripcion] [varchar](150) NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_FactorRiesgo] PRIMARY KEY CLUSTERED 
@@ -951,10 +833,6 @@ CREATE TABLE [dbo].[HistoriaFamiliar](
 	[Paciente] [int] NULL,
 	[QuePadecen] [varchar](200) NULL,
 	[Quienes] [varchar](200) NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_HistoriaFamiliar] PRIMARY KEY CLUSTERED 
@@ -974,10 +852,6 @@ CREATE TABLE [dbo].[Inventario](
 	[Producto] [int] NULL,
 	[TipoMovimiento] [int] NULL,
 	[Cantidad] [numeric](12, 2) NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_Inventario] PRIMARY KEY CLUSTERED 
@@ -1000,10 +874,6 @@ CREATE TABLE [dbo].[Kardex](
 	[Cantidad] [numeric](12, 2) NULL,
 	[CostoUnidad] [numeric](16, 8) NULL,
 	[PrecioUnidad] [numeric](14, 4) NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_Kardex] PRIMARY KEY CLUSTERED 
@@ -1023,10 +893,6 @@ CREATE TABLE [dbo].[Listas](
 	[Categoria] [int] NULL,
 	[Comentario] [varchar](250) NULL,
 	[Activo] [bit] NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_gloListas] PRIMARY KEY CLUSTERED 
@@ -1064,10 +930,6 @@ CREATE TABLE [dbo].[MedicamentoDosis](
 	[Dosis] [smallint] NULL,
 	[Edad] [varchar](50) NULL,
 	[Comentario] [varchar](200) NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_MedicamentoDosis] PRIMARY KEY CLUSTERED 
@@ -1085,10 +947,6 @@ CREATE TABLE [dbo].[MedicamentoVia](
 	[OID] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
 	[Medicamento] [int] NULL,
 	[Via] [nvarchar](10) NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_MedicamentoVia] PRIMARY KEY CLUSTERED 
@@ -1123,10 +981,6 @@ CREATE TABLE [dbo].[MedicoConsultorio](
 	[Medico] [int] NULL,
 	[Consultorio] [int] NULL,
 	[Activo] [bit] NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_MedicoConsultorio] PRIMARY KEY CLUSTERED 
@@ -1144,10 +998,6 @@ CREATE TABLE [dbo].[MedicoEspecialidad](
 	[OID] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
 	[Medico] [int] NULL,
 	[Especialidad] [nvarchar](10) NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_MedicoEspecialidad] PRIMARY KEY CLUSTERED 
@@ -1167,10 +1017,6 @@ CREATE TABLE [dbo].[MedLista](
 	[Categoria] [int] NULL,
 	[Activo] [bit] NULL,
 	[Comentario] [varchar](250) NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_MedicoListas] PRIMARY KEY CLUSTERED 
@@ -1244,10 +1090,6 @@ CREATE TABLE [dbo].[Moneda](
 	[Plural] [varchar](25) NULL,
 	[FactorCambio] [numeric](12, 2) NULL,
 	[Activa] [bit] NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_Moneda] PRIMARY KEY CLUSTERED 
@@ -1311,10 +1153,6 @@ CREATE TABLE [dbo].[PacienteMedico](
 	[Medico] [int] NULL,
 	[InicioDeRelacion] [datetime] NULL,
 	[Activo] [bit] NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_PacienteMedico] PRIMARY KEY CLUSTERED 
@@ -1330,10 +1168,6 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[PacienteVacuna](
 	[OID] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[Vacuna] [int] NULL,
 	[Fecha] [datetime] NULL,
 	[ProximaDosis] [datetime] NULL,
@@ -1371,10 +1205,6 @@ CREATE TABLE [dbo].[Pariente](
 	[Responsable] [bit] NULL,
 	[Diagnostico] [int] NULL,
 	[Comentario] [varchar](200) NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_Pariente] PRIMARY KEY CLUSTERED 
@@ -1393,10 +1223,6 @@ CREATE TABLE [dbo].[PercentilTabla](
 	[Genero] [smallint] NULL,
 	[Nombre] [varchar](60) NULL,
 	[Signo] [int] NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_PercentilTabla] PRIMARY KEY CLUSTERED 
@@ -1431,10 +1257,6 @@ CREATE TABLE [dbo].[PercentilTablaDetalle](
 	[P95th] [numeric](8, 5) NULL,
 	[P97th] [numeric](8, 5) NULL,
 	[P99th] [numeric](8, 5) NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_PercentilTablaDetalle] PRIMARY KEY CLUSTERED 
@@ -1647,10 +1469,6 @@ CREATE TABLE [dbo].[PersonaContacto](
 	[Direccion] [varchar](150) NULL,
 	[Telefono] [varchar](25) NULL,
 	[Activo] [bit] NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_PersonaContacto] PRIMARY KEY CLUSTERED 
@@ -1673,10 +1491,6 @@ CREATE TABLE [dbo].[PersonaDocumento](
 	[FechaEmision] [datetime] NULL,
 	[LugarEmision] [varchar](100) NULL,
 	[Vigente] [bit] NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_PersonaDocumento] PRIMARY KEY CLUSTERED 
@@ -1711,10 +1525,6 @@ CREATE TABLE [dbo].[PlanMedico](
 	[Oid] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
 	[Nombre] [varchar](80) NULL,
 	[Activo] [bit] NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_PlanMedico] PRIMARY KEY CLUSTERED 
@@ -1732,10 +1542,6 @@ CREATE TABLE [dbo].[PlanMedicoDetalle](
 	[Oid] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
 	[Regla] [int] NULL,
 	[PlanMedico] [int] NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_PlanMedicoDetalle] PRIMARY KEY CLUSTERED 
@@ -1760,12 +1566,8 @@ CREATE TABLE [dbo].[ProblemaMedico](
 	[Gravedad] [nvarchar](10) NULL,
 	[Diagnostico] [int] NULL,
 	[Reaccion] [nvarchar](10) NULL,
-	[UsuarioCrea] [varchar](25) NULL,
 	[Comentario] [varchar](200) NULL,
 	[Resultado] [nvarchar](10) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_ProblemaMedico] PRIMARY KEY CLUSTERED 
@@ -1788,10 +1590,6 @@ CREATE TABLE [dbo].[ProCategoria](
 	[EsGrupo] [bit] NULL,
 	[Activa] [bit] NULL,
 	[Nivel] [smallint] NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_GloCategoriaProducto] PRIMARY KEY CLUSTERED 
@@ -1843,10 +1641,6 @@ CREATE TABLE [dbo].[ProductoAtributo](
 	[Producto] [int] NULL,
 	[Atributo] [varchar](12) NULL,
 	[Descripcion] [varchar](100) NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_ProductoAtributo] PRIMARY KEY CLUSTERED 
@@ -1865,10 +1659,6 @@ CREATE TABLE [dbo].[ProductoCodigoBarra](
 	[Producto] [int] NULL,
 	[CodigoBarra] [varchar](20) NULL,
 	[Activo] [bit] NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_ProductoCodigoBarra] PRIMARY KEY CLUSTERED 
@@ -1887,10 +1677,6 @@ CREATE TABLE [dbo].[ProductoEnsamble](
 	[Producto] [int] NULL,
 	[Item] [int] NULL,
 	[Cantidad] [numeric](12, 2) NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_ProductoEnsamble] PRIMARY KEY CLUSTERED 
@@ -1909,10 +1695,6 @@ CREATE TABLE [dbo].[ProductoEquivalente](
 	[Producto] [int] NULL,
 	[Equivalente] [int] NULL,
 	[Comentario] [nvarchar](100) NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_ProductoEquivalente] PRIMARY KEY CLUSTERED 
@@ -1921,28 +1703,23 @@ CREATE TABLE [dbo].[ProductoEquivalente](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ProductoLote]    Script Date: 21/1/2021 00:34:31 ******/
+/****** Object:  Table [dbo].[InventarioLote]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[ProductoLote](
+CREATE TABLE [dbo].[InventarioLote](
 	[OID] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
 	[Producto] [int] NULL,
-	[Fecha] [datetime] NULL,
-	[NoLote] [int] NULL,
+	[CodigoLote] [varchar](48) null,
+	[FechaFabricacion] [datetime] NULL,
+	[FechaVence][datetime] null,
 	[Costo] [numeric](16, 8) NULL,
-	[Promedio] [numeric](16, 8) NULL,
-	[PromedioAnterior] [numeric](16, 8) NULL,
 	[Entrada] [numeric](12, 2) NULL,
 	[Salida] [numeric](12, 2) NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
- CONSTRAINT [PK_ProductoLote] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_InventarioLote] PRIMARY KEY CLUSTERED 
 (
 	[OID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
@@ -1964,10 +1741,6 @@ CREATE TABLE [dbo].[ProductoPrecio](
 	[HoraDesde] [datetime] NULL,
 	[HoraHasta] [datetime] NULL,
 	[Activo] [bit] NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_ProductoPrecio] PRIMARY KEY CLUSTERED 
@@ -1989,10 +1762,6 @@ CREATE TABLE [dbo].[ProductoProveedor](
 	[Fabricante] [int] NULL,
 	[PaisOrigen] [varchar](8) NULL,
 	[DiasOrden] [smallint] NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_ProductoProveedor] PRIMARY KEY CLUSTERED 
@@ -2013,10 +1782,6 @@ CREATE TABLE [dbo].[Profesion](
 	[TituloCorto] [varchar](25) NULL,
 	[Clasificacion] [int] NULL,
 	[Activo] [bit] NOT NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_Profesion] PRIMARY KEY CLUSTERED 
@@ -2037,10 +1802,6 @@ CREATE TABLE [dbo].[ProPresentacion](
 	[Unidades] [numeric](12, 2) NULL,
 	[Defecto] [bit] NULL,
 	[Activo] [bit] NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_ProdPresentacion] PRIMARY KEY CLUSTERED 
@@ -2059,10 +1820,6 @@ CREATE TABLE [dbo].[RecordatorioClinico](
 	[Paciente] [int] NULL,
 	[Regla] [int] NULL,
 	[Ajuste] [smallint] NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_RecordatorioClinico] PRIMARY KEY CLUSTERED 
@@ -2081,10 +1838,6 @@ CREATE TABLE [dbo].[Regla](
 	[Descripcion] [varchar](100) NULL,
 	[Tipo] [smallint] NULL,
 	[PracticaDefecto] [smallint] NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_Regla] PRIMARY KEY CLUSTERED 
@@ -2147,141 +1900,6 @@ CREATE TABLE [dbo].[ResourceResources_EventEvents](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[SecuritySystemMemberPermissionsObject]    Script Date: 21/1/2021 00:34:31 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[SecuritySystemMemberPermissionsObject](
-	[Oid] [uniqueidentifier] ROWGUIDCOL  NOT NULL,
-	[Members] [nvarchar](max) NULL,
-	[AllowRead] [bit] NULL,
-	[AllowWrite] [bit] NULL,
-	[Criteria] [nvarchar](max) NULL,
-	[Owner] [uniqueidentifier] NULL,
-	[OptimisticLockField] [int] NULL,
-	[GCRecord] [int] NULL,
- CONSTRAINT [PK_SecuritySystemMemberPermissionsObject] PRIMARY KEY CLUSTERED 
-(
-	[Oid] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[SecuritySystemObjectPermissionsObject]    Script Date: 21/1/2021 00:34:31 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[SecuritySystemObjectPermissionsObject](
-	[Oid] [uniqueidentifier] ROWGUIDCOL  NOT NULL,
-	[Criteria] [nvarchar](max) NULL,
-	[AllowRead] [bit] NULL,
-	[AllowWrite] [bit] NULL,
-	[AllowDelete] [bit] NULL,
-	[AllowNavigate] [bit] NULL,
-	[Owner] [uniqueidentifier] NULL,
-	[OptimisticLockField] [int] NULL,
-	[GCRecord] [int] NULL,
- CONSTRAINT [PK_SecuritySystemObjectPermissionsObject] PRIMARY KEY CLUSTERED 
-(
-	[Oid] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[SecuritySystemRole]    Script Date: 21/1/2021 00:34:31 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[SecuritySystemRole](
-	[Oid] [uniqueidentifier] ROWGUIDCOL  NOT NULL,
-	[OptimisticLockField] [int] NULL,
-	[GCRecord] [int] NULL,
-	[ObjectType] [int] NULL,
-	[Name] [nvarchar](100) NULL,
-	[IsAdministrative] [bit] NULL,
-	[CanEditModel] [bit] NULL,
- CONSTRAINT [PK_SecuritySystemRole] PRIMARY KEY CLUSTERED 
-(
-	[Oid] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[SecuritySystemRoleParentRoles_SecuritySystemRoleChildRoles]    Script Date: 21/1/2021 00:34:31 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[SecuritySystemRoleParentRoles_SecuritySystemRoleChildRoles](
-	[ChildRoles] [uniqueidentifier] NULL,
-	[ParentRoles] [uniqueidentifier] NULL,
-	[OID] [uniqueidentifier] ROWGUIDCOL  NOT NULL,
-	[OptimisticLockField] [int] NULL,
- CONSTRAINT [PK_SecuritySystemRoleParentRoles_SecuritySystemRoleChildRoles] PRIMARY KEY CLUSTERED 
-(
-	[OID] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[SecuritySystemTypePermissionsObject]    Script Date: 21/1/2021 00:34:31 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[SecuritySystemTypePermissionsObject](
-	[Oid] [uniqueidentifier] ROWGUIDCOL  NOT NULL,
-	[TargetType] [nvarchar](max) NULL,
-	[AllowRead] [bit] NULL,
-	[AllowWrite] [bit] NULL,
-	[AllowCreate] [bit] NULL,
-	[AllowDelete] [bit] NULL,
-	[AllowNavigate] [bit] NULL,
-	[OptimisticLockField] [int] NULL,
-	[GCRecord] [int] NULL,
-	[ObjectType] [int] NULL,
-	[Owner] [uniqueidentifier] NULL,
- CONSTRAINT [PK_SecuritySystemTypePermissionsObject] PRIMARY KEY CLUSTERED 
-(
-	[Oid] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[SecuritySystemUser]    Script Date: 21/1/2021 00:34:31 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[SecuritySystemUser](
-	[Oid] [uniqueidentifier] ROWGUIDCOL  NOT NULL,
-	[StoredPassword] [nvarchar](max) NULL,
-	[ChangePasswordOnFirstLogon] [bit] NULL,
-	[UserName] [nvarchar](100) NULL,
-	[IsActive] [bit] NULL,
-	[OptimisticLockField] [int] NULL,
-	[GCRecord] [int] NULL,
-	[ObjectType] [int] NULL,
- CONSTRAINT [PK_SecuritySystemUser] PRIMARY KEY CLUSTERED 
-(
-	[Oid] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[SecuritySystemUserUsers_SecuritySystemRoleRoles]    Script Date: 21/1/2021 00:34:31 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[SecuritySystemUserUsers_SecuritySystemRoleRoles](
-	[Roles] [uniqueidentifier] NULL,
-	[Users] [uniqueidentifier] NULL,
-	[OID] [uniqueidentifier] ROWGUIDCOL  NOT NULL,
-	[OptimisticLockField] [int] NULL,
- CONSTRAINT [PK_SecuritySystemUserUsers_SecuritySystemRoleRoles] PRIMARY KEY CLUSTERED 
-(
-	[OID] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-GO
 /****** Object:  Table [dbo].[Signo]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
@@ -2293,10 +1911,6 @@ CREATE TABLE [dbo].[Signo](
 	[Unidad] [varchar](25) NULL,
 	[Activo] [bit] NULL,
 	[Tipo] [smallint] NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_Signo] PRIMARY KEY CLUSTERED 
@@ -2334,10 +1948,6 @@ CREATE TABLE [dbo].[SysConsulta](
 	[Descripcion] [varchar](100) NULL,
 	[Ssql] [varchar](2000) NULL,
 	[Activa] [bit] NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_SysConsulta] PRIMARY KEY CLUSTERED 
@@ -2356,10 +1966,6 @@ CREATE TABLE [dbo].[TablaIMC](
 	[Descripcion] [varchar](60) NULL,
 	[Desde] [numeric](5, 2) NULL,
 	[Hasta] [numeric](5, 2) NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_TablaIMC] PRIMARY KEY CLUSTERED 
@@ -2377,10 +1983,6 @@ CREATE TABLE [dbo].[Telefono](
 	[Numero] [varchar](14) NOT NULL,
 	[Tipo] [smallint] NULL,
 	[Activo] [bit] NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_Telefono] PRIMARY KEY CLUSTERED 
@@ -2482,10 +2084,6 @@ CREATE TABLE [dbo].[TerceroDireccion](
 	[Activa] [bit] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
  CONSTRAINT [PK_TerceroDireccion] PRIMARY KEY CLUSTERED 
 (
 	[OID] ASC
@@ -2508,10 +2106,6 @@ CREATE TABLE [dbo].[TerceroDocumento](
 	[Tercero] [int] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
  CONSTRAINT [PK_TerceroDocumento] PRIMARY KEY CLUSTERED 
 (
 	[OID] ASC
@@ -2534,10 +2128,6 @@ CREATE TABLE [dbo].[TerceroGarantia](
 	[FechaVence] [datetime2](7) NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
  CONSTRAINT [PK_TerceroGarantia] PRIMARY KEY CLUSTERED 
 (
 	[OID] ASC
@@ -2556,10 +2146,6 @@ CREATE TABLE [dbo].[TerceroGiro](
 	[Tercero] [int] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
  CONSTRAINT [PK_TerceroGiro] PRIMARY KEY CLUSTERED 
 (
 	[OID] ASC
@@ -2576,10 +2162,6 @@ CREATE TABLE [dbo].[TerceroNota](
 	[Tercero] [int] NULL,
 	[Fecha] [datetime] NULL,
 	[Comentario] [varchar](200) NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_TerceroNota] PRIMARY KEY CLUSTERED 
@@ -2600,10 +2182,6 @@ CREATE TABLE [dbo].[TerceroRole](
 	[IdRole] [int] NULL,
 	[Activo] [bit] NULL,
 	[Tercero] [int] NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_TerceroRole] PRIMARY KEY CLUSTERED 
@@ -2625,10 +2203,6 @@ CREATE TABLE [dbo].[TerceroSucursal](
 	[Telefono] [varchar](25) NULL,
 	[EMail] [varchar](60) NULL,
 	[Activa] [bit] NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_TerceroSucursal] PRIMARY KEY CLUSTERED 
@@ -2665,10 +2239,6 @@ CREATE TABLE [dbo].[TerminologiaAnatomica](
 	[CodigoFMA] [varchar](10) NULL,
 	[TerminoAnatomico] [varchar](150) NULL,
 	[Categoria] [nvarchar](10) NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_TerminologiaAnatomica] PRIMARY KEY CLUSTERED 
@@ -2691,10 +2261,6 @@ CREATE TABLE [dbo].[UltraSonografiaObstetrica](
 	[TipoEmbarazo] [smallint] NULL,
 	[Diagnostico] [varchar](200) NULL,
 	[DatosPlan] [varchar](200) NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_UltraSonografiaObstetrica] PRIMARY KEY CLUSTERED 
@@ -2734,10 +2300,6 @@ CREATE TABLE [dbo].[UltrasonografiaObstetricaDetalle](
 	[Fpp] [datetime2](7) NULL,
 	[PF] [numeric](10, 2) NULL,
 	[Pbf] [varchar](50) NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NOT NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_UltrasonografiaObstetricaDetalle] PRIMARY KEY CLUSTERED 
@@ -2764,10 +2326,6 @@ CREATE TABLE [dbo].[UltrasonografiaPelvica](
 	[TrompaFalopioDerecha] [varchar](150) NULL,
 	[FondoSaco] [varchar](150) NULL,
 	[Observaciones] [varchar](250) NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_UltrasonografiaPelvica] PRIMARY KEY CLUSTERED 
@@ -2789,10 +2347,6 @@ CREATE TABLE [dbo].[UnidadMedida](
 	[Magnitud] [money] NULL,
 	[Simbolo] [varchar](3) NULL,
 	[Activo] [bit] NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_UnidadMedida] PRIMARY KEY CLUSTERED 
@@ -2830,46 +2384,9 @@ CREATE TABLE [dbo].[Vacuna](
 	[CodigoCVX] [varchar](6) NULL,
 	[Medicamento] [int] NULL,
 	[Comentario] [varchar](150) NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_Vacuna] PRIMARY KEY CLUSTERED 
-(
-	[OID] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[WhoPercentilPesoLong]    Script Date: 21/1/2021 00:34:32 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[WhoPercentilPesoLong](
-	[OID] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
-	[TipoTabla] [smallint] NULL,
-	[EdadMes] [numeric](3, 2) NULL,
-	[L] [numeric](8, 6) NULL,
-	[M] [numeric](8, 6) NULL,
-	[S] [numeric](8, 6) NULL,
-	[P2_3] [numeric](8, 6) NULL,
-	[P5] [numeric](8, 6) NULL,
-	[P10] [numeric](8, 6) NULL,
-	[P25] [numeric](8, 6) NULL,
-	[P50] [numeric](8, 6) NULL,
-	[P75] [numeric](8, 6) NULL,
-	[P90] [numeric](8, 6) NULL,
-	[P95] [numeric](8, 6) NULL,
-	[P98] [numeric](8, 6) NULL,
-	[OptimisticLockField] [int] NULL,
-	[GCRecord] [int] NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
- CONSTRAINT [PK_WhoPercentilPesoLong] PRIMARY KEY CLUSTERED 
 (
 	[OID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
@@ -2921,10 +2438,6 @@ CREATE TABLE [dbo].[ZonaGeografica](
 	[CodigoTelefonico] [varchar](4) NULL,
 	[Moneda] [varchar](3) NULL,
 	[Activa] [bit] NULL,
-	[UsuarioCrea] [varchar](25) NULL,
-	[FechaCrea] [datetime] NULL,
-	[UsuarioMod] [varchar](25) NULL,
-	[FechaMod] [datetime] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_ZonaGeografica] PRIMARY KEY CLUSTERED 
@@ -4339,18 +3852,24 @@ CREATE NONCLUSTERED INDEX [iProducto_ProductoEquivalente] ON [dbo].[ProductoEqui
 	[Producto] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_ProductoLote]    Script Date: 21/1/2021 00:34:32 ******/
-CREATE NONCLUSTERED INDEX [iGCRecord_ProductoLote] ON [dbo].[ProductoLote]
+/****** Object:  Index [iGCRecord_InventarioLote]    Script Date: 21/1/2021 00:34:32 ******/
+CREATE NONCLUSTERED INDEX [iGCRecord_InventarioLote] ON [dbo].[InventarioLote]
 (
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iProducto_ProductoLote]    Script Date: 21/1/2021 00:34:32 ******/
-CREATE NONCLUSTERED INDEX [iProducto_ProductoLote] ON [dbo].[ProductoLote]
+/****** Object:  Index [iProducto_InventarioLote]    Script Date: 21/1/2021 00:34:32 ******/
+CREATE NONCLUSTERED INDEX [iProducto_InventarioLote] ON [dbo].[InventarioLote]
 (
 	[Producto] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
+create nonclustered index [idxCodigoLote_InventarioLote] on [dbo].[InventarioLote]
+(
+   [CodigoLote]
+)
+GO
+
 /****** Object:  Index [iGCRecord_ProductoPrecio]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_ProductoPrecio] ON [dbo].[ProductoPrecio]
 (
@@ -5854,11 +5373,11 @@ NOT FOR REPLICATION
 GO
 ALTER TABLE [dbo].[ProductoEquivalente] CHECK CONSTRAINT [FK_ProductoEquivalente_Producto]
 GO
-ALTER TABLE [dbo].[ProductoLote]  WITH NOCHECK ADD  CONSTRAINT [FK_ProductoLote_Producto] FOREIGN KEY([Producto])
+ALTER TABLE [dbo].[InventarioLote]  WITH NOCHECK ADD  CONSTRAINT [FK_InventarioLote_Producto] FOREIGN KEY([Producto])
 REFERENCES [dbo].[Producto] ([OID])
 NOT FOR REPLICATION 
 GO
-ALTER TABLE [dbo].[ProductoLote] CHECK CONSTRAINT [FK_ProductoLote_Producto]
+ALTER TABLE [dbo].[InventarioLote] CHECK CONSTRAINT [FK_InventarioLote_Producto]
 GO
 ALTER TABLE [dbo].[ProductoPrecio]  WITH NOCHECK ADD  CONSTRAINT [FK_ProductoPrecio_Producto] FOREIGN KEY([Producto])
 REFERENCES [dbo].[Producto] ([OID])

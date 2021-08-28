@@ -17,7 +17,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
     [RuleCombinationOfPropertiesIsUnique("TerceroRole.IdRoleCodigo_Unico", DefaultContexts.Save, "IdRole;Codigo",
            CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction, SkipNullOrEmptyValues = true,
             MessageTemplateCombinationOfPropertiesMustBeUnique = "Objectos con la misma combinación de las propiedades 'IdRole' y 'Codigo' no deben existir")]
-    public class TerceroRole : XPObjectBaseBO
+    public class TerceroRole : XPObject
     {
         /// <summary>
         /// Metodo para la inicialización de propiedades y/o objetos del BO. Se ejecuta una sola vez después de la creación del objeto

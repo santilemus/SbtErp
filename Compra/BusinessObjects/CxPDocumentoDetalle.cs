@@ -61,9 +61,9 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
         /// Cantidad de producto
         /// </summary>
         [DbType("numeric(12,2)"), XafDisplayName("Cantidad"), VisibleInLookupListView(true)]
-        [RuleRange("CxCDocumentoDetalle.Cantidad_Rango", DefaultContexts.Save, "0.0", "[VentaDetalle.Cantidad]",
+        [RuleRange("CxPDocumentoDetalle.Cantidad_Rango", DefaultContexts.Save, "0.0", "[VentaDetalle.Cantidad]",
             ParametersMode.Expression, SkipNullOrEmptyValues = false,
-            CustomMessageTemplate = "Cantidad debe ser mayor o igual a 0.0 y menor o igual a la cantidad en el documento de venta")]
+            CustomMessageTemplate = "Cantidad debe ser mayor o igual a 0.0 y menor o igual a la cantidad en el documento de compra")]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         //[ImmediatePostData(true)]
         public decimal Cantidad
@@ -84,9 +84,9 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
         /// Precio por unidad
         /// </summary>
         [DbType("numeric(14,4)"), XafDisplayName("Precio Unidad")]
-        [RuleRange("CxCDocumentoDetalle.PrecioUnidad_Rango", DefaultContexts.Save, "0.0", "[VentaDetalle.PrecioUnidad]",
+        [RuleRange("CxPDocumentoDetalle.PrecioUnidad_Rango", DefaultContexts.Save, "0.0", "[VentaDetalle.PrecioUnidad]",
             ParametersMode.Expression, SkipNullOrEmptyValues = false,
-            CustomMessageTemplate = "Precio Unidad debe ser Mayor o Igual a 0.0m y menor o igual al precio en el documento de venta")]
+            CustomMessageTemplate = "Precio Unidad debe ser Mayor o Igual a 0.0m y menor o igual al precio en el documento de compra")]
         [ModelDefault("DisplayFormat", "{0:N4}"), ModelDefault("EditMask", "n4")]
         //[ImmediatePostData(true)]
         public decimal PrecioUnidad

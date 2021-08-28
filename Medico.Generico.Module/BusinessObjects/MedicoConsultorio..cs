@@ -13,7 +13,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
     /// </summary>
     [NavigationItem(false)]
     [CreatableItem(false), ImageName("ccmedico"), ModelDefault("Caption", "Consultorio")]
-    public class MedicoConsultorio : XPObjectBaseBO
+    public class MedicoConsultorio : XPObject
     {
         /// <summary>
         /// Metodo para la inicialización de propiedades y/o objetos del BO. Se ejecuta una sola vez después de la creación del objeto

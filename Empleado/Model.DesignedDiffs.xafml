@@ -90,19 +90,19 @@
                   <LayoutItem Id="Cargo" ViewItem="Cargo" Index="4" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
                   <LayoutItem Id="TipoSalario" ViewItem="TipoSalario" Index="5" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
                   <LayoutItem Id="Salario" ViewItem="Salario" Index="6" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="SalarioMes" ViewItem="SalarioMes" Index="7" RelativeSize="10.236220472440945" IsNewNode="True" />
-                  <LayoutItem Id="TipoContrato" ViewItem="TipoContrato" Index="8" RelativeSize="14.173228346456693" IsNewNode="True" />
+                  <LayoutItem Id="SalarioMes" ViewItem="SalarioMes" Index="7" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="TipoContrato" ViewItem="TipoContrato" Index="8" RelativeSize="14.173228346456693" CaptionLocation="Left" IsNewNode="True" />
                 </LayoutGroup>
                 <LayoutGroup Id="Empleado_col2" ShowCaption="False" Index="1" RelativeSize="50.627137970353481" CaptionLocation="Left" IsNewNode="True">
-                  <LayoutItem Id="DiaDescanso" ViewItem="DiaDescanso" Index="0" RelativeSize="14.173228346456693" IsNewNode="True" />
+                  <LayoutItem Id="DiaDescanso" ViewItem="DiaDescanso" Index="0" RelativeSize="14.173228346456693" CaptionLocation="Left" IsNewNode="True" />
                   <LayoutItem Id="Estado" ViewItem="Estado" CaptionLocation="Left" Index="1" RelativeSize="10.236220472440945" IsNewNode="True" />
-                  <LayoutItem Id="Banco" ViewItem="Banco" Index="2" RelativeSize="10.236220472440945" IsNewNode="True" />
+                  <LayoutItem Id="Banco" ViewItem="Banco" Index="2" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
                   <LayoutItem Id="TipoCuenta" ViewItem="TipoCuenta" Index="3" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
                   <LayoutItem Id="NumeroCuenta" ViewItem="NumeroCuenta" Index="4" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
                   <LayoutItem Id="Pensionado" ViewItem="Pensionado" Index="5" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
                   <LayoutItem Id="NumeroCarne" ViewItem="NumeroCarne" Index="6" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
                   <LayoutItem Id="Titulo" ViewItem="Titulo" CaptionLocation="Left" Index="7" RelativeSize="10.236220472440945" IsNewNode="True" />
-                  <LayoutItem Id="AFP" ViewItem="AFP" Index="8" RelativeSize="14.173228346456693" IsNewNode="True" />
+                  <LayoutItem Id="AFP" ViewItem="AFP" Index="8" RelativeSize="14.173228346456693" CaptionLocation="Left" IsNewNode="True" />
                 </LayoutGroup>
               </LayoutGroup>
               <LayoutGroup Id="Item2" ShowCaption="True" CaptionLocation="Top" Direction="Vertical" Index="2" RelativeSize="100" Caption="Fotografía" IsNewNode="True">

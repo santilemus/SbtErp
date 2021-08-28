@@ -49,38 +49,29 @@
     <DetailView Id="Enfermedad_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
-          <LayoutGroup Id="SimpleEditors" RelativeSize="100" Caption="SimpleEditors">
-            <LayoutGroup Id="Auto2bf63609-cd47-4a42-8af4-a0a83aa4178b" ShowCaption="False" Caption="" Direction="Horizontal" Index="0" RelativeSize="12.920592193808883" IsNewNode="True">
-              <LayoutGroup Id="Enfermedad_col1" ShowCaption="False" Index="0" RelativeSize="50" IsNewNode="True">
-                <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="37.5" IsNewNode="True" />
-                <LayoutItem Id="CodigoCie" ViewItem="CodigoCie" Index="1" RelativeSize="27.083333333333332" IsNewNode="True" />
-                <LayoutItem Id="Categoria" ViewItem="Categoria" Index="2" RelativeSize="35.416666666666664" IsNewNode="True" />
-              </LayoutGroup>
-              <LayoutGroup Id="Enfermedad_col2" ShowCaption="False" Index="1" RelativeSize="50" IsNewNode="True">
-                <LayoutItem Id="Comentario" ViewItem="Comentario" Index="0" RelativeSize="37.5" IsNewNode="True" />
-                <LayoutItem Id="Activo" ViewItem="Activo" Index="1" RelativeSize="27.083333333333332" IsNewNode="True" />
-                <LayoutItem Id="EsGrupo" ViewItem="EsGrupo" Index="2" RelativeSize="35.416666666666664" IsNewNode="True" />
-              </LayoutGroup>
-            </LayoutGroup>
-            <LayoutItem Id="Nombre" ViewItem="Nombre" Index="1" RelativeSize="87.079407806191114" IsNewNode="True" />
-            <LayoutGroup Id="XPObject" Caption="Oid" Direction="Horizontal" Index="1" RelativeSize="63.072776280323453" Removed="True">
-              <LayoutItem Id="Oid" Removed="True" />
-            </LayoutGroup>
-            <LayoutGroup Id="Enfermedad" RelativeSize="18.438761776581426" Removed="True">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="25.1604621309371">
+            <LayoutGroup Id="Enfermedad" RelativeSize="100" Index="0">
               <LayoutGroup Id="Enfermedad_col1" RelativeSize="50">
-                <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="36.734693877551024" IsNewNode="True" />
-                <LayoutItem Id="CodigoCie" Index="1" RelativeSize="26.530612244897959" />
-                <LayoutItem Id="Categoria" Index="2" RelativeSize="36.734693877551024" />
+                <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="24.324324324324323" CaptionLocation="Left" IsNewNode="True" />
+                <LayoutItem Id="CodigoCie" Index="1" RelativeSize="17.567567567567568" CaptionLocation="Left" />
+                <LayoutItem Id="Categoria" Index="2" RelativeSize="17.567567567567568" CaptionLocation="Left" />
                 <LayoutItem Id="Comentario" Index="3" RelativeSize="29.032258064516128" Removed="True" />
+                <LayoutItem Id="Nombre" ViewItem="Nombre" Index="3" RelativeSize="40.54054054054054" CaptionLocation="Left" IsNewNode="True" />
               </LayoutGroup>
               <LayoutGroup Id="Enfermedad_col2" RelativeSize="50">
-                <LayoutItem Id="Comentario" ViewItem="Comentario" Index="0" RelativeSize="36.734693877551024" IsNewNode="True" />
-                <LayoutItem Id="Activo" RelativeSize="26.530612244897959" Index="1" />
-                <LayoutItem Id="EsGrupo" RelativeSize="36.734693877551024" Index="2" />
+                <LayoutItem Id="Comentario" ViewItem="Comentario" Index="0" RelativeSize="24.324324324324323" CaptionLocation="Left" IsNewNode="True" />
+                <LayoutItem Id="Activo" RelativeSize="17.567567567567568" Index="1" CaptionLocation="Left" />
+                <LayoutItem Id="EsGrupo" RelativeSize="58.108108108108105" Index="2" CaptionLocation="Left" />
               </LayoutGroup>
             </LayoutGroup>
+            <LayoutGroup Id="XPObject" Caption="Oid" RelativeSize="27.692307692307693" Index="2" Removed="True">
+              <LayoutItem Id="Oid" Removed="True" />
+            </LayoutGroup>
           </LayoutGroup>
-          <LayoutGroup Id="SizeableEditors" RelativeSize="50.06729475100942" Caption="Nombre" Direction="Horizontal" Removed="True">
+          <LayoutGroup Id="FactorRiesgos_Group" Direction="Vertical" RelativeSize="74.8395378690629" Index="1">
+            <LayoutItem Id="FactorRiesgos" RelativeSize="100" />
+          </LayoutGroup>
+          <LayoutGroup Id="SizeableEditors" RelativeSize="33.247753530166882" Caption="Nombre" Removed="True">
             <LayoutItem Id="Nombre" RelativeSize="100" Removed="True" />
           </LayoutGroup>
         </LayoutGroup>

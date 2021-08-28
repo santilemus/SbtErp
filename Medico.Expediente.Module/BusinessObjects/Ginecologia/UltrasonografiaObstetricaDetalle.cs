@@ -19,7 +19,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects.Ginecologia
         NavigationItem(false), CreatableItem(false), Persistent(nameof(UltrasonografiaObstetricaDetalle))]
     //[ImageName("BO_Contact")]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
-    public class UltrasonografiaObstetricaDetalle : XPObjectBaseBO
+    public class UltrasonografiaObstetricaDetalle : XPObject
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
         public UltrasonografiaObstetricaDetalle(Session session)
             : base(session)

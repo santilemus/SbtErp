@@ -27,7 +27,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         Criteria = "[EdadMeses] >= 240 && !([Signo.Oid] In (1, 2, 9))", TargetItems = "PercentilTablaDetalle")]
     //[Appearance("ConsultaSigno.Percentil_Show", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Show, Context = "Any",
     //    Criteria = "[EdadMeses] < 240 && [Signo.Oid] In (1, 2, 9)", TargetItems = "PercentilTablaDetalle")]
-    public class ConsultaSigno : XPObjectBaseBO
+    public class ConsultaSigno : XPObject
     {
 
         public ConsultaSigno(Session session) : base(session)

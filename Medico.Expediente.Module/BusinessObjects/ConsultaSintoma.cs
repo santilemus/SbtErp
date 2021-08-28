@@ -19,7 +19,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
     [XafDefaultProperty(nameof(Descripcion))]
     [NavigationItem(false)]
     [RuleCriteria("ConsultaSintoma.FechaFin_Valida", DefaultContexts.Save, "Not(IsNull([FechaFin])) And FechaFin >= FechaInicio", "Fecha Fin debe ser mayor o igual Fecha Inicio")]
-    public class ConsultaSintoma : XPObjectBaseBO
+    public class ConsultaSintoma : XPObject
     {
         /// <summary>
         /// Metodo para la inicialización de propiedades y/o objetos del BO. Se ejecuta una sola vez después de la creación del objeto

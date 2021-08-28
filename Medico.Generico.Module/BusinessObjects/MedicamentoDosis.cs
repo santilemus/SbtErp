@@ -15,7 +15,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Dosis")]
     [DevExpress.ExpressApp.DC.XafDefaultPropertyAttribute("Comentario")]
     [DevExpress.Persistent.Base.ImageNameAttribute("capsula2")]
-    public class MedicamentoDosis : XPObjectBaseBO
+    public class MedicamentoDosis : XPObject
     {
         /// <summary>
         /// Metodo para la inicialización de propiedades y/o objetos del BO. Se ejecuta una sola vez después de la creación del objeto

@@ -12,7 +12,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
     [DevExpress.Persistent.Base.ImageNameAttribute("vacunas")]
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Vacunas")]
     [Persistent(nameof(PacienteVacuna))]
-    public class PacienteVacuna : XPObjectBaseBO
+    public class PacienteVacuna : XPObject
     {
         private Medicamento _vacuna;
         private System.String _lote;
@@ -66,6 +66,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
             }
         }
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
+        [VisibleInListView(false)]
         public System.Boolean Aplicada
         {
             get
@@ -79,6 +80,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         }
 
         [ExplicitLoading]
+        [VisibleInListView(false)]
         public TerminologiaAnatomica ParteDeCuerpo
         {
             get
@@ -101,6 +103,8 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
                 SetPropertyValue("NoDosis", ref _noDosis, value);
             }
         }
+
+        [VisibleInListView(false)]
         public System.Int16 NoRefuerzo
         {
             get
@@ -114,6 +118,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         }
 
         [ExplicitLoading]
+        [VisibleInListView(false)]
         public Tercero.Module.BusinessObjects.Tercero Farmaceutica
         {
             get
@@ -151,6 +156,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
             }
         }
         [DevExpress.Xpo.SizeAttribute(200)]
+        [VisibleInListView(false)]
         public System.String Comentario
         {
             get

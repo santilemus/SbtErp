@@ -56,7 +56,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         }
 
         [XafDisplayName("Categoría"), ImmediatePostData(true), VisibleInLookupListView(true),
-            RuleRequiredField("ArchivoAdjunto.Categoria_Requerido", DefaultContexts.Save, ResultType = ValidationResultType.Information)]
+            RuleRequiredField("PacienteFileData.Categoria_Requerido", DefaultContexts.Save, ResultType = ValidationResultType.Information)]
         public MedicoLista Categoria
         {
             get => categoria;
@@ -64,7 +64,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         }
 
         [Size(120), DbType("varchar(100)"), XafDisplayName("Descripción"), 
-            RuleRequiredField("ArchivoAdjunto.Descripcion_Requerido", DefaultContexts.Save)]
+            RuleRequiredField("PacienteFileData.Descripcion_Requerido", DefaultContexts.Save)]
         public string Descripcion
         {
             get => descripcion;

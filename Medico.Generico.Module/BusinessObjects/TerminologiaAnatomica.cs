@@ -13,7 +13,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
     //[DevExpress.Persistent.Base.ImageNameAttribute("vacunas")]
     [NavigationItem("Salud"), Persistent("TerminologiaAnatomica"),
         XafDefaultProperty("TerminoAnatomico"), ModelDefault("Caption", "Terminología Anatómica")]
-    public class TerminologiaAnatomica : XPObjectBaseBO
+    public class TerminologiaAnatomica : XPObject
     {
 
         public TerminologiaAnatomica(Session session) : base(session)

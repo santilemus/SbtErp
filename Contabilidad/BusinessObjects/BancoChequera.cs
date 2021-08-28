@@ -19,7 +19,7 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
     //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
-    public class BancoChequera : XPObjectBaseBO
+    public class BancoChequera : XPObject
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
         public BancoChequera(Session session)
             : base(session)

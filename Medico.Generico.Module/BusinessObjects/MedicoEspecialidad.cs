@@ -14,7 +14,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Especialidades del Médico")]
     [DevExpress.Persistent.Base.CreatableItemAttribute(false)]
     [DevExpress.Persistent.Base.ImageNameAttribute("med_especialista")]
-    public class MedicoEspecialidad : XPObjectBaseBO
+    public class MedicoEspecialidad : XPObject
     {
         private Medico _medico;
         private MedicoLista especialidad;

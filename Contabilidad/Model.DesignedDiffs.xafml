@@ -49,17 +49,17 @@
         <LayoutGroup Id="Main" RelativeSize="100">
           <LayoutGroup Id="SimpleEditors" RelativeSize="20.874471086036671" Direction="Horizontal">
             <LayoutGroup Id="BancoConciliacion_col1" ShowCaption="False" Index="0" RelativeSize="49.932157394843962" IsNewNode="True">
-              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="24.324324324324323" IsNewNode="True" />
-              <LayoutItem Id="Fecha" ViewItem="Fecha" Index="1" RelativeSize="17.567567567567568" IsNewNode="True" />
-              <LayoutItem Id="FechaInicio" ViewItem="FechaInicio" Index="2" RelativeSize="17.567567567567568" IsNewNode="True" />
-              <LayoutItem Id="FechaFin" ViewItem="FechaFin" Index="3" RelativeSize="17.567567567567568" IsNewNode="True" />
-              <LayoutItem Id="Elaboro" ViewItem="Elaboro" Index="4" RelativeSize="22.972972972972972" IsNewNode="True" />
+              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="24.324324324324323" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Fecha" ViewItem="Fecha" Index="1" RelativeSize="17.567567567567568" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="FechaInicio" ViewItem="FechaInicio" Index="2" RelativeSize="17.567567567567568" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="FechaFin" ViewItem="FechaFin" Index="3" RelativeSize="17.567567567567568" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Elaboro" ViewItem="Elaboro" Index="4" RelativeSize="22.972972972972972" CaptionLocation="Left" IsNewNode="True" />
             </LayoutGroup>
             <LayoutGroup Id="BancoConciliacion_col2" ShowCaption="False" Index="1" RelativeSize="50.067842605156038" IsNewNode="True">
-              <LayoutItem Id="SaldoEstadoCuenta" ViewItem="SaldoEstadoCuenta" Index="0" RelativeSize="24.324324324324323" IsNewNode="True" />
-              <LayoutItem Id="SaldoLibro" ViewItem="SaldoLibro" Index="1" RelativeSize="17.567567567567568" IsNewNode="True" />
-              <LayoutItem Id="Autorizo" ViewItem="Autorizo" Index="2" RelativeSize="17.567567567567568" IsNewNode="True" />
-              <LayoutItem Id="FechaAutorizo" ViewItem="FechaAutorizo" Index="3" RelativeSize="40.54054054054054" IsNewNode="True" />
+              <LayoutItem Id="SaldoEstadoCuenta" ViewItem="SaldoEstadoCuenta" Index="0" RelativeSize="24.324324324324323" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="SaldoLibro" ViewItem="SaldoLibro" Index="1" RelativeSize="17.567567567567568" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Autorizo" ViewItem="Autorizo" Index="2" RelativeSize="17.567567567567568" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="FechaAutorizo" ViewItem="FechaAutorizo" Index="3" RelativeSize="40.54054054054054" CaptionLocation="Left" IsNewNode="True" />
             </LayoutGroup>
             <LayoutGroup Id="XPObject" Index="1" RelativeSize="58.192090395480228" Caption="Oid" Direction="Horizontal" Removed="True">
               <LayoutItem Id="Oid" RelativeSize="100" Removed="True" />
@@ -229,22 +229,6 @@
               <LayoutItem Id="Haber" Index="3" RelativeSize="88.703465982028234" />
             </LayoutGroup>
             <LayoutGroup Id="XPObject" Caption="Oid" Index="1" RelativeSize="84.338896020539153" Removed="True">
-              <LayoutItem Id="Oid" Removed="True" />
-            </LayoutGroup>
-          </LayoutGroup>
-        </LayoutGroup>
-      </Layout>
-    </DetailView>
-    <DetailView Id="BancoTransaccionPago_DetailView">
-      <Layout>
-        <LayoutGroup Id="Main" RelativeSize="100">
-          <LayoutGroup Id="SimpleEditors" RelativeSize="100">
-            <LayoutGroup Id="BancoTransaccionPago" RelativeSize="100">
-              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="4.6213093709884463" IsNewNode="True" />
-              <LayoutItem Id="BancoTransaccion" Index="1" RelativeSize="3.3376123234916562" />
-              <LayoutItem Id="Monto" Index="2" RelativeSize="92.0410783055199" />
-            </LayoutGroup>
-            <LayoutGroup Id="XPObject" Caption="Oid" RelativeSize="87.676508344030808" Removed="True">
               <LayoutItem Id="Oid" Removed="True" />
             </LayoutGroup>
           </LayoutGroup>

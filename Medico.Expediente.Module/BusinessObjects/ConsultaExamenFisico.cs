@@ -15,7 +15,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
     [DevExpress.Persistent.Base.CreatableItemAttribute(false)]
     [DevExpress.Persistent.Base.ImageNameAttribute("examenfis")]
     [RuleCombinationOfPropertiesIsUnique("ConsultaExamenFisico.FechaDescripcionConsulta_Unico", DefaultContexts.Save, "Fecha,Descripcion,Consulta", SkipNullOrEmptyValues = false)]
-    public class ConsultaExamenFisico : XPObjectBaseBO
+    public class ConsultaExamenFisico : XPObject
     {
         /// <summary>
         /// Metodo para la inicialización de propiedades y/o objetos del BO. Se ejecuta una sola vez después de la creación del objeto

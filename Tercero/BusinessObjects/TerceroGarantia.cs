@@ -21,7 +21,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
     //[ImageName("BO_Contact")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
-    public class TerceroGarantia : XPObjectBaseBO
+    public class TerceroGarantia : XPObjectCustom
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
         public TerceroGarantia(Session session)
             : base(session)

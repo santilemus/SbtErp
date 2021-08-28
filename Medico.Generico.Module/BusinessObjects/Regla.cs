@@ -22,7 +22,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
         XafDefaultProperty(nameof(Descripcion)), CreatableItem(false)]
     [ImageName("list-key")]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
-    public class Regla : XPObjectBaseBO
+    public class Regla : XPObject
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
         public Regla(Session session)
             : base(session)

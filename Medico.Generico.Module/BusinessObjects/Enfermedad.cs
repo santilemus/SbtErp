@@ -8,6 +8,7 @@ using DevExpress.Persistent.BaseImpl;
 using DevExpress.Xpo;
 using DevExpress.Persistent.Validation;
 using SBT.Apps.Base.Module.BusinessObjects;
+using DevExpress.ExpressApp.Model;
 
 namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 {
@@ -15,6 +16,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
     /// Es la clase para el objeto de negocios que corresponde al mantenimiento de enfermedades
     /// </summary>
 	[DefaultClassOptions, CreatableItem(false)]
+	[ModelDefault("Caption", "Enfermedad")]
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Enfermedades")]
     [DevExpress.ExpressApp.DC.XafDefaultPropertyAttribute("Nombre")]
     [DevExpress.Persistent.Base.ImageNameAttribute(nameof(Enfermedad))]
@@ -22,7 +24,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
     [RuleIsReferenced("Enfermedad_Referencia", DefaultContexts.Delete, typeof(Enfermedad), nameof(Oid),
         MessageTemplateMustBeReferenced = "Para borrar el objeto '{TargetObject}', debe estar seguro que no es utilizado (referenciado) en ningún lugar.",
         InvertResult = true, FoundObjectMessageFormat = "'{0}'", FoundObjectMessagesSeparator = ";")]
-    public class Enfermedad : XPObjectBaseBO
+    public class Enfermedad : XPObject
     {
         /// <summary>
         /// Metodo para la inicialización de propiedades y/o objetos del BO. Se ejecuta una sola vez después de la creación del objeto
@@ -62,8 +64,10 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 		  }
 		}
 		[DevExpress.Xpo.SizeAttribute(300), DbType("varchar(300)")]
+		[ModelDefault("RowCount", "2")]
 		[RuleRequiredField("Diagnostico.Nombre_Requerido", "Save")]
 		[RuleUniqueValue("Diagnostico.Nombre_Unico", DefaultContexts.Save, CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction)]
+		
 		public System.String Nombre
 		{
 		  get

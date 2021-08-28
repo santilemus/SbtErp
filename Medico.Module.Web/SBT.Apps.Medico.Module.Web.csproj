@@ -38,9 +38,13 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DevExpress.Dashboard.v20.2.Core, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Dashboard.v20.2.Web, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Dashboard.v20.2.Web.WebForms, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Data.v20.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+    <Reference Include="DevExpress.DataAccess.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.ExpressApp.AuditTrail.v20.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
@@ -52,6 +56,8 @@
     <Reference Include="DevExpress.ExpressApp.ConditionalAppearance.v20.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+    <Reference Include="DevExpress.ExpressApp.Dashboards.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.ExpressApp.Dashboards.Web.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.ExpressApp.FileAttachment.Web.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.ExpressApp.Images.v20.2">
       <SpecificVersion>False</SpecificVersion>
@@ -171,6 +177,7 @@
     <Reference Include="System.Xml">
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\WebDocumentViewer.cs" />

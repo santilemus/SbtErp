@@ -16,7 +16,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
     [DevExpress.Persistent.Base.CreatableItemAttribute(false)]
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Parientes")]
     [DefaultProperty(nameof(NombreCompleto))]
-    public class Pariente : XPObjectBaseBO
+    public class Pariente : XPObject
     {
         string comentario;
         Enfermedad diagnostico;

@@ -16,7 +16,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
         Persistent(nameof(PercentilTablaDetalle)), NavigationItem(false)]  
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
-    public class PercentilTablaDetalle : XPObjectBaseBO
+    public class PercentilTablaDetalle : XPObject
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
         public PercentilTablaDetalle(Session session)
             : base(session)
@@ -59,7 +59,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
             set => SetPropertyValue(nameof(PercentilTabla), ref percentilTabla, value);
         }
 
-        [DbType("smallint"), RuleRequiredField("WhoPercentilPesoLong.Mes_Requerido", "Save"),
+        [DbType("smallint"), RuleRequiredField("PercentilTablaDetalle.Mes_Requerido", "Save"),
             RuleRange("WhoPercentilPesoLong.Mes_Rango", DefaultContexts.Save, 0, 24)]
         [XafDisplayName("Mes"), Index(1)]
         public int EdadMes
