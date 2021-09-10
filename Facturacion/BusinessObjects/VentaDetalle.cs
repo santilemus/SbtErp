@@ -212,9 +212,43 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
                 decimal pu = Producto.Precios.FirstOrDefault<ProductoPrecio>(p => p.Producto.Oid == Producto.Oid &&
                              p.Tipo.Categoria == CategoriaLista.TipoPrecio && p.Tipo.Codigo == "TPR001" && p.Activo == true).PrecioUnitario;
                 if (PrecioUnidad == 0.0m)
-                    PrecioUnidad = pu;
-                OnChanged(nameof(Costo));
+                    PrecioUnidad = pu;                
             }
+            Costo = ObtenerCosto();
+            OnChanged(nameof(Costo));
+        }
+
+        private decimal ObtenerCosto()
+        {
+            decimal valor = 0.0m;
+            if (Producto.Categoria != null)
+            {
+                if (Producto.Categoria.MetodoCosteo == EMetodoCosteoInventario.Promedio)
+                    valor = Producto.CostoPromedio;
+                else if (Producto.Categoria.MetodoCosteo == EMetodoCosteoInventario.UEPS ||
+                         Producto.Categoria.MetodoCosteo == EMetodoCosteoInventario.PEPS)
+                {
+                    InventarioLote lotep = ObtenerLote();
+                    Lote = lotep;
+                    valor = lotep != null ? lotep.Costo : Producto.CostoPromedio;  // sino se encuentra el lote retorna costo promedio
+                }
+                else if (Producto.Categoria.MetodoCosteo == EMetodoCosteoInventario.Unitario)
+                    valor = PrecioUnidad;
+            }
+            return valor;
+        }
+
+        public InventarioLote ObtenerLote()
+        {
+            InventarioLote lotep = null;
+            Producto.Lotes.Criteria = CriteriaOperator.Parse("[Producto.Oid] == ? && [Entrada] > [Salida]", Producto.Oid);
+            if (Producto.Categoria.MetodoCosteo == EMetodoCosteoInventario.PEPS)
+                lotep = Producto.Lotes.Where(x => x.Producto.Oid == Producto.Oid && x.Entrada > x.Salida)
+                                         .OrderBy(x => x.FechaVence).FirstOrDefault(x => (x.Entrada - x.Salida) >= Cantidad);
+            else
+                lotep = Producto.Lotes.Where(x => x.Producto.Oid == Producto.Oid && x.Entrada > x.Salida)
+                         .OrderBy(x => x.FechaVence).LastOrDefault(x => (x.Entrada - x.Salida) >= Cantidad);
+            return lotep;
         }
 
         protected override void DoCantidadChanged(bool forceChangeEvents, decimal oldValue)
@@ -277,19 +311,6 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             Venta.UpdateTotalGravada(true);
             Venta.UpdateTotalIva(true);
             Venta.UpdateTotalNoSujeta(true);
-        }
-
-        public InventarioLote ObtenerLote()
-        {
-            InventarioLote lotep = null;
-            Producto.Lotes.Criteria = CriteriaOperator.Parse("[Producto.Oid] == ? && [Entrada] > [Salida]", Producto.Oid);
-            if (Producto.Categoria.MetodoCosteo == EMetodoCosteoInventario.PEPS)
-                lotep = Producto.Lotes.Where(x => x.Producto.Oid == Producto.Oid && x.Entrada > x.Salida)
-                                         .OrderBy(x => x.FechaVence).FirstOrDefault(x => (x.Entrada - x.Salida) >= Cantidad);
-            else
-                lotep = Producto.Lotes.Where(x => x.Producto.Oid == Producto.Oid && x.Entrada > x.Salida)
-                         .OrderBy(x => x.FechaVence).LastOrDefault(x => (x.Entrada - x.Salida) >= Cantidad);
-            return lotep;
         }
 
         #endregion

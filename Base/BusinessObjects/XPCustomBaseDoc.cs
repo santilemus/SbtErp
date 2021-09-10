@@ -92,7 +92,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         /// Correlativo por tipo de documento.
         /// </summary>
         [Browsable(false)]
-        private int numero;
+        private int ? numero;
 #if (Firebird)
         [DbType("DM_ENTERO"), Persistent("NUMERO")]
 #else
@@ -100,7 +100,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
 #endif
         [Index(1), XafDisplayName("Número"), ModelDefault("AllowEdit", "False"), RuleRequiredField("XPCustomBaseDocs.Numero_Requerido", "Save"),
             Indexed("Empresa", Unique = false), NonCloneable]
-        public int Numero
+        public int ? Numero
         {
             get => numero;
             set => SetPropertyValue(nameof(Numero), ref numero, value);

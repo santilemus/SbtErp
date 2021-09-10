@@ -5,6 +5,7 @@ using DevExpress.Persistent.Base;
 using DevExpress.Xpo;
 using System;
 using System.Linq;
+using DevExpress.Persistent.Validation;
 
 namespace SBT.Apps.CxP.Module.BusinessObjects
 {
@@ -56,7 +57,7 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
             get { return iva; }
         }
 
-        [PersistentAlias("[VentaGravada] + [IVA]")]
+        [PersistentAlias("[Gravada] + [Iva]")]
         [XafDisplayName("SubTotal"), Index(11)]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         public decimal SubTotal
@@ -90,9 +91,9 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
         public decimal Exenta => exenta;
 
         /// <summary>
-        /// revisar porque puede ser la misma propiedad que Monto en el BO ancestro
+        /// OJO SE DEBE QUITAR Y SUMAR ESTO EN Monto del BO ancestro
         /// </summary>
-        [PersistentAlias("[SubTotal] - [IvaRetenido] + [IvaPercibido]  + [VentaNoSujeta] + [VentaExenta] ")]
+        [PersistentAlias("[SubTotal] - [IvaRetenido] + [IvaPercibido]  + [NoSujeta] + [Exenta] ")]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         [XafDisplayName("Total"), Index(16)]
         public decimal Total
@@ -111,7 +112,7 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
         public void UpdateTotalExenta(bool forceChangeEvents)
         {
             decimal? oldExenta = exenta;
-            exenta = Convert.ToDecimal(Evaluate(CriteriaOperator.Parse("[Detalles].Sum([Exenta])"))); ;
+            exenta = Convert.ToDecimal(Evaluate(CriteriaOperator.Parse("[Detalles].Sum([Exenta])")));
             if (forceChangeEvents)
                 OnChanged(nameof(Exenta), oldExenta, exenta);
         }
@@ -138,6 +139,17 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
             noSujeta = Convert.ToDecimal(Evaluate(CriteriaOperator.Parse("[Detalles].Sum([NoSujeta])")));
             if (forceChangeEvents)
                 OnChanged(nameof(NoSujeta), oldNoSujeta, noSujeta);
+        }
+
+        protected override void Anular()
+        {
+            foreach (CxPDocumentoDetalle item in Detalles)
+            {
+                item.CantidadAnulada = item.Cantidad;
+                item.Cantidad = 0.0m;
+                item.PrecioUnidad = 0.0m;                
+            }
+            base.Anular();
         }
         #endregion
 

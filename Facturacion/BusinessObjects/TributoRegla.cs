@@ -43,24 +43,24 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
 
         #region Propiedades
 
-        string formula;
+        //string formula;
 
-        [Browsable(false)]
-        public Type CriteriaObjectType
-        {
-            get { return typeof(Venta); }
-        }
+        //[Browsable(false)]
+        //public Type CriteriaObjectType
+        //{
+        //    get { return typeof(Venta); }
+        //}
 
-        [Size(400), DbType("varchar(400)"), RuleRequiredField("Tributo.Formula_Requerido", "Save"), XafDisplayName("Fórmula")]
-        [ElementTypeProperty("CriteriaObjectType")]
-        [EditorAlias(EditorAliases.PopupExpressionPropertyEditor)]
-        [ModelDefault("Width", "50")]
-        [Index(5), VisibleInListView(false)]
-        public string Formula
-        {
-            get => formula;
-            set => SetPropertyValue(nameof(Formula), ref formula, value);
-        }
+        //[Size(400), DbType("varchar(400)"), RuleRequiredField("Tributo.Formula_Requerido", "Save"), XafDisplayName("Fórmula")]
+        //[ElementTypeProperty("CriteriaObjectType")]
+        //[EditorAlias(EditorAliases.PopupExpressionPropertyEditor)]
+        //[ModelDefault("Width", "50")]
+        //[Index(5), VisibleInListView(false)]
+        //public string Formula
+        //{
+        //    get => formula;
+        //    set => SetPropertyValue(nameof(Formula), ref formula, value);
+        //}
         #endregion
 
         #region Colecciones

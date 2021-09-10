@@ -39,15 +39,15 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [Persistent(nameof(Oid)), DbType("bigint"), Key(true)]
         long oid = -1;
         [Persistent(nameof(Saldo))]
-        decimal saldo;
+        protected decimal saldo;
         [Persistent(nameof(Exenta)), DbType("numeric(14,2)")]
         protected decimal? exenta;
         [Persistent(nameof(NoSujeta)), DbType("numeric(14,2)")]
         protected decimal? noSujeta;
         [Persistent(nameof(IvaRetenido)), DbType("numeric(14,2)")]
-        decimal? ivaRetenido;
+        protected decimal? ivaRetenido;
         [Persistent(nameof(IvaPercibido)), DbType("numeric(14,2)")]
-        decimal? ivaPercibido;
+        protected decimal? ivaPercibido;
         [Persistent(nameof(Iva)), DbType("numeric(14,2)")]
         protected decimal? iva;
         [Persistent(nameof(Gravada)), DbType("numeric(14,2)")]
@@ -271,6 +271,12 @@ namespace SBT.Apps.Base.Module.BusinessObjects
 
         }
 
+        /// <summary>
+        /// Metodo virtual cuando cambia la condicion de pago
+        /// </summary>
+        /// <param name="forceChangeEvents"></param>
+        /// <param name="oldValue"></param>
+
         protected virtual void DoCondicionPagoChanged(bool forceChangeEvents, ECondicionPago oldValue)
         {
             if (CondicionPago == ECondicionPago.Credito)
@@ -285,6 +291,16 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             }
             if (forceChangeEvents)
                 OnChanged(nameof(Estado));
+        }
+
+        /// <summary>
+        /// Metodo virtual cuando cambia el valor gravado del documento
+        /// </summary>
+        /// <param name="forceChangeEvents"></param>
+        /// <param name="oldValue"></param>
+        protected virtual void DoGravadaChanged(bool forceChangeEvents, decimal oldValue)
+        {
+
         }
 
         protected virtual void DoAnular()

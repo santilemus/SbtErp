@@ -397,31 +397,15 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
 
         #region Colecciones
         [Association("Venta-Detalles"), DevExpress.Xpo.Aggregated, XafDisplayName("Detalle"), Index(0)]
-        public XPCollection<VentaDetalle> Detalles
-        {
-            get
-            {
-                return GetCollection<VentaDetalle>(nameof(Detalles));
-            }
-        }
+        public XPCollection<VentaDetalle> Detalles => GetCollection<VentaDetalle>(nameof(Detalles));
 
         [Association("Factura-ResumenTributos"), DevExpress.Xpo.Aggregated, XafDisplayName("Resumen Tributos"), Index(1)]
-        public XPCollection<VentaResumenTributo> ResumenTributos
-        {
-            get
-            {
-                return GetCollection<VentaResumenTributo>(nameof(ResumenTributos));
-            }
-        }
+        public XPCollection<VentaResumenTributo> ResumenTributos => GetCollection<VentaResumenTributo>(nameof(ResumenTributos));
+
 
         [Association("Venta-CxCDocumentos"), Index(2), XafDisplayName("Cuenta por Cobrar")]
-        public XPCollection<SBT.Apps.CxC.Module.BusinessObjects.CxCDocumento> CxCDocumentos
-        {
-            get
-            {
-                return GetCollection<SBT.Apps.CxC.Module.BusinessObjects.CxCDocumento>(nameof(CxCDocumentos));
-            }
-        }
+        public XPCollection<SBT.Apps.CxC.Module.BusinessObjects.CxCDocumento> CxCDocumentos => GetCollection<SBT.Apps.CxC.Module.BusinessObjects.CxCDocumento>(nameof(CxCDocumentos));
+
 
         #endregion
 
@@ -534,31 +518,12 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
 
         protected override void OnSaving()
         {
-            if (Session is NestedUnitOfWork)
-                return;
-            foreach (VentaDetalle item in Detalles)
+            if (!(Session is NestedUnitOfWork) && (Session.DataLayer != null) && Session.IsNewObject(this) &&
+               (Session.ObjectLayer is SimpleObjectLayer) && (Numero == null || Numero == 0))
             {
-                if (!Session.IsNewObject(item))
-                    continue;
-                switch (item.Producto.Categoria.MetodoCosteo)
-                {
-                    case EMetodoCosteoInventario.Promedio:
-                        item.Costo = item.Producto.CostoPromedio;
-                        break;
-                    case EMetodoCosteoInventario.Unitario:
-                        item.Costo = item.PrecioUnidad;
-                        break;
-                    default:
-                        {
-                            InventarioLote lotep = item.ObtenerLote();
-                            item.Lote = lotep;
-                            item.Costo = lotep != null ? lotep.Costo : item.Producto.CostoPromedio;
-                            break;
-                        }
-                }
-            }
-            if (Session.IsNewObject(this))
                 Numero = CorrelativoDoc();
+            }
+            base.OnSaving();
         }
 
         protected override void RefreshTiposDeFacturas()

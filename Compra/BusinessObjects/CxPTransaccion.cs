@@ -1,4 +1,5 @@
-﻿using DevExpress.ExpressApp.DC;
+﻿using DevExpress.Data.Filtering;
+using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
@@ -25,11 +26,11 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
     /// a los proveedores
     /// </remarks>
 
-    [DefaultClassOptions]
+    [DefaultClassOptions, ModelDefault("Caption", "Transacción CxP"), CreatableItem(false), NavigationItem("Compras")]
+    [DefaultProperty(nameof(Numero)), Persistent(nameof(CxPTransaccion))]
     //[ImageName("BO_Contact")]
-    //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
+    [RuleCriteria("CxPTransaccion No Anulado", "Save;Delete", "[Estado] != 2", "El estado de la Transacción no debe ser Anulado")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
-    //[Persistent("DatabaseTableName")]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class CxPTransaccion : XPObjectBaseBO
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
@@ -49,7 +50,7 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
 
         #region Propiedades
 
-        int numero;
+        int ? numero;
         Empresa empresa;
         decimal valorMoneda;
         Moneda moneda;
@@ -90,7 +91,7 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
         [DbType("int"), XafDisplayName("Número"), Index(3)]
         [ModelDefault("AllowEdit", "False")]
         [ToolTip("Numero Correlativo por tipo de documento y empresa")]
-        public int Numero
+        public int ? Numero
         {
             get => numero;
             set => SetPropertyValue(nameof(Numero), ref numero, value);
@@ -101,7 +102,12 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
         public Moneda Moneda
         {
             get => moneda;
-            set => SetPropertyValue(nameof(Moneda), ref moneda, value);
+            set
+            {
+                bool changed = SetPropertyValue(nameof(Moneda), ref moneda, value);
+                if (!IsLoading && !IsSaving && changed)
+                    ValorMoneda = moneda.FactorCambio;
+            }
         }
 
         [DbType("numeric(12,2)"), XafDisplayName("Valor Moneda"), Index(5)]
@@ -161,14 +167,38 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
 
 
         #endregion
-        //private string _PersistentProperty;
-        //[XafDisplayName("My display name"), ToolTip("My hint message")]
-        //[ModelDefault("EditMask", "(000)-00"), Index(0), VisibleInListView(false)]
-        //[Persistent("DatabaseColumnName"), RuleRequiredField(DefaultContexts.Save)]
-        //public string PersistentProperty {
-        //    get { return _PersistentProperty; }
-        //    set { SetPropertyValue(nameof(PersistentProperty), ref _PersistentProperty, value); }
-        //}
+
+        #region Metodos
+        /// <summary>
+        /// Metodo para anular un documento de cuenta por pagar
+        /// </summary>
+        [Action(Caption = "Anular", ConfirmationMessage = "Esta seguro de Anular el documento ?", ImageName = "Attention", AutoCommit = true)]
+        protected virtual void Anular()
+        {
+            Monto = 0.0m;
+            Estado = ECxPTransaccionEstado.Anulado;
+            usuarioAnulo = DevExpress.ExpressApp.SecuritySystem.CurrentUserName;
+            fechaAnula = DateTime.Now;
+            Save();
+        }
+
+        /// <summary>
+        /// Reescribir el metodo OnSaving para calcular el correlativo por tipo de documento de CxP
+        /// </summary>
+        protected override void OnSaving()
+        {
+            if (!(Session is NestedUnitOfWork) && (Session.DataLayer != null) && Session.IsNewObject(this) &&
+               (Session.ObjectLayer is SimpleObjectLayer) && (Numero == null || Numero == 0))
+            {
+                object max;
+                string sCriteria = "Empresa.Oid == ? && Tipo.Oid == ? && GetYear(Fecha) == ?";
+                max = Session.Evaluate<CxPTransaccion>(CriteriaOperator.Parse("Max(Numero)"), CriteriaOperator.Parse(sCriteria, Empresa.Oid, Tipo.Oid, Fecha.Year));
+                Numero = Convert.ToInt32(max ?? 0) + 1;
+            }
+            base.OnSaving();
+        }
+        #endregion
+
 
         //[Action(Caption = "My UI Action", ConfirmationMessage = "Are you sure?", ImageName = "Attention", AutoCommit = true)]
         //public void ActionMethod() {

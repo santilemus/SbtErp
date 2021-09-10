@@ -64,7 +64,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
             {
                 Producto oldProducto = producto;
                 bool changed = SetPropertyValue(nameof(Producto), ref producto, value);
-                if (!IsLoading && !IsSaving && changed)
+                if (!IsLoading && !IsSaving && changed && oldProducto != producto)
                     DoProductoChanged(true, oldProducto);
             }
         }

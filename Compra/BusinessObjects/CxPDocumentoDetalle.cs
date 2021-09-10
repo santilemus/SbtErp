@@ -6,15 +6,18 @@ using DevExpress.Xpo;
 using SBT.Apps.Compra.Module.BusinessObjects;
 using SBT.Apps.Producto.Module.BusinessObjects;
 using System;
+using System.ComponentModel;
 using System.Linq;
 
 namespace SBT.Apps.CxP.Module.BusinessObjects
 {
-    [DefaultClassOptions]
+    /// <summary>
+    /// BO que corresponde al detalle de un documento de cuenta por pagar, como el detalle de una Nota de Credito, detalle de Nota de Debito
+    /// </summary>
+    [DefaultClassOptions, NavigationItem(false), CreatableItem(false), DefaultProperty(nameof(FacturaDetalle))]
+    [ModelDefault("Caption", "Detalle CxP"), Persistent(nameof(CxPDocumentoDetalle))]
     //[ImageName("BO_Contact")]
-    //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
-    //[Persistent("DatabaseTableName")]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class CxPDocumentoDetalle : XPObject
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
@@ -25,12 +28,13 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
         public override void AfterConstruction()
         {
             base.AfterConstruction();
+            precioUnidad = 0.0m;
+            cantidad = 0.0m;
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
         #region Propiedades
 
-        [Persistent(nameof(CantidadAnulada))]
         decimal? cantidadAnulada;
         protected decimal? noSujeta;
         protected decimal? gravada;
@@ -46,7 +50,19 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
         public CxPDocumento Documento
         {
             get => documento;
-            set => SetPropertyValue(nameof(Documento), ref documento, value);
+            set
+            {
+                CxPDocumento oldDocumento = documento;
+                bool changed = SetPropertyValue(nameof(Documento), ref documento, value);
+                if (!IsLoading && !IsSaving && changed && oldDocumento != documento)
+                {
+                    oldDocumento = oldDocumento ?? documento;
+                    oldDocumento.UpdateTotalExenta(true);
+                    oldDocumento.UpdateTotalGravada(true);
+                    oldDocumento.UpdateTotalIva(true);
+                    oldDocumento.UpdateTotalNoSujeta(true);
+                }
+            }
         }
 
         //[Association("CompraFacturaDetalle-CxPDetalles")]
@@ -147,8 +163,12 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
         /// </summary>
         [PersistentAlias(nameof(cantidadAnulada))]
         [XafDisplayName("Cantidad Anulada"), ModelDefault("DisplayFormat", "{0:N2}"), VisibleInListView(false), VisibleInLookupListView(false)]
-        public decimal? CantidadAnulada => cantidadAnulada;
-
+        [ModelDefault("AllowEdit", "False")]
+        public decimal? CantidadAnulada
+        {
+            get => cantidadAnulada;
+            set => SetPropertyValue(nameof(CantidadAnulada), ref cantidadAnulada, value);
+        }
 
         #endregion
 

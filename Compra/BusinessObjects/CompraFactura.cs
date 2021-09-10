@@ -123,7 +123,7 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
 
         [Association("CompraFactura-Ingresos"), Index(1), ModelDefault("Caption", "Ingresos")]
         public XPCollection<InventarioMovimiento> Ingresos => GetCollection<InventarioMovimiento>(nameof(Ingresos));
-        [Association("CompraFactura-CxPTransacciones"), Index(2), XafDisplayName("CxP Transacciones")]
+        [Association("CompraFactura-CxPTransacciones"), Index(2), XafDisplayName("CxP Transacciones"), DevExpress.Xpo.Aggregated]
         public XPCollection<CxPTransaccion> CxPTransacciones => GetCollection<CxPTransaccion>(nameof(CxPTransacciones));
         #endregion
 
@@ -149,6 +149,11 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
                 OnChanged(nameof(Gravada), oldGravada, gravada);
         }
 
+        /// <summary>
+        /// REVISAR SE DEBE CALCULAR PARA SUJERAR EL IVA PERO PUEDEN MODIFIARLO PORQUE ES COMPRA. Tambien se deben calcular
+        /// el IVA RETENIDO Y PERCIBIDO
+        /// </summary>
+        /// <param name="forceChangeEvents"></param>
         public override void UpdateTotalIva(bool forceChangeEvents)
         {
             base.UpdateTotalIva(forceChangeEvents);
@@ -161,7 +166,11 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
         /// <summary>
         ///  calcular la renta cuando son compras de personas naturales
         /// </summary>
-        public void UpdateRenta()
+        /// <remarks>
+        /// Revisar este metodo porque hay diferentes casos a evaluar: servicios personas naturales locales, domiciliados,
+        /// no domiciliados, compra de intangibles, etc
+        /// </remarks>
+        public void UpdateRenta(bool forceChangeEvents)
         {
             if (Proveedor.TipoPersona == TipoPersona.Juridica &&
                 (Proveedor.DireccionPrincipal == null || Proveedor.DireccionPrincipal.Pais.Codigo == "SLV"))
@@ -173,6 +182,23 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
                 // calcular aqui la renta, revisar las condiciones
             }
         }
+
+        /// <summary>
+        /// Cacular el saldo de la factura de compra, cuando se ingresan transacciones de cuentas por pagar
+        /// REVISAR ES POSIBLE QUE SE DEBA QUITAR LA HERENCIA DE XPCustomFacturaBO, porque en este caso puede ingresarse
+        /// una factura de compra sin detalles (solo el maestro para casos de servicios) y en esos casos se debe poder
+        /// ingresar los datos de exento, gravado, etc.
+        /// </summary>
+        public override void ActualizarSaldo(decimal valor, EEstadoFactura status, bool forceChangeEvents)
+        {
+            if (CondicionPago == ECondicionPago.Credito)
+            {
+                // TipoOperacion == 1 son cargos que incrementan el saldo, 2 son abonos que disminuyen
+                decimal? totSaldo = Total + Convert.ToDecimal(CriteriaOperator.Parse("[CxPTransacciones].Sum(Iif([Tipo.TipoOperacion] == 1, [Monto], Iif([Tipo.TipoOperacion] == 2, -[Monto]))"));
+                base.ActualizarSaldo(valor, status, forceChangeEvents);
+            }
+        }
+
         #endregion
 
         //[Action(Caption = "My UI Action", ConfirmationMessage = "Are you sure?", ImageName = "Attention", AutoCommit = true)]

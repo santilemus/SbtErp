@@ -1,5 +1,7 @@
 ﻿using DevExpress.ExpressApp;
+using DevExpress.ExpressApp.Core;
 using DevExpress.ExpressApp.DC;
+using DevExpress.ExpressApp.Editors;
 using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
@@ -18,7 +20,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
     /// Debe moverse a Productos. Y dinamicamente tendra que manejarse la relacion con la venta, hay que ver el impacto
     /// Revisar el BO ProductoImpuesto que se excluyo del proyecto SBT.Apps.Producto para validar que todos los datos se han incorporado
     /// </remarks>
-    [DefaultClassOptions, CreatableItem(false), ModelDefault("Caption", "Definición de Tributos"), NavigationItem(false)]
+    [DefaultClassOptions, CreatableItem(false), ModelDefault("Caption", "Definición de Tributos"), NavigationItem("Facturación")]
     [Persistent(nameof(Tributo)), DefaultProperty(nameof(NombreAbreviado))]
     [ImageName(nameof(Tributo))]
     [DefaultListViewOptions(MasterDetailMode.ListViewAndDetailView, false, NewItemRowPosition.None)]
@@ -37,7 +39,9 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
 
         #region Propiedades
 
+        string formula;
         bool activo;
+        Type tipoBO;
         EClaseTributo clase;
         string nombreAbreviado;
         string nombre;
@@ -63,6 +67,39 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         {
             get => clase;
             set => SetPropertyValue(nameof(Clase), ref clase, value);
+        }
+
+        /// <summary>
+        /// El BO para el cual se implementa la formula
+        /// </summary>
+        /// <remarks>
+        /// Mas info
+        /// 1. EditorAliases.TypePropertyEditor implementa la lista de seleccion de los BO
+        ///    Ver: https://docs.devexpress.com/eXpressAppFramework/113579/concepts/business-model-design/data-types-supported-by-built-in-editors/type-properties
+        /// 2. ValueConverter, para hacer la propiedad persistente se tiliza la conversion a string y guardar el nombre del BO en la bd, incluyendo el namespace
+        /// </remarks>
+        [XafDisplayName("Tipo BO"), Persistent(nameof(TipoBO))]
+        [EditorAlias(EditorAliases.TypePropertyEditor)]
+        [ValueConverter(typeof(DevExpress.ExpressApp.Utils.TypeToStringConverter)), ImmediatePostData]
+        //[DataSourceCriteria("")]
+        [Size(100), DbType("varchar(100)")]
+        public Type TipoBO
+        {
+            get => tipoBO;
+            set => SetPropertyValue(nameof(TipoBO), ref tipoBO, value);
+        }
+
+        
+        [Size(400), DbType("varchar(400)"), XafDisplayName("Fórmula"), Persistent(nameof(Formula))]
+        [ElementTypeProperty(nameof(TipoBO))]
+        [EditorAlias(EditorAliases.PopupExpressionPropertyEditor)]
+        [VisibleInListView(false)]
+        //[ModelDefault("Width", "50")]
+        [ModelDefault("RowCount", "3")]
+        public string Formula
+        {
+            get => formula;
+            set => SetPropertyValue(nameof(Formula), ref formula, value);
         }
 
         [DbType("bit"), XafDisplayName("Activo"), RuleRequiredField("Tributo.Activo_Requerido", DefaultContexts.Save)]
