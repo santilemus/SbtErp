@@ -21,9 +21,9 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
     /// Revisar el BO ProductoImpuesto que se excluyo del proyecto SBT.Apps.Producto para validar que todos los datos se han incorporado
     /// </remarks>
     [DefaultClassOptions, CreatableItem(false), ModelDefault("Caption", "Definición de Tributos"), NavigationItem("Facturación")]
-    [Persistent(nameof(Tributo)), DefaultProperty(nameof(NombreAbreviado))]
+    [Persistent(nameof(Tributo)), DefaultProperty(nameof(Nombre))]
     [ImageName(nameof(Tributo))]
-    [DefaultListViewOptions(MasterDetailMode.ListViewAndDetailView, false, NewItemRowPosition.None)]
+    //[DefaultListViewOptions(MasterDetailMode.ListViewAndDetailView, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class Tributo : XPObject
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
@@ -43,23 +43,13 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         bool activo;
         Type tipoBO;
         EClaseTributo clase;
-        string nombreAbreviado;
         string nombre;
 
-        [Size(100), DbType("varchar(100)"), Index(0), XafDisplayName("Nombre"), RuleRequiredField("Impuesto.Nombre_Requerido", "Save")]
+        [Size(100), DbType("varchar(50)"), Index(0), XafDisplayName("Nombre"), RuleRequiredField("Impuesto.Nombre_Requerido", "Save")]
         public string Nombre
         {
             get => nombre;
             set => SetPropertyValue(nameof(Nombre), ref nombre, value);
-        }
-
-
-        [Size(12), DbType("varchar(12)"), Index(1), XafDisplayName("Nombre Abreviado"), VisibleInLookupListView(true),
-            RuleRequiredField("Impuesto.NombreAbreviado_Requerido", "Save"), Indexed(Name = "idx_TributoNombreCorto", Unique = true)]
-        public string NombreAbreviado
-        {
-            get => nombreAbreviado;
-            set => SetPropertyValue(nameof(NombreAbreviado), ref nombreAbreviado, value);
         }
 
         [DbType("smallint"), XafDisplayName("Modalidad"), Index(2), VisibleInLookupListView(true)]

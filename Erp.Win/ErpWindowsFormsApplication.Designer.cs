@@ -28,7 +28,7 @@
             this.module4 = new SBT.Apps.Erp.Module.Win.ErpWindowsFormsModule();
             this.securityModule1 = new DevExpress.ExpressApp.Security.SecurityModule();
             this.securityStrategyComplex1 = new DevExpress.ExpressApp.Security.SecurityStrategyComplex();
-            this.customAuthentication1 = new SBT.Apps.Medico.Module.CustomAuthentication();
+            this.customAuthentication1 = new SBT.Apps.Erp.Module.CustomAuthentication();
             this.objectsModule = new DevExpress.ExpressApp.Objects.BusinessClassLibraryCustomizationModule();
             this.cloneObjectModule = new DevExpress.ExpressApp.CloneObject.CloneObjectModule();
             this.conditionalAppearanceModule = new DevExpress.ExpressApp.ConditionalAppearance.ConditionalAppearanceModule();
@@ -42,7 +42,6 @@
             this.erpModule1 = new SBT.Apps.Erp.Module.ErpModule();
             this.auditTrailModule1 = new DevExpress.ExpressApp.AuditTrail.AuditTrailModule();
             this.baseModule1 = new SBT.Apps.Base.Module.BaseModule();
-            this.erpModule2 = new SBT.Apps.Erp.Module.ErpModule();
             this.treeListEditorsModuleBase1 = new DevExpress.ExpressApp.TreeListEditors.TreeListEditorsModuleBase();
             this.terceroModule1 = new SBT.Apps.Tercero.Module.TerceroModule();
             this.empleadoModule1 = new SBT.Apps.Empleado.Module.EmpleadoModule();
@@ -144,16 +143,15 @@
         private DevExpress.ExpressApp.Validation.ValidationModule validationModule;
         private DevExpress.ExpressApp.Validation.Win.ValidationWindowsFormsModule validationWindowsFormsModule;
         private DevExpress.ExpressApp.ViewVariantsModule.ViewVariantsModule viewVariantsModule;
-        private Module.ErpModule erpModule1;
+        private SBT.Apps.Erp.Module.ErpModule erpModule1;
         private DevExpress.ExpressApp.AuditTrail.AuditTrailModule auditTrailModule1;
-        private Base.Module.BaseModule baseModule1;
-        private Module.ErpModule erpModule2;
-        private Medico.Module.CustomAuthentication customAuthentication1;
+        private SBT.Apps.Base.Module.BaseModule baseModule1;
+        private SBT.Apps.Erp.Module.CustomAuthentication customAuthentication1;
         private DevExpress.ExpressApp.TreeListEditors.TreeListEditorsModuleBase treeListEditorsModuleBase1;
-        private Tercero.Module.TerceroModule terceroModule1;
-        private Empleado.Module.EmpleadoModule empleadoModule1;
-        private Producto.Module.ProductoModule productoModule1;
-        private Contabilidad.ContabilidadModule contabilidadModule1;
-        private RecursoHumano.RecursoHumanoModule recursoHumanoModule1;
+        private SBT.Apps.Tercero.Module.TerceroModule terceroModule1;
+        private SBT.Apps.Empleado.Module.EmpleadoModule empleadoModule1;
+        private SBT.Apps.Producto.Module.ProductoModule productoModule1;
+        private SBT.Apps.Contabilidad.ContabilidadModule contabilidadModule1;
+        private SBT.Apps.RecursoHumano.RecursoHumanoModule recursoHumanoModule1;
     }
 }

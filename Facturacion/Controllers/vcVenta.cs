@@ -8,6 +8,8 @@ using System;
 using System.ComponentModel;
 using System.Linq;
 using DevExpress.Xpo;
+using DevExpress.ExpressApp.SystemModule;
+using SBT.Apps.Base.Module.BusinessObjects;
 
 namespace SBT.Apps.Facturacion.Module.Controllers
 {
@@ -22,6 +24,7 @@ namespace SBT.Apps.Facturacion.Module.Controllers
     public class vcVenta : ViewControllerBase
     {
         InventarioTipoMovimiento tipoMovimiento;
+        private NewObjectViewController newController;
         public vcVenta() : base()
         {
             TargetObjectType = typeof(SBT.Apps.Facturacion.Module.BusinessObjects.Venta);
@@ -32,15 +35,19 @@ namespace SBT.Apps.Facturacion.Module.Controllers
         protected override void OnActivated()
         {
             base.OnActivated();
-            //newObjectController = Frame.GetController<NewObjectViewController>();
             ObjectSpace.ObjectChanged += ObjectSpace_ObjectChanged;
             ObjectSpace.Committing += ObjectSpace_Committing;
+            newController = Frame.GetController<NewObjectViewController>();
+            if (newController != null)
+                newController.ObjectCreated += NewController_ObjectCreated;
         }
 
         protected override void OnDeactivated()
         {
             ObjectSpace.ObjectChanged -= ObjectSpace_ObjectChanged;
             ObjectSpace.Committing -= ObjectSpace_Committing;
+            if (newController != null)
+                newController.ObjectCreated -= NewController_ObjectCreated;
             base.OnDeactivated();
         }
 
@@ -116,6 +123,33 @@ namespace SBT.Apps.Facturacion.Module.Controllers
                         fItem.Producto.Categoria.MetodoCosteo == Producto.Module.BusinessObjects.EMetodoCosteoInventario.UEPS)
                         DoActualizarLote(fItem);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Delegate que se ejecuta cuando se crea un nuevo objeto de venta. Dependiendo del Id de la vista de detalle
+        /// (view variant) asigna el tipo de factura (para que se asigne la factura correcta que corresponde al view
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void NewController_ObjectCreated(object sender, ObjectCreatedEventArgs e)
+        {
+            string sCodigo;
+            if (e.CreatedObject is Venta)
+            {
+                if (View.Id == "Venta_ListView_fcf" || View.Id == "Venta_DetailView_fcf")
+                    sCodigo = "COVE02";
+                else if (View.Id == "Venta_ListView_exportacion" || View.Id == "Venta_DetailView_exportacion")
+                    sCodigo = "COVE03";
+                else if (View.Id == "Venta_ListView_simplif" || View.Id == "Venta_DetailView_simplif")
+                    sCodigo = "COVE04";
+                else if (View.Id == "Venta_ListView_ticket" || View.Id == "Venta_DetailView_ticket")
+                    sCodigo = "COVE04";
+                else
+                    sCodigo = "COVE01";
+                Listas tipoFactura = e.ObjectSpace.GetObjectByKey<Listas>(sCodigo);
+                if (tipoFactura != null)
+                    ((Venta)e.CreatedObject).TipoFactura = tipoFactura;
             }
         }
 

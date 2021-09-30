@@ -29,9 +29,10 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         MessageTemplateMustBeReferenced = "El objeto {TargetObject} no debe tener referencias.")]
 
     [Appearance("BancoTransaccion.Cheque y Cargo", Criteria = "[Clasificacion.Tipo] == 3 || [Clasificacion.Tipo] == 4", AppearanceItemType = "ViewItem",
-        Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "DetailView", TargetItems = "Abono;IdReferencia")]
+        Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "DetailView", TargetItems = "Abono;IdReferencia;CxPTransacciones")]
     [Appearance("BancoTransaccion.Remesa y Abono", Criteria = "[Clasificacion.Tipo] == 1 || [Clasificacion.Tipo] == 2", AppearanceItemType = "ViewItem",
         Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "DetailView", TargetItems = "ChequeNo;Proveedor;Beneficiario;Cargo")]
+
 
     [ImageName(nameof(BancoTransaccion))]
     [DevExpress.Xpo.OptimisticLocking(Enabled = true, LockingKind = OptimisticLockingBehavior.ConsiderOptimisticLockingField)]
@@ -263,25 +264,22 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         //public XPCollection<BancoTransaccionPago> Pagos => GetCollection<BancoTransaccionPago>(nameof(Pagos));
 
         [Association("BancoTransaccion-Detalles"), DevExpress.Xpo.Aggregated, XafDisplayName("Detalle"), Index(1)]
-        public XPCollection<BancoTransaccionDetalle> Detalles
-        {
-            get
-            {
-                return GetCollection<BancoTransaccionDetalle>(nameof(Detalles));
-            }
-        }
+        public XPCollection<BancoTransaccionDetalle> Detalles => GetCollection<BancoTransaccionDetalle>(nameof(Detalles));
 
         [Association("BancoTransaccion-Conciliaciones"), XafDisplayName("Conciliaciones"), Index(2)]
-        public XPCollection<BancoConciliacionDetalle> Conciliaciones
-        {
-            get
-            {
-                return GetCollection<BancoConciliacionDetalle>(nameof(Conciliaciones));
-            }
-        }
+        public XPCollection<BancoConciliacionDetalle> Conciliaciones => GetCollection<BancoConciliacionDetalle>(nameof(Conciliaciones));
 
-        [Association("BancoTransaccion-BancoTransaccionPartidas"), XafDisplayName("Partidas"), DevExpress.Xpo.Aggregated, Index(3)]
+        [Association("BancoTransaccion-Partidas"), XafDisplayName("Partidas"), DevExpress.Xpo.Aggregated, Index(3)]
         public XPCollection<BancoTransaccionPartida> BancoTransaccionPartidas => GetCollection<BancoTransaccionPartida>(nameof(BancoTransaccionPartidas));
+
+        //[Association("BancoTransaccion-CxPTransacciones",AssemblyName = "SBT.Apps.Compra.Module", ElementTypeName = "SBT.Apps.CxP.Module.BusinessObjects.CxPTransaccion")]
+        //[XafDisplayName("Pagos")]
+        //public XPCollection CxPTransacciones => GetCollection(nameof(CxPTransacciones));
+
+        //[Association("BancoTransaccion-CxCTransacciones", AssemblyName = "SBT.Apps.Facturacion.Module", ElementTypeName = "SBT.Apps.CxC.Module.BusinessObjects.CxCTransaccion")]
+        //[XafDisplayName("Cobros")]
+        //[DataSourceCriteria("[Clasificacion.Tipo] In (1, 2) && [Estado] <= 2 && [FechaAnula] Is Not Null")]
+        //public XPCollection Cobros => GetCollection(nameof(Cobros));
 
         #endregion
 

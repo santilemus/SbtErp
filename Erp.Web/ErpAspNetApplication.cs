@@ -26,17 +26,17 @@ namespace SBT.Apps.Erp.Web
         private Module.Web.ErpAspNetModule erpAspNetModule1;
         private Module.ErpModule erpModule1;
         private DevExpress.ExpressApp.AuditTrail.AuditTrailModule auditTrailModule1;
-        private Base.Module.BaseModule baseModule1;
-        private Medico.Module.CustomAuthentication customAuthentication1;
-        private Tercero.Module.TerceroModule terceroModule1;
-        private Empleado.Module.EmpleadoModule empleadoModule1;
-        private Producto.Module.ProductoModule productoModule1;
-        private Contabilidad.ContabilidadModule contabilidadModule2;
-        private RecursoHumano.RecursoHumanoModule recursoHumanoModule1;
-        private Facturacion.Module.FacturacionModule facturacionModule1;
+        private SBT.Apps.Base.Module.BaseModule baseModule1;
+        private SBT.Apps.Erp.Module.CustomAuthentication customAuthentication1;
+        private SBT.Apps.Tercero.Module.TerceroModule terceroModule1;
+        private SBT.Apps.Empleado.Module.EmpleadoModule empleadoModule1;
+        private SBT.Apps.Producto.Module.ProductoModule productoModule1;
+        private SBT.Apps.Contabilidad.ContabilidadModule contabilidadModule2;
+        private SBT.Apps.RecursoHumano.RecursoHumanoModule recursoHumanoModule1;
+        private SBT.Apps.Facturacion.Module.FacturacionModule facturacionModule1;
         private DevExpress.ExpressApp.Office.OfficeModule officeModule1;
         private DevExpress.ExpressApp.Office.Web.OfficeAspNetModule officeAspNetModule1;
-        private Compra.CompraModule compraModule1;
+        private SBT.Apps.Compra.CompraModule compraModule1;
         private DevExpress.ExpressApp.ViewVariantsModule.ViewVariantsModule viewVariantsModule;
 
         #region Default XAF configuration options (https://www.devexpress.com/kb=T501418)
@@ -128,7 +128,7 @@ namespace SBT.Apps.Erp.Web
             this.module2 = new DevExpress.ExpressApp.Web.SystemModule.SystemAspNetModule();
             this.securityModule1 = new DevExpress.ExpressApp.Security.SecurityModule();
             this.securityStrategyComplex1 = new DevExpress.ExpressApp.Security.SecurityStrategyComplex();
-            this.customAuthentication1 = new SBT.Apps.Medico.Module.CustomAuthentication();
+            this.customAuthentication1 = new SBT.Apps.Erp.Module.CustomAuthentication();
             this.objectsModule = new DevExpress.ExpressApp.Objects.BusinessClassLibraryCustomizationModule();
             this.cloneObjectModule = new DevExpress.ExpressApp.CloneObject.CloneObjectModule();
             this.conditionalAppearanceModule = new DevExpress.ExpressApp.ConditionalAppearance.ConditionalAppearanceModule();

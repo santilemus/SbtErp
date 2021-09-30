@@ -1,5 +1,7 @@
 ﻿using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp;
+using DevExpress.ExpressApp.SystemModule;
+using DevExpress.Persistent.Validation;
 using SBT.Apps.Base.Module.Controllers;
 using SBT.Apps.Facturacion.Module.BusinessObjects;
 using System;
@@ -7,9 +9,13 @@ using System.Linq;
 
 namespace SBT.Apps.Facturacion.Module.Controllers
 {
+    /// <summary>
+    /// View Controller que corresponde al BO VentaDetalle
+    /// </summary>
     public class vcVentaDetalle : ViewControllerBase
     {
-        public vcVentaDetalle()
+        private NewObjectViewController newController;
+        public vcVentaDetalle() : base()
         {
             TargetObjectType = typeof(SBT.Apps.Facturacion.Module.BusinessObjects.VentaDetalle);
             TargetViewType = ViewType.Any;
@@ -19,10 +25,21 @@ namespace SBT.Apps.Facturacion.Module.Controllers
         {
             base.OnActivated();
             ObjectSpace.ObjectChanged += ObjectSpace_ObjectChanged;
+            newController = Frame.GetController<NewObjectViewController>();
+            if (newController != null)
+            {
+                newController.ObjectCreating += NewController_ObjectCreating;
+                //    newController.ObjectCreated += NewController_ObjectCreated;
+            }
         }
 
         protected override void OnDeactivated()
         {
+            if (newController != null)
+            {
+                //    newController.ObjectCreated -= NewController_ObjectCreated;
+                newController.ObjectCreating -= NewController_ObjectCreating;
+            }
             base.OnDeactivated();
         }
 
@@ -66,6 +83,35 @@ namespace SBT.Apps.Facturacion.Module.Controllers
                         CriteriaOperator.Parse("[Bodega.Oid] == ? && [Producto.Oid] == ?", itemVenta.Bodega.Oid, itemVenta.Producto.Oid)));
                     if (cantVta > existencia)
                         MostrarError($"Una validación no se cumple, La cantidad a vender {cantVta} debe ser menor o igual al disponible en inventario {existencia}");
+                }
+            }
+        }
+
+        //void NewController_ObjectCreated(object sender, ObjectCreatedEventArgs e)
+        //{
+        //    if (e.CreatedObject is VentaDetalle)
+        //    {
+        //        var obj = e.CreatedObject as VentaDetalle;
+        //        if (obj.Venta == null || obj.Venta.Cliente == null)
+        //        {
+        //            MostrarError($"Revise que ha seleccionado un cliente, antes de ingresar el detalle del documento");
+        //        }
+        //    }
+        //}
+
+        private void NewController_ObjectCreating(object sender, ObjectCreatingEventArgs e)
+        {
+            if (ObjectSpace.ModifiedObjects.Count == 1 && ObjectSpace.IsNewObject(ObjectSpace.ModifiedObjects[0]))
+            {
+                try
+                {
+                    Validator.RuleSet.Validate(e.ObjectSpace, ObjectSpace.ModifiedObjects[0], ContextIdentifier.Save);
+                }
+                catch
+                {
+                    // evaluar que esto funcione bien en plataforma web
+                    MostrarError("Debe ingrear los datos requeridos del encabezado del documento, antes de ingresar el detalle");
+                    e.Cancel = true;
                 }
             }
         }

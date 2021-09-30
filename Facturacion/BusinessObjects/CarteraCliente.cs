@@ -20,11 +20,11 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
     /// Cuenta por Cobrar. BO que corresponde a los clientes de una cartera
     /// </summary>
     [ModelDefault("Caption", "Cartera Clientes"), NavigationItem(false), CreatableItem(false), 
-        DefaultProperty(nameof(Cliente)), Persistent("CxCCarteraCliente")]
+        DefaultProperty(nameof(Cliente)), Persistent(nameof(CarteraCliente))]
     [ImageName(nameof(CarteraCliente))]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
-    public class CarteraCliente : XPObjectBaseBO
+    public class CarteraCliente : XPObject
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
         public CarteraCliente(Session session)
             : base(session)

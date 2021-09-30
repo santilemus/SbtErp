@@ -338,28 +338,22 @@
     <DetailView Id="Tributo_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
-          <LayoutGroup Id="SimpleEditors" RelativeSize="18.228498074454428">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="18.998716302952502">
             <LayoutGroup Id="Tributo" RelativeSize="100">
-              <LayoutGroup Id="Tributo_col1" RelativeSize="50">
-                <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="36.734693877551024" IsNewNode="True" />
-                <LayoutItem Id="Nombre" Index="1" RelativeSize="26.530612244897959" />
-                <LayoutItem Id="NombreAbreviado" Index="2" RelativeSize="36.734693877551024" />
-                <LayoutItem Id="Clase" Index="3" RelativeSize="29.032258064516128" Removed="True" />
-              </LayoutGroup>
-              <LayoutGroup Id="Tributo_col2" RelativeSize="50">
-                <LayoutItem Id="Clase" ViewItem="Clase" Index="0" RelativeSize="36.734693877551024" IsNewNode="True" />
-                <LayoutItem Id="Activo" RelativeSize="26.530612244897959" Index="1" />
-                <LayoutItem Id="TipoBO" RelativeSize="36.734693877551024" Index="2" />
-              </LayoutGroup>
+              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="24.324324324324323" IsNewNode="True" />
+              <LayoutItem Id="Nombre" Index="1" RelativeSize="17.567567567567568" />
+              <LayoutItem Id="Clase" Index="2" RelativeSize="17.567567567567568" />
+              <LayoutItem Id="Activo" Index="3" RelativeSize="17.567567567567568" />
+              <LayoutItem Id="TipoBO" Index="4" RelativeSize="22.972972972972972" />
             </LayoutGroup>
             <LayoutGroup Id="XPObject" Caption="Oid" RelativeSize="46.92307692307692" Removed="True">
               <LayoutItem Id="Oid" Removed="True" />
             </LayoutGroup>
           </LayoutGroup>
-          <LayoutGroup Id="SizeableEditors" RelativeSize="40.821566110397946">
+          <LayoutGroup Id="SizeableEditors" RelativeSize="40.308087291399232">
             <LayoutItem Id="Formula" RelativeSize="100" />
           </LayoutGroup>
-          <LayoutGroup Id="Categorias_Group" Direction="Vertical" RelativeSize="40.949935815147626">
+          <LayoutGroup Id="Categorias_Group" Direction="Vertical" RelativeSize="40.693196405648266">
             <LayoutItem Id="Categorias" RelativeSize="100" />
           </LayoutGroup>
         </LayoutGroup>

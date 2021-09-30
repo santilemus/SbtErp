@@ -1,8 +1,10 @@
 ﻿using DevExpress.Data.Filtering;
+using DevExpress.Data.Filtering.Helpers;
 using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.ConditionalAppearance;
 using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
+using DevExpress.ExpressApp.Security.ClientServer;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
@@ -24,10 +26,10 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
     /// </remarks>
     [DefaultClassOptions, ModelDefault("Caption", "Documento de Venta"), NavigationItem("Facturación"), DefaultProperty(nameof(NoFactura))]
     [Persistent("Venta")]
-    [Appearance("Venta.CreditoFiscal", Criteria = "[TipoFactura.Categoria] == 15 && [TipoFactura.Codigo] != 'COVE01'",
-        AppearanceItemType = "ViewItem",
-        Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "DetailView",
-        TargetItems = "Caja;NRC;NotaRemision;Iva;IvaPercibido;IvaRetenido;ResumenTributos")]
+    //[Appearance("Venta.CreditoFiscal", Criteria = "[TipoFactura.Categoria] == 15 && [TipoFactura.Codigo] != 'COVE01'",
+    //    AppearanceItemType = "ViewItem",
+    //    Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "DetailView",
+    //    TargetItems = "Caja;NRC;NotaRemision;Iva;IvaPercibido;IvaRetenido;ResumenTributos")]
     // la siguiente regla de apariencia es para deshabilitar la modificacion de propiedades criticas. Solo es posible cuando es un objeto nuevo
     [Appearance("Venta - Nuevo Registro", AppearanceItemType = "Any", Enabled = true, Context = "DetailView",
         TargetItems = "Bodega;Agencia;Caja;TipoFactura;NoFactura;Cliente", Criteria = "IsNewObject(This)")]
@@ -147,7 +149,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         /// Cliente. Es requerido en el caso de documento es: credito fiscal, factura de consumidor final, factura de exportacion
         /// </summary>
         [XafDisplayName("Cliente"), RuleRequiredField("Venta.Cliente_Requerido", DefaultContexts.Save,
-            TargetCriteria = "[TipoFactura.Codigo] In ('COVE01', 'COVE02', 'COVE03')")]
+            TargetCriteria = "[TipoFactura.Codigo] In ('COVE01', 'COVE02', 'COVE03')", SkipNullOrEmptyValues = false)]
         [Index(6), VisibleInLookupListView(true)]
         [DetailViewLayout("Datos del Cliente", LayoutGroupType.SimpleEditorsGroup, 1)]
         [ExplicitLoading]
@@ -403,8 +405,8 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         public XPCollection<VentaResumenTributo> ResumenTributos => GetCollection<VentaResumenTributo>(nameof(ResumenTributos));
 
 
-        [Association("Venta-CxCDocumentos"), Index(2), XafDisplayName("Cuenta por Cobrar")]
-        public XPCollection<SBT.Apps.CxC.Module.BusinessObjects.CxCDocumento> CxCDocumentos => GetCollection<SBT.Apps.CxC.Module.BusinessObjects.CxCDocumento>(nameof(CxCDocumentos));
+        [Association("Venta-CxCTransacciones"), Index(2), XafDisplayName("Transacciones CxC")]
+        public XPCollection<CxC.Module.BusinessObjects.CxCTransaccion> CxCTransacciones => GetCollection<CxC.Module.BusinessObjects.CxCTransaccion>(nameof(CxCTransacciones));
 
 
         #endregion
@@ -463,6 +465,23 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             }
         }
 
+        protected override void DoGravadaChanged(bool forceChangeEvents, decimal? oldValue)
+        {
+            // no calculamos el IVA porque tuvo que calcularse en los detalles (por producto)
+
+            // calculamos la percepcion cuando aplica. Cuando la empresa es gran contribuyente y el cliente no lo es
+            Tributo percepcion= Session.GetObjectByKey<Tributo>(2);
+            if (percepcion != null)
+            {
+                // la formula tiene las condiciones para identificar cuando debe aplicar la percepcion
+                ExpressionEvaluator eval = new ExpressionEvaluator(TypeDescriptor.GetProperties(percepcion.TipoBO), percepcion.Formula);
+                IvaPercibido = Convert.ToDecimal(eval.Evaluate(this));
+                OnChanged(nameof(IvaPercibido));
+            }
+            base.DoGravadaChanged(forceChangeEvents, oldValue);
+        }
+
+
         public override void UpdateTotalExenta(bool forceChangeEvents)
         {
             base.UpdateTotalExenta(forceChangeEvents);
@@ -513,13 +532,20 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         public override void ActualizarSaldo(decimal valor, EEstadoFactura status, bool forceChangeEvents)
         {
             if (CondicionPago == ECondicionPago.Credito)
-                base.ActualizarSaldo(valor, status, forceChangeEvents);
+            {
+                saldo = Total;
+            }
+            else
+            {
+                saldo = 0.0m;
+            }
+            base.ActualizarSaldo(valor, status, forceChangeEvents);
         }
 
         protected override void OnSaving()
         {
             if (!(Session is NestedUnitOfWork) && (Session.DataLayer != null) && Session.IsNewObject(this) &&
-               (Session.ObjectLayer is SimpleObjectLayer) && (Numero == null || Numero == 0))
+               (Session.ObjectLayer is SecuredSessionObjectLayer) && (Numero == null || Numero == 0))
             {
                 Numero = CorrelativoDoc();
             }

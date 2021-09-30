@@ -15,7 +15,7 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
     /// BO que corresponde al detalle de un documento de cuenta por pagar, como el detalle de una Nota de Credito, detalle de Nota de Debito
     /// </summary>
     [DefaultClassOptions, NavigationItem(false), CreatableItem(false), DefaultProperty(nameof(FacturaDetalle))]
-    [ModelDefault("Caption", "Detalle CxP"), Persistent(nameof(CxPDocumentoDetalle))]
+    [ModelDefault("Caption", "Detalle CxP"), Persistent("CxPTransaccionDetalle")]
     //[ImageName("BO_Contact")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).

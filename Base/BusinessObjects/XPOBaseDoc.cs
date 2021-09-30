@@ -55,8 +55,11 @@ namespace SBT.Apps.Base.Module.BusinessObjects
 
         protected override void OnSaving()
         {
-            if (!(Session is NestedUnitOfWork) && Session.IsNewObject(this))
+            if (!(Session is NestedUnitOfWork) && (Session.DataLayer != null) && Session.IsNewObject(this) &&
+                (Session.ObjectLayer is SimpleObjectLayer) && (Numero == null || Numero == 0))
+            {
                 Numero = CorrelativoDoc();
+            }
             base.OnSaving();
         }
 

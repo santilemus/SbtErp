@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SBT.Apps.Medico.Module
+namespace SBT.Apps.Erp.Module
 {
     /// <summary>
     /// Implementacion de CustomAuthentication para el SBT-ERP. 

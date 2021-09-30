@@ -9,7 +9,7 @@ using SBT.Apps.Compra.Module.BusinessObjects;
 using System;
 using System.ComponentModel;
 using System.Linq;
-
+using SBT.Apps.Banco.Module.BusinessObjects;
 
 namespace SBT.Apps.CxP.Module.BusinessObjects
 {
@@ -26,7 +26,7 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
     /// a los proveedores
     /// </remarks>
 
-    [DefaultClassOptions, ModelDefault("Caption", "Transacción CxP"), CreatableItem(false), NavigationItem("Compras")]
+    [DefaultClassOptions, ModelDefault("Caption", "Transaccion CxP"), CreatableItem(false), NavigationItem("Compras")]
     [DefaultProperty(nameof(Numero)), Persistent(nameof(CxPTransaccion))]
     //[ImageName("BO_Contact")]
     [RuleCriteria("CxPTransaccion No Anulado", "Save;Delete", "[Estado] != 2", "El estado de la Transacción no debe ser Anulado")]
@@ -50,8 +50,9 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
 
         #region Propiedades
 
-        int ? numero;
-        Empresa empresa;
+        BancoTransaccion bancoTransaccion;
+        int? numero;
+     //   Empresa empresa;
         decimal valorMoneda;
         Moneda moneda;
         CompraFactura factura;
@@ -59,17 +60,17 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
         DateTime fechaAnula;
         string comentario;
         ECxPTransaccionEstado estado;
-        decimal monto;
+        protected decimal monto;
         CxCTipoTransaccion tipo;
         DateTime fecha;
 
 
-        [XafDisplayName("Empresa"), Browsable(false), Index(0)]
-        public Empresa Empresa
-        {
-            get => empresa;
-            set => SetPropertyValue(nameof(Empresa), ref empresa, value);
-        }
+        //[XafDisplayName("Empresa"), Browsable(false), Index(0)]
+        //public Empresa Empresa
+        //{
+        //    get => empresa;
+        //    set => SetPropertyValue(nameof(Empresa), ref empresa, value);
+        //}
 
         [DbType("datetime2"), XafDisplayName("Fecha"), Index(1)]
         [RuleRequiredField("CxPTransaccion.Fecha_Requerido", DefaultContexts.Save)]
@@ -91,7 +92,7 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
         [DbType("int"), XafDisplayName("Número"), Index(3)]
         [ModelDefault("AllowEdit", "False")]
         [ToolTip("Numero Correlativo por tipo de documento y empresa")]
-        public int ? Numero
+        public int? Numero
         {
             get => numero;
             set => SetPropertyValue(nameof(Numero), ref numero, value);
@@ -142,6 +143,15 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
             get => estado;
             set => SetPropertyValue(nameof(Estado), ref estado, value);
         }
+        
+        [XafDisplayName("Banco Transacción")]
+        [DataSourceCriteria("[BancoCuenta.Empresa] == '@This.Factura.Empresa' && [Clasificacion.Tipo] In (3, 4)")]   // clasificacion.Tipo in (Cheque, Nota Cargo)
+        //[Association("BancoTransaccion-CxPTransacciones")]
+        public BancoTransaccion BancoTransaccion
+        {
+            get => bancoTransaccion;
+            set => SetPropertyValue(nameof(BancoTransaccion), ref bancoTransaccion, value);
+        }
 
         [Size(200), DbType("varchar(200)"), XafDisplayName("Comentario"), Index(97)]
         public string Comentario
@@ -191,8 +201,8 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
                (Session.ObjectLayer is SimpleObjectLayer) && (Numero == null || Numero == 0))
             {
                 object max;
-                string sCriteria = "Empresa.Oid == ? && Tipo.Oid == ? && GetYear(Fecha) == ?";
-                max = Session.Evaluate<CxPTransaccion>(CriteriaOperator.Parse("Max(Numero)"), CriteriaOperator.Parse(sCriteria, Empresa.Oid, Tipo.Oid, Fecha.Year));
+                string sCriteria = "[Factura.Empresa.Oid] == ? && Tipo.Oid == ? && GetYear(Fecha) == ?";
+                max = Session.Evaluate<CxPTransaccion>(CriteriaOperator.Parse("Max(Numero)"), CriteriaOperator.Parse(sCriteria, Factura.Empresa.Oid, Tipo.Oid, Fecha.Year));
                 Numero = Convert.ToInt32(max ?? 0) + 1;
             }
             base.OnSaving();

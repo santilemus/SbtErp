@@ -32,7 +32,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         Partida partida;
         BancoTransaccion bancoTransaccion;
 
-        [Association("BancoTransaccion-BancoTransaccionPartidas"), XafDisplayName("Transacción"), DevExpress.Xpo.Aggregated]
+        [Association("BancoTransaccion-Partidas"), XafDisplayName("Transacción"), DevExpress.Xpo.Aggregated]
         public BancoTransaccion BancoTransaccion
         {
             get => bancoTransaccion;

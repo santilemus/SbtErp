@@ -27,6 +27,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         public override void AfterConstruction()
         {
             base.AfterConstruction();
+            Numero = 0;
             saldo = 0.0m;
             ivaRetenido = 0.0m;
             ivaPercibido = 0.0m;
@@ -40,17 +41,11 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         long oid = -1;
         [Persistent(nameof(Saldo))]
         protected decimal saldo;
-        [Persistent(nameof(Exenta)), DbType("numeric(14,2)")]
         protected decimal? exenta;
-        [Persistent(nameof(NoSujeta)), DbType("numeric(14,2)")]
         protected decimal? noSujeta;
-        [Persistent(nameof(IvaRetenido)), DbType("numeric(14,2)")]
         protected decimal? ivaRetenido;
-        [Persistent(nameof(IvaPercibido)), DbType("numeric(14,2)")]
         protected decimal? ivaPercibido;
-        [Persistent(nameof(Iva)), DbType("numeric(14,2)")]
         protected decimal? iva;
-        [Persistent(nameof(Gravada)), DbType("numeric(14,2)")]
         protected decimal? gravada;
         [Persistent(nameof(Estado)), DbType("smallint")]
         EEstadoFactura estado;
@@ -120,7 +115,8 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         /// <summary>
         /// Monto gravado del documento
         /// </summary>
-        [PersistentAlias(nameof(gravada))]
+        //[PersistentAlias(nameof(gravada))]
+        [Persistent(nameof(Gravada)), DbType("numeric(14,2)")]
         [XafDisplayName("Gravada")]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         [VisibleInListView(true)]
@@ -133,12 +129,22 @@ namespace SBT.Apps.Base.Module.BusinessObjects
                     UpdateTotalGravada(false);
                 return gravada;
             }
+            set 
+            {
+                decimal ? oldValue = Gravada;
+                bool changed = SetPropertyValue(nameof(Gravada), ref gravada, value);
+                if (!IsLoading && !IsSaving && changed)
+                {
+                    DoGravadaChanged(true, oldValue);
+                }
+            }
         }
 
         /// <summary>
         /// Monto del iva del documento
         /// </summary>
-        [PersistentAlias(nameof(iva))]
+        //[PersistentAlias(nameof(iva))]
+        [Persistent(nameof(Iva)), DbType("numeric(14,2)")]
         [XafDisplayName("IVA"), Index(22)]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         [DetailViewLayout("Totales", LayoutGroupType.SimpleEditorsGroup, 10)]
@@ -151,11 +157,18 @@ namespace SBT.Apps.Base.Module.BusinessObjects
                     UpdateTotalIva(false);
                 return iva;
             }
+            set => SetPropertyValue(nameof(Iva), ref iva, value);
         }
 
         /// <summary>
         /// SubTotal gravado + iva del documento
         /// </summary>
+        /// <remarks>
+        /// El artículo del siguiente link dice que es mejor calcular la propiedad directamente porque es preferible en
+        /// lugar de persistentalias para calculos pesados (o continuos quiz). Por eso se hizo el cambio, sino produce el
+        /// efecto esperado regresar a la expresion del PersistentAlias. Hay que ver que funcione bien en app web
+        /// https://github.com/DevExpress/XPO/blob/master/Tutorials/WinForms/Classic/create-persistent-classes-and-connect-xpo-to-database.md
+        /// </remarks>
         [PersistentAlias("[Gravada] + [Iva]")]
         [XafDisplayName("SubTotal"), Index(23)]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
@@ -165,25 +178,36 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         /// <summary>
         /// Monto del IVA percibido
         /// </summary>
-        [PersistentAlias(nameof(ivaPercibido))]
+        //[PersistentAlias(nameof(ivaPercibido))]
+        [Persistent(nameof(IvaPercibido)), DbType("numeric(14,2)")]
         [XafDisplayName("Iva Percibido"), VisibleInListView(false)]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         [DetailViewLayout("Totales", LayoutGroupType.SimpleEditorsGroup, 10)]
-        public decimal? IvaPercibido => ivaPercibido;
+        public decimal? IvaPercibido
+        {
+            get => ivaPercibido;
+            set => SetPropertyValue(nameof(IvaPercibido), ref ivaPercibido, value);
+        }
 
         /// <summary>
         /// Monto del IVA retenido
         /// </summary>
-        [PersistentAlias(nameof(ivaRetenido))]
+        //[PersistentAlias(nameof(ivaRetenido))]
+        [Persistent(nameof(IvaRetenido)), DbType("numeric(14,2)")]
         [XafDisplayName("Iva Retenido"), VisibleInListView(false)]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         [DetailViewLayout("Totales", LayoutGroupType.SimpleEditorsGroup, 10)]
-        public decimal? IvaRetenido => ivaRetenido;
+        public decimal? IvaRetenido
+        {
+            get => ivaRetenido;
+            set => SetPropertyValue(nameof(IvaRetenido), ref ivaRetenido, value);
+        }
 
         /// <summary>
         /// Monto no sujeto del documento
         /// </summary>
-        [PersistentAlias(nameof(noSujeta))]
+        //[PersistentAlias(nameof(noSujeta))]
+        [Persistent(nameof(NoSujeta)), DbType("numeric(14,2)")]
         [XafDisplayName("No Sujeta"), VisibleInListView(false)]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         [DetailViewLayout("Totales", LayoutGroupType.SimpleEditorsGroup, 10)]
@@ -195,12 +219,14 @@ namespace SBT.Apps.Base.Module.BusinessObjects
                     UpdateTotalNoSujeta(false);
                 return noSujeta;
             }
+            set => SetPropertyValue(nameof(NoSujeta), ref noSujeta, value);
         }
 
         /// <summary>
         /// Monto exento del documento
         /// </summary>
-        [PersistentAlias(nameof(exenta))]
+        //[PersistentAlias(nameof(exenta))]
+        [Persistent(nameof(Exenta)), DbType("numeric(14,2)")]
         [XafDisplayName("Exenta"), VisibleInListView(true)]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         [DetailViewLayout("Totales", LayoutGroupType.SimpleEditorsGroup, 10)]
@@ -212,17 +238,25 @@ namespace SBT.Apps.Base.Module.BusinessObjects
                     UpdateTotalExenta(false);
                 return exenta;
             }
+            set => SetPropertyValue(nameof(Exenta), ref exenta, value);
         }
 
         /// <summary>
         /// Total del documento
         /// </summary>
-        [PersistentAlias("[SubTotal] + [IvaPercibido] - [IvaRetenido] + [NoSujeta] + [Exenta] ")]
+        /// <remarks>
+        /// El artículo del siguiente link dice que es mejor calcular la propiedad directamente porque es preferible en
+        /// lugar de persistentalias para calculos pesados (o continuos quiz). Por eso se hizo el cambio, sino produce el
+        /// efecto esperado regresar a la expresion del PersistentAlias. Hay que ver que funcione bien en app web
+        /// https://github.com/DevExpress/XPO/blob/master/Tutorials/WinForms/Classic/create-persistent-classes-and-connect-xpo-to-database.md
+        /// </remarks>
+        //[PersistentAlias("[SubTotal] + [IvaPercibido] - [IvaRetenido] + [NoSujeta] + [Exenta] ")]
         [ModelDefault("DisplayFormat", "{0:N2}")]
         [XafDisplayName("Total"), Index(28)]
         [DetailViewLayout("Totales", LayoutGroupType.SimpleEditorsGroup, 10)]
         [VisibleInListView(true)]
-        public decimal Total => Convert.ToDecimal(EvaluateAlias(nameof(Total)));
+        public decimal Total => SubTotal + IvaPercibido ?? 0.0m - IvaRetenido ?? 0.0m + NoSujeta ?? 0.0m + Exenta ?? 0.0m;
+            //Convert.ToDecimal(EvaluateAlias(nameof(Total)));
 
         /// <summary>
         /// Estado del documento
@@ -298,9 +332,9 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         /// </summary>
         /// <param name="forceChangeEvents"></param>
         /// <param name="oldValue"></param>
-        protected virtual void DoGravadaChanged(bool forceChangeEvents, decimal oldValue)
+        protected virtual void DoGravadaChanged(bool forceChangeEvents, decimal? oldValue)
         {
-
+            
         }
 
         protected virtual void DoAnular()

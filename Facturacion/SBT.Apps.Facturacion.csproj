@@ -53,6 +53,7 @@
     <Reference Include="DevExpress.ExpressApp.ReportsV2.v20.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+    <Reference Include="DevExpress.ExpressApp.Security.Xpo.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.ExpressApp.v20.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
@@ -125,7 +126,7 @@
     <Compile Include="BusinessObjects\CxCDocumento.cs" />
     <Compile Include="BusinessObjects\CxCDocumentoDetalle.cs" />
     <Compile Include="BusinessObjects\CxCTransaccion.cs" />
-    <Compile Include="BusinessObjects\ECxcTransaccionEstado.cs" />
+    <Compile Include="BusinessObjects\ECxCTransaccionEstado.cs" />
     <Compile Include="BusinessObjects\LibroVentaConsumidor.cs" />
     <Compile Include="BusinessObjects\LibroVentaContribuyente.cs" />
     <Compile Include="BusinessObjects\TributoRegla.cs" />
@@ -142,7 +143,7 @@
     <Compile Include="Controllers\vcCartera.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controllers\vcCxCDocumento.cs">
+    <Compile Include="Controllers\vcCxCTransaccion.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controllers\vcVenta.cs">
@@ -151,11 +152,7 @@
     <Compile Include="Controllers\vcVentaDetalle.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controllers\vcVentaViewDetail.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="DatabaseUpdate\Updater.cs" />
-    <Compile Include="DBColumn.cs" />
     <Compile Include="FacturacionModule.cs">
       <SubType>Component</SubType>
     </Compile>

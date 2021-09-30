@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace SBT.Apps.CxC.Module.BusinessObjects
 {
-    public enum ECxcTransaccionEstado
+    public enum ECxCTransaccionEstado
     {
         Digitado = 0,
         Aplicado = 1,

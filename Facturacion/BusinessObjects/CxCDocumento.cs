@@ -21,12 +21,13 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
 
     [DefaultClassOptions, ModelDefault(@"Caption", @"CxC Documento"), NavigationItem(false), CreatableItem(false),
         Persistent(nameof(CxCDocumento)), DefaultProperty(nameof(Numero))]
+    [MapInheritance(MapInheritanceType.ParentTable)]
     [ImageName(nameof(CxCDocumento))]
     [RuleCriteria("CxCDocumento.SaldoPendiente > 0 y Estado = Debe", DefaultContexts.Save, "[Venta.Estado] == 0 && [Venta.Saldo] <> 0.0",
         CustomMessageTemplate = "El estado de la factura debe ser Debe y el Saldo <> 0.0 para aplicarle una transacción de Cuenta por Cobrar")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
-    public class CxCDocumento : XPOBaseDoc
+    public class CxCDocumento : CxCTransaccion
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
         public CxCDocumento(Session session)
             : base(session)
@@ -36,7 +37,6 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         {
             base.AfterConstruction();
             gravada = 0.0m;
-            cxCTransaccion = null;
             iva = 0.0m;
             ivaPercibido = 0.0m;
             ivaRetenido = 0.0m;
@@ -47,9 +47,6 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
 
         #region Propiedades
 
-        decimal? valor;
-        Venta venta;
-        CxCTransaccion cxCTransaccion;
         [Persistent(nameof(Gravada)), DbType("numeric(14,2)")]
         decimal gravada;
         [Persistent(nameof(Iva)), DbType("numeric(14,2)")]
@@ -62,20 +59,6 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         decimal noSujeta;
         [Persistent(nameof(Exenta)), DbType("numeric(14,2)")]
         decimal exenta;
-
-        [Association("CxCTransaccion-Documentos"), XafDisplayName("Transacción"), Index(0)]
-        public CxCTransaccion CxCTransaccion
-        {
-            get => cxCTransaccion;
-            set => SetPropertyValue(nameof(CxCTransaccion), ref cxCTransaccion, value);
-        }
-
-        [Association("Venta-CxCDocumentos"), XafDisplayName("Venta"), Index(4), VisibleInLookupListView(true)]
-        public Venta Venta
-        {
-            get => venta;
-            set => SetPropertyValue(nameof(Venta), ref venta, value);
-        }
 
         [PersistentAlias(nameof(gravada)), XafDisplayName("Gravado"), Index(9)]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
@@ -124,25 +107,6 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         public decimal Exenta => exenta;
 
-        /// <summary>
-        /// Valor de las transacciones que no se separan en exento, gravado, etc. Por ejemplo: Pagos, cheques rechazados, etc
-        /// </summary>
-        [DbType("numeric(14,2)"), XafDisplayName("Valor")]
-        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
-        public decimal? Valor
-        {
-            get => valor;
-            set => SetPropertyValue(nameof(Valor), ref valor, value);
-        }
-
-        [PersistentAlias("[SubTotal] - [IvaRetenido] + [IvaPercibido]  + [VentaNoSujeta] + [VentaExenta] ")]
-        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
-        [XafDisplayName("Total"), Index(16)]
-        public decimal Total
-        {
-            get { return Convert.ToDecimal(EvaluateAlias(nameof(Total))); }
-        }
-
 
         #endregion
 
@@ -155,33 +119,49 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         public void UpdateTotalExenta(bool forceChangeEvents)
         {
             decimal? oldExenta = exenta;
-            exenta = Convert.ToDecimal(Evaluate(CriteriaOperator.Parse("[Detalles].Sum([Exenta])"))); ;
+            exenta = Convert.ToDecimal(Evaluate(CriteriaOperator.Parse("[Detalles].Sum([Exenta])")));
+            monto = SubTotal - IvaRetenido + IvaPercibido + NoSujeta + Exenta;
             if (forceChangeEvents)
+            {
                 OnChanged(nameof(Exenta), oldExenta, exenta);
+                OnChanged(nameof(Monto));
+            }
         }
 
         public void UpdateTotalGravada(bool forceChangeEvents)
         {
             decimal? oldGravada = gravada;
             gravada = Convert.ToDecimal(Evaluate(CriteriaOperator.Parse("[Detalles].Sum([Gravada])")));
+            monto = SubTotal - IvaRetenido + IvaPercibido + NoSujeta + Exenta;
             if (forceChangeEvents)
+            {
                 OnChanged(nameof(Gravada), oldGravada, gravada);
+                OnChanged(nameof(Monto));
+            }
         }
 
         public void UpdateTotalIva(bool forceChangeEvents)
         {
             decimal? oldIva = iva;
             iva = Convert.ToDecimal(Evaluate(CriteriaOperator.Parse("[Detalles].Sum([Iva])")));
+            monto = SubTotal - IvaRetenido + IvaPercibido + NoSujeta + Exenta;
             if (forceChangeEvents)
+            {
                 OnChanged(nameof(Iva), oldIva, iva);
+                OnChanged(nameof(Monto));
+            }
         }
 
         public void UpdateTotalNoSujeta(bool forceChangeEvents)
         {
             decimal? oldNoSujeta = noSujeta;
             noSujeta = Convert.ToDecimal(Evaluate(CriteriaOperator.Parse("[Detalles].Sum([NoSujeta])")));
+            monto = SubTotal - IvaRetenido + IvaPercibido + NoSujeta + Exenta;
             if (forceChangeEvents)
+            {
                 OnChanged(nameof(NoSujeta), oldNoSujeta, noSujeta);
+                OnChanged(nameof(Monto));
+            }
         }
 
         #endregion

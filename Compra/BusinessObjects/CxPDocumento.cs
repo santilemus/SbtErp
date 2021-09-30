@@ -9,7 +9,7 @@ using DevExpress.Persistent.Validation;
 
 namespace SBT.Apps.CxP.Module.BusinessObjects
 {
-    [DefaultClassOptions]
+    [DefaultClassOptions, ModelDefault("Caption", "Documento CxP")]
     [MapInheritance(MapInheritanceType.ParentTable)]
     //[ImageName("BO_Contact")]
     //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
@@ -90,16 +90,6 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         public decimal Exenta => exenta;
 
-        /// <summary>
-        /// OJO SE DEBE QUITAR Y SUMAR ESTO EN Monto del BO ancestro
-        /// </summary>
-        [PersistentAlias("[SubTotal] - [IvaRetenido] + [IvaPercibido]  + [NoSujeta] + [Exenta] ")]
-        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
-        [XafDisplayName("Total"), Index(16)]
-        public decimal Total
-        {
-            get { return Convert.ToDecimal(EvaluateAlias(nameof(Total))); }
-        }
         #endregion
 
         #region Collecciones
@@ -108,37 +98,53 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
 
         #endregion
 
-        #region Metodos
+        #region Metodos 
         public void UpdateTotalExenta(bool forceChangeEvents)
         {
             decimal? oldExenta = exenta;
             exenta = Convert.ToDecimal(Evaluate(CriteriaOperator.Parse("[Detalles].Sum([Exenta])")));
+            monto = SubTotal - IvaRetenido + IvaPercibido + NoSujeta + Exenta;
             if (forceChangeEvents)
+            {
                 OnChanged(nameof(Exenta), oldExenta, exenta);
+                OnChanged(nameof(Monto));
+            }
         }
 
         public void UpdateTotalGravada(bool forceChangeEvents)
         {
             decimal? oldGravada = gravada;
             gravada = Convert.ToDecimal(Evaluate(CriteriaOperator.Parse("[Detalles].Sum([Gravada])")));
+            monto = SubTotal - IvaRetenido + IvaPercibido + NoSujeta + Exenta;
             if (forceChangeEvents)
+            {
                 OnChanged(nameof(Gravada), oldGravada, gravada);
+                OnChanged(nameof(Monto));
+            }
         }
 
         public void UpdateTotalIva(bool forceChangeEvents)
         {
             decimal? oldIva = iva;
             iva = Convert.ToDecimal(Evaluate(CriteriaOperator.Parse("[Detalles].Sum([Iva])")));
+            monto = SubTotal - IvaRetenido + IvaPercibido + NoSujeta + Exenta;
             if (forceChangeEvents)
+            {
                 OnChanged(nameof(Iva), oldIva, iva);
+                OnChanged(nameof(Monto));
+            }
         }
 
         public void UpdateTotalNoSujeta(bool forceChangeEvents)
         {
             decimal? oldNoSujeta = noSujeta;
             noSujeta = Convert.ToDecimal(Evaluate(CriteriaOperator.Parse("[Detalles].Sum([NoSujeta])")));
+            monto = SubTotal - IvaRetenido + IvaPercibido + NoSujeta + Exenta;
             if (forceChangeEvents)
+            {
                 OnChanged(nameof(NoSujeta), oldNoSujeta, noSujeta);
+                OnChanged(nameof(Monto));
+            }
         }
 
         protected override void Anular()

@@ -354,6 +354,10 @@
       <Name>SBT.Apps.Erp.Module</Name>
       <Private>True</Private>
     </ProjectReference> -->
+    <ProjectReference Include="..\Activo\SBT.Apps.Activo.csproj">
+      <Project>{579E294D-47B3-4E8A-94B8-A81A514F7405}</Project>
+      <Name>SBT.Apps.Activo</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Base\SBT.Apps.Base.csproj">
       <Project>{A538FE93-206D-4869-BC40-FDC561F8C1D1}</Project>
       <Name>SBT.Apps.Base</Name>

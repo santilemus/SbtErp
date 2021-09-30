@@ -17,12 +17,12 @@ namespace SBT.Apps.Facturacion.Module.Controllers
     /// <summary>
     /// View Controller que corresponde a los documentos de Cuentas por Cobrar
     /// </summary>
-    public class vcCxCDocumento: ViewControllerBase
+    public class vcCxCTransaccion: ViewControllerBase
     {
         InventarioTipoMovimiento tipoMovimiento;
-        public vcCxCDocumento(): base()
+        public vcCxCTransaccion(): base()
         {
-            TargetObjectType = typeof(SBT.Apps.CxC.Module.BusinessObjects.CxCDocumento);
+            TargetObjectType = typeof(SBT.Apps.CxC.Module.BusinessObjects.CxCTransaccion);
             TargetViewType = ViewType.Any;
         }
 
@@ -53,10 +53,15 @@ namespace SBT.Apps.Facturacion.Module.Controllers
             System.Collections.IList items = ObjectSpace.ModifiedObjects;
             foreach (object item in items)
             {
-                if (item.GetType() == typeof(SBT.Apps.CxC.Module.BusinessObjects.CxCDocumento))
+                if (item.GetType() == typeof(SBT.Apps.CxC.Module.BusinessObjects.CxCTransaccion) ||
+                    item.GetType() == typeof(SBT.Apps.CxC.Module.BusinessObjects.CxCDocumento))
                 {
-                    CxCDocumento itemCxC = (CxCDocumento)item;
-                    ActualizarSaldoFactura(itemCxC);
+                    if (((CxCTransaccion)item).Venta.Estado == EEstadoFactura.Anulado)
+                    {
+                        e.Cancel = true;
+                        return;
+                    }
+                    ActualizarSaldoFactura((CxCTransaccion)item);
                 }
                 else
                 {
@@ -175,23 +180,28 @@ namespace SBT.Apps.Facturacion.Module.Controllers
         /// Actualizar el saldo de la factura
         /// </summary>
         /// <param name="item">Es un documento de CxC</param>
-        private void ActualizarSaldoFactura(CxCDocumento item)
+        private void ActualizarSaldoFactura(CxCTransaccion item)
         {
             //decimal fSaldo = Convert.ToDecimal(ObjectSpace.Evaluate(typeof(CxCDocumento), 
             //    CriteriaOperator.Parse("Sum(Iif([CxCTransaccion.Concepto.Tipo] == 1, [Total] + [Valor], -[Total] - [Valor]))"),
             //    CriteriaOperator.Parse("[Venta.Oid] == ? && [CxCTransaccion.Estado] != 2", item.Venta.Oid)));
 
-            decimal fCargo = Convert.ToDecimal(item.Venta.CxCDocumentos.Where(x => x.Venta == item.Venta && x.CxCTransaccion.Tipo.TipoOperacion == ETipoOperacion.Cargo &&
-                                                           x.CxCTransaccion.Estado != ECxcTransaccionEstado.Anulado).Sum(x => x.Total + x.Valor));
-            decimal fAbono = Convert.ToDecimal(item.Venta.CxCDocumentos.Where(x => x.Venta == item.Venta && x.CxCTransaccion.Tipo.TipoOperacion == ETipoOperacion.Abono &&
-                                                           x.CxCTransaccion.Estado != ECxcTransaccionEstado.Anulado).Sum(x => x.Total + x.Valor));
+            decimal fCargo = Convert.ToDecimal(item.Venta.CxCTransacciones.Where(x => x.Venta == item.Venta && x.Tipo.TipoOperacion == ETipoOperacion.Cargo &&
+                                                           x.Estado != ECxCTransaccionEstado.Anulado).Sum(x => x.Monto));
+            decimal fAbono = Convert.ToDecimal(item.Venta.CxCTransacciones.Where(x => x.Venta == item.Venta && x.Tipo.TipoOperacion == ETipoOperacion.Abono &&
+                                                           x.Estado != ECxCTransaccionEstado.Anulado).Sum(x => x.Monto));
+            decimal fNcredito = Convert.ToDecimal(item.Venta.CxCTransacciones.Where(
+                x => x.Venta == item.Venta && x.Tipo.Oid > 1 && x.Tipo.Oid <= 4 && x.Estado != ECxCTransaccionEstado.Anulado).Sum(x => x.Monto));
             decimal monto = Math.Abs(fCargo - fAbono);
-            if ((item.Venta.Saldo - monto) == 0.0m)
+            if (fNcredito > 0 && item.Venta.Total == fNcredito)
+                item.Venta.ActualizarSaldo(0.0m, EEstadoFactura.Devolucion, true);
+            else if ((item.Venta.Total - monto) == 0.0m)
             {
-                // OJO:Revisar el Estado de Pagado porque pueden ser otros, dependiendo del tipo de documento de cxc, por ejemplo: Devolucion
-                item.Venta.ActualizarSaldo(monto, EEstadoFactura.Pagado, true);
-                item.Venta.Save();
+                item.Venta.ActualizarSaldo(0.0m, EEstadoFactura.Pagado, true);
             }
+            else
+                item.Venta.ActualizarSaldo(item.Venta.Total - monto, EEstadoFactura.Debe, true);
+            item.Venta.Save();
         }
 
         /// <summary>
@@ -206,7 +216,7 @@ namespace SBT.Apps.Facturacion.Module.Controllers
             {
                 var cxcDocumento = (CxCDocumento)View.CurrentObject;
                 if (cxcDocumento.Venta.Saldo <= 0.0m || cxcDocumento.Venta.Estado != EEstadoFactura.Debe)
-                    MostrarError($"La venta con {cxcDocumento.Venta.TipoFactura.Nombre} debe tener saldo >= 0 y Estado Debe para aplicarle {cxcDocumento.CxCTransaccion.Tipo}");
+                    MostrarError($"La venta con {cxcDocumento.Venta.TipoFactura.Nombre} debe tener saldo >= 0 y Estado Debe para aplicarle {cxcDocumento.Tipo}");
             }
         }
     }

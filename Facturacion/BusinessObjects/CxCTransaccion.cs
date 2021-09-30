@@ -25,7 +25,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
     ///                                  
     /// </remarks>
 
-    [DefaultClassOptions, ModelDefault("Caption", "CxC Transacción"), NavigationItem("Cuenta por Cobrar")]
+    [DefaultClassOptions, ModelDefault("Caption", "Transacción CxC"), NavigationItem("Cuenta por Cobrar")]
     [CreatableItem(false), Persistent(nameof(CxCTransaccion)), DefaultProperty("Numero")]
     [ImageName(nameof(CxCTransaccion))]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
@@ -45,18 +45,25 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
 
         #region Propiedades
 
+        protected decimal monto;
+        Venta venta;
+        decimal valorMoneda;
+        Moneda moneda;
+        int? numero;
         Cartera cartera;
         Listas tipoTarjeta;
         BancoTransaccion bancoTransaccion;
         string noTarjeta;
         string referencia;
-        ECxcTransaccionEstado estado;
-        SBT.Apps.Tercero.Module.BusinessObjects.Banco banco;
+        ECxCTransaccionEstado estado;
+        SBT.Apps.Tercero.Module.BusinessObjects.Banco banco;  // revisar si se borra
         string comentario;
         DateTime fecha;
         CxCTipoTransaccion tipo;
         [Persistent(nameof(AutorizacionDocumento))]
         AutorizacionDocumento autorizacionDocumento;
+        string usuarioAnulo;
+        DateTime fechaAnula;
 
 
         [DbType("datetime2"), XafDisplayName("Fecha"), Index(1)]
@@ -76,6 +83,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         [RuleRequiredField("CxcTransaccion.Tipo_Requerido", DefaultContexts.Save)]
         [Index(2), VisibleInLookupListView(true)]
         [DetailViewLayout("Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
+        [DataSourceCriteria("!IsNull([Padre]) && [Activo] == True")]
         public CxCTipoTransaccion Tipo
         {
             get => tipo;
@@ -91,6 +99,50 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         [XafDisplayName("Autorización Documento"), PersistentAlias(nameof(autorizacionDocumento)), Index(2)]
         [VisibleInListView(false)]
         public AutorizacionDocumento AutorizacionDocumento => autorizacionDocumento;
+
+
+        [DbType("int"), XafDisplayName("Número"), Index(3)]
+        [ModelDefault("AllowEdit", "False")]
+        [ToolTip("Numero Correlativo por tipo de documento y empresa")]
+        public int? Numero
+        {
+            get => numero;
+            set => SetPropertyValue(nameof(Numero), ref numero, value);
+        }
+
+        [XafDisplayName("Moneda"), Index(4)]
+        [DataSourceCriteria("[Activa] == True")]
+        public Moneda Moneda
+        {
+            get => moneda;
+            set => SetPropertyValue(nameof(Moneda), ref moneda, value);
+        }
+
+        [DbType("numeric(12,2)"), XafDisplayName("Valor Moneda"), Index(5)]
+        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
+        [ModelDefault("AllowEdit", "False")]
+        public decimal ValorMoneda
+        {
+            get => valorMoneda;
+            set => SetPropertyValue(nameof(ValorMoneda), ref valorMoneda, value);
+        }
+
+        [Association("Venta-CxCTransacciones")]
+        [XafDisplayName("Venta"), Index(6)]
+        public Venta Venta
+        {
+            get => venta;
+            set => SetPropertyValue(nameof(Venta), ref venta, value);
+        }
+
+        [DbType("numeric(14,2)"), XafDisplayName("Monto"), Index(7)]
+        [RuleValueComparison("CxCTransaccion.Monto > 0", DefaultContexts.Save, ValueComparisonType.GreaterThan, 0, SkipNullOrEmptyValues = false)]
+        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
+        public decimal Monto
+        {
+            get => monto;
+            set => SetPropertyValue(nameof(Monto), ref monto, value);
+        }
 
         /// <summary>
         /// Cartera de Cuenta por Cobrar o Venta. El vendedor o el cobrador esta relacionado con la cartera y el cliente
@@ -159,6 +211,8 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         /// </remarks>
         [XafDisplayName("Banco Transacción"), Index(9), VisibleInListView(false),
             ToolTip("La transacción de bancos, cuando es transferencia, remesa, o pago electronico")]
+        //[Association("BancoTransaccion-CxCTransacciones")]
+        [DataSourceCriteria("[BancoCuenta.Empresa] == '@This.Venta.Empresa' && [Clasificacion.Tipo] In (1, 2)")]   // clasificacion.Tipo in (Abono, Remesa)
         [DetailViewLayout("Datos Transacción", LayoutGroupType.SimpleEditorsGroup, 1)]
         public BancoTransaccion BancoTransaccion
         {
@@ -168,7 +222,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
 
         [DbType("smallint"), XafDisplayName("Estado"), Index(15), RuleRequiredField("CxCTransaccion.Estado_Requerido", "Save")]
         [DetailViewLayout("Otros Datos", LayoutGroupType.SimpleEditorsGroup, 2)]
-        public ECxcTransaccionEstado Estado
+        public ECxCTransaccionEstado Estado
         {
             get => estado;
             set => SetPropertyValue(nameof(Estado), ref estado, value);
@@ -182,19 +236,24 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
             set => SetPropertyValue(nameof(Comentario), ref comentario, value);
         }
 
-        #endregion
-
-        #region colecciones
-        [Association("CxCTransaccion-Documentos"), DevExpress.Xpo.Aggregated, XafDisplayName("Documentos"), Index(0)]
-
-        public XPCollection<CxCDocumento> Documentos
+        [XafDisplayName("Fecha Anulación")]
+        [ModelDefault("AllowEdit", "False"), Index(98)]
+        public DateTime FechaAnula
         {
-            get
-            {
-                return GetCollection<CxCDocumento>(nameof(Documentos));
-            }
+            get => fechaAnula;
+            set => SetPropertyValue(nameof(FechaAnula), ref fechaAnula, value);
+        }
+        [Size(25), XafDisplayName("Usuario Anulo")]
+        [ModelDefault("AllowEdit", "False"), Index(99)]
+        public string UsuarioAnulo
+        {
+            get => usuarioAnulo;
+            set => SetPropertyValue(nameof(UsuarioAnulo), ref usuarioAnulo, value);
         }
 
+        #endregion
+
+        #region Collecciones
         #endregion
 
         //[Action(Caption = "My UI Action", ConfirmationMessage = "Are you sure?", ImageName = "Attention", AutoCommit = true)]

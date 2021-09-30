@@ -1,4 +1,5 @@
 ﻿using DevExpress.Data.Filtering;
+using DevExpress.Data.Filtering.Helpers;
 using DevExpress.ExpressApp.ConditionalAppearance;
 using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
@@ -8,6 +9,7 @@ using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.CxP.Module.BusinessObjects;
 using SBT.Apps.Inventario.Module.BusinessObjects;
+using SBT.Apps.Producto.Module.BusinessObjects;
 using System;
 using System.ComponentModel;
 using System.Linq;
@@ -123,11 +125,40 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
 
         [Association("CompraFactura-Ingresos"), Index(1), ModelDefault("Caption", "Ingresos")]
         public XPCollection<InventarioMovimiento> Ingresos => GetCollection<InventarioMovimiento>(nameof(Ingresos));
-        [Association("CompraFactura-CxPTransacciones"), Index(2), XafDisplayName("CxP Transacciones"), DevExpress.Xpo.Aggregated]
+        [Association("CompraFactura-CxPTransacciones"), Index(2), XafDisplayName("Transacciones CxP"), DevExpress.Xpo.Aggregated]
         public XPCollection<CxPTransaccion> CxPTransacciones => GetCollection<CxPTransaccion>(nameof(CxPTransacciones));
         #endregion
 
         #region Metodos
+
+        protected override void DoGravadaChanged(bool forceChangeEvents, decimal? oldValue)
+        {
+            if (this.Detalles.Count == 0)
+            {
+                // calculamos el Iva, cuando no hay detalles porque en ese caso solo se esta ingresando el encabezado de la compra
+                iva = CalcularTributo(3);
+                OnChanged(nameof(Iva));
+            }
+            ivaRetenido = CalcularTributo(4);
+            renta = CalcularTributo(5);
+            OnChanged(nameof(IvaRetenido));
+            OnChanged(nameof(Renta));
+            base.DoGravadaChanged(forceChangeEvents, oldValue);
+        }
+
+        private decimal CalcularTributo(int oidTributo)
+        {
+            Tributo tributo = Session.GetObjectByKey<Tributo>(oidTributo);
+            if (tributo != null)
+            {
+                // la formula debe tener las reglas o condiciones para calcular el tributo cuando aplique
+                ExpressionEvaluator eval = new ExpressionEvaluator(TypeDescriptor.GetProperties(tributo.TipoBO), tributo.Formula);
+                return Convert.ToDecimal(eval.Evaluate(this));
+            }
+            else
+                return 0.0m;
+        }
+
         public override void UpdateTotalExenta(bool forceChangeEvents)
         {
             base.UpdateTotalExenta(forceChangeEvents);
@@ -150,8 +181,7 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
         }
 
         /// <summary>
-        /// REVISAR SE DEBE CALCULAR PARA SUJERAR EL IVA PERO PUEDEN MODIFIARLO PORQUE ES COMPRA. Tambien se deben calcular
-        /// el IVA RETENIDO Y PERCIBIDO
+        /// Actualiza el total Iva a partir de los detalles de la compra
         /// </summary>
         /// <param name="forceChangeEvents"></param>
         public override void UpdateTotalIva(bool forceChangeEvents)
