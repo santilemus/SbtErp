@@ -2,7 +2,7 @@
 using System;
 using System.Linq;
 
-namespace SBT.Apps.Facturacion.Module.BusinessObjects
+namespace SBT.Apps.Base.Module.BusinessObjects
 {
     /// <summary>
     /// Enumeracion con las clases de documentos de compra y venta (de acuerdo a la codificacion del MH)

@@ -26,20 +26,11 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             if (this.ClassInfo.FindMember("Empresa") != null)
             {
                 this["Empresa"] = this.Session.GetObjectByKey<Empresa>(SesionDataHelper.ObtenerValor("OidEmpresa"));
-            }
-            if (this.GetType().GetProperty("Moneda") != null)
-            {
-                Constante constante = Session.GetObjectByKey<Constante>("MONEDA DEFECTO");
-                Moneda moneda = null;
-                if (constante != null)
+                if (this.GetType().GetProperty("Moneda") != null)
                 {
-                    moneda = this.Session.GetObjectByKey<Moneda>(constante.Valor.Trim());
-                    if (moneda != null)
-                    {
-                        this["Moneda"] = moneda;
-                        if (this.GetType().GetProperty("ValorMoneda") != null)
-                            this["ValorMoneda"] = moneda.FactorCambio;
-                    }
+                    this["Moneda"] = (this["Empresa"] as Empresa).MonedaDefecto;
+                    if (this.GetType().GetProperty("ValorMoneda") != null)
+                        this["ValorMoneda"] = (this["Empresa"] as Empresa).MonedaDefecto.FactorCambio;
                 }
             }
         }

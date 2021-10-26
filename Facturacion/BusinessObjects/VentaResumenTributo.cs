@@ -20,7 +20,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
     /// Facturacion
     /// BO con los tributos calculados para una venta
     /// </summary>
-    [ModelDefault("Caption", "Resumen Tributos"), NavigationItem(false), CreatableItem(false), 
+    [ModelDefault("Caption", "Resumen Tributos"), NavigationItem(false), CreatableItem(false),
         XafDefaultProperty(nameof(Tributo)), Persistent(nameof(VentaResumenTributo))]
     //[ImageName("BO_Contact")]
     //[DefaultListViewOptions(MasterDetailMode, false, NewItemRowPosition.None)]
@@ -33,14 +33,14 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         }
         public override void AfterConstruction()
         {
-            base.AfterConstruction();        
+            base.AfterConstruction();
+            valor = 0.0m;
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
         #region Propiedades
-        [Persistent(nameof(Valor))]
         decimal valor;
-        TributoRegla tributo;
+        Tributo tributo;
         Venta venta;
 
         [Association("Factura-ResumenTributos"), XafDisplayName("Venta"), Persistent(nameof(Venta))]
@@ -50,18 +50,20 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             set => SetPropertyValue(nameof(Venta), ref venta, value);
         }
 
-        [Association("Tributo-VentaResumenTributos"), XafDisplayName("Tributo")]
-        public TributoRegla Tributo
+        //[Association("Tributo-VentaResumenTributos")]
+        [XafDisplayName("Tributo")]
+        public Tributo Tributo
         {
             get => tributo;
             set => SetPropertyValue(nameof(Tributo), ref tributo, value);
         }
 
-        [DbType("numeric(14,4)"), XafDisplayName("Valor"), PersistentAlias(nameof(valor))]
+        [DbType("numeric(14,4)"), XafDisplayName("Valor"), Persistent(nameof(Valor))]
         [ModelDefault("DisplayFormat", "{0:N4}"), ModelDefault("EditMask", "n4")]
         public decimal Valor
         {
             get => valor;
+            set => SetPropertyValue(nameof(Valor), ref valor, value);
         }
 
         #endregion

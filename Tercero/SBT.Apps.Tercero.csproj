@@ -90,6 +90,7 @@
   <ItemGroup>
     <Compile Include="BusinessObjects\AFP.cs" />
     <Compile Include="BusinessObjects\Banco.cs" />
+    <Compile Include="BusinessObjects\ETerceroOrigen.cs" />
     <Compile Include="BusinessObjects\Tercero.cs" />
     <Compile Include="BusinessObjects\TerceroContacto.cs" />
     <Compile Include="BusinessObjects\TerceroCredito.cs" />

@@ -24,7 +24,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
     /// </summary>
     /// <remarks>
     /// </remarks>
-    [DefaultClassOptions, ModelDefault("Caption", "Documento de Venta"), NavigationItem("Facturación"), DefaultProperty(nameof(NoFactura))]
+    [DefaultClassOptions, ModelDefault("Caption", "Venta"), NavigationItem("Facturación"), DefaultProperty(nameof(NoFactura))]
     [Persistent("Venta")]
     //[Appearance("Venta.CreditoFiscal", Criteria = "[TipoFactura.Categoria] == 15 && [TipoFactura.Codigo] != 'COVE01'",
     //    AppearanceItemType = "ViewItem",
@@ -64,6 +64,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             base.AfterConstruction();
             if (((Usuario)SecuritySystem.CurrentUser).Agencia != null)
             {
+                var xy = SesionDataHelper.ObtenerValor("OidSucursal");
                 var unidad = this.Session.GetObjectByKey<EmpresaUnidad>(((Usuario)SecuritySystem.CurrentUser).Agencia.Oid);
                 agencia = unidad;
             }
@@ -398,14 +399,14 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         #endregion
 
         #region Colecciones
-        [Association("Venta-Detalles"), DevExpress.Xpo.Aggregated, XafDisplayName("Detalle"), Index(0)]
+        [Association("Venta-Detalles"), DevExpress.Xpo.Aggregated, XafDisplayName("Detalles"), Index(0)]
         public XPCollection<VentaDetalle> Detalles => GetCollection<VentaDetalle>(nameof(Detalles));
 
         [Association("Factura-ResumenTributos"), DevExpress.Xpo.Aggregated, XafDisplayName("Resumen Tributos"), Index(1)]
         public XPCollection<VentaResumenTributo> ResumenTributos => GetCollection<VentaResumenTributo>(nameof(ResumenTributos));
 
 
-        [Association("Venta-CxCTransacciones"), Index(2), XafDisplayName("Transacciones CxC")]
+        [Association("Venta-CxCTransacciones"), Index(2), XafDisplayName("Transacciones CxC"), DevExpress.Xpo.Aggregated]
         public XPCollection<CxC.Module.BusinessObjects.CxCTransaccion> CxCTransacciones => GetCollection<CxC.Module.BusinessObjects.CxCTransaccion>(nameof(CxCTransacciones));
 
 
@@ -467,18 +468,90 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
 
         protected override void DoGravadaChanged(bool forceChangeEvents, decimal? oldValue)
         {
+            /// NOTA: Revisar este metodo porque hay que considerar el BO TributoCategoria, para que se calculen unicamente 
+            /// cuando hay una relacion entre el tributo y la categoria del producto
+            
             // no calculamos el IVA porque tuvo que calcularse en los detalles (por producto)
-
+            // calculamos la retencion IVA Tributo Oid = 2; cuando el cliente es gran contribuyente. Se calcula porque
+            // del saldo a cobrar se deduce la retencion que hara el gran contribuyente, por lo tanto si el cliente
+            // es de la misma categoria que la empresa no se aplica (considerarlo en la formula)
+            IvaRetenido = CalcularTributo(2);
+            //OnChanged(nameof(IvaRetenido));
             // calculamos la percepcion cuando aplica. Cuando la empresa es gran contribuyente y el cliente no lo es
-            Tributo percepcion= Session.GetObjectByKey<Tributo>(2);
-            if (percepcion != null)
-            {
-                // la formula tiene las condiciones para identificar cuando debe aplicar la percepcion
-                ExpressionEvaluator eval = new ExpressionEvaluator(TypeDescriptor.GetProperties(percepcion.TipoBO), percepcion.Formula);
-                IvaPercibido = Convert.ToDecimal(eval.Evaluate(this));
-                OnChanged(nameof(IvaPercibido));
-            }
+            IvaPercibido = CalcularTributo(3);
+            //OnChanged(nameof(IvaPercibido));
             base.DoGravadaChanged(forceChangeEvents, oldValue);
+        }
+
+        /// <summary>
+        /// Calcula el valor del tributo cuyo Oid se recibe en el parametro, evaluando la formula correspondiente. 
+        /// El tributo o tasa se define en el BO Tributo, que incluye dos propiedades claves: 1) El tipo de BO en el cual se calcula, 
+        /// 2) La propiedad con la formula que sera evaluada al calcular el tributo
+        /// </summary>
+        /// <param name="oidTributo">Oid del tributo a calcular</param>
+        /// <returns>Retorna el valor del tributo calculado y que resulta de evaluar la Formula</returns>
+        /// <remarks>Por el momento El IVA no se evalua aca porque es un tributo de uso global. Se define el porcentaje a aplicar por Categoria de Producto</remarks>
+        private decimal CalcularTributo(int oidTributo)
+        {
+            Tributo tributo = Session.GetObjectByKey<Tributo>(oidTributo);
+            if (tributo != null)
+            {
+                ExpressionEvaluator eval = new ExpressionEvaluator(TypeDescriptor.GetProperties(tributo.TipoBO), tributo.Formula);
+
+                //alternativa 1
+                //CriteriaOperator op = CriteriaOperator.Parse(tributo.Formula);              
+                //ExpressionEvaluator eval2 = new ExpressionEvaluator(TypeDescriptor.GetProperties(tributo.TipoBO), op);
+
+                //alternativa 2. Cuando son muchos datos
+                //CriteriaOperator op = CriteriaOperator.Parse(tributo.Formula);
+                //Func<object, object> delegat = CriteriaCompiler.ToUntypedDelegate(op, CriteriaCompilerDescriptor.Get(tributo.TipoBO));
+                //return Convert.ToDecimal(delegat(this));
+
+                return Convert.ToDecimal(eval.Evaluate(this));
+            }
+            else
+                return 0.0m;
+        }
+
+        /// <summary>
+        /// Itera por los tributos o tasas que deben aplicarse a las categorias de los productos amparados en el detalle
+        /// de la venta
+        /// </summary>
+        /// <remarks>
+        /// Pendiente de agregar una propiedad en el BO Tributo o una manera de distinguir cuando se aplican de manera
+        /// global a la venta e independiente del producto y cuando se calculan por item de la venta (dependen del producto 
+        /// y por eso deben estar vinculados a una categoria)\r\n.
+        /// Ademas evaluar donde invocar el metodo: una opcion es en el commiting del vcVenta, agregar una accion para
+        /// calcularlos o cuando cambia el monto gravado de la venta. Con esta alterativa puede ser lento porque tiene que 
+        /// invocar cada vezel metodo y hay dos bucles anidados: uno por el detalle de la venta y otro por los atributos 
+        /// que aplican a cada producto (via la categoria
+        /// </remarks>
+        private void GenerarVentaResumenTributos()
+        {
+            var resumen = from d in Detalles
+                          where (d.Gravada != 0.0m && d.Producto.Categoria.ClasificacionIva == EClasificacionIVA.Gravado)
+                          group d by new { d.Producto.Categoria } into x
+                          select new
+                          {
+                              Categoria = x.Key.Categoria,
+                              Gravada = x.Sum(y => y.Gravada)
+                          };
+            foreach (var item in resumen)
+            {
+                foreach (TributoCategoria tributoCategoria in item.Categoria.TributosCategoria)
+                {
+                    var vtaResumenTributo = ResumenTributos.FirstOrDefault<VentaResumenTributo>(y => y.Tributo.Oid == tributoCategoria.Tributo.Oid);
+                    if (vtaResumenTributo == null)
+                        this.ResumenTributos.Add(new VentaResumenTributo(Session)
+                           { Tributo = Session.GetObjectByKey<Tributo>(tributoCategoria.Tributo.Oid), 
+                              Valor = CalcularTributo(tributoCategoria.Tributo.Oid)});
+                    else
+                    {
+                        vtaResumenTributo.Valor = CalcularTributo(tributoCategoria.Tributo.Oid);
+                        vtaResumenTributo.Save();
+                    }
+                }
+            }         
         }
 
 
@@ -501,6 +574,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             base.UpdateTotalGravada(forceChangeEvents);
             decimal? oldGravada = gravada;
             gravada = Convert.ToDecimal(Evaluate(CriteriaOperator.Parse("[Detalles].Sum([Gravada])")));
+            DoGravadaChanged(forceChangeEvents, oldGravada);
             if (forceChangeEvents)
                 OnChanged(nameof(Gravada), oldGravada, gravada);
             ActualizarSaldo(Convert.ToDecimal(exenta) + SubTotal + Convert.ToDecimal(IvaPercibido) -
@@ -557,7 +631,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             base.RefreshTiposDeFacturas();
             if (fTiposDeFacturas == null)
                 return;
-            fTiposDeFacturas.Criteria = CriteriaOperator.Parse("[Categoria] == 15 && [Activo] == True && [Codigo] In ('COVE01', 'COVE02', 'COVE03', 'COVE04', 'COVE05', 'COVE06')");
+            fTiposDeFacturas.Criteria = CriteriaOperator.Parse("[Categoria] == 15 && [Activo] == True && [Codigo] In ('COVE01', 'COVE02', 'COVE03', 'COVE04', 'COVE05')");
         }
 
         [Action(Caption = "Anular", ConfirmationMessage = "Esta Segur@? de Anular el Documento", ImageName = "Attention", AutoCommit = true)]

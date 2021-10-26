@@ -336,24 +336,44 @@
       </Columns>
     </ListView>
     <DetailView Id="Tributo_DetailView">
+      <Items>
+        <PropertyEditor Id="Comentario" PropertyName="Comentario" IsNewNode="True" Removed="True" />
+      </Items>
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
-          <LayoutGroup Id="SimpleEditors" RelativeSize="18.998716302952502">
-            <LayoutGroup Id="Tributo" RelativeSize="100">
-              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="24.324324324324323" IsNewNode="True" />
-              <LayoutItem Id="Nombre" Index="1" RelativeSize="17.567567567567568" />
-              <LayoutItem Id="Clase" Index="2" RelativeSize="17.567567567567568" />
-              <LayoutItem Id="Activo" Index="3" RelativeSize="17.567567567567568" />
-              <LayoutItem Id="TipoBO" Index="4" RelativeSize="22.972972972972972" />
+          <LayoutGroup Id="SimpleEditors" RelativeSize="12.323491655969191" Direction="Horizontal">
+            <LayoutGroup Id="Tributo_col1" ShowCaption="False" Index="0" RelativeSize="50" IsNewNode="True">
+              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="37.5" IsNewNode="True" />
+              <LayoutItem Id="Nombre" ViewItem="Nombre" Index="1" RelativeSize="27.083333333333332" IsNewNode="True" />
+              <LayoutItem Id="Clase" ViewItem="Clase" Index="2" RelativeSize="35.416666666666664" IsNewNode="True" />
             </LayoutGroup>
-            <LayoutGroup Id="XPObject" Caption="Oid" RelativeSize="46.92307692307692" Removed="True">
+            <LayoutGroup Id="Tributo_col2" ShowCaption="False" Index="1" RelativeSize="50" IsNewNode="True">
+              <LayoutItem Id="TipoBO" ViewItem="TipoBO" Index="0" RelativeSize="37.5" IsNewNode="True" />
+              <LayoutItem Id="Activo" ViewItem="Activo" Index="1" RelativeSize="62.5" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="Tributo" RelativeSize="100" Removed="True">
+              <LayoutGroup Id="Tributo_col1" RelativeSize="50">
+                <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="36.734693877551024" IsNewNode="True" />
+                <LayoutItem Id="Nombre" Index="1" RelativeSize="26.530612244897959" />
+                <LayoutItem Id="Clase" Index="2" RelativeSize="36.734693877551024" />
+                <LayoutItem Id="Activo" Index="3" RelativeSize="29.032258064516128" Removed="True" />
+              </LayoutGroup>
+              <LayoutGroup Id="Tributo_col2" RelativeSize="50">
+                <LayoutItem Id="Activo" ViewItem="Activo" Index="1" RelativeSize="26.530612244897959" IsNewNode="True" />
+                <LayoutItem Id="Comentario" RelativeSize="36.734693877551024" Index="2" />
+                <LayoutItem Id="TipoBO" RelativeSize="36.734693877551024" />
+              </LayoutGroup>
+            </LayoutGroup>
+            <LayoutGroup Id="XPObject" Caption="Oid" RelativeSize="36.92307692307692" Removed="True">
               <LayoutItem Id="Oid" Removed="True" />
             </LayoutGroup>
           </LayoutGroup>
-          <LayoutGroup Id="SizeableEditors" RelativeSize="40.308087291399232">
-            <LayoutItem Id="Formula" RelativeSize="100" />
+          <LayoutGroup Id="SizeableEditors" RelativeSize="43.388960205391527" Caption="SizeableEditors">
+            <LayoutItem Id="Formula" RelativeSize="75.7396449704142" />
+            <LayoutItem Id="Comentario" ViewItem="Comentario" Index="1" RelativeSize="21.301775147928993" IsNewNode="True" Removed="True" />
+            <LayoutItem Id="Comentario1" ViewItem="" Index="2" RelativeSize="2.9585798816568047" IsNewNode="True" />
           </LayoutGroup>
-          <LayoutGroup Id="Categorias_Group" Direction="Vertical" RelativeSize="40.693196405648266">
+          <LayoutGroup Id="Categorias_Group" Direction="Vertical" RelativeSize="44.287548138639281" Index="2">
             <LayoutItem Id="Categorias" RelativeSize="100" />
           </LayoutGroup>
         </LayoutGroup>
@@ -367,10 +387,13 @@
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
           <LayoutGroup Id="SimpleEditors" RelativeSize="100">
-            <LayoutGroup Id="XPObject" Index="0" RelativeSize="100" Caption="Oid">
-              <LayoutItem Id="Oid" Index="0" RelativeSize="4.6213093709884463" />
-              <LayoutItem Id="Categoria" ViewItem="Categoria" Index="1" RelativeSize="3.3376123234916562" IsNewNode="True" />
-              <LayoutItem Id="Tributo" ViewItem="Tributo" Index="2" RelativeSize="92.0410783055199" IsNewNode="True" />
+            <LayoutGroup Id="TributoCategoria" RelativeSize="100">
+              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="4.6213093709884463" IsNewNode="True" />
+              <LayoutItem Id="Categoria" Index="1" RelativeSize="3.3376123234916562" />
+              <LayoutItem Id="Tributo" Index="2" RelativeSize="92.0410783055199" />
+            </LayoutGroup>
+            <LayoutGroup Id="XPObject" Caption="Oid" RelativeSize="87.676508344030808" Removed="True">
+              <LayoutItem Id="Oid" Removed="True" />
             </LayoutGroup>
           </LayoutGroup>
         </LayoutGroup>

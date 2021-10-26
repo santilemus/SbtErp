@@ -37,12 +37,14 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
         {
             base.AfterConstruction();
             renta = 0.0m;
+            Clase = EClaseDocumentoCompraVenta.Imprenta;
 
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
         #region Propiedades
 
+        EClaseDocumentoCompraVenta clase;
         decimal renta;
         string concepto;
         string numeroDocumento;
@@ -81,7 +83,7 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
             set => SetPropertyValue(nameof(Tipo), ref tipo, value);
         }
 
-        [DbType("smallint"), XafDisplayName("Origen Compra"), Index(8)]
+        [DbType("smallint"), XafDisplayName("Origen"), Index(8)]
         [DetailViewLayout("Datos Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
         public EOrigenCompra Origen
         {
@@ -97,10 +99,19 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
             set => SetPropertyValue(nameof(NumeroDocumento), ref numeroDocumento, value);
         }
 
+        [Size(20), XafDisplayName("Clase"), Index(11)]
+        [DetailViewLayout("Datos de Pago", LayoutGroupType.SimpleEditorsGroup, 2)]
+        [ToolTip("Clase de documento. Es requerido para el libro de compras")]
+        public EClaseDocumentoCompraVenta Clase
+        {
+            get => clase;
+            set => SetPropertyValue(nameof(Clase), ref clase, value);
+        }
+
         /// <summary>
         /// Concepto de la compra
         /// </summary>
-        [Size(200), DbType("varchar(200)"), XafDisplayName("Concepto"), Index(10)]
+        [Size(200), DbType("varchar(200)"), XafDisplayName("Concepto"), Index(12)]
         [DetailViewLayout("Datos de Pago", LayoutGroupType.SimpleEditorsGroup, 2)]
         public string Concepto
         {
@@ -125,6 +136,7 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
 
         [Association("CompraFactura-Ingresos"), Index(1), ModelDefault("Caption", "Ingresos")]
         public XPCollection<InventarioMovimiento> Ingresos => GetCollection<InventarioMovimiento>(nameof(Ingresos));
+
         [Association("CompraFactura-CxPTransacciones"), Index(2), XafDisplayName("Transacciones CxP"), DevExpress.Xpo.Aggregated]
         public XPCollection<CxPTransaccion> CxPTransacciones => GetCollection<CxPTransaccion>(nameof(CxPTransacciones));
         #endregion
@@ -136,23 +148,27 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
             if (this.Detalles.Count == 0)
             {
                 // calculamos el Iva, cuando no hay detalles porque en ese caso solo se esta ingresando el encabezado de la compra
-                iva = CalcularTributo(3);
+                iva = CalcularTributo(5);
                 OnChanged(nameof(Iva));
             }
-            ivaRetenido = CalcularTributo(4);
-            renta = CalcularTributo(5);
-            OnChanged(nameof(IvaRetenido));
-            OnChanged(nameof(Renta));
             base.DoGravadaChanged(forceChangeEvents, oldValue);
+
+            ivaRetenido = CalcularTributo(6);
+            IvaPercibido = CalcularTributo(7);
+            renta = CalcularTributo(8);
+            OnChanged(nameof(IvaRetenido));
+            OnChanged(nameof(IvaPercibido));
+            OnChanged(nameof(Renta));
         }
 
-        private decimal CalcularTributo(int oidTributo)
+        public decimal CalcularTributo(int oidTributo)
         {
             Tributo tributo = Session.GetObjectByKey<Tributo>(oidTributo);
             if (tributo != null)
             {
                 // la formula debe tener las reglas o condiciones para calcular el tributo cuando aplique
                 ExpressionEvaluator eval = new ExpressionEvaluator(TypeDescriptor.GetProperties(tributo.TipoBO), tributo.Formula);
+
                 return Convert.ToDecimal(eval.Evaluate(this));
             }
             else
@@ -229,6 +245,13 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
             }
         }
 
+        protected override void RefreshTiposDeFacturas()
+        {
+            base.RefreshTiposDeFacturas();
+            if (fTiposDeFacturas == null)
+                return;
+            fTiposDeFacturas.Criteria = CriteriaOperator.Parse("[Categoria] == 15 && [Activo] == True && [Codigo] In ('COVE01', 'COVE02', 'COVE04', 'COVE05', 'COVE06', 'COVE10', 'COVE12', 'COVE13')");
+        }
         #endregion
 
         //[Action(Caption = "My UI Action", ConfirmationMessage = "Are you sure?", ImageName = "Attention", AutoCommit = true)]

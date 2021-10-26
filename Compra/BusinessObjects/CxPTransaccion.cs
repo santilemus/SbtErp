@@ -10,6 +10,8 @@ using System;
 using System.ComponentModel;
 using System.Linq;
 using SBT.Apps.Banco.Module.BusinessObjects;
+using DevExpress.ExpressApp.ConditionalAppearance;
+using DevExpress.ExpressApp.Editors;
 
 namespace SBT.Apps.CxP.Module.BusinessObjects
 {
@@ -29,7 +31,11 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
     [DefaultClassOptions, ModelDefault("Caption", "Transaccion CxP"), CreatableItem(false), NavigationItem("Compras")]
     [DefaultProperty(nameof(Numero)), Persistent(nameof(CxPTransaccion))]
     //[ImageName("BO_Contact")]
-    [RuleCriteria("CxPTransaccion No Anulado", "Save;Delete", "[Estado] != 2", "El estado de la Transacción no debe ser Anulado")]
+    [RuleCriteria("CxPTransaccion Pagada", "Save;Delete", "[Factura.Estado] == 0", "Transacciones validas solo para facturas con estado Debe", 
+        ResultType = ValidationResultType.Warning)]
+    [RuleCriteria("CxPTransaccion Monto es Valido", DefaultContexts.Save, 
+        "[Factura.CxPTransacciones][].Sum(Iif([Estado] != 2 && [Oid] != '@This.Oid', [Monto], 0)) + [Monto] <= [Factura.Total]", TargetCriteria = "[Tipo.TipoOperacion] == 2",
+        CustomMessageTemplate = "El Monto de todos los abonos realizados debe ser menor o igual al valor de la factura ")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class CxPTransaccion : XPObjectBaseBO
@@ -52,7 +58,6 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
 
         BancoTransaccion bancoTransaccion;
         int? numero;
-     //   Empresa empresa;
         decimal valorMoneda;
         Moneda moneda;
         CompraFactura factura;
@@ -72,21 +77,44 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
         //    set => SetPropertyValue(nameof(Empresa), ref empresa, value);
         //}
 
-        [DbType("datetime2"), XafDisplayName("Fecha"), Index(1)]
+        //[Association("CxCTipoTransaccion-CxPTransaccioness")]
+        [XafDisplayName("Tipo"), Index(0)]
+        [DataSourceCriteria("!IsNull([Padre]) && [Activo] == True")]
+        //[ImmediatePostData(true)]
+        public CxCTipoTransaccion Tipo
+        {
+            get => tipo;
+            set => SetPropertyValue(nameof(Tipo), ref tipo, value);
+        }
+
+        [XafDisplayName("Banco Transacción")]
+        [DataSourceCriteria("[BancoCuenta.Empresa] == '@This.Factura.Empresa' && [Clasificacion.Tipo] In (3, 4)")]   // clasificacion.Tipo in (Cheque, Nota Cargo)
+        [Appearance("CxPTransaccion.BancoTransaccion", Enabled = false, /*Visibility = ViewItemVisibility.Hide,*/ TargetItems = "BancoTransaccion",
+             Criteria = "!([Tipo.Oid] == 7 || [Tipo.Oid] == 10 || [Tipo.Oid] == 11 || [Tipo.Oid] == 12 || [Tipo.Oid] == 18)", Context = "DetailView")]
+        [Index(1)]
+        //[Association("BancoTransaccion-CxPTransacciones")]
+        public BancoTransaccion BancoTransaccion
+        {
+            get => bancoTransaccion;
+            set
+            {
+                bool changed = SetPropertyValue(nameof(BancoTransaccion), ref bancoTransaccion, value);
+                if (!IsLoading && !IsSaving && changed)
+                {
+                    Fecha = BancoTransaccion.Fecha;
+                    Moneda = BancoTransaccion.Moneda;
+                    ValorMoneda = BancoTransaccion.ValorMoneda;
+                    Monto = BancoTransaccion.Monto;
+                }
+            }
+        }
+
+        [DbType("datetime2"), XafDisplayName("Fecha"), Index(2)]
         [RuleRequiredField("CxPTransaccion.Fecha_Requerido", DefaultContexts.Save)]
         public DateTime Fecha
         {
             get => fecha;
             set => SetPropertyValue(nameof(Fecha), ref fecha, value);
-        }
-
-        //[Association("CxCTipoTransaccion-CxPTransaccioness")]
-        [XafDisplayName("Tipo"), Index(2)]
-        [DataSourceCriteria("!IsNull([Padre]) && [Activo] == True")]
-        public CxCTipoTransaccion Tipo
-        {
-            get => tipo;
-            set => SetPropertyValue(nameof(Tipo), ref tipo, value);
         }
 
         [DbType("int"), XafDisplayName("Número"), Index(3)]
@@ -125,7 +153,12 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
         public CompraFactura Factura
         {
             get => factura;
-            set => SetPropertyValue(nameof(Factura), ref factura, value);
+            set
+            {
+                var changed = SetPropertyValue(nameof(Factura), ref factura, value);
+                if (!IsLoading && !IsSaving && changed && Factura != null)
+                    Moneda = Factura.Empresa.MonedaDefecto;
+            }
         }
 
         [DbType("numeric(14,2)"), XafDisplayName("Monto"), Index(7)]
@@ -142,18 +175,9 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
         {
             get => estado;
             set => SetPropertyValue(nameof(Estado), ref estado, value);
-        }
-        
-        [XafDisplayName("Banco Transacción")]
-        [DataSourceCriteria("[BancoCuenta.Empresa] == '@This.Factura.Empresa' && [Clasificacion.Tipo] In (3, 4)")]   // clasificacion.Tipo in (Cheque, Nota Cargo)
-        //[Association("BancoTransaccion-CxPTransacciones")]
-        public BancoTransaccion BancoTransaccion
-        {
-            get => bancoTransaccion;
-            set => SetPropertyValue(nameof(BancoTransaccion), ref bancoTransaccion, value);
-        }
+        }       
 
-        [Size(200), DbType("varchar(200)"), XafDisplayName("Comentario"), Index(97)]
+        [Size(200), DbType("varchar(200)"), XafDisplayName("Comentario"), Index(9)]
         public string Comentario
         {
             get => comentario;
@@ -161,14 +185,14 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
         }
 
         [XafDisplayName("Fecha Anulación")]
-        [ModelDefault("AllowEdit", "False"), Index(98)]
+        [ModelDefault("AllowEdit", "False"), Index(10)]
         public DateTime FechaAnula
         {
             get => fechaAnula;
             set => SetPropertyValue(nameof(FechaAnula), ref fechaAnula, value);
         }
         [Size(25), XafDisplayName("Usuario Anulo")]
-        [ModelDefault("AllowEdit", "False"), Index(99)]
+        [ModelDefault("AllowEdit", "False"), Index(11)]
         public string UsuarioAnulo
         {
             get => usuarioAnulo;

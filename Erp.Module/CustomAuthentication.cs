@@ -48,6 +48,14 @@ namespace SBT.Apps.Erp.Module
             if (!usuario.ComparePassword(customLogonParameters.Password))
                 throw new AuthenticationException(
                     usuario.UserName, "Password Incorrecto.");
+            // agregado el 01/10/2021 por SELM. Solo la agencia, porque la empresa es el Administrador quien debe asignarla
+            if (usuario.Agencia != customLogonParameters.Agencia)
+            {
+                int oidAgenciaLogon = customLogonParameters.Agencia.Oid;
+                usuario.Agencia = objectSpace.GetObjectByKey<EmpresaUnidad>(oidAgenciaLogon);
+                objectSpace.CommitChanges();
+            }
+            // -- fin agregado el 01/10/2021
             return usuario;
         }
 

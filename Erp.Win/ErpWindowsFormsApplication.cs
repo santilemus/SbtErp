@@ -32,6 +32,10 @@ namespace SBT.Apps.Erp.Win {
             InitializeComponent();
 			InitializeDefaults();
 
+            // agregado para permitir la seleccion de empresas y sucursales en el login
+            ((SecurityStrategy)Security).AnonymousAllowedTypes.Add(typeof(SBT.Apps.Base.Module.BusinessObjects.Empresa));
+            ((SecurityStrategy)Security).AnonymousAllowedTypes.Add(typeof(SBT.Apps.Base.Module.BusinessObjects.EmpresaUnidad));
+
             LastLogonParametersReading += LastLogonParametersReadingEvent;
             LastLogonParametersWriting += LastLogonParametersWritingEvent;
             LoggedOn += LoggedOnEvent;
@@ -76,7 +80,7 @@ namespace SBT.Apps.Erp.Win {
 
         /// <summary>
         /// Guardar los parámetros de la ventana de logon, justo despues que el login ha sido satisfactorio
-        /// (Se guardan en una cookie). Agregar más adelante, los párametros de empresa, sucursal, bodega
+        /// Agregar más adelante, los párametros de empresa, sucursal, bodega
         /// </summary>
         /// <param name="sender">Objeto que dispara el evento</param>
         /// <param name="e">parámetros del logon que se desean guardar</param>

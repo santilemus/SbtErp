@@ -113,11 +113,23 @@
         </LayoutGroup>
       </Layout>
     </DetailView>
+    <ListView Id="BancoCuenta_Chequeras_ListView">
+      <Columns>
+        <ColumnInfo Id="NumeroCuenta" Width="82" />
+        <ColumnInfo Id="Oid" Width="58" />
+        <ColumnInfo Id="FechaInicio" Width="82" />
+        <ColumnInfo Id="FechaFin" Width="82" />
+        <ColumnInfo Id="NumeroInicio" Width="116" />
+        <ColumnInfo Id="NumeroFin" Width="115" />
+        <ColumnInfo Id="NumeroActual" Width="111" />
+        <ColumnInfo Id="Serie" Width="82" />
+      </Columns>
+    </ListView>
     <DetailView Id="BancoCuenta_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
           <LayoutGroup Id="SimpleEditors" RelativeSize="22.336328626444161" Direction="Horizontal">
-            <LayoutGroup Id="BancoCuenta_col1" ShowCaption="False" Index="0" RelativeSize="49.726348709929631" CaptionLocation="Left" IsNewNode="True">
+            <LayoutGroup Id="BancoCuenta_col1" ShowCaption="False" Index="0" RelativeSize="49.336283185840706" CaptionLocation="Left" IsNewNode="True">
               <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="20.689655172413794" CaptionLocation="Left" IsNewNode="True" />
               <LayoutItem Id="Banco" ViewItem="Banco" Index="1" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
               <LayoutItem Id="Tipo" ViewItem="Tipo" Index="2" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
@@ -125,7 +137,7 @@
               <LayoutItem Id="Nombre" ViewItem="Nombre" Index="4" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
               <LayoutItem Id="Moneda" ViewItem="Moneda" Index="5" RelativeSize="19.540229885057471" CaptionLocation="Left" IsNewNode="True" />
             </LayoutGroup>
-            <LayoutGroup Id="BancoCuenta_col2" ShowCaption="False" Index="1" RelativeSize="50.273651290070369" CaptionLocation="Left" IsNewNode="True">
+            <LayoutGroup Id="BancoCuenta_col2" ShowCaption="False" Index="1" RelativeSize="50.663716814159294" CaptionLocation="Left" IsNewNode="True">
               <LayoutItem Id="FechaApertura" ViewItem="FechaApertura" Index="0" RelativeSize="20.689655172413794" CaptionLocation="Left" IsNewNode="True" />
               <LayoutItem Id="FechaCierre" ViewItem="FechaCierre" Index="1" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
               <LayoutItem Id="ReporteCheque" ViewItem="ReporteCheque" Index="2" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
@@ -175,7 +187,7 @@
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
           <LayoutGroup Id="SimpleEditors" RelativeSize="32.349165596919129" Direction="Horizontal">
-            <LayoutGroup Id="BancoTransaccion_col1" ShowCaption="False" Index="0" RelativeSize="49.774977497749774" IsNewNode="True">
+            <LayoutGroup Id="BancoTransaccion_col1" ShowCaption="False" Index="0" RelativeSize="49.7787610619469" IsNewNode="True">
               <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="14.285714285714287" CaptionLocation="Left" IsNewNode="True" />
               <LayoutItem Id="BancoCuenta" ViewItem="BancoCuenta" Index="1" RelativeSize="10.317460317460318" CaptionLocation="Left" IsNewNode="True" />
               <LayoutItem Id="Clasificacion" ViewItem="Clasificacion" Index="2" RelativeSize="10.317460317460318" CaptionLocation="Left" IsNewNode="True" />
@@ -186,7 +198,7 @@
               <LayoutItem Id="Proveedor" ViewItem="Proveedor" CaptionLocation="Left" Index="7" RelativeSize="10.317460317460318" IsNewNode="True" />
               <LayoutItem Id="ChequeNo" ViewItem="ChequeNo" CaptionLocation="Left" Index="8" RelativeSize="13.492063492063492" IsNewNode="True" />
             </LayoutGroup>
-            <LayoutGroup Id="BancoTransaccion_col2" ShowCaption="False" Index="1" RelativeSize="50.225022502250226" IsNewNode="True">
+            <LayoutGroup Id="BancoTransaccion_col2" ShowCaption="False" Index="1" RelativeSize="50.2212389380531" IsNewNode="True">
               <LayoutItem Id="Monto" ViewItem="Monto" CaptionLocation="Left" Index="0" RelativeSize="14.285714285714287" IsNewNode="True" />
               <LayoutItem Id="Beneficiario" ViewItem="Beneficiario" Index="1" RelativeSize="10.317460317460318" CaptionLocation="Left" IsNewNode="True" />
               <LayoutItem Id="IdReferencia" ViewItem="IdReferencia" Index="2" RelativeSize="10.317460317460318" CaptionLocation="Left" IsNewNode="True" />
@@ -194,14 +206,15 @@
               <LayoutItem Id="Estado" ViewItem="Estado" Index="4" RelativeSize="10.317460317460318" CaptionLocation="Left" IsNewNode="True" />
               <LayoutItem Id="Abono" ViewItem="Abono" Index="5" RelativeSize="10.317460317460318" CaptionLocation="Left" IsNewNode="True" />
               <LayoutItem Id="Cargo" ViewItem="Cargo" Index="6" RelativeSize="10.317460317460318" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="Comentario" ViewItem="Comentario" Index="7" RelativeSize="23.80952380952381" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Comentario" ViewItem="Comentario" Index="7" RelativeSize="10.317460317460318" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Saldo" ViewItem="Saldo" Index="8" RelativeSize="13.492063492063492" IsNewNode="True" />
             </LayoutGroup>
             <LayoutGroup Id="XPObject" Index="1" RelativeSize="35.2185089974293" Caption="Oid" Removed="True">
               <LayoutItem Id="Oid" RelativeSize="100" Removed="True" />
             </LayoutGroup>
             <LayoutGroup Id="BancoTransaccion" Removed="True" />
           </LayoutGroup>
-          <TabbedGroup Id="Tabs" RelativeSize="67.650834403080879">
+          <TabbedGroup Id="Tabs" RelativeSize="67.650834403080879" Index="1">
             <LayoutGroup Id="Detalles" RelativeSize="100">
               <LayoutItem Id="Detalles" RelativeSize="100" />
             </LayoutGroup>
@@ -217,6 +230,14 @@
         <ColumnInfo Id="CuentaContable" Width="480" />
         <ColumnInfo Id="Debe" Width="124" />
         <ColumnInfo Id="Haber" Width="148" />
+      </Columns>
+    </ListView>
+    <ListView Id="BancoTransaccion_LookupListView">
+      <Columns>
+        <ColumnInfo Id="Numero" Width="93" />
+        <ColumnInfo Id="Clasificacion" Width="122" />
+        <ColumnInfo Id="Fecha" Width="93" DisplayFormat="{0:d}" />
+        <ColumnInfo Id="Beneficiario" Width="336" />
       </Columns>
     </ListView>
     <DetailView Id="BancoTransaccionDetalle_DetailView">

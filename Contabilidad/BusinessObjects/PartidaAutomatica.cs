@@ -52,13 +52,13 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         }
 
 
-        private decimal ObtenerSaldoCuenta(ETipoEmpresaCuenta tipo)
+        private decimal ObtenerSaldoCuenta(ECuentaEspecial tipo)
         {
-            var cta = uow.FindObject<EmpresaCuenta>(CriteriaOperator.Parse("[Empresa.Oid] == ? && [TipoCuenta] == ?",
+            var cta = uow.FindObject<Catalogo>(CriteriaOperator.Parse("[Empresa.Oid] == ? && [CuentaEspecial] == ?",
                 fEmpresa.Oid, tipo));
             if (cta != null)
             {
-                var fSaldo = saldosMes.Where(x => x.Cuenta == cta.Cuenta).FirstOrDefault();
+                var fSaldo = saldosMes.Where(x => x.Cuenta == cta).FirstOrDefault();
                 return (fSaldo != null) ? fSaldo.SaldoFin : 0.0m;
             }
             else 
@@ -107,25 +107,25 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
                 var fCostoGasto = saldosMes.Where(x => (x.Cuenta.TipoCuenta == Contabilidad.BusinessObjects.ETipoCuentaCatalogo.Costo ||
                                 x.Cuenta.TipoCuenta == Contabilidad.BusinessObjects.ETipoCuentaCatalogo.Gasto) && x.Cuenta.Nivel == 1).Sum(x => x.SaldoFin);
                 var resultadoOperacion = fIngreso.SaldoFin - fCostoGasto;
-                var empresaCuentas = uow.Query<EmpresaCuenta>().Where(x => x.Empresa.Oid == fEmpresa.Oid);
+                var ctasEspeciales = uow.Query<Catalogo>().Where(x => x.Empresa.Oid == fEmpresa.Oid && x.CuentaEspecial > 0 && x.Activa == true);
                 decimal reserva = 0.0m;
                 decimal renta = 0.0m;
                 if (resultadoOperacion > 0)
                 {
-                    var reservaLegal = CalcularReservaLegal(empresaCuentas, resultadoOperacion);
+                    var reservaLegal = CalcularReservaLegal(ctasEspeciales, resultadoOperacion);
                     reserva = reservaLegal.ValorHaber;
                     if (reservaLegal != null)
                         partida.Detalles.Add(reservaLegal);
-                    var rentaItem = CalcularImpuestoRenta(empresaCuentas, resultadoOperacion, reserva);
+                    var rentaItem = CalcularImpuestoRenta(ctasEspeciales, resultadoOperacion, reserva);
                     renta = rentaItem.ValorHaber;
                     if (rentaItem != null)
                         partida.Detalles.Add(rentaItem);
                 }
-                var ctaLiquida = empresaCuentas.FirstOrDefault(x => x.TipoCuenta == ETipoEmpresaCuenta.Liquidacion);
+                var ctaLiquida = ctasEspeciales.FirstOrDefault(x => x.CuentaEspecial == ECuentaEspecial.Liquidacion);
                 if (ctaLiquida != null)
                 {
                     PartidaDetalle liquidaItem = new PartidaDetalle(uow);
-                    liquidaItem.Cuenta = ctaLiquida.Cuenta;
+                    liquidaItem.Cuenta = ctaLiquida;
                     liquidaItem.Concepto = ctaLiquida.Concepto;
                     if (resultadoOperacion > 0)
                         liquidaItem.ValorHaber = resultadoOperacion - reserva - renta;
@@ -134,18 +134,18 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
                     partida.Detalles.Add(liquidaItem);
                     // aplicar la ganancia o la perdida
                     PartidaDetalle item = new PartidaDetalle(uow);
-                    EmpresaCuenta cta;
+                    Catalogo cta;
                     if (resultadoOperacion > 0)
                     {
-                        cta = empresaCuentas.FirstOrDefault(x => x.TipoCuenta == ETipoEmpresaCuenta.UtilidadEjercicio);
+                        cta = ctasEspeciales.FirstOrDefault(x => x.CuentaEspecial == ECuentaEspecial.UtilidadEjercicio);
                         item.ValorHaber = resultadoOperacion - reserva - renta;
                     }
                     else
                     {
-                        cta = empresaCuentas.FirstOrDefault(x => x.TipoCuenta == ETipoEmpresaCuenta.PerdidaEjercicio);
+                        cta = ctasEspeciales.FirstOrDefault(x => x.CuentaEspecial == ECuentaEspecial.PerdidaEjercicio);
                         item.ValorDebe = resultadoOperacion;
                     }
-                    item.Cuenta = cta.Cuenta;
+                    item.Cuenta = cta;
                     item.Concepto = cta.Concepto;
                     partida.Detalles.Add(item);
                 }
@@ -155,19 +155,19 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             msg = string.Empty;
         }
 
-        private PartidaDetalle CalcularReservaLegal(IQueryable<EmpresaCuenta> empresaCuentas, decimal utilidadOperacion)
+        private PartidaDetalle CalcularReservaLegal(IQueryable<Catalogo> empresaCuentas, decimal utilidadOperacion)
         {
-            var reservaAnterior = ObtenerSaldoCuenta(ETipoEmpresaCuenta.ReservaLegalAnterior);
-            var capitalSocial = ObtenerSaldoCuenta(ETipoEmpresaCuenta.CapitalSocial);
+            var reservaAnterior = ObtenerSaldoCuenta(ECuentaEspecial.ReservaLegalAnterior);
+            var capitalSocial = ObtenerSaldoCuenta(ECuentaEspecial.CapitalSocial);
             var totReserva = Math.Round(capitalSocial * fEmpresa.ClaseSociedad.PorcentajeCapital, 2);
             if (reservaAnterior < totReserva)
             {
-                var ctaReserva = empresaCuentas.FirstOrDefault(x => x.TipoCuenta == ETipoEmpresaCuenta.ReservaLegalEjercicio);
+                var ctaReserva = empresaCuentas.FirstOrDefault(x => x.CuentaEspecial == ECuentaEspecial.ReservaLegalEjercicio);
                 if (ctaReserva == null)
                     return null;
                 var reservaEjercicio = Math.Round(utilidadOperacion * fEmpresa.ClaseSociedad.PorcentajeAnual, 2);
                 var detalle = new PartidaDetalle(uow);
-                detalle.Cuenta = ctaReserva.Cuenta;
+                detalle.Cuenta = ctaReserva;
                 detalle.Concepto = ctaReserva.Concepto;
                 detalle.ValorHaber = (reservaAnterior + reservaEjercicio < totReserva) ? reservaEjercicio : totReserva - reservaAnterior;
                 return detalle;
@@ -176,13 +176,13 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
                 return null;
         }
 
-        private PartidaDetalle CalcularImpuestoRenta(IQueryable<EmpresaCuenta> empresaCuentas, decimal utilidadOperacion, decimal reservaLegal)
+        private PartidaDetalle CalcularImpuestoRenta(IQueryable<Catalogo> empresaCuentas, decimal utilidadOperacion, decimal reservaLegal)
         {
-            var ctaImpuesto = empresaCuentas.FirstOrDefault(x => x.TipoCuenta == ETipoEmpresaCuenta.RentaPagar);
+            var ctaImpuesto = empresaCuentas.FirstOrDefault(x => x.CuentaEspecial == ECuentaEspecial.RentaPagar);
             if (ctaImpuesto != null)
             {
                 var detalle = new PartidaDetalle(uow);
-                detalle.Cuenta = ctaImpuesto.Cuenta;
+                detalle.Cuenta = ctaImpuesto;
                 detalle.Concepto = ctaImpuesto.Concepto;
                 detalle.ValorHaber = Math.Round((utilidadOperacion - reservaLegal) * fEmpresa.ClaseSociedad.PorcentajeRenta, 2);
                 return detalle;

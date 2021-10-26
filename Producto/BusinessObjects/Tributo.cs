@@ -20,7 +20,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
     /// Debe moverse a Productos. Y dinamicamente tendra que manejarse la relacion con la venta, hay que ver el impacto
     /// Revisar el BO ProductoImpuesto que se excluyo del proyecto SBT.Apps.Producto para validar que todos los datos se han incorporado
     /// </remarks>
-    [DefaultClassOptions, CreatableItem(false), ModelDefault("Caption", "Definición de Tributos"), NavigationItem("Facturación")]
+    [DefaultClassOptions, CreatableItem(false), ModelDefault("Caption", "Definición de Tributos"), NavigationItem("Catalogos")]
     [Persistent(nameof(Tributo)), DefaultProperty(nameof(Nombre))]
     [ImageName(nameof(Tributo))]
     //[DefaultListViewOptions(MasterDetailMode.ListViewAndDetailView, false, NewItemRowPosition.None)]
@@ -39,6 +39,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
 
         #region Propiedades
 
+        string comentario;
         string formula;
         bool activo;
         Type tipoBO;
@@ -79,8 +80,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
             set => SetPropertyValue(nameof(TipoBO), ref tipoBO, value);
         }
 
-        
-        [Size(400), DbType("varchar(400)"), XafDisplayName("Fórmula"), Persistent(nameof(Formula))]
+        [Size(500), XafDisplayName("Fórmula"), Persistent(nameof(Formula))]
         [ElementTypeProperty(nameof(TipoBO))]
         [EditorAlias(EditorAliases.PopupExpressionPropertyEditor)]
         [VisibleInListView(false)]
@@ -99,11 +99,19 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
             get => activo;
             set => SetPropertyValue(nameof(Activo), ref activo, value);
         }
+      
+        [Size(250), DbType("varchar(250)"), XafDisplayName("Comentario")]
+        [ModelDefault("RowCount", "3")]
+        public string Comentario
+        {
+            get => comentario;
+            set => SetPropertyValue(nameof(Comentario), ref comentario, value);
+        }
 
         #endregion
 
         #region Colecciones
-        [Association("Tributo-TributoCategorias"), DevExpress.Xpo.Aggregated, XafDisplayName("Categorías"), Index(0)]
+        [Association("Tributo-TributoCategorias"), XafDisplayName("Categorías"), Index(0), DevExpress.Xpo.Aggregated]
         public XPCollection<TributoCategoria> Categorias => GetCollection<TributoCategoria>(nameof(Categorias));
 
 

@@ -1,7 +1,9 @@
 ﻿using DevExpress.ExpressApp.DC;
+using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
+using SBT.Apps.Contabilidad.BusinessObjects;
 using System;
 using System.Linq;
 
@@ -28,8 +30,19 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             base.AfterConstruction();
             Activa = true;
             Clasificacion = EClasificacionContribuyente.Otro;
+            PorcentajeIva = 0.0m;
+            PorcPercepcion = 0.0m;
+            PorcRetencionIva = 0.0m;
         }
 
+        decimal renta25;
+        decimal renta20;
+        decimal renta5;
+        decimal renta10;
+        decimal porcPercepcion;
+        decimal porcRetencionIva;
+        Moneda monedaDefecto;
+        decimal porcentajeIva;
         ClaseSociedad claseSociedad;
         EClasificacionContribuyente clasificacion;
         string nrc;
@@ -192,7 +205,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             }
         }
 
-        [DbType("smallint"), XafDisplayName("Clasificación"), VisibleInListView(false), VisibleInLookupListView(false)]
+        [DbType("smallint"), XafDisplayName("Clasificacion"), VisibleInListView(false), VisibleInLookupListView(false)]
         [ToolTip("Clasificación de la empresa como contribuyente")]
         public EClasificacionContribuyente Clasificacion
         {
@@ -206,6 +219,92 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         {
             get => claseSociedad;
             set => SetPropertyValue(nameof(ClaseSociedad), ref claseSociedad, value);
+        }
+
+        [XafDisplayName("Moneda Defecto")]
+        [VisibleInListView(false)]
+        public Moneda MonedaDefecto
+        {
+            get => monedaDefecto;
+            set => SetPropertyValue(nameof(MonedaDefecto), ref monedaDefecto, value);
+        }
+
+        [DbType("numeric(10,4)"), XafDisplayName("Porcentaje Iva")]
+        [ModelDefault("DisplayFormat", "{0:P4}"), ModelDefault("EditMask", "p4")]
+        [RuleRange("Empresa.PorcentajeIva_RangoValido", DefaultContexts.Save, 0.0, 1.00)]
+        [VisibleInListView(false)]
+        public decimal PorcentajeIva
+        {
+            get => porcentajeIva;
+            set => SetPropertyValue(nameof(PorcentajeIva), ref porcentajeIva, value);
+        }
+
+        [XafDisplayName("Factor Iva"), ModelDefault("DisplayFormat", "{0:N4}")]
+        [VisibleInListView(false)]
+        public decimal FactorIva => (1 + PorcentajeIva);
+
+        [DbType("numeric(10,4)"), XafDisplayName("Porcentaje Retencion")]
+        [ModelDefault("DisplayFormat", "{0:P4}"), ModelDefault("EditMask", "p4")]
+        [RuleRange("Empresa.PorcRetencionIva_RangoValido", DefaultContexts.Save, 0.0, 1.00)]
+        [VisibleInListView(false)]
+        public decimal PorcRetencionIva
+        {
+            get => porcRetencionIva;
+            set => SetPropertyValue(nameof(PorcRetencionIva), ref porcRetencionIva, value);
+        }
+
+        [DbType("numeric(10,4)"), XafDisplayName("Porcentaje Percepcion")]
+        [ModelDefault("DisplayFormat", "{0:P4}"), ModelDefault("EditMask", "p4")]
+        [RuleRange("Empresa.PorcPercepcion_RangoValido", DefaultContexts.Save, 0.0, 1.00)]
+        [VisibleInListView(false)]
+        public decimal PorcPercepcion
+        {
+            get => porcPercepcion;
+            set => SetPropertyValue(nameof(PorcPercepcion), ref porcPercepcion, value);
+        }
+
+        [DbType("numeric(10,4)"), XafDisplayName("Renta 5")]
+        [ModelDefault("DisplayFormat", "{0:P4}"), ModelDefault("EditMask", "p4")]
+        [RuleRange("Empresa.Renta5_RangoValido", DefaultContexts.Save, 0.0, 1.00)]
+        [ToolTip("Porcentaje de renta que se aplica entre otros a empresas por la compra de intangibles")]
+        [VisibleInListView(false)]
+        public decimal Renta5
+        {
+            get => renta5;
+            set => SetPropertyValue(nameof(Renta5), ref renta5, value);
+        }
+
+        [DbType("numeric(10,4)"), XafDisplayName("Renta 10")]
+        [ModelDefault("DisplayFormat", "{0:P4}"), ModelDefault("EditMask", "p4")]
+        [RuleRange("Empresa.Renta10_RangoValido", DefaultContexts.Save, 0.0, 1.00)]
+        [ToolTip("Porcentaje de renta que se aplica a la compra de servicios de personas naturales, intangibles, intereses entre otros")]
+        [VisibleInListView(false)]
+        public decimal Renta10
+        {
+            get => renta10;
+            set => SetPropertyValue(nameof(Renta10), ref renta10, value);
+        }
+
+        [DbType("numeric(10,4)"), XafDisplayName("Renta 20")]
+        [ModelDefault("DisplayFormat", "{0:P4}"), ModelDefault("EditMask", "p4")]
+        [RuleRange("Empresa.Renta20_RangoValido", DefaultContexts.Save, 0.0, 1.00)]
+        [ToolTip("Porcentaje de renta que se aplica a los no domiciliados por compra de cualquier servicio o renta")]
+        [VisibleInListView(false)]
+        public decimal Renta20
+        {
+            get => renta20;
+            set => SetPropertyValue(nameof(Renta20), ref renta20, value);
+        }
+
+        [DbType("numeric(10,4)"), XafDisplayName("Renta 25")]
+        [ModelDefault("DisplayFormat", "{0:P4}"), ModelDefault("EditMask", "p4")]
+        [RuleRange("Empresa.Renta25_RangoValido", DefaultContexts.Save, 0.0, 1.00)]
+        [ToolTip("Porcentaje de renta que se aplica a los sujetos constituidos, domiciliados o que residen en paraísos fiscales")]
+        [VisibleInListView(false)]
+        public decimal Renta25
+        {
+            get => renta25;
+            set => SetPropertyValue(nameof(Renta25), ref renta25, value);
         }
 
         /// <summary>
@@ -262,6 +361,17 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             get
             {
                 return GetCollection<Usuario>(nameof(Usuarios));
+            }
+        }
+
+        [Association("Empresa-Catalogos"), XafDisplayName("Cuentas")]
+        [DataSourceCriteria("[CuentaEspecial] > 0 && [Empresa.Oid] == EmpresaActualOid()")]
+        [ToolTip("Parametrización de las cuentas de liquidación y cierre del ejercicio contable")]
+        public XPCollection<Catalogo> Cuentas
+        {
+            get
+            {
+                return GetCollection<Catalogo>(nameof(Cuentas));
             }
         }
     }

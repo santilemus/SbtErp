@@ -1,6 +1,7 @@
 ﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
+using DevExpress.Persistent.BaseImpl;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
@@ -35,6 +36,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         #region Propiedades
 
 
+        ReportDataV2 reporte;
         EClaseDocumentoCompraVenta clase;
         EmpresaUnidad agencia;
         Caja caja;
@@ -50,7 +52,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
 
 
         [XafDisplayName("Agencia"), RuleRequiredField("ResCorrelativo.Agencia_Requerido", "Save"), Index(0)]
-        [DataSourceCriteria("[Empresa.Oid] = EmpresaActualOid() And [Activa] = True And [Role] == 2")]
+        [DataSourceCriteria("[Empresa.Oid] == EmpresaActualOid() And [Activa] = True And [Role] == 2")]
         public EmpresaUnidad Agencia
         {
             get => agencia;
@@ -140,6 +142,14 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         {
             get => activo;
             set => SetPropertyValue(nameof(Activo), ref activo, value);
+        }
+
+        
+        [XafDisplayName("Reporte")]
+        public ReportDataV2 Reporte
+        {
+            get => reporte;
+            set => SetPropertyValue(nameof(Reporte), ref reporte, value);
         }
 
         #endregion

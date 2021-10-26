@@ -30,7 +30,7 @@ namespace SBT.Apps.RecursoHumano.Module
         /// </summary>
         /// <param name="operands"></param>
         /// Arreglo con los operandos de la funcion. 
-        /// El perimero es un objeto (instancia) del BO PlanillaDetalle 
+        /// El primero es un objeto (instancia) del BO PlanillaDetalle 
         /// El segundo es el nombre del metodo de PlanillaDetalle a ejecutar
         /// El tercero en adelante son los parametros requeridos por el metodo
         /// <returns>Retorna el valor calculado por la funcion</returns>

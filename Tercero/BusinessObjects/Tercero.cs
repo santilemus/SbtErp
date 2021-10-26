@@ -22,9 +22,11 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
             base.AfterConstruction();
             TipoPersona = TipoPersona.Natural;
             TipoContribuyente = ETipoContribuyente.Gravado;
+            Origen = ETerceroOrigen.Nacional;
             Activo = true;
         }
 
+        ETerceroOrigen origen;
         EClasificacionContribuyente clasificacion;
         private System.Boolean activo;
         private ETipoContribuyente tipoContribuyente;
@@ -90,7 +92,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
             set => SetPropertyValue(nameof(TipoContribuyente), ref tipoContribuyente, value);
         }
 
-        [DbType("smallint"), XafDisplayName("Clasificación")]
+        [DbType("smallint"), XafDisplayName("Clasificacion"), Index(6)]
         [ToolTip("Clasificación del tercero como contribuyente")]
         [VisibleInListView(false), VisibleInLookupListView(false)]
         public EClasificacionContribuyente Clasificacion
@@ -99,7 +101,14 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
             set => SetPropertyValue(nameof(Clasificacion), ref clasificacion, value);
         }
 
-        [Index(6), VisibleInLookupListView(true)]
+        [DbType("smallint"), XafDisplayName("Origen")]
+        public ETerceroOrigen Origen
+        {
+            get => origen;
+            set => SetPropertyValue(nameof(Origen), ref origen, value);
+        }
+
+        [Index(8), VisibleInLookupListView(true)]
         [RuleRequiredField("Tercero.Activo_Requerido", "Save")]
         public System.Boolean Activo
         {
@@ -107,7 +116,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
             set => SetPropertyValue(nameof(Activo), ref activo, value);
         }
 
-        [DevExpress.Xpo.AssociationAttribute("Tercero-Telefonos"), DevExpress.Xpo.Aggregated]
+        [DevExpress.Xpo.AssociationAttribute("Tercero-Telefonos")]
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Teléfonos")]
         [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
@@ -172,7 +181,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
             }
         }
 
-        [Association("Tercero-Direcciones"), DevExpress.Xpo.Aggregated, XafDisplayName("Direcciones")]
+        [Association("Tercero-Direcciones"), XafDisplayName("Direcciones")]
         public XPCollection<TerceroDireccion> Direcciones
         {
             get

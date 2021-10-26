@@ -9,9 +9,11 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
     public enum ETipoCompra
     {
         Servicio = 0,
-        [XafDisplayName("Produto Inventario")]
+        [XafDisplayName("Producto Inventario")]
         Producto = 1,
-        [XafDisplayName("Activo Fijo e Intangibles")]
-        ActivoFijo = 2
+        [XafDisplayName("Bienes o Activo Fijo")]
+        Bienes = 2,
+        [XafDisplayName("Intangibles")]
+        Intangible = 3
     }
 }

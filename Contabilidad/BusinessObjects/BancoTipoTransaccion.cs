@@ -62,7 +62,7 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         }
         /// <summary>
         /// Para facilitar realizar las operaciones de calculo de saldos. Las operaciones positivas aumentan el saldo de la cuenta
-        /// afectada por la transaccion, las negativas lo disminuyen 
+        /// afectada por la transaccion, las negativas lo disminuyen  
         /// </summary>
         [PersistentAlias("Iif(Tipo = 1 Or Tipo = 2, 1, -1)"), Browsable(false)]
         public int Operacion

@@ -129,7 +129,6 @@
     <Compile Include="BusinessObjects\ECxCTransaccionEstado.cs" />
     <Compile Include="BusinessObjects\LibroVentaConsumidor.cs" />
     <Compile Include="BusinessObjects\LibroVentaContribuyente.cs" />
-    <Compile Include="BusinessObjects\TributoRegla.cs" />
     <Compile Include="BusinessObjects\Venta.cs" />
     <Compile Include="BusinessObjects\AutorizacionDocumento.cs" />
     <Compile Include="BusinessObjects\VentaDetalle.cs" />
@@ -215,6 +214,24 @@
   <ItemGroup>
     <EmbeddedResource Include="Images\AutorizacionDocumento.png" />
     <EmbeddedResource Include="Images\AutorizacionDocumento_32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="UnusableNodes.xml">
+      <DependentUpon>Model.DesignedDiffs.xafml</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="UnusableNodes1.xml">
+      <DependentUpon>Model.DesignedDiffs.xafml</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="UnusableNodes2.xml">
+      <DependentUpon>Model.DesignedDiffs.xafml</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -30,9 +30,9 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
             base.AfterConstruction();
             EsGrupo = false;
             Activa = true;
-            Constante constante = Session.GetObjectByKey<Constante>("PORCENTAJE_IVA");
-            if (constante != null)
-                porcentajeIva = Convert.ToDecimal(constante.Valor);
+            var emp = ((Usuario)DevExpress.ExpressApp.SecuritySystem.CurrentUser).Empresa;
+            if (emp != null)
+                porcentajeIva = Session.GetObjectByKey<Empresa>(emp.Oid).PorcentajeIva;
         }
 
         //protected override void OnChanged(string propertyName, object oldValue, object newValue)
@@ -77,6 +77,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         [ImmediatePostData(true)]
         [RuleRequiredField("Categoria.Padre_Requerido", DefaultContexts.Save, "Padre es requerido", SkipNullOrEmptyValues = true), VisibleInLookupListView(false)]
         [ExplicitLoading]
+        [DevExpress.Xpo.Association("Categoria-Categorias")]
         public Categoria Padre
         {
             get => padre;
@@ -182,8 +183,12 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         //[Association("Categoria-Productos"), DevExpress.Xpo.Aggregated, XafDisplayName("Productos"), Index(0)]
         //public XPCollection<Producto> Productos => GetCollection<Producto>(nameof(Productos));
 
-        [Association("Categoria-TributosCategoria"), DevExpress.Xpo.Aggregated, XafDisplayName("Tributos"), Index(1)]
+        [Association("Categoria-TributosCategoria"), XafDisplayName("Tributos"), Index(1)]
         public XPCollection<TributoCategoria> TributosCategoria => GetCollection<TributoCategoria>(nameof(TributosCategoria));
+
+        [Association("Categoria-Categorias")]
+        public XPCollection<Categoria> Categorias => GetCollection<Categoria>(nameof(Categorias));
+
         #endregion
     }
 }

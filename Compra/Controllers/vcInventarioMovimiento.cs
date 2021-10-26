@@ -73,6 +73,8 @@ namespace SBT.Apps.Inventario.Module.Controllers
 
         private void ObjectSpace_Committing(object Sender, CancelEventArgs﻿ e)
         {
+            if (View.CurrentObject == null)
+                return;
             if (((InventarioMovimiento)View.CurrentObject).TipoMovimiento == null)
             {
                 MostrarError($"No se encontró el Tipo de Movimiento de Inventario. No se puede actualizar el Inventario");

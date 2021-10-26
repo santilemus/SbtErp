@@ -19,7 +19,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
     /// En todo caso es el detalle de BO CxcTransaccion
     /// </summary>
 
-    [DefaultClassOptions, ModelDefault(@"Caption", @"CxC Documento"), NavigationItem(false), CreatableItem(false),
+    [DefaultClassOptions, ModelDefault(@"Caption", @"Documento CxC"), NavigationItem(false), CreatableItem(false),
         Persistent(nameof(CxCDocumento)), DefaultProperty(nameof(Numero))]
     [MapInheritance(MapInheritanceType.ParentTable)]
     [ImageName(nameof(CxCDocumento))]
@@ -60,8 +60,9 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         [Persistent(nameof(Exenta)), DbType("numeric(14,2)")]
         decimal exenta;
 
-        [PersistentAlias(nameof(gravada)), XafDisplayName("Gravado"), Index(9)]
+        [PersistentAlias(nameof(gravada)), XafDisplayName("Gravada"), Index(9)]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
+        [DetailViewLayout("Totales", LayoutGroupType.SimpleEditorsGroup, 2)]
         public decimal Gravada
         {
             get { return gravada; }
@@ -69,6 +70,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
 
         [PersistentAlias(nameof(iva)), XafDisplayName("IVA"), Index(10)]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
+        [DetailViewLayout("Totales", LayoutGroupType.SimpleEditorsGroup, 2)]
         public decimal Iva
         {
             get { return iva; }
@@ -77,6 +79,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         [PersistentAlias("[VentaGravada] + [IVA]")]
         [XafDisplayName("SubTotal"), Index(11)]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
+        [DetailViewLayout("Totales", LayoutGroupType.SimpleEditorsGroup, 2)]
         public decimal SubTotal
         {
             get { return Convert.ToDecimal(EvaluateAlias(nameof(SubTotal))); }
@@ -84,6 +87,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
 
         [PersistentAlias(nameof(ivaRetenido)), XafDisplayName("(-) Iva Retenido"), VisibleInListView(false), Index(12)]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
+        [DetailViewLayout("Totales", LayoutGroupType.SimpleEditorsGroup, 2)]
         public decimal IvaRetenido
         {
             get { return ivaRetenido; }
@@ -91,21 +95,24 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
 
         [PersistentAlias(nameof(ivaPercibido)), XafDisplayName("(+) Iva Percibido"), VisibleInListView(false), Index(13)]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
+        [DetailViewLayout("Totales", LayoutGroupType.SimpleEditorsGroup, 2)]
         public decimal IvaPercibido
         {
             get { return ivaPercibido; }
         }
 
-        [PersistentAlias(nameof(noSujeta)), XafDisplayName("No Sujeta"), VisibleInListView(false), Index(14)]
+        [PersistentAlias(nameof(exenta)), XafDisplayName("Exenta"), VisibleInListView(true), Index(14)]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
+        [DetailViewLayout("Totales", LayoutGroupType.SimpleEditorsGroup, 2)]
+        public decimal Exenta => exenta;
+
+        [PersistentAlias(nameof(noSujeta)), XafDisplayName("No Sujeta"), VisibleInListView(false), Index(15)]
+        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
+        [DetailViewLayout("Totales", LayoutGroupType.SimpleEditorsGroup, 2)]
         public decimal NoSujeta
         {
             get { return noSujeta; }
         }
-
-        [PersistentAlias(nameof(exenta)), XafDisplayName("Exento"), VisibleInListView(true), Index(15)]
-        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
-        public decimal Exenta => exenta;
 
 
         #endregion

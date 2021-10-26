@@ -1,4 +1,5 @@
 ﻿using DevExpress.ExpressApp.DC;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using System;
@@ -32,6 +33,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         }
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Unidad Padre")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
+        [DataSourceCriteria("[Empresa] == '@This.Empresa'")]
         public EmpresaUnidad UnidadPadre
         {
             get

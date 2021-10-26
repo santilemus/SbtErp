@@ -14,8 +14,7 @@ using DevExpress.Persistent.Validation;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Tercero.Module.BusinessObjects;
 using SBT.Apps.Contabilidad.BusinessObjects;
-
-
+using DevExpress.ExpressApp.ConditionalAppearance;
 
 namespace SBT.Apps.Banco.Module.BusinessObjects
 {
@@ -43,6 +42,12 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
+        protected override void OnLoaded()
+        {
+            base.OnLoaded();
+            CalcularSaldo(DateTime.Now);
+        }
+
         #region Propiedades
         Empresa empresa;
         Tercero.Module.BusinessObjects.Banco banco;
@@ -54,7 +59,6 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         DateTime fechaCierre;
         Catalogo cuentaContable;
         DevExpress.Persistent.BaseImpl.ReportDataV2 reporteCheque;
-        decimal saldo;
 
         [Persistent("Empresa"), DbType("int"), XafDisplayName("Empresa"), Index(0), VisibleInListView(false)]
         public Empresa Empresa
@@ -136,13 +140,21 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         }
 
         
-        [PersistentAlias(nameof(saldo)), Index(9)]
+        [XafDisplayName("Saldo Cuenta"), Index(9)]
+        [ModelDefault("DisplayFormat", "{0:N2}")]
+        [Appearance("BancoCuenta.Saldo", FontStyle = System.Drawing.FontStyle.Bold, BackColor = "SlateBlue", FontColor = "Orange",
+            Criteria = "!IsNull([Saldo])")]
         public decimal Saldo
         {
-            get { return saldo; }
+            get
+            {
+                if (!IsLoading && !IsSaving && !Session.IsNewObject(this))
+                    return CalcularSaldo(DateTime.Now);
+                else
+                    return 0.0m;
+            } 
         }
         
-
         [Persistent("ReporteCheque"), XafDisplayName("Reporte Cheque"), VisibleInListView(false), Index(10)]
         public DevExpress.Persistent.BaseImpl.ReportDataV2 ReporteCheque
         {
@@ -182,11 +194,10 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         #endregion
 
         #region Metodos
-        public void CalcularSaldo(DateTime AFecha)
-        {         
-            var valor = Session.Evaluate<BancoTransaccion>(CriteriaOperator.Parse("Sum(Iif([Clasificacion.Tipo] = 1 Or [Clasificacion.Tipo] = 2, [Monto],-[Monto])"),
-                            CriteriaOperator.Parse("[Empresa] = ? And [NumeroCuenta] = ? And [Estado] != 3 And [Fecha] <= ?", Empresa.Oid , Oid, AFecha));
-            saldo = Convert.ToDecimal(valor);
+        public decimal CalcularSaldo(DateTime AFecha)
+        {    
+            return Convert.ToDecimal(Session.Evaluate<BancoTransaccion>(CriteriaOperator.Parse("Sum(Iif([Clasificacion.Tipo] = 1 Or [Clasificacion.Tipo] = 2, [Monto],-[Monto]))"),
+                            CriteriaOperator.Parse("[BancoCuenta.Empresa.Oid] = ? And [BancoCuenta.Oid] = ? And [Estado] != 3 And [Fecha] <= ?", Empresa.Oid , Oid, AFecha)));
         }
         #endregion
 

@@ -1,3 +1,4 @@
+
 /* For security reasons the login is created disabled and with a random password. */
 /****** Object:  Login [UsrMedico]    Script Date: 19/11/2020 14:08:55 ******/
 If not Exists (select loginname from master.dbo.syslogins 
@@ -56,7 +57,7 @@ CREATE TABLE [dbo].[ActividadEconomica](
 	[Codigo] [varchar](12) NOT NULL,
 	[Concepto] [varchar](200) NULL,
 	[ActividadPadre] [varchar](12) NULL,
-	[Activa] [bit] NULL
+	[Activa] [bit] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_ActividadEconomica] PRIMARY KEY CLUSTERED 
@@ -841,6 +842,32 @@ CREATE TABLE [dbo].[HistoriaFamiliar](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
+
+/****** Object:  Table [dbo].[InventarioTipoMovimiento]    Script Date: 26/10/2021 11:25:06 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[InventarioTipoMovimiento](
+	[OID] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
+	[Padre] [int] NULL,
+	[Nombre] [varchar](60) NULL,
+	[Codigo] [varchar](8) NULL,
+	[Operacion] [smallint] NULL,
+	[Activo] [bit] NULL,
+	[OptimisticLockField] [int] NULL,
+	[GCRecord] [int] NULL,
+ CONSTRAINT [PK_InventarioTipoMovimiento] PRIMARY KEY CLUSTERED 
+(
+	[OID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+
+
 /****** Object:  Table [dbo].[Inventario]    Script Date: 21/1/2021 00:34:31 ******/
 SET ANSI_NULLS ON
 GO
@@ -1588,8 +1615,10 @@ CREATE TABLE [dbo].[ProCategoria](
 	[Codigo] [varchar](20) NULL,
 	[Clasificacion] [int] NULL,
 	[EsGrupo] [bit] NULL,
+	PorcentajeIVA numeric(14,4) null,
+	ClasificacionIva smallint null,
+	MetodoCosteo smallint,
 	[Activa] [bit] NULL,
-	[Nivel] [smallint] NULL,
 	[OptimisticLockField] [int] NULL,
 	[GCRecord] [int] NULL,
  CONSTRAINT [PK_GloCategoriaProducto] PRIMARY KEY CLUSTERED 
@@ -1614,10 +1643,10 @@ CREATE TABLE [dbo].[Producto](
 	[CantMinima] [money] NULL,
 	[CantMaxima] [money] NULL,
 	[UnidadMedida] [varchar](8) NULL,
-	[Clasificacion] [smallint] NULL,
-	[Comentario] [varchar](200) NULL,
+	[CostoPromedio] [numeric](14,6) null,
 	[Activo] [bit] NULL,
 	[Empresa] [int] NULL,
+	[Comentario] [varchar](200) NULL,
 	[UsuarioCrea] [varchar](25) NULL,
 	[FechaCrea] [datetime] NULL,
 	[UsuarioMod] [varchar](25) NULL,
@@ -2460,12 +2489,6 @@ CREATE NONCLUSTERED INDEX [iGCRecord_ActividadEconomica] ON [dbo].[ActividadEcon
 	[GCRecord] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_Afp]    Script Date: 21/1/2021 00:34:32 ******/
-CREATE NONCLUSTERED INDEX [iGCRecord_Afp] ON [dbo].[Afp]
-(
-	[GCRecord] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
 /****** Object:  Index [iGCRecord_AsociacionProfesional]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_AsociacionProfesional] ON [dbo].[AsociacionProfesional]
 (
@@ -3114,6 +3137,8 @@ CREATE NONCLUSTERED INDEX [iPaciente_HistoriaFamiliar] ON [dbo].[HistoriaFamilia
 	[Paciente] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
+
+
 /****** Object:  Index [iBodega_Inventario]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iBodega_Inventario] ON [dbo].[Inventario]
 (
@@ -3989,110 +4014,6 @@ CREATE NONCLUSTERED INDEX [iResources_ResourceResources_EventEvents] ON [dbo].[R
 	[Resources] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_SecuritySystemMemberPermissionsObject]    Script Date: 21/1/2021 00:34:32 ******/
-CREATE NONCLUSTERED INDEX [iGCRecord_SecuritySystemMemberPermissionsObject] ON [dbo].[SecuritySystemMemberPermissionsObject]
-(
-	[GCRecord] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-/****** Object:  Index [iOwner_SecuritySystemMemberPermissionsObject]    Script Date: 21/1/2021 00:34:32 ******/
-CREATE NONCLUSTERED INDEX [iOwner_SecuritySystemMemberPermissionsObject] ON [dbo].[SecuritySystemMemberPermissionsObject]
-(
-	[Owner] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-/****** Object:  Index [iGCRecord_SecuritySystemObjectPermissionsObject]    Script Date: 21/1/2021 00:34:32 ******/
-CREATE NONCLUSTERED INDEX [iGCRecord_SecuritySystemObjectPermissionsObject] ON [dbo].[SecuritySystemObjectPermissionsObject]
-(
-	[GCRecord] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-/****** Object:  Index [iOwner_SecuritySystemObjectPermissionsObject]    Script Date: 21/1/2021 00:34:32 ******/
-CREATE NONCLUSTERED INDEX [iOwner_SecuritySystemObjectPermissionsObject] ON [dbo].[SecuritySystemObjectPermissionsObject]
-(
-	[Owner] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-/****** Object:  Index [iGCRecord_SecuritySystemRole]    Script Date: 21/1/2021 00:34:32 ******/
-CREATE NONCLUSTERED INDEX [iGCRecord_SecuritySystemRole] ON [dbo].[SecuritySystemRole]
-(
-	[GCRecord] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-/****** Object:  Index [iObjectType_SecuritySystemRole]    Script Date: 21/1/2021 00:34:32 ******/
-CREATE NONCLUSTERED INDEX [iObjectType_SecuritySystemRole] ON [dbo].[SecuritySystemRole]
-(
-	[ObjectType] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-/****** Object:  Index [iChildRoles_SecuritySystemRoleParentRoles_SecuritySystemRoleChildRoles]    Script Date: 21/1/2021 00:34:32 ******/
-CREATE NONCLUSTERED INDEX [iChildRoles_SecuritySystemRoleParentRoles_SecuritySystemRoleChildRoles] ON [dbo].[SecuritySystemRoleParentRoles_SecuritySystemRoleChildRoles]
-(
-	[ChildRoles] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-/****** Object:  Index [iChildRolesParentRoles_SecuritySystemRoleParentRoles_SecuritySystemRoleChildRoles]    Script Date: 21/1/2021 00:34:32 ******/
-CREATE UNIQUE NONCLUSTERED INDEX [iChildRolesParentRoles_SecuritySystemRoleParentRoles_SecuritySystemRoleChildRoles] ON [dbo].[SecuritySystemRoleParentRoles_SecuritySystemRoleChildRoles]
-(
-	[ChildRoles] ASC,
-	[ParentRoles] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-/****** Object:  Index [iParentRoles_SecuritySystemRoleParentRoles_SecuritySystemRoleChildRoles]    Script Date: 21/1/2021 00:34:32 ******/
-CREATE NONCLUSTERED INDEX [iParentRoles_SecuritySystemRoleParentRoles_SecuritySystemRoleChildRoles] ON [dbo].[SecuritySystemRoleParentRoles_SecuritySystemRoleChildRoles]
-(
-	[ParentRoles] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-/****** Object:  Index [iGCRecord_SecuritySystemTypePermissionsObject]    Script Date: 21/1/2021 00:34:32 ******/
-CREATE NONCLUSTERED INDEX [iGCRecord_SecuritySystemTypePermissionsObject] ON [dbo].[SecuritySystemTypePermissionsObject]
-(
-	[GCRecord] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-/****** Object:  Index [iObjectType_SecuritySystemTypePermissionsObject]    Script Date: 21/1/2021 00:34:32 ******/
-CREATE NONCLUSTERED INDEX [iObjectType_SecuritySystemTypePermissionsObject] ON [dbo].[SecuritySystemTypePermissionsObject]
-(
-	[ObjectType] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-/****** Object:  Index [iOwner_SecuritySystemTypePermissionsObject]    Script Date: 21/1/2021 00:34:32 ******/
-CREATE NONCLUSTERED INDEX [iOwner_SecuritySystemTypePermissionsObject] ON [dbo].[SecuritySystemTypePermissionsObject]
-(
-	[Owner] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-/****** Object:  Index [iGCRecord_SecuritySystemUser]    Script Date: 21/1/2021 00:34:32 ******/
-CREATE NONCLUSTERED INDEX [iGCRecord_SecuritySystemUser] ON [dbo].[SecuritySystemUser]
-(
-	[GCRecord] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-/****** Object:  Index [iObjectType_SecuritySystemUser]    Script Date: 21/1/2021 00:34:32 ******/
-CREATE NONCLUSTERED INDEX [iObjectType_SecuritySystemUser] ON [dbo].[SecuritySystemUser]
-(
-	[ObjectType] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-/****** Object:  Index [iRoles_SecuritySystemUserUsers_SecuritySystemRoleRoles]    Script Date: 21/1/2021 00:34:32 ******/
-CREATE NONCLUSTERED INDEX [iRoles_SecuritySystemUserUsers_SecuritySystemRoleRoles] ON [dbo].[SecuritySystemUserUsers_SecuritySystemRoleRoles]
-(
-	[Roles] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-/****** Object:  Index [iRolesUsers_SecuritySystemUserUsers_SecuritySystemRoleRoles]    Script Date: 21/1/2021 00:34:32 ******/
-CREATE UNIQUE NONCLUSTERED INDEX [iRolesUsers_SecuritySystemUserUsers_SecuritySystemRoleRoles] ON [dbo].[SecuritySystemUserUsers_SecuritySystemRoleRoles]
-(
-	[Roles] ASC,
-	[Users] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-/****** Object:  Index [iUsers_SecuritySystemUserUsers_SecuritySystemRoleRoles]    Script Date: 21/1/2021 00:34:32 ******/
-CREATE NONCLUSTERED INDEX [iUsers_SecuritySystemUserUsers_SecuritySystemRoleRoles] ON [dbo].[SecuritySystemUserUsers_SecuritySystemRoleRoles]
-(
-	[Users] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
 /****** Object:  Index [iGCRecord_Signo]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE NONCLUSTERED INDEX [iGCRecord_Signo] ON [dbo].[Signo]
 (
@@ -4450,21 +4371,6 @@ CREATE NONCLUSTERED INDEX [iMedicamento_Vacuna] ON [dbo].[Vacuna]
 	[Medicamento] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-/****** Object:  Index [iGCRecord_WhoPercentilPesoLong]    Script Date: 21/1/2021 00:34:32 ******/
-CREATE NONCLUSTERED INDEX [iGCRecord_WhoPercentilPesoLong] ON [dbo].[WhoPercentilPesoLong]
-(
-	[GCRecord] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-/****** Object:  Index [iTipoTablaEdadMes_WhoPercentilPesoLong]    Script Date: 21/1/2021 00:34:32 ******/
-CREATE NONCLUSTERED INDEX [iTipoTablaEdadMes_WhoPercentilPesoLong] ON [dbo].[WhoPercentilPesoLong]
-(
-	[TipoTabla] ASC,
-	[EdadMes] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-SET ANSI_PADDING ON
-GO
 /****** Object:  Index [iTypeName_XPObjectType]    Script Date: 21/1/2021 00:34:32 ******/
 CREATE UNIQUE NONCLUSTERED INDEX [iTypeName_XPObjectType] ON [dbo].[XPObjectType]
 (
@@ -4518,12 +4424,6 @@ REFERENCES [dbo].[ActividadEconomica] ([Codigo])
 NOT FOR REPLICATION 
 GO
 ALTER TABLE [dbo].[ActividadEconomica] CHECK CONSTRAINT [FK_ActividadEconomica_ActividadPadre]
-GO
-ALTER TABLE [dbo].[Afp]  WITH NOCHECK ADD  CONSTRAINT [FK_Afp_Proveedor] FOREIGN KEY([Proveedor])
-REFERENCES [dbo].[Tercero] ([OID])
-NOT FOR REPLICATION 
-GO
-ALTER TABLE [dbo].[Afp] CHECK CONSTRAINT [FK_Afp_Proveedor]
 GO
 ALTER TABLE [dbo].[AuditDataItemPersistent]  WITH NOCHECK ADD  CONSTRAINT [FK_AuditDataItemPersistent_AuditedObject] FOREIGN KEY([AuditedObject])
 REFERENCES [dbo].[AuditedObjectWeakReference] ([Oid])
@@ -4723,12 +4623,6 @@ NOT FOR REPLICATION
 GO
 ALTER TABLE [dbo].[ConsultaSintoma] CHECK CONSTRAINT [FK_ConsultaSintoma_Intensidad]
 GO
-ALTER TABLE [dbo].[Empleado]  WITH NOCHECK ADD  CONSTRAINT [FK_Empleado_AFP] FOREIGN KEY([AFP])
-REFERENCES [dbo].[Afp] ([Proveedor])
-NOT FOR REPLICATION 
-GO
-ALTER TABLE [dbo].[Empleado] CHECK CONSTRAINT [FK_Empleado_AFP]
-GO
 ALTER TABLE [dbo].[Empleado]  WITH NOCHECK ADD  CONSTRAINT [FK_Empleado_Banco] FOREIGN KEY([Banco])
 REFERENCES [dbo].[Tercero] ([OID])
 NOT FOR REPLICATION 
@@ -4914,6 +4808,16 @@ NOT FOR REPLICATION
 GO
 ALTER TABLE [dbo].[HistoriaFamiliar] CHECK CONSTRAINT [FK_HistoriaFamiliar_Paciente]
 GO
+
+ALTER TABLE [dbo].[InventarioTipoMovimiento]  WITH NOCHECK ADD  CONSTRAINT [FK_InventarioTipoMovimiento_Padre] FOREIGN KEY([Padre])
+REFERENCES [dbo].[InventarioTipoMovimiento] ([OID])
+NOT FOR REPLICATION 
+GO
+
+ALTER TABLE [dbo].[InventarioTipoMovimiento] CHECK CONSTRAINT [FK_InventarioTipoMovimiento_Padre]
+GO
+
+
 ALTER TABLE [dbo].[Inventario]  WITH NOCHECK ADD  CONSTRAINT [FK_Inventario_Bodega] FOREIGN KEY([Bodega])
 REFERENCES [dbo].[EmpresaUnidad] ([OID])
 NOT FOR REPLICATION 
@@ -4926,6 +4830,15 @@ NOT FOR REPLICATION
 GO
 ALTER TABLE [dbo].[Inventario] CHECK CONSTRAINT [FK_Inventario_Producto]
 GO
+
+ALTER TABLE [dbo].[Inventario]  WITH NOCHECK ADD  CONSTRAINT [FK_Inventario_TipoMovimiento] FOREIGN KEY([TipoMovimiento])
+REFERENCES [dbo].[InventarioTipoMovimiento] ([OID])
+NOT FOR REPLICATION 
+GO
+
+ALTER TABLE [dbo].[Inventario] CHECK CONSTRAINT [FK_Inventario_TipoMovimiento]
+GO
+
 ALTER TABLE [dbo].[Kardex]  WITH NOCHECK ADD  CONSTRAINT [FK_Kardex_Bodega] FOREIGN KEY([Bodega])
 REFERENCES [dbo].[EmpresaUnidad] ([OID])
 NOT FOR REPLICATION 
@@ -5438,66 +5351,6 @@ REFERENCES [dbo].[Resource] ([Oid])
 NOT FOR REPLICATION 
 GO
 ALTER TABLE [dbo].[ResourceResources_EventEvents] CHECK CONSTRAINT [FK_ResourceResources_EventEvents_Resources]
-GO
-ALTER TABLE [dbo].[SecuritySystemMemberPermissionsObject]  WITH NOCHECK ADD  CONSTRAINT [FK_SecuritySystemMemberPermissionsObject_Owner] FOREIGN KEY([Owner])
-REFERENCES [dbo].[SecuritySystemTypePermissionsObject] ([Oid])
-NOT FOR REPLICATION 
-GO
-ALTER TABLE [dbo].[SecuritySystemMemberPermissionsObject] CHECK CONSTRAINT [FK_SecuritySystemMemberPermissionsObject_Owner]
-GO
-ALTER TABLE [dbo].[SecuritySystemObjectPermissionsObject]  WITH NOCHECK ADD  CONSTRAINT [FK_SecuritySystemObjectPermissionsObject_Owner] FOREIGN KEY([Owner])
-REFERENCES [dbo].[SecuritySystemTypePermissionsObject] ([Oid])
-NOT FOR REPLICATION 
-GO
-ALTER TABLE [dbo].[SecuritySystemObjectPermissionsObject] CHECK CONSTRAINT [FK_SecuritySystemObjectPermissionsObject_Owner]
-GO
-ALTER TABLE [dbo].[SecuritySystemRole]  WITH NOCHECK ADD  CONSTRAINT [FK_SecuritySystemRole_ObjectType] FOREIGN KEY([ObjectType])
-REFERENCES [dbo].[XPObjectType] ([OID])
-NOT FOR REPLICATION 
-GO
-ALTER TABLE [dbo].[SecuritySystemRole] CHECK CONSTRAINT [FK_SecuritySystemRole_ObjectType]
-GO
-ALTER TABLE [dbo].[SecuritySystemRoleParentRoles_SecuritySystemRoleChildRoles]  WITH NOCHECK ADD  CONSTRAINT [FK_SecuritySystemRoleParentRoles_SecuritySystemRoleChildRoles_ChildRoles] FOREIGN KEY([ChildRoles])
-REFERENCES [dbo].[SecuritySystemRole] ([Oid])
-NOT FOR REPLICATION 
-GO
-ALTER TABLE [dbo].[SecuritySystemRoleParentRoles_SecuritySystemRoleChildRoles] CHECK CONSTRAINT [FK_SecuritySystemRoleParentRoles_SecuritySystemRoleChildRoles_ChildRoles]
-GO
-ALTER TABLE [dbo].[SecuritySystemRoleParentRoles_SecuritySystemRoleChildRoles]  WITH NOCHECK ADD  CONSTRAINT [FK_SecuritySystemRoleParentRoles_SecuritySystemRoleChildRoles_ParentRoles] FOREIGN KEY([ParentRoles])
-REFERENCES [dbo].[SecuritySystemRole] ([Oid])
-NOT FOR REPLICATION 
-GO
-ALTER TABLE [dbo].[SecuritySystemRoleParentRoles_SecuritySystemRoleChildRoles] CHECK CONSTRAINT [FK_SecuritySystemRoleParentRoles_SecuritySystemRoleChildRoles_ParentRoles]
-GO
-ALTER TABLE [dbo].[SecuritySystemTypePermissionsObject]  WITH NOCHECK ADD  CONSTRAINT [FK_SecuritySystemTypePermissionsObject_ObjectType] FOREIGN KEY([ObjectType])
-REFERENCES [dbo].[XPObjectType] ([OID])
-NOT FOR REPLICATION 
-GO
-ALTER TABLE [dbo].[SecuritySystemTypePermissionsObject] CHECK CONSTRAINT [FK_SecuritySystemTypePermissionsObject_ObjectType]
-GO
-ALTER TABLE [dbo].[SecuritySystemTypePermissionsObject]  WITH NOCHECK ADD  CONSTRAINT [FK_SecuritySystemTypePermissionsObject_Owner] FOREIGN KEY([Owner])
-REFERENCES [dbo].[SecuritySystemRole] ([Oid])
-NOT FOR REPLICATION 
-GO
-ALTER TABLE [dbo].[SecuritySystemTypePermissionsObject] CHECK CONSTRAINT [FK_SecuritySystemTypePermissionsObject_Owner]
-GO
-ALTER TABLE [dbo].[SecuritySystemUser]  WITH NOCHECK ADD  CONSTRAINT [FK_SecuritySystemUser_ObjectType] FOREIGN KEY([ObjectType])
-REFERENCES [dbo].[XPObjectType] ([OID])
-NOT FOR REPLICATION 
-GO
-ALTER TABLE [dbo].[SecuritySystemUser] CHECK CONSTRAINT [FK_SecuritySystemUser_ObjectType]
-GO
-ALTER TABLE [dbo].[SecuritySystemUserUsers_SecuritySystemRoleRoles]  WITH NOCHECK ADD  CONSTRAINT [FK_SecuritySystemUserUsers_SecuritySystemRoleRoles_Roles] FOREIGN KEY([Roles])
-REFERENCES [dbo].[SecuritySystemRole] ([Oid])
-NOT FOR REPLICATION 
-GO
-ALTER TABLE [dbo].[SecuritySystemUserUsers_SecuritySystemRoleRoles] CHECK CONSTRAINT [FK_SecuritySystemUserUsers_SecuritySystemRoleRoles_Roles]
-GO
-ALTER TABLE [dbo].[SecuritySystemUserUsers_SecuritySystemRoleRoles]  WITH NOCHECK ADD  CONSTRAINT [FK_SecuritySystemUserUsers_SecuritySystemRoleRoles_Users] FOREIGN KEY([Users])
-REFERENCES [dbo].[SecuritySystemUser] ([Oid])
-NOT FOR REPLICATION 
-GO
-ALTER TABLE [dbo].[SecuritySystemUserUsers_SecuritySystemRoleRoles] CHECK CONSTRAINT [FK_SecuritySystemUserUsers_SecuritySystemRoleRoles_Users]
 GO
 ALTER TABLE [dbo].[SysAuditoriaProceso]  WITH NOCHECK ADD  CONSTRAINT [FK_SysAuditoriaProceso_Empresa] FOREIGN KEY([Empresa])
 REFERENCES [dbo].[Empresa] ([OID])

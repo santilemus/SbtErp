@@ -14,7 +14,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
     /// por cobrar y pagar. Ejemplo: Notas de Credito -> Devolucion, Descuento por Pronto Pago, etc, Pagos -> Pagos Efectivo, Transferencias, etc.
     /// </summary>
 
-    [DefaultClassOptions, ModelDefault("Caption", "Tipo Transaccion (CxC y CxP)"), DefaultProperty("Nombre"), NavigationItem("Catalogos"),
+    [DefaultClassOptions, ModelDefault("Caption", "Tipo Transaccion (CxC - CxP)"), DefaultProperty("Nombre"), NavigationItem("Catalogos"),
         Persistent(nameof(CxCTipoTransaccion))]
     [ImageName("Concepto")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]

@@ -17,16 +17,14 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
     /// <summary>
     /// Clase Persistente que corresponde al catálogo de Productos
     /// </summary> 
-    [DefaultClassOptions]
-    [DevExpress.Persistent.Base.NavigationItem("Inventario")]
-    [DevExpress.ExpressApp.DC.XafDefaultPropertyAttribute("Nombre")]
+    [DefaultClassOptions, NavigationItem("Inventario"), DefaultProperty(nameof(Nombre))]
     [DevExpress.Persistent.Base.ImageNameAttribute("account_book")]
     [RuleIsReferenced("Producto_Referencia", DefaultContexts.Delete, typeof(Producto), nameof(Oid),
         MessageTemplateMustBeReferenced = "Para borrar el objeto '{TargetObject}', debe estar seguro que no es utilizado (referenciado) en ningún lugar.",
         InvertResult = true, FoundObjectMessageFormat = "'{0}'", FoundObjectMessagesSeparator = ";")]
+    [ListViewFilter("Todos", "")]
     [ListViewFilter("Producto Terminado", "[Categoria.Clasificacion] = 0")]
     [ListViewFilter("Servicios", "[Categoria.Clasificacion] = 4")]
-    [ListViewFilter("Todos", "")]
 
     [Appearance("Productos - Servicios - Intangibles y Otros", AppearanceItemType = "ViewItem", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide,
             Context = "Any", Criteria = "[Categoria.Clasificacion] >= 4",
@@ -67,7 +65,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         [DevExpress.Xpo.IndexedAttribute]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [RuleRequiredField("Producto.Categoria_Requerido", DefaultContexts.Save, "La Categoría es requerida")]
-        [DataSourceCriteria("EsGrupo = false And Activa = true")]
+        [DataSourceCriteria("[EsGrupo] == false && [Activa] == true && [Categorias][].Count() == 0")]
         //[Association("Categoria-Productos")]
         [ExplicitLoading]
         public Categoria Categoria

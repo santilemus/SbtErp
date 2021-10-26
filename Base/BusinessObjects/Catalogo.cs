@@ -1,4 +1,5 @@
 ﻿using DevExpress.ExpressApp;
+using DevExpress.ExpressApp.ConditionalAppearance;
 using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
 using DevExpress.ExpressApp.SystemModule;
@@ -28,6 +29,9 @@ namespace SBT.Apps.Contabilidad.BusinessObjects
         "Codigo Cuenta debe ser diferente de Padre", TargetCriteria = "!IsNull([Padre])")]
     [RuleCriteria("Catalogo - Cuenta de Mayor", DefaultContexts.Save, "Len([CodigoCuenta]) == 4 && CtaMayor = True && [CtaResumen] == True",
         "Las cuentas de 4 digitdos deben ser De Resumen y de Mayor", ResultType = ValidationResultType.Warning, TargetCriteria = "Len([CodigoCuenta]) == 4")]
+    [RuleCombinationOfPropertiesIsUnique("Catalogo. EmpresaCuentaEspecial Unica", DefaultContexts.Save, "Empresa,CodigoCuenta,CuentaEspecial", 
+        TargetCriteria = "[CuentaEspecial] > 0")]
+
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class Catalogo : XPObjectCustom
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
@@ -41,6 +45,7 @@ namespace SBT.Apps.Contabilidad.BusinessObjects
             CtaResumen = true;
             CtaMayor = false;
             activa = true;
+            CuentaEspecial = 0;
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
@@ -51,6 +56,8 @@ namespace SBT.Apps.Contabilidad.BusinessObjects
 
         #region Propiedades
 
+        string concepto;
+        ECuentaEspecial cuentaEspecial;
         Empresa empresa;
         string codigoCuenta;
         string nombre;
@@ -66,7 +73,7 @@ namespace SBT.Apps.Contabilidad.BusinessObjects
 #else
         [DbType("smallint"), Persistent("Empresa")]
 #endif
-        //[Association("Empresa-Catalogos")]
+        [Association("Empresa-Catalogos")]
         [XafDisplayName("Empresa"), Index(1), RuleRequiredField("Catalogo.Empresa_Requerida", "Save"), VisibleInListView(false)]
         [Browsable(false)]
         public Empresa Empresa
@@ -170,7 +177,7 @@ namespace SBT.Apps.Contabilidad.BusinessObjects
 #endif
         [XafDisplayName("Cuenta Mayor"), Index(8), VisibleInLookupListView(false), RuleRequiredField("Catalogo.CtaMayor_Requerido", DefaultContexts.Save)]
         //[RuleRequiredField("Catalogo.CtaMayor_Requerido", DefaultContexts.Save, TargetCriteria = "[CtaResumen] == true")]
-        [RuleValueComparison("Catalogo.CtaMayor es falso", DefaultContexts.Save, ValueComparisonType.Equals, false, 
+        [RuleValueComparison("Catalogo.CtaMayor es falso", DefaultContexts.Save, ValueComparisonType.Equals, false,
             TargetCriteria = "[CtaResumen] == false", CustomMessageTemplate = "'{TargetObject}' debe ser False cuando CtaResumen es False")]
         public bool CtaMayor
         {
@@ -192,12 +199,38 @@ namespace SBT.Apps.Contabilidad.BusinessObjects
         }
 
 #if Firebird
+        [DbType("DM_ENTERO_CORTO"), Persistent("CUENTA_ESPECIAL")]
+#else
+        [DbType("smallint"), Persistent(nameof(CuentaEspecial))]
+#endif
+        [XafDisplayName("Cuenta Especial"), Index(10), VisibleInListView(false)]
+        [ToolTip("Es cuenta especial, cuando se trata de una cuenta clave para la liquidacion o cierre del ejercicio, Solo son de detalle")]
+        [Appearance("Catalogo.CuentaEspecial Visible", AppearanceItemType = "ViewItem", Criteria = "[CtaResumen] == False", 
+            Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Show)]
+        public ECuentaEspecial CuentaEspecial
+        {
+            get => cuentaEspecial;
+            set => SetPropertyValue(nameof(CuentaEspecial), ref cuentaEspecial, value);
+        }
+
+        
+        [Size(150), DbType("varchar(150)"), XafDisplayName("Concepto"), VisibleInListView(false), Index(11)]
+        [ToolTip("Concepto predefinido cuando se trata de una cuenta especial")]
+        [Appearance("Catalogo.CuentaEspecial Concepto Visible", AppearanceItemType = "ViewItem", Criteria = "[CuentaEspecial] > 0", 
+            Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Show )]
+        public string Concepto
+        {
+            get => concepto;
+            set => SetPropertyValue(nameof(Concepto), ref concepto, value);
+        }
+
+#if Firebird
         [DbType("DM_BOOLEAN"), Persistent("ACTIVA")]
         [ValueConverter(typeof(ToBooleanDataType))]
 #else
         [DbType("bit"), Persistent("Activa")]
 #endif
-        [XafDisplayName("Cuenta Activa"), Index(10), VisibleInLookupListView(false), RuleRequiredField("Catalogo.Activa", "Save")]
+        [XafDisplayName("Cuenta Activa"), Index(12), VisibleInLookupListView(false), RuleRequiredField("Catalogo.Activa", "Save")]
         public bool Activa
         {
             get => activa;
@@ -223,5 +256,24 @@ namespace SBT.Apps.Contabilidad.BusinessObjects
         //    // Trigger a custom business logic for the current record in the UI (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112619.aspx).
         //    this.PersistentProperty = "Paid";
         //}
+    }
+
+    public enum ECuentaEspecial
+    {
+        Null = 0,
+        [XafDisplayName("Capital Social")]
+        CapitalSocial = 1,
+        [XafDisplayName("Liquidación")]
+        Liquidacion = 2,
+        [XafDisplayName("Reserva Legal del Ejercicio")]
+        ReservaLegalEjercicio = 3,
+        [XafDisplayName("Reserva Legal Ejercicios Anteriores")]
+        ReservaLegalAnterior = 4,
+        [XafDisplayName("Renta a Pagar")]
+        RentaPagar = 5,
+        [XafDisplayName("Utilidad del Ejercicio")]
+        UtilidadEjercicio = 6,
+        [XafDisplayName("Pérdida del Ejercicio")]
+        PerdidaEjercicio = 7
     }
 }

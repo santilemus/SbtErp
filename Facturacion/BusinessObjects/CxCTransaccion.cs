@@ -65,139 +65,18 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         string usuarioAnulo;
         DateTime fechaAnula;
 
-
-        [DbType("datetime2"), XafDisplayName("Fecha"), Index(1)]
-        [RuleValueComparison("CxCTransaccion.Fecha > Fecha Factura", DefaultContexts.Save,
-            ValueComparisonType.GreaterThanOrEqual, "[Venta.Fecha]", ParametersMode.Expression, SkipNullOrEmptyValues = false)]
-        [DetailViewLayout("Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
-        public DateTime Fecha
-        {
-            get => fecha;
-            set => SetPropertyValue(nameof(Fecha), ref fecha, value);
-        }
-
         /// <summary>
         /// Tipo de concepto o de transaccion de cuenta por cobrar
         /// </summary>
         //[Association("TipoTransaccion-Transacciones"), XafDisplayName("Tipo Concepto")]
-        [RuleRequiredField("CxcTransaccion.Tipo_Requerido", DefaultContexts.Save)]
-        [Index(2), VisibleInLookupListView(true)]
+        [RuleRequiredField("CxCTransaccion.Tipo_Requerido", DefaultContexts.Save)]
+        [Index(0), VisibleInLookupListView(true)]
         [DetailViewLayout("Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
         [DataSourceCriteria("!IsNull([Padre]) && [Activo] == True")]
         public CxCTipoTransaccion Tipo
         {
             get => tipo;
             set => SetPropertyValue(nameof(Tipo), ref tipo, value);
-        }
-
-        /// <summary>
-        /// Algunos tipos de concepto van a requerir una autorizacion de correlativos, habra que identificar en el BO
-        /// CxCTransaccion el tipo de documento o vincularlo al concepto, para que el sistema pueda obener la autorizacion y validar
-        /// que sea la correcta para el tipo de documento, ademas este vigente y el correlativo generado este dentro del 
-        /// rango
-        /// </summary>
-        [XafDisplayName("Autorización Documento"), PersistentAlias(nameof(autorizacionDocumento)), Index(2)]
-        [VisibleInListView(false)]
-        public AutorizacionDocumento AutorizacionDocumento => autorizacionDocumento;
-
-
-        [DbType("int"), XafDisplayName("Número"), Index(3)]
-        [ModelDefault("AllowEdit", "False")]
-        [ToolTip("Numero Correlativo por tipo de documento y empresa")]
-        public int? Numero
-        {
-            get => numero;
-            set => SetPropertyValue(nameof(Numero), ref numero, value);
-        }
-
-        [XafDisplayName("Moneda"), Index(4)]
-        [DataSourceCriteria("[Activa] == True")]
-        public Moneda Moneda
-        {
-            get => moneda;
-            set => SetPropertyValue(nameof(Moneda), ref moneda, value);
-        }
-
-        [DbType("numeric(12,2)"), XafDisplayName("Valor Moneda"), Index(5)]
-        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
-        [ModelDefault("AllowEdit", "False")]
-        public decimal ValorMoneda
-        {
-            get => valorMoneda;
-            set => SetPropertyValue(nameof(ValorMoneda), ref valorMoneda, value);
-        }
-
-        [Association("Venta-CxCTransacciones")]
-        [XafDisplayName("Venta"), Index(6)]
-        public Venta Venta
-        {
-            get => venta;
-            set => SetPropertyValue(nameof(Venta), ref venta, value);
-        }
-
-        [DbType("numeric(14,2)"), XafDisplayName("Monto"), Index(7)]
-        [RuleValueComparison("CxCTransaccion.Monto > 0", DefaultContexts.Save, ValueComparisonType.GreaterThan, 0, SkipNullOrEmptyValues = false)]
-        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
-        public decimal Monto
-        {
-            get => monto;
-            set => SetPropertyValue(nameof(Monto), ref monto, value);
-        }
-
-        /// <summary>
-        /// Cartera de Cuenta por Cobrar o Venta. El vendedor o el cobrador esta relacionado con la cartera y el cliente
-        /// a CarteraCliente
-        /// </summary>
-        [Association("Cartera-CxCTransacciones"), XafDisplayName("Cartera"), Index(3)]
-        [DetailViewLayout("Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
-        public Cartera Cartera
-        {
-            get => cartera;
-            set => SetPropertyValue(nameof(Cartera), ref cartera, value);
-        }
-
-
-        [DbType("varchar(12)"), XafDisplayName("Tipo Tarjeta"), Index(6), VisibleInListView(false)]
-        [DetailViewLayout("Datos Transacción", LayoutGroupType.SimpleEditorsGroup, 1)]
-        [DataSourceCriteria("[Categoria] == 6 And [Activo] == True")]   // categoria 6 son tarjetas de credito
-        [RuleRequiredField("CxCTransaccion.TipoTarjeta_Requerido", "Save", TargetCriteria = "[FormaPago.Codigo] In ('FPA03', 'FPA04')",
-             ResultType = ValidationResultType.Warning)]
-
-        public Listas TipoTarjeta
-        {
-            get => tipoTarjeta;
-            set => SetPropertyValue(nameof(TipoTarjeta), ref tipoTarjeta, value);
-        }
-
-        [XafDisplayName("Banco"), Index(6)]
-        [DetailViewLayout("Datos Transacción", LayoutGroupType.SimpleEditorsGroup, 1)]
-        public SBT.Apps.Tercero.Module.BusinessObjects.Banco Banco
-        {
-            get => banco;
-            set => SetPropertyValue(nameof(Banco), ref banco, value);
-        }
-
-        /// <summary>
-        /// No de tarjeta de credito o debito
-        /// </summary>
-        [Size(20), DbType("varchar(20)"), XafDisplayName("No Tarjeta"), ToolTip("No de Tarjeta de debito o credito, cuando es el medio de pago")]
-        [Index(7), VisibleInListView(false)]
-        [DetailViewLayout("Datos Transacción", LayoutGroupType.SimpleEditorsGroup, 1)]
-        public string NoTarjeta
-        {
-            get => noTarjeta;
-            set => SetPropertyValue(nameof(NoTarjeta), ref noTarjeta, value);
-        }
-
-        /// <summary>
-        ///  No de cheque, No de pago electronico, Id de la remesa, transferencia, no vaucher etc.
-        /// </summary>
-        [Size(40), DbType("varchar(40)"), XafDisplayName("No Referencia"), Index(8), VisibleInListView(false)]
-        [DetailViewLayout("Datos Transacción", LayoutGroupType.SimpleEditorsGroup, 1)]
-        public string Referencia
-        {
-            get => referencia;
-            set => SetPropertyValue(nameof(Referencia), ref referencia, value);
         }
 
         /// <summary>
@@ -209,27 +88,153 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         /// Agregar validacion para que este dato sea requerido unicamente en los casos de transferencia, remesa o pago electronico
         /// Agregar regla de apariencia, para que en los casos donde no es necesario este dato, aparezca deshabilitado u ocultarlo
         /// </remarks>
-        [XafDisplayName("Banco Transacción"), Index(9), VisibleInListView(false),
+        [XafDisplayName("Banco Transacción"), Index(1), VisibleInListView(false),
             ToolTip("La transacción de bancos, cuando es transferencia, remesa, o pago electronico")]
         //[Association("BancoTransaccion-CxCTransacciones")]
         [DataSourceCriteria("[BancoCuenta.Empresa] == '@This.Venta.Empresa' && [Clasificacion.Tipo] In (1, 2)")]   // clasificacion.Tipo in (Abono, Remesa)
-        [DetailViewLayout("Datos Transacción", LayoutGroupType.SimpleEditorsGroup, 1)]
+        [DetailViewLayout("Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
         public BancoTransaccion BancoTransaccion
         {
             get => bancoTransaccion;
             set => SetPropertyValue(nameof(BancoTransaccion), ref bancoTransaccion, value);
         }
 
-        [DbType("smallint"), XafDisplayName("Estado"), Index(15), RuleRequiredField("CxCTransaccion.Estado_Requerido", "Save")]
-        [DetailViewLayout("Otros Datos", LayoutGroupType.SimpleEditorsGroup, 2)]
+        [DbType("datetime2"), XafDisplayName("Fecha"), Index(2)]
+        [RuleValueComparison("CxCTransaccion.Fecha > Fecha Factura", DefaultContexts.Save,
+            ValueComparisonType.GreaterThanOrEqual, "[Venta.Fecha]", ParametersMode.Expression, SkipNullOrEmptyValues = false)]
+        [DetailViewLayout("Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
+        public DateTime Fecha
+        {
+            get => fecha;
+            set => SetPropertyValue(nameof(Fecha), ref fecha, value);
+        }
+
+        /// <summary>
+        /// Algunos tipos de concepto van a requerir una autorizacion de correlativos, habra que identificar en el BO
+        /// CxCTransaccion el tipo de documento o vincularlo al concepto, para que el sistema pueda obener la autorizacion y validar
+        /// que sea la correcta para el tipo de documento, ademas este vigente y el correlativo generado este dentro del 
+        /// rango
+        /// </summary>
+        [XafDisplayName("Autorización Documento"), PersistentAlias(nameof(autorizacionDocumento)), Index(3)]
+        [VisibleInListView(false)]
+        [DetailViewLayout("Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
+        public AutorizacionDocumento AutorizacionDocumento => autorizacionDocumento;
+
+
+        [DbType("int"), XafDisplayName("Número"), Index(3)]
+        [ModelDefault("AllowEdit", "False")]
+        [DetailViewLayout("Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
+        [ToolTip("Numero Correlativo por tipo de documento y empresa")]
+        public int? Numero
+        {
+            get => numero;
+            set => SetPropertyValue(nameof(Numero), ref numero, value);
+        }
+
+        [XafDisplayName("Moneda"), Index(4)]
+        [DataSourceCriteria("[Activa] == True")]
+        [DetailViewLayout("Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
+        public Moneda Moneda
+        {
+            get => moneda;
+            set => SetPropertyValue(nameof(Moneda), ref moneda, value);
+        }
+
+        [DbType("numeric(12,2)"), XafDisplayName("Valor Moneda"), Index(5)]
+        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
+        [ModelDefault("AllowEdit", "False")]
+        [DetailViewLayout("Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
+        public decimal ValorMoneda
+        {
+            get => valorMoneda;
+            set => SetPropertyValue(nameof(ValorMoneda), ref valorMoneda, value);
+        }
+
+        [Association("Venta-CxCTransacciones")]
+        [XafDisplayName("Venta"), Index(6)]
+        [DetailViewLayout("Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
+        public Venta Venta
+        {
+            get => venta;
+            set => SetPropertyValue(nameof(Venta), ref venta, value);
+        }
+
+        [DbType("numeric(14,2)"), XafDisplayName("Monto"), Index(7)]
+        [RuleValueComparison("CxCTransaccion.Monto > 0", DefaultContexts.Save, ValueComparisonType.GreaterThan, 0, SkipNullOrEmptyValues = false)]
+        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
+        [DetailViewLayout("Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
+        public decimal Monto
+        {
+            get => monto;
+            set => SetPropertyValue(nameof(Monto), ref monto, value);
+        }
+
+        /// <summary>
+        /// Cartera de Cuenta por Cobrar o Venta. El vendedor o el cobrador esta relacionado con la cartera y el cliente
+        /// a CarteraCliente
+        /// </summary>
+        [Association("Cartera-CxCTransacciones"), XafDisplayName("Cartera"), Index(8)]
+        [DetailViewLayout("Datos Pago", LayoutGroupType.SimpleEditorsGroup, 1)]
+        public Cartera Cartera
+        {
+            get => cartera;
+            set => SetPropertyValue(nameof(Cartera), ref cartera, value);
+        }
+
+
+        [DbType("varchar(12)"), XafDisplayName("Tipo Tarjeta"), Index(9), VisibleInListView(false)]
+        [DetailViewLayout("Datos Pago", LayoutGroupType.SimpleEditorsGroup, 1)]
+        [DataSourceCriteria("[Categoria] == 6 And [Activo] == True")]   // categoria 6 son tarjetas de credito
+        [RuleRequiredField("CxCTransaccion.TipoTarjeta_Requerido", "Save", TargetCriteria = "[FormaPago.Codigo] In ('FPA03', 'FPA04')",
+             ResultType = ValidationResultType.Warning)]
+
+        public Listas TipoTarjeta
+        {
+            get => tipoTarjeta;
+            set => SetPropertyValue(nameof(TipoTarjeta), ref tipoTarjeta, value);
+        }
+
+        [XafDisplayName("Banco"), Index(10)]
+        [DetailViewLayout("Datos Pago", LayoutGroupType.SimpleEditorsGroup, 1)]
+        public SBT.Apps.Tercero.Module.BusinessObjects.Banco Banco
+        {
+            get => banco;
+            set => SetPropertyValue(nameof(Banco), ref banco, value);
+        }
+
+        /// <summary>
+        /// No de tarjeta de credito o debito
+        /// </summary>
+        [Size(20), DbType("varchar(20)"), XafDisplayName("No Tarjeta"), ToolTip("No de Tarjeta de debito o credito, cuando es el medio de pago")]
+        [Index(11), VisibleInListView(false)]
+        [DetailViewLayout("Datos Pago", LayoutGroupType.SimpleEditorsGroup, 1)]
+        public string NoTarjeta
+        {
+            get => noTarjeta;
+            set => SetPropertyValue(nameof(NoTarjeta), ref noTarjeta, value);
+        }
+
+        /// <summary>
+        ///  No de cheque, No de pago electronico, Id de la remesa, transferencia, no vaucher etc.
+        /// </summary>
+        [Size(40), DbType("varchar(40)"), XafDisplayName("No Referencia"), Index(12), VisibleInListView(false)]
+        [DetailViewLayout("Datos Pago", LayoutGroupType.SimpleEditorsGroup, 1)]
+        public string Referencia
+        {
+            get => referencia;
+            set => SetPropertyValue(nameof(Referencia), ref referencia, value);
+        }
+
+        [DbType("smallint"), XafDisplayName("Estado"), Index(13), RuleRequiredField("CxCTransaccion.Estado_Requerido", "Save")]
+        [DetailViewLayout("Datos Pago", LayoutGroupType.SimpleEditorsGroup, 1)]
         public ECxCTransaccionEstado Estado
         {
             get => estado;
             set => SetPropertyValue(nameof(Estado), ref estado, value);
         }
 
-        [Size(200), DbType("varchar(200)"), XafDisplayName("Comentario"), Index(16), VisibleInListView(false)]
-        [DetailViewLayout("Otros Datos", LayoutGroupType.SimpleEditorsGroup, 2)]
+        [Size(200), DbType("varchar(200)"), XafDisplayName("Comentario"), Index(14), VisibleInListView(false)]
+        [DetailViewLayout("Datos Pago", LayoutGroupType.SimpleEditorsGroup, 1)]
         public string Comentario
         {
             get => comentario;
@@ -238,6 +243,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
 
         [XafDisplayName("Fecha Anulación")]
         [ModelDefault("AllowEdit", "False"), Index(98)]
+        [DetailViewLayout("Datos Pago", LayoutGroupType.SimpleEditorsGroup, 1)]
         public DateTime FechaAnula
         {
             get => fechaAnula;
@@ -245,6 +251,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         }
         [Size(25), XafDisplayName("Usuario Anulo")]
         [ModelDefault("AllowEdit", "False"), Index(99)]
+        [DetailViewLayout("Datos Pago", LayoutGroupType.SimpleEditorsGroup, 1)]
         public string UsuarioAnulo
         {
             get => usuarioAnulo;

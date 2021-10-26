@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace SBT.Apps.Compra.Module.BusinessObjects
 {
-    [ModelDefault("Caption", "Factura Compra Detalle"), NavigationItem(false), CreatableItem(false),
+    [ModelDefault("Caption", "Compra Factura Detalle"), NavigationItem(false), CreatableItem(false),
         Persistent(nameof(CompraFacturaDetalle)), DefaultProperty("Producto")]
     //[ImageName("BO_Contact")]
     [DefaultListViewOptions(MasterDetailMode.ListViewOnly, true, NewItemRowPosition.Top)]
@@ -83,7 +83,8 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
                 return;
             if (Producto.Categoria.ClasificacionIva == EClasificacionIVA.Gravado)
             {
-                gravada = Math.Round(Cantidad * PrecioUnidad, 2);
+                //gravada = Math.Round(Cantidad * PrecioUnidad, 2);
+                gravada = Factura.CalcularTributo(4);
                 iva = Math.Round(Convert.ToDecimal(Gravada) * this.Producto.Categoria.PorcentajeIVA, 2);
             }
             else

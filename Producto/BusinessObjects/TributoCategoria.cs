@@ -46,7 +46,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
 
 
         [Association("Tributo-TributoCategorias"), XafDisplayName("Tributo")]
-        [ExplicitLoading]
+        //[ExplicitLoading]
         public Tributo Tributo
         {
             get => tributo;

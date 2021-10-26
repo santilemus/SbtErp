@@ -34,8 +34,8 @@ namespace SBT.Apps.Facturacion.Module.Controllers
         {
             base.OnActivated();
             // el filtro ya se hace en ViewControllerBase
-            //if (string.Compare(View.GetType().Name, "ListView", StringComparison.Ordinal) == 0)
-            //    ((ListView)View).CollectionSource.Criteria["Empresa Actual"] = CriteriaOperator.Parse("[Agencia.Empresa.Oid] == ?", ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid);
+            if (string.Compare(View.GetType().Name, "ListView", StringComparison.Ordinal) == 0)
+                ((ListView)View).CollectionSource.Criteria["Empresa Actual"] = CriteriaOperator.Parse("[Agencia.Empresa.Oid] == ?", ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid);
         }
 
         protected override void OnDeactivated()

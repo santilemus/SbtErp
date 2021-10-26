@@ -155,7 +155,8 @@
               <LayoutItem Id="TipoPersona" ViewItem="TipoPersona" Index="0" RelativeSize="24.324324324324323" CaptionLocation="Left" IsNewNode="True" />
               <LayoutItem Id="TipoContribuyente" ViewItem="TipoContribuyente" Index="1" RelativeSize="17.567567567567568" CaptionLocation="Left" IsNewNode="True" />
               <LayoutItem Id="Clasificacion" ViewItem="Clasificacion" Index="2" RelativeSize="17.567567567567568" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="Activo" ViewItem="Activo" Index="3" RelativeSize="40.54054054054054" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Origen" ViewItem="Origen" Index="3" RelativeSize="17.567567567567568" IsNewNode="True" />
+              <LayoutItem Id="Activo" ViewItem="Activo" Index="4" RelativeSize="22.972972972972972" CaptionLocation="Left" IsNewNode="True" />
             </LayoutGroup>
             <LayoutGroup Id="XPObject" Caption="Oid" Direction="Horizontal" Index="1" RelativeSize="35.040431266846362" Removed="True">
               <LayoutItem Id="Oid" Removed="True" />

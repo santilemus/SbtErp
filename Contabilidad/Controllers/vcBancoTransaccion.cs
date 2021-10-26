@@ -26,17 +26,28 @@ namespace SBT.Apps.Banco.Module.Controllers
             if ((string.Compare(View.GetType().Name, "ListView", StringComparison.Ordinal) == 0) &&
                 !(((ListView)View).CollectionSource.Criteria.ContainsKey("Empresa Actual")))
                 ((ListView)View).CollectionSource.Criteria["Empresa Actual"] = CriteriaOperator.Parse("[BancoCuenta.Empresa.Oid] = ?", ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid);
+            ObjectSpace.Committed += ObjectSpace_Committed;
         }
 
         protected override void OnDeactivated()
         {
             base.OnDeactivated();
+            ObjectSpace.Committed -= ObjectSpace_Committed;
         }
 
         protected override void DoInitializeComponent()
         {
             base.DoInitializeComponent();
             TargetObjectType = typeof(SBT.Apps.Banco.Module.BusinessObjects.BancoTransaccion);
+        }
+
+        private void ObjectSpace_Committed(object sender, EventArgs e)
+        {
+            var bancoTransaccion = (this.View.CurrentObject as Banco.Module.BusinessObjects.BancoTransaccion);
+            if (bancoTransaccion != null && bancoTransaccion.BancoCuenta != null)
+            {
+                bancoTransaccion.BancoCuenta.CalcularSaldo(bancoTransaccion.Fecha);
+            }    
         }
 
     }

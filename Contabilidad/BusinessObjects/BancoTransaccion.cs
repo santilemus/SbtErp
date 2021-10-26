@@ -97,18 +97,27 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         EBancoTransaccionEstado estado = EBancoTransaccionEstado.Digitado;
         BancoChequera chequera;
 
+
         [Association("BancoCuenta-Transacciones"), Persistent(nameof(BancoCuenta)), XafDisplayName("Cuenta"), Index(0)]
         [DataSourceCriteria("[Empresa.Oid] == EmpresaActualOid()")]
         [ExplicitLoading]
         public BancoCuenta BancoCuenta
         {
             get => bancoCuenta;
-            set => SetPropertyValue(nameof(BancoCuenta), ref bancoCuenta, value);
+            set
+            {
+                bool changed = SetPropertyValue(nameof(BancoCuenta), ref bancoCuenta, value);
+                if (!IsLoading && !IsSaving && changed && Moneda == null)
+                {
+                    Moneda = BancoCuenta.Empresa.MonedaDefecto;
+                    ValorMoneda = Moneda.FactorCambio;
+                }
+            }
         }
 
         [Persistent("Clasificacion"), XafDisplayName("Clasificacion"), RuleRequiredField("BancoTransaccion.Tipo_Requerido", "Save")]
         [ToolTip("Clasificación de Transacciones de bancos", "Bancos", ToolTipIconType.Information)]
-        [Index(1)]
+        [Index(1), VisibleInLookupListView(true)]
         [ExplicitLoading]
         public BancoTipoTransaccion Clasificacion
         {
@@ -136,7 +145,7 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
             set => SetPropertyValue(nameof(Numero), ref numero, value);
         }
 
-        [DbType("datetime2"), Persistent(nameof(Fecha))]
+        [DbType("datetime2"), Persistent(nameof(Fecha)), VisibleInLookupListView(true)]
         [XafDisplayName("Fecha"), Index(3), RuleRequiredField("BancoTransaccion.Fecha_Requerido", "Save")]
         [ModelDefault("DisplayFormat", "{0:G}"), ModelDefault("EditMask", "g")]
         public DateTime Fecha
@@ -188,7 +197,7 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
             get => chequeNo;
         }
 
-        [Size(150), DbType("varchar(150)"), Persistent("Beneficiario"), XafDisplayName("Paguese A"), Index(8)]
+        [Size(150), DbType("varchar(150)"), Persistent("Beneficiario"), XafDisplayName("Beneficiario"), Index(8)]
         [VisibleInLookupListView(true), VisibleInListView(false)]
         public string Beneficiario
         {
@@ -255,6 +264,22 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         [Size(250), Index(18), XafDisplayName("Comentario")]
         [Delayed(true)]
         public string Comentario => comentario;
+
+        [XafDisplayName("Saldo Cuenta"), VisibleInListView(false)]
+        [ModelDefault("DisplayFormat", "{0:N2}")]
+        [Appearance("BancoTransaccion.CuentaSaldo", FontStyle = System.Drawing.FontStyle.Bold, BackColor = "SlateBlue", FontColor = "Orange",
+            Criteria = "!IsNull([Saldo])")]
+        public decimal Saldo
+        {
+            get
+            {
+                if (!IsLoading && !IsSaving && BancoCuenta != null & Fecha != null)
+                    return BancoCuenta.CalcularSaldo(Fecha);
+                else
+                    return 0.0m;
+            }
+        }
+            
 
         #endregion
 
