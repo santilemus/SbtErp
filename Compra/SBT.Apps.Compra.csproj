@@ -126,6 +126,9 @@
     <Compile Include="BusinessObjects\LibroCompra.cs" />
     <Compile Include="BusinessObjects\OrdenCompra.cs" />
     <Compile Include="BusinessObjects\OrdenCompraDetalle.cs" />
+    <Compile Include="Controllers\vcBancoTransaccionLookupListViewCxP.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controllers\vcCxPTransaccion.cs">
       <SubType>Component</SubType>
     </Compile>

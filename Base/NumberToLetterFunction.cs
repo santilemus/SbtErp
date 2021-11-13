@@ -12,7 +12,7 @@ namespace SBT.Apps.Base.Module
     /// </summary>
     /// <remarks>
     /// Implementar la interface ICustomFunctionOperatorBrowsable, ademas de la interface ICustomFunctionOperator para hacer que
-    /// la funcion este disponible para el usuario final en el editor de expresiones. S
+    /// la funcion este disponible para el usuario final en el editor de expresiones. 
     /// </remarks>
     public class NumberToLetterFunction : ICustomFunctionOperatorBrowsable
     {

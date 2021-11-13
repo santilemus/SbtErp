@@ -1,6 +1,7 @@
 ﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
+using DevExpress.Persistent.BaseImpl;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
@@ -10,14 +11,13 @@ using System.Linq;
 
 namespace SBT.Apps.Contabilidad.Module.BusinessObjects
 {
-    [NonPersistent]
-    [ModelDefault("Caption", "Estados Financieros"), DefaultProperty(nameof(Nombre)), NavigationItem("Contabilidad")]
-    //[Persistent(nameof(EstadoFinanciero))]
+    [DefaultClassOptions, ModelDefault("Caption", "Estado Financiero Modelo"), DefaultProperty(nameof(Nombre)), NavigationItem("Contabilidad")]
+    [Persistent(nameof(EstadoFinancieroModelo)), CreatableItem(false)]
     //[ImageName("BO_Contact")]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
-    public class EstadoFinanciero : XPObjectCustom
+    public class EstadoFinancieroModelo : XPObjectCustom
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
-        public EstadoFinanciero(Session session)
+        public EstadoFinancieroModelo(Session session)
             : base(session)
         {
         }
@@ -29,20 +29,21 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
 
         #region Propiedades
 
-        bool activo;
+        ReportDataV2 reporte;
         DateTime fechaHasta;
+        bool activo;
         Moneda moneda;
         string nombre;
         Empresa empresa;
 
-        [XafDisplayName("Empresa"), Browsable(false)]
+        [XafDisplayName("Empresa"), VisibleInListView(false), VisibleInDetailView(false), Index(0)]
         public Empresa Empresa
         {
             get => empresa;
             set => SetPropertyValue(nameof(Empresa), ref empresa, value);
         }
 
-        [Size(100), DbType("varchar(100)"), XafDisplayName("Nombre")]
+        [Size(100), DbType("varchar(100)"), XafDisplayName("Nombre"), Index(1)]
         [RuleRequiredField("EstadoFinanciero.Nombre_Requerido", "Save")]
         public string Nombre
         {
@@ -50,7 +51,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             set => SetPropertyValue(nameof(Nombre), ref nombre, value);
         }
 
-        [XafDisplayName("Moneda")]
+        [XafDisplayName("Moneda"), Index(2)]
         [RuleRequiredField("EstadoFinanciero.Moneda_Requerido", "Save")]
         public Moneda Moneda
         {
@@ -58,27 +59,35 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             set => SetPropertyValue(nameof(Moneda), ref moneda, value);
         }
 
-        [NonPersistent]
-        [DbType("datetime"), XafDisplayName("Fecha Hasta")]
-        [ModelDefault("DisplayFormat", "{0:G}"), ModelDefault("EditMask", "G")]
-        public DateTime FechaHasta
-        {
-            get => fechaHasta;
-            set => SetPropertyValue(nameof(FechaHasta), ref fechaHasta, value);
-        }
-
         [DbType("bit"), XafDisplayName("Activo"), RuleRequiredField("EstadoFinanciero.Activo_Requerido", "Save")]
+        [Index(3)]
         public bool Activo
         {
             get => activo;
             set => SetPropertyValue(nameof(Activo), ref activo, value);
         }
 
+        
+        [XafDisplayName("Reporte")]
+        public ReportDataV2 Reporte
+        {
+            get => reporte;
+            set => SetPropertyValue(nameof(Reporte), ref reporte, value);
+        }
+
+        [NonPersistent]
+        [XafDisplayName("Fecha Hasta"), VisibleInListView(false), VisibleInDetailView(false)]
+        public DateTime FechaHasta
+        {
+            get => fechaHasta;
+            set => SetPropertyValue(nameof(FechaHasta), ref fechaHasta, value);
+        }
+
         #endregion
 
         #region Collecciones
-        //[Association("EstadoFinanciero-Detalles"), XafDisplayName("Detalles"), DevExpress.Xpo.Aggregated]
-        //public XPCollection<EstadoFinanciero> Detalles => GetCollection<EstadoFinanciero>(nameof(Detalles));
+        [Association("EstadoFinanciero-Detalles"), XafDisplayName("Detalles"), DevExpress.Xpo.Aggregated]
+        public XPCollection<EstadoFinancieroModeloDetalle> Detalles => GetCollection<EstadoFinancieroModeloDetalle>(nameof(Detalles));
         #endregion
 
         //[Action(Caption = "My UI Action", ConfirmationMessage = "Are you sure?", ImageName = "Attention", AutoCommit = true)]

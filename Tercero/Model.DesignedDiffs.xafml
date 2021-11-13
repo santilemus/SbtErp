@@ -3,7 +3,7 @@
   <BOModel>
     <Class Name="SBT.Apps.Tercero.Module.BusinessObjects.Tercero" IsCloneable="True" />
   </BOModel>
-  <Options>
+  <Options DataAccessMode="Server">
     <LayoutManagerOptions RequiredFieldMark="*" />
   </Options>
   <SchemaModules>
@@ -423,12 +423,16 @@
       </Layout>
     </DetailView>
     <DetailView Id="TerceroTelefono_DetailView">
+      <Items>
+        <PropertyEditor Id="Tercero" Removed="True" />
+      </Items>
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
           <LayoutGroup Id="SimpleEditors" RelativeSize="100">
             <LayoutGroup Id="TerceroTelefono" RelativeSize="100" Caption="Teléfono">
-              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="4.7244094488188972" IsNewNode="True" />
-              <LayoutItem Id="Telefono" Index="1" RelativeSize="95.2755905511811" />
+              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="4.5333333333333332" IsNewNode="True" />
+              <LayoutItem Id="Telefono" Index="1" RelativeSize="95.466666666666669" />
+              <LayoutItem Id="Tercero" Removed="True" />
             </LayoutGroup>
             <LayoutGroup Id="XPObject" Caption="Oid" RelativeSize="90.813648293963254" Removed="True">
               <LayoutItem Id="Oid" Removed="True" />

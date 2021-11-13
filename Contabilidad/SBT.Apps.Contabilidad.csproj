@@ -130,8 +130,10 @@
     <Compile Include="BusinessObjects\CierreDiarioParam.cs" />
     <Compile Include="BusinessObjects\CierreMesParam.cs" />
     <Compile Include="BusinessObjects\BancoConciliacionDetalle.cs" />
-    <Compile Include="BusinessObjects\EstadoFinanciero.cs" />
-    <Compile Include="BusinessObjects\EstadoFinancieroDetalle.cs" />
+    <Compile Include="BusinessObjects\EFinancieroData.cs" />
+    <Compile Include="BusinessObjects\EstadoFinancieroModelo.cs" />
+    <Compile Include="BusinessObjects\EstadoFinancieroModeloDetalle.cs" />
+    <Compile Include="BusinessObjects\EstadoFinancieroParams.cs" />
     <Compile Include="BusinessObjects\PartidaAutomatica.cs" />
     <Compile Include="BusinessObjects\SaldoDiario.cs" />
     <Compile Include="BusinessObjects\SaldoMes.cs" />
@@ -160,6 +162,9 @@
     <Compile Include="Controllers\vcCajaChicaTransaccion.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controllers\vcEstadoFinanciero.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controllers\vcPartida.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -169,6 +174,12 @@
     <Compile Include="Controllers\vcPartidaModelo.Designer.cs">
       <DependentUpon>vcPartidaModelo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\vcSaldoDiario.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controllers\vcSaldoMes.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="DatabaseUpdate\Updater.cs" />
     <Compile Include="BusinessObjects\ETipoPartidaModelo.cs" />
     <Compile Include="ContabilidadModule.cs">
@@ -177,6 +188,7 @@
     <Compile Include="ContabilidadModule.Designer.cs">
       <DependentUpon>ContabilidadModule.cs</DependentUpon>
     </Compile>
+    <Compile Include="SaldoDeCuentaFunction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

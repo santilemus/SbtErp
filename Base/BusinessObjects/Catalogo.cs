@@ -89,7 +89,7 @@ namespace SBT.Apps.Contabilidad.BusinessObjects
 #endif
         [Size(20), XafDisplayName("Cuenta Padre"), RuleRequiredField("Catalogo.CuentaPadre_Requerido", "Save"), Index(2)]
         [Association("Padre-Cuentas"), DataSourceCriteria("[CtaResumen] == True && [Activa] == True")]
-        [ExplicitLoading]
+        [ExplicitLoading(Depth = 1)]
         public Catalogo Padre
         {
             get => padre;

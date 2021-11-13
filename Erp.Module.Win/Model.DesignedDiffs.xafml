@@ -5,4 +5,11 @@
     <SchemaModule Name="SystemModule" Version="20.2.5.0" IsNewNode="True" />
     <SchemaModule Name="SystemWindowsFormsModule" Version="20.2.5.0" IsNewNode="True" />
   </SchemaModules>
+  <Views>
+    <DetailView Id="CxPTransaccion_DetailView">
+      <Items>
+        <PropertyEditor Id="BancoTransaccion" View="BancoTransaccion_LookupListView_CxP" />
+      </Items>
+    </DetailView>
+  </Views>
 </Application>

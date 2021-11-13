@@ -145,6 +145,9 @@
     <Compile Include="Controllers\vcCxCTransaccion.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controllers\vcCxCTransaccionDetailView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controllers\vcVenta.cs">
       <SubType>Component</SubType>
     </Compile>

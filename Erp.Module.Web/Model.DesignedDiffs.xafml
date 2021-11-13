@@ -12,6 +12,11 @@
     </PropertyEditor>
   </ViewItems>
   <Views>
+    <DetailView Id="CxPTransaccion_DetailView">
+      <Items>
+        <PropertyEditor Id="BancoTransaccion" View="BancoTransaccion_LookupListView_CxP" />
+      </Items>
+    </DetailView>
     <ListView Id="Partida_Detalles_ListView" DetailRowMode="None" DataAccessMode="Server" IsFooterVisible="True" IsAdaptive="True" />
     <ListView Id="PartidaDetalle_ListView" DetailRowMode="None" />
   </Views>

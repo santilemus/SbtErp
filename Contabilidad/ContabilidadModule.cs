@@ -1,4 +1,5 @@
-﻿using DevExpress.ExpressApp;
+﻿using DevExpress.Data.Filtering;
+using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Updating;
 using DevExpress.ExpressApp.Xpo;
@@ -17,6 +18,8 @@ namespace SBT.Apps.Contabilidad
         {
             InitializeComponent();
             BaseObject.OidInitializationMode = OidInitializationMode.AfterConstruction;
+
+            CriteriaOperator.RegisterCustomFunction(new Module.SaldoDeCuentaFunction());
         }
         public override IEnumerable<ModuleUpdater> GetModuleUpdaters(IObjectSpace objectSpace, Version versionFromDB)
         {

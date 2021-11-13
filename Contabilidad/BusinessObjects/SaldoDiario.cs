@@ -24,11 +24,10 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         {
         }
 
-        public SaldoDiario(Session session, Empresa emp, Periodo per, Catalogo cta, DateTime dia, decimal valdebe, decimal valhaber, ETipoSaldoDia tipo,
+        public SaldoDiario(Session session, Periodo per, Catalogo cta, DateTime dia, decimal valdebe, decimal valhaber, ETipoSaldoDia tipo,
             decimal debeAjusteCons, decimal haberAjusteCons)
             : base(session)
         {
-            empresa = emp;
             periodo = per;
             cuenta = cta;
             fecha = dia;
@@ -41,7 +40,6 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         public override void AfterConstruction()
         {
             base.AfterConstruction();
-            empresa = null;
             periodo = null;
             cuenta = null;
             debe = 0.0m;
@@ -56,8 +54,6 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
 
         [Persistent("Oid"), Key(true), DbType("bigint")]
         Int64 oid = -1;
-        [Persistent(nameof(Empresa)), FetchOnly]
-        Empresa empresa;
         [DbType("int"), Persistent(nameof(Periodo)), FetchOnly]
         Periodo periodo;
         Catalogo cuenta;
@@ -77,12 +73,6 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         public Int64 Oid
         {
             get => oid;
-        }
-
-        [PersistentAlias(nameof(empresa)), XafDisplayName("Empresa")]
-        public Empresa Empresa
-        {
-            get => empresa;
         }
 
         [PersistentAlias(nameof(periodo)), XafDisplayName("Período")]

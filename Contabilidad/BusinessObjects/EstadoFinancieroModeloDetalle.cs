@@ -18,16 +18,14 @@ using DevExpress.ExpressApp.Core;
 
 namespace SBT.Apps.Contabilidad.Module.BusinessObjects
 {
-    [NonPersistent]
-    [NavigationItem(false), CreatableItem(false), ModelDefault("Caption", "Estado Financiero Detalle")]
+    [NavigationItem(false), CreatableItem(false), ModelDefault("Caption", "Estado Financiero Detalle"),
+        DefaultProperty(nameof(Nombre1)), Persistent(nameof(EstadoFinancieroModeloDetalle))]
     //[ImageName("BO_Contact")]
-    //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
-    //[Persistent("DatabaseTableName")]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
-    public class EstadoFinancieroDetalle : XPObject
+    public class EstadoFinancieroModeloDetalle : XPObject
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
-        public EstadoFinancieroDetalle(Session session)
+        public EstadoFinancieroModeloDetalle(Session session)
             : base(session)
         {
         }
@@ -45,10 +43,10 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         string nombre1;
         Catalogo cuenta1;
         Type tipoBO;
-        EstadoFinanciero estadoFinanciero;
+        EstadoFinancieroModelo estadoFinanciero;
 
-        //[Association("EstadoFinanciero-Detalles"), XafDisplayName("Estado Financiero")]
-        public EstadoFinanciero EstadoFinanciero
+        [Association("EstadoFinanciero-Detalles"), XafDisplayName("Estado Financiero"), Index(0)]
+        public EstadoFinancieroModelo EstadoFinanciero
         {
             get => estadoFinanciero;
             set => SetPropertyValue(nameof(EstadoFinanciero), ref estadoFinanciero, value);
@@ -63,24 +61,31 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         ///    Ver: https://docs.devexpress.com/eXpressAppFramework/113579/concepts/business-model-design/data-types-supported-by-built-in-editors/type-properties
         /// 2. ValueConverter, para hacer la propiedad persistente se tiliza la conversion a string y guardar el nombre del BO en la bd, incluyendo el namespace
         /// </remarks>
-        [XafDisplayName("Tipo Business Object"), Persistent(nameof(TipoBO))]
+        [XafDisplayName("Tipo Business Object"), Persistent(nameof(TipoBO)), Index(1)]
         [EditorAlias(EditorAliases.TypePropertyEditor)]
         [ValueConverter(typeof(DevExpress.ExpressApp.Utils.TypeToStringConverter)), ImmediatePostData]
-        [DataSourceCriteria("")]
+        [VisibleInListView(false)]
         public Type TipoBO
         {
             get => tipoBO;
             set => SetPropertyValue(nameof(TipoBO), ref tipoBO, value);
         }
 
-        [XafDisplayName("Cuenta Columna 1")]
+        [XafDisplayName("Cuenta Columna 1"), Index(2)]
         public Catalogo Cuenta1
         {
             get => cuenta1;
-            set => SetPropertyValue(nameof(Cuenta1), ref cuenta1, value);
+            set
+            {
+                bool changed = SetPropertyValue(nameof(Cuenta1), ref cuenta1, value);
+                if (!IsLoading && !IsSaving && changed && value != null)
+                {
+                    Nombre1 = value.Nombre;
+                }
+            }
         }
         
-        [Size(150), DbType("varchar(150)"), XafDisplayName("Nombre Columna 1")]
+        [Size(150), DbType("varchar(150)"), XafDisplayName("Nombre Columna 1"), Index(3)]
         [RuleRequiredField("EstadoFinancieroDetalle.Nombre1_Requerido", "Save")]
         public string Nombre1
         {
@@ -91,23 +96,29 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         [Size(1000), DbType("varchar(1000)"), XafDisplayName("Fórmula 1"), Persistent(nameof(Formula1))]
         [ElementTypeProperty(nameof(TipoBO))]
         [EditorAlias(EditorAliases.PopupExpressionPropertyEditor)]
-        [VisibleInListView(false)]
+        [VisibleInListView(false), Index(4)]
         //[ModelDefault("Width", "50")]
         [ModelDefault("RowCount", "3")]
+        [RuleRequiredField("EstadoFinancieroModeloDetalle.Formula1_Requerido", DefaultContexts.Save, TargetCriteria = "!([TipoBO] Is Null)")]
         public string Formula1
         {
             get => formula1;
             set => SetPropertyValue(nameof(Formula1), ref formula1, value);
         }
 
-        [XafDisplayName("Cuenta Columna 2")]
+        [XafDisplayName("Cuenta Columna 2"), Index(5)]
         public Catalogo Cuenta2
         {
             get => cuenta2;
-            set => SetPropertyValue(nameof(Cuenta2), ref cuenta2, value);
+            set
+            {
+                bool changed = SetPropertyValue(nameof(Cuenta2), ref cuenta2, value);
+                if (!IsLoading && !IsSaving && changed && value != null)
+                    Nombre2 = cuenta2.Nombre;
+            }
         }
 
-        [Size(150), DbType("varchar(150)"), XafDisplayName("Nombre Columna 2")]
+        [Size(150), DbType("varchar(150)"), XafDisplayName("Nombre Columna 2"), Index(6)]
         public string Nombre2
         {
             get => nombre2;
@@ -117,7 +128,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         [Size(1000), DbType("varchar(1000)"), XafDisplayName("Fórmula 2"), Persistent(nameof(Formula2))]
         [ElementTypeProperty(nameof(TipoBO))]
         [EditorAlias(EditorAliases.PopupExpressionPropertyEditor)]
-        [VisibleInListView(false)]
+        [VisibleInListView(false), Index(7)]
         //[ModelDefault("Width", "50")]
         [ModelDefault("RowCount", "3")]
         public string Formula2

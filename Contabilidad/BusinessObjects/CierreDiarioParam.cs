@@ -57,6 +57,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         public string   Bitacora { get; set; }
 
         [Browsable(false)]
+        [RuleFromBoolProperty(CustomMessageTemplate = "Fecha Hasta debe ser Mayor o Igual a Fecha Desde y deben ser del mismo mes y año")]
         //[RuleFromBoolProperty("CierreDiarioParams_ValidarPeriodo", "Save;DialogOK", SkipNullOrEmptyValues = false, UsedProperties = "FechaHasta",
         //    CustomMessageTemplate = "Fecha Hasta debe ser mayor o igual a Fecha Desde ")]
         public bool ValidarPeriodo

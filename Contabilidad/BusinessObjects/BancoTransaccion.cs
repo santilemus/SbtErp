@@ -91,7 +91,6 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         int chequeNo;
         [Size(8), DbType("varchar(8)"), Persistent("Serie")]
         string serie;
-        SBT.Apps.Tercero.Module.BusinessObjects.Tercero proveedor;
         string beneficiario;
         decimal monto;
         EBancoTransaccionEstado estado = EBancoTransaccionEstado.Digitado;
@@ -175,19 +174,6 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         {
             get => valorMoneda;
             set => SetPropertyValue(nameof(ValorMoneda), ref valorMoneda, value);
-        }
-
-        [Persistent("Proveedor"), XafDisplayName("Proveedor"), Index(6), VisibleInListView(false)]
-        [ExplicitLoading]
-        public SBT.Apps.Tercero.Module.BusinessObjects.Tercero Proveedor
-        {
-            get => proveedor;
-            set
-            {
-                var changed = SetPropertyValue(nameof(Proveedor), ref proveedor, value);
-                if (!IsLoading && !IsSaving && changed)
-                    Beneficiario = value.Nombre;
-            }
         }
 
         [XafDisplayName("Cheque No")]
@@ -362,7 +348,6 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
                 throw ex;
             }
         }
-
 
         //[Action(Caption = "My UI Action", ConfirmationMessage = "Are you sure?", ImageName = "Attention", AutoCommit = true)]
         //public void ActionMethod() {

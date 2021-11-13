@@ -87,7 +87,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         /// </remarks>
         public void PartidaLiquidacionOCierre(Partida partida, out string msg)
         {
-            saldosMes = uow.Query<SaldoMes>().Where(x => x.Empresa.Oid == fEmpresa.Oid && x.Periodo.Oid == partida.Periodo.Oid && x.Mes == x.Periodo.FechaFin.Month);
+            saldosMes = uow.Query<SaldoMes>().Where(x => x.Cuenta.Empresa.Oid == fEmpresa.Oid && x.Periodo.Oid == partida.Periodo.Oid && x.Mes == x.Periodo.FechaFin.Month);
             if (saldosMes == null || saldosMes.Count() == 0)
             {
                 msg = string.Format("No hay datos para generar la partida de {0}", Convert.ToString(partida.Fecha));

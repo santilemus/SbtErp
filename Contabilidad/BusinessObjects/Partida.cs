@@ -1,4 +1,5 @@
 ﻿using DevExpress.Data.Filtering;
+using DevExpress.Data.Filtering.Helpers;
 using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.ConditionalAppearance;
 using DevExpress.ExpressApp.DC;
@@ -293,6 +294,14 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             base.DoFechaChange(forceChangeEvents, oldValue);           
         }
 
+        [Action(Caption = "Test", ImageName = "Attention", AutoCommit = false)]
+        public void Test()
+        {
+            // saldo de octubre de la cuenta '11'
+            CriteriaOperator formula = CriteriaOperator.Parse("SaldoDeCuenta([This], [Empresa.Oid], [Periodo.Oid], 10, '11')");
+            ExpressionEvaluator eval = new ExpressionEvaluator(TypeDescriptor.GetProperties(this), formula);
+            var resultado = Convert.ToDecimal(eval.Evaluate(this));
+        }
 
         //[Action(Caption = "My UI Action", ConfirmationMessage = "Are you sure?", ImageName = "Attention", AutoCommit = true)]
         //public void ActionMethod() {

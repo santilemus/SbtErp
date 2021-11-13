@@ -26,14 +26,13 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         {
         }
 
-        public SaldoMes(Session session, Empresa emp, Periodo per, Catalogo cta, DateTime dia, decimal valdebe, decimal valhaber)
+        public SaldoMes(Session session, Periodo per, Catalogo cta, DateTime dia, decimal valdebe, decimal valhaber)
             : base(session)
         {
-            empresa = emp;
             periodo = per;
             cuenta = cta;
             mes = dia.Month;
-            mesAnio = Convert.ToInt32(string.Format("{0:D}{1:MMyyyy}", emp.Oid, dia));
+            mesAnio = Convert.ToInt32(string.Format("{0:D}{1:MMyyyy}", cta.Empresa.Oid, dia));
             debe = valdebe;
             haber = valhaber;
         }
@@ -41,7 +40,6 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         public override void AfterConstruction()
         {
             base.AfterConstruction();
-            empresa = null;
             periodo = null;
             mesAnio = 0;
             cuenta = null;
@@ -56,8 +54,6 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
 
         [Persistent(nameof(Oid)), Key(true), DbType("bigint")]
         Int64 oid = -1;
-        [Persistent(nameof(Empresa)), FetchOnly]
-        Empresa empresa;
         [DbType("int"), Persistent(nameof(Periodo)), FetchOnly]
         Periodo periodo;
         [Persistent(nameof(MesAnio)), DbType("int"), FetchOnly, Indexed(nameof(Cuenta), Name = "idxMesAnioCuenta_SaldoMes", Unique = true)]
@@ -81,12 +77,6 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             get { return oid; }
         }
 
-
-        [PersistentAlias(nameof(empresa)), XafDisplayName("Empresa"), Browsable(false), Index(0)]
-        public Empresa Empresa
-        {
-            get { return empresa; }
-        }
 
 
         [PersistentAlias(nameof(periodo)), XafDisplayName("Período"), Index(1)]

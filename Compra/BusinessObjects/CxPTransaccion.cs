@@ -88,7 +88,7 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
         }
 
         [XafDisplayName("Banco Transacción")]
-        [DataSourceCriteria("[BancoCuenta.Empresa] == '@This.Factura.Empresa' && [Clasificacion.Tipo] In (3, 4)")]   // clasificacion.Tipo in (Cheque, Nota Cargo)
+        [DataSourceCriteria("[BancoCuenta.Empresa] == '@This.Factura.Empresa'")] // && [Clasificacion.Tipo] In (3, 4)")]   // clasificacion.Tipo in (Cheque, Nota Cargo)
         [Appearance("CxPTransaccion.BancoTransaccion", Enabled = false, /*Visibility = ViewItemVisibility.Hide,*/ TargetItems = "BancoTransaccion",
              Criteria = "!([Tipo.Oid] == 7 || [Tipo.Oid] == 10 || [Tipo.Oid] == 11 || [Tipo.Oid] == 12 || [Tipo.Oid] == 18)", Context = "DetailView")]
         [Index(1)]

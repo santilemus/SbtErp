@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp;
+using DevExpress.ExpressApp.Editors;
+using DevExpress.ExpressApp.SystemModule;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Base.Module.Controllers;
 using SBT.Apps.CxC.Module.BusinessObjects;
@@ -35,9 +37,9 @@ namespace SBT.Apps.Facturacion.Module.Controllers
 
         protected override void OnDeactivated()
         {
-            base.OnDeactivated();
             ObjectSpace.ObjectChanged -= ObjectSpace_Changed;
             ObjectSpace.Committing -= ObjectSpace_Commiting;
+            base.OnDeactivated();
         }
 
         private void ObjectSpace_Commiting(object Sender, CancelEventArgs e)
@@ -219,5 +221,6 @@ namespace SBT.Apps.Facturacion.Module.Controllers
                     MostrarError($"La venta con {cxcDocumento.Venta.TipoFactura.Nombre} debe tener saldo >= 0 y Estado Debe para aplicarle {cxcDocumento.Tipo}");
             }
         }
+
     }
 }

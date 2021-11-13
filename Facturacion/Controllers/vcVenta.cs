@@ -10,6 +10,9 @@ using System.Linq;
 using DevExpress.Xpo;
 using DevExpress.ExpressApp.SystemModule;
 using SBT.Apps.Base.Module.BusinessObjects;
+using DevExpress.ExpressApp.ReportsV2;
+using System.Collections.Generic;
+using DevExpress.ExpressApp.Actions;
 
 namespace SBT.Apps.Facturacion.Module.Controllers
 {
@@ -25,6 +28,12 @@ namespace SBT.Apps.Facturacion.Module.Controllers
     {
         InventarioTipoMovimiento tipoMovimiento;
         private NewObjectViewController newController;
+
+        // agregado el 2/nov/2011 por SELM para filtrar los reportes de las facturas parametrizados en los formularios autorizados
+        PrintSelectionBaseController printController;
+        List<ChoiceActionItem> allItems = new List<ChoiceActionItem>();
+
+
         public vcVenta() : base()
         {
             TargetObjectType = typeof(SBT.Apps.Facturacion.Module.BusinessObjects.Venta);
@@ -40,6 +49,9 @@ namespace SBT.Apps.Facturacion.Module.Controllers
             newController = Frame.GetController<NewObjectViewController>();
             if (newController != null)
                 newController.ObjectCreated += NewController_ObjectCreated;
+
+            Frame.ViewChanged += Frame_ViewChanged;
+            View.SelectionChanged += View_SelectionChanged;
         }
 
         protected override void OnDeactivated()
@@ -48,6 +60,10 @@ namespace SBT.Apps.Facturacion.Module.Controllers
             ObjectSpace.Committing -= ObjectSpace_Committing;
             if (newController != null)
                 newController.ObjectCreated -= NewController_ObjectCreated;
+
+            Frame.ViewChanged -= Frame_ViewChanged;
+            View.SelectionChanged -= View_SelectionChanged;
+
             base.OnDeactivated();
         }
 
@@ -253,6 +269,45 @@ namespace SBT.Apps.Facturacion.Module.Controllers
 
         private void ExportSalesIvaF07(DateTime ADesde, DateTime AHasta)
         {
+        }
+
+        private void Frame_ViewChanged(object sender, ViewChangedEventArgs e)
+        {
+            printController = Frame.GetController<PrintSelectionBaseController>();
+            if (printController != null)
+            {
+                allItems = printController.ShowInReportAction.Items.ToList();
+                Venta vta = (Venta)View.CurrentObject;
+                if (vta == null || vta.AutorizacionDocumento == null || vta.AutorizacionDocumento.Reporte == null)
+                    return;
+                if (vta.AutorizacionDocumento != null && vta.AutorizacionDocumento.Reporte != null)
+                {
+                    DeleteFromShowInReportAction(vta);
+                }
+            }
+        }
+
+        private void View_SelectionChanged(object sender, EventArgs e)
+        {
+            Venta vta = (Venta)View.CurrentObject;
+            if (vta != null && printController != null)
+            {
+                if (vta.AutorizacionDocumento != null && vta.AutorizacionDocumento.Reporte != null)
+                {
+                    DeleteFromShowInReportAction(vta);
+                }
+            }
+        } 
+
+        private void DeleteFromShowInReportAction(Venta vta)
+        {
+            for (int i = printController.ShowInReportAction.Items.Count - 1; i >= 0; i--)
+            {
+                if ((printController.ShowInReportAction.Items[i].Caption.IndexOf("Impresión") >= 0 || 
+                     printController.ShowInReportAction.Items[i].Caption.IndexOf("Print") >= 0) &&
+                     printController.ShowInReportAction.Items[i].Caption != vta.AutorizacionDocumento.Reporte.DisplayName)
+                    printController.ShowInReportAction.Items.RemoveAt(i);
+            }
         }
 
     }

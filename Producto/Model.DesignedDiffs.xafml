@@ -390,7 +390,6 @@
             <LayoutGroup Id="TributoCategoria" RelativeSize="100">
               <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="4.6213093709884463" IsNewNode="True" />
               <LayoutItem Id="Categoria" Index="1" RelativeSize="3.3376123234916562" />
-              <LayoutItem Id="Tributo" Index="2" RelativeSize="92.0410783055199" />
             </LayoutGroup>
             <LayoutGroup Id="XPObject" Caption="Oid" RelativeSize="87.676508344030808" Removed="True">
               <LayoutItem Id="Oid" Removed="True" />
