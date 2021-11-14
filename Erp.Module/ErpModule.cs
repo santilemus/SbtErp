@@ -28,7 +28,24 @@ namespace SBT.Apps.Erp.Module
             base.Setup(application);
             // Manage various aspects of the application UI and behavior at the module level.
             application.CreateCustomLogonWindowObjectSpace += application_CreateCustomLogonWindowObjectSpace;
+            // agregado el 13/nov/2021 por selm
+            application.ObjectSpaceCreated += Application_ObjectSpaceCreated;
         }
+
+        // agregado el 13/nov/2021 por selm
+        private void Application_ObjectSpaceCreated(object sender, ObjectSpaceCreatedEventArgs e)
+        {
+            CompositeObjectSpace compositeObjectSpace = e.ObjectSpace as CompositeObjectSpace;
+            if (compositeObjectSpace != null)
+            {
+                if (!(compositeObjectSpace.Owner is CompositeObjectSpace))
+                {
+                    compositeObjectSpace.PopulateAdditionalObjectSpaces((XafApplication)sender);
+                }
+            }
+        }
+        //--
+
         public override void CustomizeTypesInfo(ITypesInfo typesInfo)
         {
             base.CustomizeTypesInfo(typesInfo);

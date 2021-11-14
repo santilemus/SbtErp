@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{079B99E0-C217-4989-9F00-43770CFD1AE7}</ProjectGuid>
+    <ProjectGuid>{579E294D-47B3-4E8A-94B8-A81A514F7405}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SBT.Apps.Facturacion.Module</RootNamespace>
-    <AssemblyName>SBT.Apps.Facturacion.Module</AssemblyName>
+    <RootNamespace>SBT.Apps.Activo.Module</RootNamespace>
+    <AssemblyName>SBT.Apps.Activo.Module</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -50,10 +50,6 @@
     <Reference Include="DevExpress.ExpressApp.Objects.v20.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.ExpressApp.ReportsV2.v20.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.ExpressApp.Security.Xpo.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.ExpressApp.v20.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
@@ -75,25 +71,7 @@
     <Reference Include="DevExpress.Printing.v20.2.Core">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.Data.Desktop.v20.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.Utils.v20.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
     <Reference Include="DevExpress.Xpo.v20.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.Charts.v20.2.Core">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.XtraCharts.v20.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.CodeParser.v20.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.XtraReports.v20.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="mscorlib">
@@ -120,58 +98,34 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BusinessObjects\Caja.cs" />
-    <Compile Include="BusinessObjects\Cartera.cs" />
-    <Compile Include="BusinessObjects\CarteraCliente.cs" />
-    <Compile Include="BusinessObjects\CxCDocumento.cs" />
-    <Compile Include="BusinessObjects\CxCDocumentoDetalle.cs" />
-    <Compile Include="BusinessObjects\CxCTransaccion.cs" />
-    <Compile Include="BusinessObjects\ECxCTransaccionEstado.cs" />
-    <Compile Include="BusinessObjects\LibroVentaConsumidor.cs" />
-    <Compile Include="BusinessObjects\LibroVentaContribuyente.cs" />
-    <Compile Include="BusinessObjects\Venta.cs" />
-    <Compile Include="BusinessObjects\AutorizacionDocumento.cs" />
-    <Compile Include="BusinessObjects\VentaDetalle.cs" />
-    <Compile Include="BusinessObjects\VentaResumenTributo.cs" />
-    <Compile Include="Controllers\vcAutorizacionDocumento.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controllers\vcCaja.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controllers\vcCartera.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controllers\vcCxCTransaccion.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controllers\vcCxCTransaccionDetailView.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controllers\vcVenta.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controllers\vcVentaDetalle.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="BusinessObjects\ActivoAjuste.cs" />
+    <Compile Include="BusinessObjects\ActivoAtributo.cs" />
+    <Compile Include="BusinessObjects\ActivoCatalogo.cs" />
+    <Compile Include="BusinessObjects\ActivoCategoria.cs" />
+    <Compile Include="BusinessObjects\ActivoDepreciacion.cs" />
+    <Compile Include="BusinessObjects\ActivoMejora.cs" />
+    <Compile Include="BusinessObjects\ActivoMovimiento.cs" />
+    <Compile Include="BusinessObjects\ActivoSeguro.cs" />
+    <Compile Include="BusinessObjects\ActivoSeguroDetalle.cs" />
+    <Compile Include="BusinessObjects\EEstadoDepreciacion.cs" />
+    <Compile Include="BusinessObjects\ETipoDepreciacion.cs" />
     <Compile Include="DatabaseUpdate\Updater.cs" />
-    <Compile Include="FacturacionModule.cs">
+    <Compile Include="Module.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="FacturacionModule.Designer.cs">
-      <DependentUpon>FacturacionModule.cs</DependentUpon>
+    <Compile Include="Module.Designer.cs">
+      <DependentUpon>Module.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="FacturacionModule.resx">
-      <DependentUpon>FacturacionModule.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Model.DesignedDiffs.xafml" />
+    <EmbeddedResource Include="Module.resx">
+      <DependentUpon>Module.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="BusinessObjects\ReadMe.txt" />
     <None Include="Controllers\ReadMe.txt" />
     <None Include="DatabaseUpdate\ReadMe.txt" />
@@ -183,17 +137,9 @@
       <Project>{A538FE93-206D-4869-BC40-FDC561F8C1D1}</Project>
       <Name>SBT.Apps.Base</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Contabilidad\SBT.Apps.Contabilidad.csproj">
-      <Project>{f8acb445-e391-4dc6-9ab3-b30ab53f7646}</Project>
-      <Name>SBT.Apps.Contabilidad</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Empleado\SBT.Apps.Empleado.csproj">
-      <Project>{05f004d2-9388-44db-a756-2ffb2eccae07}</Project>
+      <Project>{05F004D2-9388-44DB-A756-2FFB2ECCAE07}</Project>
       <Name>SBT.Apps.Empleado</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Producto\SBT.Apps.Producto.csproj">
-      <Project>{90d73cb9-2f45-473c-8fee-af118bb56c89}</Project>
-      <Name>SBT.Apps.Producto</Name>
     </ProjectReference>
     <ProjectReference Include="..\Tercero\SBT.Apps.Tercero.csproj">
       <Project>{5F15837D-D1E5-44DC-92F0-4F2EBE9C3F8D}</Project>
@@ -201,40 +147,20 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Images\caja.png" />
-    <EmbeddedResource Include="Images\caja_32x32.png" />
-    <EmbeddedResource Include="Images\cartera.png" />
-    <EmbeddedResource Include="Images\CarteraCliente.png" />
-    <EmbeddedResource Include="Images\CarteraCliente_32x32.png" />
-    <EmbeddedResource Include="Images\cartera_32x32.png" />
-    <EmbeddedResource Include="Images\CxCDocumento.png" />
-    <EmbeddedResource Include="Images\CxCDocumento_32x32.png" />
-    <EmbeddedResource Include="Images\CxCTransaccion.png" />
-    <EmbeddedResource Include="Images\CxCTransaccion_32x32.png" />
-    <EmbeddedResource Include="Images\TributoRegla.png" />
-    <EmbeddedResource Include="Images\TributoRegla_32x32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Images\AutorizacionDocumento.png" />
-    <EmbeddedResource Include="Images\AutorizacionDocumento_32x32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="UnusableNodes.xml">
-      <DependentUpon>Model.DesignedDiffs.xafml</DependentUpon>
-      <SubType>Designer</SubType>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="UnusableNodes1.xml">
-      <DependentUpon>Model.DesignedDiffs.xafml</DependentUpon>
-      <SubType>Designer</SubType>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="UnusableNodes2.xml">
-      <DependentUpon>Model.DesignedDiffs.xafml</DependentUpon>
-      <SubType>Designer</SubType>
-    </None>
+    <EmbeddedResource Include="Images\ActivoAjuste.png" />
+    <EmbeddedResource Include="Images\ActivoAjuste_32x32.png" />
+    <EmbeddedResource Include="Images\ActivoAtributo.png" />
+    <EmbeddedResource Include="Images\ActivoAtributo_32x32.png" />
+    <EmbeddedResource Include="Images\ActivoDepreciacion.png" />
+    <EmbeddedResource Include="Images\ActivoDepreciacion_32x32.png" />
+    <EmbeddedResource Include="Images\ActivoMejora.png" />
+    <EmbeddedResource Include="Images\ActivoMejora_32x32.png" />
+    <EmbeddedResource Include="Images\ActivoMovimiento.png" />
+    <EmbeddedResource Include="Images\ActivoMovimiento_32x32.png" />
+    <EmbeddedResource Include="Images\ActivoSeguro.png" />
+    <EmbeddedResource Include="Images\ActivoSeguroDetalle.png" />
+    <EmbeddedResource Include="Images\ActivoSeguroDetalle_32x32.png" />
+    <EmbeddedResource Include="Images\ActivoSeguro_32x32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

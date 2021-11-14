@@ -38,43 +38,43 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DevExpress.Data.v20.1">
+    <Reference Include="DevExpress.Data.v20.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.ExpressApp.AuditTrail.v20.1">
+    <Reference Include="DevExpress.ExpressApp.AuditTrail.v20.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.ExpressApp.CloneObject.v20.1">
+    <Reference Include="DevExpress.ExpressApp.CloneObject.v20.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.ExpressApp.ConditionalAppearance.v20.1">
+    <Reference Include="DevExpress.ExpressApp.ConditionalAppearance.v20.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.ExpressApp.Objects.v20.1">
+    <Reference Include="DevExpress.ExpressApp.Objects.v20.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.ExpressApp.v20.1">
+    <Reference Include="DevExpress.ExpressApp.v20.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.ExpressApp.Validation.v20.1">
+    <Reference Include="DevExpress.ExpressApp.Validation.v20.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.ExpressApp.ViewVariantsModule.v20.1">
+    <Reference Include="DevExpress.ExpressApp.ViewVariantsModule.v20.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.ExpressApp.Xpo.v20.1">
+    <Reference Include="DevExpress.ExpressApp.Xpo.v20.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.Persistent.Base.v20.1">
+    <Reference Include="DevExpress.Persistent.Base.v20.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.Persistent.BaseImpl.v20.1">
+    <Reference Include="DevExpress.Persistent.BaseImpl.v20.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.Printing.v20.1.Core">
+    <Reference Include="DevExpress.Printing.v20.2.Core">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.Xpo.v20.1">
+    <Reference Include="DevExpress.Xpo.v20.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="mscorlib">
@@ -93,9 +93,11 @@
   <ItemGroup>
     <Compile Include="BusinessObjects\Categoria.cs" />
     <Compile Include="BusinessObjects\ClasificacionAplicarImpuesto.cs" />
+    <Compile Include="BusinessObjects\EClaseTributo.cs" />
     <Compile Include="BusinessObjects\EClasificacion.cs" />
     <Compile Include="BusinessObjects\EClasificacionIVA.cs" />
-    <Compile Include="BusinessObjects\ETipoMovimientoInventario.cs" />
+    <Compile Include="BusinessObjects\EMetodoCosteoInventario.cs" />
+    <Compile Include="BusinessObjects\ETipoOperacionInventario.cs" />
     <Compile Include="BusinessObjects\Inventario.cs" />
     <Compile Include="BusinessObjects\Kardex.cs" />
     <Compile Include="BusinessObjects\Presentacion.cs" />
@@ -104,14 +106,27 @@
     <Compile Include="BusinessObjects\ProductoCodigoBarra.cs" />
     <Compile Include="BusinessObjects\ProductoEnsamble.cs" />
     <Compile Include="BusinessObjects\ProductoEquivalente.cs" />
-    <Compile Include="BusinessObjects\ProductoLote.cs" />
+    <Compile Include="BusinessObjects\InventarioLote.cs" />
     <Compile Include="BusinessObjects\ProductoPrecio.cs" />
     <Compile Include="BusinessObjects\ProductoProveedor.cs" />
+    <Compile Include="BusinessObjects\InventarioTipoMovimiento.cs" />
+    <Compile Include="BusinessObjects\Tributo.cs" />
+    <Compile Include="BusinessObjects\TributoCategoria.cs" />
+    <Compile Include="BusinessObjects\XPCustomFacturaDetalle.cs" />
+    <Compile Include="Controllers\vcInventario.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controllers\vcKardex.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controllers\vcProducto.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controllers\vcProducto.Designer.cs">
       <DependentUpon>vcProducto.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\vcProductoPrecio.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="DatabaseUpdate\Updater.cs" />
     <Compile Include="ProductoModule.cs">
@@ -173,10 +188,18 @@
     <EmbeddedResource Include="Images\ProductoEquivalente_32x32.png" />
     <EmbeddedResource Include="Images\Tributo.png" />
     <EmbeddedResource Include="Images\ProductoImpuesto_32x32.png" />
-    <EmbeddedResource Include="Images\ProductoLote.png" />
-    <EmbeddedResource Include="Images\ProductoLote_32x32.png" />
     <EmbeddedResource Include="Images\ProductoPrecio.png" />
     <EmbeddedResource Include="Images\ProductoPrecio_32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Images\inventario.png" />
+    <EmbeddedResource Include="Images\InventarioLote.png" />
+    <EmbeddedResource Include="Images\InventarioLote_32x32.png" />
+    <EmbeddedResource Include="Images\InventarioTipoMovimiento.png" />
+    <EmbeddedResource Include="Images\InventarioTipoMovimiento_32x32.png" />
+    <EmbeddedResource Include="Images\inventario_32x32.png" />
+    <EmbeddedResource Include="Images\kardex.png" />
+    <EmbeddedResource Include="Images\kardex_32x32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

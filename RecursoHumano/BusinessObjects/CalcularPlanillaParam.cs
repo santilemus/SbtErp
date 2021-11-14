@@ -14,6 +14,11 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
     /// <summary>
     /// Non Persistent BO, para los parametros necesarios para ejecutar el calculo de la planilla
     /// </summary>
+    /// <remarks>
+    /// ver informacion porque se hace esta implementacion en:
+    /// https://docs.devexpress.com/eXpressAppFramework/116106/business-model-design-orm/non-persistent-objects/how-to-show-persistent-objects-in-a-non-persistent-objects-view
+    /// https://docs.devexpress.com/eXpressAppFramework/DevExpress.ExpressApp.CompositeObjectSpace.AdditionalObjectSpaces
+    /// </remarks>
     [DomainComponent, XafDisplayName("Calcular Planilla")]
     public class CalcularPlanillaParam : INotifyPropertyChanged, IObjectSpaceLink
     {

@@ -30,9 +30,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         #region Propiedades
 
         ReportDataV2 reporte;
-        DateTime fechaHasta;
         bool activo;
-        Moneda moneda;
         string nombre;
         Empresa empresa;
 
@@ -51,14 +49,6 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             set => SetPropertyValue(nameof(Nombre), ref nombre, value);
         }
 
-        [XafDisplayName("Moneda"), Index(2)]
-        [RuleRequiredField("EstadoFinanciero.Moneda_Requerido", "Save")]
-        public Moneda Moneda
-        {
-            get => moneda;
-            set => SetPropertyValue(nameof(Moneda), ref moneda, value);
-        }
-
         [DbType("bit"), XafDisplayName("Activo"), RuleRequiredField("EstadoFinanciero.Activo_Requerido", "Save")]
         [Index(3)]
         public bool Activo
@@ -73,14 +63,6 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         {
             get => reporte;
             set => SetPropertyValue(nameof(Reporte), ref reporte, value);
-        }
-
-        [NonPersistent]
-        [XafDisplayName("Fecha Hasta"), VisibleInListView(false), VisibleInDetailView(false)]
-        public DateTime FechaHasta
-        {
-            get => fechaHasta;
-            set => SetPropertyValue(nameof(FechaHasta), ref fechaHasta, value);
         }
 
         #endregion

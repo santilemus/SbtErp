@@ -14,10 +14,12 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
     [DomainComponent]
     [DefaultClassOptions]
     [VisibleInReports]
-    [ModelDefault("Caption", "EstadoFinanciero"), NavigationItem(false)]
-    public class EFinancieroData: NonPersistentEntityObject
+    [ModelDefault("Caption", "EFinancieroDetalle"), NavigationItem(false)]
+    public class EFinancieroDetalle: NonPersistentObjectImpl
     {
 
+        string plural;
+        EstadoFinancieroModelo estadoFinancieroModelo;
         decimal valor2;
         int nivel2;
         string nombre2;
@@ -25,11 +27,18 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         int nivel1;
         string nombre1;
         int oid;
+
         [Key(false)]
         public int Oid
         {
             get => oid;
             set => SetPropertyValue(ref oid, value);
+        }
+
+        public EstadoFinancieroModelo EstadoFinancieroModelo
+        {
+            get => estadoFinancieroModelo;
+            set => SetPropertyValue(ref estadoFinancieroModelo, value);
         }
 
         [Size(150)]
@@ -44,7 +53,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             get => nivel1;
             set => SetPropertyValue(ref nivel1, value);
         }
-       
+
         public decimal Valor1
         {
             get => valor1;
@@ -68,6 +77,14 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         {
             get => valor2;
             set => SetPropertyValue(ref valor2, value);
+        }
+
+        
+        [Size(25)]
+        public string Plural
+        {
+            get => plural;
+            set => SetPropertyValue(ref plural, value);
         }
 
         public override void OnSaving()

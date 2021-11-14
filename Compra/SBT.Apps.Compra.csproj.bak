@@ -38,49 +38,55 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DevExpress.Data.v20.1">
+    <Reference Include="DevExpress.Data.v20.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.ExpressApp.CloneObject.v20.1">
+    <Reference Include="DevExpress.ExpressApp.CloneObject.v20.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.ExpressApp.ConditionalAppearance.v20.1">
+    <Reference Include="DevExpress.ExpressApp.ConditionalAppearance.v20.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.ExpressApp.Objects.v20.1">
+    <Reference Include="DevExpress.ExpressApp.Objects.v20.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.ExpressApp.ReportsV2.v20.1">
+    <Reference Include="DevExpress.ExpressApp.ReportsV2.v20.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.ExpressApp.v20.1">
+    <Reference Include="DevExpress.ExpressApp.v20.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.ExpressApp.Validation.v20.1">
+    <Reference Include="DevExpress.ExpressApp.Validation.v20.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.ExpressApp.ViewVariantsModule.v20.1">
+    <Reference Include="DevExpress.ExpressApp.ViewVariantsModule.v20.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.ExpressApp.Xpo.v20.1">
+    <Reference Include="DevExpress.ExpressApp.Xpo.v20.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.Persistent.Base.v20.1">
+    <Reference Include="DevExpress.Persistent.Base.v20.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.Persistent.BaseImpl.v20.1">
+    <Reference Include="DevExpress.Persistent.BaseImpl.v20.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.Printing.v20.1.Core">
+    <Reference Include="DevExpress.Printing.v20.2.Core">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.Utils.v20.1">
+    <Reference Include="DevExpress.Utils.v20.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.Xpo.v20.1">
+    <Reference Include="DevExpress.Xpo.v20.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.XtraReports.v20.1">
+    <Reference Include="DevExpress.Charts.v20.2.Core">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="DevExpress.XtraCharts.v20.2">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="DevExpress.XtraReports.v20.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="mscorlib">
@@ -107,13 +113,28 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessObjects\CxPDocumento.cs" />
+    <Compile Include="BusinessObjects\CxPDocumentoDetalle.cs" />
+    <Compile Include="BusinessObjects\CxPTransaccion.cs" />
     <Compile Include="BusinessObjects\EEstadoOrdenCompra.cs" />
     <Compile Include="BusinessObjects\EOrigenCompra.cs" />
     <Compile Include="BusinessObjects\ETipoCompra.cs" />
-    <Compile Include="BusinessObjects\FacturaCompra.cs" />
-    <Compile Include="BusinessObjects\FacturaCompraDetalle.cs" />
+    <Compile Include="BusinessObjects\CompraFactura.cs" />
+    <Compile Include="BusinessObjects\CompraFacturaDetalle.cs" />
+    <Compile Include="BusinessObjects\InventarioMovimiento.cs" />
+    <Compile Include="BusinessObjects\InventarioMovimientoDetalle.cs" />
+    <Compile Include="BusinessObjects\LibroCompra.cs" />
     <Compile Include="BusinessObjects\OrdenCompra.cs" />
     <Compile Include="BusinessObjects\OrdenCompraDetalle.cs" />
+    <Compile Include="Controllers\vcBancoTransaccionLookupListViewCxP.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controllers\vcCxPTransaccion.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controllers\vcInventarioMovimiento.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="DatabaseUpdate\Updater.cs" />
     <Compile Include="CompraModule.cs">
       <SubType>Component</SubType>
@@ -131,6 +152,7 @@
     <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="BusinessObjects\ReadMe.txt" />
     <None Include="Controllers\ReadMe.txt" />
     <None Include="DatabaseUpdate\ReadMe.txt" />
@@ -141,6 +163,10 @@
     <ProjectReference Include="..\Base\SBT.Apps.Base.csproj">
       <Project>{A538FE93-206D-4869-BC40-FDC561F8C1D1}</Project>
       <Name>SBT.Apps.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Contabilidad\SBT.Apps.Contabilidad.csproj">
+      <Project>{f8acb445-e391-4dc6-9ab3-b30ab53f7646}</Project>
+      <Name>SBT.Apps.Contabilidad</Name>
     </ProjectReference>
     <ProjectReference Include="..\Empleado\SBT.Apps.Empleado.csproj">
       <Project>{05F004D2-9388-44DB-A756-2FFB2ECCAE07}</Project>
@@ -154,6 +180,14 @@
       <Project>{5F15837D-D1E5-44DC-92F0-4F2EBE9C3F8D}</Project>
       <Name>SBT.Apps.Tercero</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Images\CompraFactura.png" />
+    <EmbeddedResource Include="Images\CompraFactura_32x32.png" />
+    <EmbeddedResource Include="Images\InventarioMovimiento.png" />
+    <EmbeddedResource Include="Images\InventarioMovimiento_32x32.png" />
+    <EmbeddedResource Include="Images\OrdenCompra.png" />
+    <EmbeddedResource Include="Images\OrdenCompra_32x32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

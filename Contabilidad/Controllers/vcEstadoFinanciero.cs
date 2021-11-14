@@ -12,6 +12,7 @@ using DevExpress.Persistent.BaseImpl;
 using DevExpress.Utils.Filtering.Internal;
 using DevExpress.Xpo;
 using DevExpress.XtraReports.UI;
+using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Base.Module.Controllers;
 using SBT.Apps.Contabilidad.Module.BusinessObjects;
 
@@ -20,7 +21,7 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
     public class vcEstadoFinanciero : ViewControllerBase
     {
         private PopupWindowShowAction pwsaGenerarEstadoFinanciero;
-        private DateTime fechaHasta;
+        private EstadoFinancieroParams efParams;
         public vcEstadoFinanciero() : base()
         {
 
@@ -48,6 +49,7 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
             TargetObjectType = typeof(SBT.Apps.Contabilidad.Module.BusinessObjects.EstadoFinancieroModelo);
             // pwsaGenerarEstadoFinanciero
             pwsaGenerarEstadoFinanciero = new PopupWindowShowAction(this, "pwsaGenerarEstadoFinanciero", DevExpress.Persistent.Base.PredefinedCategory.RecordsNavigation);
+            pwsaGenerarEstadoFinanciero.Caption = "Generar";
             pwsaGenerarEstadoFinanciero.TargetViewType = DevExpress.ExpressApp.ViewType.ListView;
             pwsaGenerarEstadoFinanciero.ToolTip = "Clic para generar el estado financiero que corresponde al modelo seleccionado";
             pwsaGenerarEstadoFinanciero.AcceptButtonCaption = "Generar";
@@ -63,12 +65,11 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
 
         private void pwsaGenerarEstadoFinanciero_CustomizePopupWindowsParams(object sender, CustomizePopupWindowParamsEventArgs e)
         {
-            IObjectSpace osParams = (NonPersistentObjectSpace)Application.CreateObjectSpace(typeof(EstadoFinancieroParams));
-            var pa = osParams.CreateObject<EstadoFinancieroParams>();
-            e.View = Application.CreateDetailView(osParams, pa);
-            //e.Size = new System.Drawing.Size(500, 400);
-            e.IsSizeable = false;
-            //vParam = e.View;
+            IObjectSpace osParams = Application.CreateObjectSpace(typeof(EstadoFinancieroParams));
+            EstadoFinancieroParams pa = osParams.CreateObject<EstadoFinancieroParams>();
+            DetailView paDetailView= Application.CreateDetailView(osParams, pa, true);
+            paDetailView.ViewEditMode = DevExpress.ExpressApp.Editors.ViewEditMode.Edit;
+            e.View = paDetailView;
         }
 
         /// <summary>
@@ -88,8 +89,8 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
             if (((EstadoFinancieroModelo)View.SelectedObjects[0]).Reporte == null)
                 return;   // no hay reporte vinculado al estado financiero
 
-            fechaHasta = ((EstadoFinancieroParams)e.PopupWindowViewCurrentObject).FechaHasta;
-            IObjectSpace os2 = (NonPersistentObjectSpace)Application.CreateObjectSpace(typeof(EFinancieroData));
+            efParams = ((EstadoFinancieroParams)e.PopupWindowViewCurrentObject);
+            IObjectSpace os2 = (NonPersistentObjectSpace)Application.CreateObjectSpace(typeof(EFinancieroDetalle));
 
             var reportData = ((EstadoFinancieroModelo)View.SelectedObjects[0]).Reporte;
             string handle = ReportDataProvider.ReportsStorage.GetReportContainerHandle(reportData);
@@ -123,9 +124,9 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
 
         private void os2_ObjectsGetting(Object sender, ObjectsGettingEventArgs e)
         {
-            if (e.ObjectType != typeof(EFinancieroData))
+            if (e.ObjectType != typeof(EFinancieroDetalle))
                 return;
-            BindingList<EFinancieroData> objects = new BindingList<EFinancieroData>();
+            BindingList<EFinancieroDetalle> objects = new BindingList<EFinancieroDetalle>();
             // preparar los datos para el informe
             IObjectSpace os = Application.CreateObjectSpace(typeof(SaldoMes));
             EstadoFinancieroModelo ef = (View.SelectedObjects[0] as EstadoFinancieroModelo);
@@ -134,10 +135,10 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
             var ctas2 = ef.Detalles.Where(y => y.Cuenta2 != null).Select(y => y.Cuenta2.Oid).ToArray();
             var ctas = ctas1.Concat(ctas2.ToArray<int>());
 
-            var saldos = os.GetObjects<SaldoMes>(new GroupOperator(new BinaryOperator("MesAnio", Convert.ToInt32(string.Format("{0:D}{1:MMyyyy}", ef.Empresa.Oid, fechaHasta))),
+            var saldos = os.GetObjects<SaldoMes>(new GroupOperator(new BinaryOperator("MesAnio", Convert.ToInt32(string.Format("{0:D}{1:MMyyyy}", ef.Empresa.Oid, efParams.FechaHasta))),
                                                       new InOperator("Cuenta.Oid", ctas)));
             
-            var saldosEF = saldos.Where(y => y.Periodo.Oid == fechaHasta.Year && y.Mes == fechaHasta.Month && ctas.Contains(y.Cuenta.Oid));
+            var saldosEF = saldos.Where(y => y.Periodo.Oid == efParams.FechaHasta.Year && y.Mes == efParams.FechaHasta.Month && ctas.Contains(y.Cuenta.Oid));
             
             foreach (EstadoFinancieroModeloDetalle item in ef.Detalles)
             { 
@@ -151,7 +152,7 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
                 }
                 else if (item.Formula1 != null)
                 {
-                    saldo1 = Convert.ToDecimal(ef.Evaluate(CriteriaOperator.Parse(item.Formula1, fechaHasta.Year, fechaHasta.Month)));
+                    saldo1 = Convert.ToDecimal(ef.Evaluate(CriteriaOperator.Parse(item.Formula1, efParams.FechaHasta.Year, efParams.FechaHasta.Month)));
                 }
                 if (item.Cuenta2 != null)
                 {
@@ -160,9 +161,9 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
                 }
                 else if (item.Formula2 != null)
                 {
-                    saldo2 = Convert.ToDecimal(ef.Evaluate(CriteriaOperator.Parse(item.Formula2, fechaHasta.Year, fechaHasta.Month)));
+                    saldo2 = Convert.ToDecimal(ef.Evaluate(CriteriaOperator.Parse(item.Formula2, efParams.FechaHasta.Year, efParams.FechaHasta.Month)));
                 }
-                objects.Add(new EFinancieroData()
+                objects.Add(new EFinancieroDetalle()
                 {
                     Oid = item.Oid,
                     Nombre1 = item.Nombre1,
@@ -171,6 +172,8 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
                     Nivel2 =  (item.Cuenta2 != null) ? item.Cuenta2.Nivel: 0,
                     Valor1 = saldo1,
                     Valor2 = saldo2,
+                    EstadoFinancieroModelo = ef,
+                    Plural = efParams.Moneda.Plural
                 });
             }
             e.Objects = objects;
@@ -178,8 +181,8 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
 
         private decimal SaldoCalculado(EstadoFinancieroModelo bo, string cuentaCodigo)
         {
-            CriteriaOperator formula = CriteriaOperator.Parse("SaldoDeCuenta(?, ?, ?, 10, '1')", bo, bo.Empresa.Oid, 
-                                                              fechaHasta.Year, fechaHasta.Month, cuentaCodigo);
+            CriteriaOperator formula = CriteriaOperator.Parse("SaldoDeCuenta(?, ?, ?, 10, '1')", bo, bo.Empresa.Oid,
+                                                              efParams.FechaHasta.Year, efParams.FechaHasta.Month, cuentaCodigo);
             ExpressionEvaluator eval = new ExpressionEvaluator(TypeDescriptor.GetProperties(bo), formula);
             return Convert.ToDecimal(eval.Evaluate(bo));
         }
