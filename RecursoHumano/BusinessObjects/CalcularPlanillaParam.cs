@@ -20,7 +20,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
     /// https://docs.devexpress.com/eXpressAppFramework/DevExpress.ExpressApp.CompositeObjectSpace.AdditionalObjectSpaces
     /// </remarks>
     [DomainComponent, XafDisplayName("Calcular Planilla")]
-    public class CalcularPlanillaParam : INotifyPropertyChanged, IObjectSpaceLink
+    public class CalcularPlanillaParam : NonPersistentObjectImpl
     {
         private IObjectSpace objectSpace;
         private IList<TipoPlanilla> tipoPlanillas;
@@ -72,23 +72,5 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
             FechaPago = AFechaPago;
         }
 
-        #region INotifyPropertyChanged
-        private void OnPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-        }
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        #endregion
-
-        #region IObjectSpaceLink
-        [Browsable(false)]
-        public IObjectSpace ObjectSpace
-        {
-            get { return objectSpace; }
-            set { objectSpace = value; }
-        }
-        #endregion
     }
 }

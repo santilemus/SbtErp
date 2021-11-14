@@ -103,11 +103,12 @@ namespace SBT.Apps.RecursoHumano.Module.Controllers
 
         private void pwsaCalcular_CustomizePopupWindowsParams(object sender, CustomizePopupWindowParamsEventArgs e)
         {
-            IObjectSpace oSpace = (NonPersistentObjectSpace)Application.ObjectSpaceProviders[1].CreateObjectSpace();
-            var pa = oSpace.CreateObject<CalcularPlanillaParam>();
-            pa.ObjectSpace = ObjectSpace; // Application.CreateObjectSpace(typeof(SBT.Apps.RecursoHumano.Module.BusinessObjects.TipoPlanilla));
-            e.View = Application.CreateDetailView(oSpace, pa);
-            e.View.Caption = "Calcular Planilla";
+            IObjectSpace oSpace = Application.CreateObjectSpace(typeof(CalcularPlanillaParam));
+            CalcularPlanillaParam pa = oSpace.CreateObject<CalcularPlanillaParam>();
+            DetailView paDetailView = Application.CreateDetailView(oSpace, pa, true);
+            paDetailView.ViewEditMode = DevExpress.ExpressApp.Editors.ViewEditMode.Edit;
+            paDetailView.Caption = "Calcular Planilla";
+            e.View = paDetailView;
             e.Size = new System.Drawing.Size(500, 500);
             e.IsSizeable = false;
             vParam = e.View;
