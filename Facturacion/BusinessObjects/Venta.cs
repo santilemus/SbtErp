@@ -634,7 +634,6 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             fTiposDeFacturas.Criteria = CriteriaOperator.Parse("[Categoria] == 15 && [Activo] == True && [Codigo] In ('COVE01', 'COVE02', 'COVE03', 'COVE04', 'COVE05')");
         }
 
-        [Action(Caption = "Anular", ConfirmationMessage = "Esta Segur@? de Anular el Documento", ImageName = "Attention", AutoCommit = true)]
         public override void Anular(AnularParametros AnularParams)
         {
             try

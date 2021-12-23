@@ -23,7 +23,6 @@ namespace SBT.Apps.RecursoHumano.Module.Controllers
     {
         private SimpleAction saAprobar;
         private PopupWindowShowAction pwsaCalcular;
-        private IContainer components;
         private DevExpress.ExpressApp.View vParam;
 
         public vcPlanilla() : base()
@@ -175,7 +174,6 @@ namespace SBT.Apps.RecursoHumano.Module.Controllers
                 plani.Session.CommitTransaction();
         }
 
-
         private void CalcularOperaciones(PlanillaDetalle planillaDetalle)
         {
             // la idea es ordenar las operaciones para su ejecucion: primero por tipo y luego por el Id de la operacion
@@ -199,15 +197,6 @@ namespace SBT.Apps.RecursoHumano.Module.Controllers
                     valor = op.Operacion.Valor;
                 planillaDetalle.Operaciones.Add(new PlanillaDetalleOperacion(planillaDetalle.Planilla.Session, planillaDetalle, op.Operacion, valor));
             }
-        }
-
-        private void InitializeComponent()
-        {
-            this.components = new System.ComponentModel.Container();
-            // 
-            // vcPlanilla
-            // 
-
         }
     }
 }

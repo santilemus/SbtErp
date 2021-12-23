@@ -35,6 +35,13 @@ namespace SBT.Apps.Erp.Module.Web.Controllers
             base.Dispose(disposing);
         }
 
+        protected override void DoInitializeComponent()
+        {
+            base.DoInitializeComponent();
+            TargetObjectType = typeof(SBT.Apps.Facturacion.Module.BusinessObjects.Venta);
+            FixColumnWidthInListView = ETipoAjusteColumnaListView.BestFit;
+        }
+
         /// <summary>
         /// Ejecuta la accion para descargar las ventas a contribuyentes a formato csv (anexo1)
         /// 

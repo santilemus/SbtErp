@@ -36,6 +36,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         }
 
         #region Propiedades
+        int orden;
         string formula2;
         string nombre2;
         Catalogo cuenta2;
@@ -50,6 +51,13 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         {
             get => estadoFinanciero;
             set => SetPropertyValue(nameof(EstadoFinanciero), ref estadoFinanciero, value);
+        }
+
+        [XafDisplayName("Orden"), Index(0)]
+        public int Orden
+        {
+            get => orden;
+            set => SetPropertyValue(nameof(Orden), ref orden, value);
         }
 
         /// <summary>

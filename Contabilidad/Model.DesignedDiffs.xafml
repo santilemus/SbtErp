@@ -17,8 +17,8 @@
     <LayoutManagerOptions RequiredFieldMark="*" />
   </Options>
   <SchemaModules>
-    <SchemaModule Name="CloneObjectModule" Version="20.2.5.0" IsNewNode="True" />
-    <SchemaModule Name="SystemModule" Version="20.2.5.0" IsNewNode="True" />
+    <SchemaModule Name="CloneObjectModule" Version="21.2.3.0" IsNewNode="True" />
+    <SchemaModule Name="SystemModule" Version="21.2.3.0" IsNewNode="True" />
   </SchemaModules>
   <Views>
     <DetailView Id="BancoChequera_DetailView">
@@ -493,7 +493,6 @@
             <LayoutGroup Id="EstadoFinancieroModelo" RelativeSize="100">
               <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="29.508196721311474" IsNewNode="True" />
               <LayoutItem Id="Nombre" Index="1" RelativeSize="21.311475409836067" />
-              <LayoutItem Id="Moneda" Index="2" RelativeSize="21.311475409836067" />
               <LayoutItem Id="Activo" Index="3" RelativeSize="27.868852459016395" />
             </LayoutGroup>
             <LayoutGroup Id="XPObject" Caption="Oid" Index="1" RelativeSize="68.637532133676089" Removed="True">
@@ -525,12 +524,13 @@
           <LayoutGroup Id="SizeableEditors" RelativeSize="100" Index="0">
             <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="4.6213093709884463" IsNewNode="True" />
             <LayoutItem Id="TipoBO" ViewItem="TipoBO" Index="1" RelativeSize="3.3376123234916562" IsNewNode="True" />
-            <LayoutItem Id="Cuenta1" ViewItem="Cuenta1" Index="2" RelativeSize="3.3376123234916562" IsNewNode="True" />
-            <LayoutItem Id="Nombre1" ViewItem="Nombre1" Index="3" RelativeSize="3.3376123234916562" IsNewNode="True" />
-            <LayoutItem Id="Formula1" RelativeSize="42.362002567394093" Index="4" />
-            <LayoutItem Id="Cuenta2" ViewItem="Cuenta2" Index="5" RelativeSize="3.3376123234916562" IsNewNode="True" />
-            <LayoutItem Id="Nombre2" ViewItem="Nombre2" Index="6" RelativeSize="3.3376123234916562" IsNewNode="True" />
-            <LayoutItem Id="Formula2" RelativeSize="36.328626444159177" Index="7" />
+            <LayoutItem Id="Orden" ViewItem="Orden" Index="2" RelativeSize="3.3376123234916562" IsNewNode="True" />
+            <LayoutItem Id="Cuenta1" ViewItem="Cuenta1" Index="3" RelativeSize="3.3376123234916562" IsNewNode="True" />
+            <LayoutItem Id="Nombre1" ViewItem="Nombre1" Index="4" RelativeSize="3.3376123234916562" IsNewNode="True" />
+            <LayoutItem Id="Formula1" RelativeSize="40.564826700898585" Index="5" />
+            <LayoutItem Id="Cuenta2" ViewItem="Cuenta2" Index="6" RelativeSize="3.3376123234916562" IsNewNode="True" />
+            <LayoutItem Id="Nombre2" ViewItem="Nombre2" Index="7" RelativeSize="3.3376123234916562" IsNewNode="True" />
+            <LayoutItem Id="Formula2" RelativeSize="34.78818998716303" Index="8" />
           </LayoutGroup>
           <LayoutGroup Id="SimpleEditors" RelativeSize="11.553273427471117" Removed="True">
             <LayoutGroup Id="EstadoFinancieroModeloDetalle" RelativeSize="100" Direction="Vertical" Removed="True">
@@ -551,6 +551,11 @@
         </LayoutGroup>
       </Layout>
     </DetailView>
+    <ListView Id="EstadoFinancieroModeloDetalle_ListView">
+      <Columns>
+        <ColumnInfo Id="Nombre2" Width="364" />
+      </Columns>
+    </ListView>
     <ListView Id="Partida_BancoTransaccionPartidas_ListView">
       <Columns>
         <ColumnInfo Id="BancoTransaccion" Width="228" />
@@ -615,8 +620,8 @@
       <Columns>
         <ColumnInfo Id="CtaPresupuesto" Width="93" Index="-1" />
         <ColumnInfo Id="NombreCuenta" Index="-1" />
-        <ColumnInfo Id="Cuenta" Width="175" />
         <ColumnInfo Id="Concepto" Index="1" Width="580" />
+        <ColumnInfo Id="Cuenta" Width="175" />
         <ColumnInfo Id="ValorDebe" Index="2" Width="127">
           <Summary>
             <ColumnSummaryItem Id="@c9d49e6d-77f4-4b89-a468-ff9a7792ce6a" SummaryType="Sum" IsNewNode="True" />

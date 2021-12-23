@@ -56,7 +56,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         public long Oid => oid;
 
         [XafDisplayName("Producto"), RuleRequiredField("", DefaultContexts.Save, CustomMessageTemplate = "Producto es requerido")]
-        //[ImmediatePostData(true)]
+        [ImmediatePostData(true)]
         public Producto Producto
         {
             get => producto;
@@ -76,7 +76,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         [RuleValueComparison("", DefaultContexts.Save, ValueComparisonType.GreaterThan, 0.0, SkipNullOrEmptyValues = false,
                                  CustomMessageTemplate = "Cantidad debe ser mayor o igual a 0.0")]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
-        //[ImmediatePostData(true)]
+        [ImmediatePostData(true)]  // no quitar, son necesarios en plataforma web
         public decimal Cantidad
         {
             get => cantidad;
@@ -98,7 +98,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         [RuleValueComparison("", DefaultContexts.Save, ValueComparisonType.GreaterThan, 0.0, SkipNullOrEmptyValues = false,
                                  CustomMessageTemplate = "Precio Unidad debe ser Mayor o Igual a 0.0m")]
         [ModelDefault("DisplayFormat", "{0:N4}"), ModelDefault("EditMask", "n4")]
-        //[ImmediatePostData(true)]
+        [ImmediatePostData(true)]  // no quitar, son necesarios en plataforma web
         public decimal PrecioUnidad
         {
             get => precioUnidad;

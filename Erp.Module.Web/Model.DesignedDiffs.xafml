@@ -2,9 +2,9 @@
 <Application>
   <Options CollectionsEditMode="Edit" />
   <SchemaModules>
-    <SchemaModule Name="CloneObjectModule" Version="20.2.5.0" IsNewNode="True" />
-    <SchemaModule Name="SystemAspNetModule" Version="20.2.5.0" IsNewNode="True" />
-    <SchemaModule Name="SystemModule" Version="20.2.5.0" IsNewNode="True" />
+    <SchemaModule Name="CloneObjectModule" Version="21.2.3.0" IsNewNode="True" />
+    <SchemaModule Name="SystemAspNetModule" Version="21.2.3.0" IsNewNode="True" />
+    <SchemaModule Name="SystemModule" Version="21.2.3.0" IsNewNode="True" />
   </SchemaModules>
   <ViewItems>
     <PropertyEditor Name="PropertyEditors">

@@ -1,6 +1,7 @@
 ﻿using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.Actions;
+using DevExpress.ExpressApp.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using System;
 using System.Linq;
@@ -47,8 +48,6 @@ namespace SBT.Apps.Base.Module.Controllers
 
         protected override void Dispose(bool disposing)
         {
-            if (saPurgeRecord != null)
-                saPurgeRecord.Dispose();
             DoDispose();
             base.Dispose(disposing);
         }
@@ -64,18 +63,25 @@ namespace SBT.Apps.Base.Module.Controllers
         }
 
         /// <summary>
-        /// Crea el Action para pugar los registros
+        /// Crea el Action para pugar los registros.
         /// </summary>
+        /// <remarks>
+        /// NO VA AQUI...PORQUE LA ACCION BORRA TODOS LOS OBJETOS DE LOS DIFERENTES BO, cuando no tienen referencia y
+        /// por lo tanto no es correcto definirlo en este viewcontroller ni los heredados. Evaluar si en el WindowController
+        /// se puede incorporar
+        /// </remarks>
         protected void CreatePurgeRecordAction()
         {
-            string sName = "saPurge";
-            saPurgeRecord = new SimpleAction(this, sName, DevExpress.Persistent.Base.PredefinedCategory.RecordEdit);
-            saPurgeRecord.Caption = "Purgar";
-            saPurgeRecord.ImageName = "trash-bin";
-            saPurgeRecord.TargetViewType = ViewType.ListView;
-            saPurgeRecord.PaintStyle = DevExpress.ExpressApp.Templates.ActionItemPaintStyle.Image;
-            saPurgeRecord.SelectionDependencyType = SelectionDependencyType.Independent;
-            saPurgeRecord.ConfirmationMessage = "Esta seguro de purgar los objetos borrados?";
+            if (saPurgeRecord == null)
+            {
+                saPurgeRecord = new SimpleAction(this, "saPurgeRecord", DevExpress.Persistent.Base.PredefinedCategory.Tools.ToString());
+                saPurgeRecord.Caption = "Purgar";
+                saPurgeRecord.ImageName = "trash-bin";
+                saPurgeRecord.TargetViewType = ViewType.ListView;
+                saPurgeRecord.PaintStyle = DevExpress.ExpressApp.Templates.ActionItemPaintStyle.Image;
+                saPurgeRecord.SelectionDependencyType = SelectionDependencyType.Independent;
+                saPurgeRecord.ConfirmationMessage = "Esta seguro de purgar los objetos borrados?";
+            }
         }
 
         /// <summary>
@@ -121,6 +127,19 @@ namespace SBT.Apps.Base.Module.Controllers
         protected void MostrarAdvertencia(string AMsg)
         {
             DoMensaje(InformationType.Warning, AMsg, "Advertencia");
+        }
+
+        /// <summary>
+        /// Purgar los registros de la eliminacion diferida, cuando los BO se implementan con XPO
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SaPurgeRecord_Execute(object sender, SimpleActionExecuteEventArgs e)
+        {
+            if (View.ObjectSpace is XPObjectSpace)
+                (View.ObjectSpace as XPObjectSpace).Session.PurgeDeletedObjects();
+            else
+                throw new NotImplementedException();
         }
     }
 }

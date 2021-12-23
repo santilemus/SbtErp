@@ -33,6 +33,7 @@ namespace SBT.Apps.Facturacion.Module.Controllers
         PrintSelectionBaseController printController;
         List<ChoiceActionItem> allItems = new List<ChoiceActionItem>();
 
+        private PopupWindowShowAction pwsaAnular;
 
         public vcVenta() : base()
         {
@@ -52,6 +53,10 @@ namespace SBT.Apps.Facturacion.Module.Controllers
 
             Frame.ViewChanged += Frame_ViewChanged;
             View.SelectionChanged += View_SelectionChanged;
+
+            pwsaAnular.Execute += PwsaAnular_Execute;
+            pwsaAnular.CustomizePopupWindowParams += PwsaAnular_CustomizePopupWindowParams;
+
         }
 
         protected override void OnDeactivated()
@@ -63,6 +68,9 @@ namespace SBT.Apps.Facturacion.Module.Controllers
 
             Frame.ViewChanged -= Frame_ViewChanged;
             View.SelectionChanged -= View_SelectionChanged;
+
+            pwsaAnular.Execute -= PwsaAnular_Execute;
+            pwsaAnular.CustomizePopupWindowParams -= PwsaAnular_CustomizePopupWindowParams;
 
             base.OnDeactivated();
         }
@@ -310,5 +318,38 @@ namespace SBT.Apps.Facturacion.Module.Controllers
             }
         }
 
+        protected override void DoInitializeComponent()
+        {
+            base.DoInitializeComponent();
+            pwsaAnular = new PopupWindowShowAction(this, "pwsaAnular", DevExpress.Persistent.Base.PredefinedCategory.RecordEdit.ToString());
+            pwsaAnular.TargetObjectType = typeof(SBT.Apps.Facturacion.Module.BusinessObjects.Venta);
+            pwsaAnular.ToolTip = "Clic para Anular el documento seleccionado";
+            pwsaAnular.SelectionDependencyType = SelectionDependencyType.RequireSingleObject;
+            pwsaAnular.Caption = "Anular";
+            pwsaAnular.ImageName = "Attention";
+            pwsaAnular.TargetViewId = "Venta_DetailView;Venta_DetailView_ccf;Venta_DetailView_fcf;Venta_DetailView_exportacion;Venta_DetailView_simplif;" +
+                "Venta_ListView;Venta_ListView_ccf;Venta_ListView_fcf;Venta_ListView_exportacion;Venta_ListView_Todo";
+            pwsaAnular.TargetObjectsCriteriaMode = TargetObjectsCriteriaMode.TrueForAll;
+            pwsaAnular.TargetObjectsCriteria = "[Estado] = 'Debe' && [Saldo] != 0.0";
+            pwsaAnular.AcceptButtonCaption = "Anular";
+            pwsaAnular.CancelButtonCaption = "Cancelar";
+            pwsaAnular.ConfirmationMessage = "Esta segur@ de anular el documento de venta seleccionado";
+        }
+
+        private void PwsaAnular_Execute(object sender, PopupWindowShowActionExecuteEventArgs e)
+        {
+            Venta vta = (Venta)View.CurrentObject;
+            vta.Anular(((AnularParametros)e.PopupWindowView.CurrentObject));
+            View.ObjectSpace.CommitChanges();
+        }
+
+        private void PwsaAnular_CustomizePopupWindowParams(object sender, CustomizePopupWindowParamsEventArgs e)
+        {
+            IObjectSpace osParam = Application.CreateObjectSpace(typeof(AnularParametros));
+            AnularParametros anularParams = osParam.CreateObject<AnularParametros>();
+            anularParams.FechaAnulacion = DateTime.Now;
+            e.View = Application.CreateDetailView(osParam, anularParams);
+            e.View.Caption = "Anular Venta";
+        }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.Web;
 using DevExpress.ExpressApp.Web.Controls;
+using System;
+using System.Collections.Generic;
 
 namespace SBT.Apps.Erp.Module.Web.Controllers
 {
@@ -61,5 +63,41 @@ namespace SBT.Apps.Erp.Module.Web.Controllers
             ((WebApplication)Application).PopupWindowManager.PopupShowing -= PopupWindowManager_PopupShowing;
             base.OnDeactivated();
         }
+
+        #region Para implementar SaveAndNew button en los popup de ingreso de datos de detalle
+        /// <summary>
+        /// Agregado el 18/nov/2021. Si da problemas con la funcionalidad ya disponible, separar en otro WindowController
+        /// Es parte de la implementacion del action Save And New (Guardar y Nuevo) en los BO que se editan en un
+        /// popup porque corresponden al detail de una relacion Master-Detail. Mas info en:
+        /// https://supportcenter.devexpress.com/ticket/details/t939993/xaf-save-and-new-popup-implementation-issue
+        /// </summary>
+
+        private Stack<Frame> framesMap = new Stack<Frame>();
+        public void AddFrame(Frame frame)
+        {
+            if (!framesMap.Contains(frame))
+            {
+                framesMap.Push(frame);
+                frame.Disposed += frame_Disposed;
+            }
+        }
+        public Frame ParentFrame
+        {
+            //get { return framesMap.Peek(); }
+            get { return framesMap.Count > 0 ? framesMap.Peek() : null; }
+        }
+
+        private void frame_Disposed(object sender, EventArgs e)
+        {
+            Frame frame = framesMap.Pop();
+            frame.Disposed -= frame_Disposed;
+        }
+
+        public void Pop()
+        {
+            framesMap.Pop();
+        }
+
+        #endregion
     }
 }

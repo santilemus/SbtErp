@@ -61,7 +61,7 @@ namespace SBT.Apps.Erp.Win {
 #else
             if(System.Diagnostics.Debugger.IsAttached) {
                 e.Updater.Update();
-                e.Handled = true;
+                ////e.Handled = true;
             }
             else {
 				string message = "The application cannot connect to the specified database, " +

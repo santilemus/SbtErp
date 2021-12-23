@@ -161,6 +161,7 @@
     <Compile Include="BusinessObjects\EClaseDocumentoCompraVenta.cs" />
     <Compile Include="BusinessObjects\EClasificacionContribuyente.cs" />
     <Compile Include="BusinessObjects\ECondicionPago.cs" />
+    <Compile Include="BusinessObjects\ECuentaEspecial.cs" />
     <Compile Include="BusinessObjects\EFormaPago.cs" />
     <Compile Include="BusinessObjects\ETipoOperacion.cs" />
     <Compile Include="BusinessObjects\ETipoTarjeta.cs" />

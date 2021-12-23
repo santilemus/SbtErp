@@ -168,6 +168,9 @@
     <Compile Include="Controllers\vcPartida.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controllers\vcPartidaDetalle.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controllers\vcPartidaModelo.cs">
       <SubType>Component</SubType>
     </Compile>

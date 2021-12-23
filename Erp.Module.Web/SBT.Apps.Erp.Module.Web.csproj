@@ -175,6 +175,10 @@
     <Compile Include="Controllers\PopupWindowController.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controllers\SaveAndNew\CustomWebNewObjectViewController.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controllers\SaveAndNew\SaveAndNewViewControllerWeb.cs" />
     <Compile Include="Controllers\vcActivoCatalogoWeb.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -234,6 +238,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controllers\vcTerceroWeb.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controllers\vcVentaDetalleWeb.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controllers\vcVentaWeb.cs">
@@ -315,6 +322,7 @@
       <Name>SBT.Apps.Tercero</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

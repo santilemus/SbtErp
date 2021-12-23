@@ -13,6 +13,7 @@ using DevExpress.Web;
 using DevExpress.ExpressApp.SystemModule;
 using DevExpress.ExpressApp.Web.SystemModule;
 using SBT.Apps.Base.Module.BusinessObjects;
+using DevExpress.ExpressApp.Web.Controls;
 
 namespace SBT.Apps.Erp.Web {
     public class Global : System.Web.HttpApplication {
@@ -58,6 +59,15 @@ namespace SBT.Apps.Erp.Web {
             WebApplication.Instance.SetLanguage("es");
             WebApplication.Instance.SetFormattingCulture("es");
             WebApplication.Instance.CustomizeFormattingCulture += Instance_CustomizeFormattingCulture;
+
+            /// Agregado y comentario por SELM el 18/nov/2021. Es para reemplazar por un usercontrol personalizado
+            /// para los popup (pagina) que corresponde al detalle, en los casos de master - detail
+            /// WebApplication.Instance.Settings.DialogTemplateContentPath = "DialogTemplateContentExt.ascx"; 
+            /// -- fin
+
+            /// Agregado y comentario por SELM el 18/nov/2021. Es para el template de los popup que corresponde al detalle
+            /// en los casos de master - detail. PopupTemplateType es la enumeracion con los templates disponibles
+            //XafPopupWindowControl.PopupTemplateType = PopupTemplateType.ByDefault; 
 
             WebApplication.Instance.Setup();
             WebApplication.Instance.Start();

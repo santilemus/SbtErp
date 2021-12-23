@@ -2,6 +2,7 @@
 using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.SystemModule;
 using DevExpress.Persistent.Validation;
+using DevExpress.ExpressApp.Actions;
 using SBT.Apps.Base.Module.Controllers;
 using SBT.Apps.Facturacion.Module.BusinessObjects;
 using System;
@@ -40,6 +41,7 @@ namespace SBT.Apps.Facturacion.Module.Controllers
                 //    newController.ObjectCreated -= NewController_ObjectCreated;
                 newController.ObjectCreating -= NewController_ObjectCreating;
             }
+            ObjectSpace.ObjectChanged -= ObjectSpace_ObjectChanged;
             base.OnDeactivated();
         }
 
@@ -110,7 +112,7 @@ namespace SBT.Apps.Facturacion.Module.Controllers
                 catch
                 {
                     // evaluar que esto funcione bien en plataforma web
-                    MostrarError("Debe ingrear los datos requeridos del encabezado del documento, antes de ingresar el detalle");
+                    MostrarError("Debe ingresar los datos requeridos del encabezado del documento, antes de ingresar el detalle");
                     e.Cancel = true;
                 }
             }

@@ -75,7 +75,7 @@ namespace SBT.Apps.Contabilidad.BusinessObjects
 #endif
         [Association("Empresa-Catalogos")]
         [XafDisplayName("Empresa"), Index(1), RuleRequiredField("Catalogo.Empresa_Requerida", "Save"), VisibleInListView(false)]
-        [Browsable(false)]
+        [Browsable(true), VisibleInReports(true)]
         public Empresa Empresa
         {
             get => empresa;
@@ -256,24 +256,5 @@ namespace SBT.Apps.Contabilidad.BusinessObjects
         //    // Trigger a custom business logic for the current record in the UI (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112619.aspx).
         //    this.PersistentProperty = "Paid";
         //}
-    }
-
-    public enum ECuentaEspecial
-    {
-        Null = 0,
-        [XafDisplayName("Capital Social")]
-        CapitalSocial = 1,
-        [XafDisplayName("Liquidación")]
-        Liquidacion = 2,
-        [XafDisplayName("Reserva Legal del Ejercicio")]
-        ReservaLegalEjercicio = 3,
-        [XafDisplayName("Reserva Legal Ejercicios Anteriores")]
-        ReservaLegalAnterior = 4,
-        [XafDisplayName("Renta a Pagar")]
-        RentaPagar = 5,
-        [XafDisplayName("Utilidad del Ejercicio")]
-        UtilidadEjercicio = 6,
-        [XafDisplayName("Pérdida del Ejercicio")]
-        PerdidaEjercicio = 7
     }
 }

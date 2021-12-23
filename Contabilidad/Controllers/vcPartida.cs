@@ -1,6 +1,7 @@
 ﻿using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.Actions;
+using DevExpress.ExpressApp.Editors;
 using DevExpress.ExpressApp.Xpo;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
@@ -125,11 +126,11 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
             saApertura.ImageName = "book";
             // saPartidaLiquidacion
             saLiquidacionCierre = new SimpleAction(this, "saPartidaLiquidacion", DevExpress.Persistent.Base.PredefinedCategory.ObjectsCreation);
-            saLiquidacionCierre.Caption = "Partida Liquidación";
+            saLiquidacionCierre.Caption = "Liquidación y Cierre";
             saLiquidacionCierre.TargetObjectType = typeof(SBT.Apps.Contabilidad.Module.BusinessObjects.Partida);
             saLiquidacionCierre.TargetViewType = ViewType.DetailView;
             saLiquidacionCierre.ToolTip = "Clic para generar la partida de Liquidación o de cierre del período";
-            saLiquidacionCierre.TargetObjectsCriteria = "[Tipo] == 4 && [Detalles][].Count() == 0";
+            saLiquidacionCierre.TargetObjectsCriteria = "([Tipo] == 4 && [Detalles][].Count() == 0) || ([Tipo] == 5 && [Detalles][].Count() == 0)";
             saLiquidacionCierre.TargetObjectsCriteriaMode = TargetObjectsCriteriaMode.TrueForAll;
             saLiquidacionCierre.ConfirmationMessage = "Confirmar que desea generar la Partida?";
             saLiquidacionCierre.ImageName = "recibo";
@@ -150,10 +151,11 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
             Partida ptda = (e.CurrentObject as Partida);
             if (ptda.Detalles.Count() == 0)
                 return;
-            UnitOfWork uow = new UnitOfWork(((XPObjectSpace)ObjectSpace).Session.DataLayer);
-            PartidaAutomatica partidaAutomatica = new PartidaAutomatica(uow, ptda.Empresa);
+            var le = ((DetailView)View).FindItem("Detalles");
+            var li = ((ListPropertyEditor)le).ListView;
+            PartidaAutomatica partidaAutomatica = new PartidaAutomatica(ObjectSpace, ptda, li);
             string sMsg = string.Empty;
-            partidaAutomatica.PartidaApertura(ptda, out sMsg);
+            partidaAutomatica.PartidaApertura(out sMsg);
         }
 
         /// <summary>
@@ -168,9 +170,9 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
                 e.Cancel = true;
                 MostrarError($"El proceso se cancela porque una propiedad para buscar la partida de {Convert.ToString((View.CurrentObject as Partida).Tipo)} en el período actual es nula");
             }
-            var ptda = ObjectSpace.FindObject<Partida>(CriteriaOperator.Parse("[Empresa.Oid] == ? && [Periodo.Oid] == ? && [Tipo] == 0",
-                (View.CurrentObject as Partida).Empresa.Oid, (View.CurrentObject as Partida).Periodo.Oid));
-            if (ptda != null)
+            var ptda = ObjectSpace.FindObject<Partida>(CriteriaOperator.Parse("[Empresa.Oid] == ? && [Periodo.Oid] == ? && [Tipo] == ?",
+                (View.CurrentObject as Partida).Empresa.Oid, (View.CurrentObject as Partida).Periodo.Oid, (View.CurrentObject as Partida).Tipo));
+            if (ptda != null && (ptda != View.CurrentObject || !ObjectSpace.IsNewObject(View.CurrentObject)))
             {
                 e.Cancel = true;
                 MostrarError($"Ya existe una partida de {Convert.ToString((View.CurrentObject as Partida).Tipo)}. Solo puede existir una por período");
@@ -180,12 +182,35 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
         private void saPartidaLiquidacionCierre_Execute(Object sender, SimpleActionExecuteEventArgs e)
         {
             Partida ptda = (e.CurrentObject as Partida);
-            if (ptda.Detalles.Count() == 0)
+            if (ptda.Detalles.Count() != 0)
+            {
+                MostrarInformacion("La partida no se va a generar, porque ya existe uno o más detalles");
                 return;
-            UnitOfWork uow = new UnitOfWork(((XPObjectSpace)ObjectSpace).Session.DataLayer);
-            PartidaAutomatica partidaAutomatica = new PartidaAutomatica(uow, ptda.Empresa);
+            }
             string sMsg = string.Empty;
-            partidaAutomatica.PartidaLiquidacionOCierre(ptda, out sMsg);
+            var le = ((DetailView)View).FindItem("Detalles");
+            var lv = ((ListPropertyEditor)le).ListView;
+            if (le != null && lv != null)
+            {
+                if (ptda.Tipo == ETipoPartida.Liquidacion)
+                {
+                    PartidaAutomatica partidaAutomatica = new PartidaAutomatica(ObjectSpace, ptda, lv);
+                    partidaAutomatica.PartidaLiquidacion(out sMsg);
+                }
+                else if (ptda.Tipo == ETipoPartida.Cierre)
+                {
+                    PartidaAutomatica partidaAutomatica = new PartidaAutomatica(ObjectSpace, ptda, lv);
+                    partidaAutomatica.PartidaDeCierre(out sMsg);
+                }
+                lv.Refresh();
+                ptda.UpdateTotDebe(true);
+                ptda.UpdateTotHaber(true);
+            }
+            else
+            {
+                MostrarInformacion("La partida no se va a generar porque no se encontró el ViewItem Detalles o el ListView correspondiente");
+                return;
+            }
         }
 
         private void DoCustomizePopupWindowCierre(object sender, CustomizePopupWindowParamsEventArgs e)
@@ -364,6 +389,7 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
             //var detalles = ObjectSpace.ModifiedObjects
             //                 .Cast<PartidaDetalle>()
             //                 .Where(x => x.GetType() == typeof(SBT.Apps.Contabilidad.Module.BusinessObjects.PartidaDetalle));
+            /*
             using (UnitOfWork uow = new UnitOfWork(((XPObjectSpace)ObjectSpace).Session.DataLayer))
             {
                 var res = from d in (View.CurrentObject as Partida).Detalles
@@ -398,6 +424,7 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
                 AcumularSaldosDiarios(ctas, ref cctas);
                 AcumularSaldosMes(cctas);
             }
+            */
         }
 
         /// <summary>

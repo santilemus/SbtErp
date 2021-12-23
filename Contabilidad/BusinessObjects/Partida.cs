@@ -27,6 +27,10 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
     [Appearance("Partida_Incompleta", AppearanceItemType = "ViewItem", TargetItems = "*",
         Criteria = "([TotalDebe] Is Null || [TotalDebe] == 0) || ([TotalHaber] Is Null || [TotalHaber] == 0) || ([TotalDebe] != [TotalHaber])",
         FontColor = "Red", Context = "ListView", Priority = 1)]
+    [Appearance("Partida.TransaccionPartidas Ocultar", Criteria = "This is not null && (IsNewObject(This) || [BancoTransaccionPartidas].Count() > 0)", 
+            TargetItems = nameof(BancoTransaccionPartidas), AppearanceItemType = "ViewItem",
+            Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "DetailView")]
+
     [ListViewFilter("Todos", "")]
     [ListViewFilter("Partidas de Días Abiertos", "[Mayorizada] == False")]
     [ListViewFilter("Partidas Incompletas", "([TotalDebe] Is Null || [TotalDebe] == 0) || ([TotalHaber] Is Null || [TotalHaber] == 0) || ([TotalDebe] != [TotalHaber])")]
@@ -45,6 +49,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             base.AfterConstruction();
             mayorizada = false;
             elaboro = null;
+            Numero = 1;
             Oid = -1;
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
@@ -85,8 +90,6 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         }
 
         [DbType("smallint"), Persistent("Tipo"), XafDisplayName("Tipo"), RuleRequiredField("Partida.Tipo_Requerido", DefaultContexts.Save)]
-        [RuleUniqueValue("Partida.Tipo_AperturaLiquidacionCierreUnico", DefaultContexts.Save, CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.InTransaction, 
-            TargetCriteria = "[Tipo] == 0 || [Tipo] == 4 || [Tipo] == 5")]
         public ETipoPartida Tipo
         {
             get => tipo;
@@ -165,6 +168,12 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             get { return mayorizada; }
         }
 
+        //[Appearance("Partida.TransaccionPartidas Mostrar", TargetItems = nameof(BancoTransaccionPartidas), AppearanceItemType = "ViewItem",
+        //    Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "DetailView")]
+        //private bool HideBancoTransaccionPartidasCollection()
+        //{
+        //    return (Session.IsNewObject(this) || BancoTransaccionPartidas.Count == 0);
+        //}
 
         #endregion
 
@@ -187,10 +196,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         public void UpdateTotDebe(bool forceChangeEvents)
         {
             decimal? oldTotalDebe = totalDebe;
-            decimal tempDebe = 0.0m;
-            foreach (PartidaDetalle detalle in Detalles)
-                tempDebe += detalle.ValorDebe;
-            totalDebe = tempDebe;
+            totalDebe = Convert.ToDecimal(Evaluate(CriteriaOperator.Parse("[Detalles].Sum([ValorDebe])")));
             if (forceChangeEvents)
                 OnChanged(nameof(TotalDebe), oldTotalDebe, totalDebe);
         }
@@ -198,10 +204,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         public void UpdateTotHaber(bool forceChangeEvents)
         {
             decimal? oldTotalHaber = totalHaber;
-            decimal tempHaber = 0.0m;
-            foreach (PartidaDetalle detalle in Detalles)
-                tempHaber += detalle.ValorHaber;
-            totalHaber = tempHaber;
+            totalHaber = Convert.ToDecimal(Evaluate(CriteriaOperator.Parse("[Detalles].Sum([ValorHaber])")));
             if (forceChangeEvents)
                 OnChanged(nameof(TotalHaber), oldTotalHaber, totalHaber);
         }
@@ -239,9 +242,9 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         }
 
         [Browsable(false)]
-        [RuleFromBoolProperty("Partida.Tipo No Valido", DefaultContexts.Save, 
-            "Tipo de Partida no es válido porque ya existe o porque ya existe una partida de liquidación",
-            SkipNullOrEmptyValues = false, UsedProperties = "Tipo", TargetCriteria = "[Tipo] <= 4 && [Periodo] != Null")]
+        [RuleFromBoolProperty("Partida.Tipo No Valido", DefaultContexts.Save,
+            "Tipo {TargetObject.Tipo} no es válido porque ya existe",
+            SkipNullOrEmptyValues = false, UsedProperties = "Tipo", TargetCriteria = "[Periodo.Oid] = GetYear([Fecha]) And [Tipo] In ('Diario', 'Liquidacion', 'Cierre')")]
         public bool TipoPartidaValida
         {
             get
@@ -277,13 +280,14 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
 
         protected override void OnSaving()
         {
-            base.OnSaving();
-            if (Session.IsNewObject(this))
+            if (!(Session is NestedUnitOfWork) && (Session.DataLayer != null) && Session.IsNewObject(this) &&
+                (Session.ObjectLayer is SimpleObjectLayer) && (Numero == null || Numero == 0))
             {
                 Empleado.Module.BusinessObjects.Empleado empleado = (((Usuario)SecuritySystem.CurrentUser).GetMemberValue("Empleado") as Empleado.Module.BusinessObjects.Empleado);
                 if (empleado != null)
                     elaboro = Session.GetObjectByKey<Empleado.Module.BusinessObjects.Empleado>(empleado.Oid);
             }
+            base.OnSaving();
         }
 
         protected override void DoFechaChange(bool forceChangeEvents, DateTime oldValue)

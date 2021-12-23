@@ -76,7 +76,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
             get { return iva; }
         }
 
-        [PersistentAlias("[VentaGravada] + [IVA]")]
+        [PersistentAlias("[Gravada] + [Iva]")]
         [XafDisplayName("SubTotal"), Index(11)]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         [DetailViewLayout("Totales", LayoutGroupType.SimpleEditorsGroup, 2)]
