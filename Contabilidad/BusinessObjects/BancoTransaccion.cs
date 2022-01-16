@@ -32,7 +32,8 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "DetailView", TargetItems = "Abono;IdReferencia;CxPTransacciones")]
     [Appearance("BancoTransaccion.Remesa y Abono", Criteria = "[Clasificacion.Tipo] == 1 || [Clasificacion.Tipo] == 2", AppearanceItemType = "ViewItem",
         Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "DetailView", TargetItems = "ChequeNo;Proveedor;Beneficiario;Cargo")]
-
+    [Appearance("BancoCuenta.TarjetaCredito", Criteria = "[Cuenta.Tipo Cuenta] = 'Tarjeta'", AppearanceItemType = "ViewItem", TargetItems = "BancoCuenta",
+        Context = "DetailView")]
 
     [ImageName(nameof(BancoTransaccion))]
     [DevExpress.Xpo.OptimisticLocking(Enabled = true, LockingKind = OptimisticLockingBehavior.ConsiderOptimisticLockingField)]

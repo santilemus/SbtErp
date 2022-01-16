@@ -18,6 +18,8 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
     public class EFinancieroDetalle: NonPersistentObjectImpl
     {
 
+        int orden;
+        DateTime fechaHasta;
         string plural;
         EstadoFinancieroModelo estadoFinancieroModelo;
         decimal valor2;
@@ -79,12 +81,24 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             set => SetPropertyValue(ref valor2, value);
         }
 
-        
+
         [Size(25)]
         public string Plural
         {
             get => plural;
             set => SetPropertyValue(ref plural, value);
+        }
+
+        public DateTime FechaHasta
+        {
+            get => fechaHasta;
+            set => SetPropertyValue(ref fechaHasta, value);
+        }
+
+        public int Orden
+        {
+            get => orden;
+            set => SetPropertyValue(ref orden, value);
         }
 
         public override void OnSaving()

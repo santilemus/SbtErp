@@ -1,3 +1,10 @@
+select * from sys.database_scoped_configurations
+ where name = 'IDENTITY_CACHE';
+if (@@rowcount = 1)
+   -- para evitar que en casos donde se detiene abruptamente el servidor sql, reinice los
+   -- identity con una brecha de 1000.
+   alter database scoped configuration set IDENTITY_CACHE = off
+go
 
 /* For security reasons the login is created disabled and with a random password. */
 /****** Object:  Login [UsrMedico]    Script Date: 19/11/2020 14:08:55 ******/

@@ -372,6 +372,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Images\CategoriaProducto.png" />
+    <EmbeddedResource Include="Images\credit-card.png" />
+    <EmbeddedResource Include="Images\credit-card_32x32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

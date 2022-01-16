@@ -5,6 +5,8 @@ using DevExpress.Data.Filtering;
 using DevExpress.Data.Filtering.Helpers;
 using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.Actions;
+using DevExpress.ExpressApp.Editors;
+using DevExpress.ExpressApp.Model;
 using DevExpress.ExpressApp.ReportsV2;
 using DevExpress.ExpressApp.Xpo;
 using DevExpress.Persistent.Base.ReportsV2;
@@ -22,6 +24,7 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
     {
         private PopupWindowShowAction pwsaGenerarEstadoFinanciero;
         private EstadoFinancieroParams efParams;
+        private PopupWindowShowAction pwsaSelectEmpleado;
         public vcEstadoFinanciero() : base()
         {
 
@@ -33,6 +36,9 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
             pwsaGenerarEstadoFinanciero.CustomizePopupWindowParams += pwsaGenerarEstadoFinanciero_CustomizePopupWindowsParams;
             pwsaGenerarEstadoFinanciero.Execute += pwsaGenerarEstadoFinanciero_Execute;
             Application.ObjectSpaceCreated += Application_ObjectSpaceCreated;
+
+            pwsaSelectEmpleado.CustomizePopupWindowParams += PwsaSelectEmpleado_CustomizePopupWindowParams;
+            pwsaSelectEmpleado.Execute += PwsaSelectEmpleado_Execute;
         }
 
         protected override void OnDeactivated()
@@ -56,10 +62,18 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
             pwsaGenerarEstadoFinanciero.CancelButtonCaption = "Cerrar";
             pwsaGenerarEstadoFinanciero.ImageName = "CierreDiario";
             pwsaGenerarEstadoFinanciero.SelectionDependencyType = SelectionDependencyType.RequireSingleObject;
+            // Lista de seleccion de empleado para el Contador y Rep. Legal
+            pwsaSelectEmpleado = new PopupWindowShowAction(this, "pwsaSelectEmpleado", DevExpress.Persistent.Base.PredefinedCategory.RecordEdit);
+            pwsaSelectEmpleado.Caption = "Empleado";
+            pwsaSelectEmpleado.TargetViewType = ViewType.DetailView;
+            pwsaSelectEmpleado.ToolTip = "Clic para seleccionar el Contador o Representante Legal";
+            pwsaSelectEmpleado.CancelButtonCaption = "Cerrar";
         }
 
         protected override void DoDispose()
         {
+            //pwsaGenerarEstadoFinanciero.Dispose();
+            //pwsaSelectEmpleado.Dispose();
             base.DoDispose();
         }
 
@@ -88,7 +102,6 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
                 return;
             if (((EstadoFinancieroModelo)View.SelectedObjects[0]).Reporte == null)
                 return;   // no hay reporte vinculado al estado financiero
-
             efParams = ((EstadoFinancieroParams)e.PopupWindowViewCurrentObject);
             IObjectSpace os2 = (NonPersistentObjectSpace)Application.CreateObjectSpace(typeof(EFinancieroDetalle));
 
@@ -150,46 +163,70 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
                     saldoMes = saldosEF.FirstOrDefault(y => y.Cuenta.Oid == item.Cuenta1.Oid);
                     saldo1 = (saldoMes != null) ? saldoMes.SaldoFin : 0.0m;
                 }
-                else if (item.Formula1 != null)
+                else if (!string.IsNullOrEmpty(item.Formula1))
                 {
-                    saldo1 = Convert.ToDecimal(ef.Evaluate(CriteriaOperator.Parse(item.Formula1, efParams.FechaHasta.Year, efParams.FechaHasta.Month)));
+                    saldo1 = SaldoCalculado(item.Formula1, item);
                 }
                 if (item.Cuenta2 != null)
                 {
                     saldoMes = saldosEF.FirstOrDefault(y => y.Cuenta.Oid == item.Cuenta2.Oid);
                     saldo2 = (saldoMes != null) ? saldoMes.SaldoFin : 0.0m;
                 }
-                else if (item.Formula2 != null)
+                else if (!string.IsNullOrEmpty(item.Formula2))
                 {
-                    saldo2 = Convert.ToDecimal(ef.Evaluate(CriteriaOperator.Parse(item.Formula2, efParams.FechaHasta.Year, efParams.FechaHasta.Month)));
+                    saldo2 = SaldoCalculado(item.Formula2, item);
                 }
                 objects.Add(new EFinancieroDetalle()
                 {
                     Oid = item.Oid,
                     Nombre1 = item.Nombre1,
-                    Nivel1 =  (item.Cuenta1 != null) ? item.Cuenta1.Nivel: 0,
+                    Nivel1 = (item.Cuenta1 != null) ? item.Cuenta1.Nivel : 0,
                     Nombre2 = item.Nombre2,
-                    Nivel2 =  (item.Cuenta2 != null) ? item.Cuenta2.Nivel: 0,
+                    Nivel2 = (item.Cuenta2 != null) ? item.Cuenta2.Nivel : 0,
                     Valor1 = saldo1,
                     Valor2 = saldo2,
                     EstadoFinancieroModelo = ef,
-                    Plural = efParams.Moneda.Plural
+                    Plural = efParams.Moneda.Plural,
+                    FechaHasta = efParams.FechaHasta,
+                    Orden = item.Orden
                 });
             }
+            objects.OrderBy(y => y.Orden);
             e.Objects = objects;
         }
 
-        private decimal SaldoCalculado(EstadoFinancieroModelo bo, string cuentaCodigo)
+        private decimal SaldoCalculado(string formula, EstadoFinancieroModeloDetalle item)
         {
-            CriteriaOperator formula = CriteriaOperator.Parse("SaldoDeCuenta(?, ?, ?, 10, '1')", bo, bo.Empresa.Oid,
-                                                              efParams.FechaHasta.Year, efParams.FechaHasta.Month, cuentaCodigo);
-            ExpressionEvaluator eval = new ExpressionEvaluator(TypeDescriptor.GetProperties(bo), formula);
-            return Convert.ToDecimal(eval.Evaluate(bo));
+            var expresion = formula.Replace("?P0", Convert.ToString(efParams.FechaHasta.Year));
+            expresion = expresion.Replace("?P1", Convert.ToString(efParams.FechaHasta.Month));
+            return Convert.ToDecimal(item.EstadoFinanciero.Evaluate(CriteriaOperator.Parse(expresion)));
         }
 
         private void reportController_BeforePrint(XtraReport report)
         {
 
+        }
+
+
+        private void PwsaSelectEmpleado_Execute(object sender, PopupWindowShowActionExecuteEventArgs e)
+        {
+            var empleado = (e.PopupWindowView.CurrentObject as Empleado.Module.BusinessObjects.Empleado);
+            (View.CurrentObject as EstadoFinancieroModelo).Contador = empleado.NombreCompleto;
+        }
+
+      
+
+        private void PwsaSelectEmpleado_CustomizePopupWindowParams(object sender, CustomizePopupWindowParamsEventArgs e)
+        {
+            IObjectSpace os = e.Application.CreateObjectSpace(typeof(Empleado.Module.BusinessObjects.Empleado));
+            string idView = e.Application.FindLookupListViewId(typeof(Empleado.Module.BusinessObjects.Empleado));
+            IModelListView modelListView = (IModelListView)Application.FindModelView(idView);
+            modelListView.FilterEnabled = true;
+            modelListView.DataAccessMode = CollectionSourceDataAccessMode.Server;
+            //alternativa CollectionSourceDataAccessMode.ServerView es más light
+            //modelListView.DataAccessMode = CollectionSourceDataAccessMode.ServerView;
+            CollectionSourceBase collectionSource = Application.CreateCollectionSource(os, typeof(Empleado.Module.BusinessObjects.Empleado), idView);
+            e.View = Application.CreateListView(modelListView, collectionSource, true); ;
         }
 
     }

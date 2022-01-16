@@ -89,6 +89,7 @@
     <Reference Include="DevExpress.CodeParser.v21.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+    <Reference Include="DevExpress.XtraLayout.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraReports.v21.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
@@ -156,6 +157,7 @@
     <Compile Include="Controllers\vcBancoTransaccion.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controllers\vcBancoTransaccionDetail.cs" />
     <Compile Include="Controllers\vcCajaChica.cs">
       <SubType>Component</SubType>
     </Compile>

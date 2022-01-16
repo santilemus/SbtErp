@@ -26,7 +26,6 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
     [RuleCombinationOfPropertiesIsUnique("BancoCuenta.Banco_Numero", DefaultContexts.Save, "Banco,Numero",
         CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction, SkipNullOrEmptyValues = false)]
     [ImageName(nameof(BancoCuenta))]
-    //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class BancoCuenta : XPObjectBaseBO
@@ -100,7 +99,6 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
             get => nombre;
             set => SetPropertyValue(nameof(Nombre), ref nombre, value);
         }
-
 
         [DbType("varchar(3)"), Persistent("Moneda"), XafDisplayName("Moneda"), RuleRequiredField("BancoCuenta.Moneda_Requerido", "Save")]
         [Index(5)]

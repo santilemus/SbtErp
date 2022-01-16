@@ -31,6 +31,9 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             TargetItems = nameof(BancoTransaccionPartidas), AppearanceItemType = "ViewItem",
             Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "DetailView")]
 
+    [Appearance("Partida.Mayorizada", Criteria = "[Mayorizada] == True", TargetItems = "*", Context = "DetailView", Enabled = false)]
+    [Appearance("Partida.Mayorizada2", Criteria = "[Mayorizada] == True", TargetItems = "Delete", Context = "Any", AppearanceItemType = "Action", Enabled = false)]
+
     [ListViewFilter("Todos", "")]
     [ListViewFilter("Partidas de Días Abiertos", "[Mayorizada] == False")]
     [ListViewFilter("Partidas Incompletas", "([TotalDebe] Is Null || [TotalDebe] == 0) || ([TotalHaber] Is Null || [TotalHaber] == 0) || ([TotalDebe] != [TotalHaber])")]

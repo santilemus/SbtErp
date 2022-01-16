@@ -29,6 +29,9 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
 
         #region Propiedades
 
+        string auditor;
+        string contador;
+        string representanteLegal;
         ReportDataV2 reporte;
         bool activo;
         string nombre;
@@ -57,12 +60,35 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             set => SetPropertyValue(nameof(Activo), ref activo, value);
         }
 
-        
         [XafDisplayName("Reporte")]
         public ReportDataV2 Reporte
         {
             get => reporte;
             set => SetPropertyValue(nameof(Reporte), ref reporte, value);
+        }
+
+
+        [Size(80), DbType("varchar(80)"), XafDisplayName("Representante Legal")]
+        public string RepresentanteLegal
+        {
+            get => representanteLegal;
+            set => SetPropertyValue(nameof(RepresentanteLegal), ref representanteLegal, value);
+        }
+
+
+        [Size(80), DbType("varchar(80)"), XafDisplayName("Contador")]
+        public string Contador
+        {
+            get => contador;
+            set => SetPropertyValue(nameof(Contador), ref contador, value);
+        }
+
+
+        [Size(80), DbType("varchar(80)"), XafDisplayName("Auditor")]
+        public string Auditor
+        {
+            get => auditor;
+            set => SetPropertyValue(nameof(Auditor), ref auditor, value);
         }
 
         #endregion

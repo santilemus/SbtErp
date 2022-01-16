@@ -14,7 +14,10 @@ using SBT.Apps.CxP.Module.BusinessObjects;
 namespace SBT.Apps.Contabilidad.Module.Controllers
 {
     /// <summary>
-    /// View Controller para la vista con id = "BancoTransaccion_LookupListView_CxP" del  BO BancoTransaccion
+    /// View Controller para la vista con id = "BancoTransaccion_LookupListView_CxP" del BO BancoTransaccion.
+    /// El propósito es implementar personalizaciones de la integracion CxP y Bancos. Cuando se agrega una transaccion
+    /// de cuentas por cobrar que corresponde al pago de una compra, en la propiedad tipo lookup de la transacción
+    /// de bancos, debe inicializarse con datos de la compra para evitar que el usuario los digite nuevamente
     /// </summary>
     public class vcBancoTransaccionLookupListViewCxP: ViewControllerBase
     {

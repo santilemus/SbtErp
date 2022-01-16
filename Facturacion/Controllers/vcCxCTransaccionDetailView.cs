@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace SBT.Apps.Facturacion.Module.Controllers
 {
+    /// <summary>
+    /// Evaluar porque en este momento no se usa, borrar en caso de no usarse
+    /// </summary>
     public class vcCxCTransaccionDetailView: ViewController 
     {
         private NewObjectViewController controller;

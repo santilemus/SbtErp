@@ -10,6 +10,8 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [XafDisplayName("Corriente")]
         Corriente = 2,
         [XafDisplayName("A Plazos")]
-        Plazos = 3
+        Plazos = 3,
+        [XafDisplayName("Tarjeta Crédito")]
+        Tarjeta = 4
     }
 }

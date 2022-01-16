@@ -489,17 +489,25 @@
     <DetailView Id="EstadoFinancieroModelo_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
-          <LayoutGroup Id="SimpleEditors" RelativeSize="15.661103979460847">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="22.0795892169448">
             <LayoutGroup Id="EstadoFinancieroModelo" RelativeSize="100">
-              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="29.508196721311474" IsNewNode="True" />
-              <LayoutItem Id="Nombre" Index="1" RelativeSize="21.311475409836067" />
-              <LayoutItem Id="Activo" Index="3" RelativeSize="27.868852459016395" />
+              <LayoutGroup Id="EstadoFinancieroModelo_col1" RelativeSize="48.824451410658305">
+                <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="29.032258064516128" IsNewNode="True" />
+                <LayoutItem Id="Nombre" Index="1" RelativeSize="20.967741935483872" />
+                <LayoutItem Id="Activo" Index="2" RelativeSize="20.967741935483872" />
+                <LayoutItem Id="Reporte" Index="3" RelativeSize="29.032258064516128" />
+              </LayoutGroup>
+              <LayoutGroup Id="EstadoFinancieroModelo_col2" RelativeSize="51.175548589341695">
+                <LayoutItem Id="RepresentanteLegal" RelativeSize="29.032258064516128" />
+                <LayoutItem Id="Contador" RelativeSize="20.967741935483872" />
+                <LayoutItem Id="Auditor" RelativeSize="50" />
+              </LayoutGroup>
             </LayoutGroup>
             <LayoutGroup Id="XPObject" Caption="Oid" Index="1" RelativeSize="68.637532133676089" Removed="True">
               <LayoutItem Id="Oid" Removed="True" />
             </LayoutGroup>
           </LayoutGroup>
-          <LayoutGroup Id="Detalles_Group" Direction="Vertical" RelativeSize="84.338896020539153">
+          <LayoutGroup Id="Detalles_Group" Direction="Vertical" RelativeSize="77.9204107830552">
             <LayoutItem Id="Detalles" RelativeSize="100" />
           </LayoutGroup>
         </LayoutGroup>

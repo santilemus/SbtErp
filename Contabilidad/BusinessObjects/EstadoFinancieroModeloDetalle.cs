@@ -107,7 +107,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         [VisibleInListView(false), Index(4)]
         //[ModelDefault("Width", "50")]
         [ModelDefault("RowCount", "3")]
-        [RuleRequiredField("EstadoFinancieroModeloDetalle.Formula1_Requerido", DefaultContexts.Save, TargetCriteria = "!([TipoBO] Is Null)")]
+        [RuleRequiredField("EstadoFinancieroModeloDetalle.Formula1_Requerido", DefaultContexts.Save, TargetCriteria = "!([TipoBO] Is Null) && [Formula2] Is Null")]
         public string Formula1
         {
             get => formula1;
@@ -139,6 +139,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         [VisibleInListView(false), Index(7)]
         //[ModelDefault("Width", "50")]
         [ModelDefault("RowCount", "3")]
+        [RuleRequiredField("EstadoFinancieroModeloDetalle.Formula2_Requerido", DefaultContexts.Save, TargetCriteria = "!([TipoBO] Is Null) && [Formula1] Is Null")]
         public string Formula2
         {
             get => formula2;

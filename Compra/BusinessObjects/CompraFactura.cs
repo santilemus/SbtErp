@@ -23,7 +23,7 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
     [DefaultProperty(nameof(NumeroDocumento))]
     [Persistent(nameof(CompraFactura))]
     [Appearance("CompraFactura_Servicios_Intangibles", AppearanceItemType = "Any", Criteria = "[Tipo] In (0, 2)",
-        Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, TargetItems = "Detalles;Ingresos")]
+        Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, TargetItems = "Detalles;Ingresos", Context = "DetailView")]
     [ImageName(nameof(CompraFactura))]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).

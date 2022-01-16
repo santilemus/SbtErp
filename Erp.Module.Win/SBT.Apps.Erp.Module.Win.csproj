@@ -192,6 +192,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\vcBancoTransaccionDetailWin.cs" />
     <Compile Include="Controllers\vcVentaWin.cs">
       <SubType>Component</SubType>
     </Compile>
