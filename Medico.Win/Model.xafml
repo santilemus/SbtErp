@@ -35,10 +35,10 @@
     <RibbonOptions RibbonControlStyle="Office2013" />
   </Options>
   <SchemaModules>
-    <SchemaModule Name="CloneObjectModule" Version="20.2.5.0" IsNewNode="True" />
-    <SchemaModule Name="SchedulerModuleBase" Version="20.2.5.0" IsNewNode="True" />
-    <SchemaModule Name="SchedulerWindowsFormsModule" Version="20.2.5.0" IsNewNode="True" />
-    <SchemaModule Name="SystemModule" Version="20.2.5.0" IsNewNode="True" />
-    <SchemaModule Name="SystemWindowsFormsModule" Version="20.2.5.0" IsNewNode="True" />
+    <SchemaModule Name="CloneObjectModule" Version="21.2.3.0" IsNewNode="True" />
+    <SchemaModule Name="SchedulerModuleBase" Version="21.2.3.0" IsNewNode="True" />
+    <SchemaModule Name="SchedulerWindowsFormsModule" Version="21.2.3.0" IsNewNode="True" />
+    <SchemaModule Name="SystemModule" Version="21.2.3.0" IsNewNode="True" />
+    <SchemaModule Name="SystemWindowsFormsModule" Version="21.2.3.0" IsNewNode="True" />
   </SchemaModules>
 </Application>

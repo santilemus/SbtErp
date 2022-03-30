@@ -10,54 +10,146 @@
   </BOModel>
   <NavigationItems>
     <Items>
+      <Item Id="Catalogos">
+        <Items>
+          <Item Id="ClaseSociedad_ListView" Visible="False" />
+          <Item Id="CxCTipoTransaccion_ListView" Visible="False" />
+          <Item Id="Periodo_ListView" Visible="False" />
+          <Item Id="Tributo_ListView" Visible="False" />
+        </Items>
+      </Item>
       <Item Id="Contabilidad" Visible="False" />
       <Item Id="Default">
         <Items>
-          <Item Id="Event_ListView" Visible="True" />
+          <Item Id="Event_ListView" Visible="False" />
+        </Items>
+      </Item>
+      <Item Id="Inventario">
+        <Items>
+          <Item Id="Inventario_ListView" Visible="False" />
+          <Item Id="InventarioTipoMovimiento_ListView" Visible="False" />
+          <Item Id="Kardex_ListView" Visible="False" />
         </Items>
       </Item>
     </Items>
   </NavigationItems>
   <Options DataAccessMode="Server" />
   <SchemaModules>
-    <SchemaModule Name="CloneObjectModule" Version="20.2.5.0" IsNewNode="True" />
-    <SchemaModule Name="SchedulerModuleBase" Version="20.2.5.0" IsNewNode="True" />
-    <SchemaModule Name="SystemModule" Version="20.2.5.0" IsNewNode="True" />
+    <SchemaModule Name="CloneObjectModule" Version="21.2.3.0" IsNewNode="True" />
+    <SchemaModule Name="SchedulerModuleBase" Version="21.2.3.0" IsNewNode="True" />
+    <SchemaModule Name="SystemModule" Version="21.2.3.0" IsNewNode="True" />
   </SchemaModules>
   <Views>
+    <DetailView Id="Banco_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main">
+          <LayoutGroup Id="SimpleEditors">
+            <LayoutGroup Id="Tercero_col1" RelativeSize="49.854791868344627" />
+            <LayoutGroup Id="Tercero_col2" RelativeSize="50.145208131655373" />
+          </LayoutGroup>
+          <TabbedGroup Id="Tabs">
+            <LayoutGroup Id="Creditos" Removed="True" />
+            <LayoutGroup Id="Garantias" Removed="True" />
+          </TabbedGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <DetailView Id="Empresa_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main">
+          <LayoutGroup Id="SimpleEditors">
+            <LayoutGroup Id="Empresa_col1" RelativeSize="48.837209302325583" />
+            <LayoutGroup Id="Empresa_col2" RelativeSize="51.162790697674417" />
+          </LayoutGroup>
+          <TabbedGroup Id="Tabs" Index="1" RelativeSize="74.326059050064188">
+            <LayoutGroup Id="Cuentas" RelativeSize="100" Removed="True">
+              <LayoutItem Id="Cuentas" RelativeSize="100" />
+            </LayoutGroup>
+          </TabbedGroup>
+          <LayoutGroup Id="OtrosDatos" Removed="True" />
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
     <DetailView Id="Medicamento_DetailView">
       <Layout>
         <LayoutGroup Id="Main">
           <LayoutGroup Id="SimpleEditors">
             <TabbedGroup Id="Item1">
               <LayoutGroup Id="Producto">
-                <LayoutGroup Id="Producto_col1">
-                  <LayoutItem Id="Categoria1" CaptionLocation="Left" />
+                <LayoutGroup Id="Producto_col1" RelativeSize="49.800796812749006">
+                  <LayoutItem Id="Categoria" ViewItem="Categoria" CaptionLocation="Left" Index="1" RelativeSize="17.333333333333332" IsNewNode="True" />
+                  <LayoutItem Id="Categoria1" CaptionLocation="Left" Removed="True" />
                 </LayoutGroup>
-                <LayoutGroup Id="Producto_col2">
-                  <LayoutItem Id="CostoPromedio" CaptionLocation="Left" />
+                <LayoutGroup Id="Producto_col2" RelativeSize="50.199203187250994">
+                  <LayoutItem Id="CostoPromedio" CaptionLocation="Left" RelativeSize="41.333333333333336" />
                 </LayoutGroup>
               </LayoutGroup>
               <LayoutGroup Id="Medicamento">
-                <LayoutGroup Id="Medicamento_col1">
+                <LayoutGroup Id="Medicamento_col1" RelativeSize="46.91235059760956">
                   <LayoutItem Id="ContraIndicacion" CaptionLocation="Left" />
                   <LayoutItem Id="Concentracion" CaptionLocation="Left" />
                   <LayoutItem Id="Via" CaptionLocation="Left" />
                   <LayoutItem Id="Prioridad" CaptionLocation="Left" />
                   <LayoutItem Id="NivelUso" CaptionLocation="Left" />
                 </LayoutGroup>
-                <LayoutGroup Id="Medicamento_col2">
+                <LayoutGroup Id="Medicamento_col2" RelativeSize="53.08764940239044">
                   <LayoutItem Id="CodigoVEN" CaptionLocation="Left" />
                   <LayoutItem Id="Comentario" CaptionLocation="Left" />
                 </LayoutGroup>
               </LayoutGroup>
             </TabbedGroup>
           </LayoutGroup>
+          <TabbedGroup Id="Tabs">
+            <LayoutGroup Id="Atributos" Index="4" />
+            <LayoutGroup Id="Equivalentes" Index="5" />
+            <LayoutGroup Id="Proveedores" Index="6" />
+            <LayoutGroup Id="CodigosBarra" Index="7" Removed="True" />
+            <LayoutGroup Id="Inventarios" Index="7" RelativeSize="100">
+              <LayoutItem Id="Inventarios" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="ItemsEnsamble" Removed="True" />
+            <LayoutGroup Id="Lotes" Removed="True" />
+          </TabbedGroup>
         </LayoutGroup>
       </Layout>
     </DetailView>
     <ListView Id="PercentilTablaDetalle_Chart">
       <ChartSettings Settings="﻿&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;&#xD;&#xA;&lt;ChartXmlSerializer version=&quot;20.1.4.0&quot;&gt;&#xD;&#xA;  &lt;Chart AutoLayout=&quot;false&quot; AppearanceNameSerializable=&quot;Default&quot; SelectionMode=&quot;None&quot; SeriesSelectionMode=&quot;Series&quot; AnimationStartMode=&quot;OnLoad&quot;&gt;&#xD;&#xA;    &lt;DataContainer ValidateDataMembers=&quot;true&quot; BoundSeriesSorting=&quot;None&quot;&gt;&#xD;&#xA;      &lt;SeriesSerializable&gt;&#xD;&#xA;        &lt;Item1 Name=&quot;1st&quot; DataSourceSorted=&quot;false&quot; ArgumentDataMember=&quot;EdadMes&quot; ValueDataMembersSerializable=&quot;P1st&quot; LabelsVisibility=&quot;False&quot; CrosshairContentShowMode=&quot;Default&quot; CrosshairEmptyValueLegendText=&quot;&quot; LegendTextPattern=&quot;{A}&quot;&gt;&#xD;&#xA;          &lt;View MarkerVisibility=&quot;False&quot; TypeNameSerializable=&quot;SplineSeriesView&quot;&gt;&#xD;&#xA;            &lt;SeriesPointAnimation TypeNameSerializable=&quot;XYMarkerWidenAnimation&quot; /&gt;&#xD;&#xA;            &lt;FirstPoint MarkerDisplayMode=&quot;Default&quot; LabelDisplayMode=&quot;Default&quot; TypeNameSerializable=&quot;SidePointMarker&quot;&gt;&#xD;&#xA;              &lt;Label Angle=&quot;180&quot; TypeNameSerializable=&quot;PointSeriesLabel&quot; TextOrientation=&quot;Horizontal&quot; /&gt;&#xD;&#xA;            &lt;/FirstPoint&gt;&#xD;&#xA;            &lt;LastPoint MarkerDisplayMode=&quot;Default&quot; LabelDisplayMode=&quot;Default&quot; TypeNameSerializable=&quot;SidePointMarker&quot;&gt;&#xD;&#xA;              &lt;Label Angle=&quot;0&quot; TypeNameSerializable=&quot;PointSeriesLabel&quot; TextOrientation=&quot;Horizontal&quot; /&gt;&#xD;&#xA;            &lt;/LastPoint&gt;&#xD;&#xA;          &lt;/View&gt;&#xD;&#xA;        &lt;/Item1&gt;&#xD;&#xA;        &lt;Item2 Name=&quot;3rd&quot; DataSourceSorted=&quot;false&quot; ArgumentDataMember=&quot;EdadMes&quot; ValueDataMembersSerializable=&quot;P3rd&quot; CrosshairContentShowMode=&quot;Default&quot; CrosshairEmptyValueLegendText=&quot;&quot;&gt;&#xD;&#xA;          &lt;View MarkerVisibility=&quot;False&quot; TypeNameSerializable=&quot;SplineSeriesView&quot;&gt;&#xD;&#xA;            &lt;SeriesPointAnimation TypeNameSerializable=&quot;XYMarkerWidenAnimation&quot; /&gt;&#xD;&#xA;            &lt;FirstPoint MarkerDisplayMode=&quot;Default&quot; LabelDisplayMode=&quot;Default&quot; TypeNameSerializable=&quot;SidePointMarker&quot;&gt;&#xD;&#xA;              &lt;Label Angle=&quot;180&quot; TypeNameSerializable=&quot;PointSeriesLabel&quot; TextOrientation=&quot;Horizontal&quot; /&gt;&#xD;&#xA;            &lt;/FirstPoint&gt;&#xD;&#xA;            &lt;LastPoint MarkerDisplayMode=&quot;Default&quot; LabelDisplayMode=&quot;Default&quot; TypeNameSerializable=&quot;SidePointMarker&quot;&gt;&#xD;&#xA;              &lt;Label Angle=&quot;0&quot; TypeNameSerializable=&quot;PointSeriesLabel&quot; TextOrientation=&quot;Horizontal&quot; /&gt;&#xD;&#xA;            &lt;/LastPoint&gt;&#xD;&#xA;          &lt;/View&gt;&#xD;&#xA;        &lt;/Item2&gt;&#xD;&#xA;        &lt;Item3 Name=&quot;5th&quot; DataSourceSorted=&quot;false&quot; ArgumentDataMember=&quot;EdadMes&quot; ValueDataMembersSerializable=&quot;P5th&quot; CrosshairContentShowMode=&quot;Default&quot; CrosshairEmptyValueLegendText=&quot;&quot;&gt;&#xD;&#xA;          &lt;View MarkerVisibility=&quot;False&quot; TypeNameSerializable=&quot;SplineSeriesView&quot;&gt;&#xD;&#xA;            &lt;SeriesPointAnimation TypeNameSerializable=&quot;XYMarkerWidenAnimation&quot; /&gt;&#xD;&#xA;            &lt;FirstPoint MarkerDisplayMode=&quot;Default&quot; LabelDisplayMode=&quot;Default&quot; TypeNameSerializable=&quot;SidePointMarker&quot;&gt;&#xD;&#xA;              &lt;Label Angle=&quot;180&quot; TypeNameSerializable=&quot;PointSeriesLabel&quot; TextOrientation=&quot;Horizontal&quot; /&gt;&#xD;&#xA;            &lt;/FirstPoint&gt;&#xD;&#xA;            &lt;LastPoint MarkerDisplayMode=&quot;Default&quot; LabelDisplayMode=&quot;Default&quot; TypeNameSerializable=&quot;SidePointMarker&quot;&gt;&#xD;&#xA;              &lt;Label Angle=&quot;0&quot; TypeNameSerializable=&quot;PointSeriesLabel&quot; TextOrientation=&quot;Horizontal&quot; /&gt;&#xD;&#xA;            &lt;/LastPoint&gt;&#xD;&#xA;          &lt;/View&gt;&#xD;&#xA;        &lt;/Item3&gt;&#xD;&#xA;        &lt;Item4 Name=&quot;10th&quot; DataSourceSorted=&quot;false&quot; ArgumentDataMember=&quot;EdadMes&quot; ValueDataMembersSerializable=&quot;P10th&quot; Visible=&quot;false&quot; ShowInLegend=&quot;false&quot; CrosshairContentShowMode=&quot;Default&quot; CrosshairEmptyValueLegendText=&quot;&quot;&gt;&#xD;&#xA;          &lt;View MarkerVisibility=&quot;False&quot; TypeNameSerializable=&quot;SplineSeriesView&quot;&gt;&#xD;&#xA;            &lt;SeriesPointAnimation TypeNameSerializable=&quot;XYMarkerWidenAnimation&quot; /&gt;&#xD;&#xA;            &lt;FirstPoint MarkerDisplayMode=&quot;Default&quot; LabelDisplayMode=&quot;Default&quot; TypeNameSerializable=&quot;SidePointMarker&quot;&gt;&#xD;&#xA;              &lt;Label Angle=&quot;180&quot; TypeNameSerializable=&quot;PointSeriesLabel&quot; TextOrientation=&quot;Horizontal&quot; /&gt;&#xD;&#xA;            &lt;/FirstPoint&gt;&#xD;&#xA;            &lt;LastPoint MarkerDisplayMode=&quot;Default&quot; LabelDisplayMode=&quot;Default&quot; TypeNameSerializable=&quot;SidePointMarker&quot;&gt;&#xD;&#xA;              &lt;Label Angle=&quot;0&quot; TypeNameSerializable=&quot;PointSeriesLabel&quot; TextOrientation=&quot;Horizontal&quot; /&gt;&#xD;&#xA;            &lt;/LastPoint&gt;&#xD;&#xA;          &lt;/View&gt;&#xD;&#xA;        &lt;/Item4&gt;&#xD;&#xA;        &lt;Item5 Name=&quot;15th&quot; DataSourceSorted=&quot;false&quot; ArgumentDataMember=&quot;EdadMes&quot; ValueDataMembersSerializable=&quot;P15th&quot; CrosshairContentShowMode=&quot;Default&quot; CrosshairEmptyValueLegendText=&quot;&quot;&gt;&#xD;&#xA;          &lt;View MarkerVisibility=&quot;False&quot; TypeNameSerializable=&quot;SplineSeriesView&quot;&gt;&#xD;&#xA;            &lt;SeriesPointAnimation TypeNameSerializable=&quot;XYMarkerWidenAnimation&quot; /&gt;&#xD;&#xA;            &lt;FirstPoint MarkerDisplayMode=&quot;Default&quot; LabelDisplayMode=&quot;Default&quot; TypeNameSerializable=&quot;SidePointMarker&quot;&gt;&#xD;&#xA;              &lt;Label Angle=&quot;180&quot; TypeNameSerializable=&quot;PointSeriesLabel&quot; TextOrientation=&quot;Horizontal&quot; /&gt;&#xD;&#xA;            &lt;/FirstPoint&gt;&#xD;&#xA;            &lt;LastPoint MarkerDisplayMode=&quot;Default&quot; LabelDisplayMode=&quot;Default&quot; TypeNameSerializable=&quot;SidePointMarker&quot;&gt;&#xD;&#xA;              &lt;Label Angle=&quot;0&quot; TypeNameSerializable=&quot;PointSeriesLabel&quot; TextOrientation=&quot;Horizontal&quot; /&gt;&#xD;&#xA;            &lt;/LastPoint&gt;&#xD;&#xA;          &lt;/View&gt;&#xD;&#xA;        &lt;/Item5&gt;&#xD;&#xA;        &lt;Item6 Name=&quot;25th&quot; DataSourceSorted=&quot;false&quot; ArgumentDataMember=&quot;EdadMes&quot; ValueDataMembersSerializable=&quot;P25th&quot; CrosshairContentShowMode=&quot;Default&quot; CrosshairEmptyValueLegendText=&quot;&quot;&gt;&#xD;&#xA;          &lt;View MarkerVisibility=&quot;False&quot; TypeNameSerializable=&quot;SplineSeriesView&quot;&gt;&#xD;&#xA;            &lt;SeriesPointAnimation TypeNameSerializable=&quot;XYMarkerWidenAnimation&quot; /&gt;&#xD;&#xA;            &lt;FirstPoint MarkerDisplayMode=&quot;Default&quot; LabelDisplayMode=&quot;Default&quot; TypeNameSerializable=&quot;SidePointMarker&quot;&gt;&#xD;&#xA;              &lt;Label Angle=&quot;180&quot; TypeNameSerializable=&quot;PointSeriesLabel&quot; TextOrientation=&quot;Horizontal&quot; /&gt;&#xD;&#xA;            &lt;/FirstPoint&gt;&#xD;&#xA;            &lt;LastPoint MarkerDisplayMode=&quot;Default&quot; LabelDisplayMode=&quot;Default&quot; TypeNameSerializable=&quot;SidePointMarker&quot;&gt;&#xD;&#xA;              &lt;Label Angle=&quot;0&quot; TypeNameSerializable=&quot;PointSeriesLabel&quot; TextOrientation=&quot;Horizontal&quot; /&gt;&#xD;&#xA;            &lt;/LastPoint&gt;&#xD;&#xA;          &lt;/View&gt;&#xD;&#xA;        &lt;/Item6&gt;&#xD;&#xA;        &lt;Item7 Name=&quot;50th&quot; DataSourceSorted=&quot;false&quot; ArgumentDataMember=&quot;EdadMes&quot; ValueDataMembersSerializable=&quot;P50th&quot; CrosshairContentShowMode=&quot;Default&quot; CrosshairEmptyValueLegendText=&quot;&quot;&gt;&#xD;&#xA;          &lt;View MarkerVisibility=&quot;False&quot; TypeNameSerializable=&quot;SplineSeriesView&quot;&gt;&#xD;&#xA;            &lt;SeriesPointAnimation TypeNameSerializable=&quot;XYMarkerWidenAnimation&quot; /&gt;&#xD;&#xA;            &lt;FirstPoint MarkerDisplayMode=&quot;Default&quot; LabelDisplayMode=&quot;Default&quot; TypeNameSerializable=&quot;SidePointMarker&quot;&gt;&#xD;&#xA;              &lt;Label Angle=&quot;180&quot; TypeNameSerializable=&quot;PointSeriesLabel&quot; TextOrientation=&quot;Horizontal&quot; /&gt;&#xD;&#xA;            &lt;/FirstPoint&gt;&#xD;&#xA;            &lt;LastPoint MarkerDisplayMode=&quot;Default&quot; LabelDisplayMode=&quot;Default&quot; TypeNameSerializable=&quot;SidePointMarker&quot;&gt;&#xD;&#xA;              &lt;Label Angle=&quot;0&quot; TypeNameSerializable=&quot;PointSeriesLabel&quot; TextOrientation=&quot;Horizontal&quot; /&gt;&#xD;&#xA;            &lt;/LastPoint&gt;&#xD;&#xA;          &lt;/View&gt;&#xD;&#xA;        &lt;/Item7&gt;&#xD;&#xA;        &lt;Item8 Name=&quot;75th&quot; DataSourceSorted=&quot;false&quot; ArgumentDataMember=&quot;EdadMes&quot; ValueDataMembersSerializable=&quot;P75th&quot; CrosshairContentShowMode=&quot;Default&quot; CrosshairEmptyValueLegendText=&quot;&quot;&gt;&#xD;&#xA;          &lt;View MarkerVisibility=&quot;False&quot; TypeNameSerializable=&quot;SplineSeriesView&quot;&gt;&#xD;&#xA;            &lt;SeriesPointAnimation TypeNameSerializable=&quot;XYMarkerWidenAnimation&quot; /&gt;&#xD;&#xA;            &lt;FirstPoint MarkerDisplayMode=&quot;Default&quot; LabelDisplayMode=&quot;Default&quot; TypeNameSerializable=&quot;SidePointMarker&quot;&gt;&#xD;&#xA;              &lt;Label Angle=&quot;180&quot; TypeNameSerializable=&quot;PointSeriesLabel&quot; TextOrientation=&quot;Horizontal&quot; /&gt;&#xD;&#xA;            &lt;/FirstPoint&gt;&#xD;&#xA;            &lt;LastPoint MarkerDisplayMode=&quot;Default&quot; LabelDisplayMode=&quot;Default&quot; TypeNameSerializable=&quot;SidePointMarker&quot;&gt;&#xD;&#xA;              &lt;Label Angle=&quot;0&quot; TypeNameSerializable=&quot;PointSeriesLabel&quot; TextOrientation=&quot;Horizontal&quot; /&gt;&#xD;&#xA;            &lt;/LastPoint&gt;&#xD;&#xA;          &lt;/View&gt;&#xD;&#xA;        &lt;/Item8&gt;&#xD;&#xA;        &lt;Item9 Name=&quot;85th&quot; DataSourceSorted=&quot;false&quot; ArgumentDataMember=&quot;EdadMes&quot; ValueDataMembersSerializable=&quot;P85th&quot; CrosshairContentShowMode=&quot;Default&quot; CrosshairEmptyValueLegendText=&quot;&quot;&gt;&#xD;&#xA;          &lt;View MarkerVisibility=&quot;False&quot; TypeNameSerializable=&quot;SplineSeriesView&quot;&gt;&#xD;&#xA;            &lt;SeriesPointAnimation TypeNameSerializable=&quot;XYMarkerWidenAnimation&quot; /&gt;&#xD;&#xA;            &lt;FirstPoint MarkerDisplayMode=&quot;Default&quot; LabelDisplayMode=&quot;Default&quot; TypeNameSerializable=&quot;SidePointMarker&quot;&gt;&#xD;&#xA;              &lt;Label Angle=&quot;180&quot; TypeNameSerializable=&quot;PointSeriesLabel&quot; TextOrientation=&quot;Horizontal&quot; /&gt;&#xD;&#xA;            &lt;/FirstPoint&gt;&#xD;&#xA;            &lt;LastPoint MarkerDisplayMode=&quot;Default&quot; LabelDisplayMode=&quot;Default&quot; TypeNameSerializable=&quot;SidePointMarker&quot;&gt;&#xD;&#xA;              &lt;Label Angle=&quot;0&quot; TypeNameSerializable=&quot;PointSeriesLabel&quot; TextOrientation=&quot;Horizontal&quot; /&gt;&#xD;&#xA;            &lt;/LastPoint&gt;&#xD;&#xA;          &lt;/View&gt;&#xD;&#xA;        &lt;/Item9&gt;&#xD;&#xA;        &lt;Item10 Name=&quot;90th&quot; DataSourceSorted=&quot;false&quot; ArgumentDataMember=&quot;EdadMes&quot; ValueDataMembersSerializable=&quot;P90th&quot; CrosshairContentShowMode=&quot;Default&quot; CrosshairEmptyValueLegendText=&quot;&quot;&gt;&#xD;&#xA;          &lt;View MarkerVisibility=&quot;False&quot; TypeNameSerializable=&quot;SplineSeriesView&quot;&gt;&#xD;&#xA;            &lt;SeriesPointAnimation TypeNameSerializable=&quot;XYMarkerWidenAnimation&quot; /&gt;&#xD;&#xA;            &lt;FirstPoint MarkerDisplayMode=&quot;Default&quot; LabelDisplayMode=&quot;Default&quot; TypeNameSerializable=&quot;SidePointMarker&quot;&gt;&#xD;&#xA;              &lt;Label Angle=&quot;180&quot; TypeNameSerializable=&quot;PointSeriesLabel&quot; TextOrientation=&quot;Horizontal&quot; /&gt;&#xD;&#xA;            &lt;/FirstPoint&gt;&#xD;&#xA;            &lt;LastPoint MarkerDisplayMode=&quot;Default&quot; LabelDisplayMode=&quot;Default&quot; TypeNameSerializable=&quot;SidePointMarker&quot;&gt;&#xD;&#xA;              &lt;Label Angle=&quot;0&quot; TypeNameSerializable=&quot;PointSeriesLabel&quot; TextOrientation=&quot;Horizontal&quot; /&gt;&#xD;&#xA;            &lt;/LastPoint&gt;&#xD;&#xA;          &lt;/View&gt;&#xD;&#xA;        &lt;/Item10&gt;&#xD;&#xA;        &lt;Item11 Name=&quot;95th&quot; DataSourceSorted=&quot;false&quot; ArgumentDataMember=&quot;EdadMes&quot; ValueDataMembersSerializable=&quot;P95th&quot; CrosshairContentShowMode=&quot;Default&quot; CrosshairEmptyValueLegendText=&quot;&quot;&gt;&#xD;&#xA;          &lt;View MarkerVisibility=&quot;False&quot; TypeNameSerializable=&quot;SplineSeriesView&quot;&gt;&#xD;&#xA;            &lt;SeriesPointAnimation TypeNameSerializable=&quot;XYMarkerWidenAnimation&quot; /&gt;&#xD;&#xA;            &lt;FirstPoint MarkerDisplayMode=&quot;Default&quot; LabelDisplayMode=&quot;Default&quot; TypeNameSerializable=&quot;SidePointMarker&quot;&gt;&#xD;&#xA;              &lt;Label Angle=&quot;180&quot; TypeNameSerializable=&quot;PointSeriesLabel&quot; TextOrientation=&quot;Horizontal&quot; /&gt;&#xD;&#xA;            &lt;/FirstPoint&gt;&#xD;&#xA;            &lt;LastPoint MarkerDisplayMode=&quot;Default&quot; LabelDisplayMode=&quot;Default&quot; TypeNameSerializable=&quot;SidePointMarker&quot;&gt;&#xD;&#xA;              &lt;Label Angle=&quot;0&quot; TypeNameSerializable=&quot;PointSeriesLabel&quot; TextOrientation=&quot;Horizontal&quot; /&gt;&#xD;&#xA;            &lt;/LastPoint&gt;&#xD;&#xA;          &lt;/View&gt;&#xD;&#xA;        &lt;/Item11&gt;&#xD;&#xA;        &lt;Item12 Name=&quot;97th&quot; DataSourceSorted=&quot;false&quot; ArgumentDataMember=&quot;EdadMes&quot; ValueDataMembersSerializable=&quot;P97th&quot; CrosshairContentShowMode=&quot;Default&quot; CrosshairEmptyValueLegendText=&quot;&quot;&gt;&#xD;&#xA;          &lt;View MarkerVisibility=&quot;False&quot; TypeNameSerializable=&quot;SplineSeriesView&quot;&gt;&#xD;&#xA;            &lt;SeriesPointAnimation TypeNameSerializable=&quot;XYMarkerWidenAnimation&quot; /&gt;&#xD;&#xA;            &lt;FirstPoint MarkerDisplayMode=&quot;Default&quot; LabelDisplayMode=&quot;Default&quot; TypeNameSerializable=&quot;SidePointMarker&quot;&gt;&#xD;&#xA;              &lt;Label Angle=&quot;180&quot; TypeNameSerializable=&quot;PointSeriesLabel&quot; TextOrientation=&quot;Horizontal&quot; /&gt;&#xD;&#xA;            &lt;/FirstPoint&gt;&#xD;&#xA;            &lt;LastPoint MarkerDisplayMode=&quot;Default&quot; LabelDisplayMode=&quot;Default&quot; TypeNameSerializable=&quot;SidePointMarker&quot;&gt;&#xD;&#xA;              &lt;Label Angle=&quot;0&quot; TypeNameSerializable=&quot;PointSeriesLabel&quot; TextOrientation=&quot;Horizontal&quot; /&gt;&#xD;&#xA;            &lt;/LastPoint&gt;&#xD;&#xA;          &lt;/View&gt;&#xD;&#xA;        &lt;/Item12&gt;&#xD;&#xA;        &lt;Item13 Name=&quot;99th&quot; DataSourceSorted=&quot;false&quot; ArgumentDataMember=&quot;EdadMes&quot; ValueDataMembersSerializable=&quot;P99th&quot; CrosshairContentShowMode=&quot;Default&quot; CrosshairEmptyValueLegendText=&quot;&quot;&gt;&#xD;&#xA;          &lt;View MarkerVisibility=&quot;False&quot; TypeNameSerializable=&quot;SplineSeriesView&quot;&gt;&#xD;&#xA;            &lt;SeriesPointAnimation TypeNameSerializable=&quot;XYMarkerWidenAnimation&quot; /&gt;&#xD;&#xA;            &lt;FirstPoint MarkerDisplayMode=&quot;Default&quot; LabelDisplayMode=&quot;Default&quot; TypeNameSerializable=&quot;SidePointMarker&quot;&gt;&#xD;&#xA;              &lt;Label Angle=&quot;180&quot; TypeNameSerializable=&quot;PointSeriesLabel&quot; TextOrientation=&quot;Horizontal&quot; /&gt;&#xD;&#xA;            &lt;/FirstPoint&gt;&#xD;&#xA;            &lt;LastPoint MarkerDisplayMode=&quot;Default&quot; LabelDisplayMode=&quot;Default&quot; TypeNameSerializable=&quot;SidePointMarker&quot;&gt;&#xD;&#xA;              &lt;Label Angle=&quot;0&quot; TypeNameSerializable=&quot;PointSeriesLabel&quot; TextOrientation=&quot;Horizontal&quot; /&gt;&#xD;&#xA;            &lt;/LastPoint&gt;&#xD;&#xA;          &lt;/View&gt;&#xD;&#xA;        &lt;/Item13&gt;&#xD;&#xA;      &lt;/SeriesSerializable&gt;&#xD;&#xA;      &lt;SeriesTemplate ArgumentDataMember=&quot;EdadMes&quot; CrosshairContentShowMode=&quot;Default&quot; CrosshairEmptyValueLegendText=&quot;&quot; /&gt;&#xD;&#xA;    &lt;/DataContainer&gt;&#xD;&#xA;    &lt;Legend Visibility=&quot;False&quot; CrosshairContentOffset=&quot;4&quot; MarkerSize=&quot;@2,Width=20@2,Height=30&quot; Font=&quot;Arial Narrow, 7.20000029pt&quot; MaxCrosshairContentWidth=&quot;50&quot; MaxCrosshairContentHeight=&quot;0&quot; Name=&quot;Default Legend&quot; /&gt;&#xD;&#xA;    &lt;Border Visibility=&quot;True&quot; /&gt;&#xD;&#xA;    &lt;Diagram RuntimePaneCollapse=&quot;true&quot; RuntimePaneResize=&quot;false&quot; PaneLayoutDirection=&quot;Horizontal&quot; TypeNameSerializable=&quot;XYDiagram&quot;&gt;&#xD;&#xA;      &lt;AxisX StickToEnd=&quot;false&quot; Visibility=&quot;True&quot; Alignment=&quot;Zero&quot; VisibleInPanesSerializable=&quot;-1&quot; ShowBehind=&quot;false&quot; MinorCount=&quot;14&quot;&gt;&#xD;&#xA;        &lt;AutoScaleBreaks MaxCount=&quot;1&quot; /&gt;&#xD;&#xA;        &lt;Tickmarks MinorVisible=&quot;false&quot; /&gt;&#xD;&#xA;        &lt;Label TextPattern=&quot;{A}&quot; Font=&quot;Arial Narrow, 6pt&quot; /&gt;&#xD;&#xA;        &lt;WholeRange Auto=&quot;false&quot; AutoSideMargins=&quot;false&quot; StartSideMargin=&quot;4&quot; EndSideMargin=&quot;4&quot; SideMarginSizeUnit=&quot;AxisUnit&quot; MinValueSerializable=&quot;NaN&quot; MaxValueSerializable=&quot;NaN&quot; /&gt;&#xD;&#xA;        &lt;GridLines Visible=&quot;true&quot; /&gt;&#xD;&#xA;        &lt;NumericScaleOptions ScaleMode=&quot;Automatic&quot; AggregateFunction=&quot;None&quot;&gt;&#xD;&#xA;          &lt;IntervalOptions DivisionMode=&quot;Auto&quot; GridLayoutMode=&quot;GridAndLabelCentered&quot; /&gt;&#xD;&#xA;        &lt;/NumericScaleOptions&gt;&#xD;&#xA;      &lt;/AxisX&gt;&#xD;&#xA;      &lt;AxisY VisibleInPanesSerializable=&quot;-1&quot; ShowBehind=&quot;false&quot;&gt;&#xD;&#xA;        &lt;Tickmarks MinorVisible=&quot;false&quot; /&gt;&#xD;&#xA;        &lt;Label Font=&quot;Arial Narrow, 6pt&quot; /&gt;&#xD;&#xA;        &lt;WholeRange StartSideMargin=&quot;0.72&quot; EndSideMargin=&quot;0.72&quot; SideMarginSizeUnit=&quot;AxisUnit&quot; /&gt;&#xD;&#xA;      &lt;/AxisY&gt;&#xD;&#xA;      &lt;SelectionOptions /&gt;&#xD;&#xA;      &lt;PaneLayout Direction=&quot;Horizontal&quot; /&gt;&#xD;&#xA;    &lt;/Diagram&gt;&#xD;&#xA;  &lt;/Chart&gt;&#xD;&#xA;&lt;/ChartXmlSerializer&gt;" />
     </ListView>
+    <DetailView Id="Producto_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main">
+          <LayoutGroup Id="SimpleEditors">
+            <LayoutGroup Id="Producto_col1" RelativeSize="49.6124031007752" />
+            <LayoutGroup Id="Producto_col2" RelativeSize="50.3875968992248" />
+          </LayoutGroup>
+          <TabbedGroup Id="Tabs">
+            <LayoutGroup Id="Atributos" Index="1" />
+            <LayoutGroup Id="Equivalentes" Index="2" />
+            <LayoutGroup Id="Proveedores" Index="3" />
+            <LayoutGroup Id="CodigosBarra" Index="4" Removed="True" />
+            <LayoutGroup Id="Inventarios" Index="4" RelativeSize="100">
+              <LayoutItem Id="Inventarios" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="ItemsEnsamble" Removed="True" />
+            <LayoutGroup Id="Lotes" Removed="True" />
+          </TabbedGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <DetailView Id="Tercero_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main">
+          <LayoutGroup Id="SimpleEditors">
+            <LayoutGroup Id="Tercero_col1" RelativeSize="49.564375605033881" />
+            <LayoutGroup Id="Tercero_col2" RelativeSize="50.435624394966119" />
+          </LayoutGroup>
+          <TabbedGroup Id="Tabs">
+            <LayoutGroup Id="Creditos" Removed="True" />
+            <LayoutGroup Id="Garantias" Removed="True" />
+          </TabbedGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
   </Views>
 </Application>

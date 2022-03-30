@@ -1,27 +1,33 @@
-﻿using DevExpress.ExpressApp;
-using DevExpress.ExpressApp.Scheduler.Web;
-using DevExpress.Web.ASPxScheduler;
-using DevExpress.XtraScheduler;
-using SBT.Apps.Medico.Expediente.Module.BusinessObjects;
-using System;
+﻿using System;
+using DevExpress.ExpressApp.Actions;
+using SBT.Apps.Base.Module.Controllers;
+
 
 namespace SBT.Apps.Medico.Module.Web.Controllers
 {
-    /// <summary>
-    /// View controller del tipo OjectViewController y que aplica al control de tipo XtraScheduler del BO cita
-    /// El proposito es tener acceso al control para syncronizar la informacion de las citas con outlook
-    /// </summary>
-    public class vcCitaWeb : ObjectViewController<ListView, Cita>
+    // ViewController que se aplica al BO Cita y para la plataforma web
+    public class vcCitaWeb: ViewControllerBaseWeb
     {
-        protected override void OnViewControlsCreated()
+        public vcCitaWeb(): base()
         {
-            base.OnViewControlsCreated();
-            ASPxSchedulerListEditor listEditor = View.Editor as ASPxSchedulerListEditor;
-            if (listEditor != null)
-            {
-                ASPxScheduler scheduler = listEditor.SchedulerControl;
-                scheduler.Views.DayView.VisibleTime = new TimeOfDayInterval(new TimeSpan(8, 0, 0), new TimeSpan(17, 0, 0));
-            }
+
+        }
+
+        protected override void OnActivated()
+        {
+            base.OnActivated();
+        }
+
+        protected override void OnDeactivated()
+        {
+            base.OnDeactivated();
+        }
+
+        protected override void DoInitializeComponent()
+        {
+            base.DoInitializeComponent();
+            TargetObjectType = typeof(SBT.Apps.Medico.Expediente.Module.BusinessObjects.Cita);
+            FixColumnWidthInListView = ETipoAjusteColumnaListView.BestFit;
         }
     }
 }

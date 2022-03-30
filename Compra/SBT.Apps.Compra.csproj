@@ -126,7 +126,11 @@
     <Compile Include="BusinessObjects\LibroCompra.cs" />
     <Compile Include="BusinessObjects\OrdenCompra.cs" />
     <Compile Include="BusinessObjects\OrdenCompraDetalle.cs" />
-    <Compile Include="Controllers\vcBancoTransaccionLookupListViewCxP.cs">
+    <Compile Include="Controllers\vcBancoTransaccionLookupCxP.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controllers\vcCompraFacturaDetail.cs" />
+    <Compile Include="Controllers\vcCompraFacturaList.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controllers\vcCxPTransaccion.cs">
@@ -152,7 +156,6 @@
     <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="BusinessObjects\ReadMe.txt" />
     <None Include="Controllers\ReadMe.txt" />
     <None Include="DatabaseUpdate\ReadMe.txt" />

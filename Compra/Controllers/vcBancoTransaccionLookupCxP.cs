@@ -19,10 +19,10 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
     /// de cuentas por cobrar que corresponde al pago de una compra, en la propiedad tipo lookup de la transacción
     /// de bancos, debe inicializarse con datos de la compra para evitar que el usuario los digite nuevamente
     /// </summary>
-    public class vcBancoTransaccionLookupListViewCxP: ViewControllerBase
+    public class vcBancoTransaccionLookupCxP: ViewControllerBase
     {
         private NewObjectViewController newObjectController;
-        public vcBancoTransaccionLookupListViewCxP(): base()
+        public vcBancoTransaccionLookupCxP(): base()
         {
 
         }

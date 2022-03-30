@@ -17,6 +17,8 @@ using DevExpress.ExpressApp.Model.NodeGenerators;
 using DevExpress.ExpressApp.Xpo;
 using DevExpress.Xpo.Metadata;
 using DevExpress.Xpo;
+using SBT.Apps.Medico.Expediente.Module.BusinessObjects;
+using System.IO;
 
 namespace SBT.Apps.Medico.Expediente.Module {
     // For more typical usage scenarios, be sure to check out http://documentation.devexpress.com/#Xaf/clsDevExpressExpressAppModuleBasetopic.
@@ -64,5 +66,36 @@ namespace SBT.Apps.Medico.Expediente.Module {
             //typesInfo.RefreshInfo(tInfoMedico);
             //typesInfo.RefreshInfo(tInfoCita);
         }
+
+        public static ExpedienteModule FindExpedienteModule(ModuleList modules)
+        {
+            ExpedienteModule expedienteModule = null;
+            foreach (ModuleBase module in modules)
+            {
+                if (module is ExpedienteModule)
+                {
+                    expedienteModule = (ExpedienteModule)module;
+                }
+            }          
+            return expedienteModule;
+        }
+
+        public byte[] GetPacienteFileDataByHandle(string handle)
+        {
+
+            MemoryStream ms = new MemoryStream();
+            using (IObjectSpace os = this.Application.CreateObjectSpace(typeof(SBT.Apps.Medico.Expediente.Module.BusinessObjects.PacienteFileData)))
+            {
+                var fileAttachment = (os.GetObjectByHandle(handle) as PacienteFileData);
+                if (fileAttachment != null)
+                {
+                    fileAttachment.File.SaveToStream(ms);
+                    return ms.ToArray();
+                }
+                else
+                    return null;
+            }
+        }
+
     }
 }

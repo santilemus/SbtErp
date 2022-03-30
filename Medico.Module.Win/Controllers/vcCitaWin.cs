@@ -210,6 +210,8 @@ namespace SBT.Apps.Medico.Module.Win.Controllers
             /// completar y adaptar al BO Cita. Ademas revisar SystemInformation.es necesario
             /// en caso que no funcione probar sin el mapeo porque el BO esta vinculado al control schedule y puede
             /// que no sea necesario
+            if (listEditor == null || listEditor.Appointments == null)
+                return;
             AppointmentMappingInfo aptmappings = listEditor.Appointments.Mappings;
             aptmappings.Start = "StartOn";
             aptmappings.End = "EndOn";

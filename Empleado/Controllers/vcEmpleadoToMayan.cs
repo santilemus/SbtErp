@@ -13,12 +13,12 @@ using System.Text.Json;
 namespace SBT.Apps.Empleado.Module.Controllers
 {
     // For more typical usage scenarios, be sure to check out https://documentation.devexpress.com/eXpressAppFramework/clsDevExpressExpressAppViewControllertopic.aspx.
-    public partial class vcEmpleado : ViewController
+    public partial class vcEmpleadoToMayan : ViewController
     {
         private PopupWindowShowAction pwsaDocumentosDigitales;
         private MayanDocumentsReadResponse mayanDocumento;  /// solo para pruebas, borrar despues
 
-        public vcEmpleado()
+        public vcEmpleadoToMayan()
         {
             InitializeComponent();
             // Target required Views (via the TargetXXX properties) and create their Actions.

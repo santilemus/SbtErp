@@ -1,16 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Application>
+  <ActionDesign>
+    <Actions>
+      <Action Id="saShowPicture" IsPostBackRequired="True" />
+    </Actions>
+  </ActionDesign>
   <Options CollectionsEditMode="Edit" />
   <SchemaModules>
-    <SchemaModule Name="CloneObjectModule" Version="20.2.5.0" IsNewNode="True" />
-    <SchemaModule Name="SchedulerAspNetModule" Version="20.2.5.0" IsNewNode="True" />
-    <SchemaModule Name="SchedulerModuleBase" Version="20.2.5.0" IsNewNode="True" />
-    <SchemaModule Name="SystemAspNetModule" Version="20.2.5.0" IsNewNode="True" />
-    <SchemaModule Name="SystemModule" Version="20.2.5.0" IsNewNode="True" />
+    <SchemaModule Name="CloneObjectModule" Version="21.2.3.0" IsNewNode="True" />
+    <SchemaModule Name="SchedulerAspNetModule" Version="21.2.3.0" IsNewNode="True" />
+    <SchemaModule Name="SchedulerModuleBase" Version="21.2.3.0" IsNewNode="True" />
+    <SchemaModule Name="SystemAspNetModule" Version="21.2.3.0" IsNewNode="True" />
+    <SchemaModule Name="SystemModule" Version="21.2.3.0" IsNewNode="True" />
   </SchemaModules>
   <Views>
+    <ListView Id="Cita_ListView_Grid" EditorTypeName="DevExpress.ExpressApp.Web.Editors.ASPx.ASPxGridListEditor" />
+    <ListView Id="Cita_ListView_Mes" SchedulerViewType="Month" />
+    <ListView Id="Cita_ListView_Semana" SchedulerViewType="Week" />
+    <ListView Id="CitaBase_ListView_Mes" SchedulerViewType="Month" />
+    <ListView Id="CitaBase_ListView_Semana" SchedulerViewType="Week" />
     <ListView Id="Medico_Citas_ListView" EditorTypeName="DevExpress.ExpressApp.Web.Editors.ASPx.ASPxGridListEditor" />
     <ListView Id="Paciente_Citas_ListView" EditorTypeName="DevExpress.ExpressApp.Web.Editors.ASPx.ASPxGridListEditor" />
+    <DetailView Id="Paciente_DetailView">
+      <Items>
+        <PropertyEditor Id="Aseguradora" View="Aseguradora_LookupListView" />
+      </Items>
+    </DetailView>
     <ListView Id="PercentilTablaDetalle_Chart" EditorTypeName="DevExpress.ExpressApp.Chart.Web.ASPxChartListEditor" />
     <ListView Id="PercentilTablaDetalle_ListView">
       <Variants Current="" />

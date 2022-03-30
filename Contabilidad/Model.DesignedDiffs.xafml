@@ -1,6 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Application>
   <BOModel>
+    <Class Name="SBT.Apps.Contabilidad.BusinessObjects.Catalogo">
+      <OwnMembers>
+        <Member Name="SaldosDiarios" AllowEdit="False" />
+        <Member Name="SaldosMeses" AllowEdit="False" />
+      </OwnMembers>
+    </Class>
     <Class Name="SBT.Apps.Contabilidad.Module.BusinessObjects.Partida" IsCloneable="True" />
     <Class Name="SBT.Apps.Contabilidad.Module.BusinessObjects.PartidaDetalle" IsCloneable="True" />
   </BOModel>
@@ -433,6 +439,9 @@
       </Columns>
     </ListView>
     <DetailView Id="Catalogo_DetailView">
+      <Items>
+        <PropertyEditor Id="Partidas" AllowEdit="False" />
+      </Items>
       <Layout>
         <LayoutGroup Id="Main">
           <LayoutGroup Id="SimpleEditors" RelativeSize="18.998716302952502" />
@@ -736,5 +745,7 @@
         </LayoutGroup>
       </Layout>
     </DetailView>
+    <ListView Id="SaldoDiario_LookupListView" AllowNew="False" AllowUnlink="False" AllowDelete="False" />
+    <ListView Id="SaldoMes_LookupListView" AllowUnlink="False" AllowNew="False" AllowDelete="False" />
   </Views>
 </Application>

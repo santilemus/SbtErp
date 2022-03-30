@@ -7,29 +7,30 @@
     <LayoutManagerOptions RequiredFieldMark="*" />
   </Options>
   <SchemaModules>
-    <SchemaModule Name="CloneObjectModule" Version="20.2.5.0" IsNewNode="True" />
-    <SchemaModule Name="SystemModule" Version="20.2.5.0" IsNewNode="True" />
+    <SchemaModule Name="CloneObjectModule" Version="21.2.3.0" IsNewNode="True" />
+    <SchemaModule Name="SystemModule" Version="21.2.3.0" IsNewNode="True" />
   </SchemaModules>
   <Views>
     <DetailView Id="AFP_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
-          <LayoutGroup Id="SimpleEditors" RelativeSize="22.336328626444161" Direction="Horizontal">
-            <LayoutGroup Id="Tercero_col1" ShowCaption="False" Index="0" RelativeSize="50" IsNewNode="True">
-              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="20.689655172413794" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="Nombre" ViewItem="Nombre" Index="1" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="DireccionPrincipal" ViewItem="DireccionPrincipal" Index="2" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="EMail" ViewItem="EMail" Index="3" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="SitioWeb" ViewItem="SitioWeb" Index="4" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="TipoPersona" ViewItem="TipoPersona" Index="5" RelativeSize="19.540229885057471" CaptionLocation="Left" IsNewNode="True" />
+          <LayoutGroup Id="SimpleEditors" RelativeSize="25.673940949935815" Direction="Horizontal">
+            <LayoutGroup Id="Tercero_col1" ShowCaption="False" Index="0" RelativeSize="49.944629014396455" IsNewNode="True">
+              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="18" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Nombre" ViewItem="Nombre" Index="1" RelativeSize="13" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="DireccionPrincipal" ViewItem="DireccionPrincipal" Index="2" RelativeSize="13" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="EMail" ViewItem="EMail" Index="3" RelativeSize="13" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="SitioWeb" ViewItem="SitioWeb" Index="4" RelativeSize="13" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="TipoPersona" ViewItem="TipoPersona" Index="5" RelativeSize="13" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="TipoContribuyente" ViewItem="TipoContribuyente" CaptionLocation="Left" Index="6" RelativeSize="17" IsNewNode="True" />
             </LayoutGroup>
-            <LayoutGroup Id="Tercero_col2" ShowCaption="False" Index="1" RelativeSize="50" IsNewNode="True">
-              <LayoutItem Id="TipoContribuyente" ViewItem="TipoContribuyente" Index="0" RelativeSize="20.689655172413794" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="Activo" ViewItem="Activo" Index="1" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="Clasificacion" ViewItem="Clasificacion" Index="2" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="AporteAfiliado" ViewItem="AporteAfiliado" Index="3" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="AporteEmpresa" ViewItem="AporteEmpresa" Index="4" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="Comision" ViewItem="Comision" Index="5" RelativeSize="19.540229885057471" CaptionLocation="Left" IsNewNode="True" />
+            <LayoutGroup Id="Tercero_col2" ShowCaption="False" Index="1" RelativeSize="50.055370985603545" IsNewNode="True">
+              <LayoutItem Id="Clasificacion" ViewItem="Clasificacion" Index="0" RelativeSize="18" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Origen" ViewItem="Origen" Index="1" RelativeSize="13" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="AporteAfiliado" ViewItem="AporteAfiliado" Index="2" RelativeSize="13" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="AporteEmpresa" ViewItem="AporteEmpresa" Index="3" RelativeSize="13" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Comision" ViewItem="Comision" Index="4" RelativeSize="13" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Activo" ViewItem="Activo" Index="5" RelativeSize="30" CaptionLocation="Left" IsNewNode="True" />
             </LayoutGroup>
             <LayoutGroup Id="XPObject" Index="2" RelativeSize="45.501285347043705" Caption="Oid" Removed="True">
               <LayoutItem Id="Oid" RelativeSize="100" Removed="True" />
@@ -41,7 +42,7 @@
             </LayoutGroup>
             <LayoutGroup Id="Tercero" Removed="True" />
           </LayoutGroup>
-          <TabbedGroup Id="Tabs" RelativeSize="77.663671373555843">
+          <TabbedGroup Id="Tabs" RelativeSize="74.326059050064188">
             <LayoutGroup Id="Telefonos" RelativeSize="100">
               <LayoutItem Id="Telefonos" RelativeSize="100" />
             </LayoutGroup>
@@ -83,34 +84,46 @@
         <ColumnInfo Id="Comision" Index="4" />
       </Columns>
     </ListView>
+    <ListView Id="Aseguradora_LookupListView" ClassName="SBT.Apps.Tercero.Module.BusinessObjects.Tercero" Criteria="[Roles][[IdRole] = ##Enum#SBT.Apps.Tercero.Module.BusinessObjects.TipoRoleTercero,Aseguradora#] And [TipoPersona] = ##Enum#SBT.Apps.Base.Module.BusinessObjects.TipoPersona,Juridica# And [Activo] = True" Caption="Aseguradora" IsNewNode="True">
+      <Columns IsNewNode="True">
+        <ColumnInfo Id="Oid" PropertyName="Oid" Index="0" IsNewNode="True" />
+        <ColumnInfo Id="Nombre" PropertyName="Nombre" SortIndex="0" SortOrder="Ascending" Index="1" IsNewNode="True" />
+        <ColumnInfo Id="Activo" PropertyName="Activo" Index="2" Width="76" IsNewNode="True" />
+      </Columns>
+    </ListView>
     <DetailView Id="Banco_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
-          <LayoutGroup Id="SimpleEditors" RelativeSize="19.733333333333334" Direction="Horizontal">
-            <LayoutGroup Id="Tercero_col1" ShowCaption="False" Index="0" RelativeSize="49.866666666666667" IsNewNode="True">
-              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="22.972972972972972" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="Nombre" ViewItem="Nombre" Index="1" RelativeSize="17.567567567567568" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="DireccionPrincipal" ViewItem="DireccionPrincipal" Index="2" RelativeSize="17.567567567567568" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="EMail" ViewItem="EMail" Index="3" RelativeSize="17.567567567567568" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="SitioWeb" ViewItem="SitioWeb" Index="4" RelativeSize="24.324324324324323" CaptionLocation="Left" IsNewNode="True" />
+          <LayoutGroup Id="SimpleEditors" RelativeSize="22.336328626444161" Direction="Horizontal">
+            <LayoutGroup Id="Tercero_col1" ShowCaption="False" Index="0" RelativeSize="49.951597289448209" IsNewNode="True">
+              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="20.689655172413794" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Nombre" ViewItem="Nombre" Index="1" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="DireccionPrincipal" ViewItem="DireccionPrincipal" Index="2" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="EMail" ViewItem="EMail" Index="3" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="SitioWeb" ViewItem="SitioWeb" Index="4" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="TipoPersona" ViewItem="TipoPersona" Index="5" RelativeSize="19.540229885057471" CaptionLocation="Left" IsNewNode="True" />
             </LayoutGroup>
-            <LayoutGroup Id="Tercero_col2" ShowCaption="False" Index="1" RelativeSize="50.133333333333333" IsNewNode="True">
-              <LayoutItem Id="TipoPersona" ViewItem="TipoPersona" Index="0" RelativeSize="22.972972972972972" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="TipoContribuyente" ViewItem="TipoContribuyente" Index="1" RelativeSize="17.567567567567568" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="Comision" ViewItem="Comision" Index="3" RelativeSize="17.567567567567568" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="Activo" ViewItem="Activo" Index="4" RelativeSize="24.324324324324323" CaptionLocation="Left" IsNewNode="True" />
+            <LayoutGroup Id="Tercero_col2" ShowCaption="False" Index="1" RelativeSize="50.048402710551791" IsNewNode="True">
+              <LayoutItem Id="TipoContribuyente" ViewItem="TipoContribuyente" Index="0" RelativeSize="20.689655172413794" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Clasificacion" ViewItem="Clasificacion" Index="1" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Comision" ViewItem="Comision" Index="2" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Origen" ViewItem="Origen" Index="3" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Activo" ViewItem="Activo" Index="4" RelativeSize="34.482758620689658" CaptionLocation="Left" IsNewNode="True" />
             </LayoutGroup>
-            <LayoutGroup Id="XPObject" Index="1" RelativeSize="53.099730458221025" Caption="Oid" Direction="Horizontal" Removed="True">
+            <LayoutGroup Id="XPObject" Index="2" RelativeSize="1.8518518518518519" Caption="Oid" Removed="True">
               <LayoutItem Id="Oid" RelativeSize="100" Removed="True" />
             </LayoutGroup>
-            <LayoutGroup Id="Banco" RelativeSize="51.482479784366575" Caption="Porcentaje Comisión" Direction="Horizontal" Removed="True">
+            <LayoutGroup Id="Banco" RelativeSize="20.37037037037037" Caption="Porcentaje Comisión" Removed="True">
               <LayoutItem Id="Comision" RelativeSize="100" Removed="True" />
             </LayoutGroup>
             <LayoutGroup Id="Tercero" Removed="True" />
           </LayoutGroup>
-          <TabbedGroup Id="Tabs" RelativeSize="80.266666666666666">
+          <TabbedGroup Id="Tabs" RelativeSize="77.663671373555843">
             <LayoutGroup Id="Telefonos" RelativeSize="100">
               <LayoutItem Id="Telefonos" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="Giros" RelativeSize="100">
+              <LayoutItem Id="Giros" RelativeSize="100" />
             </LayoutGroup>
             <LayoutGroup Id="Contactos" RelativeSize="100">
               <LayoutItem Id="Contactos" RelativeSize="100" />
@@ -129,6 +142,12 @@
             </LayoutGroup>
             <LayoutGroup Id="Documentos" RelativeSize="100">
               <LayoutItem Id="Documentos" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="Creditos" RelativeSize="100">
+              <LayoutItem Id="Creditos" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="Garantias" RelativeSize="100">
+              <LayoutItem Id="Garantias" RelativeSize="100" />
             </LayoutGroup>
           </TabbedGroup>
         </LayoutGroup>
@@ -155,7 +174,7 @@
               <LayoutItem Id="TipoPersona" ViewItem="TipoPersona" Index="0" RelativeSize="24.324324324324323" CaptionLocation="Left" IsNewNode="True" />
               <LayoutItem Id="TipoContribuyente" ViewItem="TipoContribuyente" Index="1" RelativeSize="17.567567567567568" CaptionLocation="Left" IsNewNode="True" />
               <LayoutItem Id="Clasificacion" ViewItem="Clasificacion" Index="2" RelativeSize="17.567567567567568" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="Origen" ViewItem="Origen" Index="3" RelativeSize="17.567567567567568" IsNewNode="True" />
+              <LayoutItem Id="Origen" ViewItem="Origen" Index="3" RelativeSize="17.567567567567568" CaptionLocation="Left" IsNewNode="True" />
               <LayoutItem Id="Activo" ViewItem="Activo" Index="4" RelativeSize="22.972972972972972" CaptionLocation="Left" IsNewNode="True" />
             </LayoutGroup>
             <LayoutGroup Id="XPObject" Caption="Oid" Direction="Horizontal" Index="1" RelativeSize="35.040431266846362" Removed="True">

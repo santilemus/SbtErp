@@ -52,7 +52,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             base.AfterConstruction();
             mayorizada = false;
             elaboro = null;
-            Numero = 1;
+            Numero = -1;
             Oid = -1;
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }

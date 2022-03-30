@@ -30,7 +30,7 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
 
     [DefaultClassOptions, ModelDefault("Caption", "Transaccion CxP"), CreatableItem(false), NavigationItem("Compras")]
     [DefaultProperty(nameof(Numero)), Persistent(nameof(CxPTransaccion))]
-    //[ImageName("BO_Contact")]
+    [ImageName("bill")]
     [RuleCriteria("CxPTransaccion Pagada", "Save;Delete", "[Factura.Estado] == 0", "Transacciones validas solo para facturas con estado Debe", 
         ResultType = ValidationResultType.Warning)]
     [RuleCriteria("CxPTransaccion Monto es Valido", DefaultContexts.Save, 

@@ -53,7 +53,7 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         decimal saldoLibro;
         SBT.Apps.Empleado.Module.BusinessObjects.Empleado autorizo;
         [Persistent(nameof(FechaAutorizo)), DbType("datetime2")]
-        DateTime ? fechaAutorizo;
+        DateTime ? fechaAutorizo = null;
 
 
         [Association("BancoCuenta-Conciliaciones"), Index(0), XafDisplayName("Número Cuenta"), VisibleInLookupListView(true)]

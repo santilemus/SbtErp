@@ -1,4 +1,5 @@
-﻿using DevExpress.ExpressApp;
+﻿using DevExpress.Data.Filtering;
+using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Updating;
 using DevExpress.ExpressApp.Xpo;
@@ -16,6 +17,9 @@ namespace SBT.Apps.Empleado.Module
         {
             InitializeComponent();
             BaseObject.OidInitializationMode = OidInitializationMode.AfterConstruction;
+
+            // registramos la funcion que retorna el Oid del empleado vinculado al usuario logeado
+            CriteriaOperator.RegisterCustomFunction(new CurrentOidEmpleadoFunction());
         }
         public override IEnumerable<ModuleUpdater> GetModuleUpdaters(IObjectSpace objectSpace, Version versionFromDB)
         {

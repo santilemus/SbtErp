@@ -2,8 +2,8 @@
 <Application Title="SBT.Apps.Medico.Generico.Module" Logo="ExpressAppLogo">
   <Options DataAccessMode="Server" />
   <SchemaModules>
-    <SchemaModule Name="CloneObjectModule" Version="20.2.5.0" IsNewNode="True" />
-    <SchemaModule Name="SystemModule" Version="20.2.5.0" IsNewNode="True" />
+    <SchemaModule Name="CloneObjectModule" Version="21.2.3.0" IsNewNode="True" />
+    <SchemaModule Name="SystemModule" Version="21.2.3.0" IsNewNode="True" />
   </SchemaModules>
   <Views>
     <DetailView Id="CitaBase_DetailView">
@@ -39,13 +39,68 @@
         </LayoutGroup>
       </Layout>
     </DetailView>
-    <ListView Id="CitaBase_ListView" DataAccessMode="Client" />
-    <ListView Id="CitaBase_LookupListView" DataAccessMode="Client" />
-    <ListView Id="Empleado_Profesiones_ListView">
-      <Columns>
-        <ColumnInfo Id="NumeroProfesional" Width="379" />
+    <ListView Id="CitaBase_ListView" DataAccessMode="Client">
+      <Variants>
+        <Variant Id="@49b710ee-0431-4d04-8325-4ce3e808f81c" ViewID="CitaBase_ListView_Dia" IsNewNode="True" />
+        <Variant Id="@7b515d5c-fdf2-479d-89c8-0ae818867cc2" ViewID="CitaBase_ListView_Semana" IsNewNode="True" />
+        <Variant Id="@be28cc95-ce32-466a-8e99-5ea35c280c7b" ViewID="CitaBase_ListView_Mes" IsNewNode="True" />
+      </Variants>
+    </ListView>
+    <ListView Id="CitaBase_ListView_Dia" ClassName="SBT.Apps.Medico.Generico.Module.BusinessObjects.CitaBase" DataAccessMode="Client" Caption="Citas - Día" IsNewNode="True">
+      <Columns IsNewNode="True">
+        <ColumnInfo Id="AlarmTime" PropertyName="AlarmTime" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Description" PropertyName="Description" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="IsPostponed" PropertyName="IsPostponed" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="NotificationMessage" PropertyName="NotificationMessage" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Oid" PropertyName="Oid" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="RecurrenceInfoXml" PropertyName="RecurrenceInfoXml" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Subject" PropertyName="Subject" SortIndex="0" SortOrder="Ascending" Index="0" IsNewNode="True" />
+        <ColumnInfo Id="StartOn" PropertyName="StartOn" Index="1" IsNewNode="True" />
+        <ColumnInfo Id="EndOn" PropertyName="EndOn" Index="2" IsNewNode="True" />
+        <ColumnInfo Id="AllDay" PropertyName="AllDay" Index="3" IsNewNode="True" />
+        <ColumnInfo Id="Location" PropertyName="Location" Index="4" IsNewNode="True" />
+        <ColumnInfo Id="Label" PropertyName="Label" Index="5" IsNewNode="True" />
+        <ColumnInfo Id="Status" PropertyName="Status" Index="6" IsNewNode="True" />
+        <ColumnInfo Id="ReminderInfoXml" PropertyName="ReminderInfoXml" Index="7" IsNewNode="True" />
       </Columns>
     </ListView>
+    <ListView Id="CitaBase_ListView_Mes" ClassName="SBT.Apps.Medico.Generico.Module.BusinessObjects.CitaBase" DataAccessMode="Client" Caption="Citas - Mes" IsNewNode="True">
+      <Columns IsNewNode="True">
+        <ColumnInfo Id="AlarmTime" PropertyName="AlarmTime" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Description" PropertyName="Description" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="IsPostponed" PropertyName="IsPostponed" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="NotificationMessage" PropertyName="NotificationMessage" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Oid" PropertyName="Oid" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="RecurrenceInfoXml" PropertyName="RecurrenceInfoXml" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Subject" PropertyName="Subject" SortIndex="0" SortOrder="Ascending" Index="0" IsNewNode="True" />
+        <ColumnInfo Id="StartOn" PropertyName="StartOn" Index="1" IsNewNode="True" />
+        <ColumnInfo Id="EndOn" PropertyName="EndOn" Index="2" IsNewNode="True" />
+        <ColumnInfo Id="AllDay" PropertyName="AllDay" Index="3" IsNewNode="True" />
+        <ColumnInfo Id="Location" PropertyName="Location" Index="4" IsNewNode="True" />
+        <ColumnInfo Id="Label" PropertyName="Label" Index="5" IsNewNode="True" />
+        <ColumnInfo Id="Status" PropertyName="Status" Index="6" IsNewNode="True" />
+        <ColumnInfo Id="ReminderInfoXml" PropertyName="ReminderInfoXml" Index="7" IsNewNode="True" />
+      </Columns>
+    </ListView>
+    <ListView Id="CitaBase_ListView_Semana" ClassName="SBT.Apps.Medico.Generico.Module.BusinessObjects.CitaBase" DataAccessMode="Client" Caption="Citas - Semana" IsNewNode="True">
+      <Columns IsNewNode="True">
+        <ColumnInfo Id="AlarmTime" PropertyName="AlarmTime" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Description" PropertyName="Description" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="IsPostponed" PropertyName="IsPostponed" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="NotificationMessage" PropertyName="NotificationMessage" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Oid" PropertyName="Oid" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="RecurrenceInfoXml" PropertyName="RecurrenceInfoXml" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Subject" PropertyName="Subject" SortIndex="0" SortOrder="Ascending" Index="0" IsNewNode="True" />
+        <ColumnInfo Id="StartOn" PropertyName="StartOn" Index="1" IsNewNode="True" />
+        <ColumnInfo Id="EndOn" PropertyName="EndOn" Index="2" IsNewNode="True" />
+        <ColumnInfo Id="AllDay" PropertyName="AllDay" Index="3" IsNewNode="True" />
+        <ColumnInfo Id="Location" PropertyName="Location" Index="4" IsNewNode="True" />
+        <ColumnInfo Id="Label" PropertyName="Label" Index="5" IsNewNode="True" />
+        <ColumnInfo Id="Status" PropertyName="Status" Index="6" IsNewNode="True" />
+        <ColumnInfo Id="ReminderInfoXml" PropertyName="ReminderInfoXml" Index="7" IsNewNode="True" />
+      </Columns>
+    </ListView>
+    <ListView Id="CitaBase_LookupListView" DataAccessMode="Client" />
     <DetailView Id="Enfermedad_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
@@ -242,10 +297,10 @@
     <DetailView Id="Medico_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
-          <LayoutGroup Id="SimpleEditors" RelativeSize="40.419947506561677">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="39.537869062901159">
             <TabbedGroup Id="Item1" CaptionLocation="Top" Index="0" RelativeSize="100" IsNewNode="True">
               <LayoutGroup Id="Persona" ShowCaption="True" Direction="Horizontal" Index="0" RelativeSize="100" Caption="Datos Generales" IsNewNode="True">
-                <LayoutGroup Id="Persona_col1" ShowCaption="False" Index="0" RelativeSize="49.886104783599087" IsNewNode="True">
+                <LayoutGroup Id="Persona_col1" ShowCaption="False" Index="0" RelativeSize="49.658314350797269" IsNewNode="True">
                   <LayoutItem Id="Nombre" ViewItem="Nombre" Index="0" RelativeSize="14.173228346456693" CaptionLocation="Left" IsNewNode="True" />
                   <LayoutItem Id="Apellido" ViewItem="Apellido" Index="1" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
                   <LayoutItem Id="Pais" ViewItem="Pais" Index="2" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
@@ -253,43 +308,41 @@
                   <LayoutItem Id="Ciudad" ViewItem="Ciudad" Index="4" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
                   <LayoutItem Id="Direccion" ViewItem="Direccion" Index="5" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
                   <LayoutItem Id="FechaNacimiento" ViewItem="FechaNacimiento" Index="6" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="EMail" ViewItem="EMail" Index="7" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="Genero" ViewItem="Genero" Index="8" RelativeSize="14.173228346456693" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="EMail" ViewItem="EMail" Index="7" RelativeSize="24.409448818897637" CaptionLocation="Left" IsNewNode="True" />
                 </LayoutGroup>
-                <LayoutGroup Id="Persona_col2" ShowCaption="False" Index="1" RelativeSize="50.113895216400913" IsNewNode="True">
-                  <LayoutItem Id="EstadoCivil" ViewItem="EstadoCivil" Index="0" RelativeSize="14.173228346456693" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="FechaIngreso" ViewItem="FechaIngreso" Index="1" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="FechaRetiro" ViewItem="FechaRetiro" Index="2" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="TipoSangre" ViewItem="TipoSangre" Index="3" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="Idioma" ViewItem="Idioma" Index="4" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="FechaMuerte" ViewItem="FechaMuerte" Index="5" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="CausaMuerte" ViewItem="CausaMuerte" Index="6" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="NombreCompleto" ViewItem="NombreCompleto" Index="7" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="Edad" ViewItem="Edad" Index="8" RelativeSize="14.173228346456693" CaptionLocation="Left" IsNewNode="True" />
+                <LayoutGroup Id="Persona_col2" ShowCaption="False" Index="1" RelativeSize="50.341685649202731" IsNewNode="True">
+                  <LayoutItem Id="Genero" ViewItem="Genero" CaptionLocation="Left" Index="0" RelativeSize="14.173228346456693" IsNewNode="True" />
+                  <LayoutItem Id="EstadoCivil" ViewItem="EstadoCivil" Index="1" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="TipoSangre" ViewItem="TipoSangre" Index="2" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="Idioma" ViewItem="Idioma" Index="3" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="FechaMuerte" ViewItem="FechaMuerte" Index="4" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="CausaMuerte" ViewItem="CausaMuerte" Index="5" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="Edad" ViewItem="Edad" Index="6" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="Nacionalidad" ViewItem="Nacionalidad" CaptionLocation="Left" Index="7" RelativeSize="24.409448818897637" IsNewNode="True" />
                 </LayoutGroup>
               </LayoutGroup>
               <LayoutGroup Id="Empleado" ShowCaption="True" Direction="Horizontal" Index="1" RelativeSize="100" Caption="Medico" IsNewNode="True">
-                <LayoutGroup Id="Empleado_col1" ShowCaption="False" Index="0" RelativeSize="49.886104783599087" IsNewNode="True">
+                <LayoutGroup Id="Empleado_col1" ShowCaption="False" Index="0" RelativeSize="49.658314350797269" IsNewNode="True">
                   <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="14.173228346456693" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="Unidad" ViewItem="Unidad" Index="1" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="Cargo" ViewItem="Cargo" Index="2" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="TipoSalario" ViewItem="TipoSalario" Index="3" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="Salario" ViewItem="Salario" Index="4" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="TipoContrato" ViewItem="TipoContrato" Index="5" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="Estado" ViewItem="Estado" Index="6" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="Nacionalidad" ViewItem="Nacionalidad" Index="7" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="Banco" ViewItem="Banco" Index="8" RelativeSize="14.173228346456693" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="FechaIngreso" ViewItem="FechaIngreso" CaptionLocation="Left" Index="1" RelativeSize="10.236220472440945" IsNewNode="True" />
+                  <LayoutItem Id="FechaRetiro" ViewItem="FechaRetiro" CaptionLocation="Left" Index="2" RelativeSize="10.236220472440945" IsNewNode="True" />
+                  <LayoutItem Id="Unidad" ViewItem="Unidad" Index="3" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="Cargo" ViewItem="Cargo" Index="4" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="TipoSalario" ViewItem="TipoSalario" Index="5" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="Salario" ViewItem="Salario" CaptionLocation="Left" Index="6" RelativeSize="10.236220472440945" IsNewNode="True" />
+                  <LayoutItem Id="TipoContrato" ViewItem="TipoContrato" CaptionLocation="Left" Index="7" RelativeSize="10.236220472440945" IsNewNode="True" />
+                  <LayoutItem Id="DiaDescanso" ViewItem="DiaDescanso" CaptionLocation="Left" Index="8" RelativeSize="14.173228346456693" IsNewNode="True" />
                 </LayoutGroup>
-                <LayoutGroup Id="Empleado_col2" ShowCaption="False" Index="1" RelativeSize="50.113895216400913" IsNewNode="True">
-                  <LayoutItem Id="TipoCuenta" ViewItem="TipoCuenta" Index="0" RelativeSize="14.173228346456693" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="NumeroCuenta" ViewItem="NumeroCuenta" Index="1" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="NumeroCarne" ViewItem="NumeroCarne" Index="2" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="Titulo" ViewItem="Titulo" Index="3" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="DiaDescanso" ViewItem="DiaDescanso" Index="4" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="AFP" ViewItem="AFP" Index="5" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="NumeroJVPM" ViewItem="NumeroJVPM" Index="6" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="SalarioMes" ViewItem="SalarioMes" Index="7" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="Pensionado" ViewItem="Pensionado" Index="8" RelativeSize="14.173228346456693" CaptionLocation="Left" IsNewNode="True" />
+                <LayoutGroup Id="Empleado_col2" ShowCaption="False" Index="1" RelativeSize="50.341685649202731" IsNewNode="True">
+                  <LayoutItem Id="Estado" ViewItem="Estado" CaptionLocation="Left" Index="0" RelativeSize="14.173228346456693" IsNewNode="True" />
+                  <LayoutItem Id="Banco" ViewItem="Banco" CaptionLocation="Left" Index="1" RelativeSize="10.236220472440945" IsNewNode="True" />
+                  <LayoutItem Id="TipoCuenta" ViewItem="TipoCuenta" CaptionLocation="Left" Index="2" RelativeSize="10.236220472440945" IsNewNode="True" />
+                  <LayoutItem Id="NumeroCuenta" ViewItem="NumeroCuenta" Index="3" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="Pensionado" ViewItem="Pensionado" Index="4" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="NumeroCarne" ViewItem="NumeroCarne" Index="5" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="Titulo" ViewItem="Titulo" Index="6" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="AFP" ViewItem="AFP" Index="7" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="NumeroJVPM" ViewItem="NumeroJVPM" Index="8" RelativeSize="14.173228346456693" CaptionLocation="Left" IsNewNode="True" />
                 </LayoutGroup>
               </LayoutGroup>
               <LayoutGroup Id="Item2" ShowCaption="True" CaptionLocation="Top" Direction="Vertical" Index="2" Caption="Fotografía" RelativeSize="100" IsNewNode="True">
@@ -329,7 +382,7 @@
               </LayoutGroup>
             </LayoutGroup>
           </LayoutGroup>
-          <TabbedGroup Id="Tabs" RelativeSize="59.580052493438323" Index="1">
+          <TabbedGroup Id="Tabs" RelativeSize="60.462130937098841" Index="1">
             <LayoutGroup Id="Especialidades" RelativeSize="100">
               <LayoutItem Id="Especialidades" RelativeSize="100" />
             </LayoutGroup>

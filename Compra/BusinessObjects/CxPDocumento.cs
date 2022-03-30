@@ -25,6 +25,9 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
         public override void AfterConstruction()
         {
             base.AfterConstruction();
+            ivaPercibido = 0.0m;
+            ivaRetenido = 0.0m;
+            iva = 0.0m;
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 

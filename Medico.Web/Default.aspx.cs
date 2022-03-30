@@ -30,6 +30,23 @@ public partial class Default : BaseXafPage
         }
     }
 
+    // fue una prueba
+    //void Page_Load(Object sender, EventArgs e) 
+    //{
+    //    Exception[] errs = Context.AllErrors;
+    //    if (errs != null)
+    //    {
+    //        foreach (Exception ex in errs)
+    //        {
+    //            Response.Write("<p style='text-align:center; ");
+    //            Response.Write("font-weight:bold'>");
+    //            Response.Write(Server.HtmlEncode(ex.ToString()) + "</p>");
+    //        }
+    //        Context.ClearError();
+    //    }
+    //}
+
+
     //protected void Page_Init()
     //{
     //    CustomizeTemplateContent += (s, e) => {

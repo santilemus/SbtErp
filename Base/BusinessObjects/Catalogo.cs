@@ -87,7 +87,7 @@ namespace SBT.Apps.Contabilidad.BusinessObjects
 #else
         [DbType("varchar(20)"), Persistent("CtaPadre")]
 #endif
-        [Size(20), XafDisplayName("Cuenta Padre"), RuleRequiredField("Catalogo.CuentaPadre_Requerido", "Save"), Index(2)]
+        [Size(20), XafDisplayName("Cuenta Padre"), RuleRequiredField("Catalogo.CuentaPadre_Requerido", "Save", SkipNullOrEmptyValues = true), Index(2)]
         [Association("Padre-Cuentas"), DataSourceCriteria("[CtaResumen] == True && [Activa] == True")]
         [ExplicitLoading(Depth = 1)]
         public Catalogo Padre

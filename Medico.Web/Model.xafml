@@ -30,10 +30,10 @@
   </NavigationItems>
   <Options CollectionsEditMode="Edit" />
   <SchemaModules>
-    <SchemaModule Name="CloneObjectModule" Version="20.2.5.0" IsNewNode="True" />
-    <SchemaModule Name="SchedulerAspNetModule" Version="20.2.5.0" IsNewNode="True" />
-    <SchemaModule Name="SchedulerModuleBase" Version="20.2.5.0" IsNewNode="True" />
-    <SchemaModule Name="SystemAspNetModule" Version="20.2.5.0" IsNewNode="True" />
-    <SchemaModule Name="SystemModule" Version="20.2.5.0" IsNewNode="True" />
+    <SchemaModule Name="CloneObjectModule" Version="21.2.3.0" IsNewNode="True" />
+    <SchemaModule Name="SchedulerAspNetModule" Version="21.2.3.0" IsNewNode="True" />
+    <SchemaModule Name="SchedulerModuleBase" Version="21.2.3.0" IsNewNode="True" />
+    <SchemaModule Name="SystemAspNetModule" Version="21.2.3.0" IsNewNode="True" />
+    <SchemaModule Name="SystemModule" Version="21.2.3.0" IsNewNode="True" />
   </SchemaModules>
 </Application>

@@ -47,8 +47,8 @@
   </Localization>
   <Options DataAccessMode="Server" />
   <SchemaModules>
-    <SchemaModule Name="CloneObjectModule" Version="20.2.5.0" IsNewNode="True" />
-    <SchemaModule Name="SystemModule" Version="20.2.5.0" IsNewNode="True" />
+    <SchemaModule Name="CloneObjectModule" Version="21.2.3.0" IsNewNode="True" />
+    <SchemaModule Name="SystemModule" Version="21.2.3.0" IsNewNode="True" />
   </SchemaModules>
   <Views>
     <ListView Id="ActividadEconomica_ListView" DataAccessMode="Server" />
@@ -425,7 +425,8 @@
       </Layout>
     </DetailView>
     <ListView Id="Persona_ListView" DataAccessMode="Server" />
-    <ListView Id="Persona_LookupListView" DataAccessMode="Server" />
+    <ListView Id="Persona_LookupListView" DataAccessMode="Server" NewItemRowPosition="None" AllowEdit="False" />
+    <ListView Id="Persona_Telefonos_ListView" AllowEdit="True" NewItemRowPosition="Top" />
     <DetailView Id="PersonaContacto_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
@@ -502,7 +503,7 @@
         </LayoutGroup>
       </Layout>
     </DetailView>
-    <ListView Id="PersonaTelefono_ListView" DataAccessMode="Server" />
+    <ListView Id="PersonaTelefono_ListView" DataAccessMode="Server" AllowEdit="False" NewItemRowPosition="None" />
     <DetailView Id="Profesion_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
@@ -527,7 +528,7 @@
     </DetailView>
     <ListView Id="Profesion_ListView" DataAccessMode="Server" />
     <ListView Id="Profesion_LookupListView" DataAccessMode="Server" />
-    <ListView Id="Telefono_ListView" DataAccessMode="Server" />
+    <ListView Id="Telefono_ListView" DataAccessMode="Server" AllowEdit="False" NewItemRowPosition="None" />
     <ListView Id="Telefono_LookupListView" DataAccessMode="Server" />
     <DetailView Id="UnidadMedida_DetailView">
       <Layout>

@@ -619,7 +619,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         protected override void OnSaving()
         {
             if (!(Session is NestedUnitOfWork) && (Session.DataLayer != null) && Session.IsNewObject(this) &&
-               (Session.ObjectLayer is SecuredSessionObjectLayer) && (Numero == null || Numero == 0))
+               (Session.ObjectLayer is SecuredSessionObjectLayer) && (Numero == null || Numero <= 0))
             {
                 Numero = CorrelativoDoc();
             }

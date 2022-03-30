@@ -144,6 +144,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         }
         [DevExpress.Xpo.SizeAttribute(25)]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
+        [VisibleInListView(false)]
         public System.String Lote
         {
             get

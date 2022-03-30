@@ -178,6 +178,9 @@
     <Compile Include="Controllers\vcPaciente.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controllers\vcPacienteAseguradoraLookup.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ExpedienteModule.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -204,7 +207,6 @@
     <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="DatabaseUpdate\ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>

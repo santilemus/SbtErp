@@ -1,19 +1,12 @@
 ﻿using System;
-using System.Linq;
-using System.Text;
 using DevExpress.Xpo;
-using DevExpress.ExpressApp;
 using System.ComponentModel;
 using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
 using DevExpress.Persistent.Base;
-using System.Collections.Generic;
 using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.BaseImpl;
 using DevExpress.Persistent.Validation;
-using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Medico.Generico.Module.BusinessObjects;
-using System.IO;
 
 namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 {
@@ -37,11 +30,12 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         public override void AfterConstruction()
         {
             base.AfterConstruction();
+           
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
         Paciente paciente;
-        MedicoLista categoria;
+     //   MedicoLista categoria;
         string descripcion;
         DateTime fecha;
         bool vigente = true;
@@ -55,13 +49,13 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
             set => SetPropertyValue(nameof(Paciente), ref paciente, value);
         }
 
-        [XafDisplayName("Categoría"), ImmediatePostData(true), VisibleInLookupListView(true),
-            RuleRequiredField("PacienteFileData.Categoria_Requerido", DefaultContexts.Save, ResultType = ValidationResultType.Information)]
-        public MedicoLista Categoria
-        {
-            get => categoria;
-            set => SetPropertyValue(nameof(Categoria), ref categoria, value);
-        }
+        //[XafDisplayName("Categoría"), ImmediatePostData(true), VisibleInLookupListView(true),
+        //    RuleRequiredField("PacienteFileData.Categoria_Requerido", DefaultContexts.Save, ResultType = ValidationResultType.Information)]
+        //public MedicoLista Categoria
+        //{
+        //    get => categoria;
+        //    set => SetPropertyValue(nameof(Categoria), ref categoria, value);
+        //}
 
         [Size(120), DbType("varchar(100)"), XafDisplayName("Descripción"), 
             RuleRequiredField("PacienteFileData.Descripcion_Requerido", DefaultContexts.Save)]

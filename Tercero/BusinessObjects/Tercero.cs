@@ -20,7 +20,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
         public override void AfterConstruction()
         {
             base.AfterConstruction();
-            TipoPersona = TipoPersona.Natural;
+            TipoPersona = TipoPersona.Juridica;
             TipoContribuyente = ETipoContribuyente.Gravado;
             Origen = ETerceroOrigen.Nacional;
             Activo = true;
@@ -56,7 +56,15 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
         public TerceroDireccion DireccionPrincipal
         {
             get => direccionPrincipal;
-            set => SetPropertyValue(nameof(DireccionPrincipal), ref direccionPrincipal, value);
+            set
+            {
+                bool changed = SetPropertyValue(nameof(DireccionPrincipal), ref direccionPrincipal, value);
+                if (!IsLoading && !IsSaving && changed && 
+                    (Session.IsNewObject(this) || Direcciones.Count<TerceroDireccion>(y => y.Oid == DireccionPrincipal.Oid) == 0))
+                {
+                    Direcciones.Add(DireccionPrincipal);
+                }
+            }
         }
 
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false), Index(2)]

@@ -35,15 +35,15 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         #region Propiedades
 
         [Persistent(nameof(Empresa))]
-        Empresa empresa;
+        Empresa empresa = null;
         [Persistent(nameof(FechaCierre))]
-        DateTime? fechaCierre;
+        DateTime? fechaCierre = null;
         [Persistent(nameof(DiaCerrado)), DbType("bit")]
-        bool diaCerrado;
+        bool diaCerrado = true;
         [Persistent(nameof(MesCerrado)), DbType("bit")]
-        bool mesCerrado;
+        bool mesCerrado = false;
         [Persistent("FechaCierreAudit"), DbType("datetime2")]
-        DateTime? fechaCierreAuditoria;
+        DateTime? fechaCierreAuditoria = null;
 
 
         [PersistentAlias(nameof(empresa)), XafDisplayName("Empresa")]

@@ -41,6 +41,20 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         public override void AfterConstruction()
         {
             base.AfterConstruction();
+            FechaIngreso = DateTime.Now;
+            if (Empresa != null)   // por defecto asigna el pais de la empresa (OJO...importante esa propiedad de empresa)
+            {
+                if (Empresa.Pais != null)
+                    Pais = Empresa.Pais;
+            }
+            if (Pais == null)     // si la propiedad empresa no existe, asigna como pais El Salvador (revisar si se deja asi)
+            {
+                var fPais = Session.GetObjectByKey<ZonaGeografica>("SLV");
+                if (fPais != null)
+                    Pais = fPais;
+            }
+            if (Pais != null)
+                Nacionalidad = Pais;
         }
 
         [DbType("int"), Persistent("Empresa"), XafDisplayName("Empresa"), VisibleInListView(false), VisibleInLookupListView(false)]
@@ -132,6 +146,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [DevExpress.Persistent.Base.ImmediatePostDataAttribute, Persistent("TipoSeguro"),
             XafDisplayName("Tipo Seguro")]
+        [DataSourceCriteria("[Categoria] = 'TipoSeguro'")]
         [ExplicitLoading]
         public Listas TipoSeguro
         {
@@ -146,7 +161,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         }
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false),
             Persistent("Aseguradora"), XafDisplayName("Aseguradora")]
-        [DataSourceCriteria("[TipoPersona] == 2 && [Activo] == True && [Roles][[IdRole] == 9 And [Activo] == True]")]
+        [DataSourceCriteria("[TipoPersona] = 'Juridica' And [Activo] = True And [Roles][[IdRole] = 'Aseguradora' And [Activo] = True]")]
         [ExplicitLoading]
         public Tercero.Module.BusinessObjects.Tercero Aseguradora
         {

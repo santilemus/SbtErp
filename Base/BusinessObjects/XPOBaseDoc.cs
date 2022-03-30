@@ -1,6 +1,7 @@
 ﻿using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
+using DevExpress.ExpressApp.Security.ClientServer;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
@@ -32,16 +33,9 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         /// </remarks>
         protected virtual int CorrelativoDoc()
         {
-            //string sSQL = $"select Max(coalesce(Numero, 0)) + 1 from {ClassInfo.TableName} where Empresa = @Empresa And Year(Fecha) = @Fecha";
             string sCriteria = "[Empresa.Oid] == ? && GetYear([Fecha]) == ?";
-            //if (GetType().GetProperty("Caja") != null)
-            //    sCriteria += " && Caja.Oid == ?";
-            using (UnitOfWork uow = new UnitOfWork(Session.DataLayer, null))
-            {
-                object max = uow.Evaluate(this.GetType(), CriteriaOperator.Parse("Max([Numero]) + 1"), CriteriaOperator.Parse(sCriteria, Empresa.Oid, Fecha.Year));
-                //object max = uow.ExecuteScalar(sSQL, new string[] { "@Empresa", "@Fecha" }, new object[] { Empresa.Oid, Fecha});
-                return Convert.ToInt32(max ?? 1);
-            }
+            object max = Session.Evaluate(this.GetType(), CriteriaOperator.Parse("Max([Numero]) + 1"), CriteriaOperator.Parse(sCriteria, Empresa.Oid, Fecha.Year));
+            return Convert.ToInt32(max ?? 1);
         }
 
         protected override void OnChanged(string propertyName, object oldValue, object newValue)
@@ -56,7 +50,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         protected override void OnSaving()
         {
             if (!(Session is NestedUnitOfWork) && (Session.DataLayer != null) && Session.IsNewObject(this) &&
-                (Session.ObjectLayer is SimpleObjectLayer) && (Numero == null || Numero == 0))
+                (Session.ObjectLayer is SecuredSessionObjectLayer) && (Numero == null || Numero <= 0))
             {
                 Numero = CorrelativoDoc();
             }
@@ -99,7 +93,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         }
 
         [Browsable(false)]
-        private int ? numero;
+        private int? numero;
 #if (Firebird)
         [DbType("DM_ENTERO_LARGO"), Persistent("NUMERO")]
 #else
@@ -107,7 +101,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
 #endif
         [Index(1), XafDisplayName("Número"), RuleRequiredField("XPOBaseDocs.Numero_Requerido", "Save"), NonCloneable]
         [ModelDefault("AllowEdit", "False")]
-        public int ? Numero
+        public int? Numero
         {
             get => numero;
             set => SetPropertyValue(nameof(Numero), ref numero, value);

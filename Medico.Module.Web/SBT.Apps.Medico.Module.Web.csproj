@@ -180,9 +180,15 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\WebDocumentViewer.cs" />
+    <Compile Include="Classes\ImageViewer.cs" />
     <Compile Include="Controllers\ETipoAjusteColumnaListView.cs" />
-    <Compile Include="Controllers\vcCitaWeb.cs" />
+    <Compile Include="Controllers\ImageViewerController.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controllers\vcCitaSyncOutlook.cs" />
+    <Compile Include="Controllers\vcCitaWeb.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controllers\vcConsultaWeb.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -201,14 +207,22 @@
     <Compile Include="Controllers\vcEmpresaUnidadLookupListViewHideNew.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controllers\vcEmpresaUnidadWeb.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controllers\vcEmpresaWeb.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controllers\vcExamenWeb.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controllers\vcMostrarImagenArchivoAdjunto.cs" />
+    <Compile Include="Controllers\vcPacienteVacunaWeb.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controllers\vcPacienteWeb.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controllers\vcParienteWeb.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controllers\vcProblemaMedicoWeb.cs">
@@ -265,7 +279,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="Controllers\ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>

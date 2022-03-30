@@ -44,9 +44,9 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
         #region Propiedades
 
         [Persistent(nameof(ValorMoneda))]
-        decimal valorMoneda;
+        decimal valorMoneda = 1.0m;
         [Persistent(nameof(Moneda))]
-        Moneda moneda;
+        Moneda moneda = null;
         decimal ivaRetenido;
         decimal ivaPercibido;
         Tercero.Module.BusinessObjects.Tercero cliente;

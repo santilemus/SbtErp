@@ -14,8 +14,8 @@ namespace SBT.Apps.Erp.Module.Win.Controllers
 {
     public class vcVentaWin: ViewController 
     {
-        private PopupWindowShowAction pwsaExportSalesF07Contribuyente;
-        private PopupWindowShowAction pwsaExportSalesF07Consumidor;
+        //private PopupWindowShowAction pwsaExportSalesF07Contribuyente;
+        //private PopupWindowShowAction pwsaExportSalesF07Consumidor;
         public vcVentaWin()
         {
 
@@ -39,7 +39,6 @@ namespace SBT.Apps.Erp.Module.Win.Controllers
 
         private void DoExportSalesF07Contribuyente(int AMonth, int AYear)
         {
-            Venta vc;
             SbtExport export = new SbtExport(((XPObjectSpace)ObjectSpace).Session.DataLayer);
             /// cambiar, debera de ser del BO que corresponde a 
             export.BOClass = typeof(SBT.Apps.Facturacion.Module.BusinessObjects.Venta);

@@ -116,6 +116,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 
         [Persistent("Diagnostico"), XafDisplayName("Diagnostico"), ToolTip("Referencia del diagnostico del pariente, para la historia familiar")]
         [ExplicitLoading]
+        [VisibleInListView(false)]
         public Enfermedad Diagnostico
         {
             get => diagnostico;
@@ -128,6 +129,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         /// </summary>
         [Size(200), DbType("varchar(200)"), Persistent("Comentario"), XafDisplayName("Comentario"),
             ToolTip("Cuando el diagnostico del pariente no es claro o es necesario detallar, hacerlo aquí")]
+        [VisibleInListView(false)]
         public string Comentario
         {
             get => comentario;
@@ -139,6 +141,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         /// </summary>
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [ToolTip("Marcar cuando el pariente es el responsable de paciente menor de edad o incapaz")]
+        [VisibleInListView(false)]
         public System.Boolean Responsable
         {
             get
@@ -152,6 +155,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         }
 
         [PersistentAlias("[Nombres] + Iif(!IsNullOrEmpty([Apellidos]), ' ' + [Apellidos], '')")]
+        [VisibleInListView(false)]
         public string NombreCompleto => Convert.ToString(EvaluateAlias(nameof(NombreCompleto)));
 
     }

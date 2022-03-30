@@ -22,7 +22,8 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
           : base(session)
         {
         }
-        [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Profesión")]
+
+        [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Profesión"), VisibleInLookupListView(true), Index(1)]
         [RuleRequiredField("EmpleadoProfesion_Profesion", DefaultContexts.Save, "Profesión es requerida")]
         [ExplicitLoading]
         public Profesion Profesion
@@ -36,10 +37,10 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
                 SetPropertyValue("Profesion", ref _profesion, value);
             }
         }
-        [DevExpress.Xpo.SizeAttribute(12), DbType("varchar(12)")]
+        [DevExpress.Xpo.SizeAttribute(12), DbType("varchar(12)"), Index(2)]
         [DevExpress.Persistent.Base.ToolTipAttribute("Número de certificación emitido por el organismo de vigilancia de la profesión")]
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Número Profesional")]
-        [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
+        [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(true)]
         public System.String NumeroProfesional
         {
             get
@@ -51,7 +52,7 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
                 SetPropertyValue("NumeroProfesional", ref _numeroProfesional, value);
             }
         }
-        [DevExpress.Xpo.AssociationAttribute("Profesiones-Empleado")]
+        [DevExpress.Xpo.AssociationAttribute("Profesiones-Empleado"), Index(0)]
         [RuleRequiredField("EmpleadoProfesion_Empleado", DefaultContexts.Save, "El empleado es requerido")]
         public Empleado Empleado
         {

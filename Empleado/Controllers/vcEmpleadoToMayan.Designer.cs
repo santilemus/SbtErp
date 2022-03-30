@@ -1,6 +1,6 @@
 ﻿namespace SBT.Apps.Empleado.Module.Controllers
 {
-    partial class vcEmpleado
+    partial class vcEmpleadoToMayan
     {
         /// <summary>
         /// Required designer variable.

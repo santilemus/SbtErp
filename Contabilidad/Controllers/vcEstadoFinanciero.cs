@@ -179,9 +179,9 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
                 objects.Add(new EFinancieroDetalle()
                 {
                     Oid = item.Oid,
-                    Nombre1 = item.Nombre1,
+                    Nombre1 = EvaluarNombre(item, item.Nombre1),
                     Nivel1 = (item.Cuenta1 != null) ? item.Cuenta1.Nivel : 0,
-                    Nombre2 = item.Nombre2,
+                    Nombre2 = EvaluarNombre(item, item.Nombre2),
                     Nivel2 = (item.Cuenta2 != null) ? item.Cuenta2.Nivel : 0,
                     Valor1 = saldo1,
                     Valor2 = saldo2,
@@ -200,6 +200,19 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
             var expresion = formula.Replace("?P0", Convert.ToString(efParams.FechaHasta.Year));
             expresion = expresion.Replace("?P1", Convert.ToString(efParams.FechaHasta.Month));
             return Convert.ToDecimal(item.EstadoFinanciero.Evaluate(CriteriaOperator.Parse(expresion)));
+        }
+
+        private string EvaluarNombre(EstadoFinancieroModeloDetalle item, string expresion)
+        {
+            CriteriaOperator criteriaOp = CriteriaOperator.TryParse(expresion);
+            if (ReferenceEquals(criteriaOp, null))
+                return expresion;
+            else
+            {
+                var exp2 = expresion.Replace("?P0", Convert.ToString(efParams.FechaHasta.Year));
+                exp2 = exp2.Replace("?P1", Convert.ToString(efParams.FechaHasta.Month));
+                return  Convert.ToString(item.EstadoFinanciero.Evaluate(exp2));
+            }
         }
 
         private void reportController_BeforePrint(XtraReport report)

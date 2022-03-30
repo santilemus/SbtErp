@@ -24,6 +24,10 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
         public override void AfterConstruction()
         {
             base.AfterConstruction();
+            var fPais = Session.GetObjectByKey<ZonaGeografica>("SLV");
+            if (fPais != null)
+                Pais = fPais;
+            Activa = true;
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 

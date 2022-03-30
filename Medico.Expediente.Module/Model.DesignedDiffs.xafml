@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Application Title="SBT.Apps.Medico.Expediente.Module" Logo="ExpressAppLogo">
   <SchemaModules>
-    <SchemaModule Name="CloneObjectModule" Version="20.2.5.0" IsNewNode="True" />
-    <SchemaModule Name="SchedulerModuleBase" Version="20.2.5.0" IsNewNode="True" />
-    <SchemaModule Name="SystemModule" Version="20.2.5.0" IsNewNode="True" />
+    <SchemaModule Name="CloneObjectModule" Version="21.2.3.0" IsNewNode="True" />
+    <SchemaModule Name="SchedulerModuleBase" Version="21.2.3.0" IsNewNode="True" />
+    <SchemaModule Name="SystemModule" Version="21.2.3.0" IsNewNode="True" />
   </SchemaModules>
   <Views>
     <DetailView Id="Cita_DetailView">
@@ -61,7 +61,109 @@
         </LayoutGroup>
       </Layout>
     </DetailView>
-    <ListView Id="Cita_ListView" DataAccessMode="Client" />
+    <ListView Id="Cita_ListView" DataAccessMode="Client">
+      <Variants>
+        <Variant Id="@0e615385-1353-4ab9-b1ad-7ad753287e7e" ViewID="Cita_ListView_Semana" IsNewNode="True" />
+        <Variant Id="@67f8a351-1101-4905-877f-e231e327b998" ViewID="Cita_ListView_Dia" IsNewNode="True" />
+        <Variant Id="@d101af66-b5f6-4820-8d6c-f597c057aa95" ViewID="Cita_ListView_Grid" Caption="Citas - Lista" IsNewNode="True" />
+        <Variant Id="@ed6ad575-53d7-4e86-ab2a-d9273bfc44bc" ViewID="Cita_ListView_Mes" IsNewNode="True" />
+      </Variants>
+    </ListView>
+    <ListView Id="Cita_ListView_Dia" ClassName="SBT.Apps.Medico.Expediente.Module.BusinessObjects.Cita" DataAccessMode="Client" Caption="Citas - Diarias" IsNewNode="True">
+      <Columns IsNewNode="True">
+        <ColumnInfo Id="AlarmTime" PropertyName="AlarmTime" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="AllDay" PropertyName="AllDay" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Description" PropertyName="Description" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="EndOn" PropertyName="EndOn" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="IsPostponed" PropertyName="IsPostponed" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Label" PropertyName="Label" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Location" PropertyName="Location" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="NotificationMessage" PropertyName="NotificationMessage" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Oid" PropertyName="Oid" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="RecurrenceInfoXml" PropertyName="RecurrenceInfoXml" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="ReminderInfoXml" PropertyName="ReminderInfoXml" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="StartOn" PropertyName="StartOn" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Status" PropertyName="Status" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Subject" PropertyName="Subject" SortIndex="0" SortOrder="Ascending" Index="0" IsNewNode="True" />
+        <ColumnInfo Id="Paciente" PropertyName="Paciente" Index="1" IsNewNode="True" />
+        <ColumnInfo Id="SePresento" PropertyName="SePresento" Index="2" IsNewNode="True" />
+      </Columns>
+    </ListView>
+    <ListView Id="Cita_ListView_Grid" ClassName="SBT.Apps.Medico.Expediente.Module.BusinessObjects.Cita" DataAccessMode="Server" IsNewNode="True">
+      <Columns IsNewNode="True">
+        <ColumnInfo Id="AlarmTime" PropertyName="AlarmTime" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="AllDay" PropertyName="AllDay" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="EndOn" PropertyName="EndOn" Index="-1" Width="140" IsNewNode="True" />
+        <ColumnInfo Id="IsPostponed" PropertyName="IsPostponed" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Label" PropertyName="Label" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Location" PropertyName="Location" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="NotificationMessage" PropertyName="NotificationMessage" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Oid" PropertyName="Oid" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="RecurrenceInfoXml" PropertyName="RecurrenceInfoXml" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="ReminderInfoXml" PropertyName="ReminderInfoXml" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Status" PropertyName="Status" Index="-1" Width="73" IsNewNode="True" />
+        <ColumnInfo Id="Subject" PropertyName="Subject" SortIndex="0" SortOrder="Ascending" Index="0" Width="323" IsNewNode="True" />
+        <ColumnInfo Id="StartOn" PropertyName="StartOn" Index="1" Width="157" IsNewNode="True" />
+        <ColumnInfo Id="Description" PropertyName="Description" Index="2" Width="286" IsNewNode="True" />
+        <ColumnInfo Id="SePresento" PropertyName="SePresento" Index="3" Width="92" IsNewNode="True" />
+        <ColumnInfo Id="Paciente" PropertyName="Paciente" Index="4" Width="273" IsNewNode="True" />
+      </Columns>
+      <Filters IsNewNode="True">
+        <Filter Id="Citas - Esta Semana" Criteria="IsThisWeek([StartOn])" IsNewNode="True" />
+        <Filter Id="Citas - Hoy" Criteria="IsOutlookIntervalToday([StartOn])" IsNewNode="True" />
+        <Filter Id="Citas - Mañana" Criteria="IsOutlookIntervalTomorrow([StartOn])" IsNewNode="True" />
+        <Filter Id="Citas - Todas" IsNewNode="True" />
+        <Filter Id="Mis Citas" Criteria="[Medicos][[Oid] = CurrentEmpleadoOid()]" IsNewNode="True" />
+        <Filter Id="Mis Citas Esta Semana" Criteria="[Medicos][[Oid] = CurrentEmpleadoOid()] And IsThisWeek([StartOn])" IsNewNode="True" />
+        <Filter Id="Mis Citas Hoy" Criteria="[Medicos][[Oid] = CurrentEmpleadoOid()] And IsOutlookIntervalToday([StartOn])" IsNewNode="True" />
+        <Filter Id="Mis Citas Mañana" Criteria="[Medicos][[Oid] = CurrentEmpleadoOid()] And IsOutlookIntervalTomorrow([StartOn])" IsNewNode="True" />
+      </Filters>
+      <Variants IsNewNode="True">
+        <Variant Id="@0e615385-1353-4ab9-b1ad-7ad753287e7e" ViewID="Cita_ListView_Semana" IsNewNode="True" />
+        <Variant Id="@67f8a351-1101-4905-877f-e231e327b998" ViewID="Cita_ListView_Dia" IsNewNode="True" />
+        <Variant Id="@ed6ad575-53d7-4e86-ab2a-d9273bfc44bc" ViewID="Cita_ListView_Mes" IsNewNode="True" />
+      </Variants>
+    </ListView>
+    <ListView Id="Cita_ListView_Mes" ClassName="SBT.Apps.Medico.Expediente.Module.BusinessObjects.Cita" DataAccessMode="Client" Caption="Citas - Mes" IsNewNode="True">
+      <Columns IsNewNode="True">
+        <ColumnInfo Id="AlarmTime" PropertyName="AlarmTime" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="AllDay" PropertyName="AllDay" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Description" PropertyName="Description" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="EndOn" PropertyName="EndOn" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="IsPostponed" PropertyName="IsPostponed" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Label" PropertyName="Label" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Location" PropertyName="Location" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="NotificationMessage" PropertyName="NotificationMessage" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Oid" PropertyName="Oid" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="RecurrenceInfoXml" PropertyName="RecurrenceInfoXml" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="ReminderInfoXml" PropertyName="ReminderInfoXml" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="StartOn" PropertyName="StartOn" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Status" PropertyName="Status" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Subject" PropertyName="Subject" SortIndex="0" SortOrder="Ascending" Index="0" IsNewNode="True" />
+        <ColumnInfo Id="Paciente" PropertyName="Paciente" Index="1" IsNewNode="True" />
+        <ColumnInfo Id="SePresento" PropertyName="SePresento" Index="2" IsNewNode="True" />
+      </Columns>
+    </ListView>
+    <ListView Id="Cita_ListView_Semana" ClassName="SBT.Apps.Medico.Expediente.Module.BusinessObjects.Cita" DataAccessMode="Client" Caption="Citas - Semana" IsNewNode="True">
+      <Columns IsNewNode="True">
+        <ColumnInfo Id="AlarmTime" PropertyName="AlarmTime" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="AllDay" PropertyName="AllDay" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Description" PropertyName="Description" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="EndOn" PropertyName="EndOn" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="IsPostponed" PropertyName="IsPostponed" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Label" PropertyName="Label" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Location" PropertyName="Location" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="NotificationMessage" PropertyName="NotificationMessage" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Oid" PropertyName="Oid" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="RecurrenceInfoXml" PropertyName="RecurrenceInfoXml" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="ReminderInfoXml" PropertyName="ReminderInfoXml" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="StartOn" PropertyName="StartOn" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Status" PropertyName="Status" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Subject" PropertyName="Subject" SortIndex="0" SortOrder="Ascending" Index="0" IsNewNode="True" />
+        <ColumnInfo Id="Paciente" PropertyName="Paciente" Index="1" IsNewNode="True" />
+        <ColumnInfo Id="SePresento" PropertyName="SePresento" Index="2" IsNewNode="True" />
+      </Columns>
+    </ListView>
     <DetailView Id="Consulta_DetailView">
       <Items>
         <PropertyEditor Id="Paciente" PropertyName="Paciente" IsNewNode="True" />
@@ -611,7 +713,6 @@
         <LayoutGroup Id="Main" RelativeSize="100">
           <LayoutGroup Id="SimpleEditors" RelativeSize="100">
             <LayoutGroup Id="PacienteFileData" RelativeSize="100">
-              <LayoutItem Id="Categoria" RelativeSize="4.6213093709884463" CaptionLocation="Left" />
               <LayoutItem Id="Descripcion" RelativeSize="3.3376123234916562" CaptionLocation="Left" />
               <LayoutItem Id="Fecha" RelativeSize="3.3376123234916562" CaptionLocation="Left" />
               <LayoutItem Id="Vigente" RelativeSize="3.3376123234916562" CaptionLocation="Left" />
