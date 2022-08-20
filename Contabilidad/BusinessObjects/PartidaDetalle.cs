@@ -19,6 +19,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
     /// Action Info: https://docs.devexpress.com/eXpressAppFramework/112619/task-based-help/actions/how-to-create-an-action-using-the-action-attribute
     /// </remarks>
     [NavigationItem(false), ModelDefault("Caption", "Partida Detalle"), ModelDefault("AllowEdit", "True"), CreatableItem(false)]
+    [VisibleInDashboards(true), VisibleInReports(true)]
     //[ImageName("BO_Contact")]
     //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
     [DefaultListViewOptions(MasterDetailMode.ListViewOnly, true, NewItemRowPosition.Top)]
@@ -45,7 +46,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         int ctaPresupuesto;
         ETipoOperacionConsolidacion ajusteConsolidacion = ETipoOperacionConsolidacion.Ninguno;
 
-        [Association("Partida-Detalles"), DbType("int"), Persistent("Partida"), Browsable(false)]
+        [Association("Partida-Detalles"), DbType("int"), Persistent("Partida"), VisibleInDetailView(false), VisibleInListView(false)]
         public Partida Partida
         {
             get => partida;

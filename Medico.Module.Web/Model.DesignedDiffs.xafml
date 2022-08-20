@@ -14,6 +14,26 @@
     <SchemaModule Name="SystemModule" Version="21.2.3.0" IsNewNode="True" />
   </SchemaModules>
   <Views>
+    <DetailView Id="Cita_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main">
+          <LayoutGroup Id="Event">
+            <LayoutGroup Id="Event_col1" RelativeSize="49.716231555051081" />
+            <LayoutGroup Id="Event_col2" RelativeSize="50.283768444948919">
+              <LayoutItem Id="SePresento" RelativeSize="19.35483870967742" />
+              <LayoutItem Id="AlarmTime" ViewItem="AlarmTime" Index="3" RelativeSize="20.967741935483872" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="RecurrencePattern" Index="4" RelativeSize="9.67741935483871" />
+              <LayoutItem Id="ReminderInfoXml" Removed="True" />
+            </LayoutGroup>
+          </LayoutGroup>
+          <LayoutGroup Id="GrupoCita" RelativeSize="26.444159178433889">
+            <LayoutItem Id="Description" RelativeSize="48.863636363636367" />
+            <LayoutItem Id="RecurrenceInfoXml" RelativeSize="51.136363636363633" />
+          </LayoutGroup>
+          <LayoutGroup Id="Medicos_Group" RelativeSize="52.503209242618745" />
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
     <ListView Id="Cita_ListView_Grid" EditorTypeName="DevExpress.ExpressApp.Web.Editors.ASPx.ASPxGridListEditor" />
     <ListView Id="Cita_ListView_Mes" SchedulerViewType="Month" />
     <ListView Id="Cita_ListView_Semana" SchedulerViewType="Week" />

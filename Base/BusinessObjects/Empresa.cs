@@ -223,10 +223,11 @@ namespace SBT.Apps.Base.Module.BusinessObjects
 
         [XafDisplayName("Moneda Defecto")]
         [VisibleInListView(false)]
+        [Delayed]
         public Moneda MonedaDefecto
         {
-            get => monedaDefecto;
-            set => SetPropertyValue(nameof(MonedaDefecto), ref monedaDefecto, value);
+            get => GetDelayedPropertyValue<Moneda>(nameof(MonedaDefecto)); // monedaDefecto;
+            set => SetDelayedPropertyValue(nameof(MonedaDefecto), value);
         }
 
         [DbType("numeric(10,4)"), XafDisplayName("Porcentaje Iva")]

@@ -112,7 +112,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         }
 
 
-        [Size(4), XafDisplayName("Código Teléfonico"), DbType("varchar(4)"), VisibleInListView(false)]
+        [Size(4), XafDisplayName("Código Teléfonico"), DbType("varchar(4)"), VisibleInListView(true)]
         public string CodigoTelefonico
         {
             get => codigoTelefonico;
@@ -135,9 +135,10 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         /// <summary>
         /// Moneda usada en el pais, agregar validacion para que solo se ingrese cuando la zona geografica padre es nula
         /// </summary>
-        [Size(3), DbType("varchar(3)"), XafDisplayName("Moneda"), VisibleInListView(true), VisibleInLookupListView(true)]
+        [Size(3), DbType("varchar(3)"), XafDisplayName("Moneda"), VisibleInListView(false), VisibleInLookupListView(false)]
         [Appearance("ZonaGeografica.Moneda_Ocultar", Criteria = "Not([ZonaPadre] Is Null)",
             Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "DetailView")]
+        [RuleRequiredField("ZonaGeografica.Moneda_Requerida", DefaultContexts.Save, TargetCriteria = "[ZonaPadre] Is Null", SkipNullOrEmptyValues = true)]
         public Moneda Moneda
         {
             get => moneda;

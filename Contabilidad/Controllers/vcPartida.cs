@@ -149,13 +149,31 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
         private void saPartidaApertura_Execute(Object sender, SimpleActionExecuteEventArgs e)
         {
             Partida ptda = (e.CurrentObject as Partida);
-            if (ptda.Detalles.Count() == 0)
+            if (ptda.Detalles.Count() > 0)
                 return;
             var le = ((DetailView)View).FindItem("Detalles");
-            var li = ((ListPropertyEditor)le).ListView;
-            PartidaAutomatica partidaAutomatica = new PartidaAutomatica(ObjectSpace, ptda, li);
+            var lv = ((ListPropertyEditor)le).ListView;
             string sMsg = string.Empty;
-            partidaAutomatica.PartidaApertura(out sMsg);
+            if (le != null && lv != null)
+            {
+                if (ptda.Tipo == ETipoPartida.Apertura)
+                {
+                    if (string.IsNullOrEmpty(ptda.Concepto))
+                    {                 
+                        ptda.Concepto = $"Partida de Apertura del Ejercicio {ptda.Fecha.Year}";
+                    }
+                    PartidaAutomatica partidaAutomatica = new PartidaAutomatica(ObjectSpace, ptda, lv);
+                    partidaAutomatica.PartidaApertura(out sMsg);
+                    lv.Refresh();
+                    ptda.UpdateTotDebe(true);
+                    ptda.UpdateTotHaber(true);
+                }
+            }
+            else
+            {
+                MostrarInformacion("La partida no se va a generar porque no se encontró el ViewItem Detalles o el ListView correspondiente");
+                return;
+            }
         }
 
         /// <summary>

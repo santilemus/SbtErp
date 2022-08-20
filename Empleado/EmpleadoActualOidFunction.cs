@@ -18,11 +18,11 @@ namespace SBT.Apps.Empleado.Module
     /// la funcion este disponible para el usuario final en el editor de expresiones. Si quiere usar la funcion como un CriteriaOperator
     /// para los criterios del lado del servidor (consultar a la base de datos), implementar ademas, ICustomFunctionOperatorFormattable.
     /// </remarks>
-    public class CurrentOidEmpleadoFunction : ICustomFunctionOperatorBrowsable
+    public class EmpleadoActualOidFunction : ICustomFunctionOperatorBrowsable
     {
 
         #region Implementacion ICustomFunctionOperator
-        public string Name => "CurrentEmpleadoOid";
+        public string Name => "EmpleadoActualOid";
 
         public object Evaluate(params object[] operands)
         {
@@ -50,9 +50,9 @@ namespace SBT.Apps.Empleado.Module
         /// <summary>
         /// Constructor (estatico)
         /// </summary>
-        static CurrentOidEmpleadoFunction()
+        static EmpleadoActualOidFunction()
         {
-            CurrentOidEmpleadoFunction instance = new CurrentOidEmpleadoFunction();
+            EmpleadoActualOidFunction instance = new EmpleadoActualOidFunction();
             if (CriteriaOperator.GetCustomFunction(instance.Name) == null)
             {
                 CriteriaOperator.RegisterCustomFunction(instance);
@@ -84,7 +84,7 @@ namespace SBT.Apps.Empleado.Module
 
         public string Description
         {
-            get { return $"CurrentEmpleadoOid(){Environment.NewLine}Retorna el Oid del empleado vinculado al usuario logeado"; }
+            get { return $"EmpleadoActualOid(){Environment.NewLine}Retorna el Oid del empleado vinculado al usuario logeado"; }
         }
 
         public FunctionCategory Category

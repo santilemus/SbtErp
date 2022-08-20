@@ -4,24 +4,22 @@ using System.Linq;
 using System.Text;
 using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp;
-using DevExpress.ExpressApp.Actions;
-using DevExpress.ExpressApp.Editors;
-using DevExpress.ExpressApp.Layout;
-using DevExpress.ExpressApp.Model.NodeGenerators;
-using DevExpress.ExpressApp.SystemModule;
-using DevExpress.ExpressApp.Templates;
-using DevExpress.ExpressApp.Utils;
-using DevExpress.Persistent.Base;
-using DevExpress.Persistent.Validation;
+using SBT.Apps.Medico.Expediente.Module.BusinessObjects;
+using SBT.Apps.Base.Module.Controllers;
+
 
 namespace SBT.Apps.Medico.Expediente.Module.Controllers
 {
     // For more typical usage scenarios, be sure to check out https://documentation.devexpress.com/eXpressAppFramework/clsDevExpressExpressAppViewControllertopic.aspx.
-    public partial class vcConsulta : ViewController
+    /// <summary>
+    /// View Controller que corresponde a las vistas de listas del BO Consulta
+    /// </summary>
+    public class vcConsultaListView : ViewControllerBase
     {
-        public vcConsulta()
+        public vcConsultaListView(): base()
         {
-            InitializeComponent();
+            TargetObjectType = typeof(SBT.Apps.Medico.Expediente.Module.BusinessObjects.Consulta);
+            this.TargetViewType = DevExpress.ExpressApp.ViewType.ListView;
             // Target required Views (via the TargetXXX properties) and create their Actions.
         }
         protected override void OnActivated()

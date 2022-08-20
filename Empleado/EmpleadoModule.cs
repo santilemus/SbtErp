@@ -19,7 +19,7 @@ namespace SBT.Apps.Empleado.Module
             BaseObject.OidInitializationMode = OidInitializationMode.AfterConstruction;
 
             // registramos la funcion que retorna el Oid del empleado vinculado al usuario logeado
-            CriteriaOperator.RegisterCustomFunction(new CurrentOidEmpleadoFunction());
+            CriteriaOperator.RegisterCustomFunction(new EmpleadoActualOidFunction());
         }
         public override IEnumerable<ModuleUpdater> GetModuleUpdaters(IObjectSpace objectSpace, Version versionFromDB)
         {

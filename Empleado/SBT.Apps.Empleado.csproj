@@ -110,7 +110,10 @@
     <Compile Include="BusinessObjects\ETipoAccionPersonal.cs" />
     <Compile Include="BusinessObjects\TipoContrato.cs" />
     <Compile Include="BusinessObjects\TipoSalario.cs" />
-    <Compile Include="CurrentEmpleadoOidFunction.cs" />
+    <Compile Include="Controllers\EmpleadoViewController.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="EmpleadoActualOidFunction.cs" />
     <Compile Include="DatabaseUpdate\Updater.cs" />
     <Compile Include="EmpleadoModule.cs">
       <SubType>Component</SubType>

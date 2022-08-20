@@ -36,6 +36,7 @@ namespace SBT.Apps.Erp.Win {
             //winApplication.SplashScreen = new DevExpress.ExpressApp.Win.Utils.DXSplashScreen("YourSplashImage.png");
 			SecurityStrategy security = (SecurityStrategy)winApplication.Security;
             security.RegisterXPOAdapterProviders();
+            security.PermissionsReloadMode = PermissionsReloadMode.CacheOnFirstAccess;  // agregado el 27/07/2022 por selm para reducir los accesos a la bd por permisos
             if(ConfigurationManager.ConnectionStrings["Erp"] != null) {
                 winApplication.ConnectionString = ConfigurationManager.ConnectionStrings["Erp"].ConnectionString;
             }
@@ -49,6 +50,8 @@ namespace SBT.Apps.Erp.Win {
             DevExpress.ExpressApp.ApplicationModulesManager.UseParallelTypesCollector = true;
             DevExpress.ExpressApp.ApplicationModulesManager.UseStaticCache = false;
             DevExpress.Persistent.Base.ReflectionHelper.UseAssemblyResolutionCache = false;
+            winApplication.UseLightStyle = true;
+            winApplication.UseOldTemplates = false;
             //---
 #if EASYTEST
             if(ConfigurationManager.ConnectionStrings["EasyTestConnectionString"] != null) {

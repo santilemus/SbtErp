@@ -323,6 +323,7 @@ namespace SBT.Apps.Facturacion.Module.Controllers
             base.DoInitializeComponent();
             pwsaAnular = new PopupWindowShowAction(this, "pwsaAnular", DevExpress.Persistent.Base.PredefinedCategory.RecordEdit.ToString());
             pwsaAnular.TargetObjectType = typeof(SBT.Apps.Facturacion.Module.BusinessObjects.Venta);
+            pwsaAnular.TargetViewType = ViewType.DetailView;
             pwsaAnular.ToolTip = "Clic para Anular el documento seleccionado";
             pwsaAnular.SelectionDependencyType = SelectionDependencyType.RequireSingleObject;
             pwsaAnular.Caption = "Anular";

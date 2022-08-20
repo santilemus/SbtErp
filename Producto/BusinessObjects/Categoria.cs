@@ -76,7 +76,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
 
         [ImmediatePostData(true)]
         [RuleRequiredField("Categoria.Padre_Requerido", DefaultContexts.Save, "Padre es requerido", SkipNullOrEmptyValues = true), VisibleInLookupListView(false)]
-        [ExplicitLoading]
+        [ExplicitLoading(Depth = 1)]
         [DevExpress.Xpo.Association("Categoria-Categorias")]
         public Categoria Padre
         {

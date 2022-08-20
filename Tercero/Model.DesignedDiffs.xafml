@@ -84,6 +84,7 @@
         <ColumnInfo Id="Comision" Index="4" />
       </Columns>
     </ListView>
+    <ListView Id="AFP_LookupListView" DataAccessMode="DataView" />
     <ListView Id="Aseguradora_LookupListView" ClassName="SBT.Apps.Tercero.Module.BusinessObjects.Tercero" Criteria="[Roles][[IdRole] = ##Enum#SBT.Apps.Tercero.Module.BusinessObjects.TipoRoleTercero,Aseguradora#] And [TipoPersona] = ##Enum#SBT.Apps.Base.Module.BusinessObjects.TipoPersona,Juridica# And [Activo] = True" Caption="Aseguradora" IsNewNode="True">
       <Columns IsNewNode="True">
         <ColumnInfo Id="Oid" PropertyName="Oid" Index="0" IsNewNode="True" />
@@ -153,7 +154,7 @@
         </LayoutGroup>
       </Layout>
     </DetailView>
-    <ListView Id="Banco_LookupListView">
+    <ListView Id="Banco_LookupListView" DataAccessMode="DataView">
       <Columns>
         <ColumnInfo Id="Nombre" PropertyName="Nombre" Index="0" Width="405" IsNewNode="True" />
         <ColumnInfo Id="Activo" Index="1" />

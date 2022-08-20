@@ -1,6 +1,7 @@
 ﻿using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.ConditionalAppearance;
 using DevExpress.ExpressApp.DC;
+using DevExpress.ExpressApp.SystemModule;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
@@ -26,6 +27,17 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
     [RuleCriteria("Consulta.ProximaCitaValida", DefaultContexts.Save, "ProximaCita >= Fecha", "Fecha de próxima cita debe ser mayor o igual a Fecha")]
     [Appearance("Ultrasonografia_Hide", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide,
         Context = "DetailView", Criteria = "[Paciente.Genero] != 1 && [Paciente.Edad] >= 10", TargetItems = "UltrasonografiaObstetricas;UltrasonografiaPelvicas")]
+
+    [ListViewFilter("Consulta Medica. En Espera", "[Estado] == 'Espera'", "Esperando Turno con Medico", "Consultas procesadas por recepción y esperando turno con medico asignado")]
+    [ListViewFilter("Consulta Medica. Iniciada", "[Estado] == 'Iniciada'", "Pacientes en consultorios", "Pacientes que estan siendo atendidos")]
+    [ListViewFilter("Consulta Medica. Paciente siendo atendido", "[Estado] == 'Iniciada' && [Medico.Oid] == EmpleadoActualOid()", 
+        "Paciente con su Medico", "Consulta atendida por medico de la sesión")]
+    [ListViewFilter("Consulta Medica. Finalizada", "[Estado] == 'Finalizada'", "Consultas finalizadas", "Consultas que el medico ha dado por finalizadas")]
+    [ListViewFilter("Consulta Medica. Cancelada", "[Estado] == 'Cancelada'", "Consultas Canceladas", "Pacientes que se retiraron antes de pasar consulta")]
+    [ListViewFilter("Consulta Medica. Del dia de hoy", "GetDate([Fecha]) == Today()", "Consultas del dia de hoy")]
+    [ListViewFilter("Consulta Medica. De la Semana", "IsThisWeek([Fecha])", "Consultas de la Semana Actual")]
+    [ListViewFilter("Consulta Medica. Del Mes Actual", "IsThisMonth([Fecha])", "Consultas del Mes Actual")]
+    [ListViewFilter("Consulta Medica. Todas", "")]
     public class Consulta : XPObjectBaseBO
     {
         /// <summary>
@@ -52,6 +64,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
             Generico.Module.BusinessObjects.Medico doc = Session.GetObjectByKey<Generico.Module.BusinessObjects.Medico>(empleado.Oid);
             if (doc != null)
                 Medico = doc;
+            estado = EEstadoConsulta.Espera;
         }
 
         //   SBT.Apps.Producto.Module.BusinessObjects.ProductoPrecio precio;
@@ -65,6 +78,8 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         private Empresa empresa;
         private System.String _diagnostico;
         private System.DateTime _fecha;
+        private EEstadoConsulta estado;
+
         public Consulta(DevExpress.Xpo.Session session)
           : base(session)
         {
@@ -182,6 +197,13 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
             {
                 SetPropertyValue("UnidadDeRemision", ref _unidadDeRemision, value);
             }
+        }
+
+        [XafDisplayName("Estado"), DbType("smallint")]
+        public EEstadoConsulta Estado
+        {
+            get => estado;
+            set => SetPropertyValue(nameof(Estado), ref estado, value);
         }
 
 

@@ -67,7 +67,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         [RuleRequiredField("Producto.Categoria_Requerido", DefaultContexts.Save, "La Categoría es requerida")]
         [DataSourceCriteria("[EsGrupo] == false && [Activa] == true && [Categorias][].Count() == 0")]
         //[Association("Categoria-Productos")]
-        [ExplicitLoading]
+        [ExplicitLoading(Depth = 1)]
         public Categoria Categoria
         {
             get => categoria;
@@ -95,7 +95,15 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         public ProductoCodigoBarra CodigoBarra
         {
             get => codigoBarra;
-            set => SetPropertyValue(nameof(CodigoBarra), ref codigoBarra, value);
+            set
+            {
+                bool changed = SetPropertyValue(nameof(CodigoBarra), ref codigoBarra, value);
+                if (!IsLoading && !IsSaving && changed &&
+                   (Session.IsNewObject(this) || CodigosBarra.Count<ProductoCodigoBarra>(y => y.Oid == CodigoBarra.Oid) == 0))
+                {
+                    CodigosBarra.Add(CodigoBarra);
+                }
+            }
         }
 
         [DbType("varchar(100)")]

@@ -62,7 +62,6 @@ namespace SBT.Apps.Erp.Win {
             if(System.Diagnostics.Debugger.IsAttached) 
             {
                 e.Updater.Update();
-
                 ////e.Handled = true;
             }
             else {

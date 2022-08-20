@@ -140,6 +140,7 @@
     <Compile Include="BusinessObjects\ConsultaDiagnostico.cs" />
     <Compile Include="BusinessObjects\ConsultaSigno.cs" />
     <Compile Include="BusinessObjects\ConsultaSintoma.cs" />
+    <Compile Include="BusinessObjects\EEstadoConsulta.cs" />
     <Compile Include="BusinessObjects\Ginecologia\ECantidadFeto.cs" />
     <Compile Include="BusinessObjects\Ginecologia\EDorsoFetoUltra.cs" />
     <Compile Include="BusinessObjects\Ginecologia\EFormaPlacentaPrevia.cs" />
@@ -163,11 +164,9 @@
     <Compile Include="BusinessObjects\RecordatorioClinico.cs" />
     <Compile Include="BusinessObjects\PacienteVacuna.cs" />
     <Compile Include="BusinessObjects\Pariente.cs" />
-    <Compile Include="Controllers\vcConsulta.cs">
+    <Compile Include="Controllers\ConsultaDetailViewController.cs" />
+    <Compile Include="Controllers\vcConsultaListView.cs">
       <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controllers\vcConsulta.Designer.cs">
-      <DependentUpon>vcConsulta.cs</DependentUpon>
     </Compile>
     <Compile Include="Controllers\vcHistoriaFamiliar.cs">
       <SubType>Component</SubType>
@@ -191,9 +190,6 @@
     <Compile Include="DatabaseUpdate\Updater.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Controllers\vcConsulta.resx">
-      <DependentUpon>vcConsulta.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Controllers\vcHistoriaFamiliar.resx">
       <DependentUpon>vcHistoriaFamiliar.cs</DependentUpon>
     </EmbeddedResource>

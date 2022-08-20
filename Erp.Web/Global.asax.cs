@@ -34,6 +34,11 @@ namespace SBT.Apps.Erp.Web {
             WebApplication.SetInstance(Session, new ErpAspNetApplication());
             SecurityStrategy security = (SecurityStrategy)WebApplication.Instance.Security;
             security.RegisterXPOAdapterProviders();
+
+            // agregado el 27/07/2022 para reducir el acceso a la bd por los permisos, cargar el modelo solo al inicio
+            security.PermissionsReloadMode = PermissionsReloadMode.CacheOnFirstAccess;  
+            WebApplication.Instance.EnableModelCache = true;
+            //---
             DevExpress.ExpressApp.Web.Templates.DefaultVerticalTemplateContentNew.ClearSizeLimit();
             WebApplication.Instance.SwitchToNewStyle();
             if(ConfigurationManager.ConnectionStrings["Erp"] != null) {

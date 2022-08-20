@@ -31,6 +31,7 @@ namespace SBT.Apps.Contabilidad.BusinessObjects
         "Las cuentas de 4 digitdos deben ser De Resumen y de Mayor", ResultType = ValidationResultType.Warning, TargetCriteria = "Len([CodigoCuenta]) == 4")]
     [RuleCombinationOfPropertiesIsUnique("Catalogo. EmpresaCuentaEspecial Unica", DefaultContexts.Save, "Empresa,CodigoCuenta,CuentaEspecial", 
         TargetCriteria = "[CuentaEspecial] > 0")]
+    [Serializable]
 
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class Catalogo : XPObjectCustom

@@ -200,7 +200,7 @@
               <LayoutItem Id="Numero" ViewItem="Numero" Index="3" RelativeSize="10.317460317460318" CaptionLocation="Left" IsNewNode="True" />
               <LayoutItem Id="Fecha" ViewItem="Fecha" Index="4" RelativeSize="10.317460317460318" CaptionLocation="Left" IsNewNode="True" />
               <LayoutItem Id="Moneda" ViewItem="Moneda" Index="5" RelativeSize="10.317460317460318" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="ValorMoneda" ViewItem="ValorMoneda" Index="6" RelativeSize="10.317460317460318" IsNewNode="True" />
+              <LayoutItem Id="ValorMoneda" ViewItem="ValorMoneda" Index="6" RelativeSize="10.317460317460318" CaptionLocation="Left" IsNewNode="True" />
               <LayoutItem Id="ChequeNo" ViewItem="ChequeNo" CaptionLocation="Left" Index="7" RelativeSize="10.317460317460318" IsNewNode="True" />
               <LayoutItem Id="Monto" ViewItem="Monto" CaptionLocation="Left" Index="8" RelativeSize="13.492063492063492" IsNewNode="True" />
             </LayoutGroup>

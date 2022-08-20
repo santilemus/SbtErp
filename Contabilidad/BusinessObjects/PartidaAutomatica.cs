@@ -103,8 +103,11 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
                 return;
             }
             foreach (var item in saldos)
-                CreateDetalle(item.Cuenta, fPartida.Concepto, (item.TipoSaldoCta == ETipoSaldoCuenta.Acreedor) ? item.SaldoFin : 0.0m, /* debe */
-                                                               (item.TipoSaldoCta == ETipoSaldoCuenta.Deudor) ? item.SaldoFin : 0.0m   /* haber */);
+            {
+                if (item.SaldoFin != 0.0m)
+                    CreateDetalle(item.Cuenta, fPartida.Concepto, (item.TipoSaldoCta == ETipoSaldoCuenta.Acreedor) ? item.SaldoFin : 0.0m, /* debe */
+                                                                  (item.TipoSaldoCta == ETipoSaldoCuenta.Deudor) ? item.SaldoFin : 0.0m   /* haber */);
+            }
             var fIngreso = fObjectSpace.Evaluate(typeof(SaldoMes), CriteriaOperator.Parse("Sum([SaldoFin])"),
                            CriteriaOperator.Parse("[Cuenta.Empresa.Oid] == ? && [Periodo.Oid] == ? && [Mes] == ? &&[Cuenta.TipoCuenta] == ? && IsNull([Cuenta.Padre])",
                            fPartida.Empresa.Oid, fPartida.Fecha.Year, fPartida.Fecha.Month, ETipoCuentaCatalogo.Ingreso));
@@ -250,8 +253,9 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             {
                 foreach (var item in saldos)
                 {
-                    CreateDetalle(item.Cuenta, fPartida.Concepto, (item.TipoSaldoCta == ETipoSaldoCuenta.Acreedor) ? item.SaldoFin : 0.0m, /* debe */
-                                                                   (item.TipoSaldoCta == ETipoSaldoCuenta.Deudor) ? item.SaldoFin : 0.0m   /* haber */);
+                    if (item.SaldoFin != 0.0m)
+                        CreateDetalle(item.Cuenta, fPartida.Concepto, (item.TipoSaldoCta == ETipoSaldoCuenta.Acreedor) ? item.SaldoFin : 0.0m, /* debe */
+                                                                      (item.TipoSaldoCta == ETipoSaldoCuenta.Deudor) ? item.SaldoFin : 0.0m   /* haber */);
                 }
             }
             msg = string.Empty;
@@ -281,27 +285,28 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         /// <param name="msg">Mensaje retornado por el metodo</param>
         public void PartidaApertura(out string msg)
         {
-            if (fObjectSpace.GetObjectByKey<Periodo>(fPartida.Periodo.Oid - 1) == null)
+            if (fObjectSpace.GetObjectByKey<Periodo>(fPartida.Fecha.Year - 1) == null)
             {
-                msg = $"Periodo {fPartida.Periodo.Oid - 1} no existe";
+                msg = $"Periodo {fPartida.Fecha.Year - 1} no existe";
                 return;
             }
             Partida partidaCierre = fObjectSpace.FindObject<Partida>(CriteriaOperator.Parse("[Empresa.Oid] == ? && [Periodo.Oid] == ? && [Tipo] == ?",
-                                        fPartida.Empresa.Oid, fPartida.Periodo.Oid - 1, ETipoPartida.Cierre));
+                                        fPartida.Empresa.Oid, fPartida.Fecha.Year - 1, ETipoPartida.Cierre));
             if (partidaCierre == null)
             {
-                msg = $"Partida {Convert.ToString(ETipoPartida.Cierre)} del Periodo {fPartida.Periodo.Oid - 1} no existe para generar partida de Apertura";
+                msg = $"Partida {Convert.ToString(ETipoPartida.Cierre)} del Periodo {fPartida.Fecha.Year - 1} no existe para generar partida de Apertura";
                 return;
             }
             foreach (var item in partidaCierre.Detalles)
             {
-                fPartida.Detalles.Add(new PartidaDetalle(fPartida.Session)
-                {
-                    Cuenta = item.Cuenta,
-                    Concepto = fPartida.Concepto,
-                    ValorDebe = (item.Cuenta.TipoSaldoCta == ETipoSaldoCuenta.Deudor) ? item.ValorHaber : 0.0m,
-                    ValorHaber = (item.Cuenta.TipoSaldoCta == ETipoSaldoCuenta.Acreedor) ? item.ValorDebe : 0.0m
-                });
+                var detalle = fObjectSpace.CreateObject<PartidaDetalle>();
+                detalle.Cuenta = item.Cuenta;
+                detalle.Concepto = fPartida.Concepto;
+                if (item.ValorDebe == 0.0m && item.ValorHaber == 0.0m)
+                    continue;
+                detalle.ValorDebe = (item.Cuenta.TipoSaldoCta == ETipoSaldoCuenta.Deudor) ? item.ValorHaber : 0.0m;
+                detalle.ValorHaber = (item.Cuenta.TipoSaldoCta == ETipoSaldoCuenta.Acreedor) ? item.ValorDebe : 0.0m;
+                fListaDetalle.CollectionSource.Add(detalle);
             }
             fPartida.Save();
             msg = string.Empty;

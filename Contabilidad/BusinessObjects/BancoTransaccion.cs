@@ -101,6 +101,7 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         [Association("BancoCuenta-Transacciones"), Persistent(nameof(BancoCuenta)), XafDisplayName("Cuenta"), Index(0)]
         [DataSourceCriteria("[Empresa.Oid] == EmpresaActualOid()")]
         [ExplicitLoading]
+        [ImmediatePostData(true)]
         public BancoCuenta BancoCuenta
         {
             get => bancoCuenta;

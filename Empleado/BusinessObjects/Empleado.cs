@@ -144,20 +144,20 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [DataSourceCriteria("[ZonaPadre] is null and [Activa] = true")]
         //[ExplicitLoading]
+        [Delayed]
         public ZonaGeografica Nacionalidad
         {
-            get => nacionalidad;
-            set => SetPropertyValue(nameof(Nacionalidad), ref nacionalidad, value);
+            get => GetDelayedPropertyValue<ZonaGeografica>(nameof(Nacionalidad));
+            set => SetDelayedPropertyValue<ZonaGeografica>(nameof(Nacionalidad), value);
         }
 
-
         [XafDisplayName("Banco"), VisibleInListView(false)]
-        //[DataSourceCriteria("[Roles][[IdRole] = 2]")]
-        [ExplicitLoading]
+        //[ExplicitLoading]
+        [Delayed]
         public Banco Banco
         {
-            get => banco;
-            set => SetPropertyValue(nameof(Banco), ref banco, value);
+            get => GetDelayedPropertyValue<Banco>(nameof(Banco));
+            set => SetDelayedPropertyValue<Banco>(nameof(Banco), value);
         }
 
         [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
@@ -213,10 +213,11 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
 
 
         [XafDisplayName("AFP"), VisibleInListView(false)]
+        [Delayed]
         public AFP AFP
         {
-            get => aFP;
-            set => SetPropertyValue(nameof(AFP), ref aFP, value);
+            get => GetDelayedPropertyValue<AFP>(nameof(AFP));
+            set => SetDelayedPropertyValue<AFP>(nameof(AFP), value);
         }
 
         [PersistentAlias("Iif([TipoSalario] != 1, [Salario], [Salario] * DateDiffDay(LocalDateTimeThisYear(), LocalDateTimeNextYear()) / 12.00)")]

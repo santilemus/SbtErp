@@ -278,7 +278,7 @@
         </LayoutGroup>
       </Layout>
     </DetailView>
-    <ListView Id="Empresa_ListView" DataAccessMode="DataView" />
+    <ListView Id="Empresa_ListView" DataAccessMode="Server" />
     <ListView Id="Empresa_LookupListView" AllowDelete="False" />
     <DetailView Id="EmpresaGiro_DetailView">
       <Layout>
@@ -355,7 +355,7 @@
       </Layout>
     </DetailView>
     <ListView Id="Listas_ListView" DataAccessMode="Server" />
-    <ListView Id="Listas_LookupListView" DataAccessMode="Server" />
+    <ListView Id="Listas_LookupListView" DataAccessMode="DataView" />
     <DetailView Id="Moneda_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
@@ -622,7 +622,7 @@
         <ColumnInfo Id="CodigoTelefonico" Width="121" />
       </Columns>
     </ListView>
-    <ListView Id="ZonaGeografica_LookupListView" DataAccessMode="DataView" ShowAutoFilterRow="False" />
+    <ListView Id="ZonaGeografica_LookupListView" DataAccessMode="Server" ShowAutoFilterRow="False" />
     <ListView Id="ZonaGeografica_Zonas_ListView" DataAccessMode="Server" />
   </Views>
 </Application>
