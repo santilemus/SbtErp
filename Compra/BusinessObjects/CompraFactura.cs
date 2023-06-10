@@ -19,10 +19,10 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
     /// <summary>
     /// BO que corresponde a los encabezados de las facturas de compra
     /// </summary>
-    [DefaultClassOptions, ModelDefault("Caption", "Compra Factura"), NavigationItem("Compras"), CreatableItem(false)]
-    [DefaultProperty(nameof(NumeroDocumento))]
+    [DefaultClassOptions, ModelDefault("Caption", "Factura de Compra"), NavigationItem("Compras"), CreatableItem(false)]
+    [DefaultProperty(nameof(NumeroFactura))]
     [Persistent(nameof(CompraFactura))]
-    [Appearance("CompraFactura_Servicios_Intangibles", AppearanceItemType = "Any", Criteria = "[Tipo] In (0, 2)",
+    [Appearance("CompraFactura_Servicios_Intangibles", AppearanceItemType = "ViewItem", Criteria = "[Tipo] In ('Servicio', 'Intangible')",
         Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, TargetItems = "Detalles;Ingresos", Context = "DetailView")]
     [ImageName(nameof(CompraFactura))]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
@@ -37,6 +37,7 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
         {
             base.AfterConstruction();
             renta = 0.0m;
+            fovial = 0.0m;
             Clase = EClaseDocumentoCompraVenta.Imprenta;
 
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
@@ -44,10 +45,11 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
 
         #region Propiedades
 
+        decimal fovial;
         EClaseDocumentoCompraVenta clase;
         decimal renta;
         string concepto;
-        string numeroDocumento;
+        string numeroFactura;
         ETipoCompra tipo = ETipoCompra.Servicio;
         Tercero.Module.BusinessObjects.Tercero proveedor;
         EOrigenCompra origen = EOrigenCompra.Local;
@@ -91,12 +93,12 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
             set => SetPropertyValue(nameof(Origen), ref origen, value);
         }
 
-        [Size(20), DbType("varchar(20)"), XafDisplayName("No Documento"), Index(10)]
+        [Size(20), DbType("varchar(20)"), XafDisplayName("No Factura"), Index(10)]
         [DetailViewLayout("Datos de Pago", LayoutGroupType.SimpleEditorsGroup, 2)]
-        public string NumeroDocumento
+        public string NumeroFactura
         {
-            get => numeroDocumento;
-            set => SetPropertyValue(nameof(NumeroDocumento), ref numeroDocumento, value);
+            get => numeroFactura;
+            set => SetPropertyValue(nameof(NumeroFactura), ref numeroFactura, value);
         }
 
         [Size(20), XafDisplayName("Clase"), Index(11)]
@@ -128,6 +130,15 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
             set => SetPropertyValue(nameof(Renta), ref renta, value);
         }
 
+        [DbType("numeric(14,2)"), XafDisplayName("Fovial")]
+        [ToolTip("Monto de la contribución al fovial cuando se trata de compras de combustible")]
+        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
+        public decimal Fovial
+        {
+            get => fovial;
+            set => SetPropertyValue(nameof(Fovial), ref fovial, value);
+        }
+
         #endregion
 
         #region Colecciones
@@ -137,7 +148,7 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
         [Association("CompraFactura-Ingresos"), Index(1), ModelDefault("Caption", "Ingresos")]
         public XPCollection<InventarioMovimiento> Ingresos => GetCollection<InventarioMovimiento>(nameof(Ingresos));
 
-        [Association("CompraFactura-CxPTransacciones"), Index(2), XafDisplayName("Transacciones CxP"), DevExpress.Xpo.Aggregated]
+        [Association("CompraFactura-CxPTransacciones"), Index(2), XafDisplayName("Cuenta por Pagar"), DevExpress.Xpo.Aggregated]
         public XPCollection<CxPTransaccion> CxPTransacciones => GetCollection<CxPTransaccion>(nameof(CxPTransacciones));
         #endregion
 
@@ -149,6 +160,7 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
             {
                 // calculamos el Iva, cuando no hay detalles porque en ese caso solo se esta ingresando el encabezado de la compra
                 iva = CalcularTributo(5);
+                
                 OnChanged(nameof(Iva));
             }
             base.DoGravadaChanged(forceChangeEvents, oldValue);
@@ -245,6 +257,7 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
             }
         }
 
+
         protected override void RefreshTiposDeFacturas()
         {
             base.RefreshTiposDeFacturas();
@@ -252,6 +265,7 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
                 return;
             fTiposDeFacturas.Criteria = CriteriaOperator.Parse("[Categoria] == 15 && [Activo] == True && [Codigo] In ('COVE01', 'COVE02', 'COVE04', 'COVE05', 'COVE06', 'COVE10', 'COVE12', 'COVE13')");
         }
+
         #endregion
 
         //[Action(Caption = "My UI Action", ConfirmationMessage = "Are you sure?", ImageName = "Attention", AutoCommit = true)]

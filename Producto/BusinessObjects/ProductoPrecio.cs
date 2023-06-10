@@ -154,6 +154,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
 
 
         [PersistentAlias("Round([PrecioUnitario] + [PrecioUnitario] * [Producto.Categoria.PorcentajeIVA], 4)")]
+        [XafDisplayName("Precio C/Iva")]
         public decimal PrecioUnitarioConIva => Convert.ToDecimal(EvaluateAlias(nameof(PrecioUnitarioConIva)));
 
     }

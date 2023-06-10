@@ -159,25 +159,15 @@
     <Reference Include="System.Core">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="System.Drawing">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
     <Reference Include="System.Web">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="System.Xml">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="System">
       <Private>False</Private>
     </Reference>
-    <Reference Include="System.Data">
-      <Private>False</Private>
-    </Reference>
     <Reference Include="System.Xml">
       <Private>False</Private>
     </Reference>
-    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\ImageViewer.cs" />
@@ -261,6 +251,7 @@
     <Compile Include="Controllers\WindowControllerMain.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Editors\ToothEditor.cs" />
     <Compile Include="MedicoAspNetModule.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -270,9 +261,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Controllers\vcEmpleadoWeb.resx">
-      <DependentUpon>vcEmpleadoWeb.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="MedicoAspNetModule.resx">
       <DependentUpon>MedicoAspNetModule.cs</DependentUpon>

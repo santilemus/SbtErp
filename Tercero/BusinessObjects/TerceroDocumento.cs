@@ -72,7 +72,8 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
 
         [XafDisplayName("Lugar Emisión"), ToolTip("Lugar de emisión del documento"), VisibleInListView(false),
             VisibleInLookupListView(false), DbType("varchar(100)"), Index(4)]
-        [RuleRequiredField("TerceroDocumento.LugarEmision_Requerido", "Save", TargetCriteria = "[Tipo.Codigo] In ('DUI', 'PAS', 'RES')")]
+        [RuleRequiredField("TerceroDocumento.LugarEmision_Requerido", "Save", TargetCriteria = "[Tipo.Codigo] In ('DUI', 'PAS', 'RES')", 
+            ResultType = ValidationResultType.Information)]
         public System.String LugarEmision
         {
             get => lugarEmision;

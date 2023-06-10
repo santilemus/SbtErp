@@ -89,13 +89,17 @@ namespace SBT.Apps.Erp.Module.Web.Controllers
 
         private void frame_Disposed(object sender, EventArgs e)
         {
-            Frame frame = framesMap.Pop();
-            frame.Disposed -= frame_Disposed;
+            if (framesMap.Count > 0)
+            {
+                Frame frame = framesMap.Pop();
+                frame.Disposed -= frame_Disposed;
+            }
         }
 
         public void Pop()
         {
-            framesMap.Pop();
+            if (framesMap.Count > 0)
+                framesMap.Pop();
         }
 
         #endregion

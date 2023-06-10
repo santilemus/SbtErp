@@ -80,7 +80,8 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
                 }
                 catch (Exception ex)
                 {
-                    throw ex; 
+                    Application.ShowViewStrategy.ShowMessage(ex.Message, InformationType.Error, 4000);
+                    throw; 
                 }
                 finally
                 {

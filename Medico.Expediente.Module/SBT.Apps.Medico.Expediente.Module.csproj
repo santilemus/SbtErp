@@ -124,11 +124,6 @@
       <Name>System</Name>
       <Private>False</Private>
     </Reference>
-    <Reference Include="System.Data">
-      <Name>System.Data</Name>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessObjects\Cita.cs" />
@@ -171,9 +166,6 @@
     <Compile Include="Controllers\vcHistoriaFamiliar.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controllers\vcHistoriaFamiliar.Designer.cs">
-      <DependentUpon>vcHistoriaFamiliar.cs</DependentUpon>
-    </Compile>
     <Compile Include="Controllers\vcPaciente.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -190,9 +182,6 @@
     <Compile Include="DatabaseUpdate\Updater.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Controllers\vcHistoriaFamiliar.resx">
-      <DependentUpon>vcHistoriaFamiliar.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Model.DesignedDiffs.xafml">
       <SubType>Designer</SubType>
     </EmbeddedResource>

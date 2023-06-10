@@ -424,9 +424,10 @@
         </LayoutGroup>
       </Layout>
     </DetailView>
+    <ListView Id="Persona_Documentos_ListView" DataAccessMode="Server" NewItemRowPosition="Top" AllowEdit="True" />
     <ListView Id="Persona_ListView" DataAccessMode="Server" />
     <ListView Id="Persona_LookupListView" DataAccessMode="Server" NewItemRowPosition="None" AllowEdit="False" />
-    <ListView Id="Persona_Telefonos_ListView" AllowEdit="True" NewItemRowPosition="Top" />
+    <ListView Id="Persona_Telefonos_ListView" AllowEdit="True" NewItemRowPosition="Top" DataAccessMode="Server" />
     <DetailView Id="PersonaContacto_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
@@ -529,7 +530,7 @@
     <ListView Id="Profesion_ListView" DataAccessMode="Server" />
     <ListView Id="Profesion_LookupListView" DataAccessMode="Server" />
     <ListView Id="Telefono_ListView" DataAccessMode="Server" AllowEdit="False" NewItemRowPosition="None" />
-    <ListView Id="Telefono_LookupListView" DataAccessMode="Server" />
+    <ListView Id="Telefono_LookupListView" DataAccessMode="Server" AllowEdit="True" NewItemRowPosition="Top" ShowFindPanel="False" />
     <DetailView Id="UnidadMedida_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">

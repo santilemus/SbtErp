@@ -1,5 +1,6 @@
 ﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
+using DevExpress.ExpressApp.SystemModule;
 using DevExpress.Persistent.Base;
 using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
@@ -20,7 +21,10 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
     /// </remarks>
     [DefaultClassOptions]
     [ModelDefault("Caption", "Paciente"), NavigationItem("Salud"), XafDefaultProperty("NombreCompleto"), ImageName("Paciente")]
-    //[NonPersistent]
+    [ListViewFilter("Paciente - Esperando Consulta", "[Consultas][[Estado] = 'Espera']", "Pacientes Esperando Consulta")]
+    [ListViewFilter("Paciente - Consultas del Dia", "[Consultas][GetDay([Fecha]) = GetDay(CURRENTDATE())]", "Pacientes - Consultas del día")]
+    [ListViewFilter("Paciente - Consulta del día Finalizada", "[Consultas][[Estado] = 'Finalizada' && GetDay([Fecha]) = GetDay(CURRENTDATE())]", "Pacientes - Consulta Finalizada")]
+    [ListViewFilter("Paciente - Consulta Medica. Todas", "")]
     public class Paciente : Persona
     {
         private ZonaGeografica _nacionalidad;

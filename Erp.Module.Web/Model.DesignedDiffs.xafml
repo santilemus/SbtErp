@@ -1,5 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Application>
+  <ActionDesign>
+    <Actions>
+      <Action Id="LibroCompras_Exportar" IsPostBackRequired="True" />
+    </Actions>
+  </ActionDesign>
   <Options CollectionsEditMode="Edit" />
   <SchemaModules>
     <SchemaModule Name="CloneObjectModule" Version="21.2.3.0" IsNewNode="True" />
@@ -17,7 +22,50 @@
         <PropertyEditor Id="BancoTransaccion" View="BancoTransaccion_LookupListView_CxP" />
       </Items>
     </DetailView>
-    <ListView Id="Partida_Detalles_ListView" DetailRowMode="None" DataAccessMode="Server" IsFooterVisible="True" IsAdaptive="True" />
+    <DetailView Id="Partida_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="15.681233933161954">
+            <LayoutGroup Id="Partida_col1" RelativeSize="49.168207024029577">
+              <LayoutItem Id="Numero" Index="0" RelativeSize="29.508196721311474" />
+              <LayoutItem Id="Fecha" Index="1" RelativeSize="21.311475409836067" />
+              <LayoutItem Id="Tipo" Index="2" RelativeSize="21.311475409836067" />
+              <LayoutItem Id="Moneda" Index="3" RelativeSize="27.868852459016395" />
+              <LayoutItem Id="Oid" Removed="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="Partida_col2" RelativeSize="50.831792975970423">
+              <LayoutItem Id="ValorMoneda" RelativeSize="29.508196721311474" />
+              <LayoutItem Id="Concepto" RelativeSize="21.311475409836067" />
+              <LayoutItem Id="Elaboro" RelativeSize="21.311475409836067" />
+              <LayoutItem Id="Comentario" RelativeSize="27.868852459016395" />
+            </LayoutGroup>
+          </LayoutGroup>
+          <TabbedGroup Id="Tabs" RelativeSize="79.691516709511575">
+            <LayoutGroup Id="Detalles" RelativeSize="100" Caption="Detalle">
+              <LayoutItem Id="Detalles" RelativeSize="100" />
+              <LayoutGroup Id="Autod836c3fd-d255-4461-86e5-e3cce92c3776" Caption="Autod836c3fd-d255-4461-86e5-e3cce92c3776(20)" Direction="Horizontal" RelativeSize="5.8519793459552494" Removed="True">
+                <LayoutItem Id="TotalHaber" Index="0" RelativeSize="100" Removed="True" />
+                <LayoutItem Id="TotalDebe" Removed="True" />
+              </LayoutGroup>
+            </LayoutGroup>
+            <LayoutGroup Id="BancoTransaccionPartidas" RelativeSize="100">
+              <LayoutItem Id="BancoTransaccionPartidas" RelativeSize="100" />
+            </LayoutGroup>
+          </TabbedGroup>
+          <LayoutGroup Id="Auto1d7b0de4-c160-4ad1-9614-fc7007edf1eb" ShowCaption="False" Caption="" Direction="Horizontal" Index="2" RelativeSize="4.6272493573264786" IsNewNode="True">
+            <LayoutItem Id="TotalDebe" ViewItem="TotalDebe" CaptionLocation="Left" Index="0" RelativeSize="50" IsNewNode="True" />
+            <LayoutItem Id="TotalHaber" ViewItem="TotalHaber" CaptionLocation="Left" Index="1" RelativeSize="50" IsNewNode="True" />
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="Partida_Detalles_ListView" DetailRowMode="None" DataAccessMode="Server" IsFooterVisible="False" IsAdaptive="True" />
     <ListView Id="PartidaDetalle_ListView" DetailRowMode="None" />
+    <ListView Id="Telefono_LookupListView" DetailRowMode="DetailViewWithActions" />
+    <ListView Id="Tercero_Documentos_ListView" DetailRowMode="DetailViewWithActions" InlineEditMode="Inline" />
+    <ListView Id="Tercero_Giros_ListView" DetailRowMode="DetailViewWithActions" />
+    <ListView Id="Tercero_Notas_ListView" DetailRowMode="DetailViewWithActions" />
+    <ListView Id="Tercero_Roles_ListView" DetailRowMode="DetailViewWithActions" />
+    <ListView Id="Tercero_Telefonos_ListView" DetailRowMode="DetailViewWithActions" InlineEditMode="Inline" />
   </Views>
 </Application>

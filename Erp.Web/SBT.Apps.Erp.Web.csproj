@@ -317,6 +317,7 @@
     <Content Include="Model.Tablet.xafml" />
     <None Include="ReadMe.txt" />
     <Content Include="sbt128.ico" />
+    <Content Include="Cambios Aplicar BD.txt" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

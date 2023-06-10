@@ -14,7 +14,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
     [NavigationItem(false)]
     [DevExpress.Persistent.Base.ImageNameAttribute("user_group")]
     [DevExpress.Persistent.Base.CreatableItemAttribute(false)]
-    [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Parientes")]
+    [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Parientes del Paciente")]
     [DefaultProperty(nameof(NombreCompleto))]
     public class Pariente : XPObject
     {

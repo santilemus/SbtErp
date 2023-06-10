@@ -98,7 +98,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             set => SetPropertyValue(nameof(Bodega), ref bodega, value);
         }
 
-        [PersistentAlias("[PrecioUnidad] + [Iva]"), XafDisplayName("Precio Con Iva"), Index(6)]
+        [PersistentAlias("Iif([Iva] > 0, Round(([Gravada] + [Iva])/[Cantidad], 2), [PrecioUnidad])"), XafDisplayName("Precio Con Iva"), Index(6)]
         [ModelDefault("DisplayFormat", "{0:N4}"), ModelDefault("EditMask", "n4")]
         public decimal PrecioConIva => Convert.ToDecimal(EvaluateAlias(nameof(PrecioConIva)));
 

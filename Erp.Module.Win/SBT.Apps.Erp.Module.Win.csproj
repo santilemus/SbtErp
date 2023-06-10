@@ -116,6 +116,7 @@
     <Reference Include="DevExpress.XtraBars.v21.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+    <Reference Include="DevExpress.XtraDialogs.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraEditors.v21.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
@@ -158,9 +159,6 @@
     <Reference Include="System.Core">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="System.Design">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
     <Reference Include="System.Drawing">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
@@ -171,13 +169,6 @@
       <Name>System</Name>
       <Private>False</Private>
     </Reference>
-    <Reference Include="System.configuration">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Data">
-      <Name>System.Data</Name>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="System.Drawing">
       <Name>System.Drawing</Name>
       <Private>False</Private>
@@ -186,12 +177,9 @@
       <Name>System.Windows.Forms</Name>
       <Private>False</Private>
     </Reference>
-    <Reference Include="System.Xml">
-      <Name>System.XML</Name>
-      <Private>False</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\LibroCompraListViewControllerWin.cs" />
     <Compile Include="Controllers\vcBancoTransaccionDetailWin.cs" />
     <Compile Include="Controllers\vcVentaWin.cs">
       <SubType>Component</SubType>
@@ -238,6 +226,10 @@
     <ProjectReference Include="..\Base\SBT.Apps.Base.csproj">
       <Project>{A538FE93-206D-4869-BC40-FDC561F8C1D1}</Project>
       <Name>SBT.Apps.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Compra\SBT.Apps.Compra.csproj">
+      <Project>{e300665d-ad47-415f-8ae3-0bdb0d4f0371}</Project>
+      <Name>SBT.Apps.Compra</Name>
     </ProjectReference>
     <ProjectReference Include="..\Contabilidad\SBT.Apps.Contabilidad.csproj">
       <Project>{F8ACB445-E391-4DC6-9AB3-B30AB53F7646}</Project>

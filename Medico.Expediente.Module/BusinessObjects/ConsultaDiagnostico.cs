@@ -15,7 +15,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
     /// </summary>
     ///[DefaultClassOptions]
     [DevExpress.Persistent.Base.CreatableItemAttribute(false)]
-    [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Signos")]
+    [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Consulta Diagnóstico")]
     [DevExpress.Persistent.Base.ImageNameAttribute("signo")]
     [NavigationItem(false)]
     [DefaultProperty(nameof(Consulta))]

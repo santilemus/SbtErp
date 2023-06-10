@@ -83,19 +83,10 @@
     <Reference Include="System.Core">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="System.Drawing">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
-    <Reference Include="System.Data">
-      <Name>System.Data</Name>
-    </Reference>
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Xml">
-      <Name>System.XML</Name>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessObjects\ActivoAjuste.cs" />
@@ -110,9 +101,7 @@
     <Compile Include="BusinessObjects\EEstadoDepreciacion.cs" />
     <Compile Include="BusinessObjects\ETipoDepreciacion.cs" />
     <Compile Include="DatabaseUpdate\Updater.cs" />
-    <Compile Include="Module.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="Module.cs" />
     <Compile Include="Module.Designer.cs">
       <DependentUpon>Module.cs</DependentUpon>
     </Compile>

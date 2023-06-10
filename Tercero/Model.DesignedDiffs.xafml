@@ -233,12 +233,24 @@
         </LayoutGroup>
       </Layout>
     </DetailView>
+    <ListView Id="Tercero_Direcciones_ListView" DataAccessMode="Server" AllowEdit="True" NewItemRowPosition="Top" />
+    <ListView Id="Tercero_Documentos_ListView" NewItemRowPosition="Top" AllowEdit="True" DataAccessMode="Server">
+      <Columns>
+        <ColumnInfo Id="Numero" Width="255" />
+        <ColumnInfo Id="Nombre" Width="543" />
+        <ColumnInfo Id="Vigente" Width="108" />
+      </Columns>
+    </ListView>
+    <ListView Id="Tercero_Giros_ListView" AllowEdit="True" DataAccessMode="Server" NewItemRowPosition="Top" />
+    <ListView Id="Tercero_Notas_ListView" DataAccessMode="Server" AllowEdit="True" NewItemRowPosition="Top" />
+    <ListView Id="Tercero_Roles_ListView" DataAccessMode="Server" AllowEdit="True" NewItemRowPosition="Top" />
     <ListView Id="Tercero_Sucursales_ListView">
       <Columns>
         <ColumnInfo Id="Nombre" SortIndex="-1" SortOrder="None" />
         <ColumnInfo Id="Telefono" SortIndex="0" SortOrder="Ascending" />
       </Columns>
     </ListView>
+    <ListView Id="Tercero_Telefonos_ListView" AllowEdit="True" DataAccessMode="Server" NewItemRowPosition="Top" ShowFindPanel="False" />
     <DetailView Id="TerceroContacto_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
@@ -461,5 +473,6 @@
         </LayoutGroup>
       </Layout>
     </DetailView>
+    <ListView Id="TerceroTelefono_LookupListView" ShowFindPanel="False" DataAccessMode="Server" />
   </Views>
 </Application>

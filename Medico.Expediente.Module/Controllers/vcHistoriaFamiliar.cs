@@ -1,27 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.Actions;
 using DevExpress.ExpressApp.Editors;
-using DevExpress.ExpressApp.Layout;
-using DevExpress.ExpressApp.Model.NodeGenerators;
-using DevExpress.ExpressApp.SystemModule;
-using DevExpress.ExpressApp.Templates;
-using DevExpress.ExpressApp.Utils;
-using DevExpress.Persistent.Base;
-using DevExpress.Persistent.Validation;
-using DevExpress.Persistent.BaseImpl;
 using SBT.Apps.Medico.Generico.Module.BusinessObjects;
 using SBT.Apps.Medico.Expediente.Module.BusinessObjects;
 
 namespace SBT.Apps.Medico.Expediente.Module.Controllers
 {
     // For more typical usage scenarios, be sure to check out https://documentation.devexpress.com/eXpressAppFramework/clsDevExpressExpressAppViewControllertopic.aspx.
-    public partial class vcHistoriaFamiliar : ViewController
+    public class vcHistoriaFamiliar : ViewController
     {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+        private DevExpress.ExpressApp.Actions.PopupWindowShowAction pwsActionEnfermedades;
+
         public vcHistoriaFamiliar()
         {
             InitializeComponent();
@@ -81,5 +75,44 @@ namespace SBT.Apps.Medico.Expediente.Module.Controllers
                 View.ObjectSpace.CommitChanges();
             }
         }
+
+        /// <summary> 
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private void InitializeComponent()
+        {
+            this.components = new System.ComponentModel.Container();
+            this.pwsActionEnfermedades = new DevExpress.ExpressApp.Actions.PopupWindowShowAction(this.components);
+            // 
+            // pwsActionEnfermedades
+            // 
+            this.pwsActionEnfermedades.AcceptButtonCaption = null;
+            this.pwsActionEnfermedades.ActionMeaning = DevExpress.ExpressApp.Actions.ActionMeaning.Accept;
+            this.pwsActionEnfermedades.CancelButtonCaption = null;
+            this.pwsActionEnfermedades.Caption = "Enfermedades";
+            this.pwsActionEnfermedades.Category = "RecordEdit";
+            this.pwsActionEnfermedades.ConfirmationMessage = null;
+            this.pwsActionEnfermedades.Id = "a9cadd06-5f47-4629-b69e-9b3b3d8d87f6";
+            this.pwsActionEnfermedades.TargetObjectType = typeof(SBT.Apps.Medico.Expediente.Module.BusinessObjects.HistoriaFamiliar);
+            this.pwsActionEnfermedades.TargetViewType = DevExpress.ExpressApp.ViewType.DetailView;
+            this.pwsActionEnfermedades.ToolTip = null;
+            this.pwsActionEnfermedades.TypeOfView = typeof(DevExpress.ExpressApp.DetailView);
+            // 
+            // vcHistoriaFamiliar
+            // 
+            this.Actions.Add(this.pwsActionEnfermedades);
+            this.TargetObjectType = typeof(SBT.Apps.Medico.Expediente.Module.BusinessObjects.HistoriaFamiliar);
+
+        }
     }
-}
+ }

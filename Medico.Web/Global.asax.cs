@@ -40,8 +40,12 @@ namespace SBT.Apps.Medico.Web
             WebApplication.SetInstance(Session, new medicoAspNetApplication());
             SecurityStrategy security = (SecurityStrategy)WebApplication.Instance.Security;
             security.RegisterXPOAdapterProviders();
+            security.PermissionsReloadMode = PermissionsReloadMode.CacheOnFirstAccess;
             DevExpress.ExpressApp.Web.Templates.DefaultVerticalTemplateContentNew.ClearSizeLimit();
             WebApplication.Instance.SwitchToNewStyle();
+            // siguiente linea agregada por SELM el 30/01/2022, para habilitar los eventos vía scripts en los objetos del reporte.
+            // en las versiones recientes de XAF por seguridad, esta característica por defecto es ExecutionMode.Deny 
+            ScriptPermissionManager.GlobalInstance = new ScriptPermissionManager(ExecutionMode.Unrestricted); // agregado por SELM 30/01/2022
             if (ConfigurationManager.ConnectionStrings["medico"] != null)
             {
                 WebApplication.Instance.ConnectionString = ConfigurationManager.ConnectionStrings["medico"].ConnectionString;

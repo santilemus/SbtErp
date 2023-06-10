@@ -9,7 +9,7 @@ namespace SBT.Apps.Banco.Module.Controllers
     /// ViewController para el BO CajaChica que corresponde a los parámetros de Caja Chica.
     /// </summary>
     // For more typical usage scenarios, be sure to check out https://documentation.devexpress.com/eXpressAppFramework/clsDevExpressExpressAppViewControllertopic.aspx.
-    public partial class vcCajaChica : ViewControllerBase
+    public class vcCajaChica : ViewControllerBase
     {
         public vcCajaChica(): base()
         {

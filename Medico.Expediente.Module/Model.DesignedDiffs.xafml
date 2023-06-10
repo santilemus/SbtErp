@@ -163,6 +163,7 @@
         <ColumnInfo Id="SePresento" PropertyName="SePresento" Index="2" IsNewNode="True" />
       </Columns>
     </ListView>
+    <ListView Id="Consulta_ConsultaSignos_ListView" DataAccessMode="Server" AllowEdit="True" NewItemRowPosition="Top" />
     <DetailView Id="Consulta_DetailView">
       <Items>
         <PropertyEditor Id="Paciente" PropertyName="Paciente" IsNewNode="True" />
@@ -224,6 +225,99 @@
         </LayoutGroup>
       </Layout>
     </DetailView>
+    <ListView Id="Consulta_Diagnosticos_ListView" AllowEdit="True" DataAccessMode="Server" NewItemRowPosition="Top" />
+    <ListView Id="Consulta_Exámenes_ListView" AllowEdit="True" DataAccessMode="Server" NewItemRowPosition="Top" />
+    <ListView Id="Consulta_ExamenesFisicos_ListView" AllowEdit="True" DataAccessMode="Server" />
+    <ListView Id="Consulta_Incapacidades_ListView" DataAccessMode="Server" />
+    <ListView Id="Consulta_ListView">
+      <Variants>
+        <Variant Id="Consulta - Finalizada" ViewID="Consulta_ListView_Finalizada" IsNewNode="True" />
+        <Variant Id="Consulta_del_dia" ViewID="Consulta_ListView_Del_Dia" Caption="Consulta del día" IsNewNode="True" />
+        <Variant Id="Consulta_Esperando" ViewID="Consulta_ListView_Espera" Caption="Consulta - Esperando" IsNewNode="True" />
+      </Variants>
+    </ListView>
+    <ListView Id="Consulta_ListView_Del_Dia" ClassName="SBT.Apps.Medico.Expediente.Module.BusinessObjects.Consulta" Criteria="GetDate([Fecha]) = Today()" IsNewNode="True">
+      <Columns IsNewNode="True">
+        <ColumnInfo Id="Diagnostico" PropertyName="Diagnostico" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Empresa" PropertyName="Empresa" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Oid" PropertyName="Oid" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Paciente" PropertyName="Paciente" SortIndex="0" SortOrder="Ascending" Index="0" IsNewNode="True" />
+        <ColumnInfo Id="Medico" PropertyName="Medico" Index="1" IsNewNode="True" />
+        <ColumnInfo Id="Fecha" PropertyName="Fecha" Index="2" SortOrder="Ascending" IsNewNode="True" />
+        <ColumnInfo Id="ProximaCita" PropertyName="ProximaCita" Index="3" IsNewNode="True" />
+        <ColumnInfo Id="RealizarExamenes" PropertyName="RealizarExamenes" Index="4" IsNewNode="True" />
+        <ColumnInfo Id="Consultorio" PropertyName="Consultorio" Index="5" IsNewNode="True" />
+        <ColumnInfo Id="UnidadDeRemision" PropertyName="UnidadDeRemision" Index="6" IsNewNode="True" />
+        <ColumnInfo Id="Estado" PropertyName="Estado" Index="7" IsNewNode="True" />
+      </Columns>
+      <Filters IsNewNode="True">
+        <Filter Id="Consulta Medica. Cancelada" Criteria="[Estado] == 'Cancelada'" Caption="Consultas Canceladas" Description="Pacientes que se retiraron antes de pasar consulta" IsNewNode="True" />
+        <Filter Id="Consulta Medica. De la Semana" Criteria="IsThisWeek([Fecha])" Caption="Consultas de la Semana Actual" IsNewNode="True" />
+        <Filter Id="Consulta Medica. Del dia de hoy" Criteria="GetDate([Fecha]) == Today()" Caption="Consultas del dia de hoy" IsNewNode="True" />
+        <Filter Id="Consulta Medica. Del Mes Actual" Criteria="IsThisMonth([Fecha])" Caption="Consultas del Mes Actual" IsNewNode="True" />
+        <Filter Id="Consulta Medica. En Espera" Criteria="[Estado] == 'Espera'" Caption="Esperando Turno con Medico" Description="Consultas procesadas por recepción y esperando turno con medico asignado" IsNewNode="True" />
+        <Filter Id="Consulta Medica. Finalizada" Criteria="[Estado] == 'Finalizada'" Caption="Consultas finalizadas" Description="Consultas que el medico ha dado por finalizadas" IsNewNode="True" />
+        <Filter Id="Consulta Medica. Iniciada" Criteria="[Estado] == 'Iniciada'" Caption="Pacientes en consultorios" Description="Pacientes que estan siendo atendidos" IsNewNode="True" />
+        <Filter Id="Consulta Medica. Paciente siendo atendido" Criteria="[Estado] == 'Iniciada' &amp;&amp; [Medico.Oid] == EmpleadoActualOid()" Caption="Paciente con su Medico" Description="Consulta atendida por medico de la sesión" IsNewNode="True" />
+        <Filter Id="Consulta Medica. Todas" Criteria="" IsNewNode="True" />
+      </Filters>
+    </ListView>
+    <ListView Id="Consulta_ListView_Espera" ClassName="SBT.Apps.Medico.Expediente.Module.BusinessObjects.Consulta" Criteria="[Estado] In (##Enum#SBT.Apps.Medico.Expediente.Module.BusinessObjects.EEstadoConsulta,Espera#, ##Enum#SBT.Apps.Medico.Expediente.Module.BusinessObjects.EEstadoConsulta,Iniciada#)" IsNewNode="True">
+      <Columns IsNewNode="True">
+        <ColumnInfo Id="Diagnostico" PropertyName="Diagnostico" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Empresa" PropertyName="Empresa" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Oid" PropertyName="Oid" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Paciente" PropertyName="Paciente" SortIndex="0" SortOrder="Ascending" Index="0" IsNewNode="True" />
+        <ColumnInfo Id="Medico" PropertyName="Medico" Index="1" IsNewNode="True" />
+        <ColumnInfo Id="Fecha" PropertyName="Fecha" Index="2" IsNewNode="True" />
+        <ColumnInfo Id="ProximaCita" PropertyName="ProximaCita" Index="3" IsNewNode="True" />
+        <ColumnInfo Id="RealizarExamenes" PropertyName="RealizarExamenes" Index="4" IsNewNode="True" />
+        <ColumnInfo Id="Consultorio" PropertyName="Consultorio" Index="5" IsNewNode="True" />
+        <ColumnInfo Id="UnidadDeRemision" PropertyName="UnidadDeRemision" Index="6" IsNewNode="True" />
+        <ColumnInfo Id="Estado" PropertyName="Estado" Index="7" IsNewNode="True" />
+      </Columns>
+      <Filters IsNewNode="True">
+        <Filter Id="Consulta Medica. Cancelada" Criteria="[Estado] == 'Cancelada'" Caption="Consultas Canceladas" Description="Pacientes que se retiraron antes de pasar consulta" IsNewNode="True" />
+        <Filter Id="Consulta Medica. De la Semana" Criteria="IsThisWeek([Fecha])" Caption="Consultas de la Semana Actual" IsNewNode="True" />
+        <Filter Id="Consulta Medica. Del dia de hoy" Criteria="GetDate([Fecha]) == Today()" Caption="Consultas del dia de hoy" IsNewNode="True" />
+        <Filter Id="Consulta Medica. Del Mes Actual" Criteria="IsThisMonth([Fecha])" Caption="Consultas del Mes Actual" IsNewNode="True" />
+        <Filter Id="Consulta Medica. En Espera" Criteria="[Estado] == 'Espera'" Caption="Esperando Turno con Medico" Description="Consultas procesadas por recepción y esperando turno con medico asignado" IsNewNode="True" />
+        <Filter Id="Consulta Medica. Finalizada" Criteria="[Estado] == 'Finalizada'" Caption="Consultas finalizadas" Description="Consultas que el medico ha dado por finalizadas" IsNewNode="True" />
+        <Filter Id="Consulta Medica. Iniciada" Criteria="[Estado] == 'Iniciada'" Caption="Pacientes en consultorios" Description="Pacientes que estan siendo atendidos" IsNewNode="True" />
+        <Filter Id="Consulta Medica. Paciente siendo atendido" Criteria="[Estado] == 'Iniciada' &amp;&amp; [Medico.Oid] == EmpleadoActualOid()" Caption="Paciente con su Medico" Description="Consulta atendida por medico de la sesión" IsNewNode="True" />
+        <Filter Id="Consulta Medica. Todas" Criteria="" IsNewNode="True" />
+      </Filters>
+    </ListView>
+    <ListView Id="Consulta_ListView_Finalizada" ClassName="SBT.Apps.Medico.Expediente.Module.BusinessObjects.Consulta" Criteria="[Estado] = ##Enum#SBT.Apps.Medico.Expediente.Module.BusinessObjects.EEstadoConsulta,Finalizada#" IsNewNode="True">
+      <Columns IsNewNode="True">
+        <ColumnInfo Id="Diagnostico" PropertyName="Diagnostico" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Empresa" PropertyName="Empresa" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Oid" PropertyName="Oid" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Paciente" PropertyName="Paciente" SortIndex="0" SortOrder="Ascending" Index="0" IsNewNode="True" />
+        <ColumnInfo Id="Medico" PropertyName="Medico" Index="1" IsNewNode="True" />
+        <ColumnInfo Id="Fecha" PropertyName="Fecha" Index="2" IsNewNode="True" />
+        <ColumnInfo Id="ProximaCita" PropertyName="ProximaCita" Index="3" IsNewNode="True" />
+        <ColumnInfo Id="RealizarExamenes" PropertyName="RealizarExamenes" Index="4" IsNewNode="True" />
+        <ColumnInfo Id="Consultorio" PropertyName="Consultorio" Index="5" IsNewNode="True" />
+        <ColumnInfo Id="UnidadDeRemision" PropertyName="UnidadDeRemision" Index="6" IsNewNode="True" />
+        <ColumnInfo Id="Estado" PropertyName="Estado" Index="7" IsNewNode="True" />
+      </Columns>
+      <Filters IsNewNode="True">
+        <Filter Id="Consulta Medica. Cancelada" Criteria="[Estado] == 'Cancelada'" Caption="Consultas Canceladas" Description="Pacientes que se retiraron antes de pasar consulta" IsNewNode="True" />
+        <Filter Id="Consulta Medica. De la Semana" Criteria="IsThisWeek([Fecha])" Caption="Consultas de la Semana Actual" IsNewNode="True" />
+        <Filter Id="Consulta Medica. Del dia de hoy" Criteria="GetDate([Fecha]) == Today()" Caption="Consultas del dia de hoy" IsNewNode="True" />
+        <Filter Id="Consulta Medica. Del Mes Actual" Criteria="IsThisMonth([Fecha])" Caption="Consultas del Mes Actual" IsNewNode="True" />
+        <Filter Id="Consulta Medica. En Espera" Criteria="[Estado] == 'Espera'" Caption="Esperando Turno con Medico" Description="Consultas procesadas por recepción y esperando turno con medico asignado" IsNewNode="True" />
+        <Filter Id="Consulta Medica. Finalizada" Criteria="[Estado] == 'Finalizada'" Caption="Consultas finalizadas" Description="Consultas que el medico ha dado por finalizadas" IsNewNode="True" />
+        <Filter Id="Consulta Medica. Iniciada" Criteria="[Estado] == 'Iniciada'" Caption="Pacientes en consultorios" Description="Pacientes que estan siendo atendidos" IsNewNode="True" />
+        <Filter Id="Consulta Medica. Paciente siendo atendido" Criteria="[Estado] == 'Iniciada' &amp;&amp; [Medico.Oid] == EmpleadoActualOid()" Caption="Paciente con su Medico" Description="Consulta atendida por medico de la sesión" IsNewNode="True" />
+        <Filter Id="Consulta Medica. Todas" Criteria="" IsNewNode="True" />
+      </Filters>
+    </ListView>
+    <ListView Id="Consulta_Receta_ListView" DataAccessMode="Server" />
+    <ListView Id="Consulta_Sintomas_ListView" DataAccessMode="Server" AllowEdit="True" NewItemRowPosition="Top" />
+    <ListView Id="Consulta_UltrasonografiaObstetricas_ListView" DataAccessMode="Server" />
+    <ListView Id="Consulta_UltrasonografiaPelvicas_ListView" DataAccessMode="Server" />
     <DetailView Id="ConsultaDiagnostico_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
@@ -521,7 +615,8 @@
         </LayoutGroup>
       </Layout>
     </DetailView>
-    <ListView Id="Paciente_Consultas_ListView" MasterDetailView="PacienteConsulta_DetailView" />
+    <ListView Id="Paciente_ArchivosAdjuntos_ListView" DataAccessMode="Server" NewItemRowPosition="Top" />
+    <ListView Id="Paciente_Consultas_ListView" DataAccessMode="Server" MasterDetailView="PacienteConsulta_DetailView" />
     <DetailView Id="Paciente_DetailView">
       <Items>
         <PropertyEditor Id="Fotografia" PropertyName="Fotografia" IsNewNode="True" Removed="True" />
@@ -649,6 +744,12 @@
         </LayoutGroup>
       </Layout>
     </DetailView>
+    <ListView Id="Paciente_EstilosVida_ListView" NewItemRowPosition="Top" />
+    <ListView Id="Paciente_HistoriaFamiliares_ListView" AllowEdit="True" DataAccessMode="Server" NewItemRowPosition="Top" />
+    <ListView Id="Paciente_Medicos_ListView" DataAccessMode="Server" AllowEdit="True" NewItemRowPosition="Top" />
+    <ListView Id="Paciente_Parientes_ListView" DataAccessMode="Server" AllowEdit="True" />
+    <ListView Id="Paciente_Problemas_ListView" AllowEdit="True" DataAccessMode="Server" />
+    <ListView Id="Paciente_Recordatorios_ListView" NewItemRowPosition="Top" />
     <DetailView Id="PacienteConsulta_DetailView" ClassName="SBT.Apps.Medico.Expediente.Module.BusinessObjects.Consulta" DefaultFocusedItem="Medico" IsNewNode="True">
       <Items IsNewNode="True">
         <PropertyEditor Id="Consultorio" PropertyName="Consultorio" IsNewNode="True" />
@@ -801,6 +902,7 @@
         </LayoutGroup>
       </Layout>
     </DetailView>
+    <ListView Id="Persona_Contactos_ListView" DataAccessMode="Server" AllowEdit="True" />
     <DetailView Id="ProblemaMedico_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
@@ -874,8 +976,38 @@
     <DetailView Id="UltrasonografiaObstetricaDetalle_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
-          <LayoutGroup Id="SimpleEditors" RelativeSize="100">
-            <LayoutGroup Id="UltrasonografiaObstetricaDetalle" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="100" Direction="Horizontal">
+            <LayoutGroup Id="UltrasonografiaObstetricaDetalle_col1" ShowCaption="False" Index="0" RelativeSize="49.868593955321941" IsNewNode="True">
+              <LayoutItem Id="Oid" ViewItem="Oid" CaptionLocation="Left" Index="0" RelativeSize="4.6213093709884463" IsNewNode="True" />
+              <LayoutItem Id="Presentacion" ViewItem="Presentacion" CaptionLocation="Left" Index="1" RelativeSize="3.3376123234916562" IsNewNode="True" />
+              <LayoutItem Id="Situacion" ViewItem="Situacion" CaptionLocation="Left" Index="2" RelativeSize="3.3376123234916562" IsNewNode="True" />
+              <LayoutItem Id="Posicion" ViewItem="Posicion" CaptionLocation="Left" Index="3" RelativeSize="3.3376123234916562" IsNewNode="True" />
+              <LayoutItem Id="Dorso" ViewItem="Dorso" CaptionLocation="Left" Index="4" RelativeSize="3.3376123234916562" IsNewNode="True" />
+              <LayoutItem Id="Placenta" ViewItem="Placenta" CaptionLocation="Left" Index="5" RelativeSize="3.3376123234916562" IsNewNode="True" />
+              <LayoutItem Id="FormaPlacentaPrevia" ViewItem="FormaPlacentaPrevia" CaptionLocation="Left" Index="6" RelativeSize="3.3376123234916562" IsNewNode="True" />
+              <LayoutItem Id="GradoPlacenta" ViewItem="GradoPlacenta" CaptionLocation="Left" Index="7" RelativeSize="3.3376123234916562" IsNewNode="True" />
+              <LayoutItem Id="EspesorPlacenta" ViewItem="EspesorPlacenta" CaptionLocation="Left" Index="8" RelativeSize="3.3376123234916562" IsNewNode="True" />
+              <LayoutItem Id="Crl" ViewItem="Crl" CaptionLocation="Left" Index="9" RelativeSize="3.3376123234916562" IsNewNode="True" />
+              <LayoutItem Id="Dbp" ViewItem="Dbp" CaptionLocation="Left" Index="10" RelativeSize="3.3376123234916562" IsNewNode="True" />
+              <LayoutItem Id="Ac" ViewItem="Ac" CaptionLocation="Left" Index="11" RelativeSize="62.002567394094996" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="UltrasonografiaObstetricaDetalle_col2" ShowCaption="False" Index="1" RelativeSize="50.131406044678059" IsNewNode="True">
+              <LayoutItem Id="Dms" ViewItem="Dms" CaptionLocation="Left" Index="0" RelativeSize="4.6213093709884463" IsNewNode="True" />
+              <LayoutItem Id="Fcf" ViewItem="Fcf" CaptionLocation="Left" Index="1" RelativeSize="3.3376123234916562" IsNewNode="True" />
+              <LayoutItem Id="Cc" ViewItem="Cc" CaptionLocation="Left" Index="2" RelativeSize="3.3376123234916562" IsNewNode="True" />
+              <LayoutItem Id="Lf" ViewItem="Lf" CaptionLocation="Left" Index="3" RelativeSize="3.3376123234916562" IsNewNode="True" />
+              <LayoutItem Id="Vv" ViewItem="Vv" CaptionLocation="Left" Index="4" RelativeSize="3.3376123234916562" IsNewNode="True" />
+              <LayoutItem Id="ReaccionDesidual" ViewItem="ReaccionDesidual" CaptionLocation="Left" Index="5" RelativeSize="3.3376123234916562" IsNewNode="True" />
+              <LayoutItem Id="Ila" ViewItem="Ila" CaptionLocation="Left" Index="6" RelativeSize="3.3376123234916562" IsNewNode="True" />
+              <LayoutItem Id="Eg" ViewItem="Eg" CaptionLocation="Left" Index="7" RelativeSize="3.3376123234916562" IsNewNode="True" />
+              <LayoutItem Id="Fpp" ViewItem="Fpp" CaptionLocation="Left" Index="8" RelativeSize="3.3376123234916562" IsNewNode="True" />
+              <LayoutItem Id="PF" ViewItem="PF" CaptionLocation="Left" Index="9" RelativeSize="3.3376123234916562" IsNewNode="True" />
+              <LayoutItem Id="Pbf" ViewItem="Pbf" CaptionLocation="Left" Index="10" RelativeSize="65.340179717586651" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="XPObject" Caption="Oid" Index="1" RelativeSize="51.181102362204726" Removed="True">
+              <LayoutItem Id="Oid" Removed="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="UltrasonografiaObstetricaDetalle" RelativeSize="100" Removed="True">
               <LayoutGroup Id="UltrasonografiaObstetricaDetalle_col1" RelativeSize="49.961089494163424">
                 <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="5.0561797752808992" CaptionLocation="Left" IsNewNode="True" />
                 <LayoutItem Id="Situacion" Index="1" RelativeSize="3.6516853932584268" CaptionLocation="Left" />
@@ -887,23 +1019,22 @@
                 <LayoutItem Id="Crl" Index="9" RelativeSize="3.6516853932584268" CaptionLocation="Left" />
                 <LayoutItem Id="Dbp" Index="10" RelativeSize="3.6516853932584268" CaptionLocation="Left" />
                 <LayoutItem Id="Ac" Index="11" RelativeSize="58.426966292134829" CaptionLocation="Left" />
+                <LayoutItem Id="Posicion" CaptionLocation="Left" />
+                <LayoutItem Id="Presentacion" CaptionLocation="Left" />
               </LayoutGroup>
               <LayoutGroup Id="UltrasonografiaObstetricaDetalle_col2" RelativeSize="50.038910505836576">
-                <LayoutItem Id="Dms" RelativeSize="5.0561797752808992" CaptionLocation="Left" />
-                <LayoutItem Id="Fcf" RelativeSize="3.6516853932584268" CaptionLocation="Left" />
                 <LayoutItem Id="Cc" RelativeSize="3.6516853932584268" CaptionLocation="Left" />
-                <LayoutItem Id="Lf" RelativeSize="3.6516853932584268" CaptionLocation="Left" />
-                <LayoutItem Id="Vv" RelativeSize="3.6516853932584268" CaptionLocation="Left" />
-                <LayoutItem Id="ReaccionDesidual" RelativeSize="3.6516853932584268" CaptionLocation="Left" />
-                <LayoutItem Id="Ila" RelativeSize="3.6516853932584268" CaptionLocation="Left" />
+                <LayoutItem Id="Dms" RelativeSize="5.0561797752808992" CaptionLocation="Left" />
                 <LayoutItem Id="Eg" RelativeSize="3.6516853932584268" CaptionLocation="Left" />
+                <LayoutItem Id="Fcf" RelativeSize="3.6516853932584268" CaptionLocation="Left" />
                 <LayoutItem Id="Fpp" RelativeSize="3.6516853932584268" CaptionLocation="Left" />
-                <LayoutItem Id="PF" RelativeSize="3.6516853932584268" CaptionLocation="Left" />
+                <LayoutItem Id="Ila" RelativeSize="3.6516853932584268" CaptionLocation="Left" />
+                <LayoutItem Id="Lf" RelativeSize="3.6516853932584268" CaptionLocation="Left" />
                 <LayoutItem Id="Pbf" RelativeSize="62.078651685393261" CaptionLocation="Left" />
+                <LayoutItem Id="PF" RelativeSize="3.6516853932584268" CaptionLocation="Left" />
+                <LayoutItem Id="ReaccionDesidual" RelativeSize="3.6516853932584268" CaptionLocation="Left" />
+                <LayoutItem Id="Vv" RelativeSize="3.6516853932584268" CaptionLocation="Left" />
               </LayoutGroup>
-            </LayoutGroup>
-            <LayoutGroup Id="XPObject" Caption="Oid" Index="1" RelativeSize="51.181102362204726" Removed="True">
-              <LayoutItem Id="Oid" Removed="True" />
             </LayoutGroup>
           </LayoutGroup>
         </LayoutGroup>

@@ -111,13 +111,7 @@
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
-    <Reference Include="System.Data">
-      <Name>System.Data</Name>
-    </Reference>
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Xml">
-      <Name>System.XML</Name>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessObjects\AccionPersonal.cs" />
@@ -156,56 +150,17 @@
     <Compile Include="BusinessObjects\TipoPlanilla.cs" />
     <Compile Include="BusinessObjects\ToETablaISR.cs" />
     <Compile Include="BusinessObjects\Transaccion.cs" />
-    <Compile Include="Controllers\vcAccionPersonal.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controllers\vcAccionPersonal.Designer.cs">
-      <DependentUpon>vcAccionPersonal.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controllers\vcParametro.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controllers\vcParametro.Designer.cs">
-      <DependentUpon>vcParametro.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controllers\vcParametroAguinaldo.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controllers\vcParametroAguinaldo.Designer.cs">
-      <DependentUpon>vcParametroAguinaldo.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controllers\vcParametroJornada.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controllers\vcParametroJornada.Designer.cs">
-      <DependentUpon>vcParametroJornada.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controllers\vcParametroVacacion.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controllers\vcParametroVacacion.Designer.cs">
-      <DependentUpon>vcParametroVacacion.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controllers\vcPlanilla.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controllers\vcRHExtra.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controllers\vcRHExtra.Designer.cs">
-      <DependentUpon>vcRHExtra.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controllers\vcTransaccion.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controllers\vcTransaccion.Designer.cs">
-      <DependentUpon>vcTransaccion.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Controllers\vcAccionPersonal.cs" />
+    <Compile Include="Controllers\vcParametro.cs" />
+    <Compile Include="Controllers\vcParametroAguinaldo.cs" />
+    <Compile Include="Controllers\vcParametroJornada.cs" />
+    <Compile Include="Controllers\vcParametroVacacion.cs" />
+    <Compile Include="Controllers\vcPlanilla.cs" />
+    <Compile Include="Controllers\vcRHExtra.cs" />
+    <Compile Include="Controllers\vcTransaccion.cs" />
     <Compile Include="DatabaseUpdate\Updater.cs" />
     <Compile Include="EmpleadoFunction.cs" />
-    <Compile Include="RecursoHumanoModule.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="RecursoHumanoModule.cs" />
     <Compile Include="RecursoHumanoModule.Designer.cs">
       <DependentUpon>RecursoHumanoModule.cs</DependentUpon>
     </Compile>
@@ -213,30 +168,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Controllers\vcAccionPersonal.resx">
-      <DependentUpon>vcAccionPersonal.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controllers\vcParametro.resx">
-      <DependentUpon>vcParametro.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controllers\vcParametroAguinaldo.resx">
-      <DependentUpon>vcParametroAguinaldo.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controllers\vcParametroJornada.resx">
-      <DependentUpon>vcParametroJornada.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controllers\vcParametroVacacion.resx">
-      <DependentUpon>vcParametroVacacion.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controllers\vcPlanilla.resx">
-      <DependentUpon>vcPlanilla.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controllers\vcRHExtra.resx">
-      <DependentUpon>vcRHExtra.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controllers\vcTransaccion.resx">
-      <DependentUpon>vcTransaccion.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Model.DesignedDiffs.xafml" />
     <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>

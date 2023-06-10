@@ -17,7 +17,7 @@ namespace SBT.Apps.Erp.Module.Web.Controllers
     /// 
     /// </remarks>
     // For more typical usage scenarios, be sure to check out https://documentation.devexpress.com/eXpressAppFramework/clsDevExpressExpressAppViewControllertopic.aspx.
-    public partial class ViewControllerBaseWeb : ViewController
+    public class ViewControllerBaseWeb : ViewController
     {
         public ViewControllerBaseWeb()
         {

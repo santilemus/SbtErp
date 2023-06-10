@@ -16,7 +16,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
     /// <summary>
     /// Informacion de los signos vitales y especificos para el problema medico del paciente, tomados durante la consulta
     /// </summary>
-    [DefaultClassOptions, ModelDefault("Caption", "Signo"), NavigationItem(false), CreatableItem(false), DefaultProperty(nameof(Signo)),
+    [DefaultClassOptions, ModelDefault("Caption", "Consulta Signo"), NavigationItem(false), CreatableItem(false), DefaultProperty(nameof(Signo)),
      Persistent(nameof(ConsultaSigno))]
     [ImageName("ConsultaSigno")]
     [Appearance("ConsultaSigno.Imc_Hide", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "Any",

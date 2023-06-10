@@ -98,9 +98,6 @@
     <Reference Include="System.Core">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="System.Drawing">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
@@ -108,9 +105,6 @@
       <Name>System.Data</Name>
     </Reference>
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Xml">
-      <Name>System.XML</Name>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessObjects\CxPDocumento.cs" />
@@ -126,6 +120,7 @@
     <Compile Include="BusinessObjects\LibroCompra.cs" />
     <Compile Include="BusinessObjects\OrdenCompra.cs" />
     <Compile Include="BusinessObjects\OrdenCompraDetalle.cs" />
+    <Compile Include="Controllers\LibroCompraListViewController.cs" />
     <Compile Include="Controllers\vcBancoTransaccionLookupCxP.cs">
       <SubType>Component</SubType>
     </Compile>

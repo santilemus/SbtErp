@@ -108,13 +108,7 @@
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
-    <Reference Include="System.Data">
-      <Name>System.Data</Name>
-    </Reference>
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Xml">
-      <Name>System.XML</Name>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessObjects\BancoTipoTransaccion.cs" />
@@ -148,48 +142,21 @@
     <Compile Include="BusinessObjects\PartidaDetalle.cs" />
     <Compile Include="BusinessObjects\PartidaModelo.cs" />
     <Compile Include="BusinessObjects\PartidaModeloDetalle.cs" />
-    <Compile Include="Controllers\vcBancoConciliacion.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controllers\vcBancoCuenta.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controllers\vcBancoTransaccion.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="Controllers\vcBancoConciliacion.cs" />
+    <Compile Include="Controllers\vcBancoCuenta.cs" />
+    <Compile Include="Controllers\vcBancoTransaccion.cs" />
     <Compile Include="Controllers\vcBancoTransaccionDetail.cs" />
-    <Compile Include="Controllers\vcCajaChica.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controllers\vcCajaChicaTransaccion.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controllers\vcEstadoFinanciero.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controllers\vcPartida.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controllers\vcPartidaDetalle.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controllers\vcPartidaModelo.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controllers\vcPartidaModelo.Designer.cs">
-      <DependentUpon>vcPartidaModelo.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controllers\vcSaldoDiario.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controllers\vcSaldoMes.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="Controllers\vcCajaChica.cs" />
+    <Compile Include="Controllers\vcCajaChicaTransaccion.cs" />
+    <Compile Include="Controllers\vcEstadoFinanciero.cs" />
+    <Compile Include="Controllers\vcPartida.cs" />
+    <Compile Include="Controllers\vcPartidaDetalle.cs" />
+    <Compile Include="Controllers\vcPartidaModelo.cs" />
+    <Compile Include="Controllers\vcSaldoDiario.cs" />
+    <Compile Include="Controllers\vcSaldoMes.cs" />
     <Compile Include="DatabaseUpdate\Updater.cs" />
     <Compile Include="BusinessObjects\ETipoPartidaModelo.cs" />
-    <Compile Include="ContabilidadModule.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="ContabilidadModule.cs" />
     <Compile Include="ContabilidadModule.Designer.cs">
       <DependentUpon>ContabilidadModule.cs</DependentUpon>
     </Compile>
@@ -197,9 +164,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Controllers\vcPartidaModelo.resx">
-      <DependentUpon>vcPartidaModelo.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Model.DesignedDiffs.xafml" />
     <EmbeddedResource Include="ContabilidadModule.resx">
       <DependentUpon>ContabilidadModule.cs</DependentUpon>

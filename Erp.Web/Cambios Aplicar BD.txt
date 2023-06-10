@@ -1,0 +1,4 @@
+﻿delete from Listas 
+ where Categoria = 10
+   and Codigo in ('LIC')
+go

@@ -15,8 +15,13 @@ namespace SBT.Apps.Base.Module.Controllers
     /// particulares de cada uno, por lo tanto es posible que este viewcontroller, no sea necesario y debe removerse
     /// </remarks>
     // For more typical usage scenarios, be sure to check out https://documentation.devexpress.com/eXpressAppFramework/clsDevExpressExpressAppViewControllertopic.aspx.
-    public partial class ViewControllerXPOBaseDoc : ViewController
+    public class ViewControllerXPOBaseDoc : ViewController
     {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
         public ViewControllerXPOBaseDoc()
         {
             InitializeComponent();
@@ -40,6 +45,28 @@ namespace SBT.Apps.Base.Module.Controllers
         {
             // Unsubscribe from previously subscribed events and release other references and resources.
             base.OnDeactivated();
+        }
+
+        /// <summary> 
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private void InitializeComponent()
+        {
+            // 
+            // vcFilterDatosEmpresaDeSesion
+            // 
+            this.TargetObjectType = typeof(SBT.Apps.Base.Module.BusinessObjects.XPOBaseDoc);
+
         }
     }
 }

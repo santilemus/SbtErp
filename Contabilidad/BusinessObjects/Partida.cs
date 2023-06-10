@@ -255,6 +255,10 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         {
             get
             {
+                if (Periodo == null)
+                {
+                    return false;
+                }
                 switch (Tipo)
                 {
                     case ETipoPartida.Apertura:

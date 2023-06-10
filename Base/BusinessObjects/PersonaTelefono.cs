@@ -33,11 +33,13 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         }
 
         [XafDisplayName("Telefono")]
-        [ExplicitLoading]
         public Telefono Telefono
         {
             get => telefono;
-            set => SetPropertyValue(nameof(Telefono), ref telefono, value);
+            set
+            {
+                SetPropertyValue(nameof(Telefono), ref telefono, value);
+            }
         }
 
     }

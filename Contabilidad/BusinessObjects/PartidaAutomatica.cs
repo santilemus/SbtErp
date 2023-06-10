@@ -102,6 +102,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
                 msg = string.Format("No hay datos para generar la partida de {0}", Convert.ToString(fPartida.Fecha));
                 return;
             }
+            // 1. Liquidar las cuentas de resultados y gastos
             foreach (var item in saldos)
             {
                 if (item.SaldoFin != 0.0m)
@@ -117,6 +118,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             var resultadoBruto = Convert.ToDecimal(fIngreso) - Convert.ToDecimal(fCostoGasto);
             decimal reserva = 0.0m;
             decimal renta = 0.0m;
+            // 2. Cuando hay utilidades se calcula la reserva legal y el impuesto sobre la renta
             //decimal impuestoNoDeducible = ImpuestoGastoFinancieroNoDeducible();
             if (resultadoBruto > 0)
             {
@@ -127,16 +129,24 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             if (ctaLiquida != null)
             {
                 decimal resultadoNeto = resultadoBruto - reserva - renta; // - impuestoNoDeducible;
-                // se lleva el resultado a perdidas y ganancias
-                CreateDetalle(ctaLiquida, ctaLiquida.Concepto, (resultadoNeto > 0) ? resultadoNeto : 0.0m, (resultadoNeto < 0) ? 0.0m : resultadoNeto);
-                ECuentaEspecial ctaUtilidadPerdida = (resultadoBruto > 0) ? ECuentaEspecial.UtilidadEjercicio : ECuentaEspecial.PerdidaEjercicio;
-                var cta = ObtenerCuentaEspecial((resultadoBruto > 0) ? ECuentaEspecial.UtilidadEjercicio : ECuentaEspecial.PerdidaEjercicio);
+                // 3. Se genera el detalle que corresponde al resultado y se lleva a la cuenta de perdidas y ganancias
+                if (resultadoNeto > 0)
+                    CreateDetalle(ctaLiquida, ctaLiquida.Concepto, resultadoNeto, 0.0m);            // resultado es utilidad
+                //else
+                //    CreateDetalle(ctaLiquida, ctaLiquida.Concepto, 0.0m, Math.Abs(resultadoNeto));  // resultado es perdida
+                
+                // 4. Dependiendo del resultado, se obtiene la cuenta de patrimonio para registrar la utilidad o la perdida
+                ECuentaEspecial ctaUtilidadPerdida = (resultadoNeto > 0) ? ECuentaEspecial.UtilidadEjercicio : ECuentaEspecial.PerdidaEjercicio;
+                var cta = ObtenerCuentaEspecial(ctaUtilidadPerdida);
                 if (cta != null)
                 {
-                    if (resultadoNeto > 0)           // utilidad se lleva a cuenta de patrimonio que corresponde a utilidades del periodo
+                    if (resultadoNeto > 0)     // 4.1. utilidad. Se lleva a cuenta de patrimonio - utilidades del periodo
                         CreateDetalle(cta, cta.Concepto, 0.0m, resultadoNeto);
-                    else if (resultadoBruto < 0)     // perdida se lleva a cuenta de patrimonio que corresponde a perdidas del periodo
-                        CreateDetalle(cta, cta.Concepto, resultadoNeto, 0.0m);
+                    else                       // 4.2. Perdida. Se lleva a cuenta de patrimonio - perdidas del periodo
+                    {
+                        //CreateDetalle(ctaLiquida, ctaLiquida.Concepto, Math.Abs(resultadoNeto), 0.0m);
+                        CreateDetalle(cta, cta.Concepto, Math.Abs(resultadoNeto), 0.0m);
+                    }
                 }
             }           
             fPartida.Save();

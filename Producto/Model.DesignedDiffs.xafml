@@ -192,6 +192,29 @@
     </DetailView>
     <ListView Id="Producto_ListView" DataAccessMode="Server" />
     <ListView Id="Producto_LookupListView" DataAccessMode="Server" />
+    <ListView Id="Producto_Precios_ListView">
+      <Columns>
+        <ColumnInfo Id="Tipo" Width="153" />
+        <ColumnInfo Id="Descripcion" Width="172" />
+        <ColumnInfo Id="PrecioUnitario" Width="118" />
+        <ColumnInfo Id="PrecioUnitarioConIva" Width="172" />
+      </Columns>
+    </ListView>
+    <ListView Id="Producto_Precios_Seleccion" ClassName="SBT.Apps.Producto.Module.BusinessObjects.ProductoPrecio" DataAccessMode="Server" Criteria="[Activo] = True" AllowUnlink="False" AllowNew="False" AllowLink="True" AllowDelete="False" IsNewNode="True">
+      <Columns IsNewNode="True">
+        <ColumnInfo Id="Activo" PropertyName="Activo" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="CantidadDesde" PropertyName="CantidadDesde" Index="-1" Width="132" IsNewNode="True" />
+        <ColumnInfo Id="CantidadHasta" PropertyName="CantidadHasta" Index="-1" Width="126" IsNewNode="True" />
+        <ColumnInfo Id="HoraDesde" PropertyName="HoraDesde" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="HoraHasta" PropertyName="HoraHasta" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Oid" PropertyName="Oid" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Producto" PropertyName="Producto" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Tipo" PropertyName="Tipo" SortIndex="0" SortOrder="Ascending" Index="0" Width="153" IsNewNode="True" />
+        <ColumnInfo Id="Descripcion" PropertyName="Descripcion" Index="1" Width="172" IsNewNode="True" />
+        <ColumnInfo Id="PrecioUnitario" PropertyName="PrecioUnitario" Index="2" Width="118" IsNewNode="True" />
+        <ColumnInfo Id="PrecioUnitarioConIva" PropertyName="PrecioUnitarioConIva" Index="3" Width="102" IsNewNode="True" />
+      </Columns>
+    </ListView>
     <DetailView Id="ProductoAtributo_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">

@@ -25,7 +25,7 @@ namespace SBT.Apps.Erp.Module.Web.Controllers.SaveAndNew
     /// desde el nested objectspace (del detalle)
     /// https://supportcenter.devexpress.com/ticket/details/t219521/how-to-add-the-save-and-new-action-in-a-detaiview-shown-for-the-aggregated-detail
     /// </remarks>
-    public class SaveAndNewViewControllerWeb: ViewController<DetailView>
+    public class SaveAndNewViewControllerWeb : ViewController<DetailView>
     {
         internal DevExpress.ExpressApp.Actions.SimpleAction SaveAndNew_Button;
         public SaveAndNewViewControllerWeb()
@@ -45,7 +45,8 @@ namespace SBT.Apps.Erp.Module.Web.Controllers.SaveAndNew
             // las vistas para las cuales deshabilitamos la accion SaveAndNew. Agregar las vistas en el if
             string Id = View.Id;
             if ((Id == "AuditObjectInfo_DetailView") || (Id == "BO2_DetailView") ||
-                (Id == "BO3_DetailView") || (Id == "Bo4_DetailView")) 
+                (Id == "BO3_DetailView") || (Id == "Bo4_DetailView") || (Id == "RangoFechaParams_DetailView") ||
+                (Id == "LibroIvaParams_DetailView"))
             {
                 SaveAndNew_Button.Active.SetItemValue("SaveAndNew_Button", false);
             }

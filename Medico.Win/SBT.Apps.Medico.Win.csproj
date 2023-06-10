@@ -246,13 +246,10 @@
       <Name>System.Drawing</Name>
       <Private>False</Private>
     </Reference>
-    <Reference Include="System.Management" />
-    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows.Forms">
       <Name>System.Windows.Forms</Name>
       <Private>False</Private>
     </Reference>
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FormInstallDlg.cs">

@@ -22,8 +22,13 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
     /// ViewController para el BO PartidaModelo y que corresponde a las Partidas Modelo
     /// </summary>
     // For more typical usage scenarios, be sure to check out https://documentation.devexpress.com/eXpressAppFramework/clsDevExpressExpressAppViewControllertopic.aspx.
-    public partial class vcPartidaModelo : ViewController
+    public class vcPartidaModelo : ViewController
     {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
         public vcPartidaModelo()
         {
             InitializeComponent();
@@ -45,6 +50,28 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
         {
             // Unsubscribe from previously subscribed events and release other references and resources.
             base.OnDeactivated();
+        }
+
+        /// <summary> 
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private void InitializeComponent()
+        {
+            // 
+            // vcPartidaModelo
+            // 
+            this.TargetObjectType = typeof(SBT.Apps.Contabilidad.Module.BusinessObjects.PartidaModelo);
+
         }
     }
 }

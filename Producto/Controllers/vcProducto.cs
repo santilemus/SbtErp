@@ -8,8 +8,13 @@ using System.Linq;
 namespace SBT.Apps.Producto.Module.Controllers
 {
     // For more typical usage scenarios, be sure to check out https://documentation.devexpress.com/eXpressAppFramework/clsDevExpressExpressAppViewControllertopic.aspx.
-    public partial class vcProducto : ViewController
+    public class vcProducto : ViewController
     {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
         public vcProducto()
         {
             InitializeComponent();
@@ -63,6 +68,30 @@ namespace SBT.Apps.Producto.Module.Controllers
                     bool deleted = ((BusinessObjects.ProductoPrecio)obj).IsDeleted;
                 }
             }
+        }
+
+
+        /// <summary> 
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private void InitializeComponent()
+        {
+            this.components = new System.ComponentModel.Container();
+            // 
+            // vcProducto
+            // 
+            this.TargetObjectType = typeof(SBT.Apps.Producto.Module.BusinessObjects.Producto);
+
         }
     }
 }

@@ -1,18 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp;
-using DevExpress.ExpressApp.Actions;
-using DevExpress.ExpressApp.Editors;
-using DevExpress.ExpressApp.Layout;
-using DevExpress.ExpressApp.Model.NodeGenerators;
-using DevExpress.ExpressApp.SystemModule;
-using DevExpress.ExpressApp.Templates;
-using DevExpress.ExpressApp.Utils;
-using DevExpress.Persistent.Base;
-using DevExpress.Persistent.Validation;
 using SBT.Apps.Base.Module.BusinessObjects;
 
 namespace SBT.Apps.RecursoHumano.Module.Controllers
@@ -22,8 +10,13 @@ namespace SBT.Apps.RecursoHumano.Module.Controllers
     /// ViewController correspondiente al BO Transaccion (Transacciones del Empleado)
     /// </summary>
     // For more typical usage scenarios, be sure to check out https://documentation.devexpress.com/eXpressAppFramework/clsDevExpressExpressAppViewControllertopic.aspx.
-    public partial class vcTransaccion : ViewController
+    public class vcTransaccion : ViewController
     {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
         public vcTransaccion()
         {
             InitializeComponent();
@@ -45,6 +38,28 @@ namespace SBT.Apps.RecursoHumano.Module.Controllers
         {
             // Unsubscribe from previously subscribed events and release other references and resources.
             base.OnDeactivated();
+        }
+
+        /// <summary> 
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private void InitializeComponent()
+        {
+            // 
+            // vcTransaccion
+            // 
+            this.TargetObjectType = typeof(SBT.Apps.RecursoHumano.Module.BusinessObjects.Transaccion);
+
         }
     }
 }

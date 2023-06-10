@@ -626,10 +626,14 @@
               </LayoutGroup>
             </LayoutGroup>
           </LayoutGroup>
-          <LayoutGroup Id="Autod836c3fd-d255-4461-86e5-e3cce92c3776" ShowCaption="False" Caption="" Direction="Horizontal" Index="2" RelativeSize="4.8322147651006713" IsNewNode="True">
-            <LayoutItem Id="TotalDebe" ViewItem="TotalDebe" Index="0" RelativeSize="50" IsNewNode="True" />
-            <LayoutItem Id="TotalHaber" ViewItem="TotalHaber" Index="1" RelativeSize="50" IsNewNode="True" />
-          </LayoutGroup>
+          <TabbedGroup Id="Tabs">
+            <LayoutGroup Id="Detalles">
+              <LayoutGroup Id="Autod836c3fd-d255-4461-86e5-e3cce92c3776" ShowCaption="False" Caption="" Direction="Horizontal" Index="2" RelativeSize="4.8322147651006713" IsNewNode="True">
+                <LayoutItem Id="TotalDebe" ViewItem="TotalDebe" Index="0" RelativeSize="50" CaptionLocation="Left" IsNewNode="True" />
+                <LayoutItem Id="TotalHaber" ViewItem="TotalHaber" Index="1" RelativeSize="50" CaptionLocation="Left" IsNewNode="True" />
+              </LayoutGroup>
+            </LayoutGroup>
+          </TabbedGroup>
         </LayoutGroup>
       </Layout>
     </DetailView>
@@ -639,16 +643,8 @@
         <ColumnInfo Id="NombreCuenta" Index="-1" />
         <ColumnInfo Id="Concepto" Index="1" Width="580" />
         <ColumnInfo Id="Cuenta" Width="175" />
-        <ColumnInfo Id="ValorDebe" Index="2" Width="127">
-          <Summary>
-            <ColumnSummaryItem Id="@c9d49e6d-77f4-4b89-a468-ff9a7792ce6a" SummaryType="Sum" IsNewNode="True" />
-          </Summary>
-        </ColumnInfo>
-        <ColumnInfo Id="ValorHaber" Index="3" Width="128">
-          <Summary>
-            <ColumnSummaryItem Id="@0e9a3200-ad55-47ad-a9d7-b32ac1893330" SummaryType="Sum" IsNewNode="True" />
-          </Summary>
-        </ColumnInfo>
+        <ColumnInfo Id="ValorDebe" Index="2" Width="127" />
+        <ColumnInfo Id="ValorHaber" Index="3" Width="128" />
         <ColumnInfo Id="AjusteConsolidacion" Index="4" Width="128" />
       </Columns>
     </ListView>
@@ -683,7 +679,17 @@
         </LayoutGroup>
       </Layout>
     </DetailView>
-    <ListView Id="PartidaDetalle_ListView" DataAccessMode="Server" />
+    <ListView Id="PartidaDetalle_ListView" DataAccessMode="Server">
+      <Columns>
+        <ColumnInfo Id="NombreCuenta" Width="230" />
+        <ColumnInfo Id="Cuenta" Width="126" />
+        <ColumnInfo Id="Concepto" Width="400" />
+        <ColumnInfo Id="ValorDebe" Width="94" />
+        <ColumnInfo Id="ValorHaber" Width="83" />
+        <ColumnInfo Id="CtaPresupuesto" Width="157" />
+        <ColumnInfo Id="AjusteConsolidacion" Width="165" />
+      </Columns>
+    </ListView>
     <DetailView Id="PartidaModelo_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">

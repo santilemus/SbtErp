@@ -50,6 +50,7 @@ namespace SBT.Apps.Medico.Expediente.Module.Controllers
             saCancelarConsulta.Execute -= SaCancelarConsulta_Execute;
             saIniciarConsulta.Execute -= SaIniciarConsulta_Execute;
             ObjectSpace.Committing -= ObjectSpace_Committing;
+            ObjectSpace.Committed -= ObjectSpace_Committed;
             base.OnDeactivated();
         }
 
@@ -61,7 +62,8 @@ namespace SBT.Apps.Medico.Expediente.Module.Controllers
                     return;
                 var medicoSesion = ((Usuario)SecuritySystem.CurrentUser).GetMemberValue("Empleado") as SBT.Apps.Medico.Generico.Module.BusinessObjects.Medico;
                 // falta validar que la propiedad Medico del currentObject no sea nulo, para evitar errores desagradables
-                if (medicoSesion != null && ((Consulta)View.CurrentObject).Medico.Oid == medicoSesion.Oid && ((Consulta)View.CurrentObject).Estado == EEstadoConsulta.Iniciada)
+                if (medicoSesion != null && ((Consulta)View.CurrentObject).Medico.Oid == medicoSesion.Oid && 
+                    (((Consulta)View.CurrentObject).Estado == EEstadoConsulta.Iniciada || ((Consulta)View.CurrentObject).Estado == EEstadoConsulta.Espera))
                     ((Consulta)View.CurrentObject).Estado = EEstadoConsulta.Finalizada;
             }
         }

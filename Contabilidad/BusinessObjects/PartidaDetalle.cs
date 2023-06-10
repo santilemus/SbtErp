@@ -92,7 +92,8 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         [DbType("money"), Persistent("Debe"), XafDisplayName("Debe")]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         [RuleValueComparison("PartidaDetalle.ValorDebe >= 0", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual, 0,
-            "'{TargetPropertyName}' tiene el siguiente valor: '{TargetValue}'. Este debería de ser Mayor o Igual a '{RightOperand}'.")]
+            "'{TargetPropertyName}' tiene el siguiente valor: '{TargetValue}'. Este debería de ser Mayor o Igual a '{RightOperand}'.",
+            ResultType = ValidationResultType.Warning)]
         public decimal ValorDebe
         {
             get => valorDebe;
@@ -107,7 +108,8 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         [DbType("money"), Persistent("Haber"), XafDisplayName("Haber")]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         [RuleValueComparison("PartidaDetalle.ValorHaber >= 0", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual, 0,
-            "'{TargetPropertyName}' tiene el siguiente valor: '{TargetValue}'. Este debería de ser Mayor o Igual a '{RightOperand}'.")]
+            "'{TargetPropertyName}' tiene el siguiente valor: '{TargetValue}'. Este debería de ser Mayor o Igual a '{RightOperand}'.",
+             ResultType = ValidationResultType.Warning)]
         public decimal ValorHaber
         {
             get => valorHaber;

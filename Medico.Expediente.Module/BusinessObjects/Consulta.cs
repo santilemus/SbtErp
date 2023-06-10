@@ -28,7 +28,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
     [Appearance("Ultrasonografia_Hide", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide,
         Context = "DetailView", Criteria = "[Paciente.Genero] != 1 && [Paciente.Edad] >= 10", TargetItems = "UltrasonografiaObstetricas;UltrasonografiaPelvicas")]
 
-    [ListViewFilter("Consulta Medica. En Espera", "[Estado] == 'Espera'", "Esperando Turno con Medico", "Consultas procesadas por recepción y esperando turno con medico asignado")]
+    [ListViewFilter("Consulta Medica. En Espera", "[Estado] = 'Espera'", "Esperando Turno con Medico", "Consultas procesadas por recepción y esperando turno con medico asignado")]
     [ListViewFilter("Consulta Medica. Iniciada", "[Estado] == 'Iniciada'", "Pacientes en consultorios", "Pacientes que estan siendo atendidos")]
     [ListViewFilter("Consulta Medica. Paciente siendo atendido", "[Estado] == 'Iniciada' && [Medico.Oid] == EmpleadoActualOid()", 
         "Paciente con su Medico", "Consulta atendida por medico de la sesión")]
@@ -244,6 +244,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         }
         [DevExpress.Xpo.AssociationAttribute("Diagnostico-Consulta"), DevExpress.Xpo.Aggregated]
         [ToolTip("Diagnosticos o padecimientos del paciente e identificados en la consulta")]
+        [XafDisplayName("Diagnósticos")]
         public XPCollection<ConsultaDiagnostico> Diagnosticos
         {
             get
@@ -254,6 +255,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 
         [Association("ConsultaSigno-Consulta"), DevExpress.Xpo.Aggregated]
         [ToolTip("Registro de los signos tomados al paciente en la consulta")]
+        [XafDisplayName("Signos")]
         public XPCollection<ConsultaSigno> ConsultaSignos => GetCollection<ConsultaSigno>(nameof(ConsultaSignos));
 
         [DevExpress.Xpo.AssociationAttribute("Sintomas-Consulta"), DevExpress.Xpo.Aggregated]
