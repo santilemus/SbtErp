@@ -16,7 +16,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
     /// Recurso Humano. BO que corresponde a las Transacciones del usuario y que afectan el calculo de los ingresos y descuentos
     /// aplicables al empleado, los cuales impactan en el devengado del empleado
     /// </summary>
-    [DefaultClassOptions, ImageName("TransaccionEmpleado")]
+    [DefaultClassOptions, ImageName("TransaccionEmpleado"), CreatableItem(false)]
     [DefaultProperty("Descripcion"), DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None),
         Persistent("PlanillaTransaccion"), ModelDefault("Caption", "Transacciones de Planillas"), NavigationItem("Recurso Humano")]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).

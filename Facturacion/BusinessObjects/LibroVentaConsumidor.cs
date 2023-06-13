@@ -19,8 +19,8 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
     /// <summary>
     /// BO que corresponde al LIbro de Ventas a Consumidor Final (IVA)
     /// </summary>
-    [DefaultClassOptions, ModelDefault("Caption", "Libro Ventas Consumidor"), NavigationItem(false)]
-    [DefaultProperty(nameof(FechaEmision))]
+    [DefaultClassOptions, ModelDefault("Caption", "Libro Ventas Consumidor"), NavigationItem("Contabilidad")]
+    [DefaultProperty(nameof(Fecha)), CreatableItem(false)]
     [Persistent(nameof(LibroVentaConsumidor))]
     //[ImageName("BO_Contact")]
     //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
@@ -37,17 +37,12 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
         {
             base.AfterConstruction();
             oid = -1;
-            moneda = null;
-            valorMoneda = 0.0m;
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
         #region Propiedades
 
-        [Persistent(nameof(ValorMoneda))]
-        decimal valorMoneda;
-        [Persistent(nameof(Moneda))]
-        Moneda moneda;
+        bool cerrado;
         AutorizacionDocumento autorizacionDocumento;
         decimal ventaTercero;
         decimal ventaZonaFranca;
@@ -63,19 +58,27 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
         string noControlInternoAl;
         string noControlInternoDel;
         string tipoDocumento;
-        DateTime fechaEmision;
+        DateTime fecha;
+        Empresa empresa;
         [Persistent(nameof(Oid)), DbType("int"), Key(true)]
         int oid;
 
         [PersistentAlias(nameof(oid)), XafDisplayName("Oid")]
         public int Oid => oid;
 
+        [XafDisplayName("Empresa"), DbType("int"), VisibleInListView(false)]
+        public Empresa Empresa
+        {
+            get => empresa;
+            set => SetPropertyValue(nameof(Empresa), ref empresa, value);
+        }
+
         [DbType("datetime"), XafDisplayName("Fecha Emisión")]
         [Indexed(nameof(AutorizacionDocumento), Name = "idxFechaEmisionAutorizacion_LibroCompra")]
-        public DateTime FechaEmision
+        public DateTime Fecha
         {
-            get => fechaEmision;
-            set => SetPropertyValue(nameof(FechaEmision), ref fechaEmision, value);
+            get => fecha;
+            set => SetPropertyValue(nameof(Fecha), ref fecha, value);
         }
 
         /// <summary>
@@ -194,11 +197,13 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
         [XafDisplayName("No de Anexo"), PersistentAlias("2")]
         public string NumeroAnexo => Convert.ToString(EvaluateAlias(nameof(NumeroAnexo)));
 
-        [XafDisplayName("Moneda"), PersistentAlias(nameof(moneda))]
-        public Moneda Moneda => moneda;
-        
-        [PersistentAlias(nameof(valorMoneda)), XafDisplayName("Valor Moneda"), Browsable(false)]
-        public decimal ValorMoneda => valorMoneda;
+        [DbType("bit"), XafDisplayName("Cerrado"), Browsable(false)]
+        public bool Cerrado
+        {
+            get => cerrado;
+            set => SetPropertyValue(nameof(Cerrado), ref cerrado, value);
+        }
+
 
         #endregion
 

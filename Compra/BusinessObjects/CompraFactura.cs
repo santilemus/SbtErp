@@ -3,6 +3,7 @@ using DevExpress.Data.Filtering.Helpers;
 using DevExpress.ExpressApp.ConditionalAppearance;
 using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
+using DevExpress.ExpressApp.Security.ClientServer;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
@@ -38,7 +39,9 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
             base.AfterConstruction();
             renta = 0.0m;
             fovial = 0.0m;
-            Clase = EClaseDocumentoCompraVenta.Imprenta;
+            NoSujeta = 0.0m;
+            DiasCredito = 0;
+            Clase = EClaseDocumento.Imprenta;
 
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
@@ -46,7 +49,7 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
         #region Propiedades
 
         decimal fovial;
-        EClaseDocumentoCompraVenta clase;
+        EClaseDocumento clase;
         decimal renta;
         string concepto;
         string numeroFactura;
@@ -104,7 +107,7 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
         [Size(20), XafDisplayName("Clase"), Index(11)]
         [DetailViewLayout("Datos de Pago", LayoutGroupType.SimpleEditorsGroup, 2)]
         [ToolTip("Clase de documento. Es requerido para el libro de compras")]
-        public EClaseDocumentoCompraVenta Clase
+        public EClaseDocumento Clase
         {
             get => clase;
             set => SetPropertyValue(nameof(Clase), ref clase, value);
@@ -138,6 +141,23 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
             get => fovial;
             set => SetPropertyValue(nameof(Fovial), ref fovial, value);
         }
+
+        /// <summary>
+        /// Total del documento
+        /// </summary>
+        /// <remarks>
+        /// El artículo del siguiente link dice que es mejor calcular la propiedad directamente porque es preferible en
+        /// lugar de persistentalias para calculos pesados (o continuos quiz). Por eso se hizo el cambio, sino produce el
+        /// efecto esperado regresar a la expresion del PersistentAlias. Hay que ver que funcione bien en app web
+        /// https://github.com/DevExpress/XPO/blob/master/Tutorials/WinForms/Classic/create-persistent-classes-and-connect-xpo-to-database.md
+        /// </remarks>
+        [PersistentAlias("[SubTotal] + [IvaPercibido] - [IvaRetenido] + [NoSujeta] + [Exenta] + [Fovial]")]
+        [ModelDefault("DisplayFormat", "{0:N2}")]
+        [XafDisplayName("Total"), Index(28)]
+        [DetailViewLayout("Totales", LayoutGroupType.SimpleEditorsGroup, 10)]
+        [VisibleInListView(true)]
+        public decimal Total => Convert.ToDecimal(EvaluateAlias(nameof(Total)));
+
 
         #endregion
 
@@ -264,6 +284,20 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
             if (fTiposDeFacturas == null)
                 return;
             fTiposDeFacturas.Criteria = CriteriaOperator.Parse("[Categoria] == 15 && [Activo] == True && [Codigo] In ('COVE01', 'COVE02', 'COVE04', 'COVE05', 'COVE06', 'COVE10', 'COVE12', 'COVE13')");
+        }
+
+        protected override decimal GetTotal()
+        {
+            return Total;
+        }
+
+        protected override void OnSaving()
+        {
+            if (!(Session is NestedUnitOfWork) && (Session.DataLayer != null) && Session.IsNewObject(this) &&
+                (Session.ObjectLayer is SecuredSessionObjectLayer) && (Numero == null || Numero <= 0))
+            {
+                Numero = CorrelativoDoc();
+            }
         }
 
         #endregion

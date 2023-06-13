@@ -3,6 +3,22 @@
   <BOModel>
     <Class Name="DevExpress.Persistent.BaseImpl.ReportDataV2" IsCloneable="True" />
   </BOModel>
+  <NavigationItems>
+    <Items>
+      <Item Id="Contabilidad">
+        <Items>
+          <Item Id="Catalogo_ListView" Index="0" />
+          <Item Id="Partida_ListView" Index="1" />
+          <Item Id="PartidaModelo_ListView" Index="2" />
+          <Item Id="CierreMesParam_ListView" Index="3" />
+          <Item Id="EstadoFinancieroModelo_ListView" Index="4" />
+          <Item Id="SaldoMes_ListView" Index="5" />
+          <Item Id="LibroCompra_ListView" Index="6" />
+          <Item Id="LibroVentaContribuyente_ListView" Index="7" />
+        </Items>
+      </Item>
+    </Items>
+  </NavigationItems>
   <Options>
     <LayoutManagerOptions RequiredFieldMark="*" />
   </Options>

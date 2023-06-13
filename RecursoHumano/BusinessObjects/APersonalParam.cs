@@ -17,7 +17,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 
     [DomainComponent]
     [DefaultClassOptions]
-    [ModelDefault("Caption", "Aprobación o Rechazo"), NavigationItem(false)]
+    [ModelDefault("Caption", "Aprobación o Rechazo"), NavigationItem(false), CreatableItem(false)]
     //[ImageName("BO_Unknown")]
     public class APersonalParam
     {

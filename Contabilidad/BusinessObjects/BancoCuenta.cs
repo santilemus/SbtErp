@@ -26,6 +26,7 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
     [RuleCombinationOfPropertiesIsUnique("BancoCuenta.Banco_Numero", DefaultContexts.Save, "Banco,Numero",
         CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction, SkipNullOrEmptyValues = false)]
     [ImageName(nameof(BancoCuenta))]
+    [CreatableItem(false)]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class BancoCuenta : XPObjectBaseBO

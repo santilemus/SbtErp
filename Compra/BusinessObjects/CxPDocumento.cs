@@ -11,6 +11,7 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
 {
     [DefaultClassOptions, ModelDefault("Caption", "Documento CxP")]
     [MapInheritance(MapInheritanceType.ParentTable)]
+    [CreatableItem(false)]
     //[ImageName("BO_Contact")]
     //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]

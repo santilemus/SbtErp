@@ -20,8 +20,8 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
     /// <summary>
     /// BO que corresponde al libro de Ventas a Contribuyentes (IVA)
     /// </summary>
-    [DefaultClassOptions, ModelDefault("Caption", "Libro Ventas Contribuyente"), NavigationItem(false)]
-    [DefaultProperty(nameof(NoControlInterno))]
+    [DefaultClassOptions, ModelDefault("Caption", "Libro Ventas Contribuyente"), NavigationItem("Contabilidad")]
+    [DefaultProperty(nameof(Numero)), CreatableItem(false)]
     [Persistent(nameof(LibroVentaContribuyente))]
     //[ImageName("BO_Contact")]
     //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
@@ -38,15 +38,14 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
         {
             base.AfterConstruction();
             oid = -1;
+            cerrado = false;
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
         #region Propiedades
 
-        [Persistent(nameof(ValorMoneda))]
-        decimal valorMoneda = 1.0m;
-        [Persistent(nameof(Moneda))]
-        Moneda moneda = null;
+        bool cerrado;
+        string dui;
         decimal ivaRetenido;
         decimal ivaPercibido;
         Tercero.Module.BusinessObjects.Tercero cliente;
@@ -70,11 +69,12 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
         [PersistentAlias(nameof(oid)), XafDisplayName("Oid")]
         public long Oid => oid;
 
-        [DbType("datetime"), XafDisplayName("Fecha Emisión")]
-        public DateTime FechaEmision
+        [DbType("datetime"), XafDisplayName("Fecha")]
+        [ModelDefault("DisplayFormat", "dd/MM/yyyy")]
+        public DateTime Fecha
         {
             get => fechaEmision;
-            set => SetPropertyValue(nameof(FechaEmision), ref fechaEmision, value);
+            set => SetPropertyValue(nameof(Fecha), ref fechaEmision, value);
         }
 
         /// <summary>
@@ -124,6 +124,7 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
         }
 
         [DbType("numeric(14,2)"), XafDisplayName("Venta Exenta")]
+        [ModelDefault("DisplayFormat", "F2")]
         public decimal Exenta
         {
             get => exenta;
@@ -131,13 +132,15 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
         }
 
         [DbType("numeric(14,2)"), XafDisplayName("Venta No Sujeta")]
+        [ModelDefault("DisplayFormat", "F2")]
         public decimal NoSujeta
         {
             get => noSujeta;
             set => SetPropertyValue(nameof(NoSujeta), ref noSujeta, value);
         }
 
-        [DbType("numeric(14,2)"), XafDisplayName("Venta Gravada Local")]
+        [DbType("numeric(14,2)"), XafDisplayName("Gravada Local")]
+        [ModelDefault("DisplayFormat", "F2")]
         public decimal GravadaLocal
         {
             get => gravadaLocal;
@@ -145,6 +148,7 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
         }
 
         [DbType("numeric(14,2)"), XafDisplayName("Débito Fiscal")]
+        [ModelDefault("DisplayFormat", "F2")]
         public decimal DebitoFiscal
         {
             get => debitoFiscal;
@@ -152,6 +156,7 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
         }
 
         [DbType("numeric(14,2)"), XafDisplayName("Iva Percibido")]
+        [ModelDefault("DisplayFormat", "F2")]
         public decimal IvaPercibido
         {
             get => ivaPercibido;
@@ -159,13 +164,15 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
         }
 
         [DbType("numeric(14,2)"), XafDisplayName("Iva Retenido")]
+        [ModelDefault("DisplayFormat", "F2")]
         public decimal IvaRetenido
         {
             get => ivaRetenido;
             set => SetPropertyValue(nameof(IvaRetenido), ref ivaRetenido, value);
         }
 
-        [DbType("numeric(14,2)"), XafDisplayName("Venta Tercero No Domiciliado")]
+        [DbType("numeric(14,2)"), XafDisplayName("Tercero No Domiciliado")]
+        [ModelDefault("DisplayFormat", "F2")]
         public decimal VentaTercero
         {
             get => ventaTercero;
@@ -173,21 +180,30 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
         }
 
         [DbType("numeric(14,2)"), XafDisplayName("Débito Fiscal Vta Tercero")]
-        public decimal DebitoFiscalVtaTercero
+        [ModelDefault("DisplayFormat", "F2")]
+        public decimal DebitoFiscalTercero
         {
             get => debitoFiscalVtaTercero;
-            set => SetPropertyValue(nameof(DebitoFiscalVtaTercero), ref debitoFiscalVtaTercero, value);
+            set => SetPropertyValue(nameof(DebitoFiscalTercero), ref debitoFiscalVtaTercero, value);
         }
 
         [DbType("numeric(14,2)"), XafDisplayName("Total Venta")]
         [PersistentAlias("[Exenta] + [NoSujeta] + [GravadaLocal] + [DebitoFiscal] +[VentaTercero] + [DebitoFiscalTercero]")]
+        [ModelDefault("DisplayFormat", "F2")]
         public decimal Total => Convert.ToDecimal(EvaluateAlias(nameof(Total)));
 
+
+        [Size(9), XafDisplayName("Dui")]
+        public string Dui
+        {
+            get => dui;
+            set => SetPropertyValue(nameof(Dui), ref dui, value);
+        }
 
         /// <summary>
         /// Es importante para hacer el update cuando ya se inserto el registro de ventas y evitar que se dupliquen
         /// </summary>
-        [XafDisplayName("Venta"), Browsable(false)]
+        [XafDisplayName("Venta"), VisibleInListView(false)]
         public Venta Venta
         {
             get => venta;
@@ -208,11 +224,14 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
         [XafDisplayName("No de Anexo"), PersistentAlias("1")]
         public string NumeroAnexo => Convert.ToString(EvaluateAlias(nameof(NumeroAnexo)));
 
-        [XafDisplayName("Moneda"), PersistentAlias(nameof(moneda))]
-        public Moneda Moneda => moneda;
+        [Persistent(nameof(Cerrado)), DbType("bit")]
+        public bool Cerrado
+        {
+            get => cerrado;
+        }
 
-        [PersistentAlias(nameof(valorMoneda)), XafDisplayName("Valor Moneda"), Browsable(false)]
-        public decimal ValorMoneda => valorMoneda;
+        [XafDisplayName("Clase"), VisibleInListView(true)]
+        public int Clase => (int)AutorizacionDocumento.Clase;
 
         #endregion
 

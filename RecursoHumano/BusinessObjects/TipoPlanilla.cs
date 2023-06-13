@@ -16,6 +16,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
     [DefaultClassOptions, ModelDefault("Caption", "Tipo Planilla"), NavigationItem("Recurso Humano"),
         DefaultProperty("Nombre"), DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None),
         Persistent(nameof(TipoPlanilla)), ImageName("TipoPlanilla")]
+    [CreatableItem(false)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class TipoPlanilla : XPObject
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).

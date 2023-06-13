@@ -18,6 +18,7 @@ namespace SBT.Apps.Inventario.Module.BusinessObjects
         Criteria = "([TipoMovimiento.Codigo] In ('201', '202', '203'))", Context = "*", AppearanceItemType = "Any",
         TargetItems = "OrdenCompra;Factura")]
     [ImageName(nameof(InventarioMovimiento))]
+    [CreatableItem(false)]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class InventarioMovimiento : XPCustomBaseDoc

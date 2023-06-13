@@ -128,7 +128,6 @@ namespace SBT.Apps.Iva.Module.Controllers
             var pa = os.CreateObject<RangoFechaParams>();
             e.View = Application.CreateDetailView(os, pa);
             e.View.Caption = "Exportar Libro de Compras";
-
         }
 
         private void PwsaGenerar_Execute(object sender, PopupWindowShowActionExecuteEventArgs e)
@@ -199,7 +198,7 @@ namespace SBT.Apps.Iva.Module.Controllers
         private void ExportController_CustomGetDefaultFileName(object sender, CustomGetDefaultFileNameEventArgs e)
         {
             if (View.CurrentObject != null)
-                e.FileName = e.FileName + "_" + string.Format("{0:mmmmYYYY}", (View.CurrentObject as SBT.Apps.Iva.Module.BusinessObjects.LibroCompra).Fecha);
+                e.FileName = e.FileName + "_" + string.Format("{0:MMMyyyy}", (View.CurrentObject as SBT.Apps.Iva.Module.BusinessObjects.LibroCompra).Fecha);
         }
 
         protected virtual void CustomExport(object sender, CustomExportEventArgs e)

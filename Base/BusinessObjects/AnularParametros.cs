@@ -9,6 +9,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
     [DomainComponent]
     [DefaultClassOptions]
     [ModelDefault("Caption", "Parámetros <Anulación>"), NavigationItem(false)]
+    [CreatableItem(false)]
     //[ImageName("BO_Unknown")]
     //[DefaultProperty("SampleProperty")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]

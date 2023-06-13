@@ -34,7 +34,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             string sCriteria = "Empresa.Oid == ? && GetYear(Fecha) == ?";
             using (UnitOfWork uow = new UnitOfWork(Session.DataLayer, null))
             {
-                object max = uow.Evaluate(this.GetType(), CriteriaOperator.Parse("Max(Numero) + 1"), CriteriaOperator.Parse(sCriteria, Empresa.Oid, Fecha));
+                object max = uow.Evaluate(this.GetType(), CriteriaOperator.Parse("Max(Numero) + 1"), CriteriaOperator.Parse(sCriteria, Empresa.Oid, Fecha.Year));
                 return Convert.ToInt32(max ?? 1);
             }
         }

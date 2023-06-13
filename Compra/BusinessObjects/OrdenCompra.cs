@@ -82,6 +82,23 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
         }
 
         /// <summary>
+        /// Total del documento
+        /// </summary>
+        /// <remarks>
+        /// El artículo del siguiente link dice que es mejor calcular la propiedad directamente porque es preferible en
+        /// lugar de persistentalias para calculos pesados (o continuos quiz). Por eso se hizo el cambio, sino produce el
+        /// efecto esperado regresar a la expresion del PersistentAlias. Hay que ver que funcione bien en app web
+        /// https://github.com/DevExpress/XPO/blob/master/Tutorials/WinForms/Classic/create-persistent-classes-and-connect-xpo-to-database.md
+        /// </remarks>
+        [PersistentAlias("[SubTotal] + [IvaPercibido] - [IvaRetenido] + [NoSujeta] + [Exenta] ")]
+        [ModelDefault("DisplayFormat", "{0:N2}")]
+        [XafDisplayName("Total"), Index(28)]
+        [DetailViewLayout("Totales", LayoutGroupType.SimpleEditorsGroup, 10)]
+        [VisibleInListView(true)]
+        public decimal Total => Convert.ToDecimal(EvaluateAlias(nameof(Total))); // SubTotal + IvaPercibido ?? 0.0m - IvaRetenido ?? 0.0m + NoSujeta ?? 0.0m + Exenta ?? 0.0m;
+
+
+        /// <summary>
         /// Estado de la orden de compra
         /// </summary>
         [DbType("smallint"), XafDisplayName("Estado Orden"), Index(11)]
@@ -148,6 +165,11 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
             iva = Convert.ToDecimal(Evaluate(CriteriaOperator.Parse("[Detalles].Sum([Iva])")));
             if (forceChangeEvents)
                 OnChanged(nameof(Iva), oldIva, iva);
+        }
+
+        protected override decimal GetTotal()
+        {
+            return Total;
         }
 
         #endregion

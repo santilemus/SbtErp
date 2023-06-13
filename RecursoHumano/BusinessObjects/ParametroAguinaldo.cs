@@ -19,6 +19,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
     [DefaultClassOptions, NavigationItem("Recurso Humano"), ModelDefault("Caption", "Parámetro Aguinaldo"),
         Persistent(nameof(ParametroAguinaldo)), DefaultProperty("Desde")]
     [ImageName("ParametroAguinaldo")]
+    [CreatableItem(false)]
     //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).

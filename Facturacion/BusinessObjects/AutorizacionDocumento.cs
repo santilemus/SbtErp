@@ -19,6 +19,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
     [DefaultClassOptions, ModelDefault("Caption", "Autorización Documentos"), NavigationItem("Facturación"),
         Persistent("FacAutorizacionDoc"), DefaultProperty("Resolucion")]
     [ImageName(nameof(AutorizacionDocumento))]
+    [CreatableItem(false)]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class AutorizacionDocumento : XPObjectBaseBO
@@ -37,7 +38,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
 
 
         ReportDataV2 reporte;
-        EClaseDocumentoCompraVenta clase;
+        EClaseDocumento clase;
         EmpresaUnidad agencia;
         Caja caja;
         string noSolicitud;
@@ -131,7 +132,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         }
 
         [XafDisplayName("Clase Documento"), DbType("smallint")]
-        public EClaseDocumentoCompraVenta Clase
+        public EClaseDocumento Clase
         {
             get => clase;
             set => SetPropertyValue(nameof(Clase), ref clase, value);

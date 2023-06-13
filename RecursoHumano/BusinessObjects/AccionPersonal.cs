@@ -18,6 +18,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
     [DefaultClassOptions, ModelDefault("Caption", "Acción de Personal"), NavigationItem("Recurso Humano"), DefaultProperty("Empleado")]
     [Persistent(nameof(AccionPersonal))]
     [ImageName(nameof(AccionPersonal))]
+    [CreatableItem(false)]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class AccionPersonal : XPObjectBaseBO

@@ -17,6 +17,7 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
     [DefaultClassOptions, NavigationItem("Banco"), ModelDefault("Caption", "Clasificación Transacción"),
         Persistent(nameof(BancoTipoTransaccion)), DefaultProperty("Nombre")]
     [ImageName("BancoClasificacionTransac")]
+    [CreatableItem(false)]
     //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).

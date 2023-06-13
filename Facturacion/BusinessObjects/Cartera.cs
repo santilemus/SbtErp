@@ -22,6 +22,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
     [DefaultClassOptions, ModelDefault("Caption", "Cartera CxC"), NavigationItem("Cuenta por Cobrar"), 
         DefaultProperty(nameof(Nombre)), Persistent(nameof(Cartera))]
     [ImageName(nameof(Cartera))]
+    [CreatableItem(false)]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class Cartera : XPObjectCustom

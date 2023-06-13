@@ -13,7 +13,7 @@ using System.Linq;
 
 namespace SBT.Apps.Empleado.Module.BusinessObjects
 {
-    [DefaultClassOptions]
+    [DefaultClassOptions, CreatableItem(false)]
     [ModelDefault("Caption", "Empleado"), XafDisplayName("Empleado"), NavigationItem("Recurso Humano"), XafDefaultProperty("NombreCompleto"),
         Persistent("Empleado"), ImageName("employees")]
     [RuleIsReferenced("Empleado_Referencia", DefaultContexts.Delete, typeof(Empleado), nameof(Oid),

@@ -108,6 +108,7 @@
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
@@ -124,6 +125,8 @@
     <Compile Include="BusinessObjects\AutorizacionDocumento.cs" />
     <Compile Include="BusinessObjects\VentaDetalle.cs" />
     <Compile Include="BusinessObjects\VentaResumenTributo.cs" />
+    <Compile Include="Controllers\LibroVentaConsumidorListViewController.cs" />
+    <Compile Include="Controllers\LibroVentaContribuyenteListViewController.cs" />
     <Compile Include="Controllers\vcAutorizacionDocumento.cs">
       <SubType>Component</SubType>
     </Compile>

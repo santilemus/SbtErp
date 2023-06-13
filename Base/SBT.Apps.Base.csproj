@@ -165,7 +165,7 @@
     <Compile Include="BusinessObjects\EBugPrioridad.cs" />
     <Compile Include="BusinessObjects\EBugSeveridad.cs" />
     <Compile Include="BusinessObjects\EBugSistemaOperativo.cs" />
-    <Compile Include="BusinessObjects\EClaseDocumentoCompraVenta.cs" />
+    <Compile Include="BusinessObjects\EClaseDocumento.cs" />
     <Compile Include="BusinessObjects\EClasificacionContribuyente.cs" />
     <Compile Include="BusinessObjects\ECondicionPago.cs" />
     <Compile Include="BusinessObjects\ECuentaEspecial.cs" />

@@ -14,7 +14,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
     [DomainComponent]
     [DefaultClassOptions]
     [VisibleInReports]
-    [ModelDefault("Caption", "EFinancieroDetalle"), NavigationItem(false)]
+    [ModelDefault("Caption", "EFinancieroDetalle"), NavigationItem(false), CreatableItem(false)]
     public class EFinancieroDetalle: NonPersistentObjectImpl
     {
 

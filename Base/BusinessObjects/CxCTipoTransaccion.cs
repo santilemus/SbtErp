@@ -17,6 +17,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
     [DefaultClassOptions, ModelDefault("Caption", "Tipo Transaccion (CxC - CxP)"), DefaultProperty("Nombre"), NavigationItem("Catalogos"),
         Persistent(nameof(CxCTipoTransaccion))]
     [ImageName("Concepto")]
+    [CreatableItem(false)]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class CxCTipoTransaccion : XPCustomObject

@@ -24,6 +24,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
     [DefaultClassOptions, ModelDefault("Caption", "Reporte Hora Extra"), NavigationItem("Recurso Humano"), DefaultProperty("Empleado")]
     [Persistent(nameof(ReporteHoraExtra))]
     [ImageName(nameof(ReporteHoraExtra))]
+    [CreatableItem(false)]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class ReporteHoraExtra : XPObjectBaseBO

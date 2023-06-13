@@ -22,6 +22,7 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
     [DefaultClassOptions, ModelDefault("Caption", "Libro Compras"), NavigationItem("Contabilidad")]
     [DefaultProperty(nameof(Numero))]
     [Persistent(nameof(LibroCompra))]
+    [CreatableItem(false)]
     //[ImageName("BO_Contact")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
@@ -35,13 +36,14 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
         {
             base.AfterConstruction();
             oid = -1;
-            claseDocumento = 1;
+            claseDocumento = EClaseDocumento.Imprenta;
             cerrado = false;
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
         #region Propiedades
 
+        string dui;
         bool cerrado;
         decimal compraExcluido;
         Tercero.Module.BusinessObjects.Tercero proveedor;
@@ -57,7 +59,7 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
         string nit;
         string numero;
         string tipoDocumento;
-        int claseDocumento;
+        EClaseDocumento claseDocumento;
         DateTime fecha;
         [Persistent(nameof(Oid)), DbType("bigint"), Key(true)]
         long oid;
@@ -66,18 +68,21 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
         public long Oid => oid;
 
         [DbType("datetime"), XafDisplayName("Fecha Emisión")]
+        [ModelDefault("DisplayFormat", "dd/MM/yyyy")]
         public DateTime Fecha
         {
             get => fecha;
             set => SetPropertyValue(nameof(Fecha), ref fecha, value);
         }
 
-        [Size(1), DbType("smallint"), XafDisplayName("Clase Documento")]
-        public int ClaseDocumento
+        [DbType("smallint"), XafDisplayName("Clase Documento"), VisibleInListView(false)]
+        public EClaseDocumento ClaseDocumento
         {
             get => claseDocumento;
             set => SetPropertyValue(nameof(ClaseDocumento), ref claseDocumento, value);
         }
+
+        public int Clase => (int)ClaseDocumento;
 
         [Size(2), DbType("varchar(2)"), XafDisplayName("Tipo Documento")]
         public string TipoDocumento
@@ -100,7 +105,6 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
             set => SetPropertyValue(nameof(Nit), ref nit, value);
         }
 
-
         [XafDisplayName("Proveedor")]
         public Tercero.Module.BusinessObjects.Tercero Proveedor
         {
@@ -108,56 +112,56 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
             set => SetPropertyValue(nameof(Proveedor), ref proveedor, value);
         }
 
-        [DbType("numeric(14,2)"), XafDisplayName("Interna Exenta")]
+        [DbType("numeric(14,2)"), XafDisplayName("Interna Exenta"), ModelDefault("DisplayFormat", "F2")]
         public decimal InternaExenta
         {
             get => internaExenta;
             set => SetPropertyValue(nameof(InternaExenta), ref internaExenta, value);
         }
 
-        [DbType("numeric(14,2)"), XafDisplayName("Internación Exenta")]
+        [DbType("numeric(14,2)"), XafDisplayName("Internación Exenta"), ModelDefault("DisplayFormat", "F2")]
         public decimal InternacionExenta
         {
             get => internacionExenta;
             set => SetPropertyValue(nameof(InternacionExenta), ref internacionExenta, value);
         }
 
-        [DbType("numeric(14,2)"), XafDisplayName("Importación Exenta")]
+        [DbType("numeric(14,2)"), XafDisplayName("Importación Exenta"), ModelDefault("DisplayFormat", "F2")]
         public decimal ImportacionExenta
         {
             get => importacionExenta;
             set => SetPropertyValue(nameof(ImportacionExenta), ref importacionExenta, value);
         }
 
-        [DbType("numeric(14,2)"), XafDisplayName("Interna Gravada")]
+        [DbType("numeric(14,2)"), XafDisplayName("Interna Gravada"), ModelDefault("DisplayFormat", "F2")]
         public decimal InternaGravada
         {
             get => internaGravada;
             set => SetPropertyValue(nameof(InternaGravada), ref internaGravada, value);
         }
 
-        [DbType("numeric(14,2)"), XafDisplayName("Internación Gravada Bien")]
+        [DbType("numeric(14,2)"), XafDisplayName("Internación Gravada Bien"), ModelDefault("DisplayFormat", "F2")]
         public decimal InternacionGravadaBien
         {
             get => internacionGravadaBien;
             set => SetPropertyValue(nameof(InternacionGravadaBien), ref internacionGravadaBien, value);
         }
 
-        [DbType("numeric(14,2)"), XafDisplayName("Importación Gravada Bien")]
+        [DbType("numeric(14,2)"), XafDisplayName("Importación Gravada Bien"), ModelDefault("DisplayFormat", "F2")]
         public decimal ImportacionGravadaBien
         {
             get => importacionGravadaBien;
             set => SetPropertyValue(nameof(ImportacionGravadaBien), ref importacionGravadaBien, value);
         }
 
-        [DbType("numeric(14,2)"), XafDisplayName("Importación Gravada Servicio")]
+        [DbType("numeric(14,2)"), XafDisplayName("Importación Gravada Servicio"), ModelDefault("DisplayFormat", "F2")]
         public decimal ImportacionGravadaServicio
         {
             get => importacionGravadaServicio;
             set => SetPropertyValue(nameof(ImportacionGravadaServicio), ref importacionGravadaServicio, value);
         }
 
-        [DbType("numeric(14,2)"), XafDisplayName("Crédito Fiscal")]
+        [DbType("numeric(14,2)"), XafDisplayName("Crédito Fiscal"), ModelDefault("DisplayFormat", "F2")]
         public decimal CreditoFiscal
         {
             get => creditoFiscal;
@@ -167,11 +171,12 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
         [DbType("numeric(14,2)"), XafDisplayName("Total Compra")]
         [PersistentAlias(@"[InternaExenta] + [InternacionExenta] + [ImportacionExenta] + [InternaGravada] +[InternacionGravadaBien] + 
                            [ImportacionGravadaBien] + [ImportacionGravadaServicio] + [CreditoFiscal] + [CompraExcluido]")]
+        [ModelDefault("DisplayFormat", "F2")]
         public decimal Total => Convert.ToDecimal(EvaluateAlias(nameof(Total)));
 
 
         [DbType("numeric(14,2)"), XafDisplayName("Compra Sujeto Excluido")]
-        [ToolTip("Compras a sujetos excluidos")]
+        [ToolTip("Compras a sujetos excluidos"), ModelDefault("DisplayFormat", "F2")]
         public decimal CompraExcluido
         {
             get => compraExcluido;
@@ -184,8 +189,16 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
             get => compraFactura;
             set => SetPropertyValue(nameof(CompraFactura), ref compraFactura, value);
         }
+
         
-        [Persistent(nameof(Cerrado)), DbType("bit")]
+        [Size(9), DbType("varchar(9)"), XafDisplayName("Dui")]
+        public string Dui
+        {
+            get => dui;
+            set => SetPropertyValue(nameof(Dui), ref dui, value);
+        }
+
+        [Persistent(nameof(Cerrado)), DbType("bit"), VisibleInListView(false)]
         public bool Cerrado
         {
             get => cerrado;

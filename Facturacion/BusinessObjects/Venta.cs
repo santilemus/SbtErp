@@ -70,6 +70,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             }
             giro = null;
             formaPago = EFormaPago.Efectivo;
+            ExportacionServicio = false;
             // PENDIENTE asignar la caja de forma automatica, a partir de la agencia
 
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
@@ -78,6 +79,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
 
         #region Propiedades
 
+        bool exportacionServicio;
         bool gravadaTasaCero;
         SBT.Apps.Tercero.Module.BusinessObjects.TerceroGiro giro;
         [Persistent(nameof(Agencia))]
@@ -168,22 +170,18 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
                         DireccionEntrega = Cliente.Direcciones.FirstOrDefault<TerceroDireccion>();
                     if (Cliente.Giros.Count > 0)
                         Giro = Cliente.Giros.FirstOrDefault<TerceroGiro>();
+                    TerceroDocumento doc;
+                    if (Cliente.TipoPersona == TipoPersona.Juridica)
+                        doc = Cliente.Documentos.FirstOrDefault(TerceroDocumento => (TerceroDocumento.Tipo.Codigo == "NIT" && TerceroDocumento.Vigente == true));
+                    else
+                        doc = Cliente.Documentos.FirstOrDefault(TerceroDocumento =>
+                              ((TerceroDocumento.Tipo.Codigo == "NIT" || TerceroDocumento.Tipo.Codigo == "DUI") && TerceroDocumento.Vigente == true));
+                    ClienteDocumento = doc;
                     if (string.Compare(TipoFactura.Codigo, "COVE01", StringComparison.Ordinal) == 0 || TipoFactura.Codigo == "COVE06")
                     {
-                        ClienteDocumento = Cliente.Documentos.FirstOrDefault(TerceroDocumento =>
-                                          (TerceroDocumento.Tipo.Codigo == "NIT" && TerceroDocumento.Vigente == true));
                         nrc = Cliente.Documentos.FirstOrDefault(TerceroDocumento =>
                                           TerceroDocumento.Tipo.Codigo == "NRC" && TerceroDocumento.Vigente == true);
                         OnChanged(nameof(Nrc));
-                    }
-                    else if (string.Compare(TipoFactura.Codigo, "COVE02", StringComparison.Ordinal) == 0)
-                    {
-                        TerceroDocumento doc = Cliente.Documentos.FirstOrDefault(TerceroDocumento =>
-                                           (string.Compare(TerceroDocumento.Tipo.Codigo, "NIT", StringComparison.Ordinal) == 0 && TerceroDocumento.Vigente == true));
-                        if (doc == null)
-                            doc = Cliente.Documentos.FirstOrDefault();
-                        if (doc != null)
-                            ClienteDocumento = doc;
                     }
                 }
             }
@@ -221,7 +219,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             set => SetPropertyValue(nameof(Giro), ref giro, value);
         }
         /// <summary>
-        /// En creditos fiscales es el NIT, en factura de consumidor puede ser: DUI, NIT, PASAPORTE
+        /// En creditos fiscales es el NIT o DUI, en factura de consumidor puede ser: DUI, NIT, PASAPORTE
         /// </summary>
         [XafDisplayName("Cliente Documento"), ToolTip("Documento de identificación del cliente, cuando es requerido")]
         [DataSourceCriteria("Tercero == '@This.Cliente' && Vigente == True")]
@@ -361,6 +359,23 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             get { return diaCerrado; }
         }
 
+        /// <summary>
+        /// Total del documento
+        /// </summary>
+        /// <remarks>
+        /// El artículo del siguiente link dice que es mejor calcular la propiedad directamente porque es preferible en
+        /// lugar de persistentalias para calculos pesados (o continuos quiz). Por eso se hizo el cambio, sino produce el
+        /// efecto esperado regresar a la expresion del PersistentAlias. Hay que ver que funcione bien en app web
+        /// https://github.com/DevExpress/XPO/blob/master/Tutorials/WinForms/Classic/create-persistent-classes-and-connect-xpo-to-database.md
+        /// </remarks>
+        [PersistentAlias("[SubTotal] + [IvaPercibido] - [IvaRetenido] + [NoSujeta] + [Exenta] ")]
+        [ModelDefault("DisplayFormat", "{0:N2}")]
+        [XafDisplayName("Total"), Index(28)]
+        [DetailViewLayout("Totales", LayoutGroupType.SimpleEditorsGroup, 10)]
+        [VisibleInListView(true)]
+        public decimal Total => Convert.ToDecimal(EvaluateAlias(nameof(Total))); // SubTotal + IvaPercibido ?? 0.0m - IvaRetenido ?? 0.0m + NoSujeta ?? 0.0m + Exenta ?? 0.0m;
+
+
         [XafDisplayName("Tercero no Domiciliado"), VisibleInListView(false), VisibleInLookupListView(false)]
         [ToolTip("La venta es a cuenta de este Tercero No Domiciliado")]
         [Delayed(true)]
@@ -394,6 +409,21 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         {
             get => gravadaTasaCero;
             set => SetPropertyValue(nameof(GravadaTasaCero), ref gravadaTasaCero, value);
+        }
+
+        /// <summary>
+        /// Exportacion de servicios, válido solo para la factura de exportacion  
+        /// </summary>
+        /// <remarks>
+        /// Incorporado el 09/junio/2023. Originalmente se penso manejar esto que es importante para la separacion en los  
+        /// libros de IVA, a través de la categoría de producto, pero es complicado por dos razones: 1) Puede mezclar en 
+        /// una misma factura de exportacion productos y servicios y 2) lo más importante complica innecesariamente la
+        /// generacion del libro de contribuyentes porque la tabla principal para la generación es el detalle de la venta.
+        /// </remarks>
+        public bool ExportacionServicio
+        {
+            get => exportacionServicio;
+            set => SetPropertyValue(nameof(ExportacionServicio), ref exportacionServicio, value);
         }
 
         #endregion
@@ -647,6 +677,10 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             }
         }
 
+        protected override decimal GetTotal()
+        {
+            return Total;
+        }
         #endregion
 
 

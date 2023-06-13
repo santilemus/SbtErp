@@ -15,7 +15,7 @@ using DevExpress.ExpressApp.Model;
 namespace SBT.Apps.Contabilidad.Module.BusinessObjects
 {
     [DefaultClassOptions, NavigationItem("Contabilidad"), ModelDefault("Caption", "Partidas Modelo"), DefaultProperty("Concepto"),
-        Persistent("ConPartidaModelo")]
+        Persistent("ConPartidaModelo"), CreatableItem(false)]
     [ImageName(nameof(PartidaModelo))]
     //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]

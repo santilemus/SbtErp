@@ -17,6 +17,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
     [DefaultClassOptions, ModelDefault("Caption", "Planillas"), NavigationItem("Recurso Humano"), DefaultProperty("Tipo")]
     [Persistent(nameof(Planilla))]
     [ImageName(nameof(Planilla))]
+    [CreatableItem(false)]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class Planilla : XPObjectBaseBO

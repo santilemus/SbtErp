@@ -16,6 +16,7 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
     [DefaultClassOptions, ModelDefault("Caption", "Caja Chica - Transacciones"), NavigationItem("Banco"), Persistent(nameof(CajaChicaTransaccion)),
         DefaultProperty(nameof(FechaInicio))]
     [ImageName(nameof(CajaChicaTransaccion))]
+    [CreatableItem(false)]
     //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).

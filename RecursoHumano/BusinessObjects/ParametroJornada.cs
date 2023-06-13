@@ -19,6 +19,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
     [DefaultClassOptions, ModelDefault("Caption", "Parámetros Jornadas"), NavigationItem("Recurso Humano"), Persistent(nameof(ParametroJornada)),
         DefaultProperty("Tipo")]
     [ImageName("ParametroJornada")]
+    [CreatableItem(false)]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class ParametroJornada : XPObject

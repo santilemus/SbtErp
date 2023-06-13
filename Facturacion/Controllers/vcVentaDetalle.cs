@@ -8,6 +8,7 @@ using SBT.Apps.Facturacion.Module.BusinessObjects;
 using System;
 using System.Linq;
 using DevExpress.ExpressApp.Model;
+using SBT.Apps.Producto.Module.BusinessObjects;
 
 namespace SBT.Apps.Facturacion.Module.Controllers
 {
@@ -40,7 +41,10 @@ namespace SBT.Apps.Facturacion.Module.Controllers
 
         private void PwsaSeleccionarPrecio_Execute(object sender, PopupWindowShowActionExecuteEventArgs e)
         {
-            throw new NotImplementedException();
+            if (e.PopupWindowViewCurrentObject != null)
+            {
+                (View.CurrentObject as VentaDetalle).PrecioUnidad = (e.PopupWindowViewCurrentObject as ProductoPrecio).PrecioUnitario;
+            }
         }
 
         private void PwsaSeleccionarPrecio_CustomizePopupWindowParams(object sender, CustomizePopupWindowParamsEventArgs e)
@@ -113,8 +117,6 @@ namespace SBT.Apps.Facturacion.Module.Controllers
             }
             if (View.CurrentObject == e.Object && e.PropertyName == "Cantidad" && ObjectSpace.IsNewObject(View.CurrentObject))
             { 
-                if (e.NewValue == null)
-                    return;
                 var itemVenta = ((VentaDetalle)View.CurrentObject);
                 if (itemVenta.Producto.Categoria.Clasificacion >= Producto.Module.BusinessObjects.EClasificacion.Servicios || 
                     itemVenta.Producto.Categoria.MetodoCosteo == Producto.Module.BusinessObjects.EMetodoCosteoInventario.Ninguno ||

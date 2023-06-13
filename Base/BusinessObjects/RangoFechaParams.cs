@@ -15,6 +15,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
 {
     [DomainComponent]
     [DefaultClassOptions, NavigationItem(false), ModelDefault("Caption", "Rango de Fechas")]
+    [CreatableItem(false)]
     //[ImageName("BO_Unknown")]
     //[DefaultProperty("SampleProperty")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
