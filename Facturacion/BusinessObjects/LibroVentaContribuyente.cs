@@ -1,17 +1,9 @@
-﻿using DevExpress.Data.Filtering;
-using DevExpress.ExpressApp;
-using DevExpress.ExpressApp.DC;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
-using DevExpress.Persistent.BaseImpl;
-using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Facturacion.Module.BusinessObjects;
 using SBT.Apps.CxC.Module.BusinessObjects;
 
@@ -21,7 +13,7 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
     /// BO que corresponde al libro de Ventas a Contribuyentes (IVA)
     /// </summary>
     [DefaultClassOptions, ModelDefault("Caption", "Libro Ventas Contribuyente"), NavigationItem("Contabilidad")]
-    [DefaultProperty(nameof(Numero)), CreatableItem(false)]
+    [DefaultProperty(nameof(Numero)), CreatableItem(false), VisibleInReports(true), VisibleInDashboards(true)]
     [Persistent(nameof(LibroVentaContribuyente))]
     //[ImageName("BO_Contact")]
     //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
@@ -44,6 +36,8 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
 
         #region Propiedades
 
+        int correlativo;
+        [Persistent(nameof(Cerrado)), DbType("bit")]
         bool cerrado;
         string dui;
         decimal ivaRetenido;
@@ -68,6 +62,13 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
 
         [PersistentAlias(nameof(oid)), XafDisplayName("Oid")]
         public long Oid => oid;
+
+        [DbType("int"), XafDisplayName("Correlativo"), VisibleInListView(false)]
+        public int Correlativo
+        {
+            get => correlativo;
+            set => SetPropertyValue(nameof(Correlativo), ref correlativo, value);
+        }
 
         [DbType("datetime"), XafDisplayName("Fecha")]
         [ModelDefault("DisplayFormat", "dd/MM/yyyy")]
@@ -224,7 +225,7 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
         [XafDisplayName("No de Anexo"), PersistentAlias("1")]
         public string NumeroAnexo => Convert.ToString(EvaluateAlias(nameof(NumeroAnexo)));
 
-        [Persistent(nameof(Cerrado)), DbType("bit")]
+        [PersistentAlias(nameof(cerrado)), VisibleInListView(false)]
         public bool Cerrado
         {
             get => cerrado;

@@ -745,24 +745,30 @@
                 <LayoutItem Id="Fecha" CaptionLocation="Left" RelativeSize="4.9382716049382713" Index="0" />
                 <LayoutItem Id="ClaseDocumento" CaptionLocation="Left" RelativeSize="3.5665294924554183" Index="1" />
                 <LayoutItem Id="TipoDocumento" CaptionLocation="Left" RelativeSize="3.5665294924554183" Index="2" />
-                <LayoutItem Id="Numero" CaptionLocation="Left" RelativeSize="3.5665294924554183" Index="3" />
-                <LayoutItem Id="Nit" CaptionLocation="Left" RelativeSize="3.5665294924554183" Index="4" />
-                <LayoutItem Id="Proveedor" CaptionLocation="Left" RelativeSize="3.5665294924554183" Index="5" />
-                <LayoutItem Id="InternaExenta" CaptionLocation="Left" RelativeSize="3.5665294924554183" Index="6" />
-                <LayoutItem Id="InternacionExenta" CaptionLocation="Left" RelativeSize="3.5665294924554183" Index="7" />
-                <LayoutItem Id="ImportacionExenta" CaptionLocation="Left" RelativeSize="70.0960219478738" Index="8" />
+                <LayoutItem Id="Clase" RelativeSize="3.5665294924554183" />
+                <LayoutItem Id="Numero" CaptionLocation="Left" RelativeSize="3.5665294924554183" Index="4" />
+                <LayoutItem Id="Nit" CaptionLocation="Left" RelativeSize="3.5665294924554183" Index="5" />
+                <LayoutItem Id="Proveedor" CaptionLocation="Left" RelativeSize="3.5665294924554183" Index="6" />
+                <LayoutItem Id="InternaExenta" CaptionLocation="Left" RelativeSize="3.5665294924554183" Index="7" />
+                <LayoutItem Id="InternacionExenta" CaptionLocation="Left" RelativeSize="3.5665294924554183" Index="8" />
+                <LayoutItem Id="ImportacionExenta" CaptionLocation="Left" RelativeSize="3.5665294924554183" Index="9" />
+                <LayoutItem Id="InternaGravada" CaptionLocation="Left" Index="10" RelativeSize="3.5665294924554183" />
+                <LayoutItem Id="InternacionGravadaBien" CaptionLocation="Left" Index="11" RelativeSize="59.396433470507546" />
                 <LayoutItem Id="Oid" CaptionLocation="Left" RelativeSize="4.9382716049382713" Removed="True" />
               </LayoutGroup>
               <LayoutGroup Id="LibroCompra_col2" RelativeSize="50">
-                <LayoutItem Id="InternaGravada" CaptionLocation="Left" RelativeSize="4.9382716049382713" />
-                <LayoutItem Id="InternacionGravadaBien" CaptionLocation="Left" RelativeSize="3.5665294924554183" />
-                <LayoutItem Id="ImportacionGravadaBien" CaptionLocation="Left" RelativeSize="3.5665294924554183" />
+                <LayoutItem Id="ImportacionGravadaBien" CaptionLocation="Left" RelativeSize="4.9382716049382713" />
                 <LayoutItem Id="ImportacionGravadaServicio" CaptionLocation="Left" RelativeSize="3.5665294924554183" />
                 <LayoutItem Id="CreditoFiscal" CaptionLocation="Left" RelativeSize="3.5665294924554183" />
-                <LayoutItem Id="Total" CaptionLocation="Left" RelativeSize="3.5665294924554183" />
-                <LayoutItem Id="CompraExcluido" CaptionLocation="Left" RelativeSize="3.5665294924554183" />
-                <LayoutItem Id="CompraFactura" CaptionLocation="Left" RelativeSize="3.5665294924554183" />
-                <LayoutItem Id="NumeroAnexo" CaptionLocation="Left" Index="8" RelativeSize="70.0960219478738" />
+                <LayoutItem Id="Fovial" CaptionLocation="Left" Index="3" RelativeSize="3.5665294924554183" />
+                <LayoutItem Id="Cotrans" CaptionLocation="Left" RelativeSize="3.5665294924554183" Index="4" />
+                <LayoutItem Id="IvaPercibido" CaptionLocation="Left" Index="5" RelativeSize="3.5665294924554183" />
+                <LayoutItem Id="IvaRetenido" CaptionLocation="Left" Index="6" RelativeSize="3.5665294924554183" />
+                <LayoutItem Id="Total" CaptionLocation="Left" RelativeSize="3.5665294924554183" Index="7" />
+                <LayoutItem Id="CompraExcluido" CaptionLocation="Left" RelativeSize="3.5665294924554183" Index="8" />
+                <LayoutItem Id="CompraFactura" CaptionLocation="Left" RelativeSize="3.5665294924554183" Index="9" />
+                <LayoutItem Id="Dui" CaptionLocation="Left" Index="10" RelativeSize="3.5665294924554183" />
+                <LayoutItem Id="NumeroAnexo" CaptionLocation="Left" Index="11" RelativeSize="59.396433470507546" />
                 <LayoutItem Id="Cerrado" CaptionLocation="Left" Removed="True" />
               </LayoutGroup>
             </LayoutGroup>

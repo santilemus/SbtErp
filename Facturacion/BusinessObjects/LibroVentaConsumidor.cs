@@ -20,7 +20,7 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
     /// BO que corresponde al LIbro de Ventas a Consumidor Final (IVA)
     /// </summary>
     [DefaultClassOptions, ModelDefault("Caption", "Libro Ventas Consumidor"), NavigationItem("Contabilidad")]
-    [DefaultProperty(nameof(Fecha)), CreatableItem(false)]
+    [DefaultProperty(nameof(Fecha)), CreatableItem(false), VisibleInReports(true), VisibleInDashboards(true)]
     [Persistent(nameof(LibroVentaConsumidor))]
     //[ImageName("BO_Contact")]
     //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
@@ -42,6 +42,8 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
 
         #region Propiedades
 
+        int correlativo;
+        [Persistent(nameof(Cerrado)), DbType("bit")]
         bool cerrado;
         AutorizacionDocumento autorizacionDocumento;
         decimal ventaTercero;
@@ -73,7 +75,14 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
             set => SetPropertyValue(nameof(Empresa), ref empresa, value);
         }
 
-        [DbType("datetime"), XafDisplayName("Fecha Emisión")]
+        [DbType("int"), XafDisplayName("Correlativo"), VisibleInListView(false)]
+        public int Correlativo
+        {
+            get => correlativo;
+            set => SetPropertyValue(nameof(Correlativo), ref correlativo, value);
+        }
+
+        [DbType("datetime"), XafDisplayName("Fecha")]
         [Indexed(nameof(AutorizacionDocumento), Name = "idxFechaEmisionAutorizacion_LibroCompra")]
         public DateTime Fecha
         {
@@ -98,28 +107,28 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
             set => SetPropertyValue(nameof(TipoDocumento), ref tipoDocumento, value);
         }
 
-        [Size(14), DbType("varchar(14)"), XafDisplayName("No Control Interno Del")]
+        [Size(14), DbType("varchar(14)"), XafDisplayName("Control Interno Del")]
         public string NoControlInternoDel
         {
             get => noControlInternoDel;
             set => SetPropertyValue(nameof(NoControlInternoDel), ref noControlInternoDel, value);
         }
 
-        [Size(14), DbType("varchar(14)"), XafDisplayName("No Control Interno Al")]
+        [Size(14), DbType("varchar(14)"), XafDisplayName("Control Interno Al")]
         public string NoControlInternoAl
         {
             get => noControlInternoAl;
             set => SetPropertyValue(nameof(NoControlInternoAl), ref noControlInternoAl, value);
         }
 
-        [Size(14), DbType("varchar(14)"), XafDisplayName("No Documento Del")]
+        [Size(14), DbType("varchar(14)"), XafDisplayName("Documento Del")]
         public string NoDocumentoDel
         {
             get => noDocumentoDel;
             set => SetPropertyValue(nameof(NoDocumentoDel), ref noDocumentoDel, value);
         }
 
-        [Size(14), DbType("varchar(14)"), XafDisplayName("No Documento Al")]
+        [Size(14), DbType("varchar(14)"), XafDisplayName("Documento Al")]
         public string NoDocumentoAl
         {
             get => noDocumentoAl;
@@ -133,7 +142,7 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
             set => SetPropertyValue(nameof(Exenta), ref exenta, value);
         }
 
-        [DbType("numeric(14,2)"), XafDisplayName("Venta Interna Exenta")]
+        [DbType("numeric(14,2)"), XafDisplayName("Interna Exenta")]
         [ToolTip("Ventas internas exentas no sujetas a proporcionalidad")]
         public decimal InternaExenta
         {
@@ -141,14 +150,14 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
             set => SetPropertyValue(nameof(InternaExenta), ref internaExenta, value);
         }
 
-        [DbType("numeric(14,2)"), XafDisplayName("Venta No Sujeta")]
+        [DbType("numeric(14,2)"), XafDisplayName("No Sujeta")]
         public decimal NoSujeta
         {
             get => noSujeta;
             set => SetPropertyValue(nameof(NoSujeta), ref noSujeta, value);
         }
 
-        [DbType("numeric(14,2)"), XafDisplayName("Venta Gravada Local")]
+        [DbType("numeric(14,2)"), XafDisplayName("Gravada Local")]
         public decimal GravadaLocal
         {
             get => gravadaLocal;
@@ -176,14 +185,14 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
             set => SetPropertyValue(nameof(ExportacionServicio), ref exportacionServicio, value);
         }
 
-        [DbType("numeric(14,2)"), XafDisplayName("Venta Zona Franca")]
+        [DbType("numeric(14,2)"), XafDisplayName("Zona Franca")]
         public decimal VentaZonaFranca
         {
             get => ventaZonaFranca;
             set => SetPropertyValue(nameof(VentaZonaFranca), ref ventaZonaFranca, value);
         }
 
-        [DbType("numeric(14,2)"), XafDisplayName("Venta Tercero No Domiciliado")]
+        [DbType("numeric(14,2)"), XafDisplayName("Tercero No Domiciliado")]
         public decimal VentaTercero
         {
             get => ventaTercero;
@@ -191,18 +200,14 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
         }
 
         [DbType("numeric(14,2)"), XafDisplayName("Total Venta"),
-            PersistentAlias("[Exenta] + [NoSujeta] + [GravadaLocal] + [ExportacionCA] + [ExportacionFueraCA] + [ExportacionServicio] + [VentaZonaFranca] + [VentaTerceroNoDomiciliado]")]
+            PersistentAlias("[Exenta] + [NoSujeta] + [GravadaLocal] + [ExportacionCA] + [ExportacionFueraCA] + [ExportacionServicio] + [VentaZonaFranca] + [VentaTercero]")]
         public decimal Total => Convert.ToDecimal(EvaluateAlias(nameof(Total)));
 
         [XafDisplayName("No de Anexo"), PersistentAlias("2")]
         public string NumeroAnexo => Convert.ToString(EvaluateAlias(nameof(NumeroAnexo)));
 
-        [DbType("bit"), XafDisplayName("Cerrado"), Browsable(false)]
-        public bool Cerrado
-        {
-            get => cerrado;
-            set => SetPropertyValue(nameof(Cerrado), ref cerrado, value);
-        }
+        [XafDisplayName("Cerrado"), VisibleInListView(false), PersistentAlias(nameof(cerrado))]
+        public bool Cerrado => cerrado;
 
 
         #endregion

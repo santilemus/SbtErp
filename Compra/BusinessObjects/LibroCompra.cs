@@ -22,7 +22,7 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
     [DefaultClassOptions, ModelDefault("Caption", "Libro Compras"), NavigationItem("Contabilidad")]
     [DefaultProperty(nameof(Numero))]
     [Persistent(nameof(LibroCompra))]
-    [CreatableItem(false)]
+    [CreatableItem(false), VisibleInReports(true), VisibleInDashboards(true)]
     //[ImageName("BO_Contact")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
@@ -43,7 +43,13 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
 
         #region Propiedades
 
+
+        decimal ivaRetenido;
+        decimal ivaPercibido;
+        decimal cotrans;
+        decimal fovial;
         string dui;
+        [Persistent(nameof(Cerrado)), DbType("bit")]
         bool cerrado;
         decimal compraExcluido;
         Tercero.Module.BusinessObjects.Tercero proveedor;
@@ -61,11 +67,19 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
         string tipoDocumento;
         EClaseDocumento claseDocumento;
         DateTime fecha;
+        int correlativo;
         [Persistent(nameof(Oid)), DbType("bigint"), Key(true)]
         long oid;
 
         [PersistentAlias(nameof(oid)), XafDisplayName("Oid")]
         public long Oid => oid;
+
+        [DbType("int"), XafDisplayName("Correlativo"), VisibleInListView(false), VisibleInDetailView(false)]
+        public int Correlativo
+        {
+            get => correlativo;
+            set => SetPropertyValue(nameof(Correlativo), ref correlativo, value);
+        }
 
         [DbType("datetime"), XafDisplayName("Fecha Emisión")]
         [ModelDefault("DisplayFormat", "dd/MM/yyyy")]
@@ -190,7 +204,7 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
             set => SetPropertyValue(nameof(CompraFactura), ref compraFactura, value);
         }
 
-        
+
         [Size(9), DbType("varchar(9)"), XafDisplayName("Dui")]
         public string Dui
         {
@@ -198,7 +212,35 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
             set => SetPropertyValue(nameof(Dui), ref dui, value);
         }
 
-        [Persistent(nameof(Cerrado)), DbType("bit"), VisibleInListView(false)]
+        [DbType("numeric(14,2)"), VisibleInListView(false), XafDisplayName("Fovial")]
+        public decimal Fovial
+        {
+            get => fovial;
+            set => SetPropertyValue(nameof(Fovial), ref fovial, value);
+        }
+
+        [DbType("numeric(14,2)"), VisibleInListView(false), XafDisplayName("Cotrans")]
+        public decimal Cotrans
+        {
+            get => cotrans;
+            set => SetPropertyValue(nameof(Cotrans), ref cotrans, value);
+        }
+
+        [DbType("numeric(14,2)"), VisibleInListView(false), XafDisplayName("Iva Percbido")]
+        public decimal IvaPercibido
+        {
+            get => ivaPercibido;
+            set => SetPropertyValue(nameof(IvaPercibido), ref ivaPercibido, value);
+        }
+
+        [DbType("numeric(14,2)"), VisibleInListView(false), XafDisplayName("Iva Retenido")]
+        public decimal IvaRetenido
+        {
+            get => ivaRetenido;
+            set => SetPropertyValue(nameof(IvaRetenido), ref ivaRetenido, value);
+        }
+
+        [VisibleInListView(false), PersistentAlias(nameof(cerrado))]
         public bool Cerrado
         {
             get => cerrado;
@@ -206,6 +248,9 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
 
         [XafDisplayName("No de Anexo"), PersistentAlias("3")]
         public string NumeroAnexo => Convert.ToString(EvaluateAlias(nameof(NumeroAnexo)));
+
+        [XafDisplayName("Mes"), VisibleInListView(false), VisibleInDetailView(false)]
+        public string Mes => string.Format("{0:MM-yyyy}", Fecha);
 
         #endregion
 
