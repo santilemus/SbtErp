@@ -37,6 +37,7 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
         {
             base.AfterConstruction();
             oid = -1;
+            cerrado = false;
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
@@ -84,6 +85,7 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
 
         [DbType("datetime"), XafDisplayName("Fecha")]
         [Indexed(nameof(AutorizacionDocumento), Name = "idxFechaEmisionAutorizacion_LibroCompra")]
+        [ModelDefault("DisplayFormat", "dd/MM/yyyy")]
         public DateTime Fecha
         {
             get => fecha;
@@ -93,7 +95,7 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
         /// <summary>
         /// Para relacionar con AutorizacionDocumento y obtener de alli: ClaseDocumento, NoResolucion, NoSerie, NoCaja
         /// </summary>
-        [XafDisplayName("Autorización Documento")]
+        [XafDisplayName("Autorización Documento"), VisibleInListView(false)]
         public AutorizacionDocumento AutorizacionDocumento
         {
             get => autorizacionDocumento;
@@ -136,6 +138,7 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
         }
 
         [DbType("numeric(14,2)"), XafDisplayName("Venta Exenta")]
+        [ModelDefault("DisplayFormat", "F2")]
         public decimal Exenta
         {
             get => exenta;
@@ -144,6 +147,7 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
 
         [DbType("numeric(14,2)"), XafDisplayName("Interna Exenta")]
         [ToolTip("Ventas internas exentas no sujetas a proporcionalidad")]
+        [ModelDefault("DisplayFormat", "F2")]
         public decimal InternaExenta
         {
             get => internaExenta;
@@ -151,6 +155,7 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
         }
 
         [DbType("numeric(14,2)"), XafDisplayName("No Sujeta")]
+        [ModelDefault("DisplayFormat", "F2")]
         public decimal NoSujeta
         {
             get => noSujeta;
@@ -158,6 +163,7 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
         }
 
         [DbType("numeric(14,2)"), XafDisplayName("Gravada Local")]
+        [ModelDefault("DisplayFormat", "F2")]
         public decimal GravadaLocal
         {
             get => gravadaLocal;
@@ -165,6 +171,7 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
         }
 
         [DbType("numeric(14,2)"), XafDisplayName("Exportación CA")]
+        [ModelDefault("DisplayFormat", "F2")]
         public decimal ExportacionCA
         {
             get => exportacionCA;
@@ -172,6 +179,7 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
         }
 
         [DbType("numeric(14,2)"), XafDisplayName("Exportación Fuera CA")]
+        [ModelDefault("DisplayFormat", "F2")]
         public decimal ExportacionFueraCA
         {
             get => exportacionFueraCA;
@@ -179,6 +187,7 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
         }
 
         [DbType("numeric(14,2)"), XafDisplayName("Exportación Servicio")]
+        [ModelDefault("DisplayFormat", "F2")]
         public decimal ExportacionServicio
         {
             get => exportacionServicio;
@@ -186,6 +195,7 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
         }
 
         [DbType("numeric(14,2)"), XafDisplayName("Zona Franca")]
+        [ModelDefault("DisplayFormat", "F2")]
         public decimal VentaZonaFranca
         {
             get => ventaZonaFranca;
@@ -193,6 +203,7 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
         }
 
         [DbType("numeric(14,2)"), XafDisplayName("Tercero No Domiciliado")]
+        [ModelDefault("DisplayFormat", "F2")]
         public decimal VentaTercero
         {
             get => ventaTercero;
@@ -201,6 +212,7 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
 
         [DbType("numeric(14,2)"), XafDisplayName("Total Venta"),
             PersistentAlias("[Exenta] + [NoSujeta] + [GravadaLocal] + [ExportacionCA] + [ExportacionFueraCA] + [ExportacionServicio] + [VentaZonaFranca] + [VentaTercero]")]
+        [ModelDefault("DisplayFormat", "F2")]
         public decimal Total => Convert.ToDecimal(EvaluateAlias(nameof(Total)));
 
         [XafDisplayName("No de Anexo"), PersistentAlias("2")]
@@ -208,6 +220,9 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
 
         [XafDisplayName("Cerrado"), VisibleInListView(false), PersistentAlias(nameof(cerrado))]
         public bool Cerrado => cerrado;
+
+        [XafDisplayName("Clase"), VisibleInListView(true)]
+        public int Clase => (int)AutorizacionDocumento.Clase;
 
 
         #endregion

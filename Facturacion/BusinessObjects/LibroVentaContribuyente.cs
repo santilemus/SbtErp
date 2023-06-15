@@ -231,7 +231,7 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
             get => cerrado;
         }
 
-        [XafDisplayName("Clase"), VisibleInListView(true)]
+        [XafDisplayName("Clase"), VisibleInListView(true), VisibleInDetailView(false)]
         public int Clase => (int)AutorizacionDocumento.Clase;
 
         #endregion
