@@ -125,15 +125,6 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
             set => SetPropertyValue(nameof(NombreCorto), ref nombreCorto, value);
         }
 
-        [DbType("varchar(8)"), Persistent("UnidadMedida")]
-        [Size(8), XafDisplayName("Unidad Medida")]
-        [RuleRequiredField("Producto.UnidadMedida_Requerido", "Save", TargetCriteria = "[Categoria.Clasificacion] < 4"), VisibleInLookupListView(false)]
-        public string UnidadMedida
-        {
-            get => unidadMedida;
-            set => SetPropertyValue(nameof(UnidadMedida), ref unidadMedida, value);
-        }
-
         [Association("Presentacion-Productos"), XafDisplayName("Presentación"), Persistent("Presentacion"), VisibleInListView(false)]
         [ExplicitLoading]
         public Presentacion Presentacion
@@ -163,7 +154,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
             set => SetPropertyValue(nameof(CantMaxima), ref cantMaxima, value);
         }
 
-        [DbType("numeric(14, 6)"), XafDisplayName("Costo Promedio")]
+        [DbType("numeric(14, 6)"), XafDisplayName("Costo Promedio"), ModelDefault("DisplayFormat", "{0:N6}"), ModelDefault("EditMask", "n6")]
         [RuleValueComparison("Producto.CostoPromedio >= 0", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual, 0.0,
             TargetCriteria = "[Categoria.Clasificacion] < 4 && [Activo] == true", CustomMessageTemplate = "El costo promedio debe ser mayor o igual a cero")]
         public decimal CostoPromedio

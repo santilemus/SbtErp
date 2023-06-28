@@ -207,12 +207,14 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
                 OnChanged(nameof(CodigoBarra));
             }
             fProdChanged = false;
-            if (Producto.Precios.Count > 0)
+            if (PrecioUnidad == 0.0m && Producto.Precios.Count > 0)
             {
-                decimal pu = Producto.Precios.FirstOrDefault<ProductoPrecio>(p => p.Producto.Oid == Producto.Oid &&
-                             p.Tipo.Categoria == CategoriaLista.TipoPrecio && p.Tipo.Codigo == "TPR001" && p.Activo == true).PrecioUnitario;
-                if (PrecioUnidad == 0.0m)
-                    PrecioUnidad = pu;                
+                var pu = Producto.Precios.FirstOrDefault<ProductoPrecio>(p => p.Producto.Oid == Producto.Oid &&
+                             p.Tipo.Categoria == CategoriaLista.TipoPrecio && p.Tipo.Codigo == "TPR001" && p.Activo == true);
+                if (pu == null)
+                    pu = Producto.Precios.FirstOrDefault<ProductoPrecio>(p => p.Producto.Oid == Producto.Oid && p.Activo == true);
+                if (pu != null)
+                    PrecioUnidad = pu.PrecioUnitario;               
             }
             Costo = ObtenerCosto();
             OnChanged(nameof(Costo));

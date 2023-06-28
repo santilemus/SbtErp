@@ -234,6 +234,9 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
         [XafDisplayName("Clase"), VisibleInListView(true), VisibleInDetailView(false)]
         public int Clase => (int)AutorizacionDocumento.Clase;
 
+        [XafDisplayName("Mes"), VisibleInListView(false), VisibleInDetailView(false)]
+        public string Mes => string.Format("{0:MM-yyyy}", Fecha);
+
         #endregion
 
         //[Action(Caption = "My UI Action", ConfirmationMessage = "Are you sure?", ImageName = "Attention", AutoCommit = true)]

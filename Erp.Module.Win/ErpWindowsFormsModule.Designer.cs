@@ -36,6 +36,7 @@
             this.RequiredModuleTypes.Add(typeof(SBT.Apps.Empleado.Module.EmpleadoModule));
             this.RequiredModuleTypes.Add(typeof(SBT.Apps.Producto.Module.ProductoModule));
             this.RequiredModuleTypes.Add(typeof(SBT.Apps.Contabilidad.ContabilidadModule));
+            this.RequiredModuleTypes.Add(typeof(DevExpress.ExpressApp.Dashboards.Win.DashboardsWindowsFormsModule));
 
         }
 

@@ -202,7 +202,8 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
             set => SetPropertyValue(nameof(VentaZonaFranca), ref ventaZonaFranca, value);
         }
 
-        [DbType("numeric(14,2)"), XafDisplayName("Tercero No Domiciliado")]
+        [DbType("numeric(14,2)"), XafDisplayName("Venta Tercero")]
+        [ToolTip("Ventas a terceros no domiciliados")]
         [ModelDefault("DisplayFormat", "F2")]
         public decimal VentaTercero
         {
@@ -224,6 +225,8 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
         [XafDisplayName("Clase"), VisibleInListView(true)]
         public int Clase => (int)AutorizacionDocumento.Clase;
 
+        [XafDisplayName("Mes"), VisibleInListView(false), VisibleInDetailView(false)]
+        public string Mes => string.Format("{0:MM-yyyy}", Fecha);
 
         #endregion
 

@@ -301,9 +301,7 @@ namespace SBT.Apps.Facturacion.Module.Controllers
             if (vta != null && printController != null)
             {
                 if (vta.AutorizacionDocumento != null && vta.AutorizacionDocumento.Reporte != null)
-                {
                     DeleteFromShowInReportAction(vta);
-                }
             }
         } 
 
@@ -311,10 +309,9 @@ namespace SBT.Apps.Facturacion.Module.Controllers
         {
             for (int i = printController.ShowInReportAction.Items.Count - 1; i >= 0; i--)
             {
-                if ((printController.ShowInReportAction.Items[i].Caption.IndexOf("Impresión") >= 0 || 
-                     printController.ShowInReportAction.Items[i].Caption.IndexOf("Print") >= 0) &&
-                     printController.ShowInReportAction.Items[i].Caption != vta.AutorizacionDocumento.Reporte.DisplayName)
-                    printController.ShowInReportAction.Items.RemoveAt(i);
+                var item = printController.ShowInReportAction.Items[i].Data;
+                if (item != null)
+                    printController.ShowInReportAction.Items[i].Active["activo"] = (item as ReportDataInfo).DisplayName == vta.AutorizacionDocumento.Reporte.DisplayName;
             }
         }
 

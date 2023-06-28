@@ -45,6 +45,7 @@
             this.RequiredModuleTypes.Add(typeof(SBT.Apps.Facturacion.Module.FacturacionModule));
             this.RequiredModuleTypes.Add(typeof(SBT.Apps.Compra.CompraModule));
             this.RequiredModuleTypes.Add(typeof(SBT.Apps.Activo.ActivoModule));
+            this.RequiredModuleTypes.Add(typeof(DevExpress.ExpressApp.Dashboards.DashboardsModule));
 
 		}
 
