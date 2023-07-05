@@ -17,7 +17,7 @@ using SBT.Apps.Empleado.Module.BusinessObjects;
 namespace SBT.Apps.Banco.Module.BusinessObjects
 {
     /// <summary>
-    /// Bancos. BO para definir la parametrizacion de la caja chica
+    /// Bancos. BO para definir la parametrizacion de la caja chica 
     /// </summary>
 
     [DefaultClassOptions, ModelDefault("Caption", "Parámetros Caja Chica"), NavigationItem("Banco"), Persistent(nameof(CajaChica))]

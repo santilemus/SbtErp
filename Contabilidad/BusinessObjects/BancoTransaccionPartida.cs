@@ -6,7 +6,7 @@ using SBT.Apps.Banco.Module.BusinessObjects;
 using System;
 using System.Linq;
 
-namespace SBT.Apps.Contabilidad.Module.BusinessObjects
+namespace SBT.Apps.Contabilidad.Module.BusinessObjects 
 {
     [DefaultClassOptions, ModelDefault("Caption", "BancoTransaccion - Partida"), NavigationItem(false), CreatableItem(false),
         ]

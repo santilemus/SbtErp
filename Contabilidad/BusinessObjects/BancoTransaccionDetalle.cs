@@ -12,7 +12,7 @@ using System.Linq;
 namespace SBT.Apps.Banco.Module.BusinessObjects
 {
     /// <summary>
-    /// Bancos. BO para el vaucher o detalle de una transacción de bancos
+    /// Bancos. BO para el vaucher o detalle de una transacción de bancos 
     /// </summary>
 
     [ModelDefault("Caption", "Detalle Transacción Bancaria"), Persistent(nameof(BancoTransaccionDetalle)), NavigationItem(false), CreatableItem(false),

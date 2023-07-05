@@ -5,15 +5,13 @@ using DevExpress.Persistent.BaseImpl;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
-using System;
 using System.ComponentModel;
-using System.Linq;
 
 namespace SBT.Apps.Contabilidad.Module.BusinessObjects
 {
     [DefaultClassOptions, ModelDefault("Caption", "Estado Financiero Modelo"), DefaultProperty(nameof(Nombre)), NavigationItem("Contabilidad")]
     [Persistent(nameof(EstadoFinancieroModelo)), CreatableItem(false)]
-    //[ImageName("BO_Contact")]
+    //[ImageName("BO_Contact")] 
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class EstadoFinancieroModelo : XPObjectCustom
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).

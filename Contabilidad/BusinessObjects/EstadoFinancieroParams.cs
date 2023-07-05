@@ -12,7 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SBT.Apps.Contabilidad.Module.BusinessObjects
+namespace SBT.Apps.Contabilidad.Module.BusinessObjects 
 {
     [DomainComponent]
     [ModelDefault("Caption", "Generar Estado Financiero - Parámetros")]

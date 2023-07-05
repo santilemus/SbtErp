@@ -9,7 +9,6 @@ using SBT.Apps.Base.Module.BusinessObjects;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using DevExpress.ExpressApp.Model;
 
 namespace SBT.Apps.Contabilidad.Module.BusinessObjects

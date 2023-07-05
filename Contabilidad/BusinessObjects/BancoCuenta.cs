@@ -19,7 +19,7 @@ using DevExpress.ExpressApp.ConditionalAppearance;
 namespace SBT.Apps.Banco.Module.BusinessObjects
 {
     /// <summary>
-    /// Bancos. BO para las cuentas bancarias
+    /// Bancos. BO para las cuentas bancarias 
     /// </summary>
     [DefaultClassOptions, ModelDefault("Caption", "Cuenta Bancaria"), NavigationItem("Banco"), Persistent(nameof(BancoCuenta)), 
         DefaultProperty(nameof(Numero))]

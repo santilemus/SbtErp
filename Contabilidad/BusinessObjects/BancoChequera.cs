@@ -11,7 +11,7 @@ using System.Linq;
 namespace SBT.Apps.Banco.Module.BusinessObjects
 {
     /// <summary>
-    /// Bancos. BO para las chequeras correspondientes a las cuentas bancarias de las cuales se emiten cheques
+    /// Bancos. BO para las chequeras correspondientes a las cuentas bancarias de las cuales se emiten  
     /// </summary>
     /// 
     [ModelDefault("Caption", "Chequera"), NavigationItem(false), Persistent(nameof(BancoChequera)), CreatableItem(false)]

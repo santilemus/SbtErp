@@ -14,7 +14,7 @@ using DevExpress.Persistent.Validation;
 namespace SBT.Apps.Contabilidad.Module.BusinessObjects
 {
     /// <summary>
-    /// BO para los parametros del cierre de mes
+    /// BO para los parametros del cierre de mes 
     /// </summary>
     [DomainComponent]
     [DefaultClassOptions, ModelDefault("Caption", "Cierre de Mes"), NavigationItem("Contabilidad")]

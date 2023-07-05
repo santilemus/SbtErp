@@ -17,7 +17,7 @@ using SBT.Apps.Tercero.Module.BusinessObjects;
 namespace SBT.Apps.Banco.Module.BusinessObjects
 {
     /// <summary>
-    /// Bancos. BO para el detalle de las transacciones de caja chica
+    /// Bancos. BO para el detalle de las transacciones de caja chica 
     /// </summary>
     [ModelDefault("Caption", "Caja Chica - Transacción Detalle"), NavigationItem(false), CreatableItem(false),
         Persistent(nameof(CajaChicaTransaccionDetalle)), DefaultProperty("Proveedor")]

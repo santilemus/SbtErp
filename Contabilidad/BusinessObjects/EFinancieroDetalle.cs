@@ -4,14 +4,10 @@ using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using DevExpress.Xpo;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SBT.Apps.Contabilidad.Module.BusinessObjects
 {
-    [DomainComponent]
+    [DomainComponent] 
     [DefaultClassOptions]
     [VisibleInReports]
     [ModelDefault("Caption", "EFinancieroDetalle"), NavigationItem(false), CreatableItem(false)]

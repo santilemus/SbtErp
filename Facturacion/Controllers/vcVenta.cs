@@ -56,7 +56,6 @@ namespace SBT.Apps.Facturacion.Module.Controllers
 
             pwsaAnular.Execute += PwsaAnular_Execute;
             pwsaAnular.CustomizePopupWindowParams += PwsaAnular_CustomizePopupWindowParams;
-
         }
 
         protected override void OnDeactivated()

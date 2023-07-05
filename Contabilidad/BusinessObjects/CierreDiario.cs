@@ -13,7 +13,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
 {
     /// <summary>
     /// Contabilidad.
-    /// BO que contiene el control de los cierres diarios
+    /// BO que contiene el control de los cierres diarios 
     /// </summary>
     [DefaultClassOptions, NavigationItem(false), ModelDefault("Caption", "Cierre Diario"), DefaultProperty("FechaCierre")]
     [Persistent("ConCierre")]

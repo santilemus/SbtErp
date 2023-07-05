@@ -73,7 +73,6 @@ namespace SBT.Apps.Facturacion.Module.Controllers
             if (newController != null)
             {
                 newController.ObjectCreating += NewController_ObjectCreating;
-                //    newController.ObjectCreated += NewController_ObjectCreated;
             }
             pwsaSeleccionarPrecio.CustomizePopupWindowParams += PwsaSeleccionarPrecio_CustomizePopupWindowParams;
             pwsaSeleccionarPrecio.Execute += PwsaSeleccionarPrecio_Execute;
@@ -158,17 +157,27 @@ namespace SBT.Apps.Facturacion.Module.Controllers
 
         private void NewController_ObjectCreating(object sender, ObjectCreatingEventArgs e)
         {
-            if (ObjectSpace.ModifiedObjects.Count == 1 && ObjectSpace.IsNewObject(ObjectSpace.ModifiedObjects[0]))
+            if (((VentaDetalle)e.NewObject).Venta.Cliente == null)
+            {
+                Application.ShowViewStrategy.ShowMessage(@"Debe seleccionar en el encabezado del documento de venta al cliente", InformationType.Error);
+                e.Cancel = true;
+                return;
+            }
+            DoValidateVenta(e.ObjectSpace);
+        }
+
+        private void DoValidateVenta(IObjectSpace os)
+        {
+            if (os.ModifiedObjects.Count == 1 && os.IsNewObject(os.ModifiedObjects[0]))
             {
                 try
                 {
-                    Validator.RuleSet.Validate(e.ObjectSpace, ObjectSpace.ModifiedObjects[0], ContextIdentifier.Save);
+                    Validator.RuleSet.Validate(os, os.ModifiedObjects[0], ContextIdentifier.Save);
                 }
                 catch
                 {
                     // evaluar que esto funcione bien en plataforma web
                     MostrarError("Debe ingresar los datos requeridos del encabezado del documento, antes de ingresar el detalle");
-                    e.Cancel = true;
                 }
             }
         }

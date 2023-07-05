@@ -17,7 +17,7 @@ using SBT.Apps.Base.Module.BusinessObjects;
 namespace SBT.Apps.Contabilidad.Module.BusinessObjects
 {
     /// <summary>
-    /// BO No Persistente para los parámetros del cierre contable diario
+    /// BO No Persistente para los parámetros del cierre contable diario 
     /// </summary>
     /// <remarks>
     /// PENDIENTE: Validar que los dias a cerrar correspondan a un periodo abierto y de la sesion actual.

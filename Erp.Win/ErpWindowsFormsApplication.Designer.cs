@@ -48,6 +48,12 @@
             this.productoModule1 = new SBT.Apps.Producto.Module.ProductoModule();
             this.contabilidadModule1 = new SBT.Apps.Contabilidad.ContabilidadModule();
             this.recursoHumanoModule1 = new SBT.Apps.RecursoHumano.RecursoHumanoModule();
+            this.officeModule1 = new DevExpress.ExpressApp.Office.OfficeModule();
+            this.facturacionModule1 = new SBT.Apps.Facturacion.Module.FacturacionModule();
+            this.compraModule1 = new SBT.Apps.Compra.CompraModule();
+            this.activoModule1 = new SBT.Apps.Activo.ActivoModule();
+            this.dashboardsModule1 = new DevExpress.ExpressApp.Dashboards.DashboardsModule();
+            this.dashboardsWindowsFormsModule1 = new DevExpress.ExpressApp.Dashboards.Win.DashboardsWindowsFormsModule();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             // 
             // securityStrategyComplex1
@@ -58,6 +64,10 @@
             this.securityStrategyComplex1.RoleType = typeof(DevExpress.Persistent.BaseImpl.PermissionPolicy.PermissionPolicyRole);
             this.securityStrategyComplex1.SupportNavigationPermissionsForTypes = false;
             this.securityStrategyComplex1.UserType = typeof(SBT.Apps.Base.Module.BusinessObjects.Usuario);
+            // 
+            // customAuthentication1
+            // 
+            this.customAuthentication1.UserLoginInfoType = null;
             // 
             // cloneObjectModule
             // 
@@ -91,6 +101,18 @@
             // 
             this.auditTrailModule1.AuditDataItemPersistentType = typeof(DevExpress.Persistent.BaseImpl.AuditDataItemPersistent);
             // 
+            // officeModule1
+            // 
+            this.officeModule1.RichTextMailMergeDataType = null;
+            // 
+            // dashboardsModule1
+            // 
+            this.dashboardsModule1.DashboardDataType = typeof(DevExpress.Persistent.BaseImpl.DashboardData);
+            // 
+            // dashboardsWindowsFormsModule1
+            // 
+            this.dashboardsWindowsFormsModule1.DesignerFormStyle = null;
+            // 
             // ErpWindowsFormsApplication
             // 
             this.ApplicationName = "SBT - Sistema Administrativo Financiero";
@@ -109,13 +131,19 @@
             this.Modules.Add(this.viewVariantsModule);
             this.Modules.Add(this.auditTrailModule1);
             this.Modules.Add(this.treeListEditorsModuleBase1);
+            this.Modules.Add(this.officeModule1);
             this.Modules.Add(this.baseModule1);
             this.Modules.Add(this.terceroModule1);
             this.Modules.Add(this.empleadoModule1);
             this.Modules.Add(this.productoModule1);
             this.Modules.Add(this.contabilidadModule1);
             this.Modules.Add(this.recursoHumanoModule1);
+            this.Modules.Add(this.facturacionModule1);
+            this.Modules.Add(this.compraModule1);
+            this.Modules.Add(this.activoModule1);
+            this.Modules.Add(this.dashboardsModule1);
             this.Modules.Add(this.erpModule1);
+            this.Modules.Add(this.dashboardsWindowsFormsModule1);
             this.Modules.Add(this.module4);
             this.Modules.Add(this.securityModule1);
             this.Security = this.securityStrategyComplex1;
@@ -153,5 +181,11 @@
         private SBT.Apps.Producto.Module.ProductoModule productoModule1;
         private SBT.Apps.Contabilidad.ContabilidadModule contabilidadModule1;
         private SBT.Apps.RecursoHumano.RecursoHumanoModule recursoHumanoModule1;
+        private DevExpress.ExpressApp.Office.OfficeModule officeModule1;
+        private Facturacion.Module.FacturacionModule facturacionModule1;
+        private Compra.CompraModule compraModule1;
+        private Activo.ActivoModule activoModule1;
+        private DevExpress.ExpressApp.Dashboards.DashboardsModule dashboardsModule1;
+        private DevExpress.ExpressApp.Dashboards.Win.DashboardsWindowsFormsModule dashboardsWindowsFormsModule1;
     }
 }

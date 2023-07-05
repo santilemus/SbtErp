@@ -14,7 +14,7 @@ using System.Linq;
 namespace SBT.Apps.Banco.Module.BusinessObjects
 {
     /// <summary>
-    /// Banco. BO para las transacciones de bancos
+    /// Banco. BO para las transacciones de bancos 
     /// </summary>
 
     [DefaultClassOptions, ModelDefault("Caption", "Transacción Bancaria"), NavigationItem("Banco"), Persistent(nameof(BancoTransaccion)),

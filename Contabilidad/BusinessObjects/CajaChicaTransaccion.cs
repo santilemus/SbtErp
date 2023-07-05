@@ -11,7 +11,7 @@ using System.Linq;
 namespace SBT.Apps.Banco.Module.BusinessObjects
 {
     /// <summary>
-    /// Bancos. BO para el registro de las transacciones de caja chica"
+    /// Bancos. BO para el registro de las transacciones de caja chica" 
     /// </summary>
     [DefaultClassOptions, ModelDefault("Caption", "Caja Chica - Transacciones"), NavigationItem("Banco"), Persistent(nameof(CajaChicaTransaccion)),
         DefaultProperty(nameof(FechaInicio))]

@@ -7,7 +7,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
     /// Enumeracion con los tipos de operacion en un detalle de partida, el cual indica si se debe considerar la 
     /// el objeto (registro) en la generacion de la consolidacion. Si se va a incluir, entonces como debe operararse,
     /// independiente de la naturaleza del asiento contable (normalmente va a ser la contrario)
-    /// </summary>
+    /// </summary> 
     public enum ETipoOperacionConsolidacion
     {
         [XafDisplayName("Ninguno")]

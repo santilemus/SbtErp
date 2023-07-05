@@ -17,7 +17,7 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
 {
     /// <summary>
     /// Bancos
-    /// BO que corresponde al encabezado de la conciliaciones bancarias
+    /// BO que corresponde al encabezado de la conciliaciones bancarias 
     /// </summary>
 
     [DefaultClassOptions, ModelDefault("Caption", "Conciliación"), NavigationItem("Banco"), DefaultProperty("Fecha"), 

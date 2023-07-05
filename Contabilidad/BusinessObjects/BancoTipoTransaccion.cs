@@ -12,7 +12,7 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
 {
     /// <summary>
     /// Bancos. BO Clasificacion de las transacciones de bancos, para tener una identificacion mas amplia que la proporcionada
-    /// por el enum EBancoTipoTransaccion
+    /// por el enum EBancoTipoTransaccion 
     /// </summary>
     [DefaultClassOptions, NavigationItem("Banco"), ModelDefault("Caption", "Clasificación Transacción"),
         Persistent(nameof(BancoTipoTransaccion)), DefaultProperty("Nombre")]

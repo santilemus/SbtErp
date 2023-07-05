@@ -12,7 +12,6 @@ using SBT.Apps.Base.Module.BusinessObjects;
 using System;
 using System.ComponentModel;
 using System.Drawing;
-using System.Linq;
 
 namespace SBT.Apps.Contabilidad.Module.BusinessObjects
 {
