@@ -1,19 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using DevExpress.Data.Filtering;
-using DevExpress.ExpressApp;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Persistent.Base;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
+using DevExpress.Persistent.Base;
 using DevExpress.Xpo;
-using DevExpress.Persistent.Validation;
+using System;
 
 namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
-{ 
+{
 
     [DomainComponent]
     [DefaultClassOptions]
@@ -27,7 +19,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 
         }
 
-        [Size(150), XafDisplayName("Comentario")]
+        [DevExpress.ExpressApp.DC.FieldSize(150), XafDisplayName("Comentario")]
         public String Comentario { get; set; }
 
     }

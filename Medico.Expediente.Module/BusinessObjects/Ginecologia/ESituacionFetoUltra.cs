@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-
-namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects.Ginecologia
+﻿namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects.Ginecologia
 {
     public enum ESituacionFetoUltra
     {

@@ -9,7 +9,6 @@ using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using System;
 using System.ComponentModel;
-using System.Linq;
 
 namespace SBT.Apps.Contabilidad.BusinessObjects
 {
@@ -25,11 +24,11 @@ namespace SBT.Apps.Contabilidad.BusinessObjects
     [ModelDefault("Caption", "Catálogo Contable"), NavigationItem("Contabilidad"), DefaultProperty(nameof(CodigoCuenta)), Persistent("ConCatalogo"),
         DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None),
         ListViewFilter("Catálogo de la Empresa de la Sesion", "Empresa.Oid = EmpresaActualOid()")]
-    [RuleCriteria("Catalogo [Padre] != [Cuenta]", DefaultContexts.Save, "[CodigoCuenta] != [Padre.CodigoCuenta]", 
+    [RuleCriteria("Catalogo [Padre] != [Cuenta]", DefaultContexts.Save, "[CodigoCuenta] != [Padre.CodigoCuenta]",
         "Codigo Cuenta debe ser diferente de Padre", TargetCriteria = "!IsNull([Padre])")]
     [RuleCriteria("Catalogo - Cuenta de Mayor", DefaultContexts.Save, "Len([CodigoCuenta]) == 4 && CtaMayor = True && [CtaResumen] == True",
         "Las cuentas de 4 digitdos deben ser De Resumen y de Mayor", ResultType = ValidationResultType.Warning, TargetCriteria = "Len([CodigoCuenta]) == 4")]
-    [RuleCombinationOfPropertiesIsUnique("Catalogo. EmpresaCuentaEspecial Unica", DefaultContexts.Save, "Empresa,CodigoCuenta,CuentaEspecial", 
+    [RuleCombinationOfPropertiesIsUnique("Catalogo. EmpresaCuentaEspecial Unica", DefaultContexts.Save, "Empresa,CodigoCuenta,CuentaEspecial",
         TargetCriteria = "[CuentaEspecial] > 0")]
     [Serializable]
 
@@ -206,7 +205,7 @@ namespace SBT.Apps.Contabilidad.BusinessObjects
 #endif
         [XafDisplayName("Cuenta Especial"), Index(10), VisibleInListView(false)]
         [ToolTip("Es cuenta especial, cuando se trata de una cuenta clave para la liquidacion o cierre del ejercicio, Solo son de detalle")]
-        [Appearance("Catalogo.CuentaEspecial Visible", AppearanceItemType = "ViewItem", Criteria = "[CtaResumen] == False", 
+        [Appearance("Catalogo.CuentaEspecial Visible", AppearanceItemType = "ViewItem", Criteria = "[CtaResumen] == False",
             Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Show)]
         public ECuentaEspecial CuentaEspecial
         {
@@ -214,11 +213,11 @@ namespace SBT.Apps.Contabilidad.BusinessObjects
             set => SetPropertyValue(nameof(CuentaEspecial), ref cuentaEspecial, value);
         }
 
-        
+
         [Size(150), DbType("varchar(150)"), XafDisplayName("Concepto"), VisibleInListView(false), Index(11)]
         [ToolTip("Concepto predefinido cuando se trata de una cuenta especial")]
-        [Appearance("Catalogo.CuentaEspecial Concepto Visible", AppearanceItemType = "ViewItem", Criteria = "[CuentaEspecial] > 0", 
-            Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Show )]
+        [Appearance("Catalogo.CuentaEspecial Concepto Visible", AppearanceItemType = "ViewItem", Criteria = "[CuentaEspecial] > 0",
+            Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Show)]
         public string Concepto
         {
             get => concepto;

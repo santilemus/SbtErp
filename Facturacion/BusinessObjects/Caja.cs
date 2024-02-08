@@ -5,7 +5,6 @@ using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using System;
 using System.ComponentModel;
-using System.Linq;
 
 namespace SBT.Apps.Facturacion.Module.BusinessObjects
 {
@@ -51,7 +50,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             set => SetPropertyValue(nameof(NoCaja), ref noCaja, value);
         }
 
-        
+
         [Size(60), DbType("varchar(60)"), XafDisplayName("Descripción"), Index(1), VisibleInListView(false)]
         public string Descripcion
         {
@@ -72,7 +71,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             get => noSerie;
             set => SetPropertyValue(nameof(NoSerie), ref noSerie, value);
         }
-        [Size(25), DbType("varchar(25)"), Persistent(nameof(NoAutorizacion)), XafDisplayName("No Autorización"), Index(4), 
+        [Size(25), DbType("varchar(25)"), Persistent(nameof(NoAutorizacion)), XafDisplayName("No Autorización"), Index(4),
             VisibleInLookupListView(true)]
         public string NoAutorizacion
         {
@@ -94,7 +93,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             set => SetPropertyValue(nameof(Activa), ref activa, value);
         }
 
-        [Size(100), DbType("varchar(100)"), XafDisplayName("Comentario"), Persistent(nameof(Comentario)), Index(7), 
+        [Size(100), DbType("varchar(100)"), XafDisplayName("Comentario"), Persistent(nameof(Comentario)), Index(7),
             VisibleInListView(false)]
         public string Comentario
         {

@@ -1,8 +1,8 @@
-﻿using System;
-using System.Net.NetworkInformation;
-using Microsoft.SqlServer.Server;
+﻿using Microsoft.Data.SqlClient.Server;
+using System;
 using System.Data.SqlTypes;
-using System.Security;
+using System.Net.NetworkInformation;
+using System.Security.Permissions;
 
 namespace SBT.Apps.Utils
 {
@@ -10,8 +10,8 @@ namespace SBT.Apps.Utils
     {
         [SqlFunction(DataAccess = DataAccessKind.None)]
         //[SecurityCritical()]
-        [NetworkInformationPermission(System.Security.Permissions.SecurityAction.Demand, Access = "Full", Unrestricted = true)]
-        public static  SqlString DoPing(SqlString host, SqlInt16 timeOut)
+        //[SecurityPermission(SecurityAction.Demand, ControlThread = true)]
+        public static SqlString DoPing(SqlString host, SqlInt16 timeOut)
         {
             Ping ping = null;
             PingReply rp = null;

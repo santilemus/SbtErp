@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using DevExpress.ExpressApp.DC;
+﻿using DevExpress.ExpressApp.DC;
 
 namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 {
-    public enum CategoriaListaMedico 
+    public enum CategoriaListaMedico
     {
         [XafDisplayName("Terminología Anatómica")]
         PartesCuerpo = 1,

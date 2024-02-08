@@ -1,195 +1,71 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F8ACB445-E391-4DC6-9AB3-B30AB53F7646}</ProjectGuid>
+    <TargetFramework>net8.0</TargetFramework>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
+	<Configurations>Debug;Release;EasyTest</Configurations>
     <RootNamespace>SBT.Apps.Contabilidad.Module</RootNamespace>
     <AssemblyName>SBT.Apps.Contabilidad.Module</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <AssemblyTitle>SBT.Apps.Contabilidad.Module</AssemblyTitle>
+    <Product>SBT.Apps.Contabilidad.Module</Product>
+    <Copyright>Copyright © 2020</Copyright>
+    <AssemblyVersion>2.0.*</AssemblyVersion>
+    <FileVersion>2.0.0.0</FileVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'EasyTest|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\EasyTest\</OutputPath>
     <DefineConstants>TRACE;DEBUG;EASYTEST</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="DevExpress.Data.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.ExpressApp.CloneObject.Xpo.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.ExpressApp.ConditionalAppearance.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.ExpressApp.ReportsV2.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.ExpressApp.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.ExpressApp.Validation.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.ExpressApp.ViewVariantsModule.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.ExpressApp.Xpo.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.Persistent.Base.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.Persistent.BaseImpl.Xpo.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.Printing.v21.2.Core">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.Data.Desktop.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.Utils.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.Xpo.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.Charts.v21.2.Core">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.XtraCharts.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.CodeParser.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.XtraLayout.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraReports.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="mscorlib">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="System">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="System.Core">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="System.Drawing">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="System">
-      <Name>System</Name>
-    </Reference>
-    <Reference Include="System.Drawing" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="BusinessObjects\BancoTipoTransaccion.cs" />
-    <Compile Include="BusinessObjects\BancoConciliacion.cs" />
-    <Compile Include="BusinessObjects\BancoTransaccion.cs" />
-    <Compile Include="BusinessObjects\BancoTransaccionDetalle.cs" />
-    <Compile Include="BusinessObjects\BancoTransaccionPartida.cs" />
-    <Compile Include="BusinessObjects\CajaChica.cs" />
-    <Compile Include="BusinessObjects\CajaChicaTransaccion.cs" />
-    <Compile Include="BusinessObjects\CajaChicaTransaccionDetalle.cs" />
-    <Compile Include="BusinessObjects\BancoChequera.cs" />
-    <Compile Include="BusinessObjects\BancoCuenta.cs" />
-    <Compile Include="BusinessObjects\CierreDiario.cs" />
-    <Compile Include="BusinessObjects\CierreDiarioParam.cs" />
-    <Compile Include="BusinessObjects\CierreMesParam.cs" />
-    <Compile Include="BusinessObjects\BancoConciliacionDetalle.cs" />
-    <Compile Include="BusinessObjects\EFinancieroDetalle.cs" />
-    <Compile Include="BusinessObjects\EstadoFinancieroModelo.cs" />
-    <Compile Include="BusinessObjects\EstadoFinancieroModeloDetalle.cs" />
-    <Compile Include="BusinessObjects\EstadoFinancieroParams.cs" />
-    <Compile Include="BusinessObjects\PartidaAutomatica.cs" />
-    <Compile Include="BusinessObjects\SaldoDiario.cs" />
-    <Compile Include="BusinessObjects\SaldoMes.cs" />
-    <Compile Include="BusinessObjects\EBancoTipoTransaccion.cs" />
-    <Compile Include="BusinessObjects\EBancoTransaccionEstado.cs" />
-    <Compile Include="BusinessObjects\EConciliacionDetalleEstado.cs" />
-    <Compile Include="BusinessObjects\ETipoOperacionConsolidacion.cs" />
-    <Compile Include="BusinessObjects\ETipoPartida.cs" />
-    <Compile Include="BusinessObjects\ETipoSaldoDia.cs" />
-    <Compile Include="BusinessObjects\Partida.cs" />
-    <Compile Include="BusinessObjects\PartidaDetalle.cs" />
-    <Compile Include="BusinessObjects\PartidaModelo.cs" />
-    <Compile Include="BusinessObjects\PartidaModeloDetalle.cs" />
-    <Compile Include="Controllers\vcBancoConciliacion.cs" />
-    <Compile Include="Controllers\vcBancoCuenta.cs" />
-    <Compile Include="Controllers\vcBancoTransaccion.cs" />
-    <Compile Include="Controllers\vcBancoTransaccionDetail.cs" />
-    <Compile Include="Controllers\vcCajaChica.cs" />
-    <Compile Include="Controllers\vcCajaChicaTransaccion.cs" />
-    <Compile Include="Controllers\vcEstadoFinanciero.cs" />
-    <Compile Include="Controllers\vcPartida.cs" />
-    <Compile Include="Controllers\vcPartidaDetalle.cs" />
-    <Compile Include="Controllers\vcPartidaModelo.cs" />
-    <Compile Include="Controllers\vcSaldoDiario.cs" />
-    <Compile Include="Controllers\vcSaldoMes.cs" />
-    <Compile Include="DatabaseUpdate\Updater.cs" />
-    <Compile Include="BusinessObjects\ETipoPartidaModelo.cs" />
-    <Compile Include="ContabilidadModule.cs" />
-    <Compile Include="ContabilidadModule.Designer.cs">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug Net6|AnyCPU'">
+    <OutputPath>bin\Debug Net6\</OutputPath>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="DevExpress.ExpressApp" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.Chart" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.CloneObject.Xpo" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.CodeAnalysis" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.ConditionalAppearance" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.Objects" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.ReportsV2" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.Security.Xpo" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.Validation" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.ViewVariantsModule" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.Xpo" Version="23.1.3" />
+		<PackageReference Include="DevExpress.Persistent.Base" Version="23.1.3" />
+		<PackageReference Include="DevExpress.Persistent.BaseImpl.Xpo" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.AuditTrail.Xpo" Version="23.1.3" />
+		<!--<PackageReference Include="DevExpress.ExpressApp.Office" Version="23.1" />-->
+		<!--<PackageReference Include="DevExpress.Utils" Version="23.1" />-->
+		<!--<PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="6.0.0" />-->
+		<!--<PackageReference Include="System.Security.AccessControl" Version="6.0.0" />-->
+		<!--<PackageReference Include="System.Configuration.ConfigurationManager" Version="7.0.0" />-->
+	</ItemGroup>
+	
+	<ItemGroup>
+    <Compile Update="Controllers\vcBancoConciliacion.cs" />
+    <Compile Update="Controllers\vcBancoCuenta.cs" />
+    <Compile Update="Controllers\vcBancoTransaccion.cs" />
+    <Compile Update="Controllers\vcCajaChica.cs" />
+    <Compile Update="Controllers\vcCajaChicaTransaccion.cs" />
+    <Compile Update="Controllers\vcEstadoFinanciero.cs" />
+    <Compile Update="Controllers\vcPartida.cs" />
+    <Compile Update="Controllers\vcPartidaDetalle.cs" />
+    <Compile Update="Controllers\vcPartidaModelo.cs" />
+    <Compile Update="Controllers\vcSaldoDiario.cs" />
+    <Compile Update="Controllers\vcSaldoMes.cs" />
+    <Compile Update="ContabilidadModule.cs" />
+    <Compile Update="ContabilidadModule.Designer.cs">
       <DependentUpon>ContabilidadModule.cs</DependentUpon>
     </Compile>
-    <Compile Include="SaldoDeCuentaFunction.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Model.DesignedDiffs.xafml" />
-    <EmbeddedResource Include="ContabilidadModule.resx">
+    <EmbeddedResource Update="ContabilidadModule.resx">
       <DependentUpon>ContabilidadModule.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="BusinessObjects\ReadMe.txt" />
-    <None Include="Controllers\ReadMe.txt" />
-    <None Include="DatabaseUpdate\ReadMe.txt" />
-    <None Include="Images\ReadMe.txt" />
-    <None Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Base\SBT.Apps.Base.csproj">
-      <Project>{A538FE93-206D-4869-BC40-FDC561F8C1D1}</Project>
-      <Name>SBT.Apps.Base</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Empleado\SBT.Apps.Empleado.csproj">
-      <Project>{05f004d2-9388-44db-a756-2ffb2eccae07}</Project>
-      <Name>SBT.Apps.Empleado</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Tercero\SBT.Apps.Tercero.csproj">
-      <Project>{5f15837d-d1e5-44dc-92f0-4f2ebe9c3f8d}</Project>
-      <Name>SBT.Apps.Tercero</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Images\BancoClasificacionTransac.png" />
@@ -219,12 +95,15 @@
     <EmbeddedResource Include="Images\CierreMes.png" />
     <EmbeddedResource Include="Images\CierreMes_32x32.png" />
   </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+  <ItemGroup>
+    <Compile Remove="BusinessObjects\BancoTarjeta.cs" />
+    <Compile Remove="BusinessObjects\BancoTarjetaTransaccion.cs" />
+    <Compile Remove="Controllers\vcBancoTarjeta.cs" />
+    <Compile Remove="Controllers\vcBancoTarjetaTransaccion.cs" />
+    <Compile Remove="Controllers\vcPartidaDetalleListNewObject.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Base\SBT.Apps.Base.csproj" />
+    <ProjectReference Include="..\Empleado\SBT.Apps.Empleado.csproj" />
+  </ItemGroup>
 </Project>

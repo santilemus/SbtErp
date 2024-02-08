@@ -53,9 +53,7 @@ namespace SBT.Apps.Medico.Win {
             this.productoModule1 = new SBT.Apps.Producto.Module.ProductoModule();
             this.treeListEditorsModuleBase1 = new DevExpress.ExpressApp.TreeListEditors.TreeListEditorsModuleBase();
             this.officeModule1 = new DevExpress.ExpressApp.Office.OfficeModule();
-            this.chartModule1 = new DevExpress.ExpressApp.Chart.ChartModule();
             this.pivotGridModule1 = new DevExpress.ExpressApp.PivotGrid.PivotGridModule();
-            this.chartWindowsFormsModule1 = new DevExpress.ExpressApp.Chart.Win.ChartWindowsFormsModule();
             this.pivotGridWindowsFormsModule1 = new DevExpress.ExpressApp.PivotGrid.Win.PivotGridWindowsFormsModule();
             this.pivotChartModuleBase1 = new DevExpress.ExpressApp.PivotChart.PivotChartModuleBase();
             this.pivotChartWindowsFormsModule1 = new DevExpress.ExpressApp.PivotChart.Win.PivotChartWindowsFormsModule();
@@ -133,7 +131,6 @@ namespace SBT.Apps.Medico.Win {
             this.Modules.Add(this.officeModule1);
             this.Modules.Add(this.baseModule1);
             this.Modules.Add(this.genericoModule1);
-            this.Modules.Add(this.chartModule1);
             this.Modules.Add(this.expedienteModule1);
             this.Modules.Add(this.empleadoModule1);
             this.Modules.Add(this.terceroModule1);
@@ -145,7 +142,6 @@ namespace SBT.Apps.Medico.Win {
             this.Modules.Add(this.reportsWindowsFormsModuleV2);
             this.Modules.Add(this.schedulerWindowsFormsModule);
             this.Modules.Add(this.validationWindowsFormsModule);
-            this.Modules.Add(this.chartWindowsFormsModule1);
             this.Modules.Add(this.pivotGridWindowsFormsModule1);
             this.Modules.Add(this.pivotChartModuleBase1);
             this.Modules.Add(this.pivotChartWindowsFormsModule1);
@@ -190,9 +186,7 @@ namespace SBT.Apps.Medico.Win {
         private Producto.Module.ProductoModule productoModule1;
         private DevExpress.ExpressApp.TreeListEditors.TreeListEditorsModuleBase treeListEditorsModuleBase1;
         private DevExpress.ExpressApp.Office.OfficeModule officeModule1;
-        private DevExpress.ExpressApp.Chart.ChartModule chartModule1;
         private DevExpress.ExpressApp.PivotGrid.PivotGridModule pivotGridModule1;
-        private DevExpress.ExpressApp.Chart.Win.ChartWindowsFormsModule chartWindowsFormsModule1;
         private DevExpress.ExpressApp.PivotGrid.Win.PivotGridWindowsFormsModule pivotGridWindowsFormsModule1;
         private DevExpress.ExpressApp.PivotChart.PivotChartModuleBase pivotChartModuleBase1;
         private DevExpress.ExpressApp.PivotChart.Win.PivotChartWindowsFormsModule pivotChartWindowsFormsModule1;

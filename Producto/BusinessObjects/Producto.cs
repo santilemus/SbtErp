@@ -1,14 +1,13 @@
 ﻿using DevExpress.ExpressApp.ConditionalAppearance;
 using DevExpress.ExpressApp.DC;
+using DevExpress.ExpressApp.Model;
 using DevExpress.ExpressApp.SystemModule;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Inventario.Module.BusinessObjects;
-using System;
 using System.ComponentModel;
-using DevExpress.ExpressApp.Model;
 using System.Linq;
 
 namespace SBT.Apps.Producto.Module.BusinessObjects
@@ -262,12 +261,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         #endregion
 
         #region Metodos
-        //protected override void OnSaving()
-        //{
-        //    base.OnSaving();
 
-
-        //}
 
         #endregion
 

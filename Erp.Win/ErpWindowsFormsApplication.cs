@@ -10,6 +10,7 @@ using DevExpress.ExpressApp.Security;
 using DevExpress.ExpressApp.Security.ClientServer;
 using DevExpress.ExpressApp.SystemModule;
 using SBT.Apps.Base.Module.BusinessObjects;
+using System.Runtime.Versioning;
 
 namespace SBT.Apps.Erp.Win {
     // For more typical usage scenarios, be sure to check out https://docs.devexpress.com/eXpressAppFramework/DevExpress.ExpressApp.Win.WinApplication._members
@@ -20,6 +21,8 @@ namespace SBT.Apps.Erp.Win {
             DevExpress.Persistent.Base.PasswordCryptographer.SupportLegacySha512 = false;
 			DevExpress.ExpressApp.Utils.ImageLoader.Instance.UseSvgImages = true;
         }
+
+        [SupportedOSPlatform("windows")]
         private void InitializeDefaults() {
             LinkNewObjectToParentImmediately = false;
             OptimizedControllersCreation = true;
@@ -28,6 +31,8 @@ namespace SBT.Apps.Erp.Win {
 			ExecuteStartupLogicBeforeClosingLogonWindow = true;
         }
         #endregion
+
+        [SupportedOSPlatform("windows")]
         public ErpWindowsFormsApplication() {
             InitializeComponent();
 			InitializeDefaults();
@@ -115,6 +120,7 @@ namespace SBT.Apps.Erp.Win {
             {
                 e.SettingsStorage.SaveOption(string.Empty, "Empresa", "1");
             }
+            /*
             else
             {
                 ((CustomLogonParameters)e.LogonObject).OidEmpresa = Convert.ToInt16(e.SettingsStorage.LoadOption(string.Empty, "Empresa"), cci.NumberFormat);
@@ -123,6 +129,7 @@ namespace SBT.Apps.Erp.Win {
                 ((CustomLogonParameters)e.LogonObject).OidSucursal = Convert.ToInt16(e.SettingsStorage.LoadOption(string.Empty, "Agencia"), cci.NumberFormat);
             else
                 e.SettingsStorage.SaveOption(string.Empty, "Agencia", "1");
+            */
             e.Handled = true;
         }
 

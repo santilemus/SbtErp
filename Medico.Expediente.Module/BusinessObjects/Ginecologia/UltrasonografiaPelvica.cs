@@ -1,22 +1,14 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp;
-using System.ComponentModel;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
-using DevExpress.Persistent.Base;
-using System.Collections.Generic;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
-using SBT.Apps.Base.Module.BusinessObjects;
-using SBT.Apps.Medico.Generico.Module.BusinessObjects;
+using DevExpress.Xpo;
+using System;
+using System.ComponentModel;
 
 namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects.Ginecologia
 {
-    [DefaultClassOptions, ModelDefault("Caption", "Ultrasonografía Pélvica"), NavigationItem(false), 
+    [DefaultClassOptions, ModelDefault("Caption", "Ultrasonografía Pélvica"), NavigationItem(false),
         DefaultProperty(nameof(Fecha)), Persistent(nameof(UltrasonografiaPelvica)), CreatableItem(false)]
     [ImageName("UltraSonografiaPelvica")]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).

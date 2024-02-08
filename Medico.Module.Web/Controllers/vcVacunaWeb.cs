@@ -1,14 +1,11 @@
-﻿using System;
-
-
-namespace SBT.Apps.Medico.Module.Web.Controllers
+﻿namespace SBT.Apps.Medico.Module.Web.Controllers
 {
     /// <summary>
     /// View Controller para la plataforma web y que aplica al BO Vacuna
     /// </summary>
-    public class vcVacunaWeb: ViewControllerBaseWeb
+    public class vcVacunaWeb : ViewControllerBaseWeb
     {
-        public vcVacunaWeb(): base()
+        public vcVacunaWeb() : base()
         {
 
         }

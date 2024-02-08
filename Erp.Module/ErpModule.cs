@@ -4,9 +4,9 @@ using DevExpress.ExpressApp.Updating;
 using DevExpress.ExpressApp.Xpo;
 using DevExpress.Persistent.BaseImpl;
 using DevExpress.Xpo;
+using SBT.Apps.Base.Module.BusinessObjects;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace SBT.Apps.Erp.Module
 {
@@ -35,10 +35,9 @@ namespace SBT.Apps.Erp.Module
         // agregado el 13/nov/2021 por selm
         private void Application_ObjectSpaceCreated(object sender, ObjectSpaceCreatedEventArgs e)
         {
-            CompositeObjectSpace compositeObjectSpace = e.ObjectSpace as CompositeObjectSpace;
-            if (compositeObjectSpace != null)
+            if (e.ObjectSpace is CompositeObjectSpace compositeObjectSpace)
             {
-                if (!(compositeObjectSpace.Owner is CompositeObjectSpace))
+                if (compositeObjectSpace.Owner is not CompositeObjectSpace)
                 {
                     compositeObjectSpace.PopulateAdditionalObjectSpaces((XafApplication)sender);
                 }
@@ -55,8 +54,8 @@ namespace SBT.Apps.Erp.Module
         }
         void application_CreateCustomLogonWindowObjectSpace(object sender, CreateCustomLogonWindowObjectSpaceEventArgs e)
         {
-            IObjectSpace objectSpace = ((XafApplication)sender).CreateObjectSpace();
-            ((SBT.Apps.Base.Module.BusinessObjects.CustomLogonParameters)e.LogonParameters).ObjectSpace = objectSpace;
+            IObjectSpace objectSpace = ((XafApplication)sender).CreateObjectSpace(typeof(CustomLogonParameters));
+            //((SBT.Apps.Base.Module.BusinessObjects.CustomLogonParameters)e.LogonParameters).ObjectSpace = objectSpace;
             e.ObjectSpace = objectSpace;
         }
 

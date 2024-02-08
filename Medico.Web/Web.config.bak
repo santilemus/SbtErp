@@ -10,12 +10,12 @@
 <configuration>
   <configSections>
     <sectionGroup name="devExpress">
-      <section name="compression" requirePermission="false" type="DevExpress.Web.CompressionConfigurationSection, DevExpress.Web.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-      <section name="themes" requirePermission="false" type="DevExpress.Web.ThemesConfigurationSection, DevExpress.Web.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-      <section name="settings" requirePermission="false" type="DevExpress.Web.SettingsConfigurationSection, DevExpress.Web.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+      <section name="compression" requirePermission="false" type="DevExpress.Web.CompressionConfigurationSection, DevExpress.Web.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+      <section name="themes" requirePermission="false" type="DevExpress.Web.ThemesConfigurationSection, DevExpress.Web.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+      <section name="settings" requirePermission="false" type="DevExpress.Web.SettingsConfigurationSection, DevExpress.Web.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     </sectionGroup>
     <!-- For more information on Entity Framework configuration, visit http://go.microsoft.com/fwlink/?LinkID=237468 -->
-    <section name="DevExpressXpoProfiler" type="DevExpress.Xpo.Logger.ProfilerConfigSection, DevExpress.Data.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" allowLocation="true" allowDefinition="Everywhere" />
+    <section name="DevExpressXpoProfiler" type="DevExpress.Xpo.Logger.ProfilerConfigSection, DevExpress.Data.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" allowLocation="true" allowDefinition="Everywhere" />
   </configSections>
   <devExpress>
     <settings rightToLeft="false" doctypeMode="Html5" ieCompatibilityVersion="edge" embedRequiredClientLibraries="true" />
@@ -43,7 +43,7 @@
   </appSettings>
   <connectionStrings>
     <add name="EasyTestConnectionString" connectionString="Integrated Security=False;Pooling=false;Data Source=betomovilasus;Initial Catalog=SBT.Apps.medicoEasyTest;User ID=usradmin;Password=adminsiaf;" />
-    <add name="medico" connectionString="Integrated Security=False; Pooling=true;Data Source=BETOMOVILASUS;Initial Catalog=Medico;User ID=usradmin;Password=adminsiaf;" />
+    <add name="medico" connectionString="XpoProvider=MSSqlServer;Integrated Security=False; Pooling=true;Data Source=BETOMOVILASUS;Initial Catalog=Medico;User ID=usradmin;Password=adminsiaf;" />
     <!--    
     Use the following connection string to connect to a Jet (Microsoft Access) database that is already created and located in the <application root>/app_data folder. 
     If the database doesn't exist, it won't be created until you replace the |DataDirectory| substitution string with the fully qualified path to the database. For instance:
@@ -60,16 +60,17 @@
   </system.diagnostics>
   <system.webServer>
     <handlers>
-      <add name="ASPxUploadProgressHandler" verb="GET,POST" path="ASPxUploadProgressHandlerPage.ashx" type="DevExpress.Web.ASPxUploadProgressHttpHandler, DevExpress.Web.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" preCondition="integratedMode" />
-      <add name="XafHttpHandler" path="DXX.axd" verb="*" type="DevExpress.ExpressApp.Web.XafHttpHandler, DevExpress.ExpressApp.Web.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" preCondition="integratedMode" />
-      <add name="ASPxHttpHandlerModuleXAF" preCondition="integratedMode" verb="GET,POST" path="DXXRD.axd" type="DevExpress.Web.ASPxHttpHandlerModule, DevExpress.Web.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-      <add name="ASPxWebDocumentViewerHandlerModule" preCondition="integratedMode" verb="GET,POST" path="DXXRDV.axd" type="DevExpress.Web.ASPxHttpHandlerModule, DevExpress.Web.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-      <add name="ASPxQueryBuilderDesignerHandlerModule" preCondition="integratedMode" verb="GET,POST" path="DXQB.axd" type="DevExpress.Web.ASPxHttpHandlerModule, DevExpress.Web.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+      <add name="ASPxUploadProgressHandler" verb="GET,POST" path="ASPxUploadProgressHandlerPage.ashx" type="DevExpress.Web.ASPxUploadProgressHttpHandler, DevExpress.Web.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" preCondition="integratedMode" />
+      <add name="XafHttpHandler" path="DXX.axd" verb="*" type="DevExpress.ExpressApp.Web.XafHttpHandler, DevExpress.ExpressApp.Web.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" preCondition="integratedMode" />
+      <add name="ASPxHttpHandlerModuleXAF" preCondition="integratedMode" verb="GET,POST" path="DXXRD.axd" type="DevExpress.Web.ASPxHttpHandlerModule, DevExpress.Web.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+      <add name="ASPxWebDocumentViewerHandlerModule" preCondition="integratedMode" verb="GET,POST" path="DXXRDV.axd" type="DevExpress.Web.ASPxHttpHandlerModule, DevExpress.Web.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+      <add name="ASPxQueryBuilderDesignerHandlerModule" preCondition="integratedMode" verb="GET,POST" path="DXQB.axd" type="DevExpress.Web.ASPxHttpHandlerModule, DevExpress.Web.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+      <!--<add name="PictureViewer" preCondition="integratedMode" verb="*" path="~/default.aspx" type="SBT.Apps.Medico.Module.Web.Classes.PictureViewer, SBT.Apps.Medico.Module.Web"/> -->
     </handlers>
     <validation validateIntegratedModeConfiguration="false" />
     <modules>
-      <add name="ASPxHttpHandlerModule" type="DevExpress.Web.ASPxHttpHandlerModule, DevExpress.Web.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-      <add name="XafHttpModule" type="DevExpress.ExpressApp.Web.XafHttpModule, DevExpress.ExpressApp.Web.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+      <add name="ASPxHttpHandlerModule" type="DevExpress.Web.ASPxHttpHandlerModule, DevExpress.Web.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+      <add name="XafHttpModule" type="DevExpress.ExpressApp.Web.XafHttpModule, DevExpress.ExpressApp.Web.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     </modules>
   </system.webServer>
   <!--
@@ -84,15 +85,16 @@
     <httpRuntime requestValidationMode="2.0" />
     <pages controlRenderingCompatibilityVersion="3.5" clientIDMode="AutoID" />
     <httpHandlers>
-      <add path="DXX.axd" verb="*" type="DevExpress.ExpressApp.Web.XafHttpHandler, DevExpress.ExpressApp.Web.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-      <add verb="GET,POST" path="ASPxUploadProgressHandlerPage.ashx" validate="false" type="DevExpress.Web.ASPxUploadProgressHttpHandler, DevExpress.Web.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-      <add verb="GET,POST" path="DXXRD.axd" type="DevExpress.Web.ASPxHttpHandlerModule, DevExpress.Web.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-      <add validate="false" verb="GET,POST" path="DXXRDV.axd" type="DevExpress.Web.ASPxHttpHandlerModule, DevExpress.Web.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-      <add validate="false" verb="GET,POST" path="DXQB.axd" type="DevExpress.Web.ASPxHttpHandlerModule, DevExpress.Web.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+      <add path="DXX.axd" verb="*" type="DevExpress.ExpressApp.Web.XafHttpHandler, DevExpress.ExpressApp.Web.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+      <add verb="GET,POST" path="ASPxUploadProgressHandlerPage.ashx" validate="false" type="DevExpress.Web.ASPxUploadProgressHttpHandler, DevExpress.Web.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+      <add verb="GET,POST" path="DXXRD.axd" type="DevExpress.Web.ASPxHttpHandlerModule, DevExpress.Web.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+      <add validate="false" verb="GET,POST" path="DXXRDV.axd" type="DevExpress.Web.ASPxHttpHandlerModule, DevExpress.Web.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+      <add validate="false" verb="GET,POST" path="DXQB.axd" type="DevExpress.Web.ASPxHttpHandlerModule, DevExpress.Web.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+      <!--<add validate="false" verb="*" path="*.pdf" type="SBT.Apps.Medico.Module.Web.Classes.PictureViewer, SBT.Apps.Medico.Module.Web"/>-->
     </httpHandlers>
     <httpModules>
-      <add name="ASPxHttpHandlerModule" type="DevExpress.Web.ASPxHttpHandlerModule, DevExpress.Web.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-      <add name="XafHttpModule" type="DevExpress.ExpressApp.Web.XafHttpModule, DevExpress.ExpressApp.Web.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+      <add name="ASPxHttpHandlerModule" type="DevExpress.Web.ASPxHttpHandlerModule, DevExpress.Web.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+      <add name="XafHttpModule" type="DevExpress.ExpressApp.Web.XafHttpModule, DevExpress.ExpressApp.Web.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     </httpModules>
     <!--
     Set compilation debug="true" to insert debugging
@@ -102,35 +104,35 @@
     -->
     <compilation debug="true" targetFramework="4.8">
       <assemblies>
-        <add assembly="DevExpress.ExpressApp.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-        <add assembly="DevExpress.ExpressApp.Web.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-        <add assembly="DevExpress.Persistent.Base.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-        <add assembly="DevExpress.ExpressApp.Images.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-        <add assembly="DevExpress.Printing.v20.2.Core, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-        <add assembly="DevExpress.Data.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-        <add assembly="DevExpress.Utils.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-        <add assembly="DevExpress.Web.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-        <add assembly="DevExpress.Web.ASPxTreeList.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-        <add assembly="DevExpress.Web.ASPxGantt.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-        <add assembly="DevExpress.Web.ASPxThemes.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-        <add assembly="DevExpress.Xpo.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-        <add assembly="DevExpress.ExpressApp.Xpo.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-        <add assembly="DevExpress.ExpressApp.AuditTrail.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-        <add assembly="DevExpress.ExpressApp.Objects.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-        <add assembly="DevExpress.ExpressApp.CloneObject.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-        <add assembly="DevExpress.ExpressApp.ConditionalAppearance.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-        <add assembly="DevExpress.ExpressApp.FileAttachment.Web.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-        <add assembly="DevExpress.ExpressApp.HtmlPropertyEditor.Web.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-        <add assembly="DevExpress.ExpressApp.Notifications.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-        <add assembly="DevExpress.ExpressApp.Notifications.Web.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-        <add assembly="DevExpress.ExpressApp.ReportsV2.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-        <add assembly="DevExpress.ExpressApp.ReportsV2.Web.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-        <add assembly="DevExpress.ExpressApp.Scheduler.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-        <add assembly="DevExpress.ExpressApp.Scheduler.Web.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-        <add assembly="DevExpress.ExpressApp.Validation.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-        <add assembly="DevExpress.ExpressApp.ViewVariantsModule.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-        <add assembly="DevExpress.Persistent.BaseImpl.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-        <add assembly="DevExpress.RichEdit.v20.2.Core, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+        <add assembly="DevExpress.ExpressApp.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+        <add assembly="DevExpress.ExpressApp.Web.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+        <add assembly="DevExpress.Persistent.Base.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+        <add assembly="DevExpress.Images.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+        <add assembly="DevExpress.Printing.v21.2.Core, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+        <add assembly="DevExpress.Data.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+        <add assembly="DevExpress.Utils.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+        <add assembly="DevExpress.Web.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+        <add assembly="DevExpress.Web.ASPxTreeList.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+        <add assembly="DevExpress.Web.ASPxGantt.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+        <add assembly="DevExpress.Web.ASPxThemes.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+        <add assembly="DevExpress.Xpo.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+        <add assembly="DevExpress.ExpressApp.Xpo.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+        <add assembly="DevExpress.ExpressApp.AuditTrail.Xpo.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+        <add assembly="DevExpress.ExpressApp.Objects.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+        <add assembly="DevExpress.ExpressApp.CloneObject.Xpo.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+        <add assembly="DevExpress.ExpressApp.ConditionalAppearance.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+        <add assembly="DevExpress.ExpressApp.FileAttachment.Web.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+        <add assembly="DevExpress.ExpressApp.HtmlPropertyEditor.Web.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+        <add assembly="DevExpress.ExpressApp.Notifications.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+        <add assembly="DevExpress.ExpressApp.Notifications.Web.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+        <add assembly="DevExpress.ExpressApp.ReportsV2.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+        <add assembly="DevExpress.ExpressApp.ReportsV2.Web.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+        <add assembly="DevExpress.ExpressApp.Scheduler.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+        <add assembly="DevExpress.ExpressApp.Scheduler.Web.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+        <add assembly="DevExpress.ExpressApp.Validation.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+        <add assembly="DevExpress.ExpressApp.ViewVariantsModule.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+        <add assembly="DevExpress.Persistent.BaseImpl.Xpo.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+        <add assembly="DevExpress.RichEdit.v21.2.Core, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
       </assemblies>
     </compilation>
     <!--
@@ -179,18 +181,6 @@
   <runtime>
     <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
       <dependentAssembly>
-        <assemblyIdentity name="Newtonsoft.Json" publicKeyToken="30ad4fe6b2a6aeed" culture="neutral" />
-        <bindingRedirect oldVersion="0.0.0.0-6.0.0.0" newVersion="6.0.0.0" />
-      </dependentAssembly>
-      <dependentAssembly>
-        <assemblyIdentity name="System.Runtime.CompilerServices.Unsafe" publicKeyToken="b03f5f7f11d50a3a" culture="neutral" />
-        <bindingRedirect oldVersion="0.0.0.0-4.0.4.1" newVersion="4.0.4.1" />
-      </dependentAssembly>
-      <dependentAssembly>
-        <assemblyIdentity name="System.Threading.Tasks.Extensions" publicKeyToken="cc7b13ffcd2ddd51" culture="neutral" />
-        <bindingRedirect oldVersion="0.0.0.0-4.2.0.1" newVersion="4.2.0.1" />
-      </dependentAssembly>
-      <dependentAssembly>
         <assemblyIdentity name="System.ValueTuple" publicKeyToken="cc7b13ffcd2ddd51" culture="neutral" />
         <bindingRedirect oldVersion="0.0.0.0-4.0.3.0" newVersion="4.0.3.0" />
       </dependentAssembly>
@@ -200,5 +190,5 @@
       </dependentAssembly>
     </assemblyBinding>
   </runtime>
-  <DevExpressXpoProfiler serverType="DevExpress.Xpo.Logger.Transport.LogServer" serverAssembly="DevExpress.Xpo.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" categories="SQL;Session;DataCache" port="52934" />
+  <DevExpressXpoProfiler serverType="DevExpress.Xpo.Logger.Transport.LogServer" serverAssembly="DevExpress.Xpo.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" categories="SQL;Session;DataCache" port="52934" />
 </configuration>

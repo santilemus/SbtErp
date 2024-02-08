@@ -8,7 +8,6 @@ using SBT.Apps.Empleado.Module.BusinessObjects;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 
 namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 {
@@ -156,7 +155,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 
         private decimal CalcularRenta(params object[] pa)
         {
-            return Convert.ToDecimal(Session.ExecuteScalar("select dbo.fnPlaCalcularRenta(@Pais, @TipoTabla, @Salario)", 
+            return Convert.ToDecimal(Session.ExecuteScalar("select dbo.fnPlaCalcularRenta(@Pais, @TipoTabla, @Salario)",
                 new object[] { Planilla.Empresa.Pais.Codigo, pa[0], pa[1] }));
         }
 
@@ -165,13 +164,13 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         /// </summary>
         /// <param name="pa"></param>
         /// <returns></returns>
-        private decimal IngresoGravadoAcumulado(params object [] pa)
-        {            
+        private decimal IngresoGravadoAcumulado(params object[] pa)
+        {
             return Convert.ToDecimal(Session.ExecuteScalar("select dbo.fnPlaIngresoGravado(@OidEmpleado, @FechaInicio, @FechaFin, @Moneda)",
                 new object[] { Empleado.Oid, new DateTime(Planilla.FechaFin.Value.Year, 01, 01), pa[0], pa[1] }));
         }
 
-        private decimal OperacionAcumulada(params object [] pa)
+        private decimal OperacionAcumulada(params object[] pa)
         {
             return Convert.ToDecimal(Session.ExecuteScalar("select dbo.fnPlaOperacionAcumulada(emple.Oid, @InicioMes, @FinMes, @OidOperacion)",
                 new object[] { Empleado.Oid, new DateTime(Planilla.FechaFin.Value.Year, 1, 1), pa[0], pa[1] })); ;
@@ -183,7 +182,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         /// para calcular la vacacion
         /// </summary>
         /// <returns></returns>
-        private decimal ? ParametroVacacion()
+        private decimal? ParametroVacacion()
         {
             DateTime fechaCumple = FechaCumpleAnioContrato();
             decimal Anios = Math.Round(Convert.ToDecimal(fechaCumple.Subtract(Empleado.FechaIngreso).TotalDays) / 365.25m, 2);

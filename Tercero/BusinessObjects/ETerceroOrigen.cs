@@ -1,7 +1,5 @@
 ﻿using DevExpress.ExpressApp.DC;
 using DevExpress.Persistent.Base;
-using System;
-using System.Linq;
 
 namespace SBT.Apps.Tercero.Module.BusinessObjects
 {

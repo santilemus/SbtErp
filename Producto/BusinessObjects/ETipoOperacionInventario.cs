@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-
-namespace SBT.Apps.Inventario.Module.BusinessObjects
+﻿namespace SBT.Apps.Inventario.Module.BusinessObjects
 {
     public enum ETipoOperacionInventario
     {

@@ -1,11 +1,8 @@
-﻿using System;
-using DevExpress.Xpo;
-using SBT.Apps.Medico.Generico.Module.BusinessObjects;
-using DevExpress.ExpressApp.DC;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
-using SBT.Apps.Base.Module.BusinessObjects;
+using DevExpress.Xpo;
 
 namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 {
@@ -64,7 +61,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 
 
         [Size(10), DbType("varchar(10)"), XafDisplayName("Categoría"),
-            RuleRequiredField("TerminologiaAnatomica.Categoria_Requerida", "Save")]       
+            RuleRequiredField("TerminologiaAnatomica.Categoria_Requerida", "Save")]
         [Association("MedicoListas-TerminologiaAnatomicas")]
         [DataSourceCriteria("[Categoria] == 1")]
         public MedicoLista Categoria

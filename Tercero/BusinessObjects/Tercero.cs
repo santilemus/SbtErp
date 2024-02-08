@@ -3,7 +3,6 @@ using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
-using System;
 using System.Linq;
 
 namespace SBT.Apps.Tercero.Module.BusinessObjects
@@ -59,7 +58,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
             set
             {
                 bool changed = SetPropertyValue(nameof(DireccionPrincipal), ref direccionPrincipal, value);
-                if (!IsLoading && !IsSaving && changed && 
+                if (!IsLoading && !IsSaving && changed &&
                     (Session.IsNewObject(this) || Direcciones.Count<TerceroDireccion>(y => y.Oid == DireccionPrincipal.Oid) == 0))
                 {
                     Direcciones.Add(DireccionPrincipal);
@@ -85,14 +84,13 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
         }
 
         [DevExpress.Persistent.Base.ImmediatePostDataAttribute, Index(4)]
-        [RuleRequiredField("Tercero.TipoPersona_Requerido", "Save")]
         public TipoPersona TipoPersona
         {
             get => tipoPersona;
             set => SetPropertyValue(nameof(TipoPersona), ref tipoPersona, value);
         }
 
-        [RuleRequiredField("Tercero.TipoContribuyente_Requerido", "Save"), VisibleInListView(false), Index(5)]
+        [VisibleInListView(false), Index(5)]
         [XafDisplayName("Tipo Contribuyente")]
         public ETipoContribuyente TipoContribuyente
         {
@@ -117,7 +115,6 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
         }
 
         [Index(8), VisibleInLookupListView(true)]
-        [RuleRequiredField("Tercero.Activo_Requerido", "Save")]
         public System.Boolean Activo
         {
             get => activo;

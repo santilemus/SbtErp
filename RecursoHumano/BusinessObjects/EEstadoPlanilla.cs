@@ -1,7 +1,4 @@
-﻿using System;
-
-
-namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
+﻿namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 {
     /// <summary>
     /// Recurso Humano
@@ -10,7 +7,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
     public enum EEstadoPlanilla
     {
         PreCalculo = 0,
-        Aprobada = 1, 
+        Aprobada = 1,
         Pagada = 2,
         Contabilizada = 3
     }

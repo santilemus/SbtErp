@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DevExpress.Data.Filtering;
+﻿using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp;
 using SBT.Apps.Base.Module.BusinessObjects;
-using SBT.Apps.Empleado.Module.BusinessObjects;
+using System;
 
 namespace SBT.Apps.Empleado.Module
 {

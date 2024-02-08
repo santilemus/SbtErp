@@ -3,10 +3,7 @@ using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
-using SBT.Apps.Base.Module.BusinessObjects;
-using System;
 using System.ComponentModel;
-using System.Linq;
 
 namespace SBT.Apps.Producto.Module.BusinessObjects
 {
@@ -14,8 +11,8 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
     /// BO que corresponde a las presentaciones que pueden tener los productos
     /// 
     /// </summary>
-    
-    [DefaultClassOptions, ModelDefault("Caption", "Presentacion"), DefaultProperty("Nombre"), NavigationItem("Inventario"), 
+
+    [DefaultClassOptions, ModelDefault("Caption", "Presentacion"), DefaultProperty("Nombre"), NavigationItem("Inventario"),
         CreatableItem(false), Persistent("ProPresentacion")]
     [ImageName("Presentacion")]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
@@ -57,7 +54,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         decimal unidades;
         [DbType("numeric(12,2)"), Persistent(nameof(Unidades))]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
-        [XafDisplayName("Unidades Inventario"), Index(2), RuleRequiredField("Presentacion.UnidInventa_Requerido", DefaultContexts.Save), VisibleInLookupListView(false),
+        [XafDisplayName("Unidades Inventario"), Index(2), VisibleInLookupListView(false),
            ToolTip("Cantidad de Unidades de Inventario para el presentacion")]
         public decimal Unidades
         {
@@ -67,7 +64,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
 
         bool activo;
         [DbType("bit"), Persistent("Activo")]
-        [XafDisplayName("Activo"), Index(3), RuleRequiredField("Presentacion.Activo_Requerido", "Save")]
+        [XafDisplayName("Activo"), Index(3)]
         public bool Activo
         {
             get => activo;
@@ -76,7 +73,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
 
         bool defecto;
         [DbType("bit"), Persistent("Defecto")]
-        [XafDisplayName("Defecto"), Index(4), RuleRequiredField("Presentacion.Defecto_Requerido", "Save"), ToolTip("Presentacion o presentacion por defecto")]
+        [XafDisplayName("Defecto"), Index(4), ToolTip("Presentacion o presentacion por defecto")]
         public bool Defecto
         {
             get => defecto;

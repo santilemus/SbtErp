@@ -1,21 +1,12 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp;
-using System.ComponentModel;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
-using DevExpress.Persistent.Base;
-using System.Collections.Generic;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
-using SBT.Apps.Base.Module.BusinessObjects;
+using DevExpress.Xpo;
 
 namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 {
-    [DefaultClassOptions, ModelDefault("Caption", "Plan Medico Regla"), Persistent("PlanMedicoDetalle"), 
+    [DefaultClassOptions, ModelDefault("Caption", "Plan Medico Regla"), Persistent("PlanMedicoDetalle"),
         XafDefaultProperty("Regla"), NavigationItem(false), CreatableItem(false)]
     [ImageName("list-info")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
@@ -37,8 +28,8 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
         PlanMedico plan;
         Regla regla;
 
-        
-        [Association("Plan-Detalles"), XafDisplayName("Plan"), Persistent("PlanMedico"), 
+
+        [Association("Plan-Detalles"), XafDisplayName("Plan"), Persistent("PlanMedico"),
             RuleRequiredField("PlanMedicoRegla.Plan_Requerido", "Save")]
         public PlanMedico Plan
         {

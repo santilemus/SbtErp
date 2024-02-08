@@ -1,15 +1,11 @@
-﻿using System;
-using DevExpress.ExpressApp.Actions;
-using SBT.Apps.Base.Module.Controllers;
-
-namespace SBT.Apps.Erp.Module.Web.Controllers
+﻿namespace SBT.Apps.Erp.Module.Web.Controllers
 {
     /// <summary>
     /// ViewController que aplica al BO ActivoMejora para la plataforma web
     /// </summary>
-    public class vcActivoMejora: ViewControllerBaseWeb
+    public class vcActivoMejora : ViewControllerBaseWeb
     {
-        public vcActivoMejora(): base()
+        public vcActivoMejora() : base()
         {
 
         }

@@ -1,13 +1,7 @@
 ﻿using DevExpress.Data.Filtering;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DevExpress.Xpo;
 using SBT.Apps.Contabilidad.Module.BusinessObjects;
-using DevExpress.ExpressApp;
-using SBT.Apps.Base.Module.BusinessObjects;
+using System;
 
 namespace SBT.Apps.Contabilidad.Module
 {

@@ -6,7 +6,6 @@ using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using System;
 using System.ComponentModel;
-using System.Linq;
 
 namespace SBT.Apps.Producto.Module.BusinessObjects
 {
@@ -27,12 +26,6 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
             cantidad = 0.0m;
             cantidadAnulada = 0.0m;
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
-        }
-
-        protected override void OnSaving()
-        {
-            base.OnSaving();
-            //DevExpress.Persistent.BaseImpl.DistributedIdGeneratorHelper.Generate()
         }
 
         #region Propiedades

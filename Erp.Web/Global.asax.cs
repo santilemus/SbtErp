@@ -1,26 +1,25 @@
-﻿using System;
+﻿using DevExpress.ExpressApp;
+using DevExpress.ExpressApp.Security;
+using DevExpress.ExpressApp.SystemModule;
+using DevExpress.ExpressApp.Web;
+using DevExpress.ExpressApp.Web.SystemModule;
+using DevExpress.Persistent.Base;
+using DevExpress.Web;
+using SBT.Apps.Base.Module.BusinessObjects;
+using System;
 using System.Configuration;
-using System.Web.Configuration;
-using System.Web;
 using System.Web.Routing;
 
-using DevExpress.ExpressApp;
-using DevExpress.Persistent.Base;
-using DevExpress.Persistent.BaseImpl;
-using DevExpress.ExpressApp.Security;
-using DevExpress.ExpressApp.Web;
-using DevExpress.Web;
-using DevExpress.ExpressApp.SystemModule;
-using DevExpress.ExpressApp.Web.SystemModule;
-using SBT.Apps.Base.Module.BusinessObjects;
-using DevExpress.ExpressApp.Web.Controls;
-
-namespace SBT.Apps.Erp.Web {
-    public class Global : System.Web.HttpApplication {
-        public Global() {
+namespace SBT.Apps.Erp.Web
+{
+    public class Global : System.Web.HttpApplication
+    {
+        public Global()
+        {
             InitializeComponent();
         }
-        protected void Application_Start(Object sender, EventArgs e) {
+        protected void Application_Start(Object sender, EventArgs e)
+        {
             DevExpress.ExpressApp.FrameworkSettings.DefaultSettingsCompatibilityMode = DevExpress.ExpressApp.FrameworkSettingsCompatibilityMode.Latest;
             RouteTable.Routes.RegisterXafRoutes();
             ASPxWebControl.CallbackError += new EventHandler(Application_Error);
@@ -28,7 +27,8 @@ namespace SBT.Apps.Erp.Web {
             DevExpress.ExpressApp.Web.TestScripts.TestScriptsManager.EasyTestEnabled = true;
 #endif
         }
-        protected void Session_Start(Object sender, EventArgs e) {
+        protected void Session_Start(Object sender, EventArgs e)
+        {
             Tracing.Initialize();
             FrameworkSettings.DefaultSettingsCompatibilityMode = FrameworkSettingsCompatibilityMode.Latest;
             WebApplication.SetInstance(Session, new ErpAspNetApplication());
@@ -36,12 +36,13 @@ namespace SBT.Apps.Erp.Web {
             security.RegisterXPOAdapterProviders();
 
             // agregado el 27/07/2022 para reducir el acceso a la bd por los permisos, cargar el modelo solo al inicio
-            security.PermissionsReloadMode = PermissionsReloadMode.CacheOnFirstAccess;  
+            security.PermissionsReloadMode = PermissionsReloadMode.CacheOnFirstAccess;
             WebApplication.Instance.EnableModelCache = true;
             //---
             DevExpress.ExpressApp.Web.Templates.DefaultVerticalTemplateContentNew.ClearSizeLimit();
             WebApplication.Instance.SwitchToNewStyle();
-            if(ConfigurationManager.ConnectionStrings["Erp"] != null) {
+            if (ConfigurationManager.ConnectionStrings["Erp"] != null)
+            {
                 WebApplication.Instance.ConnectionString = ConfigurationManager.ConnectionStrings["Erp"].ConnectionString;
 
             }
@@ -54,7 +55,8 @@ namespace SBT.Apps.Erp.Web {
             }
 #endif
 #if DEBUG
-            if (System.Diagnostics.Debugger.IsAttached && WebApplication.Instance.CheckCompatibilityType == CheckCompatibilityType.DatabaseSchema) {
+            if (System.Diagnostics.Debugger.IsAttached && WebApplication.Instance.CheckCompatibilityType == CheckCompatibilityType.DatabaseSchema)
+            {
                 WebApplication.Instance.DatabaseUpdateMode = DatabaseUpdateMode.UpdateDatabaseAlways;
             }
 #endif
@@ -77,20 +79,26 @@ namespace SBT.Apps.Erp.Web {
             WebApplication.Instance.Setup();
             WebApplication.Instance.Start();
         }
-        protected void Application_BeginRequest(Object sender, EventArgs e) {
+        protected void Application_BeginRequest(Object sender, EventArgs e)
+        {
         }
-        protected void Application_EndRequest(Object sender, EventArgs e) {
+        protected void Application_EndRequest(Object sender, EventArgs e)
+        {
         }
-        protected void Application_AuthenticateRequest(Object sender, EventArgs e) {
+        protected void Application_AuthenticateRequest(Object sender, EventArgs e)
+        {
         }
-        protected void Application_Error(Object sender, EventArgs e) {
+        protected void Application_Error(Object sender, EventArgs e)
+        {
             ErrorHandling.Instance.ProcessApplicationError();
         }
-        protected void Session_End(Object sender, EventArgs e) {
+        protected void Session_End(Object sender, EventArgs e)
+        {
             WebApplication.LogOff(Session);
             WebApplication.DisposeInstance(Session);
         }
-        protected void Application_End(Object sender, EventArgs e) {
+        protected void Application_End(Object sender, EventArgs e)
+        {
         }
 
         #region Eventos para Personalizar Sistema
@@ -193,7 +201,8 @@ namespace SBT.Apps.Erp.Web {
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent() {
+        private void InitializeComponent()
+        {
         }
         #endregion
     }

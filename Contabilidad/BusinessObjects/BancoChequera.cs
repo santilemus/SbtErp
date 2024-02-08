@@ -3,9 +3,7 @@ using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
-using SBT.Apps.Base.Module.BusinessObjects;
 using System;
-using System.Linq;
 
 
 namespace SBT.Apps.Banco.Module.BusinessObjects
@@ -66,14 +64,18 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
             set => SetPropertyValue(nameof(FechaFin), ref fechaFin, value);
         }
 
-        [DbType("int"), Persistent("NumeroInicio"), XafDisplayName("No Primer Cheque"), RuleRequiredField("Chequera.NumeroInicio_Requerido", "Save")]
+        [DbType("int"), Persistent("NumeroInicio"), XafDisplayName("No Primer Cheque")]
+        [RuleValueComparison("BancoChequera.NumeroInicio_Valido", DefaultContexts.Save, ValueComparisonType.LessThan, "[NumeroFin]",
+            ParametersMode.Expression, SkipNullOrEmptyValues = true, CustomMessageTemplate = "Numero Inicio debe ser Menor a Numero Fin")]
         public int NumeroInicio
         {
             get => numeroInicio;
             set => SetPropertyValue(nameof(NumeroInicio), ref numeroInicio, value);
         }
 
-        [DbType("int"), Persistent("NumeroFin"), XafDisplayName("No Ultimo Cheque"), RuleRequiredField("Chequera.NumeroFin_Requerido", "Save")]
+        [DbType("int"), Persistent("NumeroFin"), XafDisplayName("No Ultimo Cheque")]
+        [RuleValueComparison("BancoChequera.NumeroFin_Valido", DefaultContexts.Save, ValueComparisonType.GreaterThan, "[NumeroInicio]", 
+            ParametersMode.Expression, SkipNullOrEmptyValues = true, CustomMessageTemplate = "Numero Fin debe ser mayor Numero Inicio")]
         public int NumeroFin
         {
             get => numeroFin;

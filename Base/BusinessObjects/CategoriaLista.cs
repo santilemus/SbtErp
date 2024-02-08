@@ -1,6 +1,5 @@
 ﻿using DevExpress.ExpressApp.DC;
 using DevExpress.Persistent.Base;
-using System;
 
 namespace SBT.Apps.Base.Module.BusinessObjects
 {
@@ -18,9 +17,9 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [XafDisplayName("Grupo Sanguineo")]
         GrupoSanguineo = 2,
 
-         ///<summary>
-         /// Tipos de Garantía válida que puede presentar un tercero que es cliente al recibir credito
-         ///</summary>
+        ///<summary>
+        /// Tipos de Garantía válida que puede presentar un tercero que es cliente al recibir credito
+        ///</summary>
         [XafDisplayName("Tipo Garantía")]
         [ToolTip("Tipos de Garantía válidos, cuando se vincula a un tercero que es cliente")]
         TipoGarantia = 3,

@@ -4,9 +4,7 @@ using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
-using System;
 using System.ComponentModel;
-using System.Linq;
 
 namespace SBT.Apps.Tercero.Module.BusinessObjects
 {
@@ -82,7 +80,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
             set => SetPropertyValue(nameof(Direccion), ref direccion, value);
         }
 
-        [DbType("bit"), XafDisplayName("Activa"), RuleRequiredField("TerceroDireccion.Activa", "Save"), Index(6),
+        [DbType("bit"), XafDisplayName("Activa"), Index(6),
             VisibleInListView(false), VisibleInLookupListView(false)]
         public bool Activa
         {

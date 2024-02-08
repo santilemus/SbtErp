@@ -3,8 +3,6 @@ using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
-using System;
-using System.Linq;
 
 namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 {
@@ -46,17 +44,10 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
             }
         }
 
-        [RuleRequiredField("MedicoConsultorio.Activo_Requerido", "Save")]
         public System.Boolean Activo
         {
-            get
-            {
-                return _activo;
-            }
-            set
-            {
-                SetPropertyValue("Activo", ref _activo, value);
-            }
+            get => _activo;
+            set => SetPropertyValue(nameof(Activo), ref _activo, value);
         }
         [DevExpress.Xpo.AssociationAttribute("Consultorios-Medico")]
         public Medico Medico

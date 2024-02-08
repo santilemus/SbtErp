@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using DevExpress.Data.Filtering;
-using DevExpress.ExpressApp;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Persistent.Base;
-using DevExpress.ExpressApp.Model;
-using DevExpress.ExpressApp.Editors;
-using DevExpress.Persistent.Validation;
+﻿using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.ConditionalAppearance;
-using SBT.Apps.Base.Module.BusinessObjects;
+using DevExpress.ExpressApp.DC;
+using DevExpress.ExpressApp.Model;
+using DevExpress.Persistent.Base;
+using DevExpress.Persistent.Validation;
+using System;
+using System.ComponentModel;
 
 namespace SBT.Apps.Contabilidad.Module.BusinessObjects
 {
@@ -36,10 +29,10 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
 
         public CierreDiarioParam()
         {
-            
+
         }
 
-        [Browsable(false),  DevExpress.ExpressApp.Data.Key()]
+        [Browsable(false), DevExpress.ExpressApp.Data.Key()]
         public int Oid { get; set; }
 
         [RuleRequiredField("CierreDiarioParams.FechaDesde_Requerido", "Save;DialogOK", "Fecha Desde debe tener un valor")]
@@ -48,21 +41,21 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
 
         [ModelDefault("DisplayFormat", "{0:G}"), ModelDefault("EditMask", "G"), ImmediatePostData(true)]
         [RuleRequiredField("CierreDiarioParams.FechaHasta_Requerido", "Save;DialogOK", "Fecha Hasta debe tener un valor")]
-        [RuleValueComparison("CierreDiarioParams.FechaHasta >= FechaDesde", "Save;DialogOK", 
+        [RuleValueComparison("CierreDiarioParams.FechaHasta >= FechaDesde", "Save;DialogOK",
             ValueComparisonType.GreaterThanOrEqual, "[FechaDesde]", "Fecha Hasta debe ser mayor que Fecha Desde",
             ParametersMode.Expression, SkipNullOrEmptyValues = false, ResultType = ValidationResultType.Error)]
         public DateTime FechaHasta { get; set; }
 
         [FieldSize(2000), XafDisplayName("Bitácora"), ModelDefault("RowCount", "6"), DevExpress.Persistent.Base.ImmediatePostData(true), Browsable(false)]
-        public string   Bitacora { get; set; }
+        public string Bitacora { get; set; }
 
         [Browsable(false)]
         [RuleFromBoolProperty(CustomMessageTemplate = "Fecha Hasta debe ser Mayor o Igual a Fecha Desde y deben ser del mismo mes y año")]
         //[RuleFromBoolProperty("CierreDiarioParams_ValidarPeriodo", "Save;DialogOK", SkipNullOrEmptyValues = false, UsedProperties = "FechaHasta",
         //    CustomMessageTemplate = "Fecha Hasta debe ser mayor o igual a Fecha Desde ")]
         public bool ValidarPeriodo
-        {          
-            get {  return ((FechaDesde == null || FechaHasta == null) || (FechaDesde <= FechaHasta && FechaDesde.Month == FechaHasta.Month)); }
+        {
+            get { return (FechaDesde <= FechaHasta && FechaDesde.Month == FechaHasta.Month); }
         }
 
 

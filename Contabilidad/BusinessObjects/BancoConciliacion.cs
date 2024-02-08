@@ -1,17 +1,11 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp;
-using System.ComponentModel;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
-using DevExpress.Persistent.Base;
-using System.Collections.Generic;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
+using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
+using System;
+using System.ComponentModel;
 
 namespace SBT.Apps.Banco.Module.BusinessObjects
 {
@@ -20,7 +14,7 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
     /// BO que corresponde al encabezado de la conciliaciones bancarias 
     /// </summary>
 
-    [DefaultClassOptions, ModelDefault("Caption", "Conciliación"), NavigationItem("Banco"), DefaultProperty("Fecha"), 
+    [DefaultClassOptions, ModelDefault("Caption", "Conciliación"), NavigationItem("Banco"), DefaultProperty("Fecha"),
         Persistent(nameof(BancoConciliacion))]
     [ImageName(nameof(BancoConciliacion))]
     [CreatableItem(false)]
@@ -54,7 +48,7 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         decimal saldoLibro;
         SBT.Apps.Empleado.Module.BusinessObjects.Empleado autorizo;
         [Persistent(nameof(FechaAutorizo)), DbType("datetime2")]
-        DateTime ? fechaAutorizo = null;
+        DateTime? fechaAutorizo = null;
 
 
         [Association("BancoCuenta-Conciliaciones"), Index(0), XafDisplayName("Número Cuenta"), VisibleInLookupListView(true)]
@@ -119,10 +113,10 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
             get => autorizo;
             set => SetPropertyValue(nameof(Autorizo), ref autorizo, value);
         }
-     
+
         [PersistentAlias(nameof(fechaAutorizo)), XafDisplayName("Fecha Autorizó"), Index(8), VisibleInListView(false)]
         [ModelDefault("DisplayFormat", "{0:G}"), ModelDefault("EditMask", "G")]
-        public DateTime ? FechaAutorizo
+        public DateTime? FechaAutorizo
         {
             get { return fechaAutorizo; }
         }

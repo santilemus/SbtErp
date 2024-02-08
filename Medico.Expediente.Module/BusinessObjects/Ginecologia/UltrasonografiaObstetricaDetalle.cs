@@ -1,21 +1,13 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp;
-using System.ComponentModel;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
-using DevExpress.Persistent.Base;
-using System.Collections.Generic;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
-using DevExpress.Persistent.Validation;
+using DevExpress.Persistent.Base;
+using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
+using System;
 
 namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects.Ginecologia
 {
-    [DefaultClassOptions, ModelDefault("Caption", "Ultrasonografía Obstetrica - Detalle"), 
+    [DefaultClassOptions, ModelDefault("Caption", "Ultrasonografía Obstetrica - Detalle"),
         NavigationItem(false), CreatableItem(false), Persistent(nameof(UltrasonografiaObstetricaDetalle))]
     //[ImageName("BO_Contact")]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
@@ -126,7 +118,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects.Ginecologia
         /// <summary>
         /// Distancia de coronilla a coxis (es lo mismo que LCN)
         /// </summary>
-        [DbType("numeric(10,2)"), XafDisplayName("CRL (mm)"), VisibleInListView(false), 
+        [DbType("numeric(10,2)"), XafDisplayName("CRL (mm)"), VisibleInListView(false),
             ToolTip("Distancia de coronilla a coxis (es lo mismo que LCN)")]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         public decimal Crl

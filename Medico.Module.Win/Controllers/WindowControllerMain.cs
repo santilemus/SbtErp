@@ -1,22 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Drawing;
-using System.Windows.Forms;
-using System.Threading.Tasks;
+﻿using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.Actions;
-using DevExpress.ExpressApp.Utils;
 using DevExpress.ExpressApp.Templates;
-using DevExpress.ExpressApp;
 using System.IO;
+using System.Windows.Forms;
 
 namespace SBT.Apps.Medico.Module.Win.Controllers
 {
     /// <summary>
     /// View controller para la plataforma WinForm de la aplicacion
     /// </summary>
-    public class WindowControllerMain: WindowController
+    public class WindowControllerMain : WindowController
     {
         private SimpleAction saAyuda;
         public WindowControllerMain()

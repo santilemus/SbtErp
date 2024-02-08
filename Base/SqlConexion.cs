@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Configuration;
 using System.Data.SqlClient;
-using System.Configuration;
 
 namespace SBT.Apps.Base.Module
 {
@@ -21,7 +16,7 @@ namespace SBT.Apps.Base.Module
 
         public SqlConnection CreateConnection()
         {
-            string cadenaConexion = ConfigurationManager.ConnectionStrings["Erp"].ConnectionString.Replace("XpoProvider=MSSqlServer;", "");
+            string cadenaConexion = ConfigurationManager.ConnectionStrings["Erp"].ConnectionString.Replace("XpoProvider=MSSqlServer;", string.Empty);
             return new SqlConnection(cadenaConexion);
         }
     }

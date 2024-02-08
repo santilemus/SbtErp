@@ -1,17 +1,11 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp;
-using System.ComponentModel;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
-using DevExpress.Persistent.Base;
-using System.Collections.Generic;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
-using DevExpress.Persistent.Validation;
+using DevExpress.Persistent.Base;
+using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
+using System;
+using System.ComponentModel;
+using System.Linq;
 
 namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 {
@@ -64,7 +58,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
             set => SetPropertyValue(nameof(Nombre), ref nombre, value);
         }
 
-        
+
         [XafDisplayName("Signo"), Index(2)]
         public Signo Signo
         {
@@ -94,7 +88,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
         /// <param name="ColumnaPercentil">Nombre de la columna percentil cuyo valor se a retornar</param>
         /// <returns>El valor de la columna percentil cuyo nombre se recibe en el parametro</returns>
         public decimal ObtenerPercentil(int edadMeses, string columnaPercentil)
-        {          
+        {
             PercentilTablaDetalle pd = Detalles.FirstOrDefault<PercentilTablaDetalle>(x => x.EdadMes == edadMeses);
             if (pd != null && pd.ClassInfo.FindMember(columnaPercentil) != null)
                 return Convert.ToDecimal(pd.GetMemberValue(columnaPercentil));

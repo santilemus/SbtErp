@@ -1,24 +1,16 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp;
-using System.ComponentModel;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
-using DevExpress.Persistent.Base;
-using System.Collections.Generic;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
-using SBT.Apps.Base.Module.BusinessObjects;
+using DevExpress.Xpo;
 using SBT.Apps.Medico.Generico.Module.BusinessObjects;
+using System.ComponentModel;
 
 namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 {
     [DefaultClassOptions, ModelDefault("Caption", "Recordatorio Clínico"), NavigationItem(false), Persistent("RecordatorioClinico"),
         DefaultProperty("Regla"), CreatableItem(false)]
-    [RuleCombinationOfPropertiesIsUnique("RecordatorioClinico.PacientePlanRegla_Unico", DefaultContexts.Save, "Paciente,Regla", 
+    [RuleCombinationOfPropertiesIsUnique("RecordatorioClinico.PacientePlanRegla_Unico", DefaultContexts.Save, "Paciente,Regla",
         CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction, SkipNullOrEmptyValues = false)]
     [ImageName(nameof(RecordatorioClinico))]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
@@ -33,10 +25,11 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         {
             base.AfterConstruction();
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
+            Ajuste = EEstadoRegla.PorDefecto;
         }
 
 
-        EEstadoRegla ajuste = EEstadoRegla.PorDefecto;
+        EEstadoRegla ajuste;
         Regla regla;
         Paciente paciente;
 
@@ -56,8 +49,8 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
             set => SetPropertyValue(nameof(Regla), ref regla, value);
         }
 
-        
-        [DbType("smallint"), Persistent("Ajuste"), XafDisplayName("Ajuste"), RuleRequiredField("RecordatorioClinico.Ajuste_Requerido", "Save")]
+
+        [DbType("smallint"), Persistent("Ajuste"), XafDisplayName("Ajuste")]
         public EEstadoRegla Ajuste
         {
             get => ajuste;

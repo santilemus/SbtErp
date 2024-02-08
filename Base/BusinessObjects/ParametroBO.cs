@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DevExpress.Xpo;
-using DevExpress.Xpo.DB;
-using DevExpress.Xpo.Metadata;
-using DevExpress.ExpressApp.DC;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
+using DevExpress.Xpo;
 
 
 namespace SBT.Apps.Base.Module.BusinessObjects

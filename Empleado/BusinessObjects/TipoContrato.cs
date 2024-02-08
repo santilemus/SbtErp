@@ -1,9 +1,8 @@
 ﻿using DevExpress.ExpressApp.DC;
-using System;
 
 namespace SBT.Apps.Empleado.Module.BusinessObjects
 {
-    public enum TipoContrato 
+    public enum TipoContrato
     {
         [XafDisplayName("Indefinido")]
         Indefinido = 0,

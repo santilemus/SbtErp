@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SBT.Apps.Erp.Module.Web.Controllers
+﻿namespace SBT.Apps.Erp.Module.Web.Controllers
 {
-    public class FacturaCompraListViewControllerWeb: ViewControllerBaseWeb
+    public class FacturaCompraListViewControllerWeb : ViewControllerBaseWeb
     {
-        public FacturaCompraListViewControllerWeb(): base()
+        public FacturaCompraListViewControllerWeb() : base()
         {
             TargetObjectType = typeof(SBT.Apps.Compra.Module.BusinessObjects.CompraFactura);
             TargetViewType = DevExpress.ExpressApp.ViewType.ListView;

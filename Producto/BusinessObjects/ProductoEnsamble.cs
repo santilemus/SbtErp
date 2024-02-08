@@ -1,9 +1,6 @@
 ﻿using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
-using SBT.Apps.Base.Module.BusinessObjects;
-using System;
-using System.Linq;
 
 namespace SBT.Apps.Producto.Module.BusinessObjects
 {
@@ -48,7 +45,6 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         /// Cantidad de Items requeridos por ensamble. En el ejemplo de la silla: son 4 patas
         /// </summary>
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Cantidad")]
-        [RuleRequiredField("ProductoEnsamble.Cantidad_Requerido", "Save")]
         [DbType("numeric(12,2)"), Persistent(nameof(Cantidad))]
         public System.Decimal Cantidad
         {

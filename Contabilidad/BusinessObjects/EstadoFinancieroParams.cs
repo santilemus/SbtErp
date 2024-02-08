@@ -3,16 +3,13 @@ using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
-using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace SBT.Apps.Contabilidad.Module.BusinessObjects 
+namespace SBT.Apps.Contabilidad.Module.BusinessObjects
 {
     [DomainComponent]
     [ModelDefault("Caption", "Generar Estado Financiero - Parámetros")]

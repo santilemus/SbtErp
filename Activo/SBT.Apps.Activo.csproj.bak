@@ -38,40 +38,40 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DevExpress.Data.v20.2">
+    <Reference Include="DevExpress.Data.v21.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.ExpressApp.CloneObject.v20.2">
+    <Reference Include="DevExpress.ExpressApp.CloneObject.Xpo.v21.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.ExpressApp.ConditionalAppearance.v20.2">
+    <Reference Include="DevExpress.ExpressApp.ConditionalAppearance.v21.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.ExpressApp.Objects.v20.2">
+    <Reference Include="DevExpress.ExpressApp.Objects.v21.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.ExpressApp.v20.2">
+    <Reference Include="DevExpress.ExpressApp.v21.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.ExpressApp.Validation.v20.2">
+    <Reference Include="DevExpress.ExpressApp.Validation.v21.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.ExpressApp.ViewVariantsModule.v20.2">
+    <Reference Include="DevExpress.ExpressApp.ViewVariantsModule.v21.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.ExpressApp.Xpo.v20.2">
+    <Reference Include="DevExpress.ExpressApp.Xpo.v21.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.Persistent.Base.v20.2">
+    <Reference Include="DevExpress.Persistent.Base.v21.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.Persistent.BaseImpl.v20.2">
+    <Reference Include="DevExpress.Persistent.BaseImpl.Xpo.v21.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.Printing.v20.2.Core">
+    <Reference Include="DevExpress.Printing.v21.2.Core">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.Xpo.v20.2">
+    <Reference Include="DevExpress.Xpo.v21.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="mscorlib">
@@ -83,19 +83,10 @@
     <Reference Include="System.Core">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="System.Drawing">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
-    <Reference Include="System.Data">
-      <Name>System.Data</Name>
-    </Reference>
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Xml">
-      <Name>System.XML</Name>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessObjects\ActivoAjuste.cs" />
@@ -110,9 +101,7 @@
     <Compile Include="BusinessObjects\EEstadoDepreciacion.cs" />
     <Compile Include="BusinessObjects\ETipoDepreciacion.cs" />
     <Compile Include="DatabaseUpdate\Updater.cs" />
-    <Compile Include="Module.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="Module.cs" />
     <Compile Include="Module.Designer.cs">
       <DependentUpon>Module.cs</DependentUpon>
     </Compile>

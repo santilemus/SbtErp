@@ -7,13 +7,13 @@ using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
+using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.CxC.Module.BusinessObjects;
-using SBT.Apps.Producto.Module.BusinessObjects;
 using SBT.Apps.Inventario.Module.BusinessObjects;
+using SBT.Apps.Producto.Module.BusinessObjects;
 using System;
 using System.ComponentModel;
 using System.Linq;
-using SBT.Apps.Base.Module.BusinessObjects;
 
 namespace SBT.Apps.Facturacion.Module.BusinessObjects
 {
@@ -189,14 +189,6 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
 
         #region Metodos
 
-        //protected override void OnSaving()
-        //{
-        //    bool isObjectMarkedDeleted = this.Session.IsObjectMarkedDeleted(this);
-        //    bool isNewObject = this.Session.IsNewObject(this);
-        //    XPMemberInfo cantidadInfo = this.Session.GetClassInfo(this).GetMember(nameof(Cantidad));
-        //    XPMemberInfo productoInfo = this.Session.GetClassInfo(this).GetMember(nameof(Producto));
-        //}
-
         protected override void DoProductoChanged(bool forceChangeEvents, Producto.Module.BusinessObjects.Producto oldValue)
         {
             base.DoProductoChanged(forceChangeEvents, oldValue);
@@ -214,7 +206,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
                 if (pu == null)
                     pu = Producto.Precios.FirstOrDefault<ProductoPrecio>(p => p.Producto.Oid == Producto.Oid && p.Activo == true);
                 if (pu != null)
-                    PrecioUnidad = pu.PrecioUnitario;               
+                    PrecioUnidad = pu.PrecioUnitario;
             }
             Costo = ObtenerCosto();
             OnChanged(nameof(Costo));

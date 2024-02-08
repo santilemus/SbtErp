@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-
-namespace SBT.Apps.Base.Module.BusinessObjects
+﻿namespace SBT.Apps.Base.Module.BusinessObjects
 {
     /// <summary>
     /// Enumeracion con la clasificacion de los contribuyentes

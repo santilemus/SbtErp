@@ -1,15 +1,13 @@
-﻿using System;
-using DevExpress.ExpressApp.Actions;
-using SBT.Apps.Base.Module.Controllers;
+﻿using SBT.Apps.Base.Module.Controllers;
 
 namespace SBT.Apps.Compra.Module.Controllers
 {
     /// <summary>
     /// View Controller que corresponde a la vista de lista del BO CompraFactura
     /// </summary>
-    public class vcCompraFacturaList: ViewControllerBase
+    public class vcCompraFacturaList : ViewControllerBase
     {
-        public vcCompraFacturaList(): base()
+        public vcCompraFacturaList() : base()
         {
 
         }

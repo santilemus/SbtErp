@@ -1,14 +1,11 @@
-﻿using System;
-using System.Linq;
-
-namespace SBT.Apps.Erp.Module.Web.Controllers
+﻿namespace SBT.Apps.Erp.Module.Web.Controllers
 {
     /// <summary>
     /// Controller para BO EmpresaUnidad. Implementar optimizaciones y funciones especificas de la plataforma web
     /// </summary>
-    public class vcEmpresaUnidadWeb: ViewControllerBaseWeb
+    public class vcEmpresaUnidadWeb : ViewControllerBaseWeb
     {
-        public vcEmpresaUnidadWeb(): base()
+        public vcEmpresaUnidadWeb() : base()
         {
 
         }

@@ -7,7 +7,6 @@ using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Empleado.Module.BusinessObjects;
 using System;
 using System.ComponentModel;
-using System.Linq;
 
 namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 {
@@ -30,6 +29,8 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         public override void AfterConstruction()
         {
             base.AfterConstruction();
+            Tipo = ETipoAccionPersonal.Incapacidad;
+            Estado = EEstadoAccionPersonal.Digitada;
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
@@ -71,7 +72,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         }
 
 
-        [DbType("smallint"), XafDisplayName("Tipo Acción"), RuleRequiredField("AccionPersonal.Tipo_Requerido", DefaultContexts.Save)]
+        [DbType("smallint"), XafDisplayName("Tipo Acción")]
         public ETipoAccionPersonal Tipo
         {
             get => tipo;
@@ -164,7 +165,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
             set => SetPropertyValue(nameof(Observaciones), ref observaciones, value);
         }
 
-        [DbType("smallint"), XafDisplayName("Estado"), RuleRequiredField("AccionPersonal.Estado_Requerido", "Save")]
+        [DbType("smallint"), XafDisplayName("Estado")]
         public EEstadoAccionPersonal Estado
         {
             get => estado;
@@ -228,10 +229,10 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
                 Session.CommitTransaction();
                 Session.Reload(this);
             }
-            catch (Exception e)
+            catch
             {
                 Session.RollbackTransaction();
-                throw e;
+                throw;
             }
         }
 
@@ -258,11 +259,11 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
                 if (Session.InTransaction)
                     Session.CommitTransaction();
             }
-            catch (Exception e)
+            catch
             {
                 if (Session.InTransaction)
                     Session.RollbackTransaction();
-                throw e;
+                throw;
             }
         }
 

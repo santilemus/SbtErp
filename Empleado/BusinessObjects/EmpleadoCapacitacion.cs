@@ -3,7 +3,6 @@ using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using System;
-using System.Linq;
 
 namespace SBT.Apps.Empleado.Module.BusinessObjects
 {
@@ -77,7 +76,6 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
 
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Días de Duración")]
-        [RuleRequiredField("EmpleadoCapacitacion.DiasDuracion_Requerido", "Save")]
         public System.Int16 DiasDuracion
         {
             get

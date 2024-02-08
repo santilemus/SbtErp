@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SBT.Apps.Base.Module.BusinessObjects
+﻿namespace SBT.Apps.Base.Module.BusinessObjects
 {
     public enum TipoPersona
     {

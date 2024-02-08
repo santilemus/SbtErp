@@ -1,6 +1,4 @@
 ﻿using DevExpress.ExpressApp.DC;
-using System;
-using System.Linq;
 
 namespace SBT.Apps.Activo.Module.BusinessObjects
 {

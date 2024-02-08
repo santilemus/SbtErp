@@ -1,229 +1,215 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{C18FC14B-9FF4-4495-BCCD-F1625D2FD187}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SBT.Apps.Medico.Module</RootNamespace>
-    <AssemblyName>SBT.Apps.Medico.Module</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <UpgradeBackupLocation>
-    </UpgradeBackupLocation>
-    <OldToolsVersion>3.5</OldToolsVersion>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'EasyTest|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\EasyTest\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;EASYTEST</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="DevExpress.Dashboard.v21.2.Core, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.DataAccess.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.ExpressApp.AuditTrail.Xpo.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.ExpressApp.Chart.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.ExpressApp.CloneObject.Xpo.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.ExpressApp.ConditionalAppearance.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.ExpressApp.Dashboards.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.ExpressApp.Notifications.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.ExpressApp.Objects.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.ExpressApp.PivotGrid.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.ExpressApp.ReportsV2.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.ExpressApp.Scheduler.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.ExpressApp.Security.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.ExpressApp.Validation.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.ExpressApp.ViewVariantsModule.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.ExpressApp.Security.Xpo.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="DevExpress.ExpressApp.Xpo.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="DevExpress.Pdf.v21.2.Core">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.Office.v21.2.Core">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.RichEdit.v21.2.Core">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.RichEdit.v21.2.Export">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.Printing.v21.2.Core">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.Data.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.ExpressApp.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.Persistent.Base.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.Persistent.BaseImpl.Xpo.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.Data.Desktop.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Utils.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Xpo.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.Charts.v21.2.Core, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraCharts.v21.2.Wizard, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraCharts.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.PivotGrid.v21.2.Core, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Sparkline.v21.2.Core, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.CodeParser.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraPrinting.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Utils.v21.2.UI, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraReports.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraReports.v21.2.Extensions, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraScheduler.v21.2.Core.Desktop, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraScheduler.v21.2.Core, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="System">
-      <Name>System</Name>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="CustomAuthentication.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="medicoModule.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="medicoModule.Designer.cs">
-      <DependentUpon>medicoModule.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="DatabaseUpdate\Updater.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Model.DesignedDiffs.xafml">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="medicoModule.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>medicoModule.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\licenses.licx" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="DatabaseUpdate\ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="BusinessObjects\ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Controllers\ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="FunctionalTests\MedicoLogon.inc" />
-    <None Include="FunctionalTests\Empresa_Telefono_Create.ets" />
-    <None Include="FunctionalTests\ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="FunctionalTests\sample.ets" />
-    <None Include="Images\ReadMe.txt" />
-    <None Include="packages.config" />
-    <None Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="FunctionalTests\config.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="UnusableNodes1.xml">
-      <DependentUpon>Model.DesignedDiffs.xafml</DependentUpon>
-      <SubType>Designer</SubType>
-    </None>
-    <Content Include="Welcome.html" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Base\SBT.Apps.Base.csproj">
-      <Project>{A538FE93-206D-4869-BC40-FDC561F8C1D1}</Project>
-      <Name>SBT.Apps.Base</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Empleado\SBT.Apps.Empleado.csproj">
-      <Project>{05f004d2-9388-44db-a756-2ffb2eccae07}</Project>
-      <Name>SBT.Apps.Empleado</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Medico.Expediente.Module\SBT.Apps.Medico.Expediente.Module.csproj">
-      <Project>{E00D3D65-8A67-4F8A-88D1-2E262226D807}</Project>
-      <Name>SBT.Apps.Medico.Expediente.Module</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Medico.Generico.Module\SBT.Apps.Medico.Generico.Module.csproj">
-      <Project>{241955B7-7FFC-4F17-AEFA-613AD3E97826}</Project>
-      <Name>SBT.Apps.Medico.Generico.Module</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Producto\SBT.Apps.Producto.csproj">
-      <Project>{90D73CB9-2F45-473C-8FEE-AF118BB56C89}</Project>
-      <Name>SBT.Apps.Producto</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Tercero\SBT.Apps.Tercero.csproj">
-      <Project>{5f15837d-d1e5-44dc-92f0-4f2ebe9c3f8d}</Project>
-      <Name>SBT.Apps.Tercero</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<OutputType>Library</OutputType>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<AssemblyTitle>SBT.Apps.Medico.Module</AssemblyTitle>
+		<Company>Smart Business Technology, S.A de C.V</Company>
+		<Product>SBT.Apps.Medico.Module</Product>
+		<Copyright>Copyright © 2020</Copyright>
+		<AssemblyVersion>2.0.*</AssemblyVersion>
+		<FileVersion>2.0.0.0</FileVersion>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'EasyTest|AnyCPU' ">
+		<DebugSymbols>true</DebugSymbols>
+		<OutputPath>bin\EasyTest\</OutputPath>
+		<DefineConstants>TRACE;DEBUG;EASYTEST</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug Net6|AnyCPU'">
+		<OutputPath>bin\Debug Net6\</OutputPath>
+	</PropertyGroup>
+	<ItemGroup>
+	  <None Remove="Images\account_book.png" />
+	  <None Remove="Images\account_book_32x32.png" />
+	  <None Remove="Images\address_book.png" />
+	  <None Remove="Images\address_book_32x32.png" />
+	  <None Remove="Images\archive-customer.png" />
+	  <None Remove="Images\archive-customer_32x32.png" />
+	  <None Remove="Images\archive-man.png" />
+	  <None Remove="Images\archive-man_32x32.png" />
+	  <None Remove="Images\bank-to_vendor.png" />
+	  <None Remove="Images\bank-to_vendor_32x32.png" />
+	  <None Remove="Images\bank.png" />
+	  <None Remove="Images\bank_32x32.png" />
+	  <None Remove="Images\bill-key.png" />
+	  <None Remove="Images\bill-key_32x32.png" />
+	  <None Remove="Images\book_open.png" />
+	  <None Remove="Images\book_open_32x32.png" />
+	  <None Remove="Images\business_report.png" />
+	  <None Remove="Images\business_report_32x32.png" />
+	  <None Remove="Images\capsula2.png" />
+	  <None Remove="Images\capsula2_32x32.png" />
+	  <None Remove="Images\ccmedico.png" />
+	  <None Remove="Images\ccmedico_32x32.png" />
+	  <None Remove="Images\comment-info.png" />
+	  <None Remove="Images\comment-info_32x32.png" />
+	  <None Remove="Images\company-employee.png" />
+	  <None Remove="Images\company-employee_32x32.png" />
+	  <None Remove="Images\company-info.png" />
+	  <None Remove="Images\company-info_32x32.png" />
+	  <None Remove="Images\credit_card-to_bank.png" />
+	  <None Remove="Images\credit_card-to_bank_32x32.png" />
+	  <None Remove="Images\electrocardiograma.png" />
+	  <None Remove="Images\electrocardiograma_32x32.png" />
+	  <None Remove="Images\employees.png" />
+	  <None Remove="Images\employees_32x32.png" />
+	  <None Remove="Images\employee_man-certificate.png" />
+	  <None Remove="Images\employee_man-certificate_32x32.png" />
+	  <None Remove="Images\employee_man-info.png" />
+	  <None Remove="Images\employee_man-info_32x32.png" />
+	  <None Remove="Images\employee_woman-favorite2.png" />
+	  <None Remove="Images\employee_woman-favorite2_32x32.png" />
+	  <None Remove="Images\examenfis.png" />
+	  <None Remove="Images\examenfis_32x32.png" />
+	  <None Remove="Images\list-info.png" />
+	  <None Remove="Images\list-info_32x32.png" />
+	  <None Remove="Images\list-key.png" />
+	  <None Remove="Images\list-key_32x32.png" />
+	  <None Remove="Images\list.png" />
+	  <None Remove="Images\list_32x32.png" />
+	  <None Remove="Images\medicamento.png" />
+	  <None Remove="Images\medicamento_32x32.png" />
+	  <None Remove="Images\medico.png" />
+	  <None Remove="Images\medico_32x32.png" />
+	  <None Remove="Images\med_especialista.png" />
+	  <None Remove="Images\med_especialista_32x32.png" />
+	  <None Remove="Images\money.png" />
+	  <None Remove="Images\money_32x32.png" />
+	  <None Remove="Images\phone.png" />
+	  <None Remove="Images\phone_32x32.png" />
+	  <None Remove="Images\place_blue.png" />
+	  <None Remove="Images\place_blue_32x32.png" />
+	  <None Remove="Images\planning-customer.png" />
+	  <None Remove="Images\planning-customer_32x32.png" />
+	  <None Remove="Images\proforma.png" />
+	  <None Remove="Images\proforma_32x32.png" />
+	  <None Remove="Images\prueba_lab.png" />
+	  <None Remove="Images\prueba_lab_32x32.png" />
+	  <None Remove="Images\signo.png" />
+	  <None Remove="Images\signo_32x32.png" />
+	  <None Remove="Images\user_group.png" />
+	  <None Remove="Images\user_group_32x32.png" />
+	  <None Remove="Images\user_id-certificate.png" />
+	  <None Remove="Images\user_id-certificate_32x32.png" />
+	  <None Remove="Images\user_id-info.png" />
+	  <None Remove="Images\user_id-info_32x32.png" />
+	  <None Remove="Images\vacunas.png" />
+	  <None Remove="Images\vacunas_32x32.png" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Update="CustomAuthentication.cs" />
+		<Compile Update="medicoModule.cs" />
+		<Compile Update="medicoModule.Designer.cs">
+			<DependentUpon>medicoModule.cs</DependentUpon>
+		</Compile>
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Update="medicoModule.resx">
+			<DependentUpon>medicoModule.cs</DependentUpon>
+		</EmbeddedResource>
+		<EmbeddedResource Include="Images\account_book.png" />
+		<EmbeddedResource Include="Images\account_book_32x32.png" />
+		<EmbeddedResource Include="Images\address_book.png" />
+		<EmbeddedResource Include="Images\address_book_32x32.png" />
+		<EmbeddedResource Include="Images\archive-customer.png" />
+		<EmbeddedResource Include="Images\archive-customer_32x32.png" />
+		<EmbeddedResource Include="Images\archive-man.png" />
+		<EmbeddedResource Include="Images\archive-man_32x32.png" />
+		<EmbeddedResource Include="Images\bank-to_vendor.png" />
+		<EmbeddedResource Include="Images\bank-to_vendor_32x32.png" />
+		<EmbeddedResource Include="Images\bank.png" />
+		<EmbeddedResource Include="Images\bank_32x32.png" />
+		<EmbeddedResource Include="Images\bill-key.png" />
+		<EmbeddedResource Include="Images\bill-key_32x32.png" />
+		<EmbeddedResource Include="Images\book_open.png" />
+		<EmbeddedResource Include="Images\book_open_32x32.png" />
+		<EmbeddedResource Include="Images\business_report.png" />
+		<EmbeddedResource Include="Images\business_report_32x32.png" />
+		<EmbeddedResource Include="Images\capsula2.png" />
+		<EmbeddedResource Include="Images\capsula2_32x32.png" />
+		<EmbeddedResource Include="Images\ccmedico.png" />
+		<EmbeddedResource Include="Images\ccmedico_32x32.png" />
+		<EmbeddedResource Include="Images\comment-info.png" />
+		<EmbeddedResource Include="Images\comment-info_32x32.png" />
+		<EmbeddedResource Include="Images\company-employee.png" />
+		<EmbeddedResource Include="Images\company-employee_32x32.png" />
+		<EmbeddedResource Include="Images\company-info.png" />
+		<EmbeddedResource Include="Images\company-info_32x32.png" />
+		<EmbeddedResource Include="Images\credit_card-to_bank.png" />
+		<EmbeddedResource Include="Images\credit_card-to_bank_32x32.png" />
+		<EmbeddedResource Include="Images\electrocardiograma.png" />
+		<EmbeddedResource Include="Images\electrocardiograma_32x32.png" />
+		<EmbeddedResource Include="Images\employees.png" />
+		<EmbeddedResource Include="Images\employees_32x32.png" />
+		<EmbeddedResource Include="Images\employee_man-certificate.png" />
+		<EmbeddedResource Include="Images\employee_man-certificate_32x32.png" />
+		<EmbeddedResource Include="Images\employee_man-info.png" />
+		<EmbeddedResource Include="Images\employee_man-info_32x32.png" />
+		<EmbeddedResource Include="Images\employee_woman-favorite2.png" />
+		<EmbeddedResource Include="Images\employee_woman-favorite2_32x32.png" />
+		<EmbeddedResource Include="Images\examenfis.png" />
+		<EmbeddedResource Include="Images\examenfis_32x32.png" />
+		<EmbeddedResource Include="Images\list-info.png" />
+		<EmbeddedResource Include="Images\list-info_32x32.png" />
+		<EmbeddedResource Include="Images\list-key.png" />
+		<EmbeddedResource Include="Images\list-key_32x32.png" />
+		<EmbeddedResource Include="Images\list.png" />
+		<EmbeddedResource Include="Images\list_32x32.png" />
+		<EmbeddedResource Include="Images\medicamento.png" />
+		<EmbeddedResource Include="Images\medicamento_32x32.png" />
+		<EmbeddedResource Include="Images\medico.png" />
+		<EmbeddedResource Include="Images\medico_32x32.png" />
+		<EmbeddedResource Include="Images\med_especialista.png" />
+		<EmbeddedResource Include="Images\med_especialista_32x32.png" />
+		<EmbeddedResource Include="Images\money.png" />
+		<EmbeddedResource Include="Images\money_32x32.png" />
+		<EmbeddedResource Include="Images\phone.png" />
+		<EmbeddedResource Include="Images\phone_32x32.png" />
+		<EmbeddedResource Include="Images\place_blue.png" />
+		<EmbeddedResource Include="Images\place_blue_32x32.png" />
+		<EmbeddedResource Include="Images\planning-customer.png" />
+		<EmbeddedResource Include="Images\planning-customer_32x32.png" />
+		<EmbeddedResource Include="Images\proforma.png" />
+		<EmbeddedResource Include="Images\proforma_32x32.png" />
+		<EmbeddedResource Include="Images\prueba_lab.png" />
+		<EmbeddedResource Include="Images\prueba_lab_32x32.png" />
+		<EmbeddedResource Include="Images\signo.png" />
+		<EmbeddedResource Include="Images\signo_32x32.png" />
+		<EmbeddedResource Include="Images\user_group.png" />
+		<EmbeddedResource Include="Images\user_group_32x32.png" />
+		<EmbeddedResource Include="Images\user_id-certificate.png" />
+		<EmbeddedResource Include="Images\user_id-certificate_32x32.png" />
+		<EmbeddedResource Include="Images\user_id-info.png" />
+		<EmbeddedResource Include="Images\user_id-info_32x32.png" />
+		<EmbeddedResource Include="Images\vacunas.png" />
+		<EmbeddedResource Include="Images\vacunas_32x32.png" />
+		<EmbeddedResource Include="Properties\licenses.licx" />
+		<EmbeddedResource Include="Model.DesignedDiffs.xafml" />
+	</ItemGroup>
+	<ItemGroup>
+		<Content Include="FunctionalTests\MedicoLogon.inc" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Medico.Expediente.Module\SBT.Apps.Medico.Expediente.Module.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="DevExpress.Data" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.Chart" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.CloneObject.Xpo" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.CodeAnalysis" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.ConditionalAppearance" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.Objects" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.ReportsV2" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.Security.Xpo" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.Validation" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.ViewVariantsModule" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.Xpo" Version="23.1.3" />
+		<PackageReference Include="DevExpress.Persistent.Base" Version="23.1.3" />
+		<PackageReference Include="DevExpress.Persistent.BaseImpl.Xpo" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.AuditTrail.Xpo" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.Dashboards" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.Notifications" Version="23.1.3" />
+		<PackageReference Include="DevExpress.Printing.Core" Version="23.1.3" />
+	</ItemGroup>
 </Project>

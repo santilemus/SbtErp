@@ -1,8 +1,6 @@
-﻿using System;
-using DevExpress.ExpressApp;
+﻿using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.Actions;
 using SBT.Apps.Base.Module.BusinessObjects;
-using SBT.Apps.Base.Module.Controllers;
 using SBT.Apps.Compra.Module.BusinessObjects;
 using SBT.Apps.CxP.Module.BusinessObjects;
 
@@ -11,11 +9,11 @@ namespace SBT.Apps.Compra.Module.Controllers
     /// <summary>
     /// View Controller que aplica a la vista de detalle del BO CompraFactura
     /// </summary>
-    public class vcCompraFacturaDetail: ViewController<DetailView>
+    public class vcCompraFacturaDetail : ViewController<DetailView>
     {
         private PopupWindowShowAction pwsaPagoAplicar;
         const string key = "Inactivo";
-        public vcCompraFacturaDetail(): base()
+        public vcCompraFacturaDetail() : base()
         {
             TargetObjectType = typeof(SBT.Apps.Compra.Module.BusinessObjects.CompraFactura);
             pwsaPagoAplicar = new PopupWindowShowAction(this, "saPagoAplicar", DevExpress.Persistent.Base.PredefinedCategory.RecordEdit.ToString());
@@ -28,7 +26,7 @@ namespace SBT.Apps.Compra.Module.Controllers
         {
             base.OnActivated();
             pwsaPagoAplicar.CustomizePopupWindowParams += PwsaPagoAplicar_CustomizePopupWindowParams;
-            pwsaPagoAplicar.Active[key] = (View.ObjectTypeInfo.Type == typeof(SBT.Apps.Compra.Module.BusinessObjects.CompraFactura) && 
+            pwsaPagoAplicar.Active[key] = (View.ObjectTypeInfo.Type == typeof(SBT.Apps.Compra.Module.BusinessObjects.CompraFactura) &&
                                            View.ObjectSpace.IsNewObject(View.CurrentObject));
             pwsaPagoAplicar.Execute += PwsaPagoAplicar_Execute;
         }

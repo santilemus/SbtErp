@@ -1,14 +1,11 @@
-﻿using System;
-using System.Linq;
-
-namespace SBT.Apps.Erp.Module.Web.Controllers
+﻿namespace SBT.Apps.Erp.Module.Web.Controllers
 {
     /// <summary>
     /// View Controller Empleado. Para implementar optimizaciones y funciones propias de la plataforma web
     /// </summary>
-    public class vcEmpleadoWeb: ViewControllerBaseWeb
+    public class vcEmpleadoWeb : ViewControllerBaseWeb
     {
-        public vcEmpleadoWeb(): base()
+        public vcEmpleadoWeb() : base()
         {
 
         }

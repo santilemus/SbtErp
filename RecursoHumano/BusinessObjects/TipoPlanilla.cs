@@ -4,9 +4,7 @@ using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
-using System;
 using System.ComponentModel;
-using System.Linq;
 
 namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 {
@@ -28,12 +26,15 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         {
             base.AfterConstruction();
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
+            Clase = EClasePlanilla.Salarios;
+            FormaPago = EFormaPago.Quincenal;
+            Activo = true;
         }
 
         #region Propiedades
         string nombre;
-        EFormaPago formaPago = EFormaPago.Quincenal;
-        bool activo = true;
+        EFormaPago formaPago;
+        bool activo;
 
 
 #if (Firebird)
@@ -61,7 +62,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 #else
         [DbType("smallint"), Persistent("Clase")]
 #endif
-        [XafDisplayName("Clase Planilla"), Index(2), RuleRequiredField("TipoPlanilla.Clase", "Save")]
+        [XafDisplayName("Clase Planilla"), Index(2)]
         public EClasePlanilla Clase
         {
             get
@@ -79,7 +80,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 #else
         [DbType("smallint"), Persistent("FormaPago")]
 #endif
-        [XafDisplayName("Forma de Pago"), RuleRequiredField("TipoPlanilla.FormaPago_Requerido", DefaultContexts.Save)]
+        [XafDisplayName("Forma de Pago")]
         public EFormaPago FormaPago
         {
             get => formaPago;
@@ -100,7 +101,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 #else
         [DbType("bit"), Persistent("Activo")]
 #endif
-        [XafDisplayName("Activo"), RuleRequiredField("TipoPlanilla.Activo_Requerido", "Save")]
+        [XafDisplayName("Activo")]
         public bool Activo
         {
             get => activo;
@@ -118,6 +119,10 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
                 return GetCollection<OperacionTipoPlanilla>(nameof(Operaciones));
             }
         }
+
+        //[Association("TipoPlanilla-Planillas"), XafDisplayName("Planillas")]
+        //public XPCollection<Planilla> Planillas => GetCollection<Planilla>(nameof(Planillas));
+
         #endregion
 
         //[Action(Caption = "My UI Action", ConfirmationMessage = "Are you sure?", ImageName = "Attention", AutoCommit = true)]

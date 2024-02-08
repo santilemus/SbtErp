@@ -1,14 +1,11 @@
-﻿using DevExpress.XtraScheduler;
-using DevExpress.ExpressApp;
+﻿using DevExpress.ExpressApp;
+using DevExpress.ExpressApp.Actions;
 using DevExpress.ExpressApp.Scheduler.Win;
-using DevExpress.Persistent.Base.General;
+using DevExpress.XtraScheduler;
+using DevExpress.XtraScheduler.Exchange;
 using SBT.Apps.Medico.Expediente.Module.BusinessObjects;
 using System;
-using System.Windows.Forms;
-using DevExpress.XtraScheduler.Outlook;
-using DevExpress.XtraScheduler.Outlook.Interop;
-using DevExpress.XtraScheduler.Exchange;
-using DevExpress.ExpressApp.Actions;
+using System.Runtime.Versioning;
 
 namespace SBT.Apps.Medico.Module.Win.Controllers
 {
@@ -22,6 +19,7 @@ namespace SBT.Apps.Medico.Module.Win.Controllers
     /// https://github.com/DevExpress-Examples/how-to-synchronize-appointments-with-outlook-in-a-multi-user-application-e699 // revisar este 
     /// https://github.com/DevExpress-Examples/synchronization-with-ms-outlook-a-demonstration-example-t158895
     /// </remarks>
+    [SupportedOSPlatform("windows")]
     public class vcCitaWin : ObjectViewController<DevExpress.ExpressApp.ListView, Cita>
     {
         private const string OutlookEntryIDFieldName = "OutlookID"; // revisarlo despues porque sera un campo del BO y aun no se tiene
@@ -29,7 +27,7 @@ namespace SBT.Apps.Medico.Module.Win.Controllers
         private SimpleAction saImportFromOutlook;
         private SchedulerListEditor listEditor;
 
-        public vcCitaWin(): base()
+        public vcCitaWin() : base()
         {
             saExportToOutlook = new SimpleAction(this, "saExportToOutlook", DevExpress.Persistent.Base.PredefinedCategory.RecordEdit);
             saExportToOutlook.Caption = "Exportar a Outlook";
@@ -75,6 +73,7 @@ namespace SBT.Apps.Medico.Module.Win.Controllers
             saImportFromOutlook.Dispose();
             base.Dispose(disposing);
         }
+
 
         private void ExportToOutlook_Execute(Object sender, SimpleActionExecuteEventArgs e)
         {
@@ -167,7 +166,7 @@ namespace SBT.Apps.Medico.Module.Win.Controllers
                         logInfo += " (Operation canceled)";
                     }
                        FIN COMENTARIO SELM
-                    */ 
+                    */
                     break;
                 case SynchronizeOperation.Delete:
                     logInfo += (toScheduler ? "->Scheduler (Deleting)" : "->Outlook (Deleting)");

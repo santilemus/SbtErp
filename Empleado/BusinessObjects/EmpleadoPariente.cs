@@ -3,7 +3,6 @@ using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using System;
-using System.Linq;
 
 namespace SBT.Apps.Empleado.Module.BusinessObjects
 {
@@ -84,7 +83,6 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
         }
 
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
-        [RuleRequiredField("EmpleadoPariente.Beneficiario_requerido", "Save")]
         public System.Boolean Beneficiario
         {
             get

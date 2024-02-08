@@ -1,16 +1,11 @@
-﻿using System;
-using DevExpress.ExpressApp.Actions;
-using SBT.Apps.Base.Module.BusinessObjects;
-
-
-namespace SBT.Apps.Erp.Module.Web.Controllers
+﻿namespace SBT.Apps.Erp.Module.Web.Controllers
 {
     /// <summary>
     /// ViewController que aplica a la plataforma web para el BO VentaDetalle
     /// </summary>
-    public class vcVentaDetalleWeb: ViewControllerBaseWeb
+    public class vcVentaDetalleWeb : ViewControllerBaseWeb
     {
-        public vcVentaDetalleWeb(): base()
+        public vcVentaDetalleWeb() : base()
         {
 
         }

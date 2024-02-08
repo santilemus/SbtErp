@@ -52,8 +52,6 @@ namespace SBT.Apps.Medico.Module {
             this.RequiredModuleTypes.Add(typeof(SBT.Apps.Empleado.Module.EmpleadoModule));
             this.RequiredModuleTypes.Add(typeof(SBT.Apps.Tercero.Module.TerceroModule));
             this.RequiredModuleTypes.Add(typeof(SBT.Apps.Producto.Module.ProductoModule));
-            this.RequiredModuleTypes.Add(typeof(DevExpress.ExpressApp.Chart.ChartModule));
-            this.RequiredModuleTypes.Add(typeof(DevExpress.ExpressApp.PivotGrid.PivotGridModule));
             this.RequiredModuleTypes.Add(typeof(DevExpress.ExpressApp.Dashboards.DashboardsModule));
 
 		}

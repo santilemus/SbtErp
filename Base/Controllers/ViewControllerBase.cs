@@ -4,7 +4,6 @@ using DevExpress.ExpressApp.Actions;
 using DevExpress.ExpressApp.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using System;
-using System.Linq;
 
 namespace SBT.Apps.Base.Module.Controllers
 {
@@ -25,7 +24,6 @@ namespace SBT.Apps.Base.Module.Controllers
     /// </remarks>
     public class ViewControllerBase : ViewController
     {
-        private SimpleAction saPurgeRecord;
         public ViewControllerBase()
         {
             DoInitializeComponent();
@@ -36,9 +34,13 @@ namespace SBT.Apps.Base.Module.Controllers
             base.OnActivated();
             // revisar, se agrego aquí para no tenerlo repetido en cada vc, pero si da problemas habrá que quitarlo
             // Es para filtrar los datos para la empresa de la sesion y evitar que se mezclen cuando hay más de una empresa
+            int empresaOid = 0;
+            if (SecuritySystem.CurrentUser != null && SecuritySystem.CurrentUser is SBT.Apps.Base.Module.BusinessObjects.Usuario &&
+                ((Usuario)SecuritySystem.CurrentUser).Empresa != null)
+                empresaOid = ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid;
             if ((string.Compare(View.GetType().Name, "ListView", StringComparison.Ordinal) == 0) && (((ListView)View).ObjectTypeInfo.FindMember("Empresa") != null) &&
                 !(((ListView)View).CollectionSource.Criteria.ContainsKey("Empresa Actual")) && SecuritySystem.CurrentUser != null)
-                ((ListView)View).CollectionSource.Criteria["Empresa Actual"] = CriteriaOperator.Parse("[Empresa.Oid] = ?", ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid);
+                ((ListView)View).CollectionSource.Criteria["Empresa Actual"] = CriteriaOperator.Parse("[Empresa.Oid] = ?", empresaOid);
         }
 
         protected override void OnDeactivated()
@@ -63,28 +65,6 @@ namespace SBT.Apps.Base.Module.Controllers
         }
 
         /// <summary>
-        /// Crea el Action para pugar los registros.
-        /// </summary>
-        /// <remarks>
-        /// NO VA AQUI...PORQUE LA ACCION BORRA TODOS LOS OBJETOS DE LOS DIFERENTES BO, cuando no tienen referencia y
-        /// por lo tanto no es correcto definirlo en este viewcontroller ni los heredados. Evaluar si en el WindowController
-        /// se puede incorporar
-        /// </remarks>
-        protected void CreatePurgeRecordAction()
-        {
-            if (saPurgeRecord == null)
-            {
-                saPurgeRecord = new SimpleAction(this, "saPurgeRecord", DevExpress.Persistent.Base.PredefinedCategory.Tools.ToString());
-                saPurgeRecord.Caption = "Purgar";
-                saPurgeRecord.ImageName = "trash-bin";
-                saPurgeRecord.TargetViewType = ViewType.ListView;
-                saPurgeRecord.PaintStyle = DevExpress.ExpressApp.Templates.ActionItemPaintStyle.Image;
-                saPurgeRecord.SelectionDependencyType = SelectionDependencyType.Independent;
-                saPurgeRecord.ConfirmationMessage = "Esta seguro de purgar los objetos borrados?";
-            }
-        }
-
-        /// <summary>
         /// Desplegar un mensaje con el resultado de la ejecución de un acción, valido en plataforma Windows y Web
         /// </summary>
         /// <param name="AMsg">Si necesita desplega algún valor debe formatear el mensaje con los valores a desplegar</param>
@@ -95,7 +75,7 @@ namespace SBT.Apps.Base.Module.Controllers
         /// </remarks>
         private void DoMensaje(InformationType AType, string AMsg, string ACaption)
         {
-            MessageOptions options = new MessageOptions
+            MessageOptions options = new()
             {
                 Duration = 2000,
                 Message = AMsg,
@@ -129,17 +109,5 @@ namespace SBT.Apps.Base.Module.Controllers
             DoMensaje(InformationType.Warning, AMsg, "Advertencia");
         }
 
-        /// <summary>
-        /// Purgar los registros de la eliminacion diferida, cuando los BO se implementan con XPO
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void SaPurgeRecord_Execute(object sender, SimpleActionExecuteEventArgs e)
-        {
-            if (View.ObjectSpace is XPObjectSpace)
-                (View.ObjectSpace as XPObjectSpace).Session.PurgeDeletedObjects();
-            else
-                throw new NotImplementedException();
-        }
     }
 }

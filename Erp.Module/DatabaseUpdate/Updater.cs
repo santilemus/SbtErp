@@ -6,7 +6,6 @@ using DevExpress.ExpressApp.Xpo;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.BaseImpl;
 using DevExpress.Persistent.BaseImpl.PermissionPolicy;
-using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using System;
 using System.Linq;
@@ -102,7 +101,7 @@ namespace SBT.Apps.Erp.Module.DatabaseUpdate
             if (Convert.ToInt16(iCant) == 0)
             {
                 emp = ObjectSpace.CreateObject<Empresa>();
-                emp.RazonSocial = "SBT Technology, SA de CV";
+                emp.RazonSocial = "El Torogoz, SA de CV";
                 var zg = ObjectSpace.FindObject<ZonaGeografica>(new BinaryOperator("Codigo", "SLV"));
                 if (zg != null)
                     emp.Pais = zg;

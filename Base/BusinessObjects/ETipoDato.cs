@@ -1,5 +1,4 @@
-﻿using System;
-using DevExpress.ExpressApp.DC;
+﻿using DevExpress.ExpressApp.DC;
 
 namespace SBT.Apps.Base.Module.BusinessObjects
 {
@@ -8,7 +7,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [XafDisplayName("bool")]
         tBoolean = 1,
         [XafDisplayName("int")]
-        tInt32  = 2,
+        tInt32 = 2,
         [XafDisplayName("decimal")]
         tDecimal = 3,
         [XafDisplayName("DateTime")]

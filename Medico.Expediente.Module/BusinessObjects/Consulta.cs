@@ -8,7 +8,6 @@ using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using System;
 using System.ComponentModel;
-using System.Linq;
 
 namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 {
@@ -30,7 +29,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 
     [ListViewFilter("Consulta Medica. En Espera", "[Estado] = 'Espera'", "Esperando Turno con Medico", "Consultas procesadas por recepción y esperando turno con medico asignado")]
     [ListViewFilter("Consulta Medica. Iniciada", "[Estado] == 'Iniciada'", "Pacientes en consultorios", "Pacientes que estan siendo atendidos")]
-    [ListViewFilter("Consulta Medica. Paciente siendo atendido", "[Estado] == 'Iniciada' && [Medico.Oid] == EmpleadoActualOid()", 
+    [ListViewFilter("Consulta Medica. Paciente siendo atendido", "[Estado] == 'Iniciada' && [Medico.Oid] == EmpleadoActualOid()",
         "Paciente con su Medico", "Consulta atendida por medico de la sesión")]
     [ListViewFilter("Consulta Medica. Finalizada", "[Estado] == 'Finalizada'", "Consultas finalizadas", "Consultas que el medico ha dado por finalizadas")]
     [ListViewFilter("Consulta Medica. Cancelada", "[Estado] == 'Cancelada'", "Consultas Canceladas", "Pacientes que se retiraron antes de pasar consulta")]

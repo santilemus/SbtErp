@@ -8,7 +8,6 @@ using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Facturacion.Module.BusinessObjects;
 using System;
 using System.ComponentModel;
-using System.Linq;
 
 
 namespace SBT.Apps.CxC.Module.BusinessObjects
@@ -40,6 +39,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         {
             base.AfterConstruction();
             autorizacionDocumento = null;
+            Estado = ECxCTransaccionEstado.Digitado;
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
@@ -225,7 +225,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
             set => SetPropertyValue(nameof(Referencia), ref referencia, value);
         }
 
-        [DbType("smallint"), XafDisplayName("Estado"), Index(13), RuleRequiredField("CxCTransaccion.Estado_Requerido", "Save")]
+        [DbType("smallint"), XafDisplayName("Estado"), Index(13)]
         [DetailViewLayout("Datos Pago", LayoutGroupType.SimpleEditorsGroup, 1)]
         public ECxCTransaccionEstado Estado
         {

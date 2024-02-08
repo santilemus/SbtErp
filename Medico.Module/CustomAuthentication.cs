@@ -4,7 +4,6 @@ using DevExpress.ExpressApp.Security;
 using SBT.Apps.Base.Module.BusinessObjects;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace SBT.Apps.Medico.Module
 {

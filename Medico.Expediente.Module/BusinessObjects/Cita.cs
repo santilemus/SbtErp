@@ -2,8 +2,6 @@
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using SBT.Apps.Medico.Generico.Module.BusinessObjects;
-using System;
-using System.Linq;
 
 
 /// <Notas>
@@ -55,7 +53,6 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
             }
         }
 
-        [RuleRequiredField("Cita.SePresento_Requerido", "Save")]
         public System.Boolean SePresento
         {
             get => _sePresento;

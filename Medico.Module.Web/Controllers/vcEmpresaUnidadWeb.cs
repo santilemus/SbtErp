@@ -1,13 +1,10 @@
-﻿using System;
-
-
-namespace SBT.Apps.Medico.Module.Web.Controllers
+﻿namespace SBT.Apps.Medico.Module.Web.Controllers
 {
     /// <summary>
     /// ViewController Web EmpresaUnidad. Para implementar ajustes y funciones propias de la plataforma web
     /// </summary>
     /// 
-    public class vcEmpresaUnidadWeb: ViewControllerBaseWeb
+    public class vcEmpresaUnidadWeb : ViewControllerBaseWeb
     {
         public vcEmpresaUnidadWeb() : base()
         {

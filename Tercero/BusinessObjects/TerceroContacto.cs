@@ -1,8 +1,6 @@
 ﻿using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
-using System;
-using System.Linq;
 
 namespace SBT.Apps.Tercero.Module.BusinessObjects
 {
@@ -63,7 +61,6 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
         }
 
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(true)]
-        [RuleRequiredField("TerceroContacto.Activo_Requerido", "Save")]
         public System.Boolean Activo
         {
             get => activo;

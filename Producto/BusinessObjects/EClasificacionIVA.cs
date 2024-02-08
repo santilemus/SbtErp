@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SBT.Apps.Producto.Module.BusinessObjects
+﻿namespace SBT.Apps.Producto.Module.BusinessObjects
 {
     /// <summary>
     /// Enumeracion EClasificacioIVA

@@ -39,10 +39,7 @@ namespace SBT.Apps.Medico.Web
         private Tercero.Module.TerceroModule terceroModule1;
         private Producto.Module.ProductoModule productoModule1;
         private DevExpress.ExpressApp.Validation.Web.ValidationAspNetModule validationAspNetModule1;
-        private DevExpress.ExpressApp.TreeListEditors.TreeListEditorsModuleBase treeListEditorsModuleBase1;
-        private DevExpress.ExpressApp.TreeListEditors.Web.TreeListEditorsAspNetModule treeListEditorsAspNetModule1;
         private DevExpress.ExpressApp.Office.OfficeModule officeModule1;
-        private DevExpress.ExpressApp.Chart.ChartModule chartModule1;
         private DevExpress.ExpressApp.ViewVariantsModule.ViewVariantsModule viewVariantsModule;
 
         private void InitializeDefaults()
@@ -147,10 +144,7 @@ namespace SBT.Apps.Medico.Web
             this.terceroModule1 = new SBT.Apps.Tercero.Module.TerceroModule();
             this.productoModule1 = new SBT.Apps.Producto.Module.ProductoModule();
             this.validationAspNetModule1 = new DevExpress.ExpressApp.Validation.Web.ValidationAspNetModule();
-            this.treeListEditorsModuleBase1 = new DevExpress.ExpressApp.TreeListEditors.TreeListEditorsModuleBase();
-            this.treeListEditorsAspNetModule1 = new DevExpress.ExpressApp.TreeListEditors.Web.TreeListEditorsAspNetModule();
             this.officeModule1 = new DevExpress.ExpressApp.Office.OfficeModule();
-            this.chartModule1 = new DevExpress.ExpressApp.Chart.ChartModule();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             // 
             // securityStrategyComplex1
@@ -217,11 +211,9 @@ namespace SBT.Apps.Medico.Web
             this.Modules.Add(this.schedulerModuleBase);
             this.Modules.Add(this.validationModule);
             this.Modules.Add(this.viewVariantsModule);
-            this.Modules.Add(this.treeListEditorsModuleBase1);
             this.Modules.Add(this.officeModule1);
             this.Modules.Add(this.baseModule1);
             this.Modules.Add(this.genericoModule1);
-            this.Modules.Add(this.chartModule1);
             this.Modules.Add(this.expedienteModule1);
             this.Modules.Add(this.empleadoModule1);
             this.Modules.Add(this.terceroModule1);
@@ -233,7 +225,6 @@ namespace SBT.Apps.Medico.Web
             this.Modules.Add(this.reportsAspNetModuleV2);
             this.Modules.Add(this.schedulerAspNetModule);
             this.Modules.Add(this.validationAspNetModule1);
-            this.Modules.Add(this.treeListEditorsAspNetModule1);
             this.Modules.Add(this.module4);
             this.Modules.Add(this.securityModule1);
             this.Security = this.securityStrategyComplex1;

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-
-namespace SBT.Apps.Erp.Module.Web.Controllers
+﻿namespace SBT.Apps.Erp.Module.Web.Controllers
 {
     /// <summary>
     /// ViewController Web Empresa. Para implementar ajustes y funciones propias de la plataforma web

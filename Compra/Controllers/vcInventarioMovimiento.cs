@@ -1,14 +1,14 @@
 ﻿using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.Actions;
-using SBT.Apps.Base.Module.Controllers;
 using DevExpress.Persistent.Base;
+using SBT.Apps.Base.Module.Controllers;
+using SBT.Apps.Compra.Module.BusinessObjects;
 using SBT.Apps.Inventario.Module.BusinessObjects;
 using SBT.Apps.Producto.Module.BusinessObjects;
 using System;
 using System.ComponentModel;
 using System.Linq;
-using SBT.Apps.Compra.Module.BusinessObjects;
 
 namespace SBT.Apps.Inventario.Module.Controllers
 {
@@ -19,7 +19,7 @@ namespace SBT.Apps.Inventario.Module.Controllers
     {
         private SimpleAction saIngresoDesdeOrdenCompra;
         private SimpleAction saIngresoDesdeFactura;
-        public vcInventarioMovimiento(): base()
+        public vcInventarioMovimiento() : base()
         {
 
         }
@@ -146,7 +146,7 @@ namespace SBT.Apps.Inventario.Module.Controllers
         {
             if (string.IsNullOrEmpty(item.CodigoLote))
                 return;
-            InventarioLote lote = ObjectSpace.FindObject<InventarioLote>(new BinaryOperator("CodigoLote", item.CodigoLote)); 
+            InventarioLote lote = ObjectSpace.FindObject<InventarioLote>(new BinaryOperator("CodigoLote", item.CodigoLote));
             if (lote == null)
             {
                 lote = ObjectSpace.CreateObject<InventarioLote>();
@@ -160,7 +160,7 @@ namespace SBT.Apps.Inventario.Module.Controllers
                 }
             }
 
-            if (item.Movimiento.TipoMovimiento.Operacion == ETipoOperacionInventario.Entrada || 
+            if (item.Movimiento.TipoMovimiento.Operacion == ETipoOperacionInventario.Entrada ||
                 item.Movimiento.TipoMovimiento.Operacion == ETipoOperacionInventario.Inicial)
             {
                 if (ObjectSpace.IsNewObject(item) || !item.IsDeleted)
@@ -186,7 +186,7 @@ namespace SBT.Apps.Inventario.Module.Controllers
                 MostrarInformacion("La orden de compra no tiene detalles para generar el ingreso a bodega");
                 return;
             }
-            foreach(OrdenCompraDetalle item in docInventario.OrdenCompra.Detalles)
+            foreach (OrdenCompraDetalle item in docInventario.OrdenCompra.Detalles)
             {
                 InventarioMovimientoDetalle ingresoDetalle = ObjectSpace.CreateObject<InventarioMovimientoDetalle>();
                 ingresoDetalle.OrdenCompraItem = item;
@@ -204,7 +204,7 @@ namespace SBT.Apps.Inventario.Module.Controllers
                 MostrarInformacion("La factura no tiene detalles para generar el ingreso a bodega");
                 return;
             }
-            foreach(CompraFacturaDetalle item in docInventario.Factura.Detalles)
+            foreach (CompraFacturaDetalle item in docInventario.Factura.Detalles)
             {
                 InventarioMovimientoDetalle ingresoDetalle = ObjectSpace.CreateObject<InventarioMovimientoDetalle>();
                 ingresoDetalle.FacturaItem = item;

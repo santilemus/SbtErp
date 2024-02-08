@@ -6,7 +6,6 @@ using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using System;
 using System.ComponentModel;
-using System.Linq;
 
 namespace SBT.Apps.Tercero.Module.BusinessObjects
 {
@@ -33,6 +32,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
         public override void AfterConstruction()
         {
             base.AfterConstruction();
+            Vigente = false;
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
@@ -152,7 +152,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
             set => SetPropertyValue(nameof(Comentario), ref comentario, value);
         }
 
-        [DbType("bit"), XafDisplayName("Vigente"), RuleRequiredField("TerceroCredito.Vigente_Requerido", "Save"), Index(9)]
+        [DbType("bit"), XafDisplayName("Vigente"), Index(9)]
         public bool Vigente
         {
             get => vigente;

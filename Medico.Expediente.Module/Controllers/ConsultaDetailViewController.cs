@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SBT.Apps.Medico.Expediente.Module.BusinessObjects;
+﻿using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.Actions;
-using DevExpress.ExpressApp;
 using SBT.Apps.Base.Module.BusinessObjects;
+using SBT.Apps.Medico.Expediente.Module.BusinessObjects;
+using System;
 
 namespace SBT.Apps.Medico.Expediente.Module.Controllers
 {
     /// <summary>
     /// View Controller que corresponde a las vistas de detalle del BO Consulta
     /// </summary>
-    public class ConsultaDetailViewController: ViewController<DetailView>
+    public class ConsultaDetailViewController : ViewController<DetailView>
     {
         private SimpleAction saCancelarConsulta;
         private SimpleAction saIniciarConsulta;
@@ -62,7 +58,7 @@ namespace SBT.Apps.Medico.Expediente.Module.Controllers
                     return;
                 var medicoSesion = ((Usuario)SecuritySystem.CurrentUser).GetMemberValue("Empleado") as SBT.Apps.Medico.Generico.Module.BusinessObjects.Medico;
                 // falta validar que la propiedad Medico del currentObject no sea nulo, para evitar errores desagradables
-                if (medicoSesion != null && ((Consulta)View.CurrentObject).Medico.Oid == medicoSesion.Oid && 
+                if (medicoSesion != null && ((Consulta)View.CurrentObject).Medico.Oid == medicoSesion.Oid &&
                     (((Consulta)View.CurrentObject).Estado == EEstadoConsulta.Iniciada || ((Consulta)View.CurrentObject).Estado == EEstadoConsulta.Espera))
                     ((Consulta)View.CurrentObject).Estado = EEstadoConsulta.Finalizada;
             }

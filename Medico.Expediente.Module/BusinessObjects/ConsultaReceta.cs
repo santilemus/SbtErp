@@ -2,10 +2,7 @@
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
-using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Medico.Generico.Module.BusinessObjects;
-using System;
-using System.Linq;
 
 namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 {
@@ -130,7 +127,6 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
             }
         }
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Muestra Médica")]
-        [RuleRequiredField("ConsultaReceta.MuestraMedica_Requerido", "Save")]
         [VisibleInListView(false)]
         public System.Boolean MuestraMedica
         {
@@ -143,7 +139,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
                 SetPropertyValue("MuestraMedica", ref _muestraMedica, value);
             }
         }
-        [RuleRequiredField("ConsultaReceta.Cantidad_Requerido", "Save"), DbType("numeric(12,2)")]
+        [DbType("numeric(12,2)")]
         public System.Decimal Cantidad
         {
             get

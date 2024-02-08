@@ -7,8 +7,6 @@ using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Tercero.Module.BusinessObjects;
 using System;
-using System.ComponentModel;
-using System.Linq;
 
 
 namespace SBT.Apps.Empleado.Module.BusinessObjects
@@ -32,12 +30,15 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
             Salario = 0.0m;
             TipoSalario = TipoSalario.Mensual;
             Pensionado = false;
+            TipoContrato = TipoContrato.Indefinido;
+            TipoCuenta = ETipoCuentaBanco.Ahorros;
+            cargo = null;
         }
 
-        AFP aFP;
-        EDiaDescanso diaDescanso;
-        Banco banco;
-        Cargo cargo;
+        //private AFP aFP;
+        private EDiaDescanso diaDescanso;
+        //private Banco banco;
+        private Cargo cargo;
         private EmpresaUnidad unidad;
         private Empresa empresa;
         private Listas estado;
@@ -47,9 +48,9 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
         private System.String numeroCarne;
         private System.Boolean pensionado;
         private System.String numeroCuenta;
-        private ETipoCuentaBanco tipoCuenta = ETipoCuentaBanco.Ahorros;
-        private ZonaGeografica nacionalidad;
-        private TipoContrato tipoContrato = TipoContrato.Indefinido;
+        private ETipoCuentaBanco tipoCuenta;
+        //private ZonaGeografica nacionalidad;
+        private TipoContrato tipoContrato;
 
         public Empleado(DevExpress.Xpo.Session session)
           : base(session)
@@ -104,7 +105,6 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
 
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
-        [RuleRequiredField("Empleado.TipoSalario_requerido", DefaultContexts.Save, "Tipo de Salario es requerido")]
         public TipoSalario TipoSalario
         {
             get => tipoSalario;
@@ -123,7 +123,6 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
         }
 
         [ModelDefault("Caption", "Tipo Contrato"), VisibleInDetailView(true), VisibleInLookupListView(false), VisibleInReports(true)]
-        [RuleRequiredField("Empleado.TipoContrato_Requerido", DefaultContexts.Save, "TipoContrato es Requerido")]
         public TipoContrato TipoContrato
         {
             get => tipoContrato;
@@ -144,7 +143,7 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [DataSourceCriteria("[ZonaPadre] is null and [Activa] = true")]
         //[ExplicitLoading]
-        [Delayed]
+        [Delayed(true)]
         public ZonaGeografica Nacionalidad
         {
             get => GetDelayedPropertyValue<ZonaGeografica>(nameof(Nacionalidad));
@@ -153,7 +152,7 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
 
         [XafDisplayName("Banco"), VisibleInListView(false)]
         //[ExplicitLoading]
-        [Delayed]
+        [Delayed(true)]
         public Banco Banco
         {
             get => GetDelayedPropertyValue<Banco>(nameof(Banco));
@@ -177,7 +176,6 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
             get => numeroCuenta;
             set => SetPropertyValue(nameof(NumeroCuenta), ref numeroCuenta, value);
         }
-        [RuleRequiredField("Empleado.Pensionado_requerido", DefaultContexts.Save, "Estado Pensionado es requerido")]
         [VisibleInListView(false)]
         public System.Boolean Pensionado
         {
@@ -213,7 +211,7 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
 
 
         [XafDisplayName("AFP"), VisibleInListView(false)]
-        [Delayed]
+        [Delayed(true)]
         public AFP AFP
         {
             get => GetDelayedPropertyValue<AFP>(nameof(AFP));

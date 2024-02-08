@@ -1,7 +1,6 @@
 ﻿using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.Updating;
 using System;
-using System.Linq;
 
 namespace SBT.Apps.Producto.Module.DatabaseUpdate
 {

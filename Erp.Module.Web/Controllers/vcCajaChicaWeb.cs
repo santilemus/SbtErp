@@ -1,14 +1,11 @@
-﻿using System;
-using System.Linq;
-
-namespace SBT.Apps.Erp.Module.Web.Controllers
+﻿namespace SBT.Apps.Erp.Module.Web.Controllers
 {
     /// <summary>
     /// View Controller para BO CajaChica. Implementar optimizaciones y funciones de la plataforma web
     /// </summary>
-    public class vcCajaChicaWeb: ViewControllerBaseWeb
+    public class vcCajaChicaWeb : ViewControllerBaseWeb
     {
-        public vcCajaChicaWeb(): base()
+        public vcCajaChicaWeb() : base()
         {
 
         }

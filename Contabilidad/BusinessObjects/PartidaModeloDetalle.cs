@@ -1,11 +1,11 @@
-﻿using System;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Persistent.Base;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
+using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Contabilidad.BusinessObjects;
+using System;
 namespace SBT.Apps.Contabilidad.Module.BusinessObjects
 {
     /// <summary>
@@ -94,7 +94,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             set => SetPropertyValue(nameof(ExpresionItem), ref expresionItem, value);
         }
 
-        
+
         [Size(50), Persistent(nameof(ValorItem)), XafDisplayName("Valor Item")]
         [RuleRequiredField("PartidaModeloDetalle.ValorItem_Requerido", DefaultContexts.Save, TargetCriteria = "[PartidaModelo.TipoModelo] = 1",
             SkipNullOrEmptyValues = true)]

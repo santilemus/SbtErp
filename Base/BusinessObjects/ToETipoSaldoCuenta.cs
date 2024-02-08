@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using DevExpress.Xpo.Metadata;
+﻿using DevExpress.Xpo.Metadata;
+using System;
 
 namespace SBT.Apps.Contabilidad.BusinessObjects
 {
@@ -8,7 +7,7 @@ namespace SBT.Apps.Contabilidad.BusinessObjects
     /// Clase que implementa la conversión de tipo de una propiedad del objeto persistente al tipo de dato
     /// en la base de datos, en este caso es un varchar(1)
     /// </summary>
-    public class ToETipoSaldoCuenta: ValueConverter
+    public class ToETipoSaldoCuenta : ValueConverter
     {
         /// <summary>
         /// Convierte una propiedad persistente de tipo entero, al tipo que debe guardarse en la base de datos (en este caso varchar(1))

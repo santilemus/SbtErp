@@ -1,9 +1,7 @@
-﻿using DevExpress.ExpressApp.Actions;
-using DevExpress.Persistent.Base;
-using System;
-using System.Linq;
-using DevExpress.ExpressApp;
+﻿using DevExpress.ExpressApp;
+using DevExpress.ExpressApp.Actions;
 using DevExpress.ExpressApp.Office.Web;
+using DevExpress.Persistent.Base;
 using DevExpress.Web.ASPxRichEdit;
 
 namespace SBT.Apps.Erp.Module.Web.Controllers
@@ -11,7 +9,7 @@ namespace SBT.Apps.Erp.Module.Web.Controllers
     /// <summary>
     /// ViewController Web BugReport. Para agilizar el control aspxrichtexteditor al ocultar el  Ribbon
     /// </summary>
-    public class vcBugReportShowRibbonController: ObjectViewController<ListView, SBT.Apps.Base.Module.BusinessObjects.BugReport>
+    public class vcBugReportShowRibbonController : ObjectViewController<ListView, SBT.Apps.Base.Module.BusinessObjects.BugReport>
     {
         public vcBugReportShowRibbonController()
         {

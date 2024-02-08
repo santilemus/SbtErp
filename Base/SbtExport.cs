@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SBT.Apps.Base.Module.BusinessObjects;
-using DevExpress.Data.Filtering;
+﻿using DevExpress.Data.Filtering;
 using DevExpress.Xpo;
-using DevExpress.Xpo.Metadata;
-using DevExpress.Xpo.Metadata.Helpers;
-using System.Collections;
+using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 namespace SBT.Apps.Base.Module
 {
@@ -85,7 +79,7 @@ namespace SBT.Apps.Base.Module
         private string CsvHeaderAdd()
         {
             if (!ExportHeader)
-                return "";
+                return string.Empty;
             string sHeader = string.Empty;
             int x = Properties.Count;
             for (int c = 0; c < x - 1; c++)
@@ -110,7 +104,7 @@ namespace SBT.Apps.Base.Module
                     sValue = colDef.Length == 0 ? Convert.ToString(value) : Convert.ToString(value).Substring(0, colDef.Length - 1);
                 else
                     sValue = colDef.Length == 0 ? string.Format(colDef.Format, value) : string.Format(colDef.Format, value).Substring(0, colDef.Length - 1);
-                sRow += string.Concat(sValue, idx < (x - 1) ? Separator : "");
+                sRow += string.Concat(sValue, idx < (x - 1) ? Separator : string.Empty);
             }
             return sRow;
         }
@@ -152,7 +146,7 @@ namespace SBT.Apps.Base.Module
     {
         public ColumnDefinition()
         {
-            
+
         }
 
         public ColumnDefinition(SbtExport AOwner, string APropertyName)
@@ -180,8 +174,9 @@ namespace SBT.Apps.Base.Module
         private SbtExport fOwner;
         private string fPropertyName;
         private bool fExportEnumValue;
-        public SbtExport Owner 
-        {   get => fOwner; 
+        public SbtExport Owner
+        {
+            get => fOwner;
             set
             {
                 if (value != null)
@@ -193,9 +188,9 @@ namespace SBT.Apps.Base.Module
             }
         }
         public int Length { get; set; }
-        public string PropertyName 
-        { 
-            get => fPropertyName; 
+        public string PropertyName
+        {
+            get => fPropertyName;
             set
             {
                 if (Owner.BOClass == null)
@@ -212,8 +207,8 @@ namespace SBT.Apps.Base.Module
         public string Caption { get; set; }
         public int Index { get; set; }
         public string Format { get; set; }
-        public bool ExportEnumValue 
-        { 
+        public bool ExportEnumValue
+        {
             get => fExportEnumValue;
             set
             {
@@ -221,7 +216,7 @@ namespace SBT.Apps.Base.Module
                     fExportEnumValue = value;
                 else
                     fExportEnumValue = false;
-            } 
+            }
         }
 
 

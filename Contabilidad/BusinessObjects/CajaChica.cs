@@ -1,18 +1,10 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp;
-using System.ComponentModel;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
-using DevExpress.Persistent.Base;
-using System.Collections.Generic;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
+using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
-using SBT.Apps.Empleado.Module.BusinessObjects;
+using System.ComponentModel;
 
 namespace SBT.Apps.Banco.Module.BusinessObjects
 {
@@ -95,7 +87,7 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
 
         [DbType("money"), Persistent("MaximoGasto"), XafDisplayName("Gasto Máximo"), Index(5),
             ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2"),
-            RuleRange("CajaChica.MaximoGasto > 0 y <= MontoFondo", DefaultContexts.Save, "0", "MontoFondo", 
+            RuleRange("CajaChica.MaximoGasto > 0 y <= MontoFondo", DefaultContexts.Save, "0", "MontoFondo",
             ParametersMode.Expression, SkipNullOrEmptyValues = false)]
         public decimal MaximoGasto
         {
@@ -103,9 +95,9 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
             set => SetPropertyValue(nameof(MaximoGasto), ref maximoGasto, value);
         }
 
-        [DbType("money"), Persistent("MinimoDisponible"), XafDisplayName("MinimoDisponible"), Index(6), 
+        [DbType("money"), Persistent("MinimoDisponible"), XafDisplayName("MinimoDisponible"), Index(6),
             ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2"),
-            RuleRange("CajaChica.MinimoDisponible >= MaximoGasto y <= MontoFondo", DefaultContexts.Save, "MaximoGasto", "MontoFondo", 
+            RuleRange("CajaChica.MinimoDisponible >= MaximoGasto y <= MontoFondo", DefaultContexts.Save, "MaximoGasto", "MontoFondo",
             ParametersMode.Expression, SkipNullOrEmptyValues = false)]
         public decimal MinimoDisponible
         {

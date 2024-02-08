@@ -1,10 +1,13 @@
-﻿using DevExpress.ExpressApp.DC;
+﻿using DevExpress.ExpressApp;
+using DevExpress.ExpressApp.DC;
+using DevExpress.ExpressApp.Security;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.BaseImpl.PermissionPolicy;
-using DevExpress.Xpo;
-using System;
-using System.ComponentModel;
 using DevExpress.Persistent.Validation;
+using DevExpress.Xpo;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 
 namespace SBT.Apps.Base.Module.BusinessObjects
 {
@@ -15,15 +18,21 @@ namespace SBT.Apps.Base.Module.BusinessObjects
     [DefaultClassOptions(), DefaultProperty("UserName"), DevExpress.ExpressApp.Model.ModelDefault("Caption", "Usuarios - Empresa"),
         NavigationItem(false), CreatableItem(false)]
     [Persistent(@"Usuario")]
-    [RuleCriteria("Usuario_Prevent_delete_logged_in_user", DefaultContexts.Delete, "[Oid] != CurrentUserId()", 
+    [DevExpress.Xpo.MapInheritance(MapInheritanceType.ParentTable)]
+    [RuleCriteria("Usuario_Prevent_delete_logged_in_user", DefaultContexts.Delete, "[Oid] != CurrentUserId()",
         "No puede borrar el usuario con el cual inicio la sesion actual. Por favor, ingreso con otra cuenta de usuario y reintente la operación.")]
-    public class Usuario : PermissionPolicyUser
+    public class Usuario : PermissionPolicyUser, IObjectSpaceLink, ISecurityUserWithLoginInfo
     {
         public Usuario(Session session) : base(session) { }
 
         public override void AfterConstruction()
         {
             base.AfterConstruction();
+        }
+
+        public ISecurityUserLoginInfo CreateUserLoginInfo(string loginProviderName, string providerUserKey)
+        {
+            throw new System.NotImplementedException();
         }
 
         private Empresa empresa;
@@ -43,6 +52,27 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         {
             get => agencia;
             set => SetPropertyValue(nameof(Agencia), ref agencia, value);
+        }
+        IObjectSpace IObjectSpaceLink.ObjectSpace { get; set; }
+
+
+        [Browsable(false)]
+        [DevExpress.Xpo.Aggregated, Association("User-LoginInfo")]
+        public XPCollection<ApplicationUserLoginInfo> LoginInfo
+        {
+            get { return GetCollection<ApplicationUserLoginInfo>(nameof(LoginInfo)); }
+        }
+
+        IEnumerable<ISecurityUserLoginInfo> UserLogins => LoginInfo.OfType<ISecurityUserLoginInfo>();
+        IEnumerable<ISecurityUserLoginInfo> IOAuthSecurityUser.UserLogins => LoginInfo.OfType<ISecurityUserLoginInfo>();
+
+        ISecurityUserLoginInfo ISecurityUserWithLoginInfo.CreateUserLoginInfo(string loginProviderName, string providerUserKey)
+        {
+            ApplicationUserLoginInfo result = ((IObjectSpaceLink)this).ObjectSpace.CreateObject<ApplicationUserLoginInfo>();
+            result.LoginProviderName = loginProviderName;
+            result.ProviderUserKey = providerUserKey;
+            result.User = this;
+            return result;
         }
     }
 

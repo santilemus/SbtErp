@@ -1,25 +1,17 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp;
-using System.ComponentModel;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
-using DevExpress.Persistent.Base;
-using System.Collections.Generic;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
+using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
-using SBT.Apps.Empleado.Module.BusinessObjects;
+using System.ComponentModel;
 
 namespace SBT.Apps.CxC.Module.BusinessObjects
 {
     /// <summary>
     /// Cuenta por Cobrar. BO para la definicion de las carteras de cuentas por cobrar
     /// </summary>
-    [DefaultClassOptions, ModelDefault("Caption", "Cartera CxC"), NavigationItem("Cuenta por Cobrar"), 
+    [DefaultClassOptions, ModelDefault("Caption", "Cartera CxC"), NavigationItem("Cuenta por Cobrar"),
         DefaultProperty(nameof(Nombre)), Persistent(nameof(Cartera))]
     [ImageName(nameof(Cartera))]
     [CreatableItem(false)]
@@ -35,6 +27,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         {
             base.AfterConstruction();
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
+            Activa = true;
         }
 
         #region Propiedades
@@ -80,7 +73,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
             set => SetPropertyValue(nameof(Tipo), ref tipo, value);
         }
 
-        [DbType("bit"), XafDisplayName("Activa"), Index(4), RuleRequiredField("Cartera.Activa_Requerido", DefaultContexts.Save)]
+        [DbType("bit"), XafDisplayName("Activa"), Index(4)]
         public bool Activa
         {
             get => activa;

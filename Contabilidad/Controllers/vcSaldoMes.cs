@@ -1,10 +1,9 @@
-﻿using System;
-using DevExpress.Data.Filtering;
+﻿using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp;
-using DevExpress.ExpressApp.Actions;
 using DevExpress.ExpressApp.SystemModule;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Base.Module.Controllers;
+using System;
 
 namespace SBT.Apps.Contabilidad.Module.Controllers
 {
@@ -15,13 +14,13 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
     /// Ver desactivacion de action predefinidos
     /// https://docs.devexpress.com/eXpressAppFramework/112728/ui-construction/controllers-and-actions/actions/how-to-deactivate-hide-an-action-in-code
     /// </remarks>
-    public class vcSaldoMes: ViewControllerBase
+    public class vcSaldoMes : ViewControllerBase
     {
         private DeleteObjectsViewController deleteObjectController;
         private NewObjectViewController newObjectController;
         private ModificationsController modificationController;
         private const string Key = "Desactivar";
-        public vcSaldoMes(): base()
+        public vcSaldoMes() : base()
         {
 
         }

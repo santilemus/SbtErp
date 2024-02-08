@@ -1,12 +1,10 @@
-﻿using System;
+﻿using DevExpress.Web;
+using SBT.Apps.Base.Module.BusinessObjects;
+using SBT.Apps.Iva.Module.Controllers;
+using System;
 using System.IO;
 using System.Text;
-using SBT.Apps.Base.Module.BusinessObjects;
-using SBT.Apps.Iva.Module.BusinessObjects;
-using SBT.Apps.Iva.Module.Controllers;
 using System.Web;
-using DevExpress.Web;
-using System.Net;
 
 namespace SBT.Apps.Erp.Module.Web.Controllers
 {
@@ -14,7 +12,7 @@ namespace SBT.Apps.Erp.Module.Web.Controllers
     /// ver https://docs.devexpress.com/eXpressAppFramework/DevExpress.ExpressApp.Web.SystemModule.WebExportController
     /// https://docs.devexpress.com/eXpressAppFramework/113287/shape-export-print-data/printing-exporting-in-listview/how-to-customize-the-export-action-behavior
     /// </summary>
-    public class LibroCompraListViewControllerWeb2: LibroCompraListViewController
+    public class LibroCompraListViewControllerWeb2 : LibroCompraListViewController
     {
         public LibroCompraListViewControllerWeb2()
         {
@@ -73,7 +71,7 @@ namespace SBT.Apps.Erp.Module.Web.Controllers
         protected override void OnActivated()
         {
             base.OnActivated();
-            
+
         }
     }
 }

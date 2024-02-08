@@ -1,18 +1,19 @@
-﻿using DevExpress.Data.Filtering;
+﻿using DevExpress.Charts.Native;
+using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp;
+using DevExpress.ExpressApp.Actions;
+using DevExpress.ExpressApp.ReportsV2;
+using DevExpress.ExpressApp.SystemModule;
 using DevExpress.ExpressApp.Xpo;
+using DevExpress.Persistent.BaseImpl;
+using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Base.Module.Controllers;
 using SBT.Apps.Facturacion.Module.BusinessObjects;
 using SBT.Apps.Inventario.Module.BusinessObjects;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp.SystemModule;
-using SBT.Apps.Base.Module.BusinessObjects;
-using DevExpress.ExpressApp.ReportsV2;
-using System.Collections.Generic;
-using DevExpress.ExpressApp.Actions;
 
 namespace SBT.Apps.Facturacion.Module.Controllers
 {
@@ -28,11 +29,7 @@ namespace SBT.Apps.Facturacion.Module.Controllers
     {
         InventarioTipoMovimiento tipoMovimiento;
         private NewObjectViewController newController;
-
-        // agregado el 2/nov/2011 por SELM para filtrar los reportes de las facturas parametrizados en los formularios autorizados
-        PrintSelectionBaseController printController;
-        List<ChoiceActionItem> allItems = new List<ChoiceActionItem>();
-
+        private SimpleAction imprimirDocumento;
         private PopupWindowShowAction pwsaAnular;
 
         public vcVenta() : base()
@@ -50,13 +47,9 @@ namespace SBT.Apps.Facturacion.Module.Controllers
             newController = Frame.GetController<NewObjectViewController>();
             if (newController != null)
                 newController.ObjectCreated += NewController_ObjectCreated;
-
-            Frame.ViewChanged += Frame_ViewChanged;
-            View.SelectionChanged += View_SelectionChanged;
-
             pwsaAnular.Execute += PwsaAnular_Execute;
             pwsaAnular.CustomizePopupWindowParams += PwsaAnular_CustomizePopupWindowParams;
-        }
+        }   
 
         protected override void OnDeactivated()
         {
@@ -64,10 +57,6 @@ namespace SBT.Apps.Facturacion.Module.Controllers
             ObjectSpace.Committing -= ObjectSpace_Committing;
             if (newController != null)
                 newController.ObjectCreated -= NewController_ObjectCreated;
-
-            Frame.ViewChanged -= Frame_ViewChanged;
-            View.SelectionChanged -= View_SelectionChanged;
-
             pwsaAnular.Execute -= PwsaAnular_Execute;
             pwsaAnular.CustomizePopupWindowParams -= PwsaAnular_CustomizePopupWindowParams;
 
@@ -274,45 +263,6 @@ namespace SBT.Apps.Facturacion.Module.Controllers
             }
         }
 
-        private void ExportSalesIvaF07(DateTime ADesde, DateTime AHasta)
-        {
-        }
-
-        private void Frame_ViewChanged(object sender, ViewChangedEventArgs e)
-        {
-            printController = Frame.GetController<PrintSelectionBaseController>();
-            if (printController != null)
-            {
-                allItems = printController.ShowInReportAction.Items.ToList();
-                Venta vta = (Venta)View.CurrentObject;
-                if (vta == null || vta.AutorizacionDocumento == null || vta.AutorizacionDocumento.Reporte == null)
-                    return;
-                if (vta.AutorizacionDocumento != null && vta.AutorizacionDocumento.Reporte != null)
-                {
-                    DeleteFromShowInReportAction(vta);
-                }
-            }
-        }
-
-        private void View_SelectionChanged(object sender, EventArgs e)
-        {
-            Venta vta = (Venta)View.CurrentObject;
-            if (vta != null && printController != null)
-            {
-                if (vta.AutorizacionDocumento != null && vta.AutorizacionDocumento.Reporte != null)
-                    DeleteFromShowInReportAction(vta);
-            }
-        } 
-
-        private void DeleteFromShowInReportAction(Venta vta)
-        {
-            for (int i = printController.ShowInReportAction.Items.Count - 1; i >= 0; i--)
-            {
-                var item = printController.ShowInReportAction.Items[i].Data;
-                if (item != null)
-                    printController.ShowInReportAction.Items[i].Active["activo"] = (item as ReportDataInfo).DisplayName == vta.AutorizacionDocumento.Reporte.DisplayName;
-            }
-        }
 
         protected override void DoInitializeComponent()
         {
@@ -331,6 +281,16 @@ namespace SBT.Apps.Facturacion.Module.Controllers
             pwsaAnular.AcceptButtonCaption = "Anular";
             pwsaAnular.CancelButtonCaption = "Cancelar";
             pwsaAnular.ConfirmationMessage = "Esta segur@ de anular el documento de venta seleccionado";
+
+
+            imprimirDocumento = new SimpleAction(this, "Venta_ImprimirFactura", DevExpress.Persistent.Base.PredefinedCategory.RecordEdit.ToString());
+            imprimirDocumento.Caption = "Imprimir";
+            imprimirDocumento.TargetObjectType = typeof(SBT.Apps.Facturacion.Module.BusinessObjects.Venta);
+            imprimirDocumento.SelectionDependencyType = SelectionDependencyType.RequireSingleObject;
+            imprimirDocumento.ToolTip = "Click para mostrar la vista previa de la impresión de la factura seleccionada";
+            imprimirDocumento.Execute += ImprimirDocumento_Execute;
+            imprimirDocumento.TargetObjectsCriteria = "[Oid] > 0";
+            imprimirDocumento.ImageName = "ShowPrintPreview";
         }
 
         private void PwsaAnular_Execute(object sender, PopupWindowShowActionExecuteEventArgs e)
@@ -347,6 +307,28 @@ namespace SBT.Apps.Facturacion.Module.Controllers
             anularParams.FechaAnulacion = DateTime.Now;
             e.View = Application.CreateDetailView(osParam, anularParams);
             e.View.Caption = "Anular Venta";
+        }
+
+        private void ImprimirDocumento_Execute(object sender, SimpleActionExecuteEventArgs e)
+        {
+            if (View.CurrentObject == null)
+            {
+                Application.ShowViewStrategy.ShowMessage("No se encuentra ningún documento de venta para imprimir", InformationType.Error);
+                return;
+            }
+            var reportOsProvider = ReportDataProvider.GetReportObjectSpaceProvider(this.Application.ServiceProvider);
+            var reportStorage = ReportDataProvider.GetReportStorage(this.Application.ServiceProvider);
+
+            Venta vta = (Venta)View.CurrentObject;
+            IObjectSpace objectSpace = reportOsProvider.CreateObjectSpace(typeof(ReportDataV2));
+            IReportDataV2 reportData = objectSpace.GetObject<IReportDataV2>(vta.AutorizacionDocumento.Reporte);
+            string handle = reportStorage.GetReportContainerHandle(reportData);
+            ReportServiceController controller = Frame.GetController<ReportServiceController>();
+            CriteriaOperator objectsCriteria = ((BaseObjectSpace)objectSpace).GetObjectsCriteria(View.ObjectTypeInfo, e.SelectedObjects);
+            if (controller != null)
+            {
+                controller.ShowPreview(handle, objectsCriteria);
+            };
         }
     }
 }

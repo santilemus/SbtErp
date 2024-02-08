@@ -1,17 +1,9 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp;
-using System.ComponentModel;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
-using DevExpress.Persistent.Base;
-using System.Collections.Generic;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
-using DevExpress.Persistent.Validation;
+using DevExpress.Persistent.Base;
+using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
+using System.ComponentModel;
 
 namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 {
@@ -34,6 +26,11 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         {
             base.AfterConstruction();
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
+            valor = 0.0m;
+            reporteHoraExtra = null;
+            porcentaje = 0.0m;
+            horas = 0.0m;
+            tipoJornada = null;
         }
 
         #region Propiedades
@@ -48,7 +45,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         decimal porcentaje;
         [Persistent(nameof(Valor)), DbType("numeric(12,4)"), FetchOnly]
         decimal valor;
- 
+
         [PersistentAlias(nameof(reporteHoraExtra))]
         public ReporteHoraExtra ReporteHoraExtra
         {
@@ -66,7 +63,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         public decimal Horas
         {
             get { return horas; }
-        }       
+        }
 
         [PersistentAlias(nameof(porcentaje)), XafDisplayName("Porcentaje")]
         [ModelDefault("DisplayFormat", "{0:N4}"), ModelDefault("EditMask", "n4")]
@@ -74,14 +71,14 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         {
             get { return porcentaje; }
         }
-        
+
         [PersistentAlias(nameof(valor)), XafDisplayName("Valor")]
         [ModelDefault("DisplayFormat", "{0:N4}"), ModelDefault("EditMask", "n4")]
         public decimal Valor
         {
             get { return valor; }
         }
-        
+
         #endregion
 
         //[Action(Caption = "My UI Action", ConfirmationMessage = "Are you sure?", ImageName = "Attention", AutoCommit = true)]

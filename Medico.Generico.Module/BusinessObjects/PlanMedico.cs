@@ -1,21 +1,12 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp;
-using System.ComponentModel;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
-using DevExpress.Persistent.Base;
-using System.Collections.Generic;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
-using SBT.Apps.Base.Module.BusinessObjects;
+using DevExpress.Xpo;
 
 namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 {
-    [DefaultClassOptions, ModelDefault("Caption", "Plan Medico"), NavigationItem("Salud"), XafDefaultProperty("Nombre"), 
+    [DefaultClassOptions, ModelDefault("Caption", "Plan Medico"), NavigationItem("Salud"), XafDefaultProperty("Nombre"),
         Persistent("PlanMedico"), CreatableItem(false)]
     [ImageName("PlanMedico")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
@@ -30,6 +21,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
         {
             base.AfterConstruction();
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
+            Activo = true;
         }
 
         #region Propiedades
@@ -45,8 +37,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
             set => SetPropertyValue(nameof(Nombre), ref nombre, value);
         }
 
-        [DbType("bit"), Persistent("Activo"), XafDisplayName("Activo"), 
-            RuleRequiredField("Plan.Activo_Requerido", DefaultContexts.Save)]
+        [DbType("bit"), Persistent("Activo"), XafDisplayName("Activo")]
         public bool Activo
         {
             get => activo;

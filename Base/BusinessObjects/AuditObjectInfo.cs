@@ -2,8 +2,6 @@
 using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using System;
-using System.ComponentModel;
-using System.Linq;
 
 namespace SBT.Apps.Base.Module.BusinessObjects
 {
@@ -32,9 +30,9 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             usuarioMod = BO.UsuarioMod;
         }
 
-        DateTime ? fechaCrea;
+        DateTime? fechaCrea;
         string usuarioCrea;
-        DateTime ? fechaMod;
+        DateTime? fechaMod;
         string usuarioMod;
 
         [XafDisplayName("Fecha de Creación:"), ModelDefault("DisplayFormat", "{0:G}")]

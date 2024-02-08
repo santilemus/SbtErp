@@ -4,7 +4,6 @@ using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using System;
-using System.Linq;
 
 namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 {
@@ -35,12 +34,13 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
         public override void AfterConstruction()
         {
             base.AfterConstruction();
-
+            Prioridad = EClasificacionVEN.NoEsenciales;
+            NivelUso = ENivelUsoMedicamento.P;
         }
 
         #region Propiedades 
-        ENivelUsoMedicamento nivelUso = ENivelUsoMedicamento.P;
-        EClasificacionVEN prioridad = EClasificacionVEN.NoEsenciales;
+        ENivelUsoMedicamento nivelUso;
+        EClasificacionVEN prioridad;
         private System.String _via;
         private System.String _concentracion;
         private System.String _contraIndicacion;
@@ -89,16 +89,14 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
             }
         }
 
-        [DbType("smallint"), Persistent("Prioridad"), XafDisplayName("Prioridad"),
-            RuleRequiredField("Medicamento.Prioridad_Requerido", DefaultContexts.Save)]
+        [DbType("smallint"), Persistent("Prioridad"), XafDisplayName("Prioridad")]
         public EClasificacionVEN Prioridad
         {
             get => prioridad;
             set => SetPropertyValue(nameof(Prioridad), ref prioridad, value);
         }
 
-        [DbType("smallint"), Persistent("NivelUso"), XafDisplayName("Nivel Uso"),
-            RuleRequiredField("Medicamento.NivelUso_Requerido", "Save")]
+        [DbType("smallint"), Persistent("NivelUso"), XafDisplayName("Nivel Uso")]
         public ENivelUsoMedicamento NivelUso
         {
             get => nivelUso;

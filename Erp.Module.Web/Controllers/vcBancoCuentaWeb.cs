@@ -1,15 +1,11 @@
-﻿using System;
-using System.Linq;
-
-
-namespace SBT.Apps.Erp.Module.Web.Controllers
+﻿namespace SBT.Apps.Erp.Module.Web.Controllers
 {
     /// <summary>
     /// View Controller para BO BancoCuenta. Implementar aqui las optimizaciones y funcionalidad de la plataforma web
     /// </summary>
-    public class vcBancoCuentaWeb: ViewControllerBaseWeb
+    public class vcBancoCuentaWeb : ViewControllerBaseWeb
     {
-        public vcBancoCuentaWeb(): base()
+        public vcBancoCuentaWeb() : base()
         {
 
         }

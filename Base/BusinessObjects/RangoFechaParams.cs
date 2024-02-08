@@ -1,15 +1,11 @@
-﻿using DevExpress.Data.Filtering;
-using DevExpress.ExpressApp;
+﻿using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
 
 namespace SBT.Apps.Base.Module.BusinessObjects
 {
@@ -24,8 +20,8 @@ namespace SBT.Apps.Base.Module.BusinessObjects
     {
         //private IObjectSpace objectSpace;
         private DateTime fechaInicio;
-        private DateTime fechaHasta;
-        
+        private DateTime fechaFin;
+
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -40,8 +36,9 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         public Guid Oid { get; set; }
 
         [XafDisplayName("Fecha Inicio"), Index(0)]
-        public DateTime FechaInicio 
-        { 
+        [ModelDefault("DisplayFormat", "dd/MM/yyyy"), ModelDefault("EditMask", "dd/MM/yyyy")]
+        public DateTime FechaInicio
+        {
             get => fechaInicio;
             set
             {
@@ -49,14 +46,19 @@ namespace SBT.Apps.Base.Module.BusinessObjects
                 var tmpDate = fechaInicio.AddMonths(1);
                 FechaFin = new DateTime(tmpDate.Year, tmpDate.Month, 01).AddDays(-1);
                 OnPropertyChanged(nameof(FechaFin));
-            } 
+            }
         }
 
         [XafDisplayName("Fecha Fin"), Index(1)]
         [ImmediatePostData(true)]
-        [RuleValueComparison("RangoFechaParams.FechaFin >= FechaInicio", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual, nameof(FechaInicio), 
+        [RuleValueComparison("RangoFechaParams.FechaFin >= FechaInicio", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual, nameof(FechaInicio),
             ParametersMode.Expression, SkipNullOrEmptyValues = false, CustomMessageTemplate = "Fecha Fin debe ser mayor o igual a Fecha Inicio")]
-        public DateTime FechaFin { get; set; }
+        [ModelDefault("DisplayFormat", "dd/MM/yyyy"), ModelDefault("EditMask", "dd/MM/yyyy")]
+        public DateTime FechaFin 
+        { 
+            get => fechaFin; 
+            set => fechaFin = value; 
+        }
 
         //private string sampleProperty;
         //[XafDisplayName("My display name"), ToolTip("My hint message")]

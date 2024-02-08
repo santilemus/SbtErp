@@ -3,10 +3,8 @@ using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using DevExpress.Xpo;
 using SBT.Apps.Banco.Module.BusinessObjects;
-using System;
-using System.Linq;
 
-namespace SBT.Apps.Contabilidad.Module.BusinessObjects 
+namespace SBT.Apps.Contabilidad.Module.BusinessObjects
 {
     [DefaultClassOptions, ModelDefault("Caption", "BancoTransaccion - Partida"), NavigationItem(false), CreatableItem(false),
         ]
@@ -32,7 +30,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         Partida partida;
         BancoTransaccion bancoTransaccion;
 
-        [Association("BancoTransaccion-Partidas"), XafDisplayName("Transacción"), DevExpress.Xpo.Aggregated]
+        [Association("BancoTransaccion-Partidas"), XafDisplayName("Transacción")]
         public BancoTransaccion BancoTransaccion
         {
             get => bancoTransaccion;

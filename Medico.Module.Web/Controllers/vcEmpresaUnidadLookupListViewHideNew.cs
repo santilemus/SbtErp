@@ -1,23 +1,17 @@
 ﻿using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.SystemModule;
-using DevExpress.ExpressApp.Utils;
-using DevExpress.ExpressApp.Web.SystemModule;
-using DevExpress.ExpressApp.Web.Editors;
-using System.Web.UI.WebControls;
-using DevExpress.ExpressApp.Web.Editors.ASPx;
-using System;
 
 namespace SBT.Apps.Medico.Module.Web.Controllers
 {
     /// <summary>
     /// View controller Para ocultar del lookup de Agencias el action New, porque en el login no debe de estar.
     /// </summary>
-    public class vcEmpresaUnidadLookupListViewHideNew: ObjectViewController
+    public class vcEmpresaUnidadLookupListViewHideNew : ObjectViewController
     {
         private string key = "Desactivar";
         NewObjectViewController newController;
 
-        public vcEmpresaUnidadLookupListViewHideNew(): base()
+        public vcEmpresaUnidadLookupListViewHideNew() : base()
         {
             TargetObjectType = typeof(SBT.Apps.Base.Module.BusinessObjects.EmpresaUnidad);
             TargetViewType = ViewType.ListView;

@@ -1,15 +1,11 @@
-﻿using System;
-using System.Linq;
-
-
-namespace SBT.Apps.Erp.Module.Web.Controllers
+﻿namespace SBT.Apps.Erp.Module.Web.Controllers
 {
     /// <summary>
     /// View Controller para BO PartidaDetalle. Utilizar para optimizaciones y funciones de la plataforma web
     /// </summary>
-    public class vcPartidaDetalleWeb: ViewControllerBaseWeb
+    public class vcPartidaDetalleWeb : ViewControllerBaseWeb
     {
-        public vcPartidaDetalleWeb(): base()
+        public vcPartidaDetalleWeb() : base()
         {
 
         }

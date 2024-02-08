@@ -1,11 +1,8 @@
-﻿using System;
-using System.Text;
-
-namespace SBT.Apps.Medico.Module.Web.Controllers
+﻿namespace SBT.Apps.Medico.Module.Web.Controllers
 {
-    public class vcPacienteVacunaWeb: ViewControllerBaseWeb
+    public class vcPacienteVacunaWeb : ViewControllerBaseWeb
     {
-        public vcPacienteVacunaWeb(): base()
+        public vcPacienteVacunaWeb() : base()
         {
 
         }

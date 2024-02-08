@@ -1,13 +1,12 @@
-﻿using System;
+﻿using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.Actions;
-using DevExpress.Persistent.Validation;
 using DevExpress.ExpressApp.Xpo;
-using DevExpress.Data.Filtering;
 using DevExpress.Persistent.Base;
-using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Banco.Module.BusinessObjects;
+using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Base.Module.Controllers;
+using System;
 
 namespace SBT.Apps.Banco.Module.Controllers
 {
@@ -15,12 +14,12 @@ namespace SBT.Apps.Banco.Module.Controllers
     /// Bancos
     /// Controlador que corresponde al BO de Conciliaciones Bancarias
     /// </summary>
-    public class vcBancoConciliacion: ViewControllerBase
+    public class vcBancoConciliacion : ViewControllerBase
     {
         private SimpleAction saDetalleConciliacion;
-        public vcBancoConciliacion(): base()
+        public vcBancoConciliacion() : base()
         {
-            
+
         }
 
         protected override void DoInitializeComponent()
@@ -80,7 +79,7 @@ namespace SBT.Apps.Banco.Module.Controllers
             {
                 IObjectSpace os = Application.ObjectSpaceProvider.CreateObjectSpace();
                 try
-                {              
+                {
                     ((BancoConciliacion)View.CurrentObject).Session.CommitTransaction();
                     ((BancoConciliacion)View.CurrentObject).Reload();
                     var Oid = ((BancoConciliacion)View.CurrentObject).Oid;

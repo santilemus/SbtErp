@@ -1,9 +1,9 @@
-﻿using System;
-using DevExpress.ExpressApp;
+﻿using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.Actions;
 using DevExpress.ExpressApp.Editors;
-using SBT.Apps.Medico.Generico.Module.BusinessObjects;
 using SBT.Apps.Medico.Expediente.Module.BusinessObjects;
+using SBT.Apps.Medico.Generico.Module.BusinessObjects;
+using System;
 
 namespace SBT.Apps.Medico.Expediente.Module.Controllers
 {
@@ -115,4 +115,4 @@ namespace SBT.Apps.Medico.Expediente.Module.Controllers
 
         }
     }
- }
+}

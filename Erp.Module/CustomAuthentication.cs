@@ -1,10 +1,12 @@
 ﻿using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.Security;
+using DevExpress.Persistent.Base.Security;
+using DevExpress.XtraPrinting.Native;
 using SBT.Apps.Base.Module.BusinessObjects;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Runtime.Serialization;
 
 namespace SBT.Apps.Erp.Module
 {
@@ -37,24 +39,21 @@ namespace SBT.Apps.Erp.Module
         public override object Authenticate(IObjectSpace objectSpace)
         {
 
-            Usuario usuario = objectSpace.FindObject<Usuario>(CriteriaOperator.Parse("UserName == ?", customLogonParameters.UserName));           
-                //new BinaryOperator("UserName", customLogonParameters.UserName));
+            Usuario usuario = objectSpace.FirstOrDefault<Usuario>(e => e.UserName == customLogonParameters.UserName); 
 
             if (usuario == null)
                 throw new ArgumentNullException("Usuario", $"No Existe el Usuario {customLogonParameters.UserName}, en {customLogonParameters.Empresa.RazonSocial}");
-            if (usuario.Empresa.Oid != customLogonParameters.Empresa.Oid)
+            if (usuario.Empresa != null && usuario.Empresa.Oid != customLogonParameters.Empresa.Oid)
                 throw new ArgumentException($"Al usuario {customLogonParameters.UserName} no se le permite ingresar a la empresa {customLogonParameters.Empresa.RazonSocial}");
-
-            if (!usuario.ComparePassword(customLogonParameters.Password))
-                throw new AuthenticationException(
-                    usuario.UserName, "Password Incorrecto.");
+            if (!((IAuthenticationStandardUser)usuario).ComparePassword(customLogonParameters.Password)) 
+                throw new AuthenticationException(usuario.UserName, "Password Incorrecto.");
             // agregado el 01/10/2021 por SELM. Solo la agencia, porque la empresa es el Administrador quien debe asignarla
             if (usuario.Agencia != customLogonParameters.Agencia)
             {
                 int oidAgenciaLogon = customLogonParameters.Agencia.Oid;
                 usuario.Agencia = objectSpace.GetObjectByKey<EmpresaUnidad>(oidAgenciaLogon);
                 objectSpace.CommitChanges();
-            }
+             }
             // -- fin agregado el 01/10/2021
             return usuario;
         }
@@ -68,6 +67,7 @@ namespace SBT.Apps.Erp.Module
         {
             return new Type[] { typeof(CustomLogonParameters) };
         }
+
         public override bool AskLogonParametersViaUI
         {
             get { return true; }

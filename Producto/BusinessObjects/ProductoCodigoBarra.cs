@@ -3,8 +3,6 @@ using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
-using System;
-using System.Linq;
 
 namespace SBT.Apps.Producto.Module.BusinessObjects
 {
@@ -42,7 +40,6 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
                 SetPropertyValue("CodigoBarra", ref _codigoBarra, value);
             }
         }
-        [RuleRequiredField("ProductoCodigo.Activo_Requerido", "Save")]
         public System.Boolean Activo
         {
             get

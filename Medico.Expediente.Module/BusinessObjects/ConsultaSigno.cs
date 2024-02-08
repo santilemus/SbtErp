@@ -1,15 +1,14 @@
-﻿using System;
-using System.ComponentModel;
-using System.Linq;
-using DevExpress.Data.Filtering;
+﻿using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp.ConditionalAppearance;
 using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
-using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Medico.Generico.Module.BusinessObjects;
+using System;
+using System.ComponentModel;
+using System.Linq;
 
 namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 {
@@ -40,11 +39,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         {
             base.AfterConstruction();
             // Place here your initialization code.
-        }
-
-        protected override void OnSaving()
-        {
-            base.OnSaving();
+            Valor = 0.0m;
         }
 
 
@@ -85,7 +80,6 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
             }
         }
 
-        [RuleRequiredField("ConsultaSigno.Valor_Requerido", DefaultContexts.Save)]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         [DbType("numeric(12,2)"), ImmediatePostData(true)]
         public decimal Valor
@@ -93,7 +87,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
             get => valor;
             set
             {
-                bool changed = SetPropertyValue(nameof(valor), ref valor, value);
+                bool changed = SetPropertyValue(nameof(Valor), ref valor, value);
                 if (!IsLoading && !IsSaving && changed && Signo.Oid == 9 && Consulta.Paciente.EdadMeses > 228)
                     ActualizarRelacionTablaImc(true);
             }
@@ -125,7 +119,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
             if (Consulta.Paciente.EdadMeses > 228)
                 return;
             PercentilTablaDetalle pd = Session.FindObject<PercentilTablaDetalle>(
-                CriteriaOperator.Parse("[PercentilTabla.Signo.Oid] == ? && [PercentilTabla.Genero] == ? && [EdadMes] == ?", 
+                CriteriaOperator.Parse("[PercentilTabla.Signo.Oid] == ? && [PercentilTabla.Genero] == ? && [EdadMes] == ?",
                 Signo.Oid, Consulta.Paciente.Genero, Consulta.Paciente.EdadMeses));
             PercentilTablaDetalle old = PercentilTablaDetalle;
             percentilTablaDetalle = pd;

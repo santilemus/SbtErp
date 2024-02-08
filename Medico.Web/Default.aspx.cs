@@ -1,10 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Web.UI;
 using DevExpress.ExpressApp.Templates;
-using DevExpress.ExpressApp.Web;
 using DevExpress.ExpressApp.Web.Templates;
-using DevExpress.ExpressApp.Web.Templates.ActionContainers;
+using System.Web.UI;
 
 public partial class Default : BaseXafPage
 {

@@ -4,6 +4,7 @@ using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.ConditionalAppearance;
 using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
+using DevExpress.ExpressApp.Security.ClientServer;
 using DevExpress.ExpressApp.SystemModule;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
@@ -27,7 +28,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
     [Appearance("Partida_Incompleta", AppearanceItemType = "ViewItem", TargetItems = "*",
         Criteria = "([TotalDebe] Is Null || [TotalDebe] == 0) || ([TotalHaber] Is Null || [TotalHaber] == 0) || ([TotalDebe] != [TotalHaber])",
         FontColor = "Red", Context = "ListView", Priority = 1)]
-    [Appearance("Partida.TransaccionPartidas Ocultar", Criteria = "This is not null && (IsNewObject(This) || [BancoTransaccionPartidas].Count() > 0)", 
+    [Appearance("Partida.TransaccionPartidas Ocultar", Criteria = "This is not null && (IsNewObject(This) || [BancoTransaccionPartidas].Count() > 0)",
             TargetItems = nameof(BancoTransaccionPartidas), AppearanceItemType = "ViewItem",
             Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "DetailView")]
 
@@ -40,7 +41,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
     [ListViewFilter("Partidas Ultimo 30 Días", "[Fecha] >= ADDDAYS(LocalDateTimeToday(), -30)")]
     [ListViewFilter("Partidas del Período", "GetYear([Fecha]) == GetYear(LocalDateTimeToday())", true)]
     [ListViewFilter("Partidas del Período Anterior", "(GetYear([Fecha])) == (GetYear(LocalDateTimeToday()) - 1)")]
-    [RuleCriteria("Partida Cuadre", DefaultContexts.Save, "[Detalles][].Count() > 0 && [TotalDebe] == [TotalHaber]", 
+    [RuleCriteria("Partida Cuadre", DefaultContexts.Save, "[Detalles][].Count() > 0 && [TotalDebe] == [TotalHaber]",
         "Debe cuadrar la Partida Contable y asegurarse que no este vacía, antes de guardar", UsedProperties = "TotalDebe,TotalHaber")]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class Partida : XPOBaseDoc
@@ -56,6 +57,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             elaboro = null;
             Numero = -1;
             Oid = -1;
+            Tipo = ETipoPartida.Diario;
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
@@ -94,7 +96,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             set => SetPropertyValue(nameof(Periodo), ref periodo, value);
         }
 
-        [DbType("smallint"), Persistent("Tipo"), XafDisplayName("Tipo"), RuleRequiredField("Partida.Tipo_Requerido", DefaultContexts.Save)]
+        [DbType("smallint"), Persistent("Tipo"), XafDisplayName("Tipo")]
         public ETipoPartida Tipo
         {
             get => tipo;
@@ -141,7 +143,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         //[PersistentAlias(nameof(totalDebe))]
         [XafDisplayName("Debe")]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
-        [RuleValueComparison("Partida.TotalDebe = TotalHaber", DefaultContexts.Save, ValueComparisonType.Equals, "[TotalHaber]", ParametersMode.Expression, 
+        [RuleValueComparison("Partida.TotalDebe = TotalHaber", DefaultContexts.Save, ValueComparisonType.Equals, "[TotalHaber]", ParametersMode.Expression,
             CustomMessageTemplate = "La Partida {TargetObject.Numero} no esta cuadrada")]
         public decimal? TotalDebe
         {
@@ -264,7 +266,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
                         return !ExistePartidaDe(Periodo.Oid, ETipoPartida.Apertura);
                     case ETipoPartida.Cierre:
                         return !ExistePartidaDe(Periodo.Oid, ETipoPartida.Cierre);
-                    default:
+                      default:
                         // cuando son partidas de Diario, Ingreso, Egreso o Liquidacion no debe existir la liquidacion en el periodo
                         return !ExistePartidaDe(Periodo.Oid, ETipoPartida.Liquidacion);
                 }
@@ -278,7 +280,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         {
             get
             {
-                if (Fecha == null || Periodo == null)
+                if (Periodo == null)
                     return false;
                 var obj = Session.Evaluate<CierreDiario>(CriteriaOperator.Parse("Count()"),
                     CriteriaOperator.Parse("[Empresa] == ? && [FechaCierre] == ? && [DiaCerrado] = True", Empresa.Oid, Fecha));
@@ -289,8 +291,8 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
 
         protected override void OnSaving()
         {
-            if (!(Session is NestedUnitOfWork) && (Session.DataLayer != null) && Session.IsNewObject(this) &&
-                (Session.ObjectLayer is SimpleObjectLayer) && (Numero == null || Numero == 0))
+            if (Session is not NestedUnitOfWork && (Session.DataLayer != null) && Session.IsNewObject(this) &&
+                (Session.ObjectLayer is SecuredSessionObjectLayer) && (Numero == null || Numero == 0))
             {
                 Empleado.Module.BusinessObjects.Empleado empleado = (((Usuario)SecuritySystem.CurrentUser).GetMemberValue("Empleado") as Empleado.Module.BusinessObjects.Empleado);
                 if (empleado != null)
@@ -299,21 +301,19 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             base.OnSaving();
         }
 
+        protected override void OnSaved()
+        {
+            base.OnSaved();
+            if (Oid <= 0)
+                Session.Reload(this);
+        }
+
         protected override void DoFechaChange(bool forceChangeEvents, DateTime oldValue)
         {
             Periodo pp = Session.GetObjectByKey<Periodo>(Fecha.Year);
             if (pp != null)
                 Periodo = pp;
-            base.DoFechaChange(forceChangeEvents, oldValue);           
-        }
-
-        [Action(Caption = "Test", ImageName = "Attention", AutoCommit = false)]
-        public void Test()
-        {
-            // saldo de octubre de la cuenta '11'
-            CriteriaOperator formula = CriteriaOperator.Parse("SaldoDeCuenta([This], [Empresa.Oid], [Periodo.Oid], 10, '11')");
-            ExpressionEvaluator eval = new ExpressionEvaluator(TypeDescriptor.GetProperties(this), formula);
-            var resultado = Convert.ToDecimal(eval.Evaluate(this));
+            base.DoFechaChange(forceChangeEvents, oldValue);
         }
 
         //[Action(Caption = "My UI Action", ConfirmationMessage = "Are you sure?", ImageName = "Attention", AutoCommit = true)]

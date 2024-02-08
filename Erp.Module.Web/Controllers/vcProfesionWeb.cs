@@ -1,15 +1,11 @@
-﻿using System;
-using System.Linq;
-
-
-namespace SBT.Apps.Erp.Module.Web.Controllers
+﻿namespace SBT.Apps.Erp.Module.Web.Controllers
 {
     /// <summary>
     /// View Controller para el BO Profesion para implementar optimizaciones y funciones en la plataforma web
     /// </summary>
-    public class vcProfesionWeb: ViewControllerBaseWeb
+    public class vcProfesionWeb : ViewControllerBaseWeb
     {
-        public vcProfesionWeb(): base()
+        public vcProfesionWeb() : base()
         {
 
         }

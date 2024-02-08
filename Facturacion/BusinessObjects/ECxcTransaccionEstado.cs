@@ -1,8 +1,4 @@
-﻿using System;
-using System.Linq;
-
-
-namespace SBT.Apps.CxC.Module.BusinessObjects
+﻿namespace SBT.Apps.CxC.Module.BusinessObjects
 {
     public enum ECxCTransaccionEstado
     {

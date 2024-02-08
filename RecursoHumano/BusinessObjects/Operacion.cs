@@ -9,7 +9,6 @@ using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using System;
 using System.ComponentModel;
-using System.Linq;
 
 namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 {
@@ -34,6 +33,9 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         {
             base.AfterConstruction();
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
+            Tipo = ETipoOperacion.Descuento;
+            CalcularPara = ETipoCalculoOperacion.Siempre;
+            Activo = true;
         }
 
         #region Propiedades
@@ -90,7 +92,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
             set => SetPropertyValue(nameof(Formula), ref formula, value);
         }
 
-        [DbType("smallint"), XafDisplayName("Tipo"), RuleRequiredField("Operacion.Tipo_Requerido", "Save")]
+        [DbType("smallint"), XafDisplayName("Tipo")]
         public ETipoOperacion Tipo
         {
             get => tipo;
@@ -119,14 +121,14 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
             set => SetPropertyValue(nameof(Visible), ref visible, value);
         }
 
-        [DbType("smallint"), XafDisplayName("Calcular Para"), RuleRequiredField("Operacion.CalcularPara_Requerido", "Save")]
+        [DbType("smallint"), XafDisplayName("Calcular Para")]
         public ETipoCalculoOperacion CalcularPara
         {
             get => calcularPara;
             set => SetPropertyValue(nameof(CalcularPara), ref calcularPara, value);
         }
 
-        [DbType("bit"), XafDisplayName("Activo"), RuleRequiredField("Operacion.Activo_Requerido", DefaultContexts.Save)]
+        [DbType("bit"), XafDisplayName("Activo")]
         [DefaultValue(true)]
         public bool Activo
         {
@@ -171,8 +173,8 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         [Action(Caption = "Evaluar Expression", ImageName = "Attention", SelectionDependencyType = MethodActionSelectionDependencyType.RequireSingleObject)]
         public void Execute()
         {
-            ExpressionEvaluator eval = new ExpressionEvaluator(TypeDescriptor.GetProperties(TipoBO), Formula);          
-            var bo= Session.GetObjectByKey(TipoBO, 1); 
+            ExpressionEvaluator eval = new (TypeDescriptor.GetProperties(TipoBO), Formula);
+            var bo = Session.GetObjectByKey(TipoBO, 1);
             if (bo != null)
                 Valor = Convert.ToDecimal(eval.Evaluate(bo));
             else

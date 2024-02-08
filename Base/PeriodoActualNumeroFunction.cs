@@ -1,7 +1,6 @@
 ﻿using DevExpress.Data.Filtering;
 using SBT.Apps.Base.Module.BusinessObjects;
 using System;
-using System.Linq;
 
 namespace SBT.Apps.Base.Module
 {
@@ -30,10 +29,7 @@ namespace SBT.Apps.Base.Module
         /// <returns></returns>
         public object Evaluate(params object[] operands)
         {
-            if (SesionDataHelper.ObtenerValor("IdPeriodo") == null)
-                return null;
-            else
-                return SesionDataHelper.ObtenerValor("IdPeriodo");
+            return DateTime.Now.Year;
         }
 
         /// <summary>

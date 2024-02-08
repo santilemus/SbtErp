@@ -1,9 +1,8 @@
 ﻿using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp;
 using SBT.Apps.Base.Module.BusinessObjects;
-using System;
-using System.Linq;
 using SBT.Apps.Base.Module.Controllers;
+using System;
 
 
 namespace SBT.Apps.Banco.Module.Controllers
@@ -15,7 +14,7 @@ namespace SBT.Apps.Banco.Module.Controllers
     // For more typical usage scenarios, be sure to check out https://documentation.devexpress.com/eXpressAppFramework/clsDevExpressExpressAppViewControllertopic.aspx.
     public class vcCajaChicaTransaccion : ViewControllerBase
     {
-        public vcCajaChicaTransaccion(): base()
+        public vcCajaChicaTransaccion() : base()
         {
 
         }

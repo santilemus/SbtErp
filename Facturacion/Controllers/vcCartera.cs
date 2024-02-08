@@ -1,29 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using DevExpress.Data.Filtering;
-using DevExpress.ExpressApp;
-using DevExpress.ExpressApp.Actions;
-using DevExpress.ExpressApp.Editors;
-using DevExpress.ExpressApp.Layout;
-using DevExpress.ExpressApp.Model.NodeGenerators;
-using DevExpress.ExpressApp.SystemModule;
-using DevExpress.ExpressApp.Templates;
-using DevExpress.ExpressApp.Utils;
-using DevExpress.Persistent.Base;
-using DevExpress.Persistent.Validation;
-using SBT.Apps.Base.Module.Controllers;
-using SBT.Apps.CxC.Module.BusinessObjects;
+﻿using SBT.Apps.Base.Module.Controllers;
 
 namespace SBT.Apps.CxC.Module.Controllers
 {
     /// <summary>
     /// Cuenta por Cobrar. View Controller que corresponde a la Cartera de Cuenta por Cobrar
     /// </summary>
-    public class vcCartera: ViewControllerBase
+    public class vcCartera : ViewControllerBase
     {
-        public vcCartera(): base()
+        public vcCartera() : base()
         {
 
         }

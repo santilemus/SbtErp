@@ -1,13 +1,16 @@
 ﻿using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.Actions;
+using DevExpress.ExpressApp.Model;
 using DevExpress.ExpressApp.SystemModule;
 using DevExpress.ExpressApp.Xpo;
 using SBT.Apps.Base.Module;
 using SBT.Apps.Base.Module.BusinessObjects;
+using SBT.Apps.Iva.Module.BusinessObjects;
 using System;
 using System.Data.SqlClient;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace SBT.Apps.Facturacion.Module.Controllers
@@ -32,6 +35,60 @@ namespace SBT.Apps.Facturacion.Module.Controllers
             pwsaGenerar.ImageName = "service";
             pwsaGenerar.CustomizePopupWindowParams += PwsaGenerar_CustomizePopupWindowParams;
             pwsaGenerar.Execute += PwsaGenerar_Execute;
+
+            pwsaExportarVentas = new PopupWindowShowAction(this, "LibroVentasConsumidor_Exportar", DevExpress.Persistent.Base.PredefinedCategory.RecordEdit.ToString());
+            pwsaExportarVentas.Caption = "Exportar";
+            pwsaExportarVentas.AcceptButtonCaption = "Exportar";
+            pwsaExportarVentas.CancelButtonCaption = "Cancelar";
+            pwsaExportarVentas.ActionMeaning = ActionMeaning.Accept;
+            pwsaExportarVentas.ToolTip = "Clic para exportar el libro de ventas a consumidor final al formato requerido para cargarlo en la plataforma de declaración de impuestos";
+            pwsaExportarVentas.TargetObjectType = typeof(SBT.Apps.Iva.Module.BusinessObjects.LibroVentaContribuyente);
+            pwsaExportarVentas.ImageName = "ExportToCSV";
+            pwsaExportarVentas.CustomizePopupWindowParams += PwsaExportarVentas_CustomizePopupWindowParams;
+            pwsaExportarVentas.Execute += PwsaExportarVentas_Execute;
+        }
+
+        private void PwsaExportarVentas_Execute(object sender, PopupWindowShowActionExecuteEventArgs e)
+        {
+            FechaParam pa = (e.PopupWindowViewCurrentObject as FechaParam);
+            var empresaOid = ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid;
+            var fechaInicio = new DateTime(pa.Fecha.Year, pa.Fecha.Month, 01);
+            var fechaFin = fechaInicio.AddMonths(1).AddSeconds(-1);
+            CriteriaOperator criteria = CriteriaOperator.FromLambda<LibroVentaConsumidor>(x => x.Empresa.Oid == empresaOid &&
+                                            x.Fecha >= fechaInicio && x.Fecha <= fechaFin);
+            ObjectSpace.ApplyCriteria(View.CollectionSource.Collection, criteria);
+            try
+            {
+                DoExecuteExport(pa);
+            }
+            catch (Exception ex)
+            {
+                Application.ShowViewStrategy.ShowMessage($@"Error al exportar Libro de Ventas{System.Environment.NewLine}{ex.Message}",
+                     InformationType.Error);
+            }
+        }
+
+        protected virtual void DoExecuteExport(FechaParam parametros)
+        {
+        }
+
+        private void PwsaExportarVentas_CustomizePopupWindowParams(object sender, CustomizePopupWindowParamsEventArgs e)
+        {
+            var os = Application.CreateObjectSpace(typeof(FechaParam));
+            var pa = os.CreateObject<FechaParam>();
+            IModelView detailViewModel = Application.FindModelView("FechaParam_DetailView_MonthYear");  // Fecha con formato MM/yyyy
+            if (detailViewModel != null)
+                e.View = Application.CreateDetailView(os, detailViewModel, false);
+            else
+                e.View = Application.CreateDetailView(os, pa);
+            e.View.Caption = "Exportar Libro de Ventas";
+        }
+
+        protected override void OnActivated()
+        {
+            base.OnActivated();
+            if (View.ObjectTypeInfo.FindMember("Empresa") != null && !(View.CollectionSource.Criteria.ContainsKey("Empresa Actual")) && SecuritySystem.CurrentUser != null)
+                View.CollectionSource.Criteria["Empresa Actual"] = CriteriaOperator.Parse("[Empresa.Oid] = ?", ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid);
         }
 
         private void PwsaGenerar_Execute(object sender, PopupWindowShowActionExecuteEventArgs e)
@@ -47,7 +104,8 @@ namespace SBT.Apps.Facturacion.Module.Controllers
                     DateTime inicioMes = new DateTime(Convert.ToInt16(pa.Anio), (int)pa.Mes, 01);
                     CriteriaOperator criteria = new BetweenOperator("Fecha", inicioMes, inicioMes.AddMonths(1).AddDays(-1));
                     View.RefreshDataSource();
-                    ObjectSpace.ApplyCriteria(View.CollectionSource.Collection, criteria);
+                    ObjectSpace.ApplyCriteria(View.CollectionSource.Collection, CriteriaOperator.Parse("Empresa.Oid = ? And [Fecha] Between(?, ?)",
+                        ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid, inicioMes, inicioMes.AddMonths(1).AddMinutes(-1)));
                     Application.ShowViewStrategy.ShowMessage(Informacion1, InformationType.Success);
                 }
                 catch (Exception ex)
@@ -57,6 +115,8 @@ namespace SBT.Apps.Facturacion.Module.Controllers
             }
             else
                 Application.ShowViewStrategy.ShowMessage(ParametrosNulos, InformationType.Warning);
+            var resultado = ObjectSpace.GetObjects<LibroVentaConsumidor>(CriteriaOperator.FromLambda<LibroVentaConsumidor>(x => x.Empresa.Oid == 1)).
+                Select(xy => new { xy.Clase, xy.Correlativo, xy.Exenta }).ToList();
         }
 
         private void PwsaGenerar_CustomizePopupWindowParams(object sender, CustomizePopupWindowParamsEventArgs e)

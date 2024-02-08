@@ -1,25 +1,16 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp;
-using System.ComponentModel;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
-using DevExpress.Persistent.Base;
-using System.Collections.Generic;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
-using SBT.Apps.Base.Module.BusinessObjects;
-using SBT.Apps.Tercero.Module.BusinessObjects;
+using DevExpress.Xpo;
+using System.ComponentModel;
 
 namespace SBT.Apps.CxC.Module.BusinessObjects
 {
     /// <summary>
     /// Cuenta por Cobrar. BO que corresponde a los clientes de una cartera
     /// </summary>
-    [ModelDefault("Caption", "Cartera Clientes"), NavigationItem(false), CreatableItem(false), 
+    [ModelDefault("Caption", "Cartera Clientes"), NavigationItem(false), CreatableItem(false),
         DefaultProperty(nameof(Cliente)), Persistent(nameof(CarteraCliente))]
     [ImageName(nameof(CarteraCliente))]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
@@ -47,7 +38,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
             get => cartera;
             set => SetPropertyValue(nameof(Cartera), ref cartera, value);
         }
-      
+
         [XafDisplayName("Cliente"), Index(1), RuleRequiredField("CarteraCliente.Cliente_Requerido", DefaultContexts.Save)]
         public SBT.Apps.Tercero.Module.BusinessObjects.Tercero Cliente
         {

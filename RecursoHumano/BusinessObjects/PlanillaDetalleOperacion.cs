@@ -3,9 +3,7 @@ using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.BaseImpl;
 using DevExpress.Xpo;
-using System;
 using System.ComponentModel;
-using System.Linq;
 
 
 namespace SBT.Apps.RecursoHumano.Module.BusinessObjects

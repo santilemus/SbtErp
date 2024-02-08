@@ -2,9 +2,6 @@
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
-using SBT.Apps.Base.Module.BusinessObjects;
-using System;
-using System.Linq;
 
 namespace SBT.Apps.Tercero.Module.BusinessObjects
 {
@@ -27,6 +24,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
             base.AfterConstruction();
             this.Activo = true;
             this.codigo = null;
+            this.idRole = TipoRoleTercero.Cliente;
         }
 
         private Apps.Tercero.Module.BusinessObjects.Tercero tercero;
@@ -39,7 +37,6 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
         }
 
         [Index(0), XafDisplayNameAttribute("Id Role")]
-        [RuleRequiredField("TerceroRole.IdRole_Requerido", "Save")]
         public TipoRoleTercero IdRole
         {
             get => idRole;
@@ -68,7 +65,6 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
         }
 
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(true), Index(3)]
-        [RuleRequiredField("TerceroRole.Activo_Requerido", "Save")]
         public System.Boolean Activo
         {
             get => activo;

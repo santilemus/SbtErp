@@ -1,22 +1,14 @@
-﻿using System;
-using System.ComponentModel;
-using System.Linq;
-using DevExpress.Data.Filtering;
-using DevExpress.Data.Filtering.Helpers;
+﻿using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.Actions;
-using DevExpress.ExpressApp.Editors;
 using DevExpress.ExpressApp.Model;
 using DevExpress.ExpressApp.ReportsV2;
-using DevExpress.ExpressApp.Xpo;
-using DevExpress.Persistent.Base.ReportsV2;
-using DevExpress.Persistent.BaseImpl;
-using DevExpress.Utils.Filtering.Internal;
-using DevExpress.Xpo;
 using DevExpress.XtraReports.UI;
-using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Base.Module.Controllers;
 using SBT.Apps.Contabilidad.Module.BusinessObjects;
+using System;
+using System.ComponentModel;
+using System.Linq;
 
 namespace SBT.Apps.Contabilidad.Module.Controllers
 {
@@ -54,20 +46,24 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
             base.DoInitializeComponent();
             TargetObjectType = typeof(SBT.Apps.Contabilidad.Module.BusinessObjects.EstadoFinancieroModelo);
             // pwsaGenerarEstadoFinanciero
-            pwsaGenerarEstadoFinanciero = new PopupWindowShowAction(this, "pwsaGenerarEstadoFinanciero", DevExpress.Persistent.Base.PredefinedCategory.RecordsNavigation);
-            pwsaGenerarEstadoFinanciero.Caption = "Generar";
-            pwsaGenerarEstadoFinanciero.TargetViewType = DevExpress.ExpressApp.ViewType.ListView;
-            pwsaGenerarEstadoFinanciero.ToolTip = "Clic para generar el estado financiero que corresponde al modelo seleccionado";
-            pwsaGenerarEstadoFinanciero.AcceptButtonCaption = "Generar";
-            pwsaGenerarEstadoFinanciero.CancelButtonCaption = "Cerrar";
-            pwsaGenerarEstadoFinanciero.ImageName = "CierreDiario";
-            pwsaGenerarEstadoFinanciero.SelectionDependencyType = SelectionDependencyType.RequireSingleObject;
+            pwsaGenerarEstadoFinanciero = new(this, "pwsaGenerarEstadoFinanciero", DevExpress.Persistent.Base.PredefinedCategory.RecordsNavigation)
+            {
+                Caption = "Generar",
+                TargetViewType = DevExpress.ExpressApp.ViewType.ListView,
+                ToolTip = "Clic para generar el estado financiero que corresponde al modelo seleccionado",
+                AcceptButtonCaption = "Generar",
+                CancelButtonCaption = "Cerrar",
+                ImageName = "CierreDiario",
+                SelectionDependencyType = SelectionDependencyType.RequireSingleObject
+            };
             // Lista de seleccion de empleado para el Contador y Rep. Legal
-            pwsaSelectEmpleado = new PopupWindowShowAction(this, "pwsaSelectEmpleado", DevExpress.Persistent.Base.PredefinedCategory.RecordEdit);
-            pwsaSelectEmpleado.Caption = "Empleado";
-            pwsaSelectEmpleado.TargetViewType = ViewType.DetailView;
-            pwsaSelectEmpleado.ToolTip = "Clic para seleccionar el Contador o Representante Legal";
-            pwsaSelectEmpleado.CancelButtonCaption = "Cerrar";
+            pwsaSelectEmpleado = new(this, "pwsaSelectEmpleado", DevExpress.Persistent.Base.PredefinedCategory.RecordEdit)
+            {
+                Caption = "Empleado",
+                TargetViewType = ViewType.DetailView,
+                ToolTip = "Clic para seleccionar el Contador o Representante Legal",
+                CancelButtonCaption = "Cerrar"
+            };
         }
 
         protected override void DoDispose()
@@ -81,7 +77,7 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
         {
             IObjectSpace osParams = Application.CreateObjectSpace(typeof(EstadoFinancieroParams));
             EstadoFinancieroParams pa = osParams.CreateObject<EstadoFinancieroParams>();
-            DetailView paDetailView= Application.CreateDetailView(osParams, pa, true);
+            DetailView paDetailView = Application.CreateDetailView(osParams, pa, true);
             paDetailView.ViewEditMode = DevExpress.ExpressApp.Editors.ViewEditMode.Edit;
             e.View = paDetailView;
         }
@@ -103,7 +99,6 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
             if (((EstadoFinancieroModelo)View.SelectedObjects[0]).Reporte == null)
                 return;   // no hay reporte vinculado al estado financiero
             efParams = ((EstadoFinancieroParams)e.PopupWindowViewCurrentObject);
-            IObjectSpace os2 = (NonPersistentObjectSpace)Application.CreateObjectSpace(typeof(EFinancieroDetalle));
 
             var reportData = ((EstadoFinancieroModelo)View.SelectedObjects[0]).Reporte;
             string handle = ReportDataProvider.ReportsStorage.GetReportContainerHandle(reportData);
@@ -116,9 +111,9 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
 
         private void Application_ObjectSpaceCreated(Object sender, ObjectSpaceCreatedEventArgs e)
         {
-            if (e.ObjectSpace is NonPersistentObjectSpace)
+            if (e.ObjectSpace is NonPersistentObjectSpace space)
             {
-                ((NonPersistentObjectSpace)e.ObjectSpace).ObjectsGetting += os2_ObjectsGetting;
+                space.ObjectsGetting += os2_ObjectsGetting;
             }
         }
 
@@ -139,7 +134,7 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
         {
             if (e.ObjectType != typeof(EFinancieroDetalle))
                 return;
-            BindingList<EFinancieroDetalle> objects = new BindingList<EFinancieroDetalle>();
+            BindingList<EFinancieroDetalle> objects = new();
             // preparar los datos para el informe
             IObjectSpace os = Application.CreateObjectSpace(typeof(SaldoMes));
             EstadoFinancieroModelo ef = (View.SelectedObjects[0] as EstadoFinancieroModelo);
@@ -150,11 +145,11 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
 
             var saldos = os.GetObjects<SaldoMes>(new GroupOperator(new BinaryOperator("MesAnio", Convert.ToInt32(string.Format("{0:D}{1:MMyyyy}", ef.Empresa.Oid, efParams.FechaHasta))),
                                                       new InOperator("Cuenta.Oid", ctas)));
-            
+
             var saldosEF = saldos.Where(y => y.Periodo.Oid == efParams.FechaHasta.Year && y.Mes == efParams.FechaHasta.Month && ctas.Contains(y.Cuenta.Oid));
-            
+
             foreach (EstadoFinancieroModeloDetalle item in ef.Detalles)
-            { 
+            {
                 decimal saldo1 = 0.0m;
                 decimal saldo2 = 0.0m;
                 SaldoMes saldoMes = null;
@@ -205,13 +200,13 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
         private string EvaluarNombre(EstadoFinancieroModeloDetalle item, string expresion)
         {
             CriteriaOperator criteriaOp = CriteriaOperator.TryParse(expresion);
-            if (ReferenceEquals(criteriaOp, null))
+            if (criteriaOp is null)
                 return expresion;
             else
             {
                 var exp2 = expresion.Replace("?P0", Convert.ToString(efParams.FechaHasta.Year));
                 exp2 = exp2.Replace("?P1", Convert.ToString(efParams.FechaHasta.Month));
-                return  Convert.ToString(item.EstadoFinanciero.Evaluate(exp2));
+                return Convert.ToString(item.EstadoFinanciero.Evaluate(exp2));
             }
         }
 
@@ -227,7 +222,7 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
             (View.CurrentObject as EstadoFinancieroModelo).Contador = empleado.NombreCompleto;
         }
 
-      
+
 
         private void PwsaSelectEmpleado_CustomizePopupWindowParams(object sender, CustomizePopupWindowParamsEventArgs e)
         {

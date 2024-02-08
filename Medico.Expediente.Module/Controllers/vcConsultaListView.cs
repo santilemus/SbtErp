@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using DevExpress.Data.Filtering;
-using DevExpress.ExpressApp;
-using SBT.Apps.Medico.Expediente.Module.BusinessObjects;
-using SBT.Apps.Base.Module.Controllers;
+﻿using SBT.Apps.Base.Module.Controllers;
 
 
 namespace SBT.Apps.Medico.Expediente.Module.Controllers
@@ -16,7 +9,7 @@ namespace SBT.Apps.Medico.Expediente.Module.Controllers
     /// </summary>
     public class vcConsultaListView : ViewControllerBase
     {
-        public vcConsultaListView(): base()
+        public vcConsultaListView() : base()
         {
             TargetObjectType = typeof(SBT.Apps.Medico.Expediente.Module.BusinessObjects.Consulta);
             this.TargetViewType = DevExpress.ExpressApp.ViewType.ListView;

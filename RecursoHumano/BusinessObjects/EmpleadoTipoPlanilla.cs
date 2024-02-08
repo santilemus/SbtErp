@@ -1,18 +1,9 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp;
-using System.ComponentModel;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
-using DevExpress.Persistent.Base;
-using System.Collections.Generic;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
+using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
-using SBT.Apps.Empleado.Module.BusinessObjects;
 
 namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 {
@@ -39,7 +30,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         public override void AfterConstruction()
         {
             base.AfterConstruction();
-            
+
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
@@ -55,7 +46,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
             set => SetPropertyValue(nameof(Empleado), ref empleado, value);
         }
 
-        
+
         [XafDisplayName("Tipo Planilla"), Index(1), RuleRequiredField("EmpleadoTipoPlanilla.TipoPlanilla_Requerido", "Save")]
         public TipoPlanilla TipoPlanilla
         {

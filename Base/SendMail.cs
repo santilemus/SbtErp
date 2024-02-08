@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Net.Mail;
+﻿using System.Net.Mail;
 
 namespace SBT.Apps.Base.Module
 {
@@ -41,7 +39,7 @@ namespace SBT.Apps.Base.Module
                     mailMsg.Attachments.Add(new Attachment(fileName));
                     mailClient.Send(mailMsg);
                 }
-            }          
+            }
         }
 
         public string Smtp { get; set; }

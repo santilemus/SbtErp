@@ -4,8 +4,6 @@ using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using DevExpress.Xpo;
 using System;
-using System.Linq;
-using DevExpress.Persistent.Validation;
 
 namespace SBT.Apps.CxP.Module.BusinessObjects
 {
@@ -157,7 +155,7 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
             {
                 item.CantidadAnulada = item.Cantidad;
                 item.Cantidad = 0.0m;
-                item.PrecioUnidad = 0.0m;                
+                item.PrecioUnidad = 0.0m;
             }
             base.Anular();
         }

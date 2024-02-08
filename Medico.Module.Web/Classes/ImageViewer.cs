@@ -1,9 +1,5 @@
 ﻿
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.SessionState;
 
@@ -35,7 +31,7 @@ namespace SBT.Apps.Medico.Module.Web.Classes
                 context.Response.Cache.SetCacheability(HttpCacheability.NoCache);
                 //context.Response.ContentType = "application/octectstream";
                 context.Response.ContentType = contentType;
-                context.Response.BinaryWrite(bytes);             
+                context.Response.BinaryWrite(bytes);
                 context.Response.Flush();
                 context.Response.End();
             }

@@ -1,196 +1,63 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{DC2B10D5-7EB4-4E21-9A86-1E0247178F7B}</ProjectGuid>
+    <TargetFramework>net8.0</TargetFramework>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SBT.Apps.RecursoHumano.Module</RootNamespace>
     <AssemblyName>SBT.Apps.RecursoHumano.Module</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <AssemblyTitle>SBT.Apps.RecursoHumano.Module</AssemblyTitle>
+    <Product>SBT.Apps.RecursoHumano.Module</Product>
+    <Copyright>Copyright © 2020</Copyright>
+    <AssemblyVersion>2.0.*</AssemblyVersion>
+    <FileVersion>2.0.0.0</FileVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'EasyTest|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\EasyTest\</OutputPath>
     <DefineConstants>TRACE;DEBUG;EASYTEST</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="DevExpress.Data.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.ExpressApp.CloneObject.Xpo.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.ExpressApp.ConditionalAppearance.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.ExpressApp.Objects.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.ExpressApp.ReportsV2.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.ExpressApp.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.ExpressApp.Validation.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.ExpressApp.ViewVariantsModule.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.ExpressApp.Xpo.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.Persistent.Base.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.Persistent.BaseImpl.Xpo.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.Printing.v21.2.Core">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.Data.Desktop.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.Utils.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.Xpo.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.Charts.v21.2.Core">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.XtraCharts.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.CodeParser.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.XtraReports.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="mscorlib">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="System">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="System.Core">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="System.Drawing">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="System">
-      <Name>System</Name>
-    </Reference>
-    <Reference Include="System.Drawing" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="BusinessObjects\AccionPersonal.cs" />
-    <Compile Include="BusinessObjects\APersonalParam.cs" />
-    <Compile Include="BusinessObjects\Asueto.cs" />
-    <Compile Include="BusinessObjects\CalcularPlanillaParam.cs" />
-    <Compile Include="BusinessObjects\EClasePlanilla.cs" />
-    <Compile Include="BusinessObjects\EEstadoAccionPersonal.cs" />
-    <Compile Include="BusinessObjects\EEstadoPlanilla.cs" />
-    <Compile Include="BusinessObjects\EEstadoReporteHoraExtra.cs" />
-    <Compile Include="BusinessObjects\EFormaAplicarTransaccion.cs" />
-    <Compile Include="BusinessObjects\EFormaPago.cs" />
-    <Compile Include="BusinessObjects\EMetodoAguinaldo.cs" />
-    <Compile Include="BusinessObjects\PlanillaDetalleFuncion.cs" />
-    <Compile Include="BusinessObjects\EmpleadoTipoPlanilla.cs" />
-    <Compile Include="BusinessObjects\ETablaISR.cs" />
-    <Compile Include="BusinessObjects\ETipoCalculoOperacion.cs" />
-    <Compile Include="BusinessObjects\ETipoOperacion.cs" />
-    <Compile Include="BusinessObjects\ETipoTransaccion.cs" />
-    <Compile Include="BusinessObjects\Parametro.cs" />
-    <Compile Include="BusinessObjects\ParametroAguinaldo.cs" />
-    <Compile Include="BusinessObjects\ParametroRenta.cs" />
-    <Compile Include="BusinessObjects\ParametroVacacion.cs" />
-    <Compile Include="BusinessObjects\ParametroJornada.cs" />
-    <Compile Include="BusinessObjects\Planilla.cs" />
-    <Compile Include="BusinessObjects\PlanillaDetalle.cs" />
-    <Compile Include="BusinessObjects\Operacion.cs" />
-    <Compile Include="BusinessObjects\PlanillaDetalleOperacion.cs" />
-    <Compile Include="BusinessObjects\RentaEmpleoAnterior.cs" />
-    <Compile Include="BusinessObjects\TestEmpleadoPlanilla.cs" />
-    <Compile Include="BusinessObjects\OperacionTipoPlanilla.cs" />
-    <Compile Include="BusinessObjects\ReporteHoraExtra.cs" />
-    <Compile Include="BusinessObjects\ReporteHoraExtraDetalle.cs" />
-    <Compile Include="BusinessObjects\ReporteHoraExtraResumen.cs" />
-    <Compile Include="BusinessObjects\TestStoredProcHelper.cs" />
-    <Compile Include="BusinessObjects\TipoPlanilla.cs" />
-    <Compile Include="BusinessObjects\ToETablaISR.cs" />
-    <Compile Include="BusinessObjects\Transaccion.cs" />
-    <Compile Include="Controllers\vcAccionPersonal.cs" />
-    <Compile Include="Controllers\vcParametro.cs" />
-    <Compile Include="Controllers\vcParametroAguinaldo.cs" />
-    <Compile Include="Controllers\vcParametroJornada.cs" />
-    <Compile Include="Controllers\vcParametroVacacion.cs" />
-    <Compile Include="Controllers\vcPlanilla.cs" />
-    <Compile Include="Controllers\vcRHExtra.cs" />
-    <Compile Include="Controllers\vcTransaccion.cs" />
-    <Compile Include="DatabaseUpdate\Updater.cs" />
-    <Compile Include="EmpleadoFunction.cs" />
-    <Compile Include="RecursoHumanoModule.cs" />
-    <Compile Include="RecursoHumanoModule.Designer.cs">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug Net6|AnyCPU'">
+    <OutputPath>bin\Debug Net6\</OutputPath>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="DevExpress.ExpressApp" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.Chart" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.CloneObject.Xpo" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.CodeAnalysis" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.ConditionalAppearance" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.Objects" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.ReportsV2" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.Security.Xpo" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.Validation" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.ViewVariantsModule" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.Xpo" Version="23.1.3" />
+		<PackageReference Include="DevExpress.Persistent.Base" Version="23.1.3" />
+		<PackageReference Include="DevExpress.Persistent.BaseImpl.Xpo" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.AuditTrail.Xpo" Version="23.1.3" />
+		<!--<PackageReference Include="System.Configuration.ConfigurationManager" Version="7.0.0" />-->
+	</ItemGroup>
+
+	<ItemGroup>
+    <Compile Update="Controllers\vcAccionPersonal.cs" />
+    <Compile Update="Controllers\vcParametro.cs" />
+    <Compile Update="Controllers\vcParametroAguinaldo.cs" />
+    <Compile Update="Controllers\vcParametroJornada.cs" />
+    <Compile Update="Controllers\vcParametroVacacion.cs" />
+    <Compile Update="Controllers\vcPlanilla.cs" />
+    <Compile Update="Controllers\vcRHExtra.cs" />
+    <Compile Update="Controllers\vcTransaccion.cs" />
+    <Compile Update="RecursoHumanoModule.cs" />
+    <Compile Update="RecursoHumanoModule.Designer.cs">
       <DependentUpon>RecursoHumanoModule.cs</DependentUpon>
     </Compile>
-    <Compile Include="PlanillaEvaluarFunction.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Model.DesignedDiffs.xafml" />
     <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="BusinessObjects\ReadMe.txt" />
-    <None Include="Controllers\ReadMe.txt" />
-    <None Include="DatabaseUpdate\ReadMe.txt" />
     <EmbeddedResource Include="Images\ReadMe.txt" />
-    <None Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Base\SBT.Apps.Base.csproj">
-      <Project>{a538fe93-206d-4869-bc40-fdc561f8c1d1}</Project>
-      <Name>SBT.Apps.Base</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Empleado\SBT.Apps.Empleado.csproj">
-      <Project>{05f004d2-9388-44db-a756-2ffb2eccae07}</Project>
-      <Name>SBT.Apps.Empleado</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Tercero\SBT.Apps.Tercero.csproj">
-      <Project>{5f15837d-d1e5-44dc-92f0-4f2ebe9c3f8d}</Project>
-      <Name>SBT.Apps.Tercero</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Images\ParametroAguinaldo.png" />
@@ -222,12 +89,12 @@
     <EmbeddedResource Include="Images\ReporteHoraExtra.png" />
     <EmbeddedResource Include="Images\ReporteHoraExtra_32x32.png" />
   </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+  <ItemGroup>
+    <Compile Remove="BusinessObjects\TestParam.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Base\SBT.Apps.Base.csproj" />
+    <ProjectReference Include="..\Empleado\SBT.Apps.Empleado.csproj" />
+    <ProjectReference Include="..\Tercero\SBT.Apps.Tercero.csproj" />
+  </ItemGroup>
 </Project>

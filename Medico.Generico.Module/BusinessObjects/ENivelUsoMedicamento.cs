@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using DevExpress.ExpressApp.DC;
+﻿using DevExpress.ExpressApp.DC;
 
 namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 {
@@ -9,15 +7,15 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
     /// </summary>
     public enum ENivelUsoMedicamento
     {
-        [XafDisplayName("Prescrito por Enfermera o Tecnólogo")]
+        [XafDisplayName("Prescrito Enfermera o Tecnólogo")]
         P = 0,
-        [XafDisplayName("Prescrito por Médico General")]
+        [XafDisplayName("Prescrito Medico General")]
         M = 1,
-        [XafDisplayName("Prescrito por Médico Especialista")]
+        [XafDisplayName("Prescrito Medico Especialista")]
         E = 2,
-        [XafDisplayName("Prescrito por Médico General en Hospitales")]
+        [XafDisplayName("Prescrito Medico General en Hospitales")]
         HM = 3,
-        [XafDisplayName("Prescrito por Médico Especialista en Hospitales")]
+        [XafDisplayName("Prescrito Medico Especialista en Hospitales")]
         HE = 4
     }
 }

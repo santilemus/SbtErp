@@ -9,7 +9,6 @@ using SBT.Apps.Facturacion.Module.BusinessObjects;
 using SBT.Apps.Producto.Module.BusinessObjects;
 using System;
 using System.ComponentModel;
-using System.Linq;
 
 
 namespace SBT.Apps.CxC.Module.BusinessObjects

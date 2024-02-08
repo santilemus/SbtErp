@@ -1,10 +1,14 @@
 ﻿using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.DC;
+using DevExpress.ExpressApp.Security;
+using DevExpress.ExpressApp.Utils;
 using DevExpress.Persistent.Base;
 using DevExpress.Xpo;
 using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace SBT.Apps.Base.Module.BusinessObjects
 {
@@ -12,19 +16,19 @@ namespace SBT.Apps.Base.Module.BusinessObjects
     /// Parametros personalizados para el Log On
     /// En este caso se incluyen la seleccion de Empresas y Agencias
     /// </summary>
-    /// <remarks>
+    /// <remarks> 
     /// mas info en: https://docs.devexpress.com/eXpressAppFramework/112982/task-based-help/security/how-to-use-custom-logon-parameters-and-authentication
     /// </remarks>
     [DomainComponent, Serializable]
     [System.ComponentModel.DisplayName("Conexión")]   // "Log On"
-    public class CustomLogonParameters : INotifyPropertyChanged, ISerializable
+    public class CustomLogonParameters : INotifyPropertyChanged, ISerializable, ICustomObjectSerialize, ISupportClearPassword, IAuthenticationStandardLogonParameters
     {
         int oidSucursal;
         private int oidEmpresa;
         private Empresa empresa;
         private EmpresaUnidad agencia;
+        private string password;
 
-        //[DataSourceProperty("EmpresasDisponible"), ImmediatePostData(true)]
         [DataSourceCriteria("Activa == True"), ImmediatePostData(true)]
         public Empresa Empresa
         {
@@ -35,8 +39,6 @@ namespace SBT.Apps.Base.Module.BusinessObjects
                 empresa = value;
                 Agencia = null;
                 OnPropertyChanged(nameof(Empresa));
-                RefrescarAgencias();
-                //RefreshAvailableUsers();
             }
         }
 
@@ -47,15 +49,8 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         /// </summary>
         [VisibleInDetailView(false), VisibleInListView(false)]
         public int OidEmpresa
-        {        
-            get { return (empresa != null) ? empresa.Oid : 1; }
-            set
-            {
-                oidEmpresa = value;
-                Empresa emp = ObjectSpace.GetObjectByKey<Empresa>(oidEmpresa);
-                if (emp != null)
-                    Empresa = emp;
-            }
+        {
+            get { return (empresa != null) ? empresa.Oid : 0; }
         }
 
         [DataSourceProperty("Empresa.Unidades"), ImmediatePostData(true)]
@@ -66,8 +61,9 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             {
                 if (agencia == value) return;
                 agencia = value;
+                Empresa = agencia?.Empresa;
+                //UserName = Empresa?.Usuarios.FirstOrDefault(x => x.UserName == )?.UserName;
                 OnPropertyChanged(nameof(Agencia));
-                //RefreshAvailableUsers();
             }
         }
 
@@ -76,20 +72,10 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         /// LastLogonParametersReading del Global.asax, con el valor del codigo de la agencia guardada en la
         /// sesion anterior
         /// </summary>
-        [VisibleInDetailView(false), VisibleInListView(false), Browsable(false)]
+        [Browsable(false)]
         public int OidSucursal
         {
             get { return (agencia != null) ? agencia.Oid : 1; }
-            set
-            {
-                oidSucursal = value;
-                if (AgenciasDisponibles != null)
-                {
-                    var obj = AgenciasDisponibles.Lookup(value);
-                    if (obj != null)
-                        Agencia = obj;
-                }
-            }
         }
 
         public CustomLogonParameters() { }
@@ -119,7 +105,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
 
         //[Browsable(false)]
         public String UserName { get; set; }
-        private string password;
+       
         [PasswordPropertyText(true)]
         public string Password
         {
@@ -131,41 +117,24 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             }
         }
 
-        private IObjectSpace objectSpace;
-        private XPCollection<EmpresaUnidad> agenciasDisponibles;
-        //private XPCollection<Usuario> usuariosDisponible;
-
-        [Browsable(false)]
-        public IObjectSpace ObjectSpace
+        public void RefrescarAgencias(IObjectSpace objectSpace)
         {
-            get { return objectSpace; }
-            set { objectSpace = value; }
+            Agencia = (Empresa == null) ? null : objectSpace.FirstOrDefault<EmpresaUnidad>(e => e.Empresa == Empresa && e.Activa == true); // && e.Role == ETipoRoleUnidad.Agencia);
         }
 
-        /// <summary>
-        /// Retornar coleccion de sucursales, por eso se filtra por tipo de role (2 es agencia) y que esten activas
-        /// </summary>
-        [Browsable(false)]
-        [CollectionOperationSet(AllowAdd = false, AllowRemove = false)]
-        public XPCollection<EmpresaUnidad> AgenciasDisponibles
+        public void ReadPropertyValues(SettingsStorage storage)
         {
-            get
-            {
-                if (agenciasDisponibles == null)
-                    RefrescarAgencias();
-                return agenciasDisponibles;
-            }
+            UserName = storage.LoadOption("", "UserName"); 
         }
 
-        private void RefrescarAgencias()
+        public void WritePropertyValues(SettingsStorage storage)
         {
-            if (empresa != null)
-                agenciasDisponibles = Empresa.Unidades;
-            // Se produce error al logearse cuando agenciasDisponibles es nulo, por eso se comentario el filtro
-            // porque pueden haber empresas en las cuales ninguna de sus unidades es agencia
-
-            // agenciasDisponibles.Filter = CriteriaOperator.Parse("[Role] == 2 && [Activa] == True");
+            storage.SaveOption("", "UserName", UserName); 
         }
 
+        public void ClearPassword()
+        {
+            Password = string.Empty;
+        }
     }
 }

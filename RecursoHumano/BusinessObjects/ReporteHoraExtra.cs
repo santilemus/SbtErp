@@ -1,18 +1,11 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp;
-using System.ComponentModel;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
-using DevExpress.Persistent.Base;
-using System.Collections.Generic;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
+using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
-using SBT.Apps.Empleado.Module.BusinessObjects;
+using System;
+using System.ComponentModel;
 
 namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 {
@@ -37,6 +30,11 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         {
             base.AfterConstruction();
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
+            Estado = EEstadoReporteHoraExtra.Digitado;
+            jefeDepartamento = null;
+            unidad = null;
+            planilla = null;
+            fechaPago = null;
         }
 
         #region Propiedades
@@ -49,9 +47,9 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         DateTime fechaInicio;
         DateTime fechaFin;
         [Persistent(nameof(FechaPago)), DbType("datetime")]
-        DateTime ? fechaPago;
+        DateTime? fechaPago;
         [Persistent(nameof(Planilla))]
-        int ? planilla;
+        int? planilla;
         EEstadoReporteHoraExtra estado = EEstadoReporteHoraExtra.Digitado;
 
         [XafDisplayName("Empleado")]
@@ -60,7 +58,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
             get => empleado;
             set => SetPropertyValue(nameof(Empleado), ref empleado, value);
         }
-        
+
         [XafDisplayName("Unidad"), PersistentAlias(nameof(unidad))]
         public EmpresaUnidad Unidad
         {
@@ -93,21 +91,21 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 
         [PersistentAlias(nameof(fechaPago)), XafDisplayName("Fecha Pago")]
         [ModelDefault("DisplayFormat", "{0:G}"), ModelDefault("EditMask", "G")]
-        public DateTime ? FechaPago
+        public DateTime? FechaPago
         {
             get { return fechaPago; }
         }
-        
+
         /// <summary>
         /// LEEME ==> Cambiar despues el tipo al BO del encabezado de planillas
         /// </summary>
         [XafDisplayName("Planilla"), PersistentAlias(nameof(planilla))]
-        public int ? Planilla
+        public int? Planilla
         {
             get => planilla;
         }
 
-        [DbType("smallint"), XafDisplayName("Estado"), RuleRequiredField("ReporteHExtra.Estado_Requerido", "Save")]
+        [DbType("smallint"), XafDisplayName("Estado")]
         public EEstadoReporteHoraExtra Estado
         {
             get => estado;
@@ -125,7 +123,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
             }
         }
 
-        [Association("ReporteHoraExtra-Resumenes"), DevExpress.Xpo.Aggregated, XafDisplayName("Resumen"),Index(1)]
+        [Association("ReporteHoraExtra-Resumenes"), DevExpress.Xpo.Aggregated, XafDisplayName("Resumen"), Index(1)]
         public XPCollection<ReporteHoraExtraResumen> Resumenes
         {
             get

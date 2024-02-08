@@ -1,20 +1,13 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp;
-using System.ComponentModel;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
-using DevExpress.Persistent.Base;
-using System.Collections.Generic;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
+using DevExpress.Xpo;
+using System.ComponentModel;
 
 namespace SBT.Apps.Base.Module.BusinessObjects
 {
-    
+
     /// <summary>
     /// BO para las consultas dinamicas (incluyendo la ejecucion de procedimientos almacenados) cuya definicion se guarda en la base de datos
     /// para procesos dinamicos
@@ -65,7 +58,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             get => ssql;
             set => SetPropertyValue(nameof(Ssql), ref ssql, value);
         }
-        
+
         [DbType("bit"), XafDisplayName("Activa"), Persistent("Activa"), RuleRequiredField("Consulta.Activa_Requerido", DefaultContexts.Save)]
         public bool Activa
         {

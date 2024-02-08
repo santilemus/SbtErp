@@ -1,15 +1,11 @@
-﻿using System;
-using DevExpress.ExpressApp.Actions;
-using SBT.Apps.Base.Module.Controllers;
-
-namespace SBT.Apps.Erp.Module.Web.Controllers
+﻿namespace SBT.Apps.Erp.Module.Web.Controllers
 {
     /// <summary>
     /// ViewController para el BO ActivoMovimiento para la plataforma web
     /// </summary>
-    public class vcActivoMovimiento: ViewControllerBaseWeb
+    public class vcActivoMovimiento : ViewControllerBaseWeb
     {
-        public vcActivoMovimiento(): base()
+        public vcActivoMovimiento() : base()
         {
 
         }

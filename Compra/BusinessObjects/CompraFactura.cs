@@ -13,7 +13,6 @@ using SBT.Apps.Inventario.Module.BusinessObjects;
 using SBT.Apps.Producto.Module.BusinessObjects;
 using System;
 using System.ComponentModel;
-using System.Linq;
 
 namespace SBT.Apps.Compra.Module.BusinessObjects
 {
@@ -42,7 +41,7 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
             NoSujeta = 0.0m;
             DiasCredito = 0;
             Clase = EClaseDocumento.Imprenta;
-
+            Tipo = ETipoCompra.Servicio;
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
@@ -57,6 +56,7 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
         Tercero.Module.BusinessObjects.Tercero proveedor;
         EOrigenCompra origen = EOrigenCompra.Local;
         OrdenCompra ordenCompra;
+        private string serie;
 
         [Association("OrdenCompra-Facturas"), XafDisplayName("Orden Compra"), Persistent(nameof(OrdenCompra)), Index(5)]
         [DetailViewLayout("Datos Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
@@ -80,7 +80,7 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
         /// <summary>
         /// Tipo de Compra. Puede ser: Servicio, Producto, ActivoFijo
         /// </summary>
-        [DbType("smallint"), XafDisplayName("Tipo Compra"), RuleRequiredField("CompraFactura.Tipo_Requerido", "Save"), Index(7)]
+        [DbType("smallint"), XafDisplayName("Tipo Compra"), Index(7)]
         [DetailViewLayout("Datos Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
         public ETipoCompra Tipo
         {
@@ -96,12 +96,20 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
             set => SetPropertyValue(nameof(Origen), ref origen, value);
         }
 
-        [Size(20), DbType("varchar(20)"), XafDisplayName("No Factura"), Index(10)]
+        [Size(100), DbType("varchar(100)"), XafDisplayName("No Factura"), Index(10)]
         [DetailViewLayout("Datos de Pago", LayoutGroupType.SimpleEditorsGroup, 2)]
         public string NumeroFactura
         {
             get => numeroFactura;
             set => SetPropertyValue(nameof(NumeroFactura), ref numeroFactura, value);
+        }
+
+        [Size(100), DbType("varchar(100)"), VisibleInListView(false), XafDisplayName("Serie"), Index(11)]
+        [DetailViewLayout("Datos de Pago", LayoutGroupType.SimpleEditorsGroup, 2)]
+        public string Serie
+        {
+            get => serie;
+            set => SetPropertyValue(nameof(Serie), ref serie, value);
         }
 
         [Size(20), XafDisplayName("Clase"), Index(11)]
@@ -180,7 +188,7 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
             {
                 // calculamos el Iva, cuando no hay detalles porque en ese caso solo se esta ingresando el encabezado de la compra
                 iva = CalcularTributo(5);
-                
+
                 OnChanged(nameof(Iva));
             }
             base.DoGravadaChanged(forceChangeEvents, oldValue);
@@ -199,7 +207,7 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
             if (tributo != null)
             {
                 // la formula debe tener las reglas o condiciones para calcular el tributo cuando aplique
-                ExpressionEvaluator eval = new ExpressionEvaluator(TypeDescriptor.GetProperties(tributo.TipoBO), tributo.Formula);
+                ExpressionEvaluator eval = new(TypeDescriptor.GetProperties(tributo.TipoBO), tributo.Formula);
 
                 return Convert.ToDecimal(eval.Evaluate(this));
             }
@@ -254,7 +262,7 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
                 (Proveedor.DireccionPrincipal == null || Proveedor.DireccionPrincipal.Pais.Codigo == "SLV"))
                 return;
             // pendiente revisar con el caso de los intangibles, como se van a determinar
-            if ((Tipo == ETipoCompra.Servicio) || 
+            if ((Tipo == ETipoCompra.Servicio) ||
                 (Proveedor.DireccionPrincipal != null && Proveedor.DireccionPrincipal.Pais.Codigo != "SLV"))
             {
                 // calcular aqui la renta, revisar las condiciones
@@ -293,11 +301,19 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
 
         protected override void OnSaving()
         {
-            if (!(Session is NestedUnitOfWork) && (Session.DataLayer != null) && Session.IsNewObject(this) &&
+            if ((Session is not NestedUnitOfWork) && (Session.DataLayer != null) && Session.IsNewObject(this) &&
                 (Session.ObjectLayer is SecuredSessionObjectLayer) && (Numero == null || Numero <= 0))
             {
                 Numero = CorrelativoDoc();
             }
+            base.OnSaving();
+        }
+
+        protected override void OnSaved()
+        {
+            base.OnSaved();
+            if (Oid <= 0)
+                Session.Reload(this);
         }
 
         #endregion

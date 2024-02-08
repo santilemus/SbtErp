@@ -1,7 +1,4 @@
-﻿using System;
-using DevExpress.ExpressApp.DC;
-
-namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
+﻿namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 {
     /// <summary>
     /// Forma de pago de los diferentes tipos de planilla. Pueden ser: Quincenal, Semanal, Anual, Catorcena

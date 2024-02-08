@@ -22,7 +22,6 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
     [DomainComponent, XafDisplayName("Calcular Planilla")]
     public class CalcularPlanillaParam : NonPersistentObjectImpl
     {
-        private IObjectSpace objectSpace;
         private IList<TipoPlanilla> tipoPlanillas;
         private TipoPlanilla tipoPlanilla;
 
@@ -43,11 +42,10 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         {
             get
             {
-                if (tipoPlanilla == null)
-                    tipoPlanilla = ObjectSpace.GetObjects<TipoPlanilla>(new BinaryOperator("Activo", true)).FirstOrDefault();
+                tipoPlanilla ??= ObjectSpace.GetObjects<TipoPlanilla>(new BinaryOperator("Activo", true)).FirstOrDefault();
                 return tipoPlanilla;
             }
-            set { TipoPlanilla = tipoPlanilla; }
+            set { tipoPlanilla = value; }
         }
 
         [XafDisplayName("Fecha Inicio"), ToolTip("Fecha de Inicio del período de cálculo de la planilla")]
@@ -56,7 +54,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         public DateTime FechaFin { get; set; }
         [XafDisplayName("Fecha Pago"), ToolTip("Fecha de Pago de la planilla")]
         public DateTime FechaPago { get; set; }
-        [Size(2000), ModelDefault("RowCount", "8"), XafDisplayName("Bitácora")]
+        [DevExpress.ExpressApp.DC.FieldSize(2000), ModelDefault("RowCount", "8"), XafDisplayName("Bitácora")]
         public string Bitacora { get; set; }
 
         public CalcularPlanillaParam()

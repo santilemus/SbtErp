@@ -1,11 +1,11 @@
 ﻿using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.Model;
+using DevExpress.ExpressApp.Security.ClientServer;
 using DevExpress.Persistent.Base;
 using DevExpress.Xpo;
 using DevExpress.Xpo.Metadata;
 using System;
 using System.ComponentModel;
-using System.Linq;
 
 namespace SBT.Apps.Base.Module.BusinessObjects
 {
@@ -25,24 +25,30 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
             if (this.ClassInfo.FindMember("Empresa") != null)
             {
-                this["Empresa"] = this.Session.GetObjectByKey<Empresa>(SesionDataHelper.ObtenerValor("OidEmpresa"));
-                if (this.GetType().GetProperty("Moneda") != null)
+                int id = ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid;
+                var emp = Session.GetObjectByKey<Empresa>(id);
+                this["Empresa"] = emp;
+                if (this.GetType().GetProperty("Moneda") != null && emp != null)
                 {
-                    this["Moneda"] = (this["Empresa"] as Empresa).MonedaDefecto;
-                    if (this.GetType().GetProperty("ValorMoneda") != null)
-                        this["ValorMoneda"] = (this["Empresa"] as Empresa).MonedaDefecto.FactorCambio;
+                    this["Moneda"] = emp.MonedaDefecto;
+                    if (this.GetType().GetProperty("ValorMoneda") != null && emp.MonedaDefecto != null)
+                        this["ValorMoneda"] = emp.MonedaDefecto.FactorCambio;
                 }
             }
         }
 
         protected override void OnSaving()
         {
-            base.OnSaving();
-            if (!Session.IsNewObject(this))
+            // la siguiente condicion es para ejecutar el codigo del lado del cliente y cuando es un nuevo objeto
+            // para ejecutar codigo del lado del servidor incluir el else o cambiar la condicion a la siguiente
+            // (Session.DataLayer != null && !(Session.ObjectLayer is SecuredSessionObjectLayer))
+            // mas info en https://docs.devexpress.com/eXpressAppFramework/113439/data-security-and-safety/security-system/security-tiers/middle-tier-security-xpo
+            if (Session.DataLayer ==  null && (Session.ObjectLayer is SecuredSessionObjectLayer) && !Session.IsNewObject(this))
             {
                 fechaMod = DateTime.Now;
                 usuarioMod = DevExpress.ExpressApp.SecuritySystem.CurrentUserName;
             }
+            base.OnSaving();
         }
 
         /// <summary>
@@ -50,19 +56,23 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         /// </summary>
         protected override void OnDeleting()
         {
-            base.OnDeleting();
-            if (Session.CollectReferencingObjects(this).Count > 0)
+            //if (Session.DataLayer != null && !(Session.ObjectLayer is SecuredSessionObjectLayer))
+            if (Session.DataLayer == null && (Session.ObjectLayer is SecuredSessionObjectLayer))
             {
-                string usadoPor = string.Empty;
-                int i = 0;
-                foreach (var a in Session.CollectReferencingObjects(this))
+                if (Session.CollectReferencingObjects(this).Count > 0)
                 {
-                    i++;
-                    usadoPor = $"{usadoPor}{a.GetType()}:{a}; ";
-                    if (i > 2) break;
+                    string usadoPor = string.Empty;
+                    int i = 0;
+                    foreach (var a in Session.CollectReferencingObjects(this))
+                    {
+                        i++;
+                        usadoPor = $"{usadoPor}{a.GetType()}:{a}; ";
+                        if (i > 2) break;
+                    }
+                    throw new UserFriendlyException($"No puede borrar, Existen objetos, que usan el objeto que esta intentando eliminar : {ToString()}\r\n{usadoPor}");
                 }
-                throw new Exception($"No puede borrar, Existen objetos, que usan el objeto que esta intentando eliminar : {ToString()}\r\n{usadoPor}");
             }
+            base.OnDeleting();
         }
 
         private bool isDefaultPropertyAttributeInit;

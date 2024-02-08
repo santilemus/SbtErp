@@ -2,16 +2,12 @@
 using DevExpress.ExpressApp.Model;
 using DevExpress.ExpressApp.Web.Editors;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.UI.WebControls;
 
 namespace SBT.Apps.Medico.Module.Web.Editors
 {
     [PropertyEditor(typeof(Int32), false)]
-    public class ToothEditor: WebPropertyEditor
+    public class ToothEditor : WebPropertyEditor
     {
         public ToothEditor(Type objectType, IModelMemberViewItem info) : base(objectType, info) { }
         protected override WebControl CreateViewModeControlCore()

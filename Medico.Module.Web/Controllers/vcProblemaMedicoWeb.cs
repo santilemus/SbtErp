@@ -1,12 +1,9 @@
-﻿using System;
-
-
-namespace SBT.Apps.Medico.Module.Web.Controllers
+﻿namespace SBT.Apps.Medico.Module.Web.Controllers
 {
     /// <summary>
     /// View Controller especifico de la plataforma Web para el BO ProbemaMedico. 
     /// </summary>
-    public class vcProblemaMedicoWeb: ViewControllerBaseWeb
+    public class vcProblemaMedicoWeb : ViewControllerBaseWeb
     {
         public vcProblemaMedicoWeb() : base()
         {

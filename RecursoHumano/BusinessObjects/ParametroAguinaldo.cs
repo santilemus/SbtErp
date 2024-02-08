@@ -4,9 +4,7 @@ using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
-using System;
 using System.ComponentModel;
-using System.Linq;
 
 namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 {
@@ -33,6 +31,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         {
             base.AfterConstruction();
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
+            Activo = true;
         }
 
 
@@ -85,7 +84,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
             set => SetPropertyValue(nameof(Valor), ref valor, value);
         }
 
-        [DbType("bit"), Persistent("Activo"), XafDisplayName("Activo"), RuleRequiredField("ParametroAguinaldo.Activo_Requerido", DefaultContexts.Save)]
+        [DbType("bit"), Persistent("Activo"), XafDisplayName("Activo")]
         public bool Activo
         {
             get => activo;

@@ -1,15 +1,12 @@
-﻿using System;
-using System.Linq;
-
-namespace SBT.Apps.Medico.Module.Web.Controllers
+﻿namespace SBT.Apps.Medico.Module.Web.Controllers
 {
     /// <summary>
     /// View Controller Tercero. Para implementar optimizaciones y funciones propias de la plataforma web
     /// </summary>
-    public class vcTerceroWeb: ViewControllerBaseWeb
+    public class vcTerceroWeb : ViewControllerBaseWeb
     {
-        public vcTerceroWeb(): base()
-        { 
+        public vcTerceroWeb() : base()
+        {
 
         }
 

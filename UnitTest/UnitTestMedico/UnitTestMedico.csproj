@@ -38,6 +38,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug Net6|AnyCPU'">
+    <OutputPath>bin\Debug Net6\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\MSTest.TestFramework.1.3.2\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.dll</HintPath>
@@ -55,28 +58,6 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Base\SBT.Apps.Base.csproj">
-      <Project>{a538fe93-206d-4869-bc40-fdc561f8c1d1}</Project>
-      <Name>SBT.Apps.Base</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Empleado\SBT.Apps.Empleado.csproj">
-      <Project>{05f004d2-9388-44db-a756-2ffb2eccae07}</Project>
-      <Name>SBT.Apps.Empleado</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Medico.Expediente.Module\SBT.Apps.Medico.Expediente.Module.csproj">
-      <Project>{e00d3d65-8a67-4f8a-88d1-2e262226d807}</Project>
-      <Name>SBT.Apps.Medico.Expediente.Module</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Producto\SBT.Apps.Producto.csproj">
-      <Project>{90d73cb9-2f45-473c-8fee-af118bb56c89}</Project>
-      <Name>SBT.Apps.Producto</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Tercero\SBT.Apps.Tercero.csproj">
-      <Project>{5f15837d-d1e5-44dc-92f0-4f2ebe9c3f8d}</Project>
-      <Name>SBT.Apps.Tercero</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

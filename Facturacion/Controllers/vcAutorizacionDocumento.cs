@@ -1,21 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using DevExpress.Data.Filtering;
+﻿using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp;
-using DevExpress.ExpressApp.Actions;
-using DevExpress.ExpressApp.Editors;
-using DevExpress.ExpressApp.Layout;
-using DevExpress.ExpressApp.Model.NodeGenerators;
-using DevExpress.ExpressApp.SystemModule;
-using DevExpress.ExpressApp.Templates;
-using DevExpress.ExpressApp.Utils;
-using DevExpress.Persistent.Base;
-using DevExpress.Persistent.Validation;
-using DevExpress.ExpressApp.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Base.Module.Controllers;
+using System;
 
 namespace SBT.Apps.Facturacion.Module.Controllers
 {
@@ -23,9 +10,9 @@ namespace SBT.Apps.Facturacion.Module.Controllers
     /// View Controller para el BO AutorizacionDocumento que contiene las autorizaciones para la emision de documentos
     /// de la autoridad tributaria
     /// </summary>
-    public class vcAutorizacionDocumento: ViewControllerBase
+    public class vcAutorizacionDocumento : ViewControllerBase
     {
-        public vcAutorizacionDocumento(): base()
+        public vcAutorizacionDocumento() : base()
         {
 
         }

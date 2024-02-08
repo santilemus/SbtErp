@@ -22,6 +22,6 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         }
         public DateTime FechaAnulacion { get; set; }
         [Size(250)]
-        public string Comentario { get; set; }       
+        public string Comentario { get; set; }
     }
 }

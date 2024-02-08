@@ -1,23 +1,20 @@
-﻿using System;
-using System.Linq;
+﻿using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp.Actions;
 using DevExpress.ExpressApp.Xpo;
 using SBT.Apps.Base.Module;
-using SBT.Apps.Facturacion.Module;
-using System.Web;
 using System.IO;
-using DevExpress.Data.Filtering;
+using System.Web;
 
 namespace SBT.Apps.Erp.Module.Web.Controllers
 {
-    public class vcVentaWeb: ViewControllerBaseWeb
+    public class vcVentaWeb : ViewControllerBaseWeb
     {
         private PopupWindowShowAction pwsaExportSalesF07Contribuyente;
         private PopupWindowShowAction pwsaExportSalesF07Consumidor;
 
-        public vcVentaWeb(): base()
-        { 
-            
+        public vcVentaWeb() : base()
+        {
+
         }
 
         protected override void OnActivated()

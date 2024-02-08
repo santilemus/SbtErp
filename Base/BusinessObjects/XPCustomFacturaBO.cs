@@ -5,7 +5,6 @@ using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using System;
 using System.ComponentModel;
-using System.Linq;
 
 namespace SBT.Apps.Base.Module.BusinessObjects
 {
@@ -129,9 +128,9 @@ namespace SBT.Apps.Base.Module.BusinessObjects
                     UpdateTotalGravada(false);
                 return gravada;
             }
-            set 
+            set
             {
-                decimal ? oldValue = Gravada;
+                decimal? oldValue = Gravada;
                 bool changed = SetPropertyValue(nameof(Gravada), ref gravada, value);
                 if (!IsLoading && !IsSaving && changed)
                 {
@@ -322,7 +321,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         /// <param name="oldValue"></param>
         protected virtual void DoGravadaChanged(bool forceChangeEvents, decimal? oldValue)
         {
-            
+
         }
 
         protected virtual void DoAnular()

@@ -10,7 +10,6 @@ using DevExpress.XtraScheduler.Xml;
 using SBT.Apps.Base.Module.BusinessObjects;
 using System;
 using System.ComponentModel;
-using System.Linq;
 using System.Xml;
 
 
@@ -162,13 +161,13 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
             }
         }
 
-        [NonPersistent, Browsable(false)]
+        [Browsable(false)]
         public object AppointmentId
         {
             get => Oid;
         }
 
-        [NonPersistent, Browsable(false)]
+        [Browsable(false)]
         [RuleFromBoolProperty("CitaBase_EsIntervaloValido", DefaultContexts.Save,
             "La fecha y hora de inicio debe ser menor que la fecha y hora de finalización",
             SkipNullOrEmptyValues = false, UsedProperties = "StartOn, EndOn")]
@@ -244,14 +243,14 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
             set => SetPropertyValue(nameof(IsPostponed), ref isPostponed, value);
         }
 
-        [Browsable(false), NonPersistent]
+        [Browsable(false)]
         public object UniqueId
         {
             get { return Oid; }
         }
 
         [VisibleInDetailView(false), VisibleInListView(false), VisibleInLookupListView(false)]
-        [NonPersistent, XafDisplayName("Mensaje Notificación")]
+        [XafDisplayName("Mensaje Notificación")]
         public string NotificationMessage
         {
             get { return Subject; }

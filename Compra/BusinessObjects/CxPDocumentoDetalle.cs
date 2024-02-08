@@ -7,7 +7,6 @@ using SBT.Apps.Compra.Module.BusinessObjects;
 using SBT.Apps.Producto.Module.BusinessObjects;
 using System;
 using System.ComponentModel;
-using System.Linq;
 
 namespace SBT.Apps.CxP.Module.BusinessObjects
 {

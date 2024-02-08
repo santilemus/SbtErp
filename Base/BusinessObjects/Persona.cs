@@ -4,7 +4,6 @@ using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using System;
-using System.Linq;
 
 namespace SBT.Apps.Base.Module.BusinessObjects
 {
@@ -275,7 +274,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         {
             //get { return Convert.ToString(EvaluateAlias("NombreCompleto")); }
             get => ObjectFormatter.Format("{Nombre} {Apellido}", this, EmptyEntriesMode.RemoveDelimiterWhenEntryIsEmpty);
-            }
+        }
 
 
         [PersistentAlias("Round(DateDiffMonth([FechaNacimiento], Now())/12.00, 2)")]

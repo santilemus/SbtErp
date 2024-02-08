@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using DevExpress.ExpressApp.DC;
+﻿using DevExpress.ExpressApp.DC;
 
 namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 {

@@ -1,20 +1,15 @@
 ﻿using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.SystemModule;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SBT.Apps.Facturacion.Module.Controllers
 {
     /// <summary>
     /// Evaluar porque en este momento no se usa, borrar en caso de no usarse
     /// </summary>
-    public class vcCxCTransaccionDetailView: ViewController 
+    public class vcCxCTransaccionDetailView : ViewController
     {
         private NewObjectViewController controller;
-        public vcCxCTransaccionDetailView(): base()
+        public vcCxCTransaccionDetailView() : base()
         {
             TargetObjectType = typeof(CxC.Module.BusinessObjects.CxCTransaccion);
             TargetViewType = ViewType.DetailView;

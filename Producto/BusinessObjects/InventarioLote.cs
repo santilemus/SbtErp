@@ -5,7 +5,6 @@ using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using System;
 using System.ComponentModel;
-using System.Linq;
 
 namespace SBT.Apps.Inventario.Module.BusinessObjects
 {

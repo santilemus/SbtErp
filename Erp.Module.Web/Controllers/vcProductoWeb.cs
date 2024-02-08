@@ -1,15 +1,12 @@
-﻿using System;
-using System.Linq;
-
-namespace SBT.Apps.Erp.Module.Web.Controllers
+﻿namespace SBT.Apps.Erp.Module.Web.Controllers
 {
     /// <summary>
     /// Controlador Web para Producto. El proposito es implementar optimizaciones y fuciones especificas cuando
     /// la plataforma es web
     /// </summary>
-    public class vcProductoWeb: ViewControllerBaseWeb
+    public class vcProductoWeb : ViewControllerBaseWeb
     {
-        public vcProductoWeb(): base()
+        public vcProductoWeb() : base()
         {
 
         }

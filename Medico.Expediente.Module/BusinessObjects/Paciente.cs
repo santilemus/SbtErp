@@ -5,7 +5,6 @@ using DevExpress.Persistent.Base;
 using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using System;
-using System.Linq;
 
 namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 {

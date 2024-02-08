@@ -1,24 +1,23 @@
-﻿using System;
-using DevExpress.Data.Filtering;
+﻿using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp;
-using DevExpress.ExpressApp.Actions;
 using DevExpress.ExpressApp.SystemModule;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Base.Module.Controllers;
+using System;
 
 namespace SBT.Apps.Contabilidad.Module.Controllers
 {
     /// <summary>
     /// ViewController que corresponde al BO SaldoDiario
     /// </summary>
-    public class vcSaldoDiario: ViewControllerBase
+    public class vcSaldoDiario : ViewControllerBase
     {
         private DeleteObjectsViewController deleteObjectController;
         private NewObjectViewController newObjectController;
         private ModificationsController modificationController;
         private const string Key = "Desactivar";
 
-        public vcSaldoDiario(): base()
+        public vcSaldoDiario() : base()
         {
 
         }

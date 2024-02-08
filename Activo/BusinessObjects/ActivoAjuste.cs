@@ -6,7 +6,6 @@ using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using System;
 using System.ComponentModel;
-using System.Linq;
 
 namespace SBT.Apps.Activo.Module.BusinessObjects
 {
@@ -59,7 +58,7 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
         }
 
         [DbType("numeric(14,2)"), XafDisplayName("Valor Ajuste")]
-        [RuleRequiredField("ActivoAjuste.Valor_Requerido", DefaultContexts.Save)]
+        [RuleValueComparison("ActivoAjuste.Valor_Valido", DefaultContexts.Save, ValueComparisonType.NotEquals, 0, "El valor del ajuste debe ser diferente de cero")]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         public decimal Valor
         {

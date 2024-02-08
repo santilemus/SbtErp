@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DevExpress.ExpressApp.ConditionalAppearance;
+using DevExpress.ExpressApp.Editors;
 using DevExpress.ExpressApp.Win.Editors;
 using DevExpress.XtraEditors.Controls;
 using SBT.Apps.Banco.Module.Controllers;
@@ -26,13 +27,11 @@ namespace SBT.Apps.Erp.Module.Win.Controllers
         protected override void CustomizeDisabledEditorsAppearance(ApplyAppearanceEventArgs e)
         {
             base.CustomizeDisabledEditorsAppearance(e);
-            DXPropertyEditor dxEditor = e.Item as DXPropertyEditor;
-            if (dxEditor != null && dxEditor.Control != null)
+            if (e.Item is not DXPropertyEditor dxEditor)
             {
-                dxEditor.Caption = "Tarjeta" + dxEditor.Caption; 
-                dxEditor.Control.Properties.BorderStyle = BorderStyles.Simple;
-                dxEditor.Control.Properties.Appearance.BackColor = Color.RosyBrown;
+                return;
             }
+            dxEditor.Caption = "Tarjeta" + dxEditor.Caption;
         }
     }
 }

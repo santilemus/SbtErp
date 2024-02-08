@@ -9,14 +9,13 @@ using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Compra.Module.BusinessObjects;
 using System;
 using System.ComponentModel;
-using System.Linq;
 
 namespace SBT.Apps.Inventario.Module.BusinessObjects
 {
     [ModelDefault("Caption", "Movimiento Inventario - Detalle"), CreatableItem(false), NavigationItem(false),
         DefaultProperty(nameof(Producto)), Persistent(nameof(InventarioMovimientoDetalle))]
     [DefaultListViewOptions(MasterDetailMode.ListViewOnly, true, NewItemRowPosition.Top)]
-    [Appearance("InventarioMovimientoDetalle_IngresoDeCompra", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Show, 
+    [Appearance("InventarioMovimientoDetalle_IngresoDeCompra", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Show,
         Criteria = "([Movimiento.TipoMovimiento.Codigo] In ('201', '202', '203'))", Context = "*", AppearanceItemType = "Any",
         TargetItems = "OrdenCompraItem;FacturaItem;CodigoLote;FechaFabricacion;UnidadesTeorica;FechaVence")]
     //[ImageName("BO_Contact")]

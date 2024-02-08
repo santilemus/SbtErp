@@ -3,9 +3,6 @@ using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
-using SBT.Apps.Base.Module.BusinessObjects;
-using System;
-using System.Linq;
 
 namespace SBT.Apps.Tercero.Module.BusinessObjects
 {
@@ -70,7 +67,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
             set => SetPropertyValue(nameof(EMail), ref eMail, value);
         }
 
-        [RuleRequiredField("TerceroSucursal.Activa_Requerido", "Save"), Index(4), VisibleInLookupListView(true)]
+        [Index(4), VisibleInLookupListView(true)]
         public System.Boolean Activa
         {
             get => activa;

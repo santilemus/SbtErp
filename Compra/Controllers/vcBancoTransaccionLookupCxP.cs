@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DevExpress.ExpressApp;
+﻿using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.SystemModule;
 using SBT.Apps.Banco.Module.BusinessObjects;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Base.Module.Controllers;
-using SBT.Apps.Compra.Module.BusinessObjects;
 using SBT.Apps.CxP.Module.BusinessObjects;
 
 namespace SBT.Apps.Contabilidad.Module.Controllers
@@ -19,10 +13,10 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
     /// de cuentas por cobrar que corresponde al pago de una compra, en la propiedad tipo lookup de la transacción
     /// de bancos, debe inicializarse con datos de la compra para evitar que el usuario los digite nuevamente
     /// </summary>
-    public class vcBancoTransaccionLookupCxP: ViewControllerBase
+    public class vcBancoTransaccionLookupCxP : ViewControllerBase
     {
         private NewObjectViewController newObjectController;
-        public vcBancoTransaccionLookupCxP(): base()
+        public vcBancoTransaccionLookupCxP() : base()
         {
 
         }

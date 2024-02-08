@@ -6,7 +6,6 @@ using DevExpress.ExpressApp.Xpo;
 using DevExpress.Persistent.BaseImpl;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace SBT.Apps.Base.Module
 {
@@ -18,10 +17,6 @@ namespace SBT.Apps.Base.Module
             InitializeComponent();
             BaseObject.OidInitializationMode = OidInitializationMode.AfterConstruction;
             /// se registran las funciones personalizadas que se han definido en la app
-            CriteriaOperator.RegisterCustomFunction(new SessionParameterFunction());
-            /// las tres funciones siguientes seran similares a la anterior, excepto que en la
-            /// primera se debe pasar el nombre del parametro de inicio de sesion, el cual debio 
-            /// agregarse al almacenamiento de SesionDataHelper en el global.asax evento Instance_LoggedOn
             CriteriaOperator.RegisterCustomFunction(new EmpresaActualOidFunction());
             //EmpresaActualOidFunction.Register();
             CriteriaOperator.RegisterCustomFunction(new AgenciaActualOidFunction());

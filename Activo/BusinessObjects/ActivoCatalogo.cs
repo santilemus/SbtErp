@@ -4,10 +4,8 @@ using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
-using SBT.Apps.Contabilidad.BusinessObjects;
 using System;
 using System.ComponentModel;
-using System.Linq;
 
 namespace SBT.Apps.Activo.Module.BusinessObjects
 {
@@ -34,13 +32,12 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
             valorResidual = 0.0m;
             EstadoDepreciacion = EEstadoDepreciacion.Depreciando;
             MesesGarantia = 0;
-
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
         #region Propiedades
 
-        private XPDelayedProperty foto = new XPDelayedProperty();
+        readonly private XPDelayedProperty foto = new();
         string observaciones;
         long ordenCompra;
         Listas estadoUso;
@@ -179,7 +176,8 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
             get => moneda;
             set => SetPropertyValue(nameof(Moneda), ref moneda, value);
         }
-        [DbType("numeric(14,2)"), XafDisplayName("Valor Moneda"), RuleRequiredField("ActivoCatalogo.ValorMoneda_Requerido", DefaultContexts.Save)]
+        [DbType("numeric(14,2)"), XafDisplayName("Valor Moneda")]
+        [RuleValueComparison("ActivoCatalogo.ValorMoneda_Valido", DefaultContexts.Save, ValueComparisonType.GreaterThan, 0.0, "El valor de la moneda debe ser mayor a cero")]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         [VisibleInListView(false), Index(13)]
         public decimal ValorMoneda
@@ -188,7 +186,8 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
             set => SetPropertyValue(nameof(ValorMoneda), ref valorMoneda, value);
         }
 
-        [XafDisplayName("Vida Útil (meses)"), RuleRequiredField("ActivoCatalogo.VidaUtil_Requerido", "Save")]
+        [XafDisplayName("Vida Útil (meses)")]
+        [RuleValueComparison("ActivoCatalogo.VidaUtil_Valido", DefaultContexts.Save, ValueComparisonType.GreaterThan, 0, "La vida útil del Activo debe ser mayor a cero")]
         [DbType("smallint"), Index(14)]
         public int VidaUtil
         {
@@ -225,7 +224,7 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
         [Index(18)]
         public decimal TotalDepreciacion => totalDepreciacion;
 
-        [XafDisplayName("Valor Residual"), RuleRequiredField("ActivoCatalogo.ValorResidual_Requerido", DefaultContexts.Save)]
+        [XafDisplayName("Valor Residual")]
         [RuleValueComparison("ActivoCatalogo.ValorResidual >= 0", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual, 0, SkipNullOrEmptyValues = false)]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         [VisibleInListView(false), Index(19)]
@@ -235,7 +234,7 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
             set => SetPropertyValue(nameof(ValorResidual), ref valorResidual, value);
         }
 
-        [XafDisplayName("Estado Depreciación"), DbType("smallint"), RuleRequiredField("ActivoCatalogo.EstadoDepreciacion_Requerido", "Save")]
+        [XafDisplayName("Estado Depreciación"), DbType("smallint")]
         [Index(20), VisibleInListView(false)]
         public EEstadoDepreciacion EstadoDepreciacion
         {

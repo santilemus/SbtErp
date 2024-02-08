@@ -1,6 +1,4 @@
-﻿using System;
-using System.Text;
-using DevExpress.ExpressApp.Win;
+﻿using DevExpress.ExpressApp.Win;
 
 namespace SBT.Apps.Medico.Win
 {

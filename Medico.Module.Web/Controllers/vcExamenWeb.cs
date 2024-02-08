@@ -1,13 +1,11 @@
-﻿using System;
-
-namespace SBT.Apps.Medico.Module.Web.Controllers
+﻿namespace SBT.Apps.Medico.Module.Web.Controllers
 {
     /// <summary>
     ///  Controller para la plataforma Web y que aplica al BO Examen
     /// </summary>
-    public class vcExamenWeb: ViewControllerBaseWeb
+    public class vcExamenWeb : ViewControllerBaseWeb
     {
-        public vcExamenWeb(): base()
+        public vcExamenWeb() : base()
         {
 
         }

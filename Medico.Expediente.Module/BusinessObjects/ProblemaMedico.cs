@@ -1,22 +1,14 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp;
-using System.ComponentModel;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
-using DevExpress.Persistent.Base;
-using System.Collections.Generic;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
-using SBT.Apps.Base.Module.BusinessObjects;
+using DevExpress.Xpo;
 using SBT.Apps.Medico.Generico.Module.BusinessObjects;
+using System;
 
 namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 {
-    [DefaultClassOptions, ModelDefault("Caption", "Problema Medico"), NavigationItem(false), XafDefaultProperty(nameof(Diagnostico)), 
+    [DefaultClassOptions, ModelDefault("Caption", "Problema Medico"), NavigationItem(false), XafDefaultProperty(nameof(Diagnostico)),
         Persistent(nameof(ProblemaMedico)), CreatableItem(false)]
     [ImageName(nameof(ProblemaMedico))]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
@@ -138,7 +130,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
             set => SetPropertyValue(nameof(Comentario), ref comentario, value);
         }
 
-        
+
         [DbType("varchar(10)"), Persistent("Resultado"), XafDisplayName("Resultado"), VisibleInListView(false)]
         [DataSourceCriteria("[Categoria] = 13 And [Activo] = true")]   // lista de valores de resultado de problemas medico
         public MedicoLista Resultado

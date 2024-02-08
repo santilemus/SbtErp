@@ -3,8 +3,7 @@ using DevExpress.ExpressApp.DC;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
-using System;
-using System.Linq;
+using System.Text.Json.Serialization;
 
 namespace SBT.Apps.Base.Module.BusinessObjects
 {
@@ -144,7 +143,6 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             get => moneda;
             set => SetPropertyValue(nameof(Moneda), ref moneda, value);
         }
-
 
         #region Colleciones
         [Association("ZonaPadre-Zonas"), DevExpress.Xpo.Aggregated]

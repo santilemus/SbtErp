@@ -3,10 +3,8 @@ using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
-using SBT.Apps.Base.Module.BusinessObjects;
 using System;
 using System.ComponentModel;
-using System.Linq;
 
 namespace SBT.Apps.Banco.Module.BusinessObjects
 {
@@ -31,6 +29,7 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         {
             base.AfterConstruction();
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
+            Activa = true;
         }
 
         #region Propiedades
@@ -54,8 +53,7 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
             set => SetPropertyValue(nameof(Tipo), ref tipo, value);
         }
 
-        [DbType("bit"), Persistent("Activa"), XafDisplayName("Activa"),
-            RuleRequiredField("BancoClasificacionTransac.Activa_Requerido", DefaultContexts.Save)]
+        [DbType("bit"), Persistent("Activa"), XafDisplayName("Activa")]
         public bool Activa
         {
             get => activa;

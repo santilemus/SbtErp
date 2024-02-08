@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SBT.Apps.Contabilidad.Module.BusinessObjects
+﻿namespace SBT.Apps.Contabilidad.Module.BusinessObjects
 {
     public enum ETipoPartida
     {

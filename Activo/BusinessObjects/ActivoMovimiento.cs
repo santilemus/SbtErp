@@ -6,7 +6,6 @@ using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using System;
 using System.ComponentModel;
-using System.Linq;
 
 namespace SBT.Apps.Activo.Module.BusinessObjects
 {
@@ -24,6 +23,7 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
         public override void AfterConstruction()
         {
             base.AfterConstruction();
+            Tipo = EActivoTipoMovimiento.Prestamo;
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
@@ -60,7 +60,7 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
             set => SetPropertyValue(nameof(Fecha), ref fecha, value);
         }
 
-        [XafDisplayName("Tipo"), RuleRequiredField("ActivoMovimiento.Tipo_Requerido", DefaultContexts.Save)]
+        [XafDisplayName("Tipo")]
         public EActivoTipoMovimiento Tipo
         {
             get => tipo;

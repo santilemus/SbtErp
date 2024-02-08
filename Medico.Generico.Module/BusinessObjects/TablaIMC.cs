@@ -3,10 +3,7 @@ using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
-using SBT.Apps.Base.Module.BusinessObjects;
-using System;
 using System.ComponentModel;
-using System.Linq;
 
 namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 {
@@ -44,7 +41,6 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
         decimal desde;
 
         [DbType("numeric(5,2)"), Persistent("Desde"), XafDisplayName("Desde"), ModelDefault("DisplayFormat", "N4"), ModelDefault("EditMask", "N4"),
-            RuleRequiredField("TablaIMC.Desde_Requerido", "Save"),
             RuleRange("TablaIMC.Desde_Rango", DefaultContexts.Save, 0, 40, ResultType = ValidationResultType.Warning)]
         public decimal Desde
         {
@@ -53,7 +49,6 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
         }
 
         [DbType("numeric(5,2)"), Persistent("Hasta"), XafDisplayName("Hasta"), ModelDefault("DisplayFormat", "N4"), ModelDefault("EditMask", "N4"),
-            RuleRequiredField("TablaIMC.Hasta_Requerido", "Save"),
             RuleRange("TablaIMC.Hasta_Rango", DefaultContexts.Save, 15.01, 999.00, ResultType = ValidationResultType.Warning)]
         public decimal Hasta
         {

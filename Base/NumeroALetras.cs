@@ -1,9 +1,5 @@
 ﻿using DevExpress.ExpressApp.Utils;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SBT.Apps.Base.Module
 {
@@ -18,7 +14,7 @@ namespace SBT.Apps.Base.Module
     public class NumeroALetras
     {
 
-        private string[] fUnidades = { "", CaptionHelper.GetLocalizedText(@"Numeros", "1", "un") + " ",
+        private string[] fUnidades = { string.Empty, CaptionHelper.GetLocalizedText(@"Numeros", "1", "un") + " ",
             CaptionHelper.GetLocalizedText(@"Numeros", "2", "dos") + " ",
             CaptionHelper.GetLocalizedText(@"Numeros", "3", "tres") + " ",
             CaptionHelper.GetLocalizedText(@"Numeros", "4", "cuatro") + " ",
@@ -45,7 +41,7 @@ namespace SBT.Apps.Base.Module
             CaptionHelper.GetLocalizedText(@"Numeros", "70", "setenta") + " ",
             CaptionHelper.GetLocalizedText(@"Numeros", "80", "ochenta") + " ",
             CaptionHelper.GetLocalizedText(@"Numeros", "90", "noventa") + " "};
-        private string[] fCentenas = { "", CaptionHelper.GetLocalizedText(@"Numeros", "100", "ciento") + " ",
+        private string[] fCentenas = { string.Empty, CaptionHelper.GetLocalizedText(@"Numeros", "100", "ciento") + " ",
             CaptionHelper.GetLocalizedText(@"Numeros", "200", "doscientos") + " ",
             CaptionHelper.GetLocalizedText(@"Numeros", "300", "trescientos") + " ",
             CaptionHelper.GetLocalizedText(@"Numeros", "400", "cuatrocientos") + " ",
@@ -69,7 +65,7 @@ namespace SBT.Apps.Base.Module
         public string Convertir(decimal numero, string moneda = "")
         {
 
-            string literal = "";
+            string literal = string.Empty;
             string parte_decimal;
             //si el numero utiliza (,) en lugar de (.) -> se reemplaza
             string sNumero = numero.ToString("f2");
@@ -134,7 +130,7 @@ namespace SBT.Apps.Base.Module
             else if (numero > 19)
             {
                 string u = ObtenerUnidades(numero);
-                if (u.Equals(""))
+                if (u.Equals(string.Empty))
                     return fDecenas[int.Parse(Convert.ToString(numero).Substring(0, 1)) + 8]; // 20 - 90
                 else
                     return fDecenas[int.Parse(Convert.ToString(numero).Substring(0, 1)) + 8] + "y " + u;
@@ -178,14 +174,14 @@ namespace SBT.Apps.Base.Module
             int c = int.Parse(sNum.Substring(sNum.Length - 3));
             //obtiene los miles
             int m = int.Parse(sNum.Substring(0, sNum.Length - 3));
-            string n = "";
+            string n = string.Empty;
             if (m > 0)
             {
                 n = ObtenerCentenas(m);
                 return n + $"{CaptionHelper.GetLocalizedText(@"Numeros", "thousand", "mil")} " + ObtenerCentenas(c);
             }
             else
-                return "" + ObtenerCentenas(c);
+                return string.Empty + ObtenerCentenas(c);
         }
 
         /// <summary>
@@ -194,13 +190,13 @@ namespace SBT.Apps.Base.Module
         /// <param name="numero">La parte entera del numero a convertir en letras</param>
         /// <returns>El numero convertido en letras, sin la parte decimal</returns>
         private string ObtenerMillones(int numero)
-        { 
+        {
             //se obtiene los miles
             string sNum = Convert.ToString(numero);
             int miles = int.Parse(sNum.Substring(sNum.Length - 6));
             //se obtiene los millones
             int millon = int.Parse(sNum.Substring(0, sNum.Length - 6));
-            String n = "";
+            String n = string.Empty;
             if (millon > 1)
                 n = ObtenerCentenas(millon) + $"{CaptionHelper.GetLocalizedText(@"Numeros", "millions", "millones")} ";
             else

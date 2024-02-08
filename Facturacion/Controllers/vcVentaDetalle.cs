@@ -1,14 +1,14 @@
 ﻿using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp;
+using DevExpress.ExpressApp.Actions;
+using DevExpress.ExpressApp.Model;
 using DevExpress.ExpressApp.SystemModule;
 using DevExpress.Persistent.Validation;
-using DevExpress.ExpressApp.Actions;
 using SBT.Apps.Base.Module.Controllers;
 using SBT.Apps.Facturacion.Module.BusinessObjects;
+using SBT.Apps.Producto.Module.BusinessObjects;
 using System;
 using System.Linq;
-using DevExpress.ExpressApp.Model;
-using SBT.Apps.Producto.Module.BusinessObjects;
 
 namespace SBT.Apps.Facturacion.Module.Controllers
 {
@@ -18,7 +18,7 @@ namespace SBT.Apps.Facturacion.Module.Controllers
     public class vcVentaDetalle : ViewControllerBase
     {
         private NewObjectViewController newController;
-        private PopupWindowShowAction pwsaSeleccionarPrecio;
+        private readonly PopupWindowShowAction pwsaSeleccionarPrecio;
         private int productoNuevoOid;
 
         public vcVentaDetalle() : base()
@@ -26,17 +26,19 @@ namespace SBT.Apps.Facturacion.Module.Controllers
             TargetObjectType = typeof(SBT.Apps.Facturacion.Module.BusinessObjects.VentaDetalle);
             TargetViewType = ViewType.Any;
 
-            pwsaSeleccionarPrecio = new PopupWindowShowAction(this, "Venta_ListaDePrecios", DevExpress.Persistent.Base.PredefinedCategory.RecordEdit);
-            pwsaSeleccionarPrecio.Caption = "Precios";
-            pwsaSeleccionarPrecio.ImageName = "ProductoPrecio";
-            pwsaSeleccionarPrecio.AcceptButtonCaption = "Aceptar";
-            pwsaSeleccionarPrecio.CancelButtonCaption = "Cancelar";
-            pwsaSeleccionarPrecio.ActionMeaning = ActionMeaning.Accept;
-            pwsaSeleccionarPrecio.TargetObjectType = typeof(SBT.Apps.Facturacion.Module.BusinessObjects.VentaDetalle);
-            //pwsaSeleccionarPrecio.TargetObjectsCriteriaMode = TargetObjectsCriteriaMode.TrueAtLeastForOne;
-            //pwsaSeleccionarPrecio.TargetObjectsCriteria = "!IsNull([Producto])";
-            pwsaSeleccionarPrecio.SelectionDependencyType = SelectionDependencyType.Independent;
-            pwsaSeleccionarPrecio.ToolTip = "Lista de precios que aplican al producto";
+            pwsaSeleccionarPrecio = new(this, "Venta_ListaDePrecios", DevExpress.Persistent.Base.PredefinedCategory.RecordEdit)
+            {
+                Caption = "Precios",
+                ImageName = "ProductoPrecio",
+                AcceptButtonCaption = "Aceptar",
+                CancelButtonCaption = "Cancelar",
+                ActionMeaning = ActionMeaning.Accept,
+                TargetObjectType = typeof(SBT.Apps.Facturacion.Module.BusinessObjects.VentaDetalle),
+                //pwsaSeleccionarPrecio.TargetObjectsCriteriaMode = TargetObjectsCriteriaMode.TrueAtLeastForOne;
+                //pwsaSeleccionarPrecio.TargetObjectsCriteria = "!IsNull([Producto])";
+                SelectionDependencyType = SelectionDependencyType.Independent,
+                ToolTip = "Lista de precios que aplican al producto"
+            };
         }
 
         private void PwsaSeleccionarPrecio_Execute(object sender, PopupWindowShowActionExecuteEventArgs e)
@@ -51,7 +53,7 @@ namespace SBT.Apps.Facturacion.Module.Controllers
         {
             var objectType = typeof(SBT.Apps.Producto.Module.BusinessObjects.ProductoPrecio);
             IObjectSpace os = Application.CreateObjectSpace(objectType);
-            string listViewId = "Producto_Precios_Seleccion"; 
+            string listViewId = "Producto_Precios_Seleccion";
             IModelListView precioListView = (IModelListView)Application.FindModelView(listViewId);
             if (precioListView == null)
             {
@@ -106,7 +108,7 @@ namespace SBT.Apps.Facturacion.Module.Controllers
         /// <param name="e"></param>
         private void ObjectSpace_ObjectChanged(object Sender, ObjectChangedEventArgs e)
         {
-            if (View == null || View.CurrentObject == null || e.Object == null || e.NewValue == null) 
+            if (View == null || View.CurrentObject == null || e.Object == null || e.NewValue == null)
                 return;
             // cuando se crea un nuevo Producto, para obtener la lista de precios de producto que esta agregando
             if (View.CurrentObject == e.Object && e.PropertyName == "Producto" && ObjectSpace.IsNewObject(View.CurrentObject))
@@ -115,9 +117,9 @@ namespace SBT.Apps.Facturacion.Module.Controllers
                 return;
             }
             if (View.CurrentObject == e.Object && e.PropertyName == "Cantidad" && ObjectSpace.IsNewObject(View.CurrentObject))
-            { 
+            {
                 var itemVenta = ((VentaDetalle)View.CurrentObject);
-                if (itemVenta.Producto.Categoria.Clasificacion >= Producto.Module.BusinessObjects.EClasificacion.Servicios || 
+                if (itemVenta.Producto.Categoria.Clasificacion >= Producto.Module.BusinessObjects.EClasificacion.Servicios ||
                     itemVenta.Producto.Categoria.MetodoCosteo == Producto.Module.BusinessObjects.EMetodoCosteoInventario.Ninguno ||
                     itemVenta.Bodega == null)
                     return;
@@ -157,7 +159,7 @@ namespace SBT.Apps.Facturacion.Module.Controllers
 
         private void NewController_ObjectCreating(object sender, ObjectCreatingEventArgs e)
         {
-            if (((VentaDetalle)e.NewObject).Venta.Cliente == null)
+            if (e.NewObject != null && ((VentaDetalle)e.NewObject).Venta.Cliente == null)
             {
                 Application.ShowViewStrategy.ShowMessage(@"Debe seleccionar en el encabezado del documento de venta al cliente", InformationType.Error);
                 e.Cancel = true;
@@ -172,7 +174,8 @@ namespace SBT.Apps.Facturacion.Module.Controllers
             {
                 try
                 {
-                    Validator.RuleSet.Validate(os, os.ModifiedObjects[0], ContextIdentifier.Save);
+                    IRuleSet ruleSet = Validator.GetService(Application.ServiceProvider);
+                    ruleSet?.Validate(os, os.ModifiedObjects[0], ContextIdentifier.Save);
                 }
                 catch
                 {

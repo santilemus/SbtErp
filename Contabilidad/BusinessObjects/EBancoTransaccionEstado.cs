@@ -1,7 +1,4 @@
-﻿using System;
-using DevExpress.ExpressApp.DC;
-
-namespace SBT.Apps.Banco.Module.BusinessObjects
+﻿namespace SBT.Apps.Banco.Module.BusinessObjects
 {
     /// <summary>
     /// Bancos. Enumeracion con los estados de las transacciones de bancos. Se incluye el impreso para los cheques, para 

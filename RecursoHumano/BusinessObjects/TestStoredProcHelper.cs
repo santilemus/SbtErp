@@ -1,10 +1,5 @@
-﻿using System;
-using DevExpress.Xpo;
-using DevExpress.Xpo.Metadata;
-using DevExpress.Data.Filtering;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Reflection;
+﻿using DevExpress.Xpo;
+using System;
 
 namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 {
@@ -14,7 +9,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         public static DevExpress.Xpo.DB.SelectedData SelectfnPlaEmpleadoPlanilla(Session session, int OidEmpresa, int OidEmpleado, DateTime FechaInicio, DateTime FechaFin, DateTime FechaPago)
         {
             return session.ExecuteQuery("select * from fnPlaEmpleadoPlanilla(@OidEmpresa, @OidEmpleado, @FechaInicio, @FechaFin, @FechaPago)",
-                new object[] {OidEmpresa, OidEmpleado, FechaInicio, FechaFin, FechaPago});
+                new object[] { OidEmpresa, OidEmpleado, FechaInicio, FechaFin, FechaPago });
         }
         public static System.Collections.Generic.ICollection<TestEmpleadoPlanilla> fnPlaEmpleadoPlanillaIntoObjects(Session session, int OidEmpresa, int OidEmpleado, DateTime FechaInicio, DateTime FechaFin, DateTime FechaPago)
         {

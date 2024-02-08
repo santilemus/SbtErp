@@ -2,10 +2,9 @@
 using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
-using System.ComponentModel;
 using DevExpress.Xpo;
 using System;
-using System.Linq;
+using System.ComponentModel;
 
 namespace SBT.Apps.Activo.Module.BusinessObjects
 {
@@ -95,8 +94,10 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
             set => SetPropertyValue(nameof(Valor), ref valor, value);
         }
 
-        [XafDisplayName("Vida Útil (meses)"), RuleRequiredField("ActivoMejora.VidaUtil_Requerido", "Save")]
+        [XafDisplayName("Vida Útil (meses)")]
         [DbType("smallint")]
+        [RuleValueComparison("ActivoMejora.VidaUtil_Valorvalido", DefaultContexts.Save, ValueComparisonType.GreaterThan, 1.0,
+            "La vida útil debe ser mayor a cero")]
         public int VidaUtil
         {
             get => vidaUtil;
@@ -146,7 +147,7 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
             set => SetPropertyValue(nameof(Comentario), ref comentario, value);
         }
 
-        [DbType("bit"), XafDisplayName("Activa"), RuleRequiredField("ActivoMejora.Activa_Requerido", "Save")]
+        [DbType("bit"), XafDisplayName("Activa")]
         public bool Activa
         {
             get => activa;

@@ -3,9 +3,7 @@ using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
-using System;
 using System.ComponentModel;
-using System.Linq;
 
 namespace SBT.Apps.Inventario.Module.BusinessObjects
 {
@@ -27,14 +25,16 @@ namespace SBT.Apps.Inventario.Module.BusinessObjects
         public override void AfterConstruction()
         {
             base.AfterConstruction();
+            Activo = true;
+            Operacion = ETipoOperacionInventario.Entrada;
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
         #region Propiedades
 
-        bool activo = true;
+        bool activo;
         string codigo;
-        ETipoOperacionInventario operacion = ETipoOperacionInventario.Entrada;
+        ETipoOperacionInventario operacion;
         InventarioTipoMovimiento padre;
         string nombre;
 
@@ -64,7 +64,7 @@ namespace SBT.Apps.Inventario.Module.BusinessObjects
             }
         }
 
-        [XafDisplayName("Tipo Operación"), DbType("smallint"), RuleRequiredField("InventarioTipoMovimiento.Operacion_Requerido", DefaultContexts.Save)]
+        [XafDisplayName("Tipo Operación"), DbType("smallint")]
         public ETipoOperacionInventario Operacion
         {
             get => operacion;
@@ -82,7 +82,6 @@ namespace SBT.Apps.Inventario.Module.BusinessObjects
         }
 
         [DbType("bit"), XafDisplayName("Activo"), Persistent(nameof(Activo))]
-        [RuleRequiredField("InventarioTipoMovimiento.Activo_Requrido", DefaultContexts.Save)]
         public bool Activo
         {
             get => activo;

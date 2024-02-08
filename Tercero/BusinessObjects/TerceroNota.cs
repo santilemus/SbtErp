@@ -1,9 +1,7 @@
 ﻿using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
-using SBT.Apps.Base.Module.BusinessObjects;
 using DevExpress.Xpo;
 using System;
-using System.Linq;
 
 namespace SBT.Apps.Tercero.Module.BusinessObjects
 {

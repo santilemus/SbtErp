@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
+﻿using System.Web;
 using System.Web.SessionState;
 
 namespace SBT.Apps.Erp.Module.Web
@@ -21,7 +16,7 @@ namespace SBT.Apps.Erp.Module.Web
     ///    WebWindow.CurrentRequestWindow.RegisterStartupScript("DownloadFile", clientScript);  
     ///}
     /// </remarks>
-public class FileDownloadHttpHandler : IHttpHandler, IRequiresSessionState
+    public class FileDownloadHttpHandler : IHttpHandler, IRequiresSessionState
     {
         private readonly object lockObject = new object();
         public static string GetResourceUrl(string name)

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
+﻿namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 {
     /// <summary>
     /// Recurso Humano. Enumeracion con los estados del reporte de horas extras

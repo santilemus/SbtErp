@@ -1,7 +1,4 @@
-﻿using System;
-using DevExpress.ExpressApp.DC;
-
-namespace SBT.Apps.Base.Module.BusinessObjects
+﻿namespace SBT.Apps.Base.Module.BusinessObjects
 {
     /// <summary>
     /// Enumeracion con la clasificacion de los tipos de sujetos relacionado al pago de impuestos. 

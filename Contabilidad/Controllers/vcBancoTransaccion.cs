@@ -1,14 +1,8 @@
 ﻿using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp;
 using SBT.Apps.Base.Module.BusinessObjects;
-using System;
-using System.Linq;
 using SBT.Apps.Base.Module.Controllers;
-using DevExpress.ExpressApp.Actions;
-using DevExpress.Persistent.Base;
-using DevExpress.ExpressApp.Model.NodeGenerators;
-using DevExpress.ExpressApp.Model;
-using DevExpress.ExpressApp.Utils;
+using System;
 
 namespace SBT.Apps.Banco.Module.Controllers
 {
@@ -17,10 +11,10 @@ namespace SBT.Apps.Banco.Module.Controllers
     /// ViewController para el BO BancoTransaccion que corresponde al encabezado de las transacciones de bancos
     /// </summary>
     // For more typical usage scenarios, be sure to check out https://documentation.devexpress.com/eXpressAppFramework/clsDevExpressExpressAppViewControllertopic.aspx.
-    public class vcBancoTransaccion: ViewControllerBase
+    public class vcBancoTransaccion : ViewControllerBase
     {
 
-        public vcBancoTransaccion(): base()
+        public vcBancoTransaccion() : base()
         {
 
         }

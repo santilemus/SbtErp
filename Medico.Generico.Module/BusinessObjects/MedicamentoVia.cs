@@ -3,10 +3,7 @@ using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
-using SBT.Apps.Base.Module.BusinessObjects;
-using System;
 using System.ComponentModel;
-using System.Linq;
 
 namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 {

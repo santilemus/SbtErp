@@ -1,20 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SBT.Apps.Erp.Module.Web.Controllers
+﻿namespace SBT.Apps.Erp.Module.Web.Controllers
 {
     /// <summary>
     /// ViewController
     /// View Controller con la funcionalidad comun en aplicaciones web y que se aplica a BO heredados de XPOBaseDoc
     /// </summary>
-    public class ViewControllerXPOBaseDocWeb: ViewControllerBaseWeb
+    public class ViewControllerXPOBaseDocWeb : ViewControllerBaseWeb
     {
-        public ViewControllerXPOBaseDocWeb(): base()
+        public ViewControllerXPOBaseDocWeb() : base()
         {
-            
+
         }
 
         protected override void OnActivated()

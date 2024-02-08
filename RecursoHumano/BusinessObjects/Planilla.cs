@@ -6,7 +6,6 @@ using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using System;
 using System.ComponentModel;
-using System.Linq;
 
 namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 {
@@ -42,7 +41,6 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 
         Parametro parametro;
         Empresa empresa;
-        [Persistent(nameof(Tipo))]
         TipoPlanilla tipo;
         Moneda moneda;
         decimal valorMoneda = 1.0m;
@@ -51,7 +49,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         [Persistent(nameof(FechaFin)), DbType("datetime2")]
         DateTime? fechaFin;
         [Persistent(nameof(Estado)), DbType("smallint")]
-        EEstadoPlanilla estado = EEstadoPlanilla.PreCalculo;
+        readonly EEstadoPlanilla estado = EEstadoPlanilla.PreCalculo;
         [Persistent(nameof(FechaPago)), DbType("datetime2")]
         DateTime? fechaPago;
 
@@ -62,10 +60,13 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
             get => empresa;
             set => SetPropertyValue(nameof(Empresa), ref empresa, value);
         }
-        [Association("TipoPlanilla-Planillas"), XafDisplayName("Tipo"), PersistentAlias(nameof(tipo))]
+
+        //[Association("TipoPlanilla-Planillas")]
+        [XafDisplayName("Tipo"), Persistent(nameof(Tipo)), ReadOnly(true)]
         public TipoPlanilla Tipo
         {
             get => tipo;
+            set => SetPropertyValue(nameof(Tipo), ref tipo, value);
         }
 
         [XafDisplayName("Moneda"), Persistent(nameof(Moneda))]
@@ -117,7 +118,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
             get => parametro;
             set => SetPropertyValue(nameof(Parametro), ref parametro, value);
         }
-    
+
 
         #endregion
 
@@ -151,5 +152,5 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         //}
     }
 
-   
+
 }

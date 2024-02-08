@@ -1,14 +1,9 @@
-﻿using System;
-using DevExpress.ExpressApp.Actions;
-using SBT.Apps.Base.Module.Controllers;
-
-
-namespace SBT.Apps.Medico.Module.Web.Controllers
+﻿namespace SBT.Apps.Medico.Module.Web.Controllers
 {
     // ViewController que se aplica al BO Cita y para la plataforma web
-    public class vcCitaWeb: ViewControllerBaseWeb
+    public class vcCitaWeb : ViewControllerBaseWeb
     {
-        public vcCitaWeb(): base()
+        public vcCitaWeb() : base()
         {
 
         }

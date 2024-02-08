@@ -1,5 +1,4 @@
 ﻿using DevExpress.Persistent.Base;
-using System;
 using System.Collections.Generic;
 
 namespace SBT.Apps.Base.Module.BusinessObjects

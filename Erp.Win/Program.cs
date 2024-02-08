@@ -10,8 +10,11 @@ using DevExpress.Persistent.BaseImpl;
 using DevExpress.XtraEditors;
 using DevExpress.ExpressApp.Security.Strategy;
 using DevExpress.ExpressApp.Security.ClientServer;
+using System.Runtime.Versioning;
 
 namespace SBT.Apps.Erp.Win {
+
+    [SupportedOSPlatform("windows")]
     static class Program {
         /// <summary>
         /// The main entry point for the application.
@@ -26,7 +29,7 @@ namespace SBT.Apps.Erp.Win {
             WindowsFormsSettings.LoadApplicationSettings();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            EditModelPermission.AlwaysGranted = System.Diagnostics.Debugger.IsAttached;
+            //EditModelPermission.AlwaysGranted = System.Diagnostics.Debugger.IsAttached;
             if(Tracing.GetFileLocationFromSettings() == DevExpress.Persistent.Base.FileLocation.CurrentUserApplicationDataFolder) {
                 Tracing.LocalUserAppDataPath = Application.LocalUserAppDataPath;
             }

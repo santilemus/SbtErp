@@ -7,6 +7,15 @@ using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Iva.Module.BusinessObjects;
 using SBT.Apps.Iva.Module.Controllers;
 using DevExpress.XtraEditors;
+using SBT.Apps.Compra.Module.BusinessObjects;
+using DevExpress.ClipboardSource.SpreadsheetML;
+using DevExpress.Spreadsheet;
+using DevExpress.XtraSpreadsheet.Model;
+using Microsoft.CodeAnalysis;
+using SBT.Apps.Compra.Module.helper;
+using DevExpress.Data.Filtering;
+using DevExpress.ExpressApp;
+using System.IO;
 
 namespace SBT.Apps.Erp.Module.Win.Controllers
 {
@@ -27,28 +36,34 @@ namespace SBT.Apps.Erp.Module.Win.Controllers
             base.OnDeactivated();
         }
 
-        protected override void DoExecuteExport(RangoFechaParams parametros)
+        /// <summary>
+        /// Implementación específica para la plataforma Windows de la exportación de los datos a formato Csv requerido por el MH
+        /// En este caso se esta haciendo utilizando DeveExpress.Spreadsheet para entender como funciona, pero podría cambiarse a
+        /// a csvHelper
+        /// </summary>
+        /// <param name="parametros"></param>
+        protected override void DoExecuteExport(LibroCompraExportarParams parametros)
         {
             base.DoExecuteExport(parametros);
-            var cvs = ToCsvStream(parametros.FechaInicio, parametros.FechaFin);
-            System.IO.Stream stream;
-            
-            XtraSaveFileDialog dlg = new XtraSaveFileDialog();
-            dlg.Title = "Exportar Libro de Compras";
-            if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            using (DevExpress.Spreadsheet.Workbook wb = new())
             {
-                if ((stream = dlg.OpenFile()) != null)
+                var ws = wb.Worksheets.Add("Hoja1");
+                var empresaOid = (DevExpress.ExpressApp.SecuritySystem.CurrentUser as Usuario).Empresa.Oid;
+                var fechaDesde = new DateTime(parametros.Fecha.Year, parametros.Fecha.Month, 1);
+                var fechaHasta = fechaDesde.AddMonths(1).AddSeconds(-1);
+                using var os = Application.CreateObjectSpace(typeof(LibroCompra));
+                var datos = CompraConsultaHelper.GetDataLibroCompra(os, empresaOid, fechaDesde, fechaHasta).ToList();
+                ws.Import(datos, 0, 0);
+                string sFileName = string.Format("{0:00}_LibroCompra_{1:MMMyyyy}.csv", empresaOid, fechaHasta);
+                using (XtraSaveFileDialog saveDlg = new XtraSaveFileDialog() { Title = "Exportar Libro Compra", FileName = sFileName })
                 {
-                    cvs.Position = 0;
-                    cvs.WriteTo(stream);
-                    
-                    cvs.Close();
-                }
-                stream.Close();
-                stream.Dispose();
+                    if (saveDlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    {
+                        wb.Options.Export.Csv.ValueSeparator = ';';
+                        wb.SaveDocument(saveDlg.FileName, DocumentFormat.Csv);
+                    }
+                }      
             }
-            cvs.Close();
-            cvs.Dispose();
         }
     }
 }

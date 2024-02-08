@@ -2,7 +2,6 @@
 using DevExpress.Data.Filtering.Helpers;
 using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.Actions;
-using DevExpress.ExpressApp.Xpo;
 using DevExpress.Persistent.Base;
 using SBT.Apps.Base.Module.Controllers;
 using SBT.Apps.RecursoHumano.Module.BusinessObjects;

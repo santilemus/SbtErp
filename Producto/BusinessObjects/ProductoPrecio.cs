@@ -5,7 +5,6 @@ using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using System;
-using System.Linq;
 
 namespace SBT.Apps.Producto.Module.BusinessObjects
 {
@@ -135,7 +134,6 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         ///  Indica sí el precio está activo
         /// </summary>
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Activo")]
-        [RuleRequiredField("ProductoPrecio.Activo_Requerido", "Save")]
         public System.Boolean Activo
         {
             get => _activo;

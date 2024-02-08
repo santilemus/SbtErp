@@ -1,8 +1,5 @@
 ﻿using DevExpress.ExpressApp;
-using System;
-using DevExpress.ExpressApp.Actions;
 using DevExpress.ExpressApp.Web.SystemModule;
-using SBT.Apps.Erp.Module.Web;
 
 namespace SBT.Apps.Erp.Module.Web.Controllers.SaveAndNew
 {
@@ -13,7 +10,7 @@ namespace SBT.Apps.Erp.Module.Web.Controllers.SaveAndNew
     /// <remarks>
     /// mas informacion en https://supportcenter.devexpress.com/ticket/details/t939993/xaf-save-and-new-popup-implementation-issue
     /// </remarks>
-    public class CustomWebNewObjectViewController: WebNewObjectViewController
+    public class CustomWebNewObjectViewController : WebNewObjectViewController
     {
         protected override void New(DevExpress.ExpressApp.Actions.SingleChoiceActionExecuteEventArgs args)
         {

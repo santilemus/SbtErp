@@ -1,9 +1,9 @@
-﻿using System;
-using System.Linq;
-using DevExpress.Data.Filtering;
+﻿using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Contabilidad.BusinessObjects;
+using System;
+using System.Linq;
 
 namespace SBT.Apps.Contabilidad.Module.BusinessObjects
 {
@@ -128,9 +128,9 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
                 // 3. Se genera el detalle que corresponde al resultado y se lleva a la cuenta de perdidas y ganancias
                 if (resultadoNeto > 0)
                     CreateDetalle(ctaLiquida, ctaLiquida.Concepto, resultadoNeto, 0.0m);            // resultado es utilidad
-                //else
-                //    CreateDetalle(ctaLiquida, ctaLiquida.Concepto, 0.0m, Math.Abs(resultadoNeto));  // resultado es perdida
-                
+                                                                                                    //else
+                                                                                                    //    CreateDetalle(ctaLiquida, ctaLiquida.Concepto, 0.0m, Math.Abs(resultadoNeto));  // resultado es perdida
+
                 // 4. Dependiendo del resultado, se obtiene la cuenta de patrimonio para registrar la utilidad o la perdida
                 ECuentaEspecial ctaUtilidadPerdida = (resultadoNeto > 0) ? ECuentaEspecial.UtilidadEjercicio : ECuentaEspecial.PerdidaEjercicio;
                 var cta = ObtenerCuentaEspecial(ctaUtilidadPerdida);
@@ -144,7 +144,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
                         CreateDetalle(cta, cta.Concepto, Math.Abs(resultadoNeto), 0.0m);
                     }
                 }
-            }           
+            }
             fPartida.Save();
             msg = string.Empty;
         }

@@ -2,6 +2,7 @@
 using DevExpress.ExpressApp.ConditionalAppearance;
 using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
+using DevExpress.ExpressApp.Security.ClientServer;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
@@ -9,7 +10,6 @@ using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Contabilidad.Module.BusinessObjects;
 using System;
 using System.ComponentModel;
-using System.Linq;
 
 namespace SBT.Apps.Banco.Module.BusinessObjects
 {
@@ -54,17 +54,18 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
 
         protected override void OnSaving()
         {
-            if (Session is NestedUnitOfWork)
-                return;
-            //base.OnSaving();
-            if (Clasificacion.Tipo == EBancoTipoTransaccion.Cheque && Session.IsNewObject(this) && chequera != null)
+            if ((Session is not NestedUnitOfWork) && (Session.DataLayer != null) &&  (Session.ObjectLayer is SecuredSessionObjectLayer))
             {
-                if (ChequeNo >= chequera.NumeroInicio && ChequeNo < chequera.NumeroFin)
-                    chequera.NumeroActual++;
-                chequera.Save();
+                if (Clasificacion.Tipo == EBancoTipoTransaccion.Cheque && Session.IsNewObject(this) && chequera != null)
+                {
+                    if (ChequeNo >= chequera.NumeroInicio && ChequeNo < chequera.NumeroFin)
+                        chequera.NumeroActual++;
+                    chequera.Save();
+                }
+                if (Session.IsNewObject(this) && Numero == null)
+                    Numero = CorrelativoDoc();
             }
-            if (Session.IsNewObject(this) && Numero == null)
-                Numero = CorrelativoDoc();
+            base.OnSaving();
         }
 
         protected override void OnLoading()
@@ -240,17 +241,14 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
 
         [XafDisplayName("Fecha Anulación"), ModelDefault("DisplayFormat", "{0:G}"), ModelDefault("EditMask", "g"), Index(16), ModelDefault("AllowEdit", "False")]
         [PersistentAlias(nameof(fechaAnula)), Browsable(false)]
-        [Delayed(true)]
         public DateTime? FechaAnula => fechaAnula;
 
         [Size(25), Index(17), XafDisplayName("Usuario Anuló"), ModelDefault("AllowEdit", "False"),
             PersistentAlias(nameof(usuarioAnulo)), Browsable(false)]
-        [Delayed(true)]
         public string UsuarioAnulo => usuarioAnulo;
 
         [PersistentAlias(nameof(comentario))]
         [Size(250), Index(18), XafDisplayName("Comentario")]
-        [Delayed(true)]
         public string Comentario => comentario;
 
         [XafDisplayName("Saldo Cuenta"), VisibleInListView(false)]
@@ -261,13 +259,13 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         {
             get
             {
-                if (!IsLoading && !IsSaving && BancoCuenta != null & Fecha != null)
+                if (!IsLoading && !IsSaving && BancoCuenta != null)
                     return BancoCuenta.CalcularSaldo(Fecha);
                 else
                     return 0.0m;
             }
         }
-            
+
 
         #endregion
 
@@ -310,7 +308,7 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         [Action(Caption = "Test")]
         public void TestNumberToLetter()
         {
-            Base.Module.NumeroALetras numLetter = new Base.Module.NumeroALetras();
+            Base.Module.NumeroALetras numLetter = new ();
             this.comentario = numLetter.Convertir(Monto, Moneda.Plural);
         }
 
@@ -344,10 +342,10 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
                 estado = EBancoTransaccionEstado.Anulado;
                 Save();
             }
-            catch (Exception ex)
+            catch
             {
                 CancelEdit();
-                throw ex;
+                throw;
             }
         }
 

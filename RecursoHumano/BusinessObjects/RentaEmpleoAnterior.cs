@@ -1,17 +1,11 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp;
-using System.ComponentModel;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
-using DevExpress.Persistent.Base;
-using System.Collections.Generic;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
+using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
+using System;
+using System.ComponentModel;
 
 namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 {
@@ -30,6 +24,8 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         {
             base.AfterConstruction();
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
+            IngresoGravado = 0.0m;
+            RentaRetenida = 0.0m;
         }
 
         #region Propiedades
@@ -77,7 +73,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         }
 
 
-        [Size(3), DbType("varchar(3)"), XafDisplayName("Moneda"), Index(4), 
+        [Size(3), DbType("varchar(3)"), XafDisplayName("Moneda"), Index(4),
             RuleRequiredField("RentaEmpleoAnterior.Moneda_Requerido", "Save")]
         public Moneda Moneda
         {
@@ -93,16 +89,14 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         [PersistentAlias(nameof(valorMoneda)), XafDisplayName("Valor Moneda"), Index(5)]
         public decimal ValorMoneda => valorMoneda;
 
-        [DbType("numeric(14,2)"), XafDisplayName("Ingreso Gravado"), Index(6),
-            RuleRequiredField("RentaEmpleadoAnterior.IngresoGravado_Requrido", "Save")]
+        [DbType("numeric(14,2)"), XafDisplayName("Ingreso Gravado"), Index(6)]
         public decimal IngresoGravado
         {
             get => ingresoGravado;
             set => SetPropertyValue(nameof(IngresoGravado), ref ingresoGravado, value);
         }
 
-        [DbType("numeric(14,2)"), XafDisplayName("Renta Retenida"), Index(7),
-            RuleRequiredField("RentaEmpleoAnterior.RentaRetenida_Requerido", "Save")]
+        [DbType("numeric(14,2)"), XafDisplayName("Renta Retenida"), Index(7)]
         public decimal RentaRetenida
         {
             get => rentaRetenida;

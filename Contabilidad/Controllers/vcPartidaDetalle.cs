@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using DevExpress.ExpressApp;
-using DevExpress.ExpressApp.Actions;
-using DevExpress.ExpressApp.Editors;
+﻿using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.SystemModule;
+using DevExpress.ExpressApp.Xpo;
 using DevExpress.Persistent.Validation;
 using SBT.Apps.Base.Module.Controllers;
 using SBT.Apps.Contabilidad.Module.BusinessObjects;
+using System;
 
 namespace SBT.Apps.Contabilidad.Module.Controllers
 {
@@ -64,24 +62,28 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
             {
                 try
                 {
-                    RuleSet.CustomNeedToValidateRule += RuleSet_CustomNeedToValidateRule;
-                    var reglas = Validator.RuleSet.GetRules(typeof(Partida), "Save");
-                    RuleSetValidationResult result = Validator.RuleSet.ValidateTarget(View.ObjectSpace, View.ObjectSpace.ModifiedObjects[0], reglas, "1er Detalle");
-                    if (result.ValidationOutcome > ValidationOutcome.Information)
+                    RuleSet.CustomNeedToValidateRule += RuleSet_CustomNeedToValidateRule;                   
+                    IRuleSet ruleSet = Validator.GetService(Application.ServiceProvider);
+                    if (ruleSet != null)
                     {
-                        string sError = string.Empty;
-                        foreach (var reglaRes in result.Results)
-                            if (reglaRes.State == ValidationState.Invalid)
-                                sError += reglaRes.ErrorMessage + Environment.NewLine;
-                        if (!string.IsNullOrEmpty(sError))
-                            MostrarError(sError);
-                        e.Cancel = true;
+                        var reglas = ruleSet.GetRules(typeof(Partida), "Save");
+                        RuleSetValidationResult result = ruleSet.ValidateTarget(View.ObjectSpace, View.ObjectSpace.ModifiedObjects[0], reglas, "Custom");
+                        if (result.ValidationOutcome > ValidationOutcome.Information)
+                        {
+                            string sError = string.Empty;
+                            foreach (var reglaRes in result.Results)
+                                if (reglaRes.State == ValidationState.Invalid)
+                                    sError += reglaRes.ErrorMessage + Environment.NewLine;
+                            if (!string.IsNullOrEmpty(sError))
+                                MostrarError(sError);
+                            e.Cancel = true;
+                        }
                     }
                 }
                 catch (Exception ex)
                 {
                     Application.ShowViewStrategy.ShowMessage(ex.Message, InformationType.Error, 4000);
-                    throw; 
+                    throw;
                 }
                 finally
                 {

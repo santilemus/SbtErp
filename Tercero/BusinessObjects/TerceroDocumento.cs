@@ -4,9 +4,7 @@ using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
-using System;
 using System.ComponentModel;
-using System.Linq;
 
 namespace SBT.Apps.Tercero.Module.BusinessObjects
 {
@@ -19,6 +17,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
     [ModelDefault("Caption", "Tercero Documentos"), NavigationItem(false), DefaultProperty(nameof(Numero))]
     [Persistent(nameof(TerceroDocumento)), CreatableItem(false)]
     [ImageName("user_id-info")]
+    [RuleCombinationOfPropertiesIsUnique("TerceroDocumento_TipoDocumento", DefaultContexts.Save, "Tercero, Tipo", IncludeCurrentObject = true)]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class TerceroDocumento : XPObject
@@ -30,6 +29,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
         public override void AfterConstruction()
         {
             base.AfterConstruction();
+            Vigente = true;
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
@@ -72,7 +72,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
 
         [XafDisplayName("Lugar Emisión"), ToolTip("Lugar de emisión del documento"), VisibleInListView(false),
             VisibleInLookupListView(false), DbType("varchar(100)"), Index(4)]
-        [RuleRequiredField("TerceroDocumento.LugarEmision_Requerido", "Save", TargetCriteria = "[Tipo.Codigo] In ('DUI', 'PAS', 'RES')", 
+        [RuleRequiredField("TerceroDocumento.LugarEmision_Requerido", "Save", TargetCriteria = "[Tipo.Codigo] In ('DUI', 'PAS', 'RES')",
             ResultType = ValidationResultType.Information)]
         public System.String LugarEmision
         {
@@ -92,7 +92,6 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
         }
 
         [VisibleInLookupListView(false), Index(6)]
-        [RuleRequiredField("TerceroDocumento.Vigente_Requerido", "Save")]
         public System.Boolean Vigente
         {
             get => vigente;

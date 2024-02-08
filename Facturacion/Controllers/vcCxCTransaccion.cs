@@ -1,28 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DevExpress.Data.Filtering;
+﻿using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp;
-using DevExpress.ExpressApp.Editors;
-using DevExpress.ExpressApp.SystemModule;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Base.Module.Controllers;
 using SBT.Apps.CxC.Module.BusinessObjects;
-using SBT.Apps.Facturacion.Module.BusinessObjects;
 using SBT.Apps.Inventario.Module.BusinessObjects;
+using System;
+using System.ComponentModel;
+using System.Linq;
 
 namespace SBT.Apps.Facturacion.Module.Controllers
 {
     /// <summary>
     /// View Controller que corresponde a los documentos de Cuentas por Cobrar
     /// </summary>
-    public class vcCxCTransaccion: ViewControllerBase
+    public class vcCxCTransaccion : ViewControllerBase
     {
         InventarioTipoMovimiento tipoMovimiento;
-        public vcCxCTransaccion(): base()
+        public vcCxCTransaccion() : base()
         {
             TargetObjectType = typeof(SBT.Apps.CxC.Module.BusinessObjects.CxCTransaccion);
             TargetViewType = ViewType.Any;
@@ -94,7 +88,7 @@ namespace SBT.Apps.Facturacion.Module.Controllers
         private void ActualizarInventario(CxCDocumentoDetalle item)
         {
             Inventario.Module.BusinessObjects.Inventario inventarioItem = ObjectSpace.FindObject<Inventario.Module.BusinessObjects.Inventario>(
-                   CriteriaOperator.Parse("[Bodega.Oid] == ? && [Producto.Oid] == ? && [TipoMovimiento.Oid] == ?", 
+                   CriteriaOperator.Parse("[Bodega.Oid] == ? && [Producto.Oid] == ? && [TipoMovimiento.Oid] == ?",
                    item.VentaDetalle.Bodega.Oid, item.VentaDetalle.Producto.Oid, tipoMovimiento.Oid));
             if (inventarioItem == null)
             {

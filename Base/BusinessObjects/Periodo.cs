@@ -5,7 +5,6 @@ using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using System;
 using System.ComponentModel;
-using System.Linq;
 
 
 namespace SBT.Apps.Base.Module.BusinessObjects
@@ -16,7 +15,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
     //[RuleCombinationOfPropertiesIsUnique("Periodo.Empresa_Numero_Unico", DefaultContexts.Save, "Empresa, Oid", 
     //    CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
-    [RuleCriteria("Periodo.Oid = Year", DefaultContexts.Save, "[Oid] == GetYear([FechaInicio]) && GetYear([FechaInicio]) == GetYear([FechaFin])", 
+    [RuleCriteria("Periodo.Oid = Year", DefaultContexts.Save, "[Oid] == GetYear([FechaInicio]) && GetYear([FechaInicio]) == GetYear([FechaFin])",
         "Fecha Inicio y Fecha Fin deben corresponder al mismo año y Oid debe ser igual al año", SkipNullOrEmptyValues = false)]
     public class Periodo : XPCustomObject
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).

@@ -1,5 +1,4 @@
-﻿using DevExpress.ExpressApp;
-using DevExpress.ExpressApp.Core;
+﻿using DevExpress.ExpressApp.Core;
 using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Editors;
 using DevExpress.ExpressApp.Model;
@@ -8,7 +7,6 @@ using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using System;
 using System.ComponentModel;
-using System.Linq;
 
 
 namespace SBT.Apps.Producto.Module.BusinessObjects
@@ -35,6 +33,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         {
             base.AfterConstruction();
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
+            Activo = true;
         }
 
         #region Propiedades
@@ -92,14 +91,14 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
             set => SetPropertyValue(nameof(Formula), ref formula, value);
         }
 
-        [DbType("bit"), XafDisplayName("Activo"), RuleRequiredField("Tributo.Activo_Requerido", DefaultContexts.Save)]
+        [DbType("bit"), XafDisplayName("Activo")]
         [Index(6), VisibleInLookupListView(true)]
         public bool Activo
         {
             get => activo;
             set => SetPropertyValue(nameof(Activo), ref activo, value);
         }
-      
+
         [Size(250), DbType("varchar(250)"), XafDisplayName("Comentario")]
         [ModelDefault("RowCount", "3")]
         public string Comentario

@@ -1,15 +1,11 @@
-﻿using System;
-using System.Linq;
-
-
-namespace SBT.Apps.Erp.Module.Web.Controllers
+﻿namespace SBT.Apps.Erp.Module.Web.Controllers
 {
     /// <summary>
     /// View Controller para el BO BugReport que registra los bug encontrados en la aplicacion
     /// </summary>
-    public class vcBugReportWeb: ViewControllerBaseWeb
+    public class vcBugReportWeb : ViewControllerBaseWeb
     {
-        public vcBugReportWeb(): base()
+        public vcBugReportWeb() : base()
         {
 
         }

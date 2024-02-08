@@ -2,10 +2,10 @@
 using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using DevExpress.Xpo;
+using SBT.Apps.CxC.Module.BusinessObjects;
+using SBT.Apps.Facturacion.Module.BusinessObjects;
 using System;
 using System.ComponentModel;
-using SBT.Apps.Facturacion.Module.BusinessObjects;
-using SBT.Apps.CxC.Module.BusinessObjects;
 
 namespace SBT.Apps.Iva.Module.BusinessObjects
 {

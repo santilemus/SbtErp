@@ -8,7 +8,6 @@ using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Inventario.Module.BusinessObjects;
 using System;
 using System.ComponentModel;
-using System.Linq;
 
 namespace SBT.Apps.Compra.Module.BusinessObjects
 {
@@ -38,6 +37,7 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
         {
             base.AfterConstruction();
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
+            Tipo = ETipoCompra.Servicio;
         }
 
         #region Propiedades
@@ -62,7 +62,7 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
         /// <summary>
         /// Tipo de Compra. Puede ser: Servicio, Producto, ActivoFijo
         /// </summary>
-        [DbType("smallint"), XafDisplayName("Tipo Compra"), RuleRequiredField("OrdenCompra.Tipo_Requerido", "Save"), Index(6)]
+        [DbType("smallint"), XafDisplayName("Tipo Compra"), Index(6)]
         [DetailViewLayout("Datos Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
         public ETipoCompra Tipo
         {

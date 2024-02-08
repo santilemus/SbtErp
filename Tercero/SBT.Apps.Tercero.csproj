@@ -1,139 +1,55 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5F15837D-D1E5-44DC-92F0-4F2EBE9C3F8D}</ProjectGuid>
+    <TargetFramework>net8.0</TargetFramework>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SBT.Apps.Tercero.Module</RootNamespace>
     <AssemblyName>SBT.Apps.Tercero.Module</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <AssemblyTitle>Tercero.Module</AssemblyTitle>
+    <Product>Tercero.Module</Product>
+    <Copyright>Copyright © 2019</Copyright>
+    <AssemblyVersion>2.0.*</AssemblyVersion>
+    <FileVersion>2.0.0.0</FileVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'EasyTest|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\EasyTest\</OutputPath>
     <DefineConstants>TRACE;DEBUG;EASYTEST</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="DevExpress.Data.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.ExpressApp.CloneObject.Xpo.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.ExpressApp.ConditionalAppearance.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.ExpressApp.Objects.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.ExpressApp.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.ExpressApp.Validation.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.ExpressApp.ViewVariantsModule.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.ExpressApp.Xpo.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.Persistent.Base.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.Persistent.BaseImpl.Xpo.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.Printing.v21.2.Core">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.Xpo.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="mscorlib">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="System">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="System.Core">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="System">
-      <Name>System</Name>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="BusinessObjects\AFP.cs" />
-    <Compile Include="BusinessObjects\Banco.cs" />
-    <Compile Include="BusinessObjects\ETerceroOrigen.cs" />
-    <Compile Include="BusinessObjects\Tercero.cs" />
-    <Compile Include="BusinessObjects\TerceroContacto.cs" />
-    <Compile Include="BusinessObjects\TerceroCredito.cs" />
-    <Compile Include="BusinessObjects\TerceroDireccion.cs" />
-    <Compile Include="BusinessObjects\TerceroDocumento.cs" />
-    <Compile Include="BusinessObjects\TerceroGarantia.cs" />
-    <Compile Include="BusinessObjects\TerceroNota.cs" />
-    <Compile Include="BusinessObjects\TerceroGiro.cs" />
-    <Compile Include="BusinessObjects\TerceroRole.cs" />
-    <Compile Include="BusinessObjects\TerceroSucursal.cs" />
-    <Compile Include="BusinessObjects\TerceroTelefono.cs" />
-    <Compile Include="BusinessObjects\TipoRoleTercero.cs" />
-    <Compile Include="Controllers\vcTerceroCredito.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controllers\vcTerceroGarantia.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="DatabaseUpdate\Updater.cs" />
-    <Compile Include="TerceroModule.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TerceroModule.Designer.cs">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug Net6|AnyCPU'">
+    <OutputPath>bin\Debug Net6\</OutputPath>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="DevExpress.ExpressApp" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.Chart" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.CloneObject.Xpo" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.CodeAnalysis" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.ConditionalAppearance" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.Objects" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.ReportsV2" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.Security.Xpo" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.Validation" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.ViewVariantsModule" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.Xpo" Version="23.1.3" />
+		<PackageReference Include="DevExpress.Persistent.Base" Version="23.1.3" />
+		<PackageReference Include="DevExpress.Persistent.BaseImpl.Xpo" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.AuditTrail.Xpo" Version="23.1.3" />
+		<!--<PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="6.0.0" />-->
+		<!--<PackageReference Include="System.Configuration.ConfigurationManager" Version="7.0.0" />-->
+	</ItemGroup>
+	
+	<ItemGroup>
+    <Compile Update="Controllers\vcTerceroCredito.cs" />
+    <Compile Update="Controllers\vcTerceroGarantia.cs" />
+    <Compile Update="TerceroModule.cs" />
+    <Compile Update="TerceroModule.Designer.cs">
       <DependentUpon>TerceroModule.cs</DependentUpon>
     </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Model.DesignedDiffs.xafml" />
     <EmbeddedResource Include="Properties\licenses.licx" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="BusinessObjects\ReadMe.txt" />
-    <None Include="Controllers\ReadMe.txt" />
-    <None Include="DatabaseUpdate\ReadMe.txt" />
-    <None Include="Images\ReadMe.txt" />
-    <None Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Base\SBT.Apps.Base.csproj">
-      <Project>{a538fe93-206d-4869-bc40-fdc561f8c1d1}</Project>
-      <Name>SBT.Apps.Base</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Images\Tercero.png" />
@@ -143,12 +59,7 @@
     <EmbeddedResource Include="Images\afp.png" />
     <EmbeddedResource Include="Images\afp_32x32.png" />
   </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+  <ItemGroup>
+    <ProjectReference Include="..\Base\SBT.Apps.Base.csproj" />
+  </ItemGroup>
 </Project>

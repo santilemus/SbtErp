@@ -7,7 +7,6 @@ using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using System;
 using System.ComponentModel;
-using System.Linq;
 
 namespace SBT.Apps.Producto.Module.BusinessObjects
 {
@@ -30,6 +29,8 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
             base.AfterConstruction();
             EsGrupo = false;
             Activa = true;
+            ClasificacionIva = EClasificacionIVA.Gravado;
+            Clasificacion = EClasificacion.ProductoTerminado;
             var emp = ((Usuario)DevExpress.ExpressApp.SecuritySystem.CurrentUser).Empresa;
             if (emp != null)
                 porcentajeIva = Session.GetObjectByKey<Empresa>(emp.Oid).PorcentajeIva;
@@ -44,13 +45,10 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         /// Validación que debe dispararse cuando la categoría no es grupo (es el último nivel o detalle) y además tiene subcategorías.
         /// Aplica para la propiedad EsGrupo
         /// </summary>
-        [NonPersistent, Browsable(false)]
+        [Browsable(false)]
         [RuleFromBoolProperty("Categoria.Grupo_NoModificar", DefaultContexts.Save, "No puede modificar la Propiedad es Grupo porque la categoría tiene uno o más hijos"
             , UsedProperties = "EsGrupo", SkipNullOrEmptyValues = false)]
-        protected bool IsGrupAndHaveChild
-        {
-            get { return (!EsGrupo && Hijos(this) == 0) || (EsGrupo && (Hijos(this) >= 0)); }
-        }
+        protected bool IsGrupAndHaveChild => (!EsGrupo && Hijos(this) == 0) || (EsGrupo && (Hijos(this) >= 0));
 
 
         private int Hijos(Categoria aCategoria)
@@ -66,9 +64,9 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
 
         EMetodoCosteoInventario metodoCosteo;
         decimal porcentajeIva;
-        EClasificacionIVA clasificacionIva = EClasificacionIVA.Gravado;
+        EClasificacionIVA clasificacionIva;
         private Categoria padre;
-        private EClasificacion clasificacion = EClasificacion.ProductoTerminado;
+        private EClasificacion clasificacion;
         private System.Boolean esGrupo;
         private System.Boolean activa = true;
         private System.String nombre;
@@ -115,7 +113,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         /// Clasificacion de la categoria de productos. Ejemplos: Producto Terminado, Materia Prima, Servicios, etc.
         /// </summary>
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Clasificación"), VisibleInLookupListView(false)]
-        [RuleRequiredField("Categoria.Clasificacion_Requerido", "Save"), Persistent(nameof(Clasificacion))]
+        [Persistent(nameof(Clasificacion))]
         public EClasificacion Clasificacion
         {
             get => clasificacion;
@@ -137,7 +135,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         /// Pueden Ser: Gravados, Exentos, Excluidos. Ver la enumeracion EClasificacionIVA para mas detalle
         /// </summary>
         [DbType("smallint"), Persistent(nameof(ClasificacionIva)), XafDisplayName("Clasificación Iva")]
-        [RuleRequiredField("Producto.ClasificacionIva_Requerido", "Save"), VisibleInListView(false)]
+        [VisibleInListView(false)]
         public EClasificacionIVA ClasificacionIva
         {
             get => clasificacionIva;
@@ -170,7 +168,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         [PersistentAlias("Iif(!IsNull([Padre]), [Padre.Nivel] + 1, 1)")]
         public int Nivel => Convert.ToInt16(EvaluateAlias(nameof(Nivel)));
 
-        [RuleRequiredField("Categoria.Activa_Requerido", "Save"), XafDisplayName("Activa")]
+        [XafDisplayName("Activa")]
         public System.Boolean Activa
         {
             get => activa;

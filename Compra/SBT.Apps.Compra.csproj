@@ -1,184 +1,68 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E300665D-AD47-415F-8AE3-0BDB0D4F0371}</ProjectGuid>
+    <TargetFramework>net8.0</TargetFramework>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
+	<Configurations>Debug;Release;EasyTest</Configurations>
     <RootNamespace>SBT.Apps.Compra.Module</RootNamespace>
     <AssemblyName>SBT.Apps.Compra.Module</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <AssemblyTitle>SBT.Apps.Compra.Module</AssemblyTitle>
+    <Product>SBT.Apps.Compra.Module</Product>
+    <Copyright>Copyright © 2021</Copyright>
+    <AssemblyVersion>2.0.*</AssemblyVersion>
+    <FileVersion>2.0.0.0</FileVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'EasyTest|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\EasyTest\</OutputPath>
     <DefineConstants>TRACE;DEBUG;EASYTEST</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug Net6|AnyCPU'">
+    <OutputPath>bin\Debug Net6\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DevExpress.Data.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.ExpressApp.CloneObject.Xpo.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.ExpressApp.ConditionalAppearance.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.ExpressApp.Objects.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.ExpressApp.ReportsV2.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.ExpressApp.Security.Xpo.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.ExpressApp.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.ExpressApp.Validation.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.ExpressApp.ViewVariantsModule.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.ExpressApp.Xpo.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.Persistent.Base.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.Persistent.BaseImpl.Xpo.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.Printing.v21.2.Core">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.Utils.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.Xpo.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.Charts.v21.2.Core">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.XtraCharts.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.XtraReports.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="mscorlib">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="System">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="System.Core">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="System">
-      <Name>System</Name>
-    </Reference>
-    <Reference Include="System.Data">
-      <Name>System.Data</Name>
-    </Reference>
-    <Reference Include="System.Drawing" />
+    <None Remove="Model.DesignedDiffs_original.xafml" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="BusinessObjects\CxPDocumento.cs" />
-    <Compile Include="BusinessObjects\CxPDocumentoDetalle.cs" />
-    <Compile Include="BusinessObjects\CxPTransaccion.cs" />
-    <Compile Include="BusinessObjects\EEstadoOrdenCompra.cs" />
-    <Compile Include="BusinessObjects\EOrigenCompra.cs" />
-    <Compile Include="BusinessObjects\ETipoCompra.cs" />
-    <Compile Include="BusinessObjects\CompraFactura.cs" />
-    <Compile Include="BusinessObjects\CompraFacturaDetalle.cs" />
-    <Compile Include="BusinessObjects\InventarioMovimiento.cs" />
-    <Compile Include="BusinessObjects\InventarioMovimientoDetalle.cs" />
-    <Compile Include="BusinessObjects\LibroCompra.cs" />
-    <Compile Include="BusinessObjects\OrdenCompra.cs" />
-    <Compile Include="BusinessObjects\OrdenCompraDetalle.cs" />
-    <Compile Include="Controllers\LibroCompraListViewController.cs" />
-    <Compile Include="Controllers\vcBancoTransaccionLookupCxP.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controllers\vcCompraFacturaDetail.cs" />
-    <Compile Include="Controllers\vcCompraFacturaList.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controllers\vcCxPTransaccion.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controllers\vcInventarioMovimiento.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="DatabaseUpdate\Updater.cs" />
-    <Compile Include="CompraModule.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="CompraModule.Designer.cs">
+
+	<ItemGroup>
+		<PackageReference Include="DevExpress.ExpressApp" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.Chart" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.CloneObject.Xpo" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.CodeAnalysis" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.ConditionalAppearance" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.Objects" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.ReportsV2" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.Security.Xpo" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.Validation" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.ViewVariantsModule" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.Xpo" Version="23.1.3" />
+		<PackageReference Include="DevExpress.Persistent.Base" Version="23.1.3" />
+		<PackageReference Include="DevExpress.Persistent.BaseImpl.Xpo" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.AuditTrail.Xpo" Version="23.1.3" />
+	</ItemGroup>
+	
+	<ItemGroup>
+    <Compile Update="Controllers\vcBancoTransaccionLookupCxP.cs" />
+    <Compile Update="Controllers\vcCompraFacturaList.cs" />
+    <Compile Update="Controllers\vcCxPTransaccion.cs" />
+    <Compile Update="Controllers\vcInventarioMovimiento.cs" />
+    <Compile Update="CompraModule.cs" />
+    <Compile Update="CompraModule.Designer.cs">
       <DependentUpon>CompraModule.cs</DependentUpon>
     </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="CompraModule.resx">
+    <EmbeddedResource Update="CompraModule.resx">
       <DependentUpon>CompraModule.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Model.DesignedDiffs.xafml" />
     <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="BusinessObjects\ReadMe.txt" />
-    <None Include="Controllers\ReadMe.txt" />
-    <None Include="DatabaseUpdate\ReadMe.txt" />
-    <None Include="Images\ReadMe.txt" />
-    <None Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Base\SBT.Apps.Base.csproj">
-      <Project>{A538FE93-206D-4869-BC40-FDC561F8C1D1}</Project>
-      <Name>SBT.Apps.Base</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Contabilidad\SBT.Apps.Contabilidad.csproj">
-      <Project>{f8acb445-e391-4dc6-9ab3-b30ab53f7646}</Project>
-      <Name>SBT.Apps.Contabilidad</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Empleado\SBT.Apps.Empleado.csproj">
-      <Project>{05F004D2-9388-44DB-A756-2FFB2ECCAE07}</Project>
-      <Name>SBT.Apps.Empleado</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Producto\SBT.Apps.Producto.csproj">
-      <Project>{90D73CB9-2F45-473C-8FEE-AF118BB56C89}</Project>
-      <Name>SBT.Apps.Producto</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Tercero\SBT.Apps.Tercero.csproj">
-      <Project>{5F15837D-D1E5-44DC-92F0-4F2EBE9C3F8D}</Project>
-      <Name>SBT.Apps.Tercero</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\Base\SBT.Apps.Base.csproj" />
+    <ProjectReference Include="..\Contabilidad\SBT.Apps.Contabilidad.csproj" />
+    <ProjectReference Include="..\Empleado\SBT.Apps.Empleado.csproj" />
+    <ProjectReference Include="..\Producto\SBT.Apps.Producto.csproj" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Images\CompraFactura.png" />
@@ -188,12 +72,9 @@
     <EmbeddedResource Include="Images\OrdenCompra.png" />
     <EmbeddedResource Include="Images\OrdenCompra_32x32.png" />
   </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+  <ItemGroup>
+    <None Update="UnusableNodes.xml">
+      <DependentUpon>Model.DesignedDiffs.xafml</DependentUpon>
+    </None>
+  </ItemGroup>
 </Project>

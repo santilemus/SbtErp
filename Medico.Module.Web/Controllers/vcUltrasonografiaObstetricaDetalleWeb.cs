@@ -1,15 +1,12 @@
-﻿using System;
-
-
-namespace SBT.Apps.Medico.Module.Web.Controllers
+﻿namespace SBT.Apps.Medico.Module.Web.Controllers
 {
     /// <summary>
     /// View Controller que aplica al BO UltrasonografiaObstetricaDetalle plataforma web
     /// </summary>
-    public class vcUltrasonografiaObstetricaDetalleWeb: ViewControllerBaseWeb
+    public class vcUltrasonografiaObstetricaDetalleWeb : ViewControllerBaseWeb
     {
-       
-        public vcUltrasonografiaObstetricaDetalleWeb(): base()
+
+        public vcUltrasonografiaObstetricaDetalleWeb() : base()
         {
 
         }

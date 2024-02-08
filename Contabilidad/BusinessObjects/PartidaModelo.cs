@@ -1,6 +1,5 @@
-﻿using DevExpress.Data.Filtering;
-using DevExpress.ExpressApp;
-using DevExpress.ExpressApp.DC;
+﻿using DevExpress.ExpressApp.DC;
+using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
@@ -9,7 +8,6 @@ using SBT.Apps.Base.Module.BusinessObjects;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using DevExpress.ExpressApp.Model;
 
 namespace SBT.Apps.Contabilidad.Module.BusinessObjects
 {
@@ -30,6 +28,8 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         {
             base.AfterConstruction();
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
+            Tipo = ETipoPartida.Diario;
+            Preliminar = false;
         }
 
         #region Propiedades
@@ -49,7 +49,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             set => SetPropertyValue(nameof(Empresa), ref empresa, value);
         }
 
-        [DbType("smallint"), Persistent("Tipo"), XafDisplayName("Tipo"), RuleRequiredField("PartidaModelo.Tipo_Requerido", DefaultContexts.Save)]
+        [DbType("smallint"), Persistent("Tipo"), XafDisplayName("Tipo")]
         public ETipoPartida Tipo
         {
             get => tipo;
@@ -95,7 +95,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             set => SetPropertyValue(nameof(Consulta), ref consulta, value);
         }
 
-        [DbType("bit"), Persistent(nameof(Preliminar)), XafDisplayName("Preliminar"), RuleRequiredField("PartidaModelo.Preliminar_Requerido", "Save")]
+        [DbType("bit"), Persistent(nameof(Preliminar)), XafDisplayName("Preliminar")]
         public bool Preliminar
         {
             get => preliminar;
@@ -117,7 +117,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
                 return;
             DevExpress.Xpo.DB.SelectedData data = Session.ExecuteQueryWithMetadata(Consulta.Ssql, ParamNames, ParamValues);
             // columnNames tendra los nombres de las columnas
-            Dictionary<string, int> columnNames = new Dictionary<string, int>();
+            Dictionary<string, int> columnNames = new();
             for (int columnIndex = 0; columnIndex < data.ResultSet[0].Rows.Length; columnIndex++)
             {
                 string columnName = (string)data.ResultSet[0].Rows[columnIndex].Values[0];
@@ -131,7 +131,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             }
         }
 
-        private XPClassInfo CreateParameterBO(SqlObject ASql)
+        private static XPClassInfo CreateParameterBO(SqlObject ASql)
         {
             if (ASql == null)
                 return null;
@@ -142,7 +142,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             key.AddAttribute(new BrowsableAttribute(false));
             foreach (ConsultaParametro pa in ASql.Parametros)
             {
-                string sTipo = $"System.{(Enum.GetName(typeof(ETipoDato), pa.Tipo).Substring(1))}";
+                string sTipo = $"System.{Enum.GetName(typeof(ETipoDato), pa.Tipo).Substring(1)}";
                 XPMemberInfo mi = info.CreateMember(pa.Nombre, Type.GetType(sTipo));
                 mi.AddAttribute(new DevExpress.Xpo.DisplayNameAttribute(pa.Descripcion));
             }

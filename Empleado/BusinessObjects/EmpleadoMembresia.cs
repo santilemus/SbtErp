@@ -1,8 +1,6 @@
 ﻿using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
-using System;
-using System.Linq;
 
 namespace SBT.Apps.Empleado.Module.BusinessObjects
 {
@@ -34,7 +32,6 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
             set => SetPropertyValue(nameof(AsociacionProfesional), ref asociacionProfesional, value);
         }
 
-        [RuleRequiredField("EmpleadoMembresia.Vigente_Requerido", "Save")]
         public System.Boolean Vigente
         {
             get

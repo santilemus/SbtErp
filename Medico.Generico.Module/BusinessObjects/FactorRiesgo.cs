@@ -1,17 +1,8 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp;
-using System.ComponentModel;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
-using DevExpress.Persistent.Base;
-using System.Collections.Generic;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
-using SBT.Apps.Base.Module.BusinessObjects;
+using DevExpress.Xpo;
 
 namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 {
@@ -20,7 +11,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
     /// que afectan a cada paciente en particular. 
     /// Ejemplos: Hipertension, Diabetes, etc y los cuales deben tenerse en cuenta al ser tratado
     /// </summary>
-    [DefaultClassOptions, Persistent("FactorRiesgo"), ModelDefault("Caption", "Factor Riesgo"), NavigationItem("Salud"), 
+    [DefaultClassOptions, Persistent("FactorRiesgo"), ModelDefault("Caption", "Factor Riesgo"), NavigationItem("Salud"),
         XafDefaultProperty("Diagnostico"), CreatableItem(false)]
     [ImageName("FactorRiesgo")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
@@ -42,7 +33,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
         string descripcion;
         Enfermedad diagnostico;
 
-        [Association("Enfermedad-FactorRiesgos"), Persistent("Diagnostico"), XafDisplayName("Diagnostico"), 
+        [Association("Enfermedad-FactorRiesgos"), Persistent("Diagnostico"), XafDisplayName("Diagnostico"),
             ToolTip("Enfermedad a la cual corresponde el Diagnostico de factor de riesgo (sinonimo de enfermedad)")]
         public Enfermedad Diagnostico
         {
@@ -59,8 +50,8 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
                 }
             }
         }
-      
-        [Size(150), DbType("varchar(150)"), Persistent("Descripcion"), XafDisplayName("Descripción"), 
+
+        [Size(150), DbType("varchar(150)"), Persistent("Descripcion"), XafDisplayName("Descripción"),
             RuleRequiredField("FactorRiesgo.Descripcion_Requerido", DefaultContexts.Save)]
         public string Descripcion
         {

@@ -5,7 +5,6 @@ using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using System;
 using System.ComponentModel;
-using System.Linq;
 
 namespace SBT.Apps.Activo.Module.BusinessObjects
 {
@@ -72,7 +71,8 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
         }
 
         [DbType("numeric(14,2)"), XafDisplayName("Valor")]
-        [RuleRequiredField("ActivoDepreciacion.Valor_Requerido", DefaultContexts.Save)]
+        [RuleValueComparison("ActivoDepreciacion.Valor_valido", DefaultContexts.Save, ValueComparisonType.NotEquals, 0, 
+            "El valor de la depreciación debe ser diferente a cero")]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         public decimal Valor
         {
@@ -80,14 +80,14 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
             set => SetPropertyValue(nameof(Valor), ref valor, value);
         }
 
-        [XafDisplayName("Tipo Depreciación"), RuleRequiredField("ActivoDepreciacion.Tipo_Requerido", DefaultContexts.Save)]
+        [XafDisplayName("Tipo Depreciación")]
         public ETipoDepreciacion Tipo
         {
             get => tipo;
             set => SetPropertyValue(nameof(Tipo), ref tipo, value);
         }
 
-        
+
         [Association("ActivoMejora-Depreciaciones"), XafDisplayName("Mejora")]
         [ToolTip("Mejora o Versión a la cual corresponde la depreciación")]
         public ActivoMejora Mejora

@@ -1,13 +1,11 @@
-﻿using DevExpress.ExpressApp.DC;
-using DevExpress.Persistent.Base;
-using DevExpress.Xpo;
-using System;
-using System.ComponentModel;
-using System.Linq;
-using DevExpress.ExpressApp;
+﻿using DevExpress.ExpressApp;
+using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
+using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
+using System.ComponentModel;
 
 namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 {
@@ -30,6 +28,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
             base.AfterConstruction();
             TipoTabla = ETablaISR.Mensual;
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
+            TipoTabla = ETablaISR.Mensual;
         }
 
         #region Propiedades
@@ -41,7 +40,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         [DbType("varchar(7)"), Persistent(nameof(Pais))]
 #endif
         //[Association("Pais-ParametroRentas", "Sanrey.Erp.Base", "Sanrey.Erp.Base.BusinessObjects.ZonaGeografica")]
-        [Size(7), XafDisplayName("País"), Index(1), RuleRequiredField("ParametroRenta.Pais_Requerido", DefaultContexts.Save)] 
+        [Size(7), XafDisplayName("País"), Index(1), RuleRequiredField("ParametroRenta.Pais_Requerido", DefaultContexts.Save)]
         [DataSourceCriteria("[ZonaPadre] Is Null And [Activa] = true")]
         public ZonaGeografica Pais
         {
@@ -56,7 +55,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 #else
         [DbType("smallint"), Persistent(nameof(TipoTabla))]
 #endif
-        [XafDisplayName("Tipo Tabla"), Index(2), RuleRequiredField("ParametroRenta.TipoTabla_Requerido", DefaultContexts.Save)]
+        [XafDisplayName("Tipo Tabla"), Index(2)]
         public ETablaISR TipoTabla
         {
             get => tipoTabla;
@@ -69,7 +68,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 #else
         [DbType("money"), Persistent(nameof(SueldoDesde))]
 #endif
-        [XafDisplayName("Sueldo Desde"), RuleValueComparison("ParametroRenta.SueldoDesde >= 0", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual, 0, 
+        [XafDisplayName("Sueldo Desde"), RuleValueComparison("ParametroRenta.SueldoDesde >= 0", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual, 0,
             SkipNullOrEmptyValues = false), Index(4), ModelDefault("DisplayFormat", "{0:N4}"), ModelDefault("EditMask", "n4")]
         public decimal SueldoDesde
         {
@@ -83,7 +82,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 #else
         [DbType("money"), Persistent(nameof(SueldoHasta))]
 #endif
-        [XafDisplayName("Sueldo Hasta"), RuleValueComparison("ParametroRenta.SueldoHasta > SueldoDesde", DefaultContexts.Save, ValueComparisonType.GreaterThan, 
+        [XafDisplayName("Sueldo Hasta"), RuleValueComparison("ParametroRenta.SueldoHasta > SueldoDesde", DefaultContexts.Save, ValueComparisonType.GreaterThan,
             ParametersMode.Expression, "SueldoDesde", SkipNullOrEmptyValues = false), Index(5), ModelDefault("DisplayFormat", "{0:N4}"), ModelDefault("EditMask", "n4")]
         public decimal SueldoHasta
         {
@@ -97,7 +96,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 #else
         [DbType("money"), Persistent(nameof(RentaFija))]
 #endif
-        [XafDisplayName("Renta Fija"), RuleValueComparison("ParametroRenta.RentaFija >= 0", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual,0, 
+        [XafDisplayName("Renta Fija"), RuleValueComparison("ParametroRenta.RentaFija >= 0", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual, 0,
             SkipNullOrEmptyValues = false), Index(6), ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         public decimal RentaFija
         {

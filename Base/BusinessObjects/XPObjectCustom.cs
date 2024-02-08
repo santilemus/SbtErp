@@ -3,7 +3,6 @@ using DevExpress.Xpo;
 using DevExpress.Xpo.Metadata;
 using System;
 using System.ComponentModel;
-using System.Linq;
 
 namespace SBT.Apps.Base.Module.BusinessObjects
 {
@@ -30,8 +29,10 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             base.AfterConstruction();
             if (this.ClassInfo.FindMember("Empresa") != null)
             {
-                this["Empresa"] = Session.GetObjectByKey<Empresa>(SesionDataHelper.ObtenerValor("OidEmpresa"));
-                if (this.GetType().GetProperty("Moneda") != null)
+                int id = ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid;
+                var emp = Session.GetObjectByKey<Empresa>(id);
+                this["Empresa"] = emp;
+                if (this.GetType().GetProperty("Moneda") != null && emp != null)
                 {
                     (this["Moneda"]) = (this["Empresa"] as Empresa).MonedaDefecto;
                     if (this.GetType().GetProperty("ValorMoneda") != null)

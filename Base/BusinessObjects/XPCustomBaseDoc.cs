@@ -1,12 +1,11 @@
-﻿using DevExpress.ExpressApp.DC;
+﻿using DevExpress.Data.Filtering;
+using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
-using DevExpress.Data.Filtering;
 using DevExpress.Xpo;
 using System;
 using System.ComponentModel;
-using System.Linq;
 
 namespace SBT.Apps.Base.Module.BusinessObjects
 {
@@ -54,16 +53,6 @@ namespace SBT.Apps.Base.Module.BusinessObjects
                 ValorMoneda = Moneda.FactorCambio;
         }
 
-        protected override void OnSaving() 
-        {
-            if (!(Session is NestedUnitOfWork) && (Session.DataLayer != null) && Session.IsNewObject(this) &&
-                (Session.ObjectLayer is SimpleObjectLayer) && (Numero == null || Numero == 0))
-            {
-                Numero = CorrelativoDoc();
-            }
-            base.OnSaving();
-        }
-
         /// <summary>
         /// Invocar cuando se anula un documento, para agregar informacion de comentario, fecha, usuario que anulo y guardar los cambios
         /// En los BO heredados, debe realizar antes las acciones especificas de cada caso e invocar al final este metdo
@@ -95,7 +84,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         /// Correlativo por tipo de documento.
         /// </summary>
         [Browsable(false)]
-        private int ? numero;
+        private int? numero;
 #if (Firebird)
         [DbType("DM_ENTERO"), Persistent("NUMERO")]
 #else
@@ -103,7 +92,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
 #endif
         [Index(1), XafDisplayName("Número"), ModelDefault("AllowEdit", "False"), RuleRequiredField("XPCustomBaseDocs.Numero_Requerido", "Save"),
             Indexed("Empresa", Unique = false), NonCloneable]
-        public int ? Numero
+        public int? Numero
         {
             get => numero;
             set => SetPropertyValue(nameof(Numero), ref numero, value);

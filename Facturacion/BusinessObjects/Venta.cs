@@ -9,7 +9,6 @@ using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
-using SBT.Apps.Inventario.Module.BusinessObjects;
 using SBT.Apps.Producto.Module.BusinessObjects;
 using SBT.Apps.Tercero.Module.BusinessObjects;
 using System;
@@ -64,7 +63,6 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             base.AfterConstruction();
             if (((Usuario)SecuritySystem.CurrentUser).Agencia != null)
             {
-                var xy = SesionDataHelper.ObtenerValor("OidSucursal");
                 var unidad = this.Session.GetObjectByKey<EmpresaUnidad>(((Usuario)SecuritySystem.CurrentUser).Agencia.Oid);
                 agencia = unidad;
             }
@@ -102,7 +100,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         SBT.Apps.Tercero.Module.BusinessObjects.Banco banco;
         string noReferenciaPago;
         [Persistent(nameof(DiaCerrado)), DbType("bit"), Browsable(false)]
-        bool diaCerrado = false;
+        readonly bool diaCerrado = false;
 
 
         /// <summary>
@@ -283,7 +281,6 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
 
         [XafDisplayName("Forma de Pago"), Index(16)]
         [DbType("smallint")]
-        [RuleRequiredField("Venta.FormaPago_Requerido", "Save")]
         [DetailViewLayout("Datos de Pago", LayoutGroupType.SimpleEditorsGroup, 2)]
         public EFormaPago FormaPago
         {
@@ -312,7 +309,6 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         [RuleRequiredField("Venta.TipoTarjeta_Requerido", "Save", TargetCriteria = "[FormaPago] == 2",
              ResultType = ValidationResultType.Warning)]
         [DetailViewLayout("Datos de Pago", LayoutGroupType.SimpleEditorsGroup, 2)]
-        [ExplicitLoading]
         public ETipoTarjeta? TipoTarjeta
         {
             get => tipoTarjeta;
@@ -500,7 +496,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         {
             /// NOTA: Revisar este metodo porque hay que considerar el BO TributoCategoria, para que se calculen unicamente 
             /// cuando hay una relacion entre el tributo y la categoria del producto
-            
+
             // no calculamos el IVA porque tuvo que calcularse en los detalles (por producto)
             // calculamos la retencion IVA Tributo Oid = 2; cuando el cliente es gran contribuyente. Se calcula porque
             // del saldo a cobrar se deduce la retencion que hara el gran contribuyente, por lo tanto si el cliente
@@ -526,7 +522,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             Tributo tributo = Session.GetObjectByKey<Tributo>(oidTributo);
             if (tributo != null)
             {
-                ExpressionEvaluator eval = new ExpressionEvaluator(TypeDescriptor.GetProperties(tributo.TipoBO), tributo.Formula);
+                ExpressionEvaluator eval = new (TypeDescriptor.GetProperties(tributo.TipoBO), tributo.Formula);
 
                 //alternativa 1
                 //CriteriaOperator op = CriteriaOperator.Parse(tributo.Formula);              
@@ -563,7 +559,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
                           group d by new { d.Producto.Categoria } into x
                           select new
                           {
-                              Categoria = x.Key.Categoria,
+                              x.Key.Categoria,
                               Gravada = x.Sum(y => y.Gravada)
                           };
             foreach (var item in resumen)
@@ -573,15 +569,17 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
                     var vtaResumenTributo = ResumenTributos.FirstOrDefault<VentaResumenTributo>(y => y.Tributo.Oid == tributoCategoria.Tributo.Oid);
                     if (vtaResumenTributo == null)
                         this.ResumenTributos.Add(new VentaResumenTributo(Session)
-                           { Tributo = Session.GetObjectByKey<Tributo>(tributoCategoria.Tributo.Oid), 
-                              Valor = CalcularTributo(tributoCategoria.Tributo.Oid)});
+                        {
+                            Tributo = Session.GetObjectByKey<Tributo>(tributoCategoria.Tributo.Oid),
+                            Valor = CalcularTributo(tributoCategoria.Tributo.Oid)
+                        });
                     else
                     {
                         vtaResumenTributo.Valor = CalcularTributo(tributoCategoria.Tributo.Oid);
                         vtaResumenTributo.Save();
                     }
                 }
-            }         
+            }
         }
 
 
@@ -648,12 +646,19 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
 
         protected override void OnSaving()
         {
-            if (!(Session is NestedUnitOfWork) && (Session.DataLayer != null) && Session.IsNewObject(this) &&
+            if (Session is not NestedUnitOfWork && (Session.DataLayer != null) && Session.IsNewObject(this) &&
                (Session.ObjectLayer is SecuredSessionObjectLayer) && (Numero == null || Numero <= 0))
             {
                 Numero = CorrelativoDoc();
             }
             base.OnSaving();
+        }
+
+        protected override void OnSaved()
+        {
+            base.OnSaved();
+            if (Oid <= 0)
+                Session.Reload(this);
         }
 
         protected override void RefreshTiposDeFacturas()

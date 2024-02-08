@@ -1,18 +1,11 @@
-﻿using DevExpress.Data.Filtering;
-using DevExpress.ExpressApp;
-using DevExpress.ExpressApp.DC;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
-using DevExpress.Persistent.BaseImpl;
-using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Compra.Module.BusinessObjects;
+using System;
+using System.ComponentModel;
 
 namespace SBT.Apps.Iva.Module.BusinessObjects
 {
@@ -70,6 +63,7 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
         int correlativo;
         [Persistent(nameof(Oid)), DbType("bigint"), Key(true)]
         long oid;
+        private string serie;
 
         [PersistentAlias(nameof(oid)), XafDisplayName("Oid")]
         public long Oid => oid;
@@ -105,7 +99,7 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
             set => SetPropertyValue(nameof(TipoDocumento), ref tipoDocumento, value);
         }
 
-        [Size(8), DbType("varchar(8)"), XafDisplayName("No Documento")]
+        [Size(100), DbType("varchar(100)"), XafDisplayName("No Documento")]
         public string Numero
         {
             get => numero;
@@ -249,8 +243,18 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
         [XafDisplayName("No de Anexo"), PersistentAlias("3")]
         public string NumeroAnexo => Convert.ToString(EvaluateAlias(nameof(NumeroAnexo)));
 
+        [Size(100), VisibleInListView(false), DbType("varchar(100)")]
+        public string Serie
+        {
+            get => serie;
+            set => SetPropertyValue(nameof(Serie), ref serie, value);
+        }
+
         [XafDisplayName("Mes"), VisibleInListView(false), VisibleInDetailView(false)]
         public string Mes => string.Format("{0:MM-yyyy}", Fecha);
+
+        [VisibleInListView(false), XafDisplayName("Anexo Percepción")]
+        public string AnexoPercepcion => "8";
 
         #endregion
 

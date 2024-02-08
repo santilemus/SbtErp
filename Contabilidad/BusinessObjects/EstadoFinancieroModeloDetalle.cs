@@ -1,13 +1,13 @@
-﻿using DevExpress.ExpressApp.DC;
+﻿using DevExpress.ExpressApp.Core;
+using DevExpress.ExpressApp.DC;
+using DevExpress.ExpressApp.Editors;
 using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
+using SBT.Apps.Contabilidad.BusinessObjects;
 using System;
 using System.ComponentModel;
-using SBT.Apps.Contabilidad.BusinessObjects;
-using DevExpress.ExpressApp.Editors;
-using DevExpress.ExpressApp.Core;
 
 namespace SBT.Apps.Contabilidad.Module.BusinessObjects
 {
@@ -85,7 +85,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
                 }
             }
         }
-        
+
         [Size(150), DbType("varchar(150)"), XafDisplayName("Nombre Columna 1"), Index(3)]
         [RuleRequiredField("EstadoFinancieroDetalle.Nombre1_Requerido", "Save")]
         public string Nombre1

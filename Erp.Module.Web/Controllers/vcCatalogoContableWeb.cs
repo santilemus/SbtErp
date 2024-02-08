@@ -1,14 +1,11 @@
-﻿using System;
-using System.Linq;
-
-namespace SBT.Apps.Erp.Module.Web.Controllers
+﻿namespace SBT.Apps.Erp.Module.Web.Controllers
 {
     /// <summary>
     /// Controller para el BO Catalogo. Implementar optimizaciones y funciones del catalogo contable en la plataforma web
     /// </summary>
-    public class vcCatalogoContableWeb: ViewControllerBaseWeb
+    public class vcCatalogoContableWeb : ViewControllerBaseWeb
     {
-        public vcCatalogoContableWeb(): base()
+        public vcCatalogoContableWeb() : base()
         {
 
         }

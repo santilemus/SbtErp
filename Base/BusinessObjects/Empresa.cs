@@ -4,8 +4,7 @@ using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using SBT.Apps.Contabilidad.BusinessObjects;
-using System;
-using System.Linq;
+using System.Text.Json.Serialization;
 
 namespace SBT.Apps.Base.Module.BusinessObjects
 {
@@ -56,6 +55,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         private ZonaGeografica _ciudad;
         private ZonaGeografica _pais;
         private System.String _razonSocial;
+        private byte[] logo;
 
         public Empresa(DevExpress.Xpo.Session session)
           : base(session)
@@ -226,7 +226,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [Delayed]
         public Moneda MonedaDefecto
         {
-            get => GetDelayedPropertyValue<Moneda>(nameof(MonedaDefecto)); // monedaDefecto;
+            get => GetDelayedPropertyValue<Moneda>(nameof(MonedaDefecto)); 
             set => SetDelayedPropertyValue(nameof(MonedaDefecto), value);
         }
 
@@ -321,11 +321,8 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [Delayed(nameof(_logo), true)]
         public byte[] Logo
         {
-            get => (byte[])_logo.Value; 
-            set 
-            {
-                _logo.Value = value;
-            }
+            get => (byte[])_logo.Value;
+            set => _logo.Value = value;
         }
 
         [DevExpress.Xpo.AssociationAttribute("Telefonos-Empresa"), VisibleInDetailView(true)]
@@ -347,16 +344,13 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             }
         }
 
-        [DevExpress.Xpo.AssociationAttribute("Unidades-Empresa"), DevExpress.Xpo.Aggregated, VisibleInDetailView(true)]
-        public XPCollection<EmpresaUnidad> Unidades
-        {
-            get
-            {
-                return GetCollection<EmpresaUnidad>("Unidades");
-            }
-        }
 
-        [Association("Empresa-Usuarios"), /*DevExpress.Xpo.Aggregated,*/ XafDisplayName("Usuarios"), VisibleInDetailView(true)]
+        [DevExpress.Xpo.AssociationAttribute("Unidades-Empresa"), DevExpress.Xpo.Aggregated, XafDisplayName("Unidades")]
+        public XPCollection<EmpresaUnidad> Unidades => GetCollection<EmpresaUnidad>(nameof(Unidades));
+
+        
+
+        [Association("Empresa-Usuarios"), /*DevExpress.Xpo.Aggregated,*/ XafDisplayName("Usuarios")]
         public XPCollection<Usuario> Usuarios
         {
             get

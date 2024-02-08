@@ -1,13 +1,9 @@
-﻿using System;
-using System.Linq;
-
-
-namespace SBT.Apps.Medico.Module.Web.Controllers
+﻿namespace SBT.Apps.Medico.Module.Web.Controllers
 {
     /// <summary>
     /// ViewController Web Consulta. Para implementar ajustes y funciones propias de la plataforma web
     /// </summary>
-    public class vcConsultaWeb: ViewControllerBaseWeb
+    public class vcConsultaWeb : ViewControllerBaseWeb
     {
         public vcConsultaWeb() : base()
         {

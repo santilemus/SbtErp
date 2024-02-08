@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using SBT.Apps.Base.Module.Controllers;
+﻿using SBT.Apps.Base.Module.Controllers;
 
 namespace SBT.Apps.Banco.Module.Controllers
 {
@@ -11,7 +9,7 @@ namespace SBT.Apps.Banco.Module.Controllers
     // For more typical usage scenarios, be sure to check out https://documentation.devexpress.com/eXpressAppFramework/clsDevExpressExpressAppViewControllertopic.aspx.
     public class vcBancoCuenta : ViewControllerBase
     {
-        public vcBancoCuenta(): base()
+        public vcBancoCuenta() : base()
         {
             // Target required Views (via the TargetXXX properties) and create their Actions.
         }

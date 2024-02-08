@@ -1,8 +1,6 @@
 ﻿using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
-using System;
-using System.Linq;
 
 namespace SBT.Apps.Empleado.Module.BusinessObjects
 {
@@ -102,7 +100,6 @@ namespace SBT.Apps.Empleado.Module.BusinessObjects
             }
         }
 
-        [RuleRequiredField("Cargo.Activo_Requerido", DefaultContexts.Save, "Activo es obligatorio")]
         public System.Boolean Activo
         {
             get

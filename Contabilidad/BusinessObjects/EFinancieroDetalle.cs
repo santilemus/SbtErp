@@ -7,11 +7,11 @@ using System;
 
 namespace SBT.Apps.Contabilidad.Module.BusinessObjects
 {
-    [DomainComponent] 
+    [DomainComponent]
     [DefaultClassOptions]
     [VisibleInReports]
     [ModelDefault("Caption", "EFinancieroDetalle"), NavigationItem(false), CreatableItem(false)]
-    public class EFinancieroDetalle: NonPersistentObjectImpl
+    public class EFinancieroDetalle : NonPersistentObjectImpl
     {
 
         int orden;
@@ -26,7 +26,6 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         string nombre1;
         int oid;
 
-        [Key(false)]
         public int Oid
         {
             get => oid;
@@ -39,7 +38,6 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             set => SetPropertyValue(ref estadoFinancieroModelo, value);
         }
 
-        [Size(150)]
         public string Nombre1
         {
             get => nombre1;
@@ -58,7 +56,6 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             set => SetPropertyValue(ref valor1, value);
         }
 
-        [Size(150)]
         public string Nombre2
         {
             get => nombre2;
@@ -77,8 +74,6 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             set => SetPropertyValue(ref valor2, value);
         }
 
-
-        [Size(25)]
         public string Plural
         {
             get => plural;

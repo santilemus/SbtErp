@@ -5,9 +5,7 @@ using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Contabilidad.BusinessObjects;
-using System;
 using System.ComponentModel;
-using System.Linq;
 
 namespace SBT.Apps.Activo.Module.BusinessObjects
 {
@@ -95,23 +93,26 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
             set => SetPropertyValue(nameof(CuentaGasto), ref cuentaGasto, value);
         }
 
-        [XafDisplayName("Vida Útil (meses)"), RuleRequiredField("ActivoCategoria.VidaUtil_Requerido", "Save")]
+        [XafDisplayName("Vida Útil (meses)")]
         [DbType("smallint")]
+        [RuleValueComparison("ActivoCategoría.VidaUtil_Valido", DefaultContexts.Save, ValueComparisonType.GreaterThan, 0, "La vida útil debe ser mayor a cero")]
         public int VidaUtil
         {
             get => vidaUtil;
             set => SetPropertyValue(nameof(VidaUtil), ref vidaUtil, value);
         }
 
-        [XafDisplayName("Valor Residual"), RuleRequiredField("ActivoCategoria.ValorResidual_Requerido", DefaultContexts.Save)]
+        [XafDisplayName("Valor Residual")]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
+        [RuleValueComparison("ActivoCatalogo.ValorResidual_Valido", DefaultContexts.Save, ValueComparisonType.GreaterThan, 0, "El valor residual debe ser mayor a cero")]
+
         public decimal ValorResidual
         {
             get => valorResidual;
             set => SetPropertyValue(nameof(ValorResidual), ref valorResidual, value);
         }
 
-        [DbType("bit"), XafDisplayName("Activo"), RuleRequiredField("ActivoCategoria.Activo_Requerido", "Save")]
+        [DbType("bit"), XafDisplayName("Activo")]
         public bool Activo
         {
             get => activo;

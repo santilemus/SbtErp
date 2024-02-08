@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+using System.Configuration;
 using System.Data;
-using System.Drawing;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Data.SqlClient;
-using System.Reflection;
 using System.Text.RegularExpressions;
-using System.Configuration;
+using System.Windows.Forms;
 
 namespace SBT.Apps.Medico.Win
 {
@@ -176,10 +171,10 @@ namespace SBT.Apps.Medico.Win
                     progressBar.Position++;
                     progressBar.Update();
                 }
-                catch (Exception ex)
+                catch
                 {
-                    WriteToLog(string.Format($"La siguiente sentencia no se pudo ejecutar:\r\n {{0}}{Environment.NewLine}", cmdText) );
-                    throw ex;
+                    WriteToLog(string.Format($"La siguiente sentencia no se pudo ejecutar:\r\n {{0}}{Environment.NewLine}", cmdText));
+                    throw;
                 }
             }
             return x;

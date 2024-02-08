@@ -1,11 +1,9 @@
-﻿using System;
-using DevExpress.ExpressApp.ConditionalAppearance;
+﻿using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.Actions;
-using SBT.Apps.Base.Module.BusinessObjects;
-using SBT.Apps.Base.Module.Controllers;
-using DevExpress.ExpressApp;
-using DevExpress.Persistent.Base;
+using DevExpress.ExpressApp.ConditionalAppearance;
 using DevExpress.ExpressApp.Model;
+using DevExpress.Persistent.Base;
+using System;
 
 namespace SBT.Apps.Banco.Module.Controllers
 {
@@ -16,7 +14,7 @@ namespace SBT.Apps.Banco.Module.Controllers
     ///  Con relacion a la personalizacion de la apariencia, ver mas informacion en
     ///  https://docs.devexpress.com/eXpressAppFramework/113374/conditional-appearance/how-to-customize-the-conditional-appearance-module-behavior
     /// </remarks>
-    public class vcBancoTransaccionDetail: ViewController<DetailView>
+    public class vcBancoTransaccionDetail : ViewController<DetailView>
     {
         private PopupWindowShowAction pwsaSelectProveedor;
         private AppearanceController appearanceController;
@@ -35,7 +33,7 @@ namespace SBT.Apps.Banco.Module.Controllers
             ObjectSpace.Committed += ObjectSpace_Committed;
             pwsaSelectProveedor.CustomizePopupWindowParams += pwsaSelectProveedor_CustomizePopupWindowParams;
             pwsaSelectProveedor.Execute += pwsaSelectProveedorExecute;
-            
+
             appearanceController = Frame.GetController<AppearanceController>();
             if (appearanceController != null)
             {

@@ -1,15 +1,10 @@
-﻿using DevExpress.Data.Filtering;
-using DevExpress.ExpressApp;
+﻿using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
-using DevExpress.Persistent.Validation;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
 
 namespace SBT.Apps.Base.Module.BusinessObjects
 {
@@ -48,7 +43,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [ModelDefault("DisplayFormat", "F0"), ModelDefault("EditMask", "F0")]
         public int? Anio { get; set; }
         [DataSourceCriteria("[Activa] == True")]
-        public Moneda Moneda {get; set;}
+        public Moneda Moneda { get; set; }
 
 
 

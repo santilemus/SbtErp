@@ -38,58 +38,59 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DevExpress.Data.v20.2">
+    <Reference Include="DevExpress.Data.v21.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.ExpressApp.CloneObject.v20.2">
+    <Reference Include="DevExpress.ExpressApp.CloneObject.Xpo.v21.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.ExpressApp.ConditionalAppearance.v20.2">
+    <Reference Include="DevExpress.ExpressApp.ConditionalAppearance.v21.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.ExpressApp.ReportsV2.v20.2">
+    <Reference Include="DevExpress.ExpressApp.ReportsV2.v21.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.ExpressApp.v20.2">
+    <Reference Include="DevExpress.ExpressApp.v21.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.ExpressApp.Validation.v20.2">
+    <Reference Include="DevExpress.ExpressApp.Validation.v21.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.ExpressApp.ViewVariantsModule.v20.2">
+    <Reference Include="DevExpress.ExpressApp.ViewVariantsModule.v21.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.ExpressApp.Xpo.v20.2">
+    <Reference Include="DevExpress.ExpressApp.Xpo.v21.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.Persistent.Base.v20.2">
+    <Reference Include="DevExpress.Persistent.Base.v21.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.Persistent.BaseImpl.v20.2">
+    <Reference Include="DevExpress.Persistent.BaseImpl.Xpo.v21.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.Printing.v20.2.Core">
+    <Reference Include="DevExpress.Printing.v21.2.Core">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.Data.Desktop.v20.2">
+    <Reference Include="DevExpress.Data.Desktop.v21.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.Utils.v20.2">
+    <Reference Include="DevExpress.Utils.v21.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.Xpo.v20.2">
+    <Reference Include="DevExpress.Xpo.v21.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.Charts.v20.2.Core">
+    <Reference Include="DevExpress.Charts.v21.2.Core">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.XtraCharts.v20.2">
+    <Reference Include="DevExpress.XtraCharts.v21.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.CodeParser.v20.2">
+    <Reference Include="DevExpress.CodeParser.v21.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.XtraReports.v20.2">
+    <Reference Include="DevExpress.XtraLayout.v21.2, Version=21.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraReports.v21.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="mscorlib">
@@ -107,13 +108,7 @@
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
-    <Reference Include="System.Data">
-      <Name>System.Data</Name>
-    </Reference>
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Xml">
-      <Name>System.XML</Name>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessObjects\BancoTipoTransaccion.cs" />
@@ -130,7 +125,7 @@
     <Compile Include="BusinessObjects\CierreDiarioParam.cs" />
     <Compile Include="BusinessObjects\CierreMesParam.cs" />
     <Compile Include="BusinessObjects\BancoConciliacionDetalle.cs" />
-    <Compile Include="BusinessObjects\EFinancieroData.cs" />
+    <Compile Include="BusinessObjects\EFinancieroDetalle.cs" />
     <Compile Include="BusinessObjects\EstadoFinancieroModelo.cs" />
     <Compile Include="BusinessObjects\EstadoFinancieroModeloDetalle.cs" />
     <Compile Include="BusinessObjects\EstadoFinancieroParams.cs" />
@@ -147,44 +142,21 @@
     <Compile Include="BusinessObjects\PartidaDetalle.cs" />
     <Compile Include="BusinessObjects\PartidaModelo.cs" />
     <Compile Include="BusinessObjects\PartidaModeloDetalle.cs" />
-    <Compile Include="Controllers\vcBancoConciliacion.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controllers\vcBancoCuenta.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controllers\vcBancoTransaccion.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controllers\vcCajaChica.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controllers\vcCajaChicaTransaccion.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controllers\vcEstadoFinanciero.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controllers\vcPartida.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controllers\vcPartidaModelo.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controllers\vcPartidaModelo.Designer.cs">
-      <DependentUpon>vcPartidaModelo.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controllers\vcSaldoDiario.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controllers\vcSaldoMes.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="Controllers\vcBancoConciliacion.cs" />
+    <Compile Include="Controllers\vcBancoCuenta.cs" />
+    <Compile Include="Controllers\vcBancoTransaccion.cs" />
+    <Compile Include="Controllers\vcBancoTransaccionDetail.cs" />
+    <Compile Include="Controllers\vcCajaChica.cs" />
+    <Compile Include="Controllers\vcCajaChicaTransaccion.cs" />
+    <Compile Include="Controllers\vcEstadoFinanciero.cs" />
+    <Compile Include="Controllers\vcPartida.cs" />
+    <Compile Include="Controllers\vcPartidaDetalle.cs" />
+    <Compile Include="Controllers\vcPartidaModelo.cs" />
+    <Compile Include="Controllers\vcSaldoDiario.cs" />
+    <Compile Include="Controllers\vcSaldoMes.cs" />
     <Compile Include="DatabaseUpdate\Updater.cs" />
     <Compile Include="BusinessObjects\ETipoPartidaModelo.cs" />
-    <Compile Include="ContabilidadModule.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="ContabilidadModule.cs" />
     <Compile Include="ContabilidadModule.Designer.cs">
       <DependentUpon>ContabilidadModule.cs</DependentUpon>
     </Compile>
@@ -192,9 +164,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Controllers\vcPartidaModelo.resx">
-      <DependentUpon>vcPartidaModelo.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Model.DesignedDiffs.xafml" />
     <EmbeddedResource Include="ContabilidadModule.resx">
       <DependentUpon>ContabilidadModule.cs</DependentUpon>
@@ -202,7 +171,6 @@
     <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="BusinessObjects\ReadMe.txt" />
     <None Include="Controllers\ReadMe.txt" />
     <None Include="DatabaseUpdate\ReadMe.txt" />

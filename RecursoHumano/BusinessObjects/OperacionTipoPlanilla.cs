@@ -1,17 +1,10 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp;
-using System.ComponentModel;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
-using DevExpress.Persistent.Base;
-using System.Collections.Generic;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
+using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
+using System.ComponentModel;
 
 namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 {
@@ -40,7 +33,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 
         Operacion operacion;
         TipoPlanilla tipo;
-     
+
         [Association("Operacion-TipoPlanillas"), XafDisplayName("Operación")]
         public Operacion Operacion
         {

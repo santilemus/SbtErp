@@ -7,7 +7,6 @@ using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Medico.Generico.Module.BusinessObjects;
 using System;
 using System.ComponentModel;
-using System.Linq;
 
 namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 {

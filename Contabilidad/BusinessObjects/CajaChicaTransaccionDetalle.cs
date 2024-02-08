@@ -1,18 +1,11 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp;
-using System.ComponentModel;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
-using DevExpress.Persistent.Base;
-using System.Collections.Generic;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
+using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
-using SBT.Apps.Tercero.Module.BusinessObjects;
+using System;
+using System.ComponentModel;
 
 namespace SBT.Apps.Banco.Module.BusinessObjects
 {
@@ -48,7 +41,7 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         string concepto;
         decimal valorGravado;
         decimal iva;
-        decimal renta ;
+        decimal renta;
         SBT.Apps.Contabilidad.BusinessObjects.Catalogo cuentaContable;
 
         [Association("CajaChicaTransaccion-Detalles"), XafDisplayName("Transacción"),
@@ -137,7 +130,7 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         }
 
         /// FALTAN AQUI LAS COLUMNAS DE PRESUPUESTO Y CUENTA PRESUPUESTARIA
-        [Persistent("CuentaContable"), XafDisplayName("Cuenta Contable"), 
+        [Persistent("CuentaContable"), XafDisplayName("Cuenta Contable"),
             ToolTip("Si se dispone del modulo de presupuestos, esta es la cuenta presupuestaria también")]
         public SBT.Apps.Contabilidad.BusinessObjects.Catalogo CuentaContable
         {

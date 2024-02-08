@@ -1,9 +1,6 @@
 ﻿using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
-using SBT.Apps.Base.Module.BusinessObjects;
-using System;
-using System.Linq;
 
 namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 {
@@ -35,7 +32,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
         {
         }
 
-        [RuleRequiredField("MedicamentoDosis.Dosis_Requerido", "Save"), VisibleInLookupListView(true)]
+        [VisibleInLookupListView(true)]
         public System.Int16 Dosis
         {
             get

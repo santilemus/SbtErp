@@ -1,13 +1,10 @@
-﻿using System;
-using System.Linq;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp.Actions;
+﻿using DevExpress.ExpressApp;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Base.Module.Controllers;
 using SBT.Apps.CxP.Module.BusinessObjects;
-using DevExpress.ExpressApp;
+using System;
 using System.ComponentModel;
-using SBT.Apps.Compra.Module.BusinessObjects;
+using System.Linq;
 
 namespace SBT.Apps.Compra.Module.Controllers
 {

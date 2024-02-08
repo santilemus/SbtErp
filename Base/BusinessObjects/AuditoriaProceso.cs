@@ -1,10 +1,10 @@
-﻿using DevExpress.ExpressApp.DC;
+﻿using DevExpress.ExpressApp;
+using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using DevExpress.Xpo;
 using System;
 using System.ComponentModel;
-using System.Linq;
 
 namespace SBT.Apps.Base.Module.BusinessObjects
 {
@@ -23,7 +23,8 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         public override void AfterConstruction()
         {
             base.AfterConstruction();
-            var fEmpre = Session.GetObjectByKey<Empresa>(SesionDataHelper.ObtenerValor("OidEmpresa"));
+            int id = ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid;
+            var fEmpre= Session.GetObjectByKey<Empresa>(id);
             if (fEmpre != null)
                 empresa = fEmpre;
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).

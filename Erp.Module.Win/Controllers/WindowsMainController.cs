@@ -14,12 +14,15 @@ namespace SBT.Apps.Erp.Module.Win.Controllers
     /// </summary>
     /// <remarks>
     /// INfo en: https://docs.devexpress.com/eXpressAppFramework/113252/task-based-help/miscellaneous-ui-customizations/how-to-customize-a-window-caption
+    /// NOTA: 07/07/2023 migracion a NET6. Revisar despues porque se agrego este mismo controller en el proyecto SBT.Apps.Erp.Module. Si se necesita para
+    /// otras personalizaciones en todo caso debe de heredar del controllador agregado en el proyecto independiente de la plataforma.
     /// </remarks>
     public class WindowsMainController: WindowController
     {
         public WindowsMainController()
         {
             TargetWindowType = WindowType.Main;
+            
         }
 
         protected override void OnActivated()

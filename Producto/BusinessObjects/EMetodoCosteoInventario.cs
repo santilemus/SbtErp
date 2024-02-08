@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-
-namespace SBT.Apps.Producto.Module.BusinessObjects
+﻿namespace SBT.Apps.Producto.Module.BusinessObjects
 {
     public enum EMetodoCosteoInventario
     {

@@ -1,9 +1,7 @@
-﻿using System;
-using DevExpress.Data.Filtering;
+﻿using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.Actions;
 using DevExpress.ExpressApp.Xpo;
-using DevExpress.Xpo;
 using SBT.Apps.Base.Module.Controllers;
 using SBT.Apps.Medico.Expediente.Module.BusinessObjects;
 using SBT.Apps.Medico.Generico.Module.BusinessObjects;
@@ -13,11 +11,11 @@ namespace SBT.Apps.Medico.Expediente.Module.Controllers
     /// <summary>
     /// View controller que aplica al BO Paciente
     /// </summary>
-    public class vcPaciente: ViewControllerBase
+    public class vcPaciente : ViewControllerBase
     {
         private PopupWindowShowAction pwsaSelectPlanMedico;
         private XPObjectSpace os;
-        public vcPaciente(): base()
+        public vcPaciente() : base()
         {
 
         }
@@ -64,7 +62,7 @@ namespace SBT.Apps.Medico.Expediente.Module.Controllers
             if (View.CurrentObject != null && e.PopupWindowView.SelectedObjects != null)
             {
                 bool existe = false;
-                int OidPaciente= ((Paciente)View.CurrentObject).Oid;
+                int OidPaciente = ((Paciente)View.CurrentObject).Oid;
                 var paciente = os.GetObjectByKey<Paciente>(OidPaciente);
                 foreach (PlanMedico pl in e.PopupWindowView.SelectedObjects)
                 {

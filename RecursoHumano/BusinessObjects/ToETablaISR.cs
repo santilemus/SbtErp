@@ -1,5 +1,5 @@
-﻿using System;
-using DevExpress.Xpo.Metadata;
+﻿using DevExpress.Xpo.Metadata;
+using System;
 
 namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 {
@@ -7,7 +7,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
     /// Convertir propiedades Persitentes del tipo ETablaISR a varchar, antes de guardar en la base de datos y convertir de
     /// varchar a ETablaISR cuando se lee de la BD y antes de escribir en la propiedad
     /// </summary>
-    public class ToETablaISR: ValueConverter
+    public class ToETablaISR : ValueConverter
     {
         /// <summary>
         /// Convierte una propiedad persistente de tipo ETablaISR, al tipo que debe guardarse en la base de datos (en este caso varchar)

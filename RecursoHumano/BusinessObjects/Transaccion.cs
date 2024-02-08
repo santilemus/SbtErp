@@ -8,7 +8,6 @@ using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using System;
 using System.ComponentModel;
-using System.Linq;
 
 namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 {
@@ -30,9 +29,12 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         public override void AfterConstruction()
         {
             base.AfterConstruction();
+            // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
+            TipoTransaccion = ETipoTransaccion.Descuento;
+            FormaAplicar = EFormaAplicarTransaccion.Ambas;
+            CantidadCuotas = 1;
             Cancelado = false;
             ValorMoneda = 0.0m;
-            // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
         #region Propiedades
@@ -47,7 +49,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         DateTime fechaInicio;
         EFormaAplicarTransaccion formaAplicar = EFormaAplicarTransaccion.Ambas;
         decimal montoCuota;
-        int cantidadCuotas = 1;
+        int cantidadCuotas;
         int diaPago;
         bool cancelado;
 
@@ -83,7 +85,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 #else
         [DbType("smallint"), Persistent("Tipo")]
 #endif
-        [XafDisplayName("Tipo Transacción"), RuleRequiredField("CxC Transaccion.Tipo_Requerido", "Save"), Index(3)]
+        [XafDisplayName("Tipo Transacción"), Index(3)]
         [DetailViewLayout(LayoutColumnPosition.Left, LayoutGroupType.SimpleEditorsGroup), ImmediatePostData(true)]
         public ETipoTransaccion TipoTransaccion
         {
@@ -129,7 +131,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 #else
         [DbType("money"), Persistent("ValorMoneda")]
 #endif
-        [XafDisplayName("Valor Moneda"), RuleRequiredField("Transaccion.ValorMoneda_Requerido", "Save"), Index(6),
+        [XafDisplayName("Valor Moneda"), Index(6),
             VisibleInLookupListView(false), VisibleInListView(false)]
         [DetailViewLayout(LayoutColumnPosition.Left, LayoutGroupType.SimpleEditorsGroup)]
         public decimal ValorMoneda
@@ -184,8 +186,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 #else
         [DbType("smallint"), Persistent("FormaAplicar")]
 #endif
-        [XafDisplayName("Forma Aplicar"), Index(10), VisibleInListView(false), VisibleInLookupListView(false),
-            RuleRequiredField("Transaccion.FormaAplicar_Requerido", "Save")]
+        [XafDisplayName("Forma Aplicar"), Index(10), VisibleInListView(false), VisibleInLookupListView(false)]
         [DetailViewLayout(LayoutColumnPosition.Right, LayoutGroupType.SimpleEditorsGroup)]
         public EFormaAplicarTransaccion FormaAplicar
         {
@@ -207,7 +208,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
             set => SetPropertyValue(nameof(MontoCuota), ref montoCuota, value);
         }
 
-        [XafDisplayName("Cantidad Cuotas"), RuleRequiredField("Transaccion.CantidadCuotas_Requerido", "Save")]
+        [XafDisplayName("Cantidad Cuotas")]
         public int CantidadCuotas
         {
             get => cantidadCuotas;
@@ -233,7 +234,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
 #else
         [DbType("bit"), Persistent("Cancelado")]
 #endif
-        [XafDisplayName("Cancelado"), Index(13), VisibleInLookupListView(false), RuleRequiredField("Transaccion.Cancelado_Requerido", "Save")]
+        [XafDisplayName("Cancelado"), Index(13), VisibleInLookupListView(false)]
         [DetailViewLayout(LayoutColumnPosition.Right, LayoutGroupType.SimpleEditorsGroup)]
         public bool Cancelado
         {

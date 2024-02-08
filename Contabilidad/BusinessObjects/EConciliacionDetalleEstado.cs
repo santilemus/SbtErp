@@ -2,7 +2,7 @@
 
 namespace SBT.Apps.Banco.Module.BusinessObjects
 {
-    public enum EConciliacionDetalleEstado 
+    public enum EConciliacionDetalleEstado
     {
         [XafDisplayName("Aplicado y Contabilizado")]
         AplicadoYContabilizado = 0,

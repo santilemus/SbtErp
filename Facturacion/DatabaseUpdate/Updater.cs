@@ -1,20 +1,18 @@
-﻿using System;
-using System.Linq;
-using DevExpress.ExpressApp;
-using DevExpress.Data.Filtering;
-using DevExpress.Persistent.Base;
+﻿using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.Updating;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp.Xpo;
-using DevExpress.Persistent.BaseImpl;
+using System;
 
-namespace SBT.Apps.Facturacion.Module.DatabaseUpdate {
+namespace SBT.Apps.Facturacion.Module.DatabaseUpdate
+{
     // For more typical usage scenarios, be sure to check out https://docs.devexpress.com/eXpressAppFramework/DevExpress.ExpressApp.Updating.ModuleUpdater
-    public class Updater : ModuleUpdater {
+    public class Updater : ModuleUpdater
+    {
         public Updater(IObjectSpace objectSpace, Version currentDBVersion) :
-            base(objectSpace, currentDBVersion) {
+            base(objectSpace, currentDBVersion)
+        {
         }
-        public override void UpdateDatabaseAfterUpdateSchema() {
+        public override void UpdateDatabaseAfterUpdateSchema()
+        {
             base.UpdateDatabaseAfterUpdateSchema();
             //string name = "MyName";
             //DomainObject1 theObject = ObjectSpace.FindObject<DomainObject1>(CriteriaOperator.Parse("Name=?", name));
@@ -23,9 +21,10 @@ namespace SBT.Apps.Facturacion.Module.DatabaseUpdate {
             //    theObject.Name = name;
             //}
 
-			//ObjectSpace.CommitChanges(); //Uncomment this line to persist created object(s).
+            //ObjectSpace.CommitChanges(); //Uncomment this line to persist created object(s).
         }
-        public override void UpdateDatabaseBeforeUpdateSchema() {
+        public override void UpdateDatabaseBeforeUpdateSchema()
+        {
             base.UpdateDatabaseBeforeUpdateSchema();
             //if(CurrentDBVersion < new Version("1.1.0.0") && CurrentDBVersion > new Version("0.0.0.0")) {
             //    RenameColumn("DomainObject1Table", "OldColumnName", "NewColumnName");

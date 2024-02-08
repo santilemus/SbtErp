@@ -1,24 +1,15 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp;
-using System.ComponentModel;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
-using DevExpress.Persistent.Base;
-using System.Collections.Generic;
+﻿using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
-using SBT.Apps.Base.Module.BusinessObjects;
+using DevExpress.Xpo;
 
 namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 {
     /// <summary>
     /// Clase que corresponde a las BO con la definicion de las reglas, que se pueden aplicar a los recordatorios del paciente")
     /// </summary>
-    [DefaultClassOptions, Persistent("Regla"), ModelDefault("Caption", "Reglas - Plan Medico"), NavigationItem("Salud"), 
+    [DefaultClassOptions, Persistent("Regla"), ModelDefault("Caption", "Reglas - Plan Medico"), NavigationItem("Salud"),
         XafDefaultProperty(nameof(Descripcion)), CreatableItem(false)]
     [ImageName("list-key")]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
@@ -32,6 +23,8 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
         {
             base.AfterConstruction();
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
+            Tipo = ETipoRegla.Recordatorio;
+            PracticaDefecto = EEstadoRegla.PorDefecto;
         }
 
         #region Propiedades
@@ -48,16 +41,14 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
             set => SetPropertyValue(nameof(Descripcion), ref descripcion, value);
         }
 
-        [DbType("smallint"), Persistent("Tipo"), XafDisplayName("Tipo Regla"), 
-            RuleRequiredField("Regla.Tipo_Requerido", "Save")]
+        [DbType("smallint"), Persistent("Tipo"), XafDisplayName("Tipo Regla")]
         public ETipoRegla Tipo
         {
             get => tipo;
             set => SetPropertyValue(nameof(Tipo), ref tipo, value);
         }
 
-        [DbType("smallint"), Persistent("PracticaDefecto"), XafDisplayName("Practica Defecto"), 
-            RuleRequiredField("Regla.PracticaDefecto_Requerido", DefaultContexts.Save)]
+        [DbType("smallint"), Persistent("PracticaDefecto"), XafDisplayName("Practica Defecto")]
         public EEstadoRegla PracticaDefecto
         {
             get => practicaDefecto;

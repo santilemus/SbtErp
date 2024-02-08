@@ -1,14 +1,11 @@
-﻿using System;
-using System.Linq;
-
-namespace SBT.Apps.Erp.Module.Web.Controllers
+﻿namespace SBT.Apps.Erp.Module.Web.Controllers
 {
     /// <summary>
     /// View Controller para BO BancoConciliacion. Para implementar optimizaciones y funciones de la plataforma web
     /// </summary>
-    public class vcBancoConciliacionWeb: ViewControllerBaseWeb
+    public class vcBancoConciliacionWeb : ViewControllerBaseWeb
     {
-        public vcBancoConciliacionWeb(): base()
+        public vcBancoConciliacionWeb() : base()
         {
 
         }

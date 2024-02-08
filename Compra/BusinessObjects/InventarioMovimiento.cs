@@ -1,13 +1,12 @@
 ﻿using DevExpress.ExpressApp.ConditionalAppearance;
 using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
+using DevExpress.ExpressApp.Security.ClientServer;
 using DevExpress.Persistent.Base;
 using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Compra.Module.BusinessObjects;
-using System;
 using System.ComponentModel;
-using System.Linq;
 
 
 namespace SBT.Apps.Inventario.Module.BusinessObjects
@@ -91,6 +90,26 @@ namespace SBT.Apps.Inventario.Module.BusinessObjects
         #region Colecciones
         [Association("InventarioMovimiento-Detalles"), DevExpress.Xpo.Aggregated, XafDisplayName("Detalles"), Index(0)]
         public XPCollection<InventarioMovimientoDetalle> Detalles => GetCollection<InventarioMovimientoDetalle>(nameof(Detalles));
+
+        #endregion
+
+        #region Metodos
+        protected override void OnSaving()
+        {
+            if ((Session is not NestedUnitOfWork) && (Session.DataLayer != null) && Session.IsNewObject(this) &&
+                (Session.ObjectLayer is SecuredSessionObjectLayer) && (Numero == null || Numero <= 0))
+            {
+                Numero = CorrelativoDoc();
+            }
+            base.OnSaving();            
+        }
+
+        protected override void OnSaved()
+        {
+            base.OnSaved();
+            if (Oid <= 0)
+                Session.Reload(this);
+        }
 
         #endregion
 

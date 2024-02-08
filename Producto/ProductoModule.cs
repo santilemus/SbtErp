@@ -5,7 +5,6 @@ using DevExpress.ExpressApp.Xpo;
 using DevExpress.Persistent.BaseImpl;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace SBT.Apps.Producto.Module
 {

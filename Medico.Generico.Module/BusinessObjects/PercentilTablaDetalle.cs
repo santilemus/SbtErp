@@ -3,17 +3,14 @@ using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
-using SBT.Apps.Base.Module.BusinessObjects;
-using System;
 using System.ComponentModel;
-using System.Linq;
 
 namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 {
     [DefaultClassOptions]
     //[ImageName("BO_Contact")]
     [DefaultProperty(nameof(Oid)), ModelDefault("Caption", "Percentil Tabla"), CreatableItem(false),
-        Persistent(nameof(PercentilTablaDetalle)), NavigationItem(false)]  
+        Persistent(nameof(PercentilTablaDetalle)), NavigationItem(false)]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class PercentilTablaDetalle : XPObject
@@ -59,8 +56,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
             set => SetPropertyValue(nameof(PercentilTabla), ref percentilTabla, value);
         }
 
-        [DbType("smallint"), RuleRequiredField("PercentilTablaDetalle.Mes_Requerido", "Save"),
-            RuleRange("WhoPercentilPesoLong.Mes_Rango", DefaultContexts.Save, 0, 24)]
+        [DbType("smallint"), RuleRange("WhoPercentilPesoLong.Mes_Rango", DefaultContexts.Save, 0, 24)]
         [XafDisplayName("Mes"), Index(1)]
         public int EdadMes
         {
@@ -231,7 +227,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
                 return 95.0m;
             else if (aValor >= 97.0m && aValor < 99.0m)
                 return 97.0m;
-            else 
+            else
                 return 99.0m;
         }
 

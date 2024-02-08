@@ -1,6 +1,5 @@
 ﻿using DevExpress.Data.Filtering;
 using System;
-using System.Linq;
 
 namespace SBT.Apps.RecursoHumano.Module
 {

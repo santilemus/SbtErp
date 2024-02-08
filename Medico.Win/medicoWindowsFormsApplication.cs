@@ -1,29 +1,28 @@
-using System;
-using System.ComponentModel;
 using DevExpress.ExpressApp;
-using DevExpress.ExpressApp.Win;
-using System.Collections.Generic;
-using DevExpress.ExpressApp.Updating;
-using DevExpress.ExpressApp.Xpo;
-using DevExpress.ExpressApp.SystemModule;
-using DevExpress.ExpressApp.Win.SystemModule;
-using SBT.Apps.Base.Module.BusinessObjects;
 using DevExpress.ExpressApp.Security;
+using DevExpress.ExpressApp.SystemModule;
+using DevExpress.ExpressApp.Win;
+using DevExpress.ExpressApp.Xpo;
+using SBT.Apps.Base.Module.BusinessObjects;
+using System;
 
-namespace SBT.Apps.Medico.Win {
+namespace SBT.Apps.Medico.Win
+{
     // For more typical usage scenarios, be sure to check out http://documentation.devexpress.com/#Xaf/DevExpressExpressAppWinWinApplicationMembersTopicAll
-    public partial class medicoWindowsFormsApplication : WinApplication {
-        public medicoWindowsFormsApplication() {
+    public partial class medicoWindowsFormsApplication : WinApplication
+    {
+        public medicoWindowsFormsApplication()
+        {
             InitializeComponent();
             //SetLanguage("es");
             //SetFormattingCulture("es");
             //CustomizeFormattingCulture += Instance_CustomizeFormattingCulture; 
             LastLogonParametersReading += LastLogonParametersReadingEvent;
             LastLogonParametersWriting += LastLogonParametersWritingEvent;
-            
+
             LoggedOn += LoggedOnEvent;
             // agregado para permitir la seleccion de empresas y sucursales en el login
-            
+
             ((SecurityStrategy)Security).AnonymousAllowedTypes.Add(typeof(SBT.Apps.Base.Module.BusinessObjects.Empresa));
             ((SecurityStrategy)Security).AnonymousAllowedTypes.Add(typeof(SBT.Apps.Base.Module.BusinessObjects.EmpresaUnidad));
             //LoggedOff += LoggedOffEvent;
@@ -44,25 +43,31 @@ namespace SBT.Apps.Medico.Win {
         //    e.FormattingCulture.NumberFormat.NumberDecimalDigits = 2;
         //}
 
-        protected override void CreateDefaultObjectSpaceProvider(CreateCustomObjectSpaceProviderEventArgs args) {
+        protected override void CreateDefaultObjectSpaceProvider(CreateCustomObjectSpaceProviderEventArgs args)
+        {
             args.ObjectSpaceProvider = new XPObjectSpaceProvider(args.ConnectionString, args.Connection, false);
         }
-        private void medicoWindowsFormsApplication_CustomizeLanguagesList(object sender, CustomizeLanguagesListEventArgs e) {
+        private void medicoWindowsFormsApplication_CustomizeLanguagesList(object sender, CustomizeLanguagesListEventArgs e)
+        {
             string userLanguageName = System.Threading.Thread.CurrentThread.CurrentUICulture.Name;
-            if(string.Compare(userLanguageName, "en-US", StringComparison.Ordinal) != 0 && e.Languages.IndexOf(userLanguageName) == -1) {
+            if (string.Compare(userLanguageName, "en-US", StringComparison.Ordinal) != 0 && e.Languages.IndexOf(userLanguageName) == -1)
+            {
                 e.Languages.Add(userLanguageName);
             }
         }
-        private void medicoWindowsFormsApplication_DatabaseVersionMismatch(object sender, DevExpress.ExpressApp.DatabaseVersionMismatchEventArgs e) {
+        private void medicoWindowsFormsApplication_DatabaseVersionMismatch(object sender, DevExpress.ExpressApp.DatabaseVersionMismatchEventArgs e)
+        {
 #if EASYTEST
             e.Updater.Update();
             e.Handled = true;
 #else
-            if(System.Diagnostics.Debugger.IsAttached) {
+            if (System.Diagnostics.Debugger.IsAttached)
+            {
                 e.Updater.Update();
                 e.Handled = true;
             }
-            else {
+            else
+            {
                 throw new InvalidOperationException(
                     "The application cannot connect to the specified database, because the latter doesn't exist or its version is older than that of the application.\r\n" +
                     "This error occurred  because the automatic database update was disabled when the application was started without debugging.\r\n" +
@@ -116,14 +121,17 @@ namespace SBT.Apps.Medico.Win {
             {
                 e.SettingsStorage.SaveOption(string.Empty, "Empresa", "1");
             }
-            else
-            {
-                ((CustomLogonParameters)e.LogonObject).OidEmpresa = Convert.ToInt16(e.SettingsStorage.LoadOption(string.Empty, "Empresa"), cci.NumberFormat);
-            }
-            if (!string.IsNullOrEmpty(e.SettingsStorage.LoadOption(string.Empty, "Agencia")))
-                ((CustomLogonParameters)e.LogonObject).OidSucursal = Convert.ToInt16(e.SettingsStorage.LoadOption(string.Empty, "Agencia"), cci.NumberFormat);
-            else
-                e.SettingsStorage.SaveOption(string.Empty, "Agencia", "1");
+
+            // comentario el 13/01/2024 porque con e customlogonParameters modificado para las app blazor OidEmpresa y OidSucursal son de solo lectura 
+            //else 
+            //{
+            //    ((CustomLogonParameters)e.LogonObject).OidEmpresa = Convert.ToInt16(e.SettingsStorage.LoadOption(string.Empty, "Empresa"), cci.NumberFormat);
+            //}
+            //if (!string.IsNullOrEmpty(e.SettingsStorage.LoadOption(string.Empty, "Agencia")))
+            //    ((CustomLogonParameters)e.LogonObject).OidSucursal = Convert.ToInt16(e.SettingsStorage.LoadOption(string.Empty, "Agencia"), cci.NumberFormat);
+            //else
+            //    e.SettingsStorage.SaveOption(string.Empty, "Agencia", "1");
+            //--
             e.Handled = true;
         }
 
@@ -149,7 +157,7 @@ namespace SBT.Apps.Medico.Win {
 
             Model.AboutInfoString = "{0:ProductName} - {0:Description}<br>{0:Version}<br>{0:Copyright}";
             if (!Model.Title.Contains(((CustomLogonParameters)e.LogonParameters).Empresa.RazonSocial))
-                Model.Title  =  $"{Model.Title} - {((CustomLogonParameters)e.LogonParameters).Empresa.RazonSocial}";
+                Model.Title = $"{Model.Title} - {((CustomLogonParameters)e.LogonParameters).Empresa.RazonSocial}";
             Model.Description = ((CustomLogonParameters)e.LogonParameters).Empresa.RazonSocial;
         }
     }

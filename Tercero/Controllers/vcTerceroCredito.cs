@@ -1,6 +1,4 @@
 ﻿using SBT.Apps.Base.Module.Controllers;
-using System;
-using System.Linq;
 
 namespace SBT.Apps.Tercero.Module.Controllers
 {

@@ -1,15 +1,11 @@
-﻿using System;
-using DevExpress.ExpressApp.Actions;
-using SBT.Apps.Base.Module.Controllers;
-
-namespace SBT.Apps.Erp.Module.Web.Controllers
+﻿namespace SBT.Apps.Erp.Module.Web.Controllers
 {
     /// <summary>
     /// View Controller que aplica al BO ActivoCatalogo para la plataforma Web
     /// </summary>
-    public class vcActivoCatalogoWeb: ViewControllerBaseWeb
+    public class vcActivoCatalogoWeb : ViewControllerBaseWeb
     {
-        public vcActivoCatalogoWeb(): base()
+        public vcActivoCatalogoWeb() : base()
         {
 
         }

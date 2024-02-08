@@ -1,15 +1,11 @@
-﻿using System;
-using DevExpress.ExpressApp.Actions;
-using SBT.Apps.Base.Module.Controllers;
-
-namespace SBT.Apps.Erp.Module.Web.Controllers
+﻿namespace SBT.Apps.Erp.Module.Web.Controllers
 {
     /// <summary>
     /// ViewController que aplica al BO ActivoCategoria para la plataforma Web
     /// </summary>
-    public class vcActivoCategoria: ViewControllerBaseWeb
+    public class vcActivoCategoria : ViewControllerBaseWeb
     {
-        public vcActivoCategoria(): base()
+        public vcActivoCategoria() : base()
         {
 
         }

@@ -2,8 +2,6 @@
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
-using System;
-using System.Linq;
 
 namespace SBT.Apps.Base.Module.BusinessObjects
 {
@@ -31,9 +29,11 @@ namespace SBT.Apps.Base.Module.BusinessObjects
           : base(session)
         {
         }
+
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Unidad Padre")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [DataSourceCriteria("[Empresa] == '@This.Empresa'")]
+        [DevExpress.Xpo.ExplicitLoading(1)]
         public EmpresaUnidad UnidadPadre
         {
             get
@@ -46,17 +46,12 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             }
         }
 
+
         [DevExpress.Xpo.AssociationAttribute("Unidades-Empresa")]
         public Empresa Empresa
         {
-            get
-            {
-                return _empresa;
-            }
-            set
-            {
-                SetPropertyValue("Empresa", ref _empresa, value);
-            }
+            get => _empresa;
+            set => SetPropertyValue(nameof(Empresa), ref _empresa, value);
         }
 
         [Size(100), DbType("varchar(100)")]

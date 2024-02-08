@@ -1,14 +1,11 @@
-﻿using System;
-
-
-namespace SBT.Apps.Medico.Module.Web.Controllers
+﻿namespace SBT.Apps.Medico.Module.Web.Controllers
 {
     /// <summary>
     /// View Controller que aplica al BO UltrasonografiaPelvica plataforma web
     /// </summary>
-    public class vcUltrasonografiaPelvicaWeb: ViewControllerBaseWeb
+    public class vcUltrasonografiaPelvicaWeb : ViewControllerBaseWeb
     {
-        public vcUltrasonografiaPelvicaWeb(): base()
+        public vcUltrasonografiaPelvicaWeb() : base()
         {
 
         }

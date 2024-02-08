@@ -7,7 +7,6 @@ using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using System;
 using System.ComponentModel;
-using System.Linq;
 
 namespace SBT.Apps.Facturacion.Module.BusinessObjects
 {
@@ -32,6 +31,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         {
             base.AfterConstruction();
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
+            Activo = true;
         }
 
         #region Propiedades
@@ -138,14 +138,14 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             set => SetPropertyValue(nameof(Clase), ref clase, value);
         }
 
-        [DbType("bit"), XafDisplayName("Activo"), RuleRequiredField("ResCorrelativo.Activa_Requerido", "Save"), Index(10)]
+        [DbType("bit"), XafDisplayName("Activo"), Index(10)]
         public bool Activo
         {
             get => activo;
             set => SetPropertyValue(nameof(Activo), ref activo, value);
         }
 
-        
+
         [XafDisplayName("Reporte")]
         public ReportDataV2 Reporte
         {

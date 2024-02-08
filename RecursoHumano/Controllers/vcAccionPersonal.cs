@@ -5,7 +5,6 @@ using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Base.Module.Controllers;
 using SBT.Apps.RecursoHumano.Module.BusinessObjects;
 using System;
-using System.Linq;
 
 namespace SBT.Apps.RecursoHumano.Module.Controllers
 {

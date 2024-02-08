@@ -1,17 +1,16 @@
 ﻿using DevExpress.Data.Filtering;
+using DevExpress.ExpressApp.ConditionalAppearance;
 using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
+using DevExpress.ExpressApp.Security.ClientServer;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
+using SBT.Apps.Banco.Module.BusinessObjects;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Compra.Module.BusinessObjects;
 using System;
 using System.ComponentModel;
-using System.Linq;
-using SBT.Apps.Banco.Module.BusinessObjects;
-using DevExpress.ExpressApp.ConditionalAppearance;
-using DevExpress.ExpressApp.Editors;
 
 namespace SBT.Apps.CxP.Module.BusinessObjects
 {
@@ -31,9 +30,9 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
     [DefaultClassOptions, ModelDefault("Caption", "Transaccion CxP"), CreatableItem(false), NavigationItem("Compras")]
     [DefaultProperty(nameof(Numero)), Persistent(nameof(CxPTransaccion))]
     [ImageName("bill")]
-    [RuleCriteria("CxPTransaccion Pagada", "Save;Delete", "[Factura.Estado] == 0", "Transacciones validas solo para facturas con estado Debe", 
+    [RuleCriteria("CxPTransaccion Pagada", "Save;Delete", "[Factura.Estado] == 0", "Transacciones validas solo para facturas con estado Debe",
         ResultType = ValidationResultType.Warning)]
-    [RuleCriteria("CxPTransaccion Monto es Valido", DefaultContexts.Save, 
+    [RuleCriteria("CxPTransaccion Monto es Valido", DefaultContexts.Save,
         "[Factura.CxPTransacciones][].Sum(Iif([Estado] != 2 && [Oid] != '@This.Oid', [Monto], 0)) + [Monto] <= [Factura.Total]", TargetCriteria = "[Tipo.TipoOperacion] == 2",
         CustomMessageTemplate = "El Monto de todos los abonos realizados debe ser menor o igual al valor de la factura ")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
@@ -175,7 +174,7 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
         {
             get => estado;
             set => SetPropertyValue(nameof(Estado), ref estado, value);
-        }       
+        }
 
         [Size(200), DbType("varchar(200)"), XafDisplayName("Comentario"), Index(9)]
         public string Comentario
@@ -222,7 +221,7 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
         protected override void OnSaving()
         {
             if (!(Session is NestedUnitOfWork) && (Session.DataLayer != null) && Session.IsNewObject(this) &&
-               (Session.ObjectLayer is SimpleObjectLayer) && (Numero == null || Numero == 0))
+               (Session.ObjectLayer is SecuredSessionObjectLayer) && (Numero == null || Numero == 0))
             {
                 object max;
                 string sCriteria = "[Factura.Empresa.Oid] == ? && Tipo.Oid == ? && GetYear(Fecha) == ?";
@@ -231,6 +230,7 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
             }
             base.OnSaving();
         }
+
         #endregion
 
 

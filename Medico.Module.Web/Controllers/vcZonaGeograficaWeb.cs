@@ -1,14 +1,11 @@
-﻿using System;
-using System.Linq;
-
-namespace SBT.Apps.Medico.Module.Web.Controllers
+﻿namespace SBT.Apps.Medico.Module.Web.Controllers
 {
     /// <summary>
     /// View Controller para BO ZonaGeogrica. Para implementar optimizaciones y funciones de la plataforma Web
     /// </summary>
-    public class vcZonaGeograficaWeb: ViewControllerBaseWeb
+    public class vcZonaGeograficaWeb : ViewControllerBaseWeb
     {
-        public vcZonaGeograficaWeb(): base()
+        public vcZonaGeograficaWeb() : base()
         {
 
         }

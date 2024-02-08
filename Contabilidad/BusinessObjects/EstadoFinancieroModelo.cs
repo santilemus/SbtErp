@@ -23,6 +23,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         {
             base.AfterConstruction();
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
+            Activo = true;
         }
 
         #region Propiedades
@@ -50,7 +51,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             set => SetPropertyValue(nameof(Nombre), ref nombre, value);
         }
 
-        [DbType("bit"), XafDisplayName("Activo"), RuleRequiredField("EstadoFinanciero.Activo_Requerido", "Save")]
+        [DbType("bit"), XafDisplayName("Activo")]
         [Index(3)]
         public bool Activo
         {
