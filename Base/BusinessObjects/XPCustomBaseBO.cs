@@ -1,9 +1,11 @@
 ﻿using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.Model;
+using DevExpress.ExpressApp.Security;
 using DevExpress.ExpressApp.Security.ClientServer;
 using DevExpress.Persistent.Base;
 using DevExpress.Xpo;
 using DevExpress.Xpo.Metadata;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.ComponentModel;
 
@@ -19,9 +21,27 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             : base(session)
         {
         }
+
+        private bool isDefaultPropertyAttributeInit;
+        private XPMemberInfo defaultPropertyMemberInfo;
+        [Size(25), Persistent(@"UsuarioCrea"), DbType("varchar(25)"), NonCloneable, ModelDefault("AllowEdit", "False")]
+        string usuarioCrea;
+        [Size(25)]
+        [Persistent(@"UsuarioMod"), DbType("varchar(25)"), NonCloneable, ModelDefault("AllowEdit", "False")]
+        string usuarioMod;
+        [Persistent(@"FechaCrea"), DbType("datetime"), NonCloneable, ModelDefault("AllowEdit", "False")]
+        DateTime? fechaCrea = DateTime.Now;
+        [Persistent(@"FechaMod"), DbType("datetime"), NonCloneable, ModelDefault("AllowEdit", "False")]
+        DateTime? fechaMod;
+
         public override void AfterConstruction()
         {
             base.AfterConstruction();
+            if (string.IsNullOrEmpty(SecuritySystem.CurrentUserName))
+                usuarioCrea = Session.ServiceProvider.GetRequiredService<ISecurityStrategyBase>().UserName;
+            else
+                usuarioCrea = SecuritySystem.CurrentUserName;
+            fechaCrea = DateTime.Now;
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
             if (this.ClassInfo.FindMember("Empresa") != null)
             {
@@ -46,7 +66,10 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             if (Session.DataLayer ==  null && (Session.ObjectLayer is SecuredSessionObjectLayer) && !Session.IsNewObject(this))
             {
                 fechaMod = DateTime.Now;
-                usuarioMod = DevExpress.ExpressApp.SecuritySystem.CurrentUserName;
+                if (string.IsNullOrEmpty(SecuritySystem.CurrentUserName))
+                    usuarioMod = Session.ServiceProvider.GetRequiredService<ISecurityStrategyBase>().UserName;
+                else
+                    usuarioMod = SecuritySystem.CurrentUserName;
             }
             base.OnSaving();
         }
@@ -75,13 +98,8 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             base.OnDeleting();
         }
 
-        private bool isDefaultPropertyAttributeInit;
-        private XPMemberInfo defaultPropertyMemberInfo;
-
         #region Propiedades
 
-        [Size(25), Persistent(@"UsuarioCrea"), DbType("varchar(25)"), NonCloneable, ModelDefault("AllowEdit", "False")]
-        string usuarioCrea = DevExpress.ExpressApp.SecuritySystem.CurrentUserName;
         /// <summary>
         /// Usuario que creó el registro
         /// </summary>
@@ -92,8 +110,6 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             get => usuarioCrea;
         }
 
-        [Persistent(@"FechaCrea"), DbType("datetime"), NonCloneable, ModelDefault("AllowEdit", "False")]
-        DateTime? fechaCrea = DateTime.Now;
         /// <summary>
         /// Fecha y hora de creación del registro
         /// </summary>
@@ -105,9 +121,6 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             get => fechaCrea;
         }
 
-        [Size(25)]
-        [Persistent(@"UsuarioMod"), DbType("varchar(25)"), NonCloneable, ModelDefault("AllowEdit", "False")]
-        string usuarioMod;
         /// <summary>
         /// Usuario que realizó la última modificación
         /// </summary>
@@ -117,8 +130,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         {
             get => usuarioMod;
         }
-        [Persistent(@"FechaMod"), DbType("datetime"), NonCloneable, ModelDefault("AllowEdit", "False")]
-        DateTime? fechaMod;
+
         /// <summary>
         /// Fecha y Hora de la última modificación
         /// </summary>

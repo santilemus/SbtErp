@@ -52,7 +52,12 @@
   </SchemaModules>
   <Views>
     <ListView Id="ActividadEconomica_ListView" DataAccessMode="Server" />
-    <ListView Id="ActividadEconomica_LookupListView" DataAccessMode="Server" />
+    <ListView Id="ActividadEconomica_LookupListView" DataAccessMode="Server">
+      <Columns>
+        <ColumnInfo Id="Codigo" Width="117" Index="0" />
+        <ColumnInfo Id="Concepto" Index="1" />
+      </Columns>
+    </ListView>
     <DetailView Id="BugReport_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
@@ -222,8 +227,8 @@
     <DetailView Id="Empresa_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
-          <LayoutGroup Id="SimpleEditors" RelativeSize="25.673940949935815" Direction="Horizontal">
-            <LayoutGroup Id="Empresa_col1" ShowCaption="False" Index="0" RelativeSize="48.89380530973451" CaptionLocation="Left" IsNewNode="True">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="20.79002079002079" Direction="Horizontal">
+            <LayoutGroup Id="Empresa_col1" ShowCaption="False" Index="0" RelativeSize="48.79478827361564" CaptionLocation="Left" IsNewNode="True">
               <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="18" CaptionLocation="Left" IsNewNode="True" />
               <LayoutItem Id="RazonSocial" ViewItem="RazonSocial" Index="1" RelativeSize="13" CaptionLocation="Left" IsNewNode="True" />
               <LayoutItem Id="Pais" ViewItem="Pais" Index="2" RelativeSize="13" CaptionLocation="Left" IsNewNode="True" />
@@ -232,7 +237,7 @@
               <LayoutItem Id="Direccion" ViewItem="Direccion" Index="5" RelativeSize="13" CaptionLocation="Left" IsNewNode="True" />
               <LayoutItem Id="EMail" ViewItem="EMail" CaptionLocation="Left" Index="6" RelativeSize="17" IsNewNode="True" />
             </LayoutGroup>
-            <LayoutGroup Id="Empresa_col2" ShowCaption="False" Index="1" RelativeSize="51.10619469026549" CaptionLocation="Left" IsNewNode="True">
+            <LayoutGroup Id="Empresa_col2" ShowCaption="False" Index="1" RelativeSize="51.20521172638436" CaptionLocation="Left" IsNewNode="True">
               <LayoutItem Id="SitioWeb" ViewItem="SitioWeb" Index="0" RelativeSize="18" CaptionLocation="Left" IsNewNode="True" />
               <LayoutItem Id="Nit" ViewItem="Nit" Index="1" RelativeSize="13" CaptionLocation="Left" IsNewNode="True" />
               <LayoutItem Id="Nrc" ViewItem="Nrc" Index="2" RelativeSize="13" CaptionLocation="Left" IsNewNode="True" />
@@ -246,22 +251,23 @@
               <LayoutItem Id="Oid" RelativeSize="100" Removed="True" />
             </LayoutGroup>
           </LayoutGroup>
-          <LayoutGroup Id="OtrosDatos" ShowCaption="True" Caption="Otros Datos" IsGroupCollapsed="False" IsCollapsibleGroup="True" Index="1" RelativeSize="23.106546854942234" Direction="Horizontal" IsNewNode="True">
-            <LayoutGroup Id="Auto08887d04-933c-498d-a6a2-86f70589fd00" ShowCaption="False" Caption="Auto08887d04-933c-498d-a6a2-86f70589fd00(20)" Index="0" RelativeSize="49.88610478359909" IsNewNode="True">
-              <LayoutItem Id="MonedaDefecto" ViewItem="MonedaDefecto" Index="0" RelativeSize="24" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="PorcentajeIva" ViewItem="PorcentajeIva" Index="1" RelativeSize="17.333333333333332" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="FactorIva" ViewItem="FactorIva" Index="2" RelativeSize="17.333333333333332" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="PorcRetencionIva" ViewItem="PorcRetencionIva" Index="3" RelativeSize="17.333333333333332" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="PorcPercepcion" ViewItem="PorcPercepcion" Index="4" RelativeSize="24" CaptionLocation="Left" IsNewNode="True" />
+          <LayoutGroup Id="OtrosDatos" ShowCaption="True" Caption="Otros Datos" IsGroupCollapsed="False" IsCollapsibleGroup="True" Index="1" RelativeSize="18.71101871101871" Direction="Horizontal" IsNewNode="True">
+            <LayoutGroup Id="Auto08887d04-933c-498d-a6a2-86f70589fd00" ShowCaption="False" Caption="Auto08887d04-933c-498d-a6a2-86f70589fd00(20)" Index="0" RelativeSize="49.83432736911862" IsNewNode="True">
+              <LayoutItem Id="Sector" ViewItem="Sector" Index="0" RelativeSize="24" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="MonedaDefecto" ViewItem="MonedaDefecto" Index="1" RelativeSize="17.333333333333332" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="PorcentajeIva" ViewItem="PorcentajeIva" Index="2" RelativeSize="17.333333333333332" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="FactorIva" ViewItem="FactorIva" Index="3" RelativeSize="17.333333333333332" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="PorcRetencionIva" ViewItem="PorcRetencionIva" Index="4" RelativeSize="24" CaptionLocation="Left" IsNewNode="True" />
             </LayoutGroup>
-            <LayoutGroup Id="Autoc4cad10f-5820-4900-a32f-66af55d9f4d0" ShowCaption="False" Caption="Autoc4cad10f-5820-4900-a32f-66af55d9f4d0(25)" Index="1" RelativeSize="50.11389521640091" IsNewNode="True">
-              <LayoutItem Id="Renta5" ViewItem="Renta5" Index="0" RelativeSize="24" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="Renta10" ViewItem="Renta10" Index="1" RelativeSize="17.333333333333332" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="Renta20" ViewItem="Renta20" Index="2" RelativeSize="17.333333333333332" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="Renta25" ViewItem="Renta25" Index="3" RelativeSize="41.333333333333336" CaptionLocation="Left" IsNewNode="True" />
+            <LayoutGroup Id="Autoc4cad10f-5820-4900-a32f-66af55d9f4d0" ShowCaption="False" Caption="Autoc4cad10f-5820-4900-a32f-66af55d9f4d0(25)" Index="1" RelativeSize="50.16567263088138" IsNewNode="True">
+              <LayoutItem Id="PorcPercepcion" ViewItem="PorcPercepcion" CaptionLocation="Left" Index="0" RelativeSize="24" IsNewNode="True" />
+              <LayoutItem Id="Renta5" ViewItem="Renta5" Index="1" RelativeSize="17.333333333333332" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Renta10" ViewItem="Renta10" Index="2" RelativeSize="17.333333333333332" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Renta20" ViewItem="Renta20" Index="3" RelativeSize="17.333333333333332" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Renta25" ViewItem="Renta25" Index="4" RelativeSize="24" CaptionLocation="Left" IsNewNode="True" />
             </LayoutGroup>
           </LayoutGroup>
-          <TabbedGroup Id="Tabs" RelativeSize="51.21951219512195" Index="2">
+          <TabbedGroup Id="Tabs" RelativeSize="60.4989604989605" Index="2">
             <LayoutGroup Id="Telefonos" RelativeSize="100">
               <LayoutItem Id="Telefonos" RelativeSize="100" />
             </LayoutGroup>
@@ -273,6 +279,9 @@
             </LayoutGroup>
             <LayoutGroup Id="Usuarios" RelativeSize="100">
               <LayoutItem Id="Usuarios" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="Cuentas" RelativeSize="100">
+              <LayoutItem Id="Cuentas" RelativeSize="100" />
             </LayoutGroup>
           </TabbedGroup>
         </LayoutGroup>
@@ -402,6 +411,12 @@
         </LayoutGroup>
       </Layout>
     </DetailView>
+    <ListView Id="Moneda_LookupListView">
+      <Columns>
+        <ColumnInfo Id="Codigo" Index="0" Width="67" />
+        <ColumnInfo Id="Nombre" Index="1" />
+      </Columns>
+    </ListView>
     <DetailView Id="Persona_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">

@@ -105,6 +105,12 @@ namespace SBT.Apps.Erp.Blazor.Server.Middleware
                             sFileName = sFileName + string.Format("LibroCompra_{0:MMMyyyy}.csv", fechaHasta);
                             break;
                         }
+                    case "SujetoExcluido":
+                        {
+                            // PENDIENTE EL METODO PARA GENERAR DATOS DEL SUJETO EXCLUIDO
+                            sFileName = sFileName + string.Format("SujetoExcluido_{0:MMMyyyy}.csv", fechaHasta);
+                            break;
+                        }
                     case "Percepcion":
                         {
                             datos = GetDataPercepcion(applicationProvider, empresaOid, fechaDesde, fechaHasta);

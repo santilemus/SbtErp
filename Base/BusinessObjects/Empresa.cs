@@ -4,7 +4,6 @@ using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using SBT.Apps.Contabilidad.BusinessObjects;
-using System.Text.Json.Serialization;
 
 namespace SBT.Apps.Base.Module.BusinessObjects
 {
@@ -42,6 +41,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         decimal porcRetencionIva;
         Moneda monedaDefecto;
         decimal porcentajeIva;
+
         ClaseSociedad claseSociedad;
         EClasificacionContribuyente clasificacion;
         string nrc;
@@ -57,10 +57,11 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         private System.String _razonSocial;
         private byte[] logo;
 
-        public Empresa(DevExpress.Xpo.Session session)
-          : base(session)
+        public Empresa(DevExpress.Xpo.Session session): base(session)
         {
+            
         }
+
         [DevExpress.Xpo.SizeAttribute(200), DbType("varchar(200)"), Persistent("RazonSocial"), XafDisplayName("Razon Social")]
         [RuleRequiredField("Empresa.RazonSocial_Requerido", "Save")]
         public System.String RazonSocial
@@ -213,7 +214,6 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             set => SetPropertyValue(nameof(Clasificacion), ref clasificacion, value);
         }
 
-
         [XafDisplayName("Clase Sociedad"), RuleRequiredField("Empresa.ClaseSociedad_Requerido", "Save")]
         public ClaseSociedad ClaseSociedad
         {
@@ -317,7 +317,8 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         //[DevExpress.Xpo.ValueConverterAttribute(typeof(DevExpress.Xpo.Metadata.ImageValueConverter))]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [DevExpress.Persistent.Base.VisibleInListViewAttribute(false)]
-        [ImageEditor(ListViewImageEditorMode = ImageEditorMode.PopupPictureEdit, DetailViewImageEditorMode = ImageEditorMode.PopupPictureEdit, ImageSizeMode = ImageSizeMode.StretchImage)]
+        [ImageEditor(ListViewImageEditorMode = ImageEditorMode.DropDownPictureEdit, 
+            DetailViewImageEditorMode = ImageEditorMode.DropDownPictureEdit, ImageSizeMode = ImageSizeMode.StretchImage)]
         [Delayed(nameof(_logo), true)]
         public byte[] Logo
         {

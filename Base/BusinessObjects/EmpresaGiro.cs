@@ -48,5 +48,4 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         }
 
     }
-
 }

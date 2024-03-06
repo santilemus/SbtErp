@@ -13,10 +13,10 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
     /// <summary>
     /// Cuenta por Cobrar
     /// BO que corresponde al encabezado de los documentos de la cuenta por cobrar (algunos no tienen detalle como los pagos).
-    /// En todo caso es el detalle de BO CxcTransaccion
+    /// Hereda del BO CxCTransaccion
     /// </summary>
 
-    [DefaultClassOptions, ModelDefault(@"Caption", @"Documento CxC"), NavigationItem(false), CreatableItem(false),
+    [DefaultClassOptions, ModelDefault(@"Caption", @"CxC Documento"), NavigationItem(false), CreatableItem(false),
         Persistent(nameof(CxCDocumento)), DefaultProperty(nameof(Numero))]
     [MapInheritance(MapInheritanceType.ParentTable)]
     [ImageName(nameof(CxCDocumento))]

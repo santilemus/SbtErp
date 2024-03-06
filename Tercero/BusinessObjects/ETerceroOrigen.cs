@@ -3,6 +3,13 @@ using DevExpress.Persistent.Base;
 
 namespace SBT.Apps.Tercero.Module.BusinessObjects
 {
+    /// <summary>
+    /// Origen del Tercero. Valores válidos son
+    /// Nacional = 0,
+    /// Domiciliado = 1,
+    /// NoDomiciliado = 2,
+    /// ParaisoFiscal = 3
+    /// </summary>
     public enum ETerceroOrigen
     {
         [XafDisplayName("Nacional")]

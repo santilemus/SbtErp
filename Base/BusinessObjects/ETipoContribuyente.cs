@@ -1,9 +1,14 @@
-﻿namespace SBT.Apps.Base.Module.BusinessObjects
+﻿using DevExpress.ExpressApp.DC;
+using System.ComponentModel;
+
+namespace SBT.Apps.Base.Module.BusinessObjects
 {
     /// <summary>
     /// Enumeracion con la clasificacion de los tipos de sujetos relacionado al pago de impuestos. 
     /// Esta clasificacion se utiliza para los Terceros
-    /// 
+    /// Gravado = 0,
+    /// Exento = 1
+    /// SujetoExcluido = 2
     /// </summary>
     public enum ETipoContribuyente
     {
@@ -22,6 +27,7 @@
         /// Excluido de la calidad de contribuyente Art. 119 CT
         /// Mas Info: https://elsalvador.eregulations.org/media/Codigo%20Tributario.pdf
         /// </summary>
-        Exento = 1
+        Exento = 1,
+        Excluido = 2 
     }
 }

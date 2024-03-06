@@ -241,7 +241,13 @@
         <ColumnInfo Id="Vigente" Width="108" />
       </Columns>
     </ListView>
-    <ListView Id="Tercero_Giros_ListView" AllowEdit="True" DataAccessMode="Server" NewItemRowPosition="Top" />
+    <ListView Id="Tercero_Giros_ListView" AllowEdit="True" DataAccessMode="Server" NewItemRowPosition="Top">
+      <Columns>
+        <ColumnInfo Id="ActEconomica" SortIndex="-1" SortOrder="None" Width="531" />
+        <ColumnInfo Id="Sector" Index="1" Width="183" />
+        <ColumnInfo Id="Vigente" Index="2" SortIndex="0" SortOrder="Ascending" Width="97" />
+      </Columns>
+    </ListView>
     <ListView Id="Tercero_Notas_ListView" DataAccessMode="Server" AllowEdit="True" NewItemRowPosition="Top" />
     <ListView Id="Tercero_Roles_ListView" DataAccessMode="Server" AllowEdit="True" NewItemRowPosition="Top" />
     <ListView Id="Tercero_Sucursales_ListView">
@@ -398,6 +404,21 @@
         </LayoutGroup>
       </Layout>
     </DetailView>
+    <ListView Id="TerceroGiro_ListView">
+      <Columns>
+        <ColumnInfo Id="ActEconomica" SortIndex="-1" SortOrder="None" Width="483" />
+        <ColumnInfo Id="Sector" Index="1" SortIndex="0" SortOrder="Ascending" Width="172" />
+        <ColumnInfo Id="Vigente" Index="2" Width="105" />
+        <ColumnInfo Id="Tercero" Index="3" />
+      </Columns>
+    </ListView>
+    <ListView Id="TerceroGiro_LookupListView">
+      <Columns>
+        <ColumnInfo Id="ActEconomica.Concepto" SortOrder="Descending" Index="-1" />
+        <ColumnInfo Id="ActEconomica" Width="364" Index="0" />
+        <ColumnInfo Id="Sector" PropertyName="Sector" Index="1" Width="114" IsNewNode="True" />
+      </Columns>
+    </ListView>
     <DetailView Id="TerceroNota_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">

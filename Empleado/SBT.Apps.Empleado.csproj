@@ -65,7 +65,6 @@
     <EmbeddedResource Remove="Controllers\vcEmpleadoToMayan.resx" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Base\SBT.Apps.Base.csproj" />
     <ProjectReference Include="..\Tercero\SBT.Apps.Tercero.csproj" />
   </ItemGroup>
 </Project>

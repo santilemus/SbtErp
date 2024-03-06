@@ -38,23 +38,16 @@ namespace SBT.Apps.Erp.Module
         }
         public override object Authenticate(IObjectSpace objectSpace)
         {
-
-            Usuario usuario = objectSpace.FirstOrDefault<Usuario>(e => e.UserName == customLogonParameters.UserName); 
+            Usuario usuario = objectSpace.FindObject<Usuario>(
+                new BinaryOperator("UserName", customLogonParameters.UserName));
 
             if (usuario == null)
-                throw new ArgumentNullException("Usuario", $"No Existe el Usuario {customLogonParameters.UserName}, en {customLogonParameters.Empresa.RazonSocial}");
-            if (usuario.Empresa != null && usuario.Empresa.Oid != customLogonParameters.Empresa.Oid)
-                throw new ArgumentException($"Al usuario {customLogonParameters.UserName} no se le permite ingresar a la empresa {customLogonParameters.Empresa.RazonSocial}");
-            if (!((IAuthenticationStandardUser)usuario).ComparePassword(customLogonParameters.Password)) 
-                throw new AuthenticationException(usuario.UserName, "Password Incorrecto.");
-            // agregado el 01/10/2021 por SELM. Solo la agencia, porque la empresa es el Administrador quien debe asignarla
-            if (usuario.Agencia != customLogonParameters.Agencia)
-            {
-                int oidAgenciaLogon = customLogonParameters.Agencia.Oid;
-                usuario.Agencia = objectSpace.GetObjectByKey<EmpresaUnidad>(oidAgenciaLogon);
-                objectSpace.CommitChanges();
-             }
-            // -- fin agregado el 01/10/2021
+                throw new ArgumentNullException("CustomAuthentication.Authenticate: Usuario es Nulo");
+
+            if (!usuario.ComparePassword(customLogonParameters.Password))
+                throw new AuthenticationException(
+                    usuario.UserName, "Password Incorrecto.");
+
             return usuario;
         }
 

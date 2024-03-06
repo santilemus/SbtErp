@@ -3,6 +3,7 @@ using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
+using System.ComponentModel;
 using System.Linq;
 
 namespace SBT.Apps.Tercero.Module.BusinessObjects
@@ -119,6 +120,31 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
         {
             get => activo;
             set => SetPropertyValue(nameof(Activo), ref activo, value);
+        }
+
+        [Browsable(false), VisibleInReports(true)]
+        public string Nit
+        {
+            get
+            {
+                var nit = Documentos.FirstOrDefault<TerceroDocumento>(x => x.Tipo.Codigo == "NIT");
+                return (nit != null) ? nit.Numero: null;
+            }
+        }
+
+        [Browsable(false), VisibleInReports(true)]
+        public string Dui
+        {
+            get
+            {
+                if (TipoPersona == TipoPersona.Juridica)
+                    return null;
+                else
+                {
+                    var dui = Documentos.FirstOrDefault<TerceroDocumento>(x => x.Tipo.Codigo == "DUI");
+                    return (dui != null) ? dui.Numero : string.Empty;
+                }
+            }
         }
 
         [DevExpress.Xpo.AssociationAttribute("Tercero-Telefonos")]

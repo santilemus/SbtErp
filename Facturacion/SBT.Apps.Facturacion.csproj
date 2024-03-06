@@ -136,4 +136,9 @@
     <ProjectReference Include="..\Contabilidad\SBT.Apps.Contabilidad.csproj" />
     <ProjectReference Include="..\Producto\SBT.Apps.Producto.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="UnusableNodes.xml">
+      <DependentUpon>Model.DesignedDiffs.xafml</DependentUpon>
+    </None>
+  </ItemGroup>
 </Project>

@@ -47,7 +47,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             set => SetPropertyValue(nameof(Oid), ref oid, value);
         }
 
-        [Association("TipoTransaccion-TipoTransacciones"), XafDisplayName("Transacción Padre"), Index(0)]
+        [Association("TipoTransaccion-TipoTransacciones"), XafDisplayName("Padre"), Index(0)]
         public CxCTipoTransaccion Padre
         {
             get => padre;
@@ -95,7 +95,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [XafDisplayName("Tipo Documento")]
         [RuleRequiredField("Concepto.TipoDocumento_Requerido", DefaultContexts.Save, ResultType = ValidationResultType.Information,
             CustomMessageTemplate = "Se sugiere que indique el tipo de documento para el registro")]
-        [DataSourceCriteria("[Categoria] == 16 And [Activo] == True"), VisibleInLookupListView(true), Index(4)]
+        [DataSourceCriteria("[Categoria] == 16 And [Activo] == True"), Index(4)]
         public Listas TipoDocumento
         {
             get => tipoDocumento;

@@ -83,7 +83,6 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
     {
         LibroCompras = 0,
         Percepcion = 1,
-        Retencion = 2,
-        PagoCuenta = 3,
+        Retencion = 2
     }
 }

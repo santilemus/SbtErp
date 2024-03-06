@@ -45,7 +45,6 @@ namespace SBT.Apps.Medico.Expediente.Module
             this.RequiredModuleTypes.Add(typeof(DevExpress.ExpressApp.Scheduler.SchedulerModuleBase));
             this.RequiredModuleTypes.Add(typeof(DevExpress.ExpressApp.Validation.ValidationModule));
             this.RequiredModuleTypes.Add(typeof(DevExpress.ExpressApp.ViewVariantsModule.ViewVariantsModule));
-            this.RequiredModuleTypes.Add(typeof(SBT.Apps.Base.Module.BaseModule));
             this.RequiredModuleTypes.Add(typeof(SBT.Apps.Medico.Generico.Module.GenericoModule));
             this.ResourcesExportedToModel.Add(typeof(DevExpress.ExpressApp.Scheduler.SchedulerModuleBaseLocalizer));
 

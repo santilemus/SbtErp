@@ -24,9 +24,10 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
     ///                                  
     /// </remarks>
 
-    [DefaultClassOptions, ModelDefault("Caption", "Transacción CxC"), NavigationItem("Cuenta por Cobrar")]
+    [DefaultClassOptions, ModelDefault("Caption", "Cuenta por Cobrar"), NavigationItem("Cuenta por Cobrar")]
     [CreatableItem(false), Persistent(nameof(CxCTransaccion)), DefaultProperty("Numero")]
     [ImageName(nameof(CxCTransaccion))]
+
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class CxCTransaccion : XPObjectBaseBO
@@ -73,6 +74,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         [Index(0), VisibleInLookupListView(true)]
         [DetailViewLayout("Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
         [DataSourceCriteria("!IsNull([Padre]) && [Activo] == True")]
+        [ImmediatePostData(true)]
         public CxCTipoTransaccion Tipo
         {
             get => tipo;
@@ -181,19 +183,23 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
             set => SetPropertyValue(nameof(Cartera), ref cartera, value);
         }
 
-
+        /// <summary>
+        /// Cuando el cliente realiza el pago con tarjeta de çrédito, es necesario indicar el tipo de tarjeta
+        /// </summary>
         [DbType("varchar(12)"), XafDisplayName("Tipo Tarjeta"), Index(9), VisibleInListView(false)]
         [DetailViewLayout("Datos Pago", LayoutGroupType.SimpleEditorsGroup, 1)]
         [DataSourceCriteria("[Categoria] == 6 And [Activo] == True")]   // categoria 6 son tarjetas de credito
-        [RuleRequiredField("CxCTransaccion.TipoTarjeta_Requerido", "Save", TargetCriteria = "[FormaPago.Codigo] In ('FPA03', 'FPA04')",
+        [RuleRequiredField("CxCTransaccion.TipoTarjeta_Requerido", "Save", TargetCriteria = "[Tipo.Oid] In (8, 9)",
              ResultType = ValidationResultType.Warning)]
-
         public Listas TipoTarjeta
         {
             get => tipoTarjeta;
             set => SetPropertyValue(nameof(TipoTarjeta), ref tipoTarjeta, value);
         }
 
+        /// <summary>
+        /// Banco emisor de la tarjeta de crédito, solo cuando el cliente realiza el pago con tarjeta de crédito
+        /// </summary>
         [XafDisplayName("Banco"), Index(10)]
         [DetailViewLayout("Datos Pago", LayoutGroupType.SimpleEditorsGroup, 1)]
         public SBT.Apps.Tercero.Module.BusinessObjects.Banco Banco
@@ -203,7 +209,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         }
 
         /// <summary>
-        /// No de tarjeta de credito o debito
+        /// No de tarjeta de credito o debito, solo cuando el cliente realiza el pago con tarjeta de crédito
         /// </summary>
         [Size(20), DbType("varchar(20)"), XafDisplayName("No Tarjeta"), ToolTip("No de Tarjeta de debito o credito, cuando es el medio de pago")]
         [Index(11), VisibleInListView(false)]

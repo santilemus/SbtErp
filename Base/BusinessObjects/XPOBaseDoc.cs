@@ -1,10 +1,13 @@
 ﻿using DevExpress.Data.Filtering;
+using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
+using DevExpress.ExpressApp.Security;
 using DevExpress.ExpressApp.Security.ClientServer;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.ComponentModel;
 
@@ -17,6 +20,26 @@ namespace SBT.Apps.Base.Module.BusinessObjects
     [NonPersistent]
     public abstract class XPOBaseDoc : XPObjectBaseBO
     {
+        private Empresa empresa;
+        private int? numero;
+        private DateTime fecha;
+        private Moneda moneda;
+        private decimal valorMoneda;
+        [NonCloneable]
+#if (Firebird)
+        [DbType("DM_FECHA_HORA"), Persistent("FECHA_ANULA")]
+#else
+        [DbType("datetime"), Persistent(nameof(FechaAnula))]
+#endif
+        private DateTime? fechaAnula;
+        [NonCloneable]
+#if (Firebird)
+        [DbType("DM_DESCRIPCION25"), Persistent("USUARIO_ANULO")]
+#else
+        [DbType("varchar(25)"), Persistent(nameof(UsuarioAnulo))]
+#endif
+        private string usuarioAnulo;
+        private string comentario;
 
         public XPOBaseDoc(Session session) : base(session)
         {
@@ -73,27 +96,27 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         {
             comentario += $"{Environment.NewLine}{AnularParams.Comentario}";
             fechaAnula = DateTime.Now;
-            usuarioAnulo = DevExpress.ExpressApp.SecuritySystem.CurrentUserName;
+            if (string.IsNullOrEmpty(SecuritySystem.CurrentUserName))
+                usuarioAnulo = Session.ServiceProvider.GetRequiredService<ISecurityStrategyBase>().UserName;
+            else
+                usuarioAnulo = DevExpress.ExpressApp.SecuritySystem.CurrentUserName;
         }
 
         #region Propiedades
 
-        [Browsable(false)]
-        private Empresa empresa;
 #if (Firebird)
         [DbType("DM_ENTERO_CORTO"), Persistent("COD_EMP")]
 #else
         [DbType("smallint"), Persistent(nameof(Empresa))]
 #endif
         [Index(0), ModelDefault("AllowEdit", "False"), XafDisplayName("Empresa")]
+        [Browsable(false)]
         public Empresa Empresa
         {
             get => empresa;
             set => SetPropertyValue(nameof(Empresa), ref empresa, value);
         }
 
-        [Browsable(false)]
-        private int? numero;
 #if (Firebird)
         [DbType("DM_ENTERO_LARGO"), Persistent("NUMERO")]
 #else
@@ -107,7 +130,6 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             set => SetPropertyValue(nameof(Numero), ref numero, value);
         }
 
-        private DateTime fecha;
 #if (Firebird)
         [DbType("DM_FECHA"), Persistent("FECHA")]
 #else
@@ -127,7 +149,6 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             }
         }
 
-        private Moneda moneda;
 #if (Firebird)
         [DbType("DM_CODIGO03"), Persistent("COD_MONEDA")]
 #else
@@ -142,27 +163,19 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             set => SetPropertyValue(nameof(Moneda), ref moneda, value);
         }
 
-        [Browsable(false)]
-        private decimal valorMoneda;
 #if (Firebird)
         [DbType("DM_DINERO122"), Persistent("VAL_MONE")]
 #else
         [DbType("numeric(12, 2)"), Persistent(nameof(ValorMoneda))]
 #endif
-        [XafDisplayName("Valor Moneda"), Index(4), ModelDefault("AllowEdit", "False")]
+        [XafDisplayName("Valor Moneda"), Index(4), ModelDefault("AllowEdit", "False"), Browsable(false)]
         public decimal ValorMoneda
         {
             get => valorMoneda;
             set => SetPropertyValue(nameof(ValorMoneda), ref valorMoneda, value);
         }
 
-        [NonCloneable]
-#if (Firebird)
-        [DbType("DM_FECHA_HORA"), Persistent("FECHA_ANULA")]
-#else
-        [DbType("datetime"), Persistent(nameof(FechaAnula))]
-#endif
-        private DateTime? fechaAnula;
+
         [XafDisplayName("Fecha Anulación"), ModelDefault("DisplayFormat", "{0:G}"), ModelDefault("EditMask", "G"), Index(98), ModelDefault("AllowEdit", "False")]
         [PersistentAlias("fechaAnula"), Browsable(false)]
         [Delayed(true)]
@@ -171,13 +184,6 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             get => fechaAnula;
         }
 
-        [NonCloneable]
-#if (Firebird)
-        [DbType("DM_DESCRIPCION25"), Persistent("USUARIO_ANULO")]
-#else
-        [DbType("varchar(25)"), Persistent(nameof(UsuarioAnulo))]
-#endif
-        private string usuarioAnulo;
         [Size(25), Index(99), XafDisplayName("Usuario Anuló"), ModelDefault("AllowEdit", "False"),
             PersistentAlias("usuarioAnulo"), Browsable(false)]
         [Delayed(true)]
@@ -186,8 +192,6 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             get => usuarioAnulo;
         }
 
-        [NonCloneable]
-        private string comentario;
 #if (Firebird)
         [DbType("DM_DESCRIPCION250"), Persistent("COMENTARIO")]
 #else
@@ -196,6 +200,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [Size(250), Index(100), XafDisplayName("Comentario")]
         [ModelDefault("AllowEdit", "False")]
         [Delayed(true)]
+        [NonCloneable]
         public string Comentario
         {
             get => comentario;

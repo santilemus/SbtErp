@@ -3,6 +3,7 @@ using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.Validation;
 using System.Collections;
 using DevExpress.Persistent.Validation;
+using DevExpress.Xpo;
 
 namespace SBT.Apps.Base.Module.Controllers
 {

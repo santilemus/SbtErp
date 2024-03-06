@@ -10,6 +10,8 @@ using DevExpress.DashboardAspNetCore;
 using DevExpress.AspNetCore.Reporting;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Erp.Blazor.Server.Middleware;
+using DevExpress.Blazor.Configuration;
+using SBT.Apps.Base.Module;
 
 namespace SBT.Apps.Erp.Blazor.Server;
 
@@ -32,6 +34,7 @@ public class Startup
         services.AddServerSideBlazor();
         services.AddHttpContextAccessor();
         services.AddScoped<CircuitHandler, CircuitHandlerProxy>();
+        services.Configure<GlobalOptions>(options => options.SizeMode = DevExpress.Blazor.SizeMode.Small);
         services.AddXaf(Configuration, builder =>
         {
             builder.UseApplication<BlazorBlazorApplication>();
@@ -105,6 +108,15 @@ public class Startup
                         securityStrategy.AnonymousAllowedTypes.Add(typeof(SBT.Apps.Base.Module.BusinessObjects.Empresa));
                         securityStrategy.AnonymousAllowedTypes.Add(typeof(SBT.Apps.Base.Module.BusinessObjects.EmpresaUnidad));
                         securityStrategy.PermissionsReloadMode = PermissionsReloadMode.CacheOnFirstAccess;
+                    };
+                    options.Events.OnCustomizeSecurityCriteriaOperator = context =>
+                    {
+                        if (EmpresaActualOidFunction.CanEvaluate(context))
+                        {
+                            EmpresaActualOidFunction.Evaluate(context);
+                            return;
+                        }
+                        // agregar aqui las otras funciones personalizadas y que son similares a la anterior (van a la bd)
                     };
                 })
                 .AddAuthenticationProvider<AuthenticationStandardProviderOptions, CustomAuthenticationStandardProvider>(options =>

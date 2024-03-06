@@ -9,15 +9,28 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
     /// <summary>
     /// Objeto Persistente que corresponde a los números de registro fiscal asociados a un tercero
     /// </summary>
+    /// <remarks>
+    /// </remarks>
+    /// <cambios>
+    /// 29/febrero/2024 por SELM
+    /// 700-DGII-GTR-2024-0001. Líneamientos que entran en vigencia para declaraciones de IVA y pago a cuenta de febrero del 2024.
+    /// </cambios>
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Registro Fiscal")]
     [DevExpress.Persistent.Base.CreatableItemAttribute(false)]
     [DevExpress.Persistent.Base.ImageNameAttribute("bill-key")]
     [DefaultProperty(nameof(ActEconomica))]
     public class TerceroGiro : XPObject
     {
+        public override void AfterConstruction()
+        {
+            base.AfterConstruction();
+            Sector = ESectorSujetoPasivo.Servicio;
+        }
+
         private Tercero tercero;
         bool vigente = true;
         private ActividadEconomica actEconomica;
+        private ESectorSujetoPasivo sector;
 
         public TerceroGiro(DevExpress.Xpo.Session session)
           : base(session)
@@ -46,6 +59,22 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
         {
             get => tercero;
             set => SetPropertyValue(nameof(Tercero), ref tercero, value);
+        }
+
+        /// <summary>
+        /// Rubro o actividad económica genérica a la que se dedica la empresa
+        /// </summary>
+        /// <remarks>
+        /// 700-DGII-GTR-2024-0001. Líneamientos que entran en vigencia para declaraciones de IVA
+        /// y pago a cuenta de febrero del 2024.
+        /// </remarks>
+        [System.ComponentModel.DisplayName("Sector")]
+        [DbType("smallint"), VisibleInListView(true)]
+        [ToolTip("Rubro o actividad económica genérica a la que se dedica la empresa")]
+        public ESectorSujetoPasivo Sector
+        {
+            get => sector;
+            set => SetPropertyValue(nameof(Sector), ref sector, value);
         }
 
     }

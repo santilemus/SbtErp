@@ -12,6 +12,12 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
     /// <summary>
     /// BO que corresponde al Libro de Compras (Iva)
     /// </summary>
+    /// <remarks>
+    /// </remarks>
+    /// <cambios>
+    /// 29/febrero/2024 por SELM
+    /// 700-DGII-GTR-2024-0001. Líneamientos que entran en vigencia para declaraciones de IVA y pago a cuenta de febrero del 2024.
+    /// </cambios>
     [DefaultClassOptions, ModelDefault("Caption", "Libro Compras"), NavigationItem("Contabilidad")]
     [DefaultProperty(nameof(Numero))]
     [Persistent(nameof(LibroCompra))]
@@ -31,6 +37,10 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
             oid = -1;
             claseDocumento = EClaseDocumento.Imprenta;
             cerrado = false;
+            tipoOperacion = ETipoOperacionCompra.Gravada;
+            clasificacionRenta = EClasificacionRenta.Costo;
+            sector = ESectorSujetoPasivo.Servicio;
+            tipoCostoGasto = ETipoCostoGasto.GastoVenta;
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
@@ -64,6 +74,14 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
         [Persistent(nameof(Oid)), DbType("bigint"), Key(true)]
         long oid;
         private string serie;
+        [Persistent(nameof(TipoOperacion)), FetchOnly]
+        private ETipoOperacionCompra tipoOperacion;
+        [Persistent(nameof(ClasificacionRenta)), FetchOnly]
+        private EClasificacionRenta clasificacionRenta;
+        [Persistent(nameof(Sector)), FetchOnly]
+        private ESectorSujetoPasivo sector;
+        [Persistent(nameof(TipoCostoGasto)), FetchOnly]
+        private ETipoCostoGasto tipoCostoGasto;
 
         [PersistentAlias(nameof(oid)), XafDisplayName("Oid")]
         public long Oid => oid;
@@ -255,6 +273,22 @@ namespace SBT.Apps.Iva.Module.BusinessObjects
 
         [VisibleInListView(false), XafDisplayName("Anexo Percepción")]
         public string AnexoPercepcion => "8";
+
+        [System.ComponentModel.DisplayName("Tipo Operación")]
+        [PersistentAlias(nameof(tipoOperacion))]
+        public ETipoOperacionCompra TipoOperacion => tipoOperacion;
+
+        [PersistentAlias(nameof(clasificacionRenta))]
+        [System.ComponentModel.DisplayName("Clasificación Renta")]
+        public EClasificacionRenta ClasificacionRenta => clasificacionRenta;
+
+        [PersistentAlias(nameof(sector))]
+        [System.ComponentModel.DisplayName("Sector")]
+        public ESectorSujetoPasivo Sector => sector;
+
+        [PersistentAlias(nameof(tipoCostoGasto))]
+        [System.ComponentModel.DisplayName("Tipo Costo o Gasto")]
+        public ETipoCostoGasto TipoCostoGasto => tipoCostoGasto;
 
         #endregion
 

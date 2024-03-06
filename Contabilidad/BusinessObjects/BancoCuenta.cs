@@ -187,10 +187,16 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         #endregion
 
         #region Metodos
-        public decimal CalcularSaldo(DateTime AFecha)
+        public decimal CalcularSaldo(DateTime fecha, int oidTransaccion = -1)
         {
+            if (IsLoading || IsSaving)
+                return 0.00m;
+
+            CriteriaOperator condicion = CriteriaOperator.FromLambda<BancoTransaccion>(x => x.BancoCuenta.Empresa.Oid == Empresa.Oid &&
+                                            x.BancoCuenta.Oid == Oid && x.Estado != EBancoTransaccionEstado.Anulado &&
+                                            x.Fecha <= fecha && x.Oid != oidTransaccion);
             return Convert.ToDecimal(Session.Evaluate<BancoTransaccion>(CriteriaOperator.Parse("Sum(Iif([Clasificacion.Tipo] = 1 Or [Clasificacion.Tipo] = 2, [Monto],-[Monto]))"),
-                            CriteriaOperator.Parse("[BancoCuenta.Empresa.Oid] = ? And [BancoCuenta.Oid] = ? And [Estado] != 3 And [Fecha] <= ?", Empresa.Oid, Oid, AFecha)));
+                            condicion));
         }
         #endregion
 

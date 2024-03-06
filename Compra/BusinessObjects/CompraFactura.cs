@@ -11,19 +11,29 @@ using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.CxP.Module.BusinessObjects;
 using SBT.Apps.Inventario.Module.BusinessObjects;
 using SBT.Apps.Producto.Module.BusinessObjects;
+using SBT.Apps.Tercero.Module.BusinessObjects;
 using System;
 using System.ComponentModel;
+using System.Linq;
 
 namespace SBT.Apps.Compra.Module.BusinessObjects
 {
     /// <summary>
     /// BO que corresponde a los encabezados de las facturas de compra
     /// </summary>
+    /// <remarks>
+    /// </remarks>
+    /// <cambios>
+    /// 29/febrero/2024 por SELM
+    /// 700-DGII-GTR-2024-0001. Líneamientos que entran en vigencia para declaraciones de IVA y pago a cuenta de febrero del 2024.
+    /// </cambios>
     [DefaultClassOptions, ModelDefault("Caption", "Factura de Compra"), NavigationItem("Compras"), CreatableItem(false)]
     [DefaultProperty(nameof(NumeroFactura))]
     [Persistent(nameof(CompraFactura))]
     [Appearance("CompraFactura_Servicios_Intangibles", AppearanceItemType = "ViewItem", Criteria = "[Tipo] In ('Servicio', 'Intangible')",
         Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, TargetItems = "Detalles;Ingresos", Context = "DetailView")]
+    [Appearance("CompraFactura_SujetoExcluido", AppearanceItemType = "ViewItem", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, 
+        Context = "DetailView", TargetItems = "IvaPercibido;IvaRetenido;Fovial;Exenta;NoSujeta;Numero", Criteria = "[TipoFactura.Codigo] == 'COVE06'")]
     [ImageName(nameof(CompraFactura))]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
@@ -42,6 +52,9 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
             DiasCredito = 0;
             Clase = EClaseDocumento.Imprenta;
             Tipo = ETipoCompra.Servicio;
+            tipoOperacion = ETipoOperacionCompra.Gravada;
+            tipoCostoGasto = ETipoCostoGasto.GastoVenta;
+            clasificacionRenta = EClasificacionRenta.Costo;
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
@@ -57,6 +70,10 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
         EOrigenCompra origen = EOrigenCompra.Local;
         OrdenCompra ordenCompra;
         private string serie;
+        private ETipoOperacionCompra tipoOperacion;
+        private EClasificacionRenta clasificacionRenta;
+        private ETipoCostoGasto tipoCostoGasto;
+        private TerceroGiro proveedorGiro;
 
         [Association("OrdenCompra-Facturas"), XafDisplayName("Orden Compra"), Persistent(nameof(OrdenCompra)), Index(5)]
         [DetailViewLayout("Datos Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
@@ -74,7 +91,29 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
         public Tercero.Module.BusinessObjects.Tercero Proveedor
         {
             get => proveedor;
-            set => SetPropertyValue(nameof(Proveedor), ref proveedor, value);
+            set
+            {
+                bool changed = SetPropertyValue(nameof(Proveedor), ref proveedor, value);
+                if (!IsLoading && !IsSaving && changed)
+                {
+                    ProveedorGiro = Proveedor.Giros.FirstOrDefault<TerceroGiro>(x => x.Tercero.Oid == value.Oid);
+                    if (Proveedor.TipoContribuyente == ETipoContribuyente.Excluido)
+                    {
+                        var tipoFactura = Session.GetObjectByKey<Listas>("COVE06");
+                        if (tipoFactura !=  null)
+                            TipoFactura = tipoFactura;
+                        TipoOperacion = ETipoOperacionCompra.Excluido;
+                    }
+                }
+            }
+        }
+
+        [System.ComponentModel.DisplayName("Giro"), RuleRequiredField("CompraFactura.ProveedorGiro", DefaultContexts.Save)]
+        [DataSourceCriteria("[Tercero] == '@This.Proveedor'")]
+        public TerceroGiro ProveedorGiro
+        {
+            get => proveedorGiro;
+            set => SetPropertyValue(nameof(ProveedorGiro), ref proveedorGiro, value);
         }
 
         /// <summary>
@@ -112,7 +151,7 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
             set => SetPropertyValue(nameof(Serie), ref serie, value);
         }
 
-        [Size(20), XafDisplayName("Clase"), Index(11)]
+        [Size(20), XafDisplayName("Clase"), Index(12)]
         [DetailViewLayout("Datos de Pago", LayoutGroupType.SimpleEditorsGroup, 2)]
         [ToolTip("Clase de documento. Es requerido para el libro de compras")]
         public EClaseDocumento Clase
@@ -122,9 +161,55 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
         }
 
         /// <summary>
+        /// Se refiere a la naturaleza de la compra: costo o gasto para efectos de la ley de impuesto sobre la renta
+        /// </summary>
+        /// <remarks>
+        /// 700-DGII-GTR-2024-0001. Líneamientos que entran en vigencia para declaraciones de IVA
+        /// y pago a cuenta de febrero del 2024.
+        /// </remarks>
+        [DbType("smallint"), VisibleInListView(false), System.ComponentModel.DisplayName("Tipo Operación"), Index(13)]
+        [ToolTip(@"Naturaleza de la compra: costo o gasto para efectos de la ley de impuesto sobre la renta")]
+        public ETipoOperacionCompra TipoOperacion
+        {
+            get => tipoOperacion;
+            set => SetPropertyValue(nameof(TipoOperacion), ref tipoOperacion, value);
+        }
+
+        /// <summary>
+        /// Tipo de erogación al cual corresponden las deducciones del impuesto sobre la renta, respecto de cada compra
+        /// de bienes o servicios que se realice en cada período tributario
+        /// </summary>
+        /// <remarks>
+        /// 700-DGII-GTR-2024-0001. Líneamientos que entran en vigencia para declaraciones de IVA
+        /// y pago a cuenta de febrero del 2024.
+        /// </remarks>
+        [DbType("smallint"), VisibleInListView(false), System.ComponentModel.DisplayName("Clasificación"), Index(14)]
+        [ToolTip("Tipo de erogación al cual corresponden las deducciones del impuesto sobre la renta, respecto de cada compra")]
+        public EClasificacionRenta ClasificacionRenta
+        {
+            get => clasificacionRenta;
+            set => SetPropertyValue(nameof(ClasificacionRenta), ref clasificacionRenta, value);
+        }
+
+        /// <summary>
+        /// Tipo de costo/gasto: según la clasificación que se detalla en el formulario F-11 del impuesto sobre la renta
+        /// </summary>
+        /// <remarks>
+        /// 700-DGII-GTR-2024-0001. Líneamientos que entran en vigencia para declaraciones de IVA
+        /// y pago a cuenta de febrero del 2024.
+        /// </remarks>
+        [DbType("smallint"), VisibleInListView(false), System.ComponentModel.DisplayName("Tipo Costo o Gasto"), Index(15)]
+        [ToolTip("Tipo de costo o gasto según la clasificación que se detalla en el formulario F-11 del impuesto sobre la renta")]
+        public ETipoCostoGasto TipoCostoGasto
+        {
+            get => tipoCostoGasto;
+            set => SetPropertyValue(nameof(TipoCostoGasto), ref tipoCostoGasto, value);
+        }
+
+        /// <summary>
         /// Concepto de la compra
         /// </summary>
-        [Size(200), DbType("varchar(200)"), XafDisplayName("Concepto"), Index(12)]
+        [Size(200), DbType("varchar(200)"), XafDisplayName("Concepto"), Index(16)]
         [DetailViewLayout("Datos de Pago", LayoutGroupType.SimpleEditorsGroup, 2)]
         public string Concepto
         {
@@ -134,7 +219,7 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
 
         [DbType("numeric(14,2)"), XafDisplayName("Renta Retenida")]
         [ToolTip("Monto de la retención de renta cuando es compra de servicios a personas naturales, compra de intangibles o de sujetos no domiciliados")]
-        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
+        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2"), Index(17)]
         public decimal Renta
         {
             get => renta;
@@ -143,7 +228,7 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
 
         [DbType("numeric(14,2)"), XafDisplayName("Fovial")]
         [ToolTip("Monto de la contribución al fovial cuando se trata de compras de combustible")]
-        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
+        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2"), Index(18)]
         public decimal Fovial
         {
             get => fovial;

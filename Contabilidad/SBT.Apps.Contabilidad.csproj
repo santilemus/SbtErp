@@ -103,7 +103,6 @@
     <Compile Remove="Controllers\vcPartidaDetalleListNewObject.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Base\SBT.Apps.Base.csproj" />
     <ProjectReference Include="..\Empleado\SBT.Apps.Empleado.csproj" />
   </ItemGroup>
 </Project>

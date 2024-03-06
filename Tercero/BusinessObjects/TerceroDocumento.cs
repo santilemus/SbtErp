@@ -17,7 +17,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
     [ModelDefault("Caption", "Tercero Documentos"), NavigationItem(false), DefaultProperty(nameof(Numero))]
     [Persistent(nameof(TerceroDocumento)), CreatableItem(false)]
     [ImageName("user_id-info")]
-    [RuleCombinationOfPropertiesIsUnique("TerceroDocumento_TipoDocumento", DefaultContexts.Save, "Tercero, Tipo", IncludeCurrentObject = true)]
+    [RuleCombinationOfPropertiesIsUnique("TerceroDocumento_TipoDocumento", DefaultContexts.Save, "Tercero,Numero,Tipo", IncludeCurrentObject = false)]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class TerceroDocumento : XPObject
@@ -52,7 +52,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
             set => SetPropertyValue(nameof(Tipo), ref tipo, value);
         }
 
-        [Size(14), DbType("varchar(14)"), XafDisplayName("Número"), Index(2)]
+        [Size(14), DbType("varchar(14)"), XafDisplayName("Número"), Index(2), VisibleInReports(true)]
         [RuleRequiredField("TerceroDocumento.Numero_Requerido", "Save"), Indexed("Tipo", Name = "idxTerceroNoDocumento")]
         public System.String Numero
         {

@@ -106,6 +106,8 @@ namespace SBT.Apps.Base.Module.BusinessObjects
 #endif
         [XafDisplayName("Fecha"), Index(2), RuleRequiredField("XPCustomBaseDocs.Fecha_Requerida", "Save"), Indexed("Empresa", Unique = false)]
         [VisibleInListView(true), VisibleInLookupListView(true)]
+        [ModelDefault("DisplayFormat", "{0:dd/MM/yyyy}")]
+        [ModelDefault("EditMask", "dd/MM/yyyy")]
         public DateTime Fecha
         {
             get => fecha;

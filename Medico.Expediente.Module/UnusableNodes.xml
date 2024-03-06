@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application>
+  <Views Id="Views">
+    <DetailView Id="ConsultaNutricion_DetailView">
+      <Layout Id="Layout">
+        <LayoutGroup Id="Main">
+          <LayoutGroup Id="SimpleEditors">
+            <LayoutGroup Id="ConsultaNutricion" RelativeSize="100">
+              <LayoutGroup Id="ConsultaNutricion_col1" RelativeSize="49.967170059093895">
+                <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="17.821782178217823" />
+                <LayoutItem Id="Fecha" Index="1" RelativeSize="12.871287128712872" />
+                <LayoutItem Id="Observacion" Index="2" RelativeSize="12.871287128712872" />
+                <LayoutItem Id="FrecuenciaAlimento" Index="3" RelativeSize="12.871287128712872" />
+                <LayoutItem Id="ConsumoAgua" Index="4" RelativeSize="12.871287128712872" />
+                <LayoutItem Id="PesoMeta" Index="5" RelativeSize="12.871287128712872" />
+                <LayoutItem Id="PesoIdeal" Index="6" RelativeSize="17.821782178217823" />
+                <LayoutItem Id="PesoUsual" Index="7" RelativeSize="15.178571428571429" Removed="True" />
+              </LayoutGroup>
+              <LayoutGroup Id="ConsultaNutricion_col2" RelativeSize="50.032829940906105">
+                <LayoutItem Id="PesoUsual" ViewItem="PesoUsual" Index="0" RelativeSize="17.821782178217823" />
+                <LayoutItem Id="Caloria" RelativeSize="12.871287128712872" Index="1" />
+                <LayoutItem Id="CHO" RelativeSize="12.871287128712872" Index="2" />
+                <LayoutItem Id="CHON" RelativeSize="12.871287128712872" Index="3" />
+                <LayoutItem Id="COOH" RelativeSize="12.871287128712872" Index="4" />
+                <LayoutItem Id="DietaPrescrita" RelativeSize="12.871287128712872" Index="5" />
+                <LayoutItem Id="PlanNutricional" RelativeSize="17.821782178217823" Index="6" />
+              </LayoutGroup>
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+  </Views>
+</Application>

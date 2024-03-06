@@ -10,6 +10,9 @@ using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Contabilidad.Module.BusinessObjects;
 using System;
 using System.ComponentModel;
+using DevExpress.ExpressApp.Editors;
+using System.Runtime.CompilerServices;
+using DevExpress.ExpressApp;
 
 namespace SBT.Apps.Banco.Module.BusinessObjects
 {
@@ -28,12 +31,14 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         InvertResult = true, CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction,
         MessageTemplateMustBeReferenced = "El objeto {TargetObject} no debe tener referencias.")]
 
-    [Appearance("BancoTransaccion.Cheque y Cargo", Criteria = "[Clasificacion.Tipo] == 3 || [Clasificacion.Tipo] == 4", AppearanceItemType = "ViewItem",
-        Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "DetailView", TargetItems = "Abono;IdReferencia;CxPTransacciones")]
-    [Appearance("BancoTransaccion.Remesa y Abono", Criteria = "[Clasificacion.Tipo] == 1 || [Clasificacion.Tipo] == 2", AppearanceItemType = "ViewItem",
-        Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "DetailView", TargetItems = "ChequeNo;Proveedor;Beneficiario;Cargo")]
+    [Appearance("BancoTransaccion.Cheque y Cargo", Criteria = "[Clasificacion.Tipo] == 'Cheque' || [Clasificacion.Tipo] == 'Cargo'", AppearanceItemType = "ViewItem",
+        Visibility = ViewItemVisibility.Hide, Context = "DetailView", TargetItems = "Abono;IdReferencia;Cobros")]
+    [Appearance("BancoTransaccion.Remesa y Abono", Criteria = "[Clasificacion.Tipo] == 'Abono' || [Clasificacion.Tipo] == 'Remesa'", AppearanceItemType = "ViewItem",
+        Visibility = ViewItemVisibility.Hide, Context = "DetailView", TargetItems = "ChequeNo;Proveedor;Beneficiario;Cargo;Pagos")]
     [Appearance("BancoCuenta.TarjetaCredito", Criteria = "[Cuenta.Tipo Cuenta] = 'Tarjeta'", AppearanceItemType = "ViewItem", TargetItems = "BancoCuenta",
         Context = "DetailView")]
+    [Appearance("BancoCuenta_Cheque", Criteria = "[Clasificacion.Tipo] != 'Cheque'", AppearanceItemType = "ViewItem", Visibility = ViewItemVisibility.Hide, 
+        Context = "DetailView", TargetItems = "ChequeNo")]
 
     [ImageName(nameof(BancoTransaccion))]
     [DevExpress.Xpo.OptimisticLocking(Enabled = true, LockingKind = OptimisticLockingBehavior.ConsiderOptimisticLockingField)]
@@ -49,12 +54,13 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         public override void AfterConstruction()
         {
             base.AfterConstruction();
+            numero = null;
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
         protected override void OnSaving()
         {
-            if ((Session is not NestedUnitOfWork) && (Session.DataLayer != null) &&  (Session.ObjectLayer is SecuredSessionObjectLayer))
+            if ((Session is not NestedUnitOfWork) && (Session.DataLayer != null) && (Session.ObjectLayer is SecuredSessionObjectLayer))
             {
                 if (Clasificacion.Tipo == EBancoTipoTransaccion.Cheque && Session.IsNewObject(this) && chequera != null)
                 {
@@ -62,8 +68,8 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
                         chequera.NumeroActual++;
                     chequera.Save();
                 }
-                if (Session.IsNewObject(this) && Numero == null)
-                    Numero = CorrelativoDoc();
+                if (Session.IsNewObject(this) && (numero == null || numero <= 0))
+                    numero = CorrelativoDoc();
             }
             base.OnSaving();
         }
@@ -84,6 +90,7 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         decimal valorMoneda;
         Moneda moneda;
         DateTime fecha;
+        [DbType("int"), Persistent(nameof(Numero)), NonCloneable]
         int? numero;
         string idReferencia;
         string concepto;
@@ -103,6 +110,7 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         [DataSourceCriteria("[Empresa.Oid] == EmpresaActualOid()")]
         [ExplicitLoading]
         [ImmediatePostData(true)]
+        [RuleRequiredField("BancoTransaccion.BancoCuenta_requerido", DefaultContexts.Save)]
         public BancoCuenta BancoCuenta
         {
             get => bancoCuenta;
@@ -139,17 +147,16 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
             }
         }
 
-        [DbType("int"), Persistent(nameof(Numero))]
-        [Index(2), XafDisplayName("Número"), NonCloneable]
+        [Index(2), XafDisplayName("Número")]
+        [PersistentAlias(nameof(numero))]
         public int? Numero
         {
             get => numero;
-            set => SetPropertyValue(nameof(Numero), ref numero, value);
         }
 
         [DbType("datetime2"), Persistent(nameof(Fecha)), VisibleInLookupListView(true)]
         [XafDisplayName("Fecha"), Index(3), RuleRequiredField("BancoTransaccion.Fecha_Requerido", "Save")]
-        [ModelDefault("DisplayFormat", "{0:G}"), ModelDefault("EditMask", "g")]
+        [ModelDefault("DisplayFormat", "{0:dd/MM/yyyy}"), ModelDefault("EditMask", "dd/MM/yyyy")]
         public DateTime Fecha
         {
             get => fecha;
@@ -266,6 +273,23 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
             }
         }
 
+        [Browsable(false)]
+        [RuleFromBoolProperty("BancoTransaccion.ExisteSaldo", DefaultContexts.Save, 
+            TargetCriteria = "[Monto] != 0.0 && ([Clasificacion.Tipo] == 'Cheque' || [Clasificacion.Tipo] == 'Cargo')", SkipNullOrEmptyValues = false,
+            CustomMessageTemplate = "Para la Emisión de Cheques y Notas de Cargo, la cuenta debe tener fondos suficientes para cubrir el monto de la transacción")]
+        private bool ExisteSaldo
+        {
+            get
+            {
+                if (IsLoading || IsSaving)
+                    return true;
+                if (Clasificacion.Tipo == EBancoTipoTransaccion.Remesa || Clasificacion.Tipo == EBancoTipoTransaccion.Abono)
+                    return true;
+                else
+                    return Monto <= BancoCuenta.CalcularSaldo(Fecha, Oid);
+            }
+
+        }
 
         #endregion
 
@@ -305,12 +329,12 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
 
         }
 
-        [Action(Caption = "Test")]
-        public void TestNumberToLetter()
-        {
-            Base.Module.NumeroALetras numLetter = new ();
-            this.comentario = numLetter.Convertir(Monto, Moneda.Plural);
-        }
+        //[Action(Caption = "Test")]
+        //public void TestNumberToLetter()
+        //{
+        //    Base.Module.NumeroALetras numLetter = new ();
+        //    this.comentario = numLetter.Convertir(Monto, Moneda.Plural);
+        //}
 
         /// <summary>
         /// Reescribimos el metodo para generar un correlativo por tipo de transaccion y año
@@ -319,10 +343,13 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         protected int CorrelativoDoc()
         {
             object max;
-            string sCriteria = "BancoCuenta.Empresa.Oid == ? && Clasificacion.Tipo == ? && GetYear(Fecha) == ?";
+            var criteria = CriteriaOperator.And(new BinaryOperator("[BancoCuenta.Empresa.Oid]", BancoCuenta.Empresa.Oid),
+                                                new BinaryOperator("[Clasificacion.Tipo]", Clasificacion.Tipo),
+                                                CriteriaOperator.Parse("GetYear(Fecha) == ?", Fecha.Year));
+            //string sCriteria = "BancoCuenta.Empresa.Oid == ? && Clasificacion.Tipo == ? && GetYear(Fecha) == ?";
             var oldValue = Session.LockingOption;
             Session.LockingOption = LockingOption.Optimistic;
-            max = Session.Evaluate<BancoTransaccion>(CriteriaOperator.Parse("Max(Numero)"), CriteriaOperator.Parse(sCriteria, BancoCuenta.Empresa.Oid, Clasificacion.Tipo, Fecha.Year));
+            max = Session.Evaluate<BancoTransaccion>(CriteriaOperator.Parse("Max(Numero)"), criteria);
             Session.LockingOption = oldValue;
             return Convert.ToInt32(max ?? 0) + 1;
         }

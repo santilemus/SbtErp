@@ -6,6 +6,7 @@ using DevExpress.Persistent.BaseImpl;
 using SBT.Apps.Base.Module.BusinessObjects;
 using System;
 using System.Collections.Generic;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace SBT.Apps.Medico.Module
 {
@@ -27,7 +28,20 @@ namespace SBT.Apps.Medico.Module
             base.Setup(application);
             // Manage various aspects of the application UI and behavior at the module level.
             application.CreateCustomLogonWindowObjectSpace += application_CreateCustomLogonWindowObjectSpace;
+            application.ObjectSpaceCreated += Application_ObjectSpaceCreated;
         }
+
+        private void Application_ObjectSpaceCreated(object sender, ObjectSpaceCreatedEventArgs e)
+        {
+            if (e.ObjectSpace is CompositeObjectSpace compositeObjectSpace)
+            {
+                if (compositeObjectSpace.Owner is not CompositeObjectSpace)
+                {
+                    compositeObjectSpace.PopulateAdditionalObjectSpaces((XafApplication)sender);
+                }
+            }
+        }
+
         public override void CustomizeTypesInfo(ITypesInfo typesInfo)
         {
             base.CustomizeTypesInfo(typesInfo);

@@ -1,8 +1,11 @@
 ﻿using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.Model;
+using DevExpress.ExpressApp.Security;
+using DevExpress.ExpressApp.Security.ClientServer;
 using DevExpress.Persistent.Base;
 using DevExpress.Xpo;
 using DevExpress.Xpo.Metadata;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.ComponentModel;
 
@@ -18,9 +21,27 @@ namespace SBT.Apps.Base.Module.BusinessObjects
               : base(session)
         {
         }
+
+        private bool isDefaultPropertyAttributeInit;
+        private XPMemberInfo defaultPropertyMemberInfo;
+        [Size(25), Persistent(@"UsuarioCrea"), DbType("varchar(25)"), NonCloneable(), ModelDefault("AllowEdit", "False")]
+        string usuarioCrea;
+        [Persistent(@"FechaCrea"), DbType("datetime"), NonCloneable, ModelDefault("AllowEdit", "False")]
+        DateTime? fechaCrea = DateTime.Now;
+        [Size(25), Persistent(@"UsuarioMod"), DbType("varchar(25)"), NonCloneable, ModelDefault("AllowEdit", "False")]
+        private string usuarioMod;
+        [Persistent(@"FechaMod"), DbType("datetime")]
+        private DateTime? fechaMod;
+
         public override void AfterConstruction()
         {
             base.AfterConstruction();
+            if (string.IsNullOrEmpty(SecuritySystem.CurrentUserName))
+                usuarioCrea = Session.ServiceProvider.GetRequiredService<ISecurityStrategyBase>().UserName;
+            else
+                usuarioCrea = SecuritySystem.CurrentUserName;
+            fechaCrea = DateTime.Now;
+
             if (this.ClassInfo.FindMember("Empresa") != null)
             {
                 int id = ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid;
@@ -43,10 +64,16 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         protected override void OnSaving()
         {
             base.OnSaving();
-            if (!Session.IsNewObject(this))
+            if (Session is not NestedUnitOfWork && (Session.DataLayer != null) && (Session.ObjectLayer is SecuredSessionObjectLayer))
             {
-                fechaMod = DateTime.Now;
-                usuarioMod = DevExpress.ExpressApp.SecuritySystem.CurrentUserName;
+                if (!Session.IsNewObject(this))
+                {
+                    fechaMod = DateTime.Now;
+                    if (string.IsNullOrEmpty(SecuritySystem.CurrentUserName))
+                        usuarioMod = Session.ServiceProvider.GetRequiredService<ISecurityStrategyBase>().UserName;
+                    else
+                        usuarioMod = SecuritySystem.CurrentUserName;
+                }
             }
         }
 
@@ -70,13 +97,8 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             }
         }
 
-        private bool isDefaultPropertyAttributeInit;
-        private XPMemberInfo defaultPropertyMemberInfo;
-
         #region Propiedades
 
-        [Size(25), Persistent(@"UsuarioCrea"), DbType("varchar(25)"), NonCloneable(), ModelDefault("AllowEdit", "False")]
-        string usuarioCrea;
         /// <summary>
         /// Usuario que creó el registro
         /// </summary>
@@ -88,8 +110,6 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             get => usuarioCrea;
         }
 
-        [Persistent(@"FechaCrea"), DbType("datetime"), NonCloneable, ModelDefault("AllowEdit", "False")]
-        DateTime? fechaCrea = DateTime.Now;
         /// <summary>
         /// Fecha y hora de creación del registro
         /// </summary>
@@ -102,12 +122,9 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             get => fechaCrea;
         }
 
-        [Size(25), Persistent(@"UsuarioMod"), DbType("varchar(25)"), NonCloneable, ModelDefault("AllowEdit", "False")]
-        private string usuarioMod;
         /// <summary>
         /// Usuario que realizó la última modificación
         /// </summary>
-
         [DevExpress.Xpo.DisplayName(@"Usuario Modificó"), Browsable(false), PersistentAlias("usuarioMod")]
         [Delayed(true)]
         public string UsuarioMod
@@ -115,8 +132,6 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             get => usuarioMod;
         }
 
-        [Persistent(@"FechaMod"), DbType("datetime")]
-        private DateTime? fechaMod;
         /// <summary>
         /// Fecha y Hora de la última modificación
         /// </summary>
