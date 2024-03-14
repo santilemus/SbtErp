@@ -2,6 +2,8 @@
 using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.Actions;
 using DevExpress.ExpressApp.Model;
+using DevExpress.ExpressApp.Security;
+using Microsoft.Extensions.DependencyInjection;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Compra.Module.BusinessObjects;
 using System;
@@ -11,7 +13,23 @@ namespace SBT.Apps.Compra.Module.Controllers
 {
     public class CompraFacturaListViewController : ViewController<ListView>
     {
+        private int fEmpresaOid = -1;
         private PopupWindowShowAction pwsaExportarAnexoPagoCuenta;
+
+        private int EmpresaOid
+        {
+            get
+            {
+                if (fEmpresaOid <= 0)
+                {
+                    if (SecuritySystem.CurrentUser == null)
+                        fEmpresaOid = ObjectSpace.GetObjectByKey<Usuario>(ObjectSpace.ServiceProvider.GetRequiredService<ISecurityStrategyBase>().User).Empresa.Oid;
+                    else
+                        fEmpresaOid = ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid;
+                }
+                return fEmpresaOid;
+            }
+        }
         public CompraFacturaListViewController()
         {
             TargetObjectType = typeof(SBT.Apps.Compra.Module.BusinessObjects.CompraFactura);
@@ -31,10 +49,9 @@ namespace SBT.Apps.Compra.Module.Controllers
         private void PwsaExportarAnexoPagoCuenta_Execute(object sender, PopupWindowShowActionExecuteEventArgs e)
         {
             FechaParam pa = (e.PopupWindowViewCurrentObject as FechaParam);
-            var empresaOid = ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid;
             var fechaInicio = new DateTime(pa.Fecha.Year, pa.Fecha.Month, 01);
             var fechaFin = fechaInicio.AddMonths(1).AddSeconds(-1);
-            CriteriaOperator criteria = CriteriaOperator.FromLambda<CompraFactura>(x => x.Empresa.Oid == empresaOid &&
+            CriteriaOperator criteria = CriteriaOperator.FromLambda<CompraFactura>(x => x.Empresa.Oid == EmpresaOid &&
                                             x.Fecha >= fechaInicio && x.Fecha <= fechaFin && x.Renta > 0.00m);
             ObjectSpace.ApplyCriteria(View.CollectionSource.Collection, criteria);
             try

@@ -2,22 +2,41 @@
 using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.Actions;
 using DevExpress.ExpressApp.Model;
+using DevExpress.ExpressApp.Security;
 using DevExpress.ExpressApp.SystemModule;
 using DevExpress.ExpressApp.Xpo;
+using DevExpress.Xpo;
+using Microsoft.Extensions.DependencyInjection;
 using SBT.Apps.Base.Module;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Iva.Module.BusinessObjects;
 using System;
+using static DevExpress.CodeParser.CodeStyle.Formatting.Rules;
 
 namespace SBT.Apps.Iva.Module.Controllers
 {
 
     public class LibroVentaContribuyenteListViewController : ViewController<ListView>
     {
+        private int fEmpresaOid = -1;
         private PopupWindowShowAction pwsaGenerar;
         private PopupWindowShowAction pwsaExportarVentas;
         private ExportController exportController;
 
+        private int EmpresaOid
+        {
+            get
+            {
+                if (fEmpresaOid <= 0)
+                {
+                    if (SecuritySystem.CurrentUser == null)
+                        fEmpresaOid = ObjectSpace.GetObjectByKey<Usuario>(ObjectSpace.ServiceProvider.GetRequiredService<ISecurityStrategyBase>().User).Empresa.Oid;
+                    else
+                        fEmpresaOid = ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid;
+                }
+                return fEmpresaOid;
+            }
+        }
         public LibroVentaContribuyenteListViewController(): base()
         {
             this.TargetObjectType = typeof(SBT.Apps.Iva.Module.BusinessObjects.LibroVentaContribuyente);
@@ -46,8 +65,8 @@ namespace SBT.Apps.Iva.Module.Controllers
         protected override void OnActivated()
         {
             base.OnActivated();
-            if (View.ObjectTypeInfo.FindMember("Venta") != null && SecuritySystem.CurrentUser != null)
-                View.CollectionSource.Criteria["Venta"] = CriteriaOperator.Parse("[Venta.Empresa.Oid] = ?", ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid);
+            if (View.ObjectTypeInfo.FindMember("Venta") != null)
+                View.CollectionSource.Criteria["Venta"] = CriteriaOperator.Parse("[Venta.Empresa.Oid] = ?", EmpresaOid);
         }
 
         protected override void OnDeactivated()
@@ -58,10 +77,9 @@ namespace SBT.Apps.Iva.Module.Controllers
         private void PwsaExportarVentas_Execute(object sender, PopupWindowShowActionExecuteEventArgs e)
         {
             FechaParam pa = (e.PopupWindowViewCurrentObject as FechaParam);
-            var empresaOid = ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid;
             var fechaInicio = new DateTime(pa.Fecha.Year, pa.Fecha.Month, 01);
             var fechaFin = pa.Fecha.Date.AddMonths(1).AddSeconds(-1);
-            CriteriaOperator criteria = CriteriaOperator.FromLambda<LibroVentaContribuyente>(x => x.Venta.Empresa.Oid == empresaOid &&
+            CriteriaOperator criteria = CriteriaOperator.FromLambda<LibroVentaContribuyente>(x => x.Venta.Empresa.Oid == EmpresaOid &&
                                             x.Fecha >= fechaInicio && x.Fecha <= fechaFin);
             ObjectSpace.ApplyCriteria(View.CollectionSource.Collection, criteria);
             try
@@ -97,14 +115,13 @@ namespace SBT.Apps.Iva.Module.Controllers
             LibroIvaParams pa = (e.PopupWindowViewCurrentObject as LibroIvaParams);
             if (pa.Anio != null && pa.Mes != null)
             {
-                var EmpresaOid = ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid;
                 try
                 {
                     string codMoneda = pa.Moneda.Codigo;
                     ((XPObjectSpace)ObjectSpace).Session.ExecuteSproc("spGeneraLibroVentaContribuyente", EmpresaOid, codMoneda, Convert.ToInt16(pa.Mes), pa.Anio);
                     DateTime inicioMes = new DateTime(Convert.ToInt16(pa.Anio), (int)pa.Mes, 01);
                     View.RefreshDataSource();
-                    CriteriaOperator criteria = GroupOperator.And(new BinaryOperator("Empresa.Oid", ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid),
+                    CriteriaOperator criteria = GroupOperator.And(new BinaryOperator("Venta.Empresa.Oid", EmpresaOid),
                                  new BetweenOperator("Fecha", inicioMes, inicioMes.AddMonths(1).AddSeconds(-1)));
                     ObjectSpace.ApplyCriteria(View.CollectionSource.Collection, criteria);
                     Application.ShowViewStrategy.ShowMessage($@"Libro de Ventas a Contribuyentes Generado", InformationType.Success);
@@ -124,7 +141,6 @@ namespace SBT.Apps.Iva.Module.Controllers
         {
             var os = Application.CreateObjectSpace(typeof(SBT.Apps.Base.Module.BusinessObjects.LibroIvaParams));
             var pa = os.CreateObject<LibroIvaParams>();
-            var EmpresaOid = ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid;
             CriteriaOperator condicion = CriteriaOperator.Parse("Venta.Empresa = ? And Cerrado = 1", EmpresaOid);
             var fecha = Convert.ToDateTime(ObjectSpace.Evaluate(typeof(SBT.Apps.Iva.Module.BusinessObjects.LibroVentaContribuyente), CriteriaOperator.Parse("max([Fecha])"), condicion));
             if (fecha.Year > 1)

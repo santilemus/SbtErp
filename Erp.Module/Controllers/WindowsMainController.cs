@@ -16,14 +16,16 @@ namespace SBT.Apps.Erp.Module.Controllers
         public WindowsMainController()
         {
             TargetWindowType = WindowType.Main;
-            saPurgeRecord = new(this, "saPurgarRegistrosEliminados", DevExpress.Persistent.Base.PredefinedCategory.Tools.ToString())
+            // ESTO PONERLO EN ALGUN MANTENIMIENTO DE ADMINISTRACION. POR EJEMPLO EMPRESA. ESTE ES UN EJEMPLO DE UN WINDOWCONTROLLER
+            /*
+            saPurgeRecord = new(this, "saPurgarRegistrosEliminados", DevExpress.Persistent.Base.PredefinedCategory.RecordEdit)
             {
                 ToolTip = @"Eliminar de la base de datos los objetos borrados de la aplicación con la caraçterística de eliminación diferida",
                 Caption = "Purgar",
-                ImageName = "trash-bin"
-            };
+                ImageName = "trash-bin"         };
             saPurgeRecord.Execute += SaPurgeRecord_Execute;
             saPurgeRecord.ConfirmationMessage = @"Esta seguro de borrar permanentemente los registros eliminados (Y/N)";
+            */
         }
 
         private void SaPurgeRecord_Execute(object sender, SimpleActionExecuteEventArgs e)

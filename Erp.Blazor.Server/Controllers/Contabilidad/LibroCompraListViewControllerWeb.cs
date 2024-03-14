@@ -40,6 +40,8 @@ namespace SBT.Apps.Erp.Blazor.Server.Controllers.Contabilidad
                 urlFmt = @"ExportService/?typeName=Percepcion&empresaOid={0}&fecha={1:yyyy-MM-dd}";
             else if (parametros.Anexo == EAnexoLibroCompraExportar.Retencion)
                 urlFmt = @"ExportService/?typeName=Retencion&empresaOid={0}&fecha={1:yyyy-MM-dd}";
+            else if (parametros.Anexo == EAnexoLibroCompraExportar.SujetoExcluido)
+                urlFmt = @"ExportService/?typeName=SujetoExcluido&empresaOid={0}&fecha={1:yyyy-MM-dd}";
             else
                 urlFmt = @"ExportService/?typeName=PagoCuenta&empresaOid={0}&fecha={1:yyyy-MM-dd}";
             DateTime fechaInicio = new DateTime(parametros.Fecha.Year, parametros.Fecha.Month, 01);

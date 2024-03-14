@@ -1,4 +1,5 @@
 ﻿using DevExpress.ExpressApp.Blazor;
+using DevExpress.ExpressApp.Blazor.Editors;
 using DevExpress.ExpressApp.SystemModule;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
@@ -12,6 +13,7 @@ namespace SBT.Apps.Erp.Blazor.Server.Controllers
     {
         public CompraFacturaListViewControllerWeb() : base() 
         {
+            TargetObjectType = typeof(SBT.Apps.Compra.Module.BusinessObjects.CompraFactura);
         }
 
         protected override void DoExecuteExport(FechaParam parametros)
@@ -26,5 +28,14 @@ namespace SBT.Apps.Erp.Blazor.Server.Controllers
             Application.ShowViewStrategy.ShowMessage("Finalizó exportar los datos");
         }
 
+        protected override void OnViewControlsCreated()
+        {
+            base.OnViewControlsCreated();
+            if (View.Editor is DxGridListEditor gridListEditor)
+            {
+                IDxGridAdapter dataGridAdapter = gridListEditor.GetGridAdapter();
+                dataGridAdapter.GridModel.ColumnResizeMode = DevExpress.Blazor.GridColumnResizeMode.ColumnsContainer;
+            }
+        }
     }
 }

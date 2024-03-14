@@ -81,8 +81,13 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
 
     public enum EAnexoLibroCompraExportar
     {
+        [XafDisplayName("Libro de Compras")]
         LibroCompras = 0,
+        [XafDisplayName("Anexo Percepción")]
         Percepcion = 1,
-        Retencion = 2
+        [XafDisplayName("Anexo Retención")]
+        Retencion = 2,
+        [XafDisplayName("Compra Sujeto Excluído")]
+        SujetoExcluido = 3
     }
 }

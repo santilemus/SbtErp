@@ -136,7 +136,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [DbType("datetime"), Persistent("Fecha")]
 #endif
         [XafDisplayName("Fecha"), Index(2), RuleRequiredField("", "Save")]
-        [ModelDefault("DisplayFormat", "{0:G}"), ModelDefault("EditMask", "G")]
+        [ModelDefault("DisplayFormat", "{0:dd/MM/yyyy}"), ModelDefault("EditMask", "dd/MM/yyyy")]
         public DateTime Fecha
         {
             get => fecha;

@@ -677,8 +677,8 @@
       <Columns>
         <ColumnInfo Id="CtaPresupuesto" Width="93" Index="-1" />
         <ColumnInfo Id="NombreCuenta" Index="-1" />
+        <ColumnInfo Id="Cuenta" Width="175" Index="0" />
         <ColumnInfo Id="Concepto" Index="1" Width="580" />
-        <ColumnInfo Id="Cuenta" Width="175" />
         <ColumnInfo Id="ValorDebe" Index="2" Width="127" />
         <ColumnInfo Id="ValorHaber" Index="3" Width="128" />
         <ColumnInfo Id="AjusteConsolidacion" Index="4" Width="128" />
@@ -717,13 +717,13 @@
     </DetailView>
     <ListView Id="PartidaDetalle_ListView" DataAccessMode="Server">
       <Columns>
-        <ColumnInfo Id="NombreCuenta" Width="230" />
-        <ColumnInfo Id="Cuenta" Width="126" />
-        <ColumnInfo Id="Concepto" Width="400" />
-        <ColumnInfo Id="ValorDebe" Width="94" />
-        <ColumnInfo Id="ValorHaber" Width="83" />
-        <ColumnInfo Id="CtaPresupuesto" Width="157" />
-        <ColumnInfo Id="AjusteConsolidacion" Width="165" />
+        <ColumnInfo Id="NombreCuenta" Width="230" Index="-1" />
+        <ColumnInfo Id="Cuenta" Width="126" Index="0" />
+        <ColumnInfo Id="Concepto" Width="400" Index="1" />
+        <ColumnInfo Id="ValorDebe" Width="94" Index="2" />
+        <ColumnInfo Id="ValorHaber" Width="83" Index="3" />
+        <ColumnInfo Id="CtaPresupuesto" Width="157" Index="4" />
+        <ColumnInfo Id="AjusteConsolidacion" Width="165" Index="5" />
       </Columns>
     </ListView>
     <DetailView Id="PartidaModelo_DetailView">

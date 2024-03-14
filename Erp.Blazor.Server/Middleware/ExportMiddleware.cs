@@ -87,6 +87,12 @@ namespace SBT.Apps.Erp.Blazor.Server.Middleware
             return CompraConsultaHelper.GetDataPagoCuentaAnexo(objectSpace, empresaOid, fechaDesde, fechaHasta).ToList();
         }
 
+        private dynamic GetDataFacturaSujetoExcluido(IXafApplicationProvider applicationProvider, int empresaOid, DateTime fechaDesde, DateTime fechaHasta)
+        {
+            using var objetSpace = CreateObjectSpace(applicationProvider, typeof(LibroCompra));
+            return CompraConsultaHelper.GetDataFacturaSujetoExcluido(objetSpace, empresaOid, fechaDesde, fechaHasta).ToList();
+        }
+
 
         public async Task InvokeAsync(HttpContext httpContext, IXafApplicationProvider applicationProvider)
         {
@@ -107,7 +113,7 @@ namespace SBT.Apps.Erp.Blazor.Server.Middleware
                         }
                     case "SujetoExcluido":
                         {
-                            // PENDIENTE EL METODO PARA GENERAR DATOS DEL SUJETO EXCLUIDO
+                            datos = GetDataFacturaSujetoExcluido(applicationProvider, empresaOid, fechaDesde, fechaHasta);
                             sFileName = sFileName + string.Format("SujetoExcluido_{0:MMMyyyy}.csv", fechaHasta);
                             break;
                         }

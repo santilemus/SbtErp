@@ -105,4 +105,9 @@
   <ItemGroup>
     <ProjectReference Include="..\Empleado\SBT.Apps.Empleado.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="UnusableNodes.xml">
+      <DependentUpon>Model.DesignedDiffs.xafml</DependentUpon>
+    </None>
+  </ItemGroup>
 </Project>

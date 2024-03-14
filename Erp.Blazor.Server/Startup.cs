@@ -12,6 +12,7 @@ using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Erp.Blazor.Server.Middleware;
 using DevExpress.Blazor.Configuration;
 using SBT.Apps.Base.Module;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace SBT.Apps.Erp.Blazor.Server;
 
@@ -116,6 +117,11 @@ public class Startup
                             EmpresaActualOidFunction.Evaluate(context);
                             return;
                         }
+                        if (AgenciaActualOidFunction.CanEvaluate(context))
+                        {
+                            AgenciaActualOidFunction.Evaluate(context);
+                            return;
+                        }
                         // agregar aqui las otras funciones personalizadas y que son similares a la anterior (van a la bd)
                     };
                 })
@@ -137,12 +143,14 @@ public class Startup
 
         // agregado por SELM el 13/07/2023, para habilitar consultas personalizadas en el diseñador de informes
         // más info: https://supportcenter.devexpress.com/ticket/details/t1062867/how-to-enable-custom-sql-in-xaf-blazor-report-designer
-        services.ConfigureReportingServices(options =>
+        services.ConfigureReportingServices(configurator =>
         {
-            options.ConfigureReportDesigner(designer =>
+            configurator.ConfigureReportDesigner(designer =>
             {
                 designer.RegisterDataSourceWizardConfigFileConnectionStringsProvider();
                 designer.EnableCustomSql();
+                designer.RegisterDataSourceWizardConfigFileConnectionStringsProvider();
+                designer.RegisterSqlDataSourceWizardCustomizationService<CustomSqlDataSourceWizardCustomizationService>();
             });
         });
     }
@@ -157,6 +165,10 @@ public class Startup
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
+        app.UseForwardedHeaders(new ForwardedHeadersOptions
+        {
+            ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+        });
         if (env.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();

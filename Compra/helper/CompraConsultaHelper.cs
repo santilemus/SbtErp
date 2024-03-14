@@ -30,7 +30,8 @@ namespace SBT.Apps.Compra.Module.helper
         public static IEnumerable<dynamic> GetDataLibroCompra(IObjectSpace objectSpace, int empresaOid, DateTime fechaDesde, DateTime fechaHasta)
         {
             var criteria = CriteriaOperator.FromLambda<LibroCompra>(x => x.CompraFactura.Empresa.Oid == empresaOid &&
-                x.Fecha.Date >= fechaDesde && x.Fecha.Date <= fechaHasta && x.CompraFactura.Estado != EEstadoFactura.Anulado);
+                x.Fecha.Date >= fechaDesde && x.Fecha.Date <= fechaHasta && x.CompraFactura.Estado != EEstadoFactura.Anulado &&
+                x.CompraExcluido == 0.0m && !string.IsNullOrEmpty(x.TipoDocumento));
             var datos = objectSpace.GetObjects<LibroCompra>(criteria).Select(x => new
             {
                 Fecha = string.Format("{0:dd/MM/yyyy}", x.Fecha),
@@ -49,15 +50,15 @@ namespace SBT.Apps.Compra.Module.helper
                 x.CreditoFiscal,
                 x.Total,
                 x.Dui,
-                x.TipoOperacion,
-                x.ClasificacionRenta,
-                x.Sector,
-                x.TipoCostoGasto,
+                TipoOperacion = (int)x.TipoOperacion,
+                ClasificacionRenta = (int)x.ClasificacionRenta,
+                Sector = (int)x.Sector,
+                TipoCostoGasto = (int)x.TipoCostoGasto,
                 x.NumeroAnexo
             });
             return datos;
         }
-         
+
 
         /// <summary>
         /// Obtener los datos para exportar las percepciones aplicadas a las compras de acuerdo a la estructura requerida por el MH
@@ -82,6 +83,30 @@ namespace SBT.Apps.Compra.Module.helper
                 x.IvaPercibido,
                 x.Dui,
                 x.AnexoPercepcion
+            });
+            return datos;
+        }
+
+        public static IEnumerable<dynamic> GetDataFacturaSujetoExcluido(IObjectSpace objectSpace, int empresaOid, DateTime fechaDesde, DateTime fechaHasta)
+        {
+            var criteria = CriteriaOperator.FromLambda<LibroCompra>(x => x.CompraFactura.Empresa.Oid == empresaOid &&
+                            x.Fecha.Date >= fechaDesde && x.Fecha.Date <= fechaHasta && x.CompraFactura.Estado != EEstadoFactura.Anulado &&
+                            string.IsNullOrEmpty(x.TipoDocumento) && x.CompraExcluido != 0.0m);
+            var datos = objectSpace.GetObjects<LibroCompra>(criteria).Select(x => new
+            {
+                TipoDocumento = !string.IsNullOrEmpty(x.Nit) ? 1: !string.IsNullOrEmpty(x.Dui) ? 2: 3,
+                NumeroDocumento = x.Nit ?? x.Dui,
+                x.CompraFactura.Proveedor.Nombre,
+                x.Fecha,
+                x.Serie,
+                x.Numero,
+                x.Total,
+                x.CreditoFiscal,
+                TipoOperacion = (int)x.TipoOperacion,
+                ClasificacionRenta = (int)x.ClasificacionRenta,
+                Sector = (int)x.Sector,
+                TipoCostoGasto = (int)x.TipoCostoGasto,
+                NumeroAnexo = 5
             });
             return datos;
         }
@@ -117,6 +142,10 @@ namespace SBT.Apps.Compra.Module.helper
                 Cefafa = 0.0m,
                 Bmg = 0.0m,
                 IssOvm = 0.0m,
+                TipoOperacion = (int)x.TipoOperacion,
+                Clasificacion = (int)x.ClasificacionRenta,
+                Sector = (int)x.ProveedorGiro.Sector,
+                TipoCostoGasto = (int)x.TipoCostoGasto,
                 Periodo = string.Format("{0:MMyyyy}", x.Fecha)
             });
             return datos;

@@ -2,21 +2,19 @@
 using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.Actions;
 using DevExpress.ExpressApp.Model;
-using DevExpress.ExpressApp.SystemModule;
+using DevExpress.ExpressApp.Security;
 using DevExpress.ExpressApp.Xpo;
-using SBT.Apps.Base.Module;
+using Microsoft.Extensions.DependencyInjection;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Iva.Module.BusinessObjects;
 using System;
-using System.Data.SqlClient;
-using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace SBT.Apps.Facturacion.Module.Controllers
 {
     public class LibroVentaConsumidorListViewController: ViewController<ListView>
     {
+        private int fEmpresaOid = -1;
         private PopupWindowShowAction pwsaGenerar;
         private PopupWindowShowAction pwsaExportarVentas;
         private static string ParametrosNulos = @"No se puede ejecutar el proceso de Generación del Libro de Ventas, porque uno o más parámetros son nulos";
@@ -26,6 +24,7 @@ namespace SBT.Apps.Facturacion.Module.Controllers
         public LibroVentaConsumidorListViewController(): base()
         {
             this.TargetObjectType = typeof(SBT.Apps.Iva.Module.BusinessObjects.LibroVentaConsumidor);
+
             pwsaGenerar = new PopupWindowShowAction(this, "LibroVentasConsumidor_Generar", DevExpress.Persistent.Base.PredefinedCategory.RecordEdit.ToString());
             pwsaGenerar.Caption = "Generar";
             pwsaGenerar.CancelButtonCaption = "Cancelar";
@@ -51,10 +50,9 @@ namespace SBT.Apps.Facturacion.Module.Controllers
         private void PwsaExportarVentas_Execute(object sender, PopupWindowShowActionExecuteEventArgs e)
         {
             FechaParam pa = (e.PopupWindowViewCurrentObject as FechaParam);
-            var empresaOid = ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid;
             var fechaInicio = new DateTime(pa.Fecha.Year, pa.Fecha.Month, 01);
             var fechaFin = fechaInicio.AddMonths(1).AddSeconds(-1);
-            CriteriaOperator criteria = CriteriaOperator.FromLambda<LibroVentaConsumidor>(x => x.Empresa.Oid == empresaOid &&
+            CriteriaOperator criteria = CriteriaOperator.FromLambda<LibroVentaConsumidor>(x => x.Empresa.Oid == EmpresaOid &&
                                             x.Fecha >= fechaInicio && x.Fecha <= fechaFin);
             ObjectSpace.ApplyCriteria(View.CollectionSource.Collection, criteria);
             try
@@ -91,12 +89,27 @@ namespace SBT.Apps.Facturacion.Module.Controllers
                 View.CollectionSource.Criteria["Empresa Actual"] = CriteriaOperator.Parse("[Empresa.Oid] = ?", ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid);
         }
 
+        private int EmpresaOid
+        {
+            get
+            {
+                if (fEmpresaOid <= 0)
+                {
+                    if (SecuritySystem.CurrentUser == null)
+                        fEmpresaOid = ObjectSpace.GetObjectByKey<Usuario>(ObjectSpace.ServiceProvider.GetRequiredService<ISecurityStrategyBase>().User).Empresa.Oid;
+                    else
+                        fEmpresaOid = ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid;
+                }
+                return fEmpresaOid;
+            }
+        }
+
         private void PwsaGenerar_Execute(object sender, PopupWindowShowActionExecuteEventArgs e)
         {
             LibroIvaParams pa = (e.PopupWindowViewCurrentObject as LibroIvaParams);
+
             if (pa.Anio != null && pa.Mes != null)
             {
-                var EmpresaOid = ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid;
                 try
                 {
                     string codMoneda = pa.Moneda.Codigo;
@@ -105,7 +118,7 @@ namespace SBT.Apps.Facturacion.Module.Controllers
                     CriteriaOperator criteria = new BetweenOperator("Fecha", inicioMes, inicioMes.AddMonths(1).AddDays(-1));
                     View.RefreshDataSource();
                     ObjectSpace.ApplyCriteria(View.CollectionSource.Collection, CriteriaOperator.Parse("Empresa.Oid = ? And [Fecha] Between(?, ?)",
-                        ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid, inicioMes, inicioMes.AddMonths(1).AddMinutes(-1)));
+                        EmpresaOid, inicioMes, inicioMes.AddMonths(1).AddMinutes(-1)));
                     Application.ShowViewStrategy.ShowMessage(Informacion1, InformationType.Success);
                 }
                 catch (Exception ex)
@@ -115,7 +128,7 @@ namespace SBT.Apps.Facturacion.Module.Controllers
             }
             else
                 Application.ShowViewStrategy.ShowMessage(ParametrosNulos, InformationType.Warning);
-            var resultado = ObjectSpace.GetObjects<LibroVentaConsumidor>(CriteriaOperator.FromLambda<LibroVentaConsumidor>(x => x.Empresa.Oid == 1)).
+            var resultado = ObjectSpace.GetObjects<LibroVentaConsumidor>(CriteriaOperator.FromLambda<LibroVentaConsumidor>(x => x.Empresa.Oid == EmpresaOid)).
                 Select(xy => new { xy.Clase, xy.Correlativo, xy.Exenta }).ToList();
         }
 

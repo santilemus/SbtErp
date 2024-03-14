@@ -9,15 +9,32 @@ using DevExpress.XtraPrinting;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Base.Module;
 using SBT.Apps.Compra.Module.BusinessObjects;
+using DevExpress.ExpressApp.Security;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace SBT.Apps.Iva.Module.Controllers
 {
     public class LibroCompraListViewController : ViewController<ListView>
     {
+        private int fEmpresaOid = -1;
         private PopupWindowShowAction pwsaGenerar;
         private PopupWindowShowAction pwsaExportarAnexosIva;
         private ExportController exportController;
 
+        private int EmpresaOid
+        {
+            get
+            {
+                if (fEmpresaOid <= 0)
+                {
+                    if (SecuritySystem.CurrentUser == null)
+                        fEmpresaOid = ObjectSpace.GetObjectByKey<Usuario>(ObjectSpace.ServiceProvider.GetRequiredService<ISecurityStrategyBase>().User).Empresa.Oid;
+                    else
+                        fEmpresaOid = ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid;
+                }
+                return fEmpresaOid;
+            }
+        }
         public LibroCompraListViewController() : base()
         {
             this.TargetObjectType = typeof(SBT.Apps.Iva.Module.BusinessObjects.LibroCompra);
@@ -47,8 +64,7 @@ namespace SBT.Apps.Iva.Module.Controllers
         {
             LibroCompraExportarParams pa = (e.PopupWindowViewCurrentObject as LibroCompraExportarParams);
             var inicioMes = pa.Fecha.Date;
-            var empresaOid = ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid;
-            CriteriaOperator criteria = GroupOperator.And(new BinaryOperator("CompraFactura.Empresa.Oid", empresaOid),
+            CriteriaOperator criteria = GroupOperator.And(new BinaryOperator("CompraFactura.Empresa.Oid", EmpresaOid),
                                              new BetweenOperator("Fecha", inicioMes, inicioMes.AddMonths(1).AddSeconds(-1)));
             ObjectSpace.ApplyCriteria(View.CollectionSource.Collection, criteria);
             try
@@ -79,14 +95,13 @@ namespace SBT.Apps.Iva.Module.Controllers
             LibroIvaParams pa = (e.PopupWindowViewCurrentObject as LibroIvaParams);
             if (pa.Anio != null && pa.Mes != null)
             {
-                var EmpresaOid = ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid;
                 try
                 {
                     string codMoneda = pa.Moneda.Codigo;
                     ((XPObjectSpace)ObjectSpace).Session.ExecuteSproc("spGeneraLibroCompra", EmpresaOid, codMoneda, Convert.ToInt16(pa.Mes), pa.Anio);
                     DateTime inicioMes = new DateTime(Convert.ToInt16(pa.Anio), (int)pa.Mes, 01);
                     //View.RefreshDataSource(); comentario para probar sino afecta quitar esto 03/feb/2024
-                    CriteriaOperator criteria = GroupOperator.And(new BinaryOperator("CompraFactura.Empresa.Oid", ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid),
+                    CriteriaOperator criteria = GroupOperator.And(new BinaryOperator("CompraFactura.Empresa.Oid", EmpresaOid),
                                                                  new BetweenOperator("Fecha", inicioMes, inicioMes.AddMonths(1).AddMinutes(-1)));
                     ObjectSpace.ApplyCriteria(View.CollectionSource.Collection, criteria);
                     Application.ShowViewStrategy.ShowMessage($@"Libro de Compras Generado", InformationType.Success);
@@ -104,7 +119,6 @@ namespace SBT.Apps.Iva.Module.Controllers
         {
             var os = Application.CreateObjectSpace(typeof(SBT.Apps.Base.Module.BusinessObjects.LibroIvaParams));
             var pa = os.CreateObject<LibroIvaParams>();
-            var EmpresaOid = ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid;
             CriteriaOperator condicion = CriteriaOperator.Parse("CompraFactura.Empresa = ? And Cerrado = 1", EmpresaOid);
             var fecha = Convert.ToDateTime(ObjectSpace.Evaluate(typeof(SBT.Apps.Iva.Module.BusinessObjects.LibroCompra), CriteriaOperator.Parse("max([Fecha])"), condicion));
             if (fecha.Year > 1)
@@ -131,7 +145,7 @@ namespace SBT.Apps.Iva.Module.Controllers
         {
             base.OnActivated();
             if (!(View.CollectionSource.Criteria.ContainsKey("Empresa Actual")) && SecuritySystem.CurrentUser != null)
-                View.CollectionSource.Criteria["Empresa Actual"] = CriteriaOperator.Parse("[CompraFactura.Empresa.Oid] = ?", ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid);
+                View.CollectionSource.Criteria["Empresa Actual"] = CriteriaOperator.Parse("[CompraFactura.Empresa.Oid] = ?", EmpresaOid);
 
             exportController = Frame.GetController<ExportController>();
             exportController.CustomGetDefaultFileName += ExportController_CustomGetDefaultFileName;

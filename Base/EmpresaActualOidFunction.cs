@@ -36,20 +36,11 @@ namespace SBT.Apps.Base.Module
     {
         public const string FUNCTION_NAME = "EmpresaActualOid";
 
-        IObjectSpaceFactory objectSpaceFactory;
-        private IObjectSpace objectSpace;
-
         #region Implementacion de ICustomFunctionOperator
         /// <summary>
         /// Propiedad con el nombre de la funcion personalizada
         /// </summary>
-        public string Name
-        {
-            get
-            {
-                return FUNCTION_NAME;
-            }
-        }
+        public string Name => FUNCTION_NAME;
 
         /// <summary>
         /// Evalua el codigo (expresion) que calcula el valor a retornar por la funcion personalizada cuyo nombre se define en Name
@@ -58,9 +49,10 @@ namespace SBT.Apps.Base.Module
         /// <returns>Retorna el valor calculado por la funcion</returns>
         public object Evaluate(params object[] operands)
         {
-            return CurrentOrgIdFunctionCore(SecuritySystem.Instance);
-
-            //return ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid;
+            if (string.IsNullOrEmpty(SecuritySystem.CurrentUserName))
+                return CurrentOrgIdFunctionCore(SecuritySystem.Instance);
+            else
+                return ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid;
         }
 
         public static void Evaluate(CustomCriteriaOperatorPatcherContext context)
@@ -127,7 +119,7 @@ namespace SBT.Apps.Base.Module
 
         public string Description
         {
-            get { return $"EmpresaActualOid(){Environment.NewLine}Retorna el Oid de la empresa de la sesion actual (seleccionada en LogIn"; }
+            get { return $"{FUNCTION_NAME}(){Environment.NewLine}Retorna el Oid de la empresa de la sesion actual (seleccionada en LogIn"; }
         }
 
         public FunctionCategory Category
