@@ -38,16 +38,13 @@ namespace SBT.Apps.Erp.Module
         }
         public override object Authenticate(IObjectSpace objectSpace)
         {
-            Usuario usuario = objectSpace.FindObject<Usuario>(
-                new BinaryOperator("UserName", customLogonParameters.UserName));
+            Usuario usuario = objectSpace.FirstOrDefault<Usuario>(e => e.UserName == customLogonParameters.UserName);
 
             if (usuario == null)
-                throw new ArgumentNullException("CustomAuthentication.Authenticate: Usuario es Nulo");
+                throw new ArgumentNullException("Usuario");
 
-            if (!usuario.ComparePassword(customLogonParameters.Password))
-                throw new AuthenticationException(
-                    usuario.UserName, "Password Incorrecto.");
-
+            if (!((IAuthenticationStandardUser)usuario).ComparePassword(customLogonParameters.Password))
+                throw new AuthenticationException(usuario.UserName, "Contraseña incorrecta");
             return usuario;
         }
 

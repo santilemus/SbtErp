@@ -3,6 +3,7 @@ using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Security;
 using DevExpress.ExpressApp.Utils;
 using DevExpress.Persistent.Base;
+using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using System;
 using System.ComponentModel;
@@ -30,6 +31,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         private string password;
 
         [DataSourceCriteria("Activa == True"), ImmediatePostData(true)]
+        [JsonIgnore]
         public Empresa Empresa
         {
             get { return empresa; }
@@ -54,6 +56,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         }
 
         [DataSourceProperty("Empresa.Unidades"), ImmediatePostData(true)]
+        [JsonIgnore]
         public EmpresaUnidad Agencia
         {
             get { return agencia; }
@@ -104,9 +107,12 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         public event PropertyChangedEventHandler PropertyChanged;
 
         //[Browsable(false)]
+        [System.ComponentModel.DisplayName("Usuario")]
+        [RuleRequiredField("CustomLogonParameters.UserName_requerido", DefaultContexts.Save, "El nombre de usuario es obligatorio")]
         public String UserName { get; set; }
        
         [PasswordPropertyText(true)]
+        [System.ComponentModel.DisplayName("Contraseña")]
         public string Password
         {
             get { return password; }

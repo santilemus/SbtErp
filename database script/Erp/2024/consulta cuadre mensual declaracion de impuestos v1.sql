@@ -1,19 +1,31 @@
+declare @CodigoMoneda varchar(3) = 'USD'
+declare @OidEmpresa int = 1
+declare @FechaDesde datetime = '20240101'
+declare @FechaHasta datetime = '20240131'
+
 -- Venta
-select Format(v.Fecha, 'MMMM-yyyy') as Mes, Concat(v.TipoFactura, ' ', l.Nombre) as Tipo,
-       count(*) as Cantidad, sum(coalesce(Exenta, 0)) as Exenta,
-       sum(coalesce(Gravada, 0)) as Gravada, sum(coalesce(IVA, 0)) as Iva,
-	   sum(coalesce(v.IvaRetenido, 0)) as IvaRetenido,
-	   sum(coalesce(v.IvaPercibido, 0)) as IvaPercibido, 
-	   sum(coalesce(v.Exenta, 0) + coalesce(v.Gravada, 0) + coalesce(v.Iva, 0) - coalesce(v.IvaRetenido, 0) + 
-		   coalesce(v.IvaPercibido, 0) + coalesce(v.noSujeta, 0)) as Total, 'Venta' as Grupo
-  from Venta v
- inner join Listas l
+/*
+select Format(v.Fecha, 'MMMM-yyyy') as Mes, Concat(v.TipoFactura, ' ', l.Nombre) as Tipo, m.Plural,
+       count(*) as Cantidad, sum(coalesce(v.Exenta, 0) / v.ValorMoneda * m.FactorCambio)  as Exenta,
+       sum(coalesce(v.Gravada, 0) / v.ValorMoneda * m.FactorCambio) as Gravada, 
+	   sum(coalesce(v.IVA, 0) / v.ValorMoneda * m.FactorCambio) as Iva,
+	   sum(coalesce(v.IvaRetenido, 0) / v.ValorMoneda * m.FactorCambio) as IvaRetenido,
+	   sum(coalesce(v.IvaPercibido, 0) / v.ValorMoneda * m.FactorCambio) as IvaPercibido, 
+	   sum((coalesce(v.Exenta, 0) + coalesce(v.Gravada, 0) + coalesce(v.Iva, 0) - coalesce(v.IvaRetenido, 0) + 
+		   coalesce(v.IvaPercibido, 0) + coalesce(v.noSujeta, 0)) / v.ValorMoneda * m.FactorCambio) as Total
+  from dbo.Venta v
+ inner join dbo.Listas l
     on v.TipoFactura = l.Codigo
- where v.Empresa = 1
+ inner join dbo.Moneda m
+    on m.Codigo = @CodigoMoneda
+ where v.Empresa = @OidEmpresa
    and v.Estado <> 2 -- anulado 
-   and Month(fecha) = 01
-   and Year(fecha) = 2024
- group by Format(v.Fecha, 'MMMM-yyyy'), v.TipoFactura, l.Nombre
+   and cast(v.Fecha as Date) between @FechaDesde and @FechaHasta
+ group by Format(v.Fecha, 'MMMM-yyyy'), v.TipoFactura, l.Nombre, m.Plural
+ */
+  select *
+   from vwVentaMes v
+  where v.Emp
 
  -- Libro Venta Contribuyente
 select Format(c.Fecha, 'MMMM-yyyy') as Mes, c.TipoDocumento,
@@ -26,6 +38,7 @@ select Format(c.Fecha, 'MMMM-yyyy') as Mes, c.TipoDocumento,
   from LibroVentaContribuyente c
  inner join Venta v
     on c.Venta = v.Oid 
+ inner join Moneda m
  where v.Empresa = 1
    and v.Estado <> 2 -- anulado 
    and Month(c.fecha) = 01
@@ -79,18 +92,24 @@ select v.Fecha, v.NoFactura, a.Resolucion, a.Serie,
 
  -- Compra
  select Format(c.Fecha, 'MMMM-yyyy') as Mes,  Concat(c.TipoFactura, ' ', l.Nombre) as TipoFactura,
-        count(*) as Cantidad, sum(coalesce(c.Exenta, 0)) as Exenta, sum(coalesce(c.Gravada, 0)) as Gravada,
-		sum(coalesce(c.Iva, 0)) as Iva, sum(coalesce(c.IvaRetenido, 0)) as IvaRetenido, 
-		sum(coalesce(c.IvaPercibido, 0)) as IvaPercibido, sum(coalesce(c.NoSujeta, 0)) as NoSujeta,
-		sum(coalesce(c.Fovial, 0)) as Fovial, sum(coalesce(c.Renta, 0)) as Renta,
-		sum(coalesce(c.Exenta, 0) + coalesce(c.Gravada, 0) + coalesce(c.Iva, 0) + coalesce(c.IvaPercibido, 0) -
-		    coalesce(c.IvaRetenido, 0) + coalesce(c.NoSujeta, 0) + coalesce(c.Fovial, 0)) as Total
+        m.Plural, count(*) as Cantidad, 
+		sum(coalesce(c.Exenta, 0)/ coalesce(v.ValorMoneda, 1.00) * m.FactorCambio) as Exenta, 
+		sum(coalesce(c.Gravada, 0)/ coalesce(v.ValorMoneda, 1.00) * m.FactorCambio) as Gravada,
+		sum(coalesce(c.Iva, 0)/coalesce(v.ValorMoneda, 1.00)) as Iva, 
+		sum(coalesce(c.IvaRetenido, 0)/coalesce(v.ValorMoneda, 1.00)) as IvaRetenido, 
+		sum(coalesce(c.IvaPercibido, 0)/coalesce(v.ValorMoneda, 1.00)) as IvaPercibido, 
+		sum(coalesce(c.NoSujeta, 0)/coalesce(v.ValorMoneda, 1.00)) as NoSujeta,
+		sum(coalesce(c.Fovial, 0)/coalesce(v.ValorMoneda, 1.00)) as Fovial, 
+		sum(coalesce(c.Renta, 0) / coalesce(v.ValorMoneda, 1.00)) as Renta,
+		sum((coalesce(c.Exenta, 0) + coalesce(c.Gravada, 0) + coalesce(c.Iva, 0) + coalesce(c.IvaPercibido, 0) -
+		    coalesce(c.IvaRetenido, 0) + coalesce(c.NoSujeta, 0) + coalesce(c.Fovial, 0)) / coalesce(v.ValorMoneda, 1.00)) as Total
    from CompraFactura c
   inner join Listas l
      on c.TipoFactura = l.Codigo 
-  where c.Empresa = 1
-    and Month(c.Fecha) = 01
-	and Year(c.Fecha) = 2024
+  inner join dbo.Moneda m
+	 on m.Codigo = @Moneda
+  where c.Empresa = @EmpresaOid
+    and cast(c.Fecha as Date) between @FechaDesde and @FechaHasta
 	and c.Estado != 2 -- Anulado
 	and c.TipoFactura in ('COVE01', 'COVE03', 'COVE06', 'COVE12', 'COVE13')
   group by Format(c.Fecha, 'MMMM-yyyy'), c.TipoFactura, l.Nombre
@@ -124,3 +143,10 @@ select Format(c.Fecha, 'MMMM-yyyy') as Mes,
    and year(c.Fecha) = 2024
    and f.Estado != 2 -- anulado
  group by Format(c.Fecha, 'MMMM-yyyy'), c.TipoDocumento
+
+ select Codigo, Plural, Nombre 
+  from Moneda
+ where Activa = 1
+   and Plural is not null
+
+

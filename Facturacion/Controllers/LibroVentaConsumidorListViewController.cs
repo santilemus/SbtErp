@@ -41,7 +41,7 @@ namespace SBT.Apps.Facturacion.Module.Controllers
             pwsaExportarVentas.CancelButtonCaption = "Cancelar";
             pwsaExportarVentas.ActionMeaning = ActionMeaning.Accept;
             pwsaExportarVentas.ToolTip = "Clic para exportar el libro de ventas a consumidor final al formato requerido para cargarlo en la plataforma de declaración de impuestos";
-            pwsaExportarVentas.TargetObjectType = typeof(SBT.Apps.Iva.Module.BusinessObjects.LibroVentaContribuyente);
+            pwsaExportarVentas.TargetObjectType = typeof(SBT.Apps.Iva.Module.BusinessObjects.LibroVentaConsumidor);
             pwsaExportarVentas.ImageName = "ExportToCSV";
             pwsaExportarVentas.CustomizePopupWindowParams += PwsaExportarVentas_CustomizePopupWindowParams;
             pwsaExportarVentas.Execute += PwsaExportarVentas_Execute;
@@ -76,7 +76,7 @@ namespace SBT.Apps.Facturacion.Module.Controllers
             var pa = os.CreateObject<FechaParam>();
             IModelView detailViewModel = Application.FindModelView("FechaParam_DetailView_MonthYear");  // Fecha con formato MM/yyyy
             if (detailViewModel != null)
-                e.View = Application.CreateDetailView(os, detailViewModel, false);
+                e.View = Application.CreateDetailView(os, detailViewModel.Id, false, pa);
             else
                 e.View = Application.CreateDetailView(os, pa);
             e.View.Caption = "Exportar Libro de Ventas";
@@ -85,8 +85,8 @@ namespace SBT.Apps.Facturacion.Module.Controllers
         protected override void OnActivated()
         {
             base.OnActivated();
-            if (View.ObjectTypeInfo.FindMember("Empresa") != null && !(View.CollectionSource.Criteria.ContainsKey("Empresa Actual")) && SecuritySystem.CurrentUser != null)
-                View.CollectionSource.Criteria["Empresa Actual"] = CriteriaOperator.Parse("[Empresa.Oid] = ?", ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid);
+            if (View.ObjectTypeInfo.FindMember("Empresa") != null && !(View.CollectionSource.Criteria.ContainsKey("Empresa Actual")))
+                View.CollectionSource.Criteria["Empresa Actual"] = CriteriaOperator.Parse("[Empresa.Oid] = ?", EmpresaOid);
         }
 
         private int EmpresaOid

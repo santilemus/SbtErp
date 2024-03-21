@@ -74,7 +74,7 @@ namespace SBT.Apps.Facturacion.Module.helper
                 x.NoControlInternoAl,
                 x.NoDocumentoDel,
                 x.NoDocumentoAl,
-                x.AutorizacionDocumento.Caja.NoCaja,
+                NoCaja = (x.AutorizacionDocumento.Caja != null) ? Convert.ToString(x.AutorizacionDocumento.Caja): string.Empty,
                 x.Exenta,
                 x.InternaExenta,
                 x.NoSujeta,

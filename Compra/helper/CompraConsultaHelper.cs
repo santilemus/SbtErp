@@ -97,7 +97,7 @@ namespace SBT.Apps.Compra.Module.helper
                 TipoDocumento = !string.IsNullOrEmpty(x.Nit) ? 1: !string.IsNullOrEmpty(x.Dui) ? 2: 3,
                 NumeroDocumento = x.Nit ?? x.Dui,
                 x.CompraFactura.Proveedor.Nombre,
-                x.Fecha,
+                Fecha = string.Format("{0:dd/MM/yyyy}", x.Fecha),
                 x.Serie,
                 x.Numero,
                 x.Total,
