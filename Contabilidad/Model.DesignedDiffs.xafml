@@ -766,23 +766,22 @@
     <DetailView Id="PartidaModeloDetalle_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
-          <LayoutGroup Id="SimpleEditors" RelativeSize="100" Direction="Horizontal">
-            <LayoutGroup Id="PartidaModeloDetalle_col1" ShowCaption="False" Index="0" RelativeSize="50" IsNewNode="True">
-              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="4.8452220726783315" IsNewNode="True" />
-              <LayoutItem Id="Cuenta" ViewItem="Cuenta" Index="1" RelativeSize="3.499327052489906" IsNewNode="True" />
-              <LayoutItem Id="NombreCuenta" ViewItem="NombreCuenta" Index="2" RelativeSize="3.499327052489906" IsNewNode="True" />
-              <LayoutItem Id="Concepto" ViewItem="Concepto" Index="3" RelativeSize="88.15612382234185" IsNewNode="True" />
-            </LayoutGroup>
-            <LayoutGroup Id="PartidaModeloDetalle_col2" ShowCaption="False" Index="1" RelativeSize="50" IsNewNode="True">
-              <LayoutItem Id="ValorDebe" ViewItem="ValorDebe" Index="0" RelativeSize="4.8452220726783315" IsNewNode="True" />
-              <LayoutItem Id="ValorHaber" ViewItem="ValorHaber" Index="1" RelativeSize="3.499327052489906" IsNewNode="True" />
-              <LayoutItem Id="ExpresionItem" ViewItem="ExpresionItem" Index="2" RelativeSize="3.499327052489906" IsNewNode="True" />
-              <LayoutItem Id="ValorItem" ViewItem="ValorItem" Index="3" RelativeSize="88.15612382234185" IsNewNode="True" />
+          <LayoutGroup Id="SimpleEditors" RelativeSize="19.53867028493894" Direction="Vertical">
+            <LayoutGroup Id="PartidaModeloDetalle_col1" ShowCaption="False" Index="0" RelativeSize="100" IsNewNode="True">
+              <LayoutItem Id="Cuenta" ViewItem="Cuenta" Index="0" RelativeSize="23.61111111111111" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="NombreCuenta" ViewItem="NombreCuenta" Index="1" RelativeSize="18.055555555555557" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Concepto" ViewItem="Concepto" Index="2" RelativeSize="18.055555555555557" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Tipo" ViewItem="Tipo" Index="3" RelativeSize="18.055555555555557" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="TipoBO" ViewItem="TipoBO" Index="4" RelativeSize="22.22222222222222" CaptionLocation="Left" IsNewNode="True" />
             </LayoutGroup>
             <LayoutGroup Id="XPObject" Index="1" RelativeSize="83.58008075370121" Caption="Oid" Direction="Horizontal" Removed="True">
               <LayoutItem Id="Oid" RelativeSize="100" Removed="True" />
             </LayoutGroup>
             <LayoutGroup Id="PartidaModeloDetalle" Removed="True" />
+          </LayoutGroup>
+          <LayoutGroup Id="SizeableEditors" RelativeSize="80.46132971506105">
+            <LayoutItem Id="Formula" Index="0" RelativeSize="52.1079258010118" CaptionLocation="Left" />
+            <LayoutItem Id="Criteria" Index="1" RelativeSize="47.8920741989882" CaptionLocation="Left" />
           </LayoutGroup>
         </LayoutGroup>
       </Layout>

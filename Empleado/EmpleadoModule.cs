@@ -58,6 +58,7 @@ namespace SBT.Apps.Empleado.Module
                 mInfoEmpleado = tInfoUsuario.CreateMember("Empleado", typeof(SBT.Apps.Empleado.Module.BusinessObjects.Empleado));
                 mInfoEmpleado.AddAttribute(new DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Empleado"));
                 mInfoEmpleado.AddAttribute(new DevExpress.Xpo.IndexedAttribute());
+                mInfoEmpleado.AddAttribute(new DevExpress.Persistent.Base.ImmediatePostDataAttribute(true));
                 mInfoEmpleado.AddAttribute(new DevExpress.Persistent.Base.DataSourceCriteriaAttribute("[Estado.Categoria] == 9 && !([Estado.Codigo] In ('EMPL02', 'EMPL08', 'EMPL09'))"));
                 mInfoEmpleado.AddAttribute(new DevExpress.ExpressApp.Model.DetailViewLayoutAttribute(DevExpress.ExpressApp.Model.LayoutColumnPosition.Left));
             }

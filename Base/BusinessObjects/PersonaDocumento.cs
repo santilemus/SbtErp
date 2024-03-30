@@ -11,6 +11,11 @@ namespace SBT.Apps.Base.Module.BusinessObjects
     [DevExpress.Persistent.Base.CreatableItemAttribute(false)]
     [DevExpress.Persistent.Base.ImageNameAttribute("user_id-info")]
     [RuleCombinationOfPropertiesIsUnique("PersonaDocumento_DocumentoUnico", DefaultContexts.Save, "Tipo,Oid", SkipNullOrEmptyValues = false)]
+    // nuevas agregadas el 29/03/2024
+    [RuleCriteria("PersonaDocumento.Nit", DefaultContexts.Save, "len(trim(Numero)) = 14", TargetCriteria = "Tipo.Codigo == 'NIT'",
+        CustomMessageTemplate = "Número de NIT no válido", SkipNullOrEmptyValues = true)]
+    [RuleCriteria("PersonaDocumento.Dui", DefaultContexts.Save, "len(trim(Numero)) = 9", TargetCriteria = "Tipo.Codigo == 'DUI'",
+        CustomMessageTemplate = "Número de DUI no válido", SkipNullOrEmptyValues = true)]
     public class PersonaDocumento : XPObject
     {
         public override void AfterConstruction()

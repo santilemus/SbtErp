@@ -38,6 +38,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         private Empresa empresa;
 
         [Association("Empresa-Usuarios"), XafDisplayName("Empresa"), VisibleInListView(true), VisibleInDetailView(true), Index(0)]
+        [ImmediatePostData(true)]
         [ExplicitLoading]
         public Empresa Empresa
         {
@@ -48,6 +49,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         EmpresaUnidad agencia;
         [DataSourceCriteria("Empresa = '@This.Empresa'"), XafDisplayName("Agencia"), Persistent("Agencia"), Index(1)]
         [ExplicitLoading]
+        [ImmediatePostData(true)]
         public EmpresaUnidad Agencia
         {
             get => agencia;

@@ -1,17 +1,8 @@
-﻿using DevExpress.Data.Filtering;
-using DevExpress.ExpressApp;
-using DevExpress.ExpressApp.DC;
-using DevExpress.ExpressApp.Model;
+﻿using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
-using DevExpress.Persistent.BaseImpl;
-using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Text;
 
 namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 {
@@ -260,7 +251,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 
         [DetailViewLayout("Evaluación Nutricional")]
         [DbType("numeric(9,4)")]
-        [System.ComponentModel.DisplayName("Valor del IMC")]
+        [System.ComponentModel.DisplayName("IMC")]
         public decimal IMC
         {
             get => imc;

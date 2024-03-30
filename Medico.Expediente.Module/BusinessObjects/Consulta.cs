@@ -120,7 +120,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         }
         [DevExpress.Xpo.SizeAttribute(1000), DbType("varchar(1000)")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
-        [RuleRequiredField("Consulta.Diagnostico_Requerido", "Save")]
+        [RuleRequiredField("Consulta.Diagnostico_Requerido", "Save", TargetCriteria = "[Estado] != 'Espera'")]
         [DevExpress.ExpressApp.Model.ModelDefault("RowCount", "5")]
         public System.String Diagnostico
         {

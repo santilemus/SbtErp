@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application>
+  <Views Id="Views">
+    <DetailView Id="CompraFactura_DetailView_Cxp">
+      <Layout Id="Layout">
+        <LayoutGroup Id="Main">
+          <TabbedGroup Id="Item1">
+            <LayoutGroup Id="Datos de Pago">
+              <LayoutGroup Id="Auto8058e38c-db86-432d-967b-e5c19d09a3b1">
+                <LayoutItem Id="NumeroDocumento" ViewItem="NumeroDocumento" />
+              </LayoutGroup>
+            </LayoutGroup>
+          </TabbedGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+  </Views>
+</Application>

@@ -65,7 +65,7 @@ namespace SBT.Apps.RecursoHumano.Module.BusinessObjects
         /// Mas info
         /// 1. EditorAliases.TypePropertyEditor implementa la lista de seleccion de los BO
         ///    Ver: https://docs.devexpress.com/eXpressAppFramework/113579/concepts/business-model-design/data-types-supported-by-built-in-editors/type-properties
-        /// 2. ValueConverter, para hacer la propiedad persistente se tiliza la conversion a string y guardar el nombre del BO en la bd, incluyendo el namespace
+        /// 2. ValueConverter, para hacer la propiedad persistente se utiliza la conversion a string y guardar el nombre del BO en la bd, incluyendo el namespace
         /// </remarks>
         [XafDisplayName("Tipo Business Object"), Persistent(nameof(TipoBO))]
         [EditorAlias(EditorAliases.TypePropertyEditor)]

@@ -526,6 +526,236 @@
         </LayoutGroup>
       </Layout>
     </DetailView>
+    <DetailView Id="ConsultaNutricion_DetailView_2da_vez" CaptionColon=":" EnableCaptionColon="True" CaptionLocation="Default" CaptionHorizontalAlignment="Default" CaptionVerticalAlignment="Default" CaptionWordWrap="Default" EnableLayoutGroupImages="True" CustomizationEnabled="True" RequiredFieldMark="" ClassName="SBT.Apps.Medico.Expediente.Module.BusinessObjects.ConsultaNutricion" Caption="Consulta Nutrición - 2da Vez" IsNewNode="True">
+      <Items IsNewNode="True">
+        <PropertyEditor Id="AcidoUrico" PropertyName="AcidoUrico" IsNewNode="True" />
+        <PropertyEditor Id="AguaCorporal" PropertyName="AguaCorporal" IsNewNode="True" />
+        <PropertyEditor Id="Caloria" PropertyName="Caloria" IsNewNode="True" />
+        <PropertyEditor Id="CC" PropertyName="CC" IsNewNode="True" />
+        <PropertyEditor Id="CHO" PropertyName="CHO" IsNewNode="True" />
+        <PropertyEditor Id="CHON" PropertyName="CHON" IsNewNode="True" />
+        <PropertyEditor Id="Clasificacion" PropertyName="Clasificacion" IsNewNode="True" />
+        <PropertyEditor Id="Cmb" PropertyName="Cmb" IsNewNode="True" />
+        <PropertyEditor Id="Colesterol" PropertyName="Colesterol" IsNewNode="True" />
+        <PropertyEditor Id="ConsumoAgua" PropertyName="ConsumoAgua" IsNewNode="True" />
+        <PropertyEditor Id="COOH" PropertyName="COOH" IsNewNode="True" />
+        <PropertyEditor Id="Creatinina" PropertyName="Creatinina" IsNewNode="True" />
+        <PropertyEditor Id="DiagnosticoNutricional" PropertyName="DiagnosticoNutricional" IsNewNode="True" />
+        <PropertyEditor Id="DietaPrescrita" PropertyName="DietaPrescrita" IsNewNode="True" />
+        <PropertyEditor Id="EdadMetabolica" PropertyName="EdadMetabolica" IsNewNode="True" />
+        <PropertyEditor Id="Fecha" PropertyName="Fecha" IsNewNode="True" />
+        <PropertyEditor Id="FrecuenciaAlimento" PropertyName="FrecuenciaAlimento" IsNewNode="True" />
+        <PropertyEditor Id="Glucosa" PropertyName="Glucosa" IsNewNode="True" />
+        <PropertyEditor Id="GrasaCorporal" PropertyName="GrasaCorporal" IsNewNode="True" />
+        <PropertyEditor Id="GrasaVisceral" PropertyName="GrasaVisceral" IsNewNode="True" />
+        <PropertyEditor Id="Hemoglobina" PropertyName="Hemoglobina" IsNewNode="True" />
+        <PropertyEditor Id="ICC" PropertyName="ICC" IsNewNode="True" />
+        <PropertyEditor Id="IMC" PropertyName="IMC" IsNewNode="True" />
+        <PropertyEditor Id="Muscular" PropertyName="Muscular" IsNewNode="True" />
+        <PropertyEditor Id="Observacion" PropertyName="Observacion" IsNewNode="True" />
+        <PropertyEditor Id="Oid" PropertyName="Oid" IsNewNode="True" />
+        <PropertyEditor Id="Otros" PropertyName="Otros" IsNewNode="True" />
+        <PropertyEditor Id="Paciente.Activo" PropertyName="Paciente.Activo" IsNewNode="True" />
+        <PropertyEditor Id="Paciente.Apellido" PropertyName="Paciente.Apellido" IsNewNode="True" />
+        <PropertyEditor Id="Paciente.Edad" PropertyName="Paciente.Edad" IsNewNode="True" />
+        <PropertyEditor Id="Paciente.FechaNacimiento" PropertyName="Paciente.FechaNacimiento" IsNewNode="True" />
+        <PropertyEditor Id="Paciente.Genero" PropertyName="Paciente.Genero" IsNewNode="True" />
+        <PropertyEditor Id="Paciente.Nombre" PropertyName="Paciente.Nombre" IsNewNode="True" />
+        <PropertyEditor Id="Peso" PropertyName="Peso" IsNewNode="True" />
+        <PropertyEditor Id="PesoIdeal" PropertyName="PesoIdeal" IsNewNode="True" />
+        <PropertyEditor Id="PesoLibra" PropertyName="PesoLibra" IsNewNode="True" />
+        <PropertyEditor Id="PesoMeta" PropertyName="PesoMeta" IsNewNode="True" />
+        <PropertyEditor Id="PesoUsual" PropertyName="PesoUsual" IsNewNode="True" />
+        <PropertyEditor Id="PlanNutricional" PropertyName="PlanNutricional" IsNewNode="True" />
+        <PropertyEditor Id="Recuentos24H" PropertyName="Recuentos24H" View="ConsultaNutricion_Recuentos24H_ListView" IsNewNode="True" />
+        <PropertyEditor Id="Talla" PropertyName="Talla" IsNewNode="True" />
+        <PropertyEditor Id="Triglicerido" PropertyName="Triglicerido" IsNewNode="True" />
+      </Items>
+      <Layout IsNewNode="True">
+        <LayoutGroup Id="Main" Index="0" ShowCaption="False" RelativeSize="100" IsNewNode="True">
+          <LayoutGroup Id="Datos Generales" Index="0" Direction="Horizontal" ShowCaption="True" RelativeSize="17.787418655097614" IsNewNode="True">
+            <LayoutGroup Id="Auto76963945-a7e9-4ed0-896a-92aa13b8cc1f" ShowCaption="False" Caption="Auto76963945-a7e9-4ed0-896a-92aa13b8cc1f(3)" Index="0" RelativeSize="49.967170059093895" IsNewNode="True">
+              <LayoutItem Id="Oid" ViewItem="Oid" CaptionLocation="Left" Index="0" RelativeSize="29.032258064516128" IsNewNode="True" />
+              <LayoutItem Id="Fecha" ViewItem="Fecha" CaptionLocation="Left" Index="1" RelativeSize="20.967741935483872" IsNewNode="True" />
+              <LayoutItem Id="Paciente.Nombre" ViewItem="Paciente.Nombre" Index="2" RelativeSize="20.967741935483872" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Paciente.Apellido" ViewItem="Paciente.Apellido" Index="3" RelativeSize="29.032258064516128" CaptionLocation="Left" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="Autof9ee27d7-c1a0-4ee4-bd3b-ce0feb05081a" ShowCaption="False" Caption="Autof9ee27d7-c1a0-4ee4-bd3b-ce0feb05081a(8)" Index="1" RelativeSize="50.032829940906105" IsNewNode="True">
+              <LayoutItem Id="Paciente.FechaNacimiento" ViewItem="Paciente.FechaNacimiento" Index="0" RelativeSize="29.032258064516128" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Paciente.Edad" ViewItem="Paciente.Edad" Index="1" RelativeSize="20.967741935483872" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Paciente.Genero" ViewItem="Paciente.Genero" Index="2" RelativeSize="20.967741935483872" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Paciente.Activo" ViewItem="Paciente.Activo" Index="3" RelativeSize="29.032258064516128" CaptionLocation="Left" IsNewNode="True" />
+            </LayoutGroup>
+          </LayoutGroup>
+          <LayoutGroup Id="Datos Antropométrica" ShowCaption="True" IsCollapsibleGroup="True" Direction="Horizontal" Index="1" RelativeSize="13.882863340563992" IsNewNode="True">
+            <LayoutGroup Id="Datos Antropométrica_col1" ShowCaption="False" Index="0" RelativeSize="49.704530531845045" IsNewNode="True">
+              <LayoutItem Id="Peso" ViewItem="Peso" CaptionLocation="Left" Index="0" RelativeSize="36.734693877551024" IsNewNode="True" />
+              <LayoutItem Id="PesoLibra" ViewItem="PesoLibra" CaptionLocation="Left" Index="1" RelativeSize="26.53061224489796" IsNewNode="True" />
+              <LayoutItem Id="Talla" ViewItem="Talla" CaptionLocation="Left" Index="2" RelativeSize="36.734693877551024" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="Datos Antropométrica_col2" ShowCaption="False" Index="1" RelativeSize="50.295469468154955" IsNewNode="True">
+              <LayoutItem Id="Cmb" ViewItem="Cmb" CaptionLocation="Left" Index="0" RelativeSize="36.734693877551024" IsNewNode="True" />
+              <LayoutItem Id="CC" ViewItem="CC" CaptionLocation="Left" Index="1" RelativeSize="26.53061224489796" IsNewNode="True" />
+              <LayoutItem Id="ICC" ViewItem="ICC" CaptionLocation="Left" Index="2" RelativeSize="36.734693877551024" IsNewNode="True" />
+            </LayoutGroup>
+          </LayoutGroup>
+          <LayoutGroup Id="Exámenes de Laboratorio" Index="2" Direction="Horizontal" ShowCaption="True" RelativeSize="16.702819956616054" IsCollapsibleGroup="True" IsNewNode="True">
+            <LayoutGroup Id="Exámenes de Laboratorio_col1" Index="0" ShowCaption="False" RelativeSize="49.704530531845045" IsNewNode="True">
+              <LayoutItem Id="Glucosa" ViewItem="Glucosa" ShowCaption="" Index="0" RelativeSize="29.032258064516128" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Colesterol" ViewItem="Colesterol" ShowCaption="" Index="1" RelativeSize="20.967741935483872" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Triglicerido" ViewItem="Triglicerido" ShowCaption="" Index="2" RelativeSize="20.967741935483872" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="AcidoUrico" ViewItem="AcidoUrico" ShowCaption="" Index="3" RelativeSize="29.032258064516128" CaptionLocation="Left" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="Exámenes de Laboratorio_col2" Index="1" ShowCaption="False" RelativeSize="50.295469468154955" IsNewNode="True">
+              <LayoutItem Id="Creatinina" ViewItem="Creatinina" ShowCaption="" Index="0" RelativeSize="29.032258064516128" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Hemoglobina" ViewItem="Hemoglobina" ShowCaption="" Index="1" RelativeSize="20.967741935483872" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Otros" ViewItem="Otros" ShowCaption="" Index="2" RelativeSize="50" CaptionLocation="Left" IsNewNode="True" />
+            </LayoutGroup>
+          </LayoutGroup>
+          <LayoutGroup Id="Bioimpedancia" Index="3" Direction="Horizontal" ShowCaption="True" RelativeSize="51.62689804772234" IsCollapsibleGroup="True" IsNewNode="True">
+            <LayoutGroup Id="Bioimpedancia_col1" Index="0" ShowCaption="False" RelativeSize="49.704530531845045" IsNewNode="True">
+              <LayoutItem Id="GrasaCorporal" ViewItem="GrasaCorporal" ShowCaption="" Index="0" RelativeSize="8.256880733944953" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="GrasaVisceral" ViewItem="GrasaVisceral" ShowCaption="" Index="1" RelativeSize="5.963302752293578" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Muscular" ViewItem="Muscular" ShowCaption="" Index="2" RelativeSize="85.77981651376147" CaptionLocation="Left" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="Bioimpedancia_col2" Index="1" ShowCaption="False" RelativeSize="50.295469468154955" IsNewNode="True">
+              <LayoutItem Id="AguaCorporal" ViewItem="AguaCorporal" ShowCaption="" Index="0" RelativeSize="8.256880733944953" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="EdadMetabolica" ViewItem="EdadMetabolica" ShowCaption="" Index="1" RelativeSize="91.74311926605505" CaptionLocation="Left" IsNewNode="True" />
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <DetailView Id="ConsultaNutricion_DetailView_Todo" CaptionColon=":" EnableCaptionColon="True" CaptionLocation="Default" CaptionHorizontalAlignment="Default" CaptionVerticalAlignment="Default" CaptionWordWrap="Default" EnableLayoutGroupImages="True" CustomizationEnabled="True" RequiredFieldMark="" ClassName="SBT.Apps.Medico.Expediente.Module.BusinessObjects.ConsultaNutricion" Caption="Consulta Nutrición - Todo" IsNewNode="True">
+      <Items IsNewNode="True">
+        <PropertyEditor Id="AcidoUrico" PropertyName="AcidoUrico" IsNewNode="True" />
+        <PropertyEditor Id="AguaCorporal" PropertyName="AguaCorporal" IsNewNode="True" />
+        <PropertyEditor Id="Caloria" PropertyName="Caloria" IsNewNode="True" />
+        <PropertyEditor Id="CC" PropertyName="CC" IsNewNode="True" />
+        <PropertyEditor Id="CHO" PropertyName="CHO" IsNewNode="True" />
+        <PropertyEditor Id="CHON" PropertyName="CHON" IsNewNode="True" />
+        <PropertyEditor Id="Clasificacion" PropertyName="Clasificacion" IsNewNode="True" />
+        <PropertyEditor Id="Cmb" PropertyName="Cmb" IsNewNode="True" />
+        <PropertyEditor Id="Colesterol" PropertyName="Colesterol" IsNewNode="True" />
+        <PropertyEditor Id="ConsumoAgua" PropertyName="ConsumoAgua" IsNewNode="True" />
+        <PropertyEditor Id="COOH" PropertyName="COOH" IsNewNode="True" />
+        <PropertyEditor Id="Creatinina" PropertyName="Creatinina" IsNewNode="True" />
+        <PropertyEditor Id="DiagnosticoNutricional" PropertyName="DiagnosticoNutricional" IsNewNode="True" />
+        <PropertyEditor Id="DietaPrescrita" PropertyName="DietaPrescrita" IsNewNode="True" />
+        <PropertyEditor Id="EdadMetabolica" PropertyName="EdadMetabolica" IsNewNode="True" />
+        <PropertyEditor Id="Fecha" PropertyName="Fecha" IsNewNode="True" />
+        <PropertyEditor Id="FrecuenciaAlimento" PropertyName="FrecuenciaAlimento" IsNewNode="True" />
+        <PropertyEditor Id="Glucosa" PropertyName="Glucosa" IsNewNode="True" />
+        <PropertyEditor Id="GrasaCorporal" PropertyName="GrasaCorporal" IsNewNode="True" />
+        <PropertyEditor Id="GrasaVisceral" PropertyName="GrasaVisceral" IsNewNode="True" />
+        <PropertyEditor Id="Hemoglobina" PropertyName="Hemoglobina" IsNewNode="True" />
+        <PropertyEditor Id="ICC" PropertyName="ICC" IsNewNode="True" />
+        <PropertyEditor Id="IMC" PropertyName="IMC" IsNewNode="True" />
+        <PropertyEditor Id="Muscular" PropertyName="Muscular" IsNewNode="True" />
+        <PropertyEditor Id="Observacion" PropertyName="Observacion" IsNewNode="True" />
+        <PropertyEditor Id="Oid" PropertyName="Oid" IsNewNode="True" />
+        <PropertyEditor Id="Otros" PropertyName="Otros" IsNewNode="True" />
+        <PropertyEditor Id="Paciente.Activo" PropertyName="Paciente.Activo" IsNewNode="True" />
+        <PropertyEditor Id="Paciente.Apellido" PropertyName="Paciente.Apellido" IsNewNode="True" />
+        <PropertyEditor Id="Paciente.Edad" PropertyName="Paciente.Edad" IsNewNode="True" />
+        <PropertyEditor Id="Paciente.FechaNacimiento" PropertyName="Paciente.FechaNacimiento" IsNewNode="True" />
+        <PropertyEditor Id="Paciente.Genero" PropertyName="Paciente.Genero" IsNewNode="True" />
+        <PropertyEditor Id="Paciente.Nombre" PropertyName="Paciente.Nombre" IsNewNode="True" />
+        <PropertyEditor Id="Peso" PropertyName="Peso" IsNewNode="True" />
+        <PropertyEditor Id="PesoIdeal" PropertyName="PesoIdeal" IsNewNode="True" />
+        <PropertyEditor Id="PesoLibra" PropertyName="PesoLibra" IsNewNode="True" />
+        <PropertyEditor Id="PesoMeta" PropertyName="PesoMeta" IsNewNode="True" />
+        <PropertyEditor Id="PesoUsual" PropertyName="PesoUsual" IsNewNode="True" />
+        <PropertyEditor Id="PlanNutricional" PropertyName="PlanNutricional" IsNewNode="True" />
+        <PropertyEditor Id="Recuentos24H" PropertyName="Recuentos24H" View="ConsultaNutricion_Recuentos24H_ListView" IsNewNode="True" />
+        <PropertyEditor Id="Talla" PropertyName="Talla" IsNewNode="True" />
+        <PropertyEditor Id="Triglicerido" PropertyName="Triglicerido" IsNewNode="True" />
+      </Items>
+      <Layout IsNewNode="True">
+        <LayoutGroup Id="Main" Index="0" ShowCaption="False" RelativeSize="100" IsNewNode="True">
+          <LayoutGroup Id="Datos Generales" Index="0" Direction="Horizontal" ShowCaption="True" RelativeSize="16.06268364348678" IsNewNode="True">
+            <LayoutGroup Id="Auto76963945-a7e9-4ed0-896a-92aa13b8cc1f" ShowCaption="False" Caption="" Index="0" RelativeSize="50" IsNewNode="True">
+              <LayoutItem Id="Oid" ViewItem="Oid" CaptionLocation="Left" Index="0" RelativeSize="29.032258064516128" IsNewNode="True" />
+              <LayoutItem Id="Fecha" ViewItem="Fecha" CaptionLocation="Left" Index="1" RelativeSize="20.967741935483872" IsNewNode="True" />
+              <LayoutItem Id="Paciente.Nombre" ViewItem="Paciente.Nombre" Index="2" RelativeSize="20.967741935483872" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Paciente.Apellido" ViewItem="Paciente.Apellido" Index="3" RelativeSize="29.032258064516128" CaptionLocation="Left" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="Autof9ee27d7-c1a0-4ee4-bd3b-ce0feb05081a" ShowCaption="False" Caption="" Index="1" RelativeSize="50" IsNewNode="True">
+              <LayoutItem Id="Paciente.FechaNacimiento" ViewItem="Paciente.FechaNacimiento" Index="0" RelativeSize="29.032258064516128" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Paciente.Edad" ViewItem="Paciente.Edad" Index="1" RelativeSize="20.967741935483872" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Paciente.Genero" ViewItem="Paciente.Genero" Index="2" RelativeSize="20.967741935483872" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Paciente.Activo" ViewItem="Paciente.Activo" Index="3" RelativeSize="29.032258064516128" CaptionLocation="Left" IsNewNode="True" />
+            </LayoutGroup>
+          </LayoutGroup>
+          <LayoutGroup Id="Exámenes de Laboratorio" Index="1" Direction="Horizontal" ShowCaption="True" RelativeSize="15.083251714005877" IsCollapsibleGroup="True" IsNewNode="True">
+            <LayoutGroup Id="Exámenes de Laboratorio_col1" Index="0" ShowCaption="False" RelativeSize="49.80026631158455" IsNewNode="True">
+              <LayoutItem Id="Glucosa" ViewItem="Glucosa" ShowCaption="" Index="0" RelativeSize="29.032258064516128" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Colesterol" ViewItem="Colesterol" ShowCaption="" Index="1" RelativeSize="20.967741935483872" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Triglicerido" ViewItem="Triglicerido" ShowCaption="" Index="2" RelativeSize="20.967741935483872" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="AcidoUrico" ViewItem="AcidoUrico" ShowCaption="" Index="3" RelativeSize="29.032258064516128" CaptionLocation="Left" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="Exámenes de Laboratorio_col2" Index="1" ShowCaption="False" RelativeSize="50.19973368841545" IsNewNode="True">
+              <LayoutItem Id="Creatinina" ViewItem="Creatinina" ShowCaption="" Index="0" RelativeSize="29.032258064516128" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Hemoglobina" ViewItem="Hemoglobina" ShowCaption="" Index="1" RelativeSize="20.967741935483872" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Otros" ViewItem="Otros" ShowCaption="" Index="2" RelativeSize="50" CaptionLocation="Left" IsNewNode="True" />
+            </LayoutGroup>
+          </LayoutGroup>
+          <LayoutGroup Id="Datos Antropométrica" Index="2" Direction="Horizontal" ShowCaption="True" RelativeSize="12.536728697355533" IsCollapsibleGroup="True" IsNewNode="True">
+            <LayoutGroup Id="Datos Antropométrica_col1" Index="0" ShowCaption="False" RelativeSize="49.80026631158455" IsNewNode="True">
+              <LayoutItem Id="Peso" ViewItem="Peso" ShowCaption="" Index="0" RelativeSize="36.734693877551024" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="PesoLibra" ViewItem="PesoLibra" ShowCaption="" Index="1" RelativeSize="26.53061224489796" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Talla" ViewItem="Talla" ShowCaption="" Index="2" RelativeSize="36.734693877551024" CaptionLocation="Left" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="Datos Antropométrica_col2" Index="1" ShowCaption="False" RelativeSize="50.19973368841545" IsNewNode="True">
+              <LayoutItem Id="Cmb" ViewItem="Cmb" ShowCaption="" Index="0" RelativeSize="36.734693877551024" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="CC" ViewItem="CC" ShowCaption="" Index="1" RelativeSize="26.53061224489796" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="ICC" ViewItem="ICC" ShowCaption="" Index="2" RelativeSize="36.734693877551024" CaptionLocation="Left" IsNewNode="True" />
+            </LayoutGroup>
+          </LayoutGroup>
+          <LayoutGroup Id="Bioimpedancia" Index="3" Direction="Horizontal" ShowCaption="True" RelativeSize="12.536728697355533" IsCollapsibleGroup="True" IsNewNode="True">
+            <LayoutGroup Id="Bioimpedancia_col1" Index="0" ShowCaption="False" RelativeSize="49.80026631158455" IsNewNode="True">
+              <LayoutItem Id="GrasaCorporal" ViewItem="GrasaCorporal" ShowCaption="" Index="0" RelativeSize="36.734693877551024" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="GrasaVisceral" ViewItem="GrasaVisceral" ShowCaption="" Index="1" RelativeSize="26.53061224489796" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Muscular" ViewItem="Muscular" ShowCaption="" Index="2" RelativeSize="36.734693877551024" CaptionLocation="Left" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="Bioimpedancia_col2" Index="1" ShowCaption="False" RelativeSize="50.19973368841545" IsNewNode="True">
+              <LayoutItem Id="AguaCorporal" ViewItem="AguaCorporal" ShowCaption="" Index="0" RelativeSize="36.734693877551024" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="EdadMetabolica" ViewItem="EdadMetabolica" ShowCaption="" Index="1" RelativeSize="63.265306122448976" CaptionLocation="Left" IsNewNode="True" />
+            </LayoutGroup>
+          </LayoutGroup>
+          <LayoutGroup Id="Evaluación Nutricional" Index="4" Direction="Horizontal" ShowCaption="True" RelativeSize="9.990205680705191" IsCollapsibleGroup="True" IsNewNode="True">
+            <LayoutGroup Id="Auto96ee6c5f-8d0b-4c43-bc94-50842c3402ce" ShowCaption="False" Caption="" Index="0" RelativeSize="50" IsNewNode="True">
+              <LayoutItem Id="IMC" ViewItem="IMC" CaptionLocation="Left" Index="0" RelativeSize="50" IsNewNode="True" />
+              <LayoutItem Id="Clasificacion" ViewItem="Clasificacion" CaptionLocation="Left" Index="1" RelativeSize="50" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="Auto190be0b7-cf31-4d6a-b435-273fd8a55691" ShowCaption="False" Caption="" Index="1" RelativeSize="50" IsNewNode="True">
+              <LayoutItem Id="DiagnosticoNutricional" ViewItem="DiagnosticoNutricional" CaptionLocation="Left" Index="0" RelativeSize="50" IsNewNode="True" />
+              <LayoutItem Id="Observacion" ViewItem="Observacion" CaptionLocation="Left" Index="1" RelativeSize="50" IsNewNode="True" />
+            </LayoutGroup>
+          </LayoutGroup>
+          <LayoutGroup Id="Recuentos24H_Group" Index="5" ShowCaption="True" RelativeSize="12.634671890303624" IsCollapsibleGroup="True" IsNewNode="True">
+            <LayoutItem Id="Recuentos24H" ViewItem="Recuentos24H" ShowCaption="" Index="0" RelativeSize="100" IsNewNode="True" />
+          </LayoutGroup>
+          <LayoutGroup Id="Otros Datos" Index="6" Direction="Horizontal" ShowCaption="True" RelativeSize="21.155729676787463" IsCollapsibleGroup="True" IsNewNode="True">
+            <LayoutGroup Id="Otros Datos_col1" Index="0" ShowCaption="False" RelativeSize="49.80026631158455" IsNewNode="True">
+              <LayoutItem Id="FrecuenciaAlimento" ViewItem="FrecuenciaAlimento" ShowCaption="" Index="0" RelativeSize="20.454545454545453" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="ConsumoAgua" ViewItem="ConsumoAgua" ShowCaption="" Index="1" RelativeSize="14.772727272727273" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="PesoMeta" ViewItem="PesoMeta" ShowCaption="" Index="2" RelativeSize="14.772727272727273" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="PesoIdeal" ViewItem="PesoIdeal" ShowCaption="" Index="3" RelativeSize="14.772727272727273" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="PesoUsual" ViewItem="PesoUsual" ShowCaption="" Index="4" RelativeSize="14.772727272727273" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Caloria" ViewItem="Caloria" ShowCaption="" Index="5" RelativeSize="20.454545454545453" CaptionLocation="Left" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="Otros Datos_col2" Index="1" ShowCaption="False" RelativeSize="50.19973368841545" IsNewNode="True">
+              <LayoutItem Id="CHO" ViewItem="CHO" ShowCaption="" Index="0" RelativeSize="20.454545454545453" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="CHON" ViewItem="CHON" ShowCaption="" Index="1" RelativeSize="14.772727272727273" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="COOH" ViewItem="COOH" ShowCaption="" Index="2" RelativeSize="14.772727272727273" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="DietaPrescrita" ViewItem="DietaPrescrita" ShowCaption="" Index="3" RelativeSize="14.772727272727273" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="PlanNutricional" ViewItem="PlanNutricional" ShowCaption="" Index="4" RelativeSize="35.22727272727273" CaptionLocation="Left" IsNewNode="True" />
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
     <ListView Id="ConsultaNutricion_ListView">
       <Columns>
         <ColumnInfo Id="AcidoUrico" Index="-1" />
@@ -564,6 +794,47 @@
         <ColumnInfo Id="DiagnosticoNutricional" Index="4" SortIndex="0" SortOrder="Ascending" Width="356" />
         <ColumnInfo Id="PlanNutricional" Index="5" Width="392" />
       </Columns>
+      <Variants Current="" />
+    </ListView>
+    <ListView Id="ConsultaNutricion_ListView_Primera_Vez" ClassName="SBT.Apps.Medico.Expediente.Module.BusinessObjects.ConsultaNutricion" Caption="Consulta Nutrición - Primera Vez" IsNewNode="True">
+      <Columns IsNewNode="True">
+        <ColumnInfo Id="AcidoUrico" PropertyName="AcidoUrico" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="AguaCorporal" PropertyName="AguaCorporal" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Caloria" PropertyName="Caloria" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="CC" PropertyName="CC" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="CHO" PropertyName="CHO" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="CHON" PropertyName="CHON" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Cmb" PropertyName="Cmb" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Colesterol" PropertyName="Colesterol" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="ConsumoAgua" PropertyName="ConsumoAgua" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="COOH" PropertyName="COOH" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Creatinina" PropertyName="Creatinina" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="DietaPrescrita" PropertyName="DietaPrescrita" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="EdadMetabolica" PropertyName="EdadMetabolica" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="FrecuenciaAlimento" PropertyName="FrecuenciaAlimento" Index="-1" Width="83" IsNewNode="True" />
+        <ColumnInfo Id="Glucosa" PropertyName="Glucosa" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="GrasaCorporal" PropertyName="GrasaCorporal" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="GrasaVisceral" PropertyName="GrasaVisceral" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Hemoglobina" PropertyName="Hemoglobina" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="ICC" PropertyName="ICC" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="IMC" PropertyName="IMC" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Muscular" PropertyName="Muscular" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Observacion" PropertyName="Observacion" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Oid" PropertyName="Oid" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Otros" PropertyName="Otros" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Paciente" PropertyName="Paciente" Width="255" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="PesoIdeal" PropertyName="PesoIdeal" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="PesoMeta" PropertyName="PesoMeta" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="PesoUsual" PropertyName="PesoUsual" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Talla" PropertyName="Talla" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Triglicerido" PropertyName="Triglicerido" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Fecha" PropertyName="Fecha" Index="0" Width="106" IsNewNode="True" />
+        <ColumnInfo Id="Peso" PropertyName="Peso" Index="1" Width="73" IsNewNode="True" />
+        <ColumnInfo Id="PesoLibra" PropertyName="PesoLibra" Index="2" Width="91" IsNewNode="True" />
+        <ColumnInfo Id="Clasificacion" PropertyName="Clasificacion" Index="3" Width="171" IsNewNode="True" />
+        <ColumnInfo Id="DiagnosticoNutricional" PropertyName="DiagnosticoNutricional" Index="4" SortIndex="0" SortOrder="Ascending" Width="356" IsNewNode="True" />
+        <ColumnInfo Id="PlanNutricional" PropertyName="PlanNutricional" Index="5" Width="392" IsNewNode="True" />
+      </Columns>
     </ListView>
     <ListView Id="ConsultaNutricion_Recuentos24H_ListView">
       <Columns>
@@ -571,6 +842,46 @@
         <ColumnInfo Id="Hora" Width="182" />
         <ColumnInfo Id="Alimento" Width="567" />
         <ColumnInfo Id="Porciones" Width="87" />
+      </Columns>
+    </ListView>
+    <ListView Id="ConsultaNutricion_Todas" ClassName="SBT.Apps.Medico.Expediente.Module.BusinessObjects.ConsultaNutricion" Caption="Consulta Nutrición - Todas" IsNewNode="True">
+      <Columns IsNewNode="True">
+        <ColumnInfo Id="AcidoUrico" PropertyName="AcidoUrico" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="AguaCorporal" PropertyName="AguaCorporal" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Caloria" PropertyName="Caloria" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="CC" PropertyName="CC" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="CHO" PropertyName="CHO" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="CHON" PropertyName="CHON" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Cmb" PropertyName="Cmb" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Colesterol" PropertyName="Colesterol" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="ConsumoAgua" PropertyName="ConsumoAgua" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="COOH" PropertyName="COOH" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Creatinina" PropertyName="Creatinina" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="DietaPrescrita" PropertyName="DietaPrescrita" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="EdadMetabolica" PropertyName="EdadMetabolica" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="FrecuenciaAlimento" PropertyName="FrecuenciaAlimento" Index="-1" Width="83" IsNewNode="True" />
+        <ColumnInfo Id="Glucosa" PropertyName="Glucosa" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="GrasaCorporal" PropertyName="GrasaCorporal" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="GrasaVisceral" PropertyName="GrasaVisceral" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Hemoglobina" PropertyName="Hemoglobina" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="ICC" PropertyName="ICC" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="IMC" PropertyName="IMC" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Muscular" PropertyName="Muscular" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Observacion" PropertyName="Observacion" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Oid" PropertyName="Oid" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Otros" PropertyName="Otros" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Paciente" PropertyName="Paciente" Width="255" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="PesoIdeal" PropertyName="PesoIdeal" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="PesoMeta" PropertyName="PesoMeta" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="PesoUsual" PropertyName="PesoUsual" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Talla" PropertyName="Talla" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Triglicerido" PropertyName="Triglicerido" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Fecha" PropertyName="Fecha" Index="0" Width="106" IsNewNode="True" />
+        <ColumnInfo Id="Peso" PropertyName="Peso" Index="1" Width="73" IsNewNode="True" />
+        <ColumnInfo Id="PesoLibra" PropertyName="PesoLibra" Index="2" Width="91" IsNewNode="True" />
+        <ColumnInfo Id="Clasificacion" PropertyName="Clasificacion" Index="3" Width="171" IsNewNode="True" />
+        <ColumnInfo Id="DiagnosticoNutricional" PropertyName="DiagnosticoNutricional" Index="4" SortIndex="0" SortOrder="Ascending" Width="356" IsNewNode="True" />
+        <ColumnInfo Id="PlanNutricional" PropertyName="PlanNutricional" Index="5" Width="392" IsNewNode="True" />
       </Columns>
     </ListView>
     <DetailView Id="ConsultaReceta_DetailView">
@@ -810,51 +1121,51 @@
       </Items>
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
-          <LayoutGroup Id="SimpleEditors" RelativeSize="33.60433604336043" CaptionLocation="Left">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="26.556016597510375" CaptionLocation="Left">
             <TabbedGroup Id="Item1" CaptionLocation="Top" Index="0" RelativeSize="100" IsNewNode="True">
               <LayoutGroup Id="Persona" ShowCaption="True" Direction="Horizontal" Index="0" RelativeSize="100" Caption="Datos Generales" IsNewNode="True">
-                <LayoutGroup Id="Persona_col1" ShowCaption="False" Index="0" RelativeSize="48.97288414133114" CaptionLocation="Left" IsNewNode="True">
-                  <LayoutItem Id="Nombre" ViewItem="Nombre" Index="0" RelativeSize="17.171717171717173" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="Apellido" ViewItem="Apellido" Index="1" RelativeSize="13.131313131313131" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="Pais" ViewItem="Pais" Index="2" RelativeSize="13.131313131313131" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="Provincia" ViewItem="Provincia" Index="3" RelativeSize="13.131313131313131" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="Ciudad" ViewItem="Ciudad" Index="4" RelativeSize="13.131313131313131" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="Direccion" ViewItem="Direccion" Index="5" RelativeSize="13.131313131313131" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="EMail" ViewItem="EMail" CaptionLocation="Left" Index="6" RelativeSize="17.171717171717173" IsNewNode="True" />
+                <LayoutGroup Id="Persona_col1" ShowCaption="False" Index="0" RelativeSize="48.78529218647407" CaptionLocation="Left" IsNewNode="True">
+                  <LayoutItem Id="Nombre" ViewItem="Nombre" Index="0" RelativeSize="17.821782178217823" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="Apellido" ViewItem="Apellido" Index="1" RelativeSize="12.871287128712872" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="Pais" ViewItem="Pais" Index="2" RelativeSize="12.871287128712872" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="Provincia" ViewItem="Provincia" Index="3" RelativeSize="12.871287128712872" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="Ciudad" ViewItem="Ciudad" Index="4" RelativeSize="12.871287128712872" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="Direccion" ViewItem="Direccion" Index="5" RelativeSize="12.871287128712872" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="EMail" ViewItem="EMail" CaptionLocation="Left" Index="6" RelativeSize="17.821782178217823" IsNewNode="True" />
                 </LayoutGroup>
-                <LayoutGroup Id="Persona_col2" ShowCaption="False" Index="1" RelativeSize="51.02711585866886" CaptionLocation="Left" IsNewNode="True">
-                  <LayoutItem Id="Nacionalidad" ViewItem="Nacionalidad" CaptionLocation="Left" Index="0" RelativeSize="17.171717171717173" IsNewNode="True" />
-                  <LayoutItem Id="Idioma" ViewItem="Idioma" Index="1" RelativeSize="13.131313131313131" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="FechaNacimiento" ViewItem="FechaNacimiento" CaptionLocation="Left" Index="2" RelativeSize="13.131313131313131" IsNewNode="True" />
-                  <LayoutItem Id="Genero" ViewItem="Genero" Index="3" RelativeSize="13.131313131313131" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="EstadoCivil" ViewItem="EstadoCivil" Index="4" RelativeSize="13.131313131313131" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="FechaIngreso" ViewItem="FechaIngreso" Index="5" RelativeSize="13.131313131313131" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="FechaRetiro" ViewItem="FechaRetiro" Index="6" RelativeSize="17.171717171717173" CaptionLocation="Left" IsNewNode="True" />
+                <LayoutGroup Id="Persona_col2" ShowCaption="False" Index="1" RelativeSize="51.21470781352593" CaptionLocation="Left" IsNewNode="True">
+                  <LayoutItem Id="Nacionalidad" ViewItem="Nacionalidad" CaptionLocation="Left" Index="0" RelativeSize="17.821782178217823" IsNewNode="True" />
+                  <LayoutItem Id="Idioma" ViewItem="Idioma" Index="1" RelativeSize="12.871287128712872" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="FechaNacimiento" ViewItem="FechaNacimiento" CaptionLocation="Left" Index="2" RelativeSize="12.871287128712872" IsNewNode="True" />
+                  <LayoutItem Id="Genero" ViewItem="Genero" Index="3" RelativeSize="12.871287128712872" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="EstadoCivil" ViewItem="EstadoCivil" Index="4" RelativeSize="12.871287128712872" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="FechaIngreso" ViewItem="FechaIngreso" Index="5" RelativeSize="12.871287128712872" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="FechaRetiro" ViewItem="FechaRetiro" Index="6" RelativeSize="17.821782178217823" CaptionLocation="Left" IsNewNode="True" />
                 </LayoutGroup>
               </LayoutGroup>
               <LayoutGroup Id="Paciente" ShowCaption="True" Direction="Horizontal" Index="1" RelativeSize="100" Caption="Datos del Paciente" IsNewNode="True">
-                <LayoutGroup Id="Paciente_col1" ShowCaption="False" Index="0" RelativeSize="48.97288414133114" CaptionLocation="Left" IsNewNode="True">
-                  <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="17.171717171717173" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="TipoSangre" ViewItem="TipoSangre" CaptionLocation="Left" Index="1" RelativeSize="13.131313131313131" IsNewNode="True" />
-                  <LayoutItem Id="TipoSeguro" ViewItem="TipoSeguro" Index="2" RelativeSize="13.131313131313131" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="Aseguradora" ViewItem="Aseguradora" Index="3" RelativeSize="13.131313131313131" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="PolizaSeguro" ViewItem="PolizaSeguro" Index="4" RelativeSize="13.131313131313131" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="LugarNacimiento" ViewItem="LugarNacimiento" Index="5" RelativeSize="13.131313131313131" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="Ocupacion" ViewItem="Ocupacion" CaptionLocation="Left" Index="6" RelativeSize="17.171717171717173" IsNewNode="True" />
+                <LayoutGroup Id="Paciente_col1" ShowCaption="False" Index="0" RelativeSize="48.78529218647407" CaptionLocation="Left" IsNewNode="True">
+                  <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="17.821782178217823" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="TipoSangre" ViewItem="TipoSangre" CaptionLocation="Left" Index="1" RelativeSize="12.871287128712872" IsNewNode="True" />
+                  <LayoutItem Id="TipoSeguro" ViewItem="TipoSeguro" Index="2" RelativeSize="12.871287128712872" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="Aseguradora" ViewItem="Aseguradora" Index="3" RelativeSize="12.871287128712872" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="PolizaSeguro" ViewItem="PolizaSeguro" Index="4" RelativeSize="12.871287128712872" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="LugarNacimiento" ViewItem="LugarNacimiento" Index="5" RelativeSize="12.871287128712872" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="Ocupacion" ViewItem="Ocupacion" CaptionLocation="Left" Index="6" RelativeSize="17.821782178217823" IsNewNode="True" />
                 </LayoutGroup>
-                <LayoutGroup Id="Paciente_col2" ShowCaption="False" Index="1" RelativeSize="51.02711585866886" CaptionLocation="Left" IsNewNode="True">
-                  <LayoutItem Id="Patrono" ViewItem="Patrono" CaptionLocation="Left" Index="0" RelativeSize="17.171717171717173" IsNewNode="True" />
-                  <LayoutItem Id="Referencia" ViewItem="Referencia" Index="1" RelativeSize="13.131313131313131" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="Activo" ViewItem="Activo" Index="2" RelativeSize="13.131313131313131" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="EdadMeses" ViewItem="EdadMeses" Index="3" RelativeSize="13.131313131313131" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="Edad" ViewItem="Edad" Index="4" RelativeSize="13.131313131313131" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="FechaMuerte" ViewItem="FechaMuerte" Index="5" RelativeSize="13.131313131313131" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="CausaMuerte" ViewItem="CausaMuerte" Index="6" RelativeSize="17.171717171717173" CaptionLocation="Left" IsNewNode="True" />
+                <LayoutGroup Id="Paciente_col2" ShowCaption="False" Index="1" RelativeSize="51.21470781352593" CaptionLocation="Left" IsNewNode="True">
+                  <LayoutItem Id="Patrono" ViewItem="Patrono" CaptionLocation="Left" Index="0" RelativeSize="17.821782178217823" IsNewNode="True" />
+                  <LayoutItem Id="Referencia" ViewItem="Referencia" Index="1" RelativeSize="12.871287128712872" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="Activo" ViewItem="Activo" Index="2" RelativeSize="12.871287128712872" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="EdadMeses" ViewItem="EdadMeses" Index="3" RelativeSize="12.871287128712872" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="Edad" ViewItem="Edad" Index="4" RelativeSize="12.871287128712872" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="FechaMuerte" ViewItem="FechaMuerte" Index="5" RelativeSize="12.871287128712872" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="CausaMuerte" ViewItem="CausaMuerte" Index="6" RelativeSize="17.821782178217823" CaptionLocation="Left" IsNewNode="True" />
                 </LayoutGroup>
               </LayoutGroup>
               <LayoutGroup Id="Item2" ShowCaption="True" CaptionLocation="Top" Direction="Vertical" Index="2" Caption="Fotografía" RelativeSize="100" IsNewNode="True">
-                <LayoutItem Id="Fotografia" ViewItem="Fotografia" Index="0" RelativeSize="17.171717171717173" IsNewNode="True" />
-                <LayoutItem Id="Fotografia1" ViewItem="" Index="1" RelativeSize="82.82828282828282" IsNewNode="True" />
+                <LayoutItem Id="Fotografia" ViewItem="Fotografia" Index="0" RelativeSize="17.821782178217823" IsNewNode="True" />
+                <LayoutItem Id="Fotografia1" ViewItem="" Index="1" RelativeSize="82.17821782178218" IsNewNode="True" />
               </LayoutGroup>
             </TabbedGroup>
             <LayoutGroup Id="XPObject" Caption="Oid" Index="1" RelativeSize="6.0606060606060606" Removed="True">
@@ -883,47 +1194,49 @@
               </LayoutGroup>
             </LayoutGroup>
           </LayoutGroup>
-          <TabbedGroup Id="Tabs" RelativeSize="66.39566395663957" Index="1">
-            <LayoutGroup Id="Telefonos" RelativeSize="100" Index="0">
-              <LayoutItem Id="Telefonos" RelativeSize="100" />
+          <TabbedGroup Id="Tabs" Index="1" RelativeSize="73.44398340248962" IsNewNode="True" Removed="True">
+            <LayoutGroup Id="Telefonos" ShowCaption="True" Caption="Teléfonos" Index="0" RelativeSize="100" IsNewNode="True">
+              <LayoutItem Id="Telefonos" ViewItem="Telefonos" Index="0" RelativeSize="100" IsNewNode="True" />
             </LayoutGroup>
-            <LayoutGroup Id="Documentos" RelativeSize="100" Index="1">
-              <LayoutItem Id="Documentos" RelativeSize="100" />
+            <LayoutGroup Id="Documentos" ShowCaption="True" Index="1" RelativeSize="100" IsNewNode="True">
+              <LayoutItem Id="Documentos" ViewItem="Documentos" Index="0" RelativeSize="100" IsNewNode="True" />
             </LayoutGroup>
-            <LayoutGroup Id="Contactos" RelativeSize="100" Index="2">
-              <LayoutItem Id="Contactos" RelativeSize="100" />
+            <LayoutGroup Id="Contactos" ShowCaption="True" Index="2" RelativeSize="100" IsNewNode="True">
+              <LayoutItem Id="Contactos" ViewItem="Contactos" Index="0" RelativeSize="100" IsNewNode="True" />
             </LayoutGroup>
-            <LayoutGroup Id="Parientes" RelativeSize="100" Index="3">
-              <LayoutItem Id="Parientes" RelativeSize="100" />
+            <LayoutGroup Id="Parientes" ShowCaption="True" Index="3" RelativeSize="100" IsNewNode="True">
+              <LayoutItem Id="Parientes" ViewItem="Parientes" Index="0" RelativeSize="100" IsNewNode="True" />
             </LayoutGroup>
-            <LayoutGroup Id="Medicos" RelativeSize="100" Index="4">
-              <LayoutItem Id="Medicos" RelativeSize="100" />
+            <LayoutGroup Id="Medicos" ShowCaption="True" Index="4" RelativeSize="100" IsNewNode="True">
+              <LayoutItem Id="Medicos" ViewItem="Medicos" Index="0" RelativeSize="100" IsNewNode="True" />
             </LayoutGroup>
-            <LayoutGroup Id="Vacunas" RelativeSize="100" Index="5">
-              <LayoutItem Id="Vacunas" RelativeSize="100" />
+            <LayoutGroup Id="Vacunas" ShowCaption="True" Index="5" RelativeSize="100" IsNewNode="True">
+              <LayoutItem Id="Vacunas" ViewItem="Vacunas" Index="0" RelativeSize="100" IsNewNode="True" />
             </LayoutGroup>
-            <LayoutGroup Id="Citas" RelativeSize="100" Index="6">
-              <LayoutItem Id="Citas" RelativeSize="100" />
+            <LayoutGroup Id="Citas" ShowCaption="True" Index="6" RelativeSize="100" IsNewNode="True">
+              <LayoutItem Id="Citas" ViewItem="Citas" Index="0" RelativeSize="100" IsNewNode="True" />
             </LayoutGroup>
-            <LayoutGroup Id="Consultas" RelativeSize="100" Index="7">
-              <LayoutItem Id="Consultas" RelativeSize="100" />
+            <LayoutGroup Id="Consultas" ShowCaption="True" Index="7" RelativeSize="100" IsNewNode="True">
+              <LayoutItem Id="Consultas" ViewItem="Consultas" Index="0" RelativeSize="100" IsNewNode="True" />
             </LayoutGroup>
-            <LayoutGroup Id="Recordatorios" RelativeSize="100" Index="8">
-              <LayoutItem Id="Recordatorios" RelativeSize="100" />
+            <LayoutGroup Id="Recordatorios" ShowCaption="True" Index="8" RelativeSize="100" IsNewNode="True">
+              <LayoutItem Id="Recordatorios" ViewItem="Recordatorios" Index="0" RelativeSize="100" IsNewNode="True" />
             </LayoutGroup>
-            <LayoutGroup Id="HistoriaFamiliares" RelativeSize="100" Index="9">
-              <LayoutItem Id="HistoriaFamiliares" RelativeSize="100" />
+            <LayoutGroup Id="HistoriaFamiliares" ShowCaption="True" Caption="Historia Familiar" Index="9" RelativeSize="100" IsNewNode="True">
+              <LayoutItem Id="HistoriaFamiliares" ViewItem="HistoriaFamiliares" Index="0" RelativeSize="100" IsNewNode="True" />
             </LayoutGroup>
-            <LayoutGroup Id="EstilosVida" RelativeSize="100" Index="10">
-              <LayoutItem Id="EstilosVida" RelativeSize="100" />
+            <LayoutGroup Id="EstilosVida" ShowCaption="True" Caption="Estilo Vida" Index="10" RelativeSize="100" IsNewNode="True">
+              <LayoutItem Id="EstilosVida" ViewItem="EstilosVida" Index="0" RelativeSize="100" IsNewNode="True" />
             </LayoutGroup>
-            <LayoutGroup Id="Problemas" RelativeSize="100" Index="11">
-              <LayoutItem Id="Problemas" RelativeSize="100" />
+            <LayoutGroup Id="Item3" ShowCaption="True" CaptionLocation="Top" Index="11" RelativeSize="100" Caption="Nutrición" IsNewNode="True">
+              <LayoutItem Id="Nutriciones" ViewItem="Nutriciones" Index="0" RelativeSize="100" IsNewNode="True" />
             </LayoutGroup>
-            <LayoutGroup Id="ArchivosAdjuntos" ShowCaption="True" Caption="Archivos Adjuntos" Index="12" RelativeSize="100" IsNewNode="True" Removed="True">
+            <LayoutGroup Id="Problemas" ShowCaption="True" Caption="Problemas Medicos" Index="12" RelativeSize="100" IsNewNode="True">
+              <LayoutItem Id="Problemas" ViewItem="Problemas" Index="0" RelativeSize="100" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="ArchivosAdjuntos" ShowCaption="True" Caption="Archivos Adjuntos" Index="13" RelativeSize="100" IsNewNode="True">
               <LayoutItem Id="ArchivosAdjuntos" ViewItem="ArchivosAdjuntos" Index="0" RelativeSize="100" IsNewNode="True" />
             </LayoutGroup>
-            <LayoutGroup Id="Nutriciones" Removed="True" />
           </TabbedGroup>
           <LayoutGroup Id="Resumen del Error" RelativeSize="5.006418485237484" Caption="Fotografia" Removed="True">
             <LayoutItem Id="Fotografia" RelativeSize="100" Removed="True" />
@@ -960,6 +1273,44 @@
       </Columns>
     </ListView>
     <ListView Id="Paciente_Medicos_ListView" DataAccessMode="Server" AllowEdit="True" NewItemRowPosition="Top" />
+    <ListView Id="Paciente_Nutriciones_ListView">
+      <Columns>
+        <ColumnInfo Id="AguaCorporal" Index="-1" />
+        <ColumnInfo Id="Caloria" Index="-1" Width="85" />
+        <ColumnInfo Id="CC" Index="-1" />
+        <ColumnInfo Id="CHO" Index="-1" />
+        <ColumnInfo Id="CHON" Index="-1" />
+        <ColumnInfo Id="Cmb" Index="-1" />
+        <ColumnInfo Id="ConsumoAgua" PropertyName="ConsumoAgua" Index="-1" IsNewNode="True" Removed="True" />
+        <ColumnInfo Id="COOH" Index="-1" />
+        <ColumnInfo Id="DiagnosticoNutricional" Index="-1" Width="185" />
+        <ColumnInfo Id="DietaPrescrita" Index="-1" Removed="True" />
+        <ColumnInfo Id="EdadMetabolica" Index="-1" />
+        <ColumnInfo Id="FrecuenciaAlimento" Index="-1" />
+        <ColumnInfo Id="GrasaCorporal" Index="-1" />
+        <ColumnInfo Id="GrasaVisceral" Index="-1" />
+        <ColumnInfo Id="ICC" Index="-1" />
+        <ColumnInfo Id="Muscular" Index="-1" />
+        <ColumnInfo Id="Observacion" Index="-1" />
+        <ColumnInfo Id="Otros" Index="-1" />
+        <ColumnInfo Id="PesoLibra" Index="-1" />
+        <ColumnInfo Id="PesoUsual" Index="-1" Width="100" />
+        <ColumnInfo Id="PlanNutricional" Index="-1" />
+        <ColumnInfo Id="Fecha" Width="107" />
+        <ColumnInfo Id="Glucosa" Width="78" />
+        <ColumnInfo Id="Colesterol" Width="90" />
+        <ColumnInfo Id="Triglicerido" Width="99" />
+        <ColumnInfo Id="AcidoUrico" Width="102" />
+        <ColumnInfo Id="Creatinina" Width="98" />
+        <ColumnInfo Id="Hemoglobina" Width="111" />
+        <ColumnInfo Id="Peso" Index="7" Width="87" />
+        <ColumnInfo Id="Talla" Index="8" Width="86" />
+        <ColumnInfo Id="IMC" Index="9" Width="95" />
+        <ColumnInfo Id="Clasificacion" Index="10" Width="158" />
+        <ColumnInfo Id="PesoMeta" Index="11" Width="98" />
+        <ColumnInfo Id="PesoIdeal" Index="12" Width="88" />
+      </Columns>
+    </ListView>
     <ListView Id="Paciente_Parientes_ListView" DataAccessMode="Server" AllowEdit="True" />
     <ListView Id="Paciente_Problemas_ListView" AllowEdit="True" DataAccessMode="Server" />
     <ListView Id="Paciente_Recordatorios_ListView" NewItemRowPosition="Top" />

@@ -14,6 +14,8 @@ using System.Collections.Generic;
 using System.Linq;
 using DevExpress.ExpressApp.Validation;
 using System.Collections;
+using DevExpress.ExpressApp.Security;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace SBT.Apps.Contabilidad.Module.Controllers
 {
@@ -27,6 +29,23 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
         private PopupWindowShowAction pwaCierreMes;
         private SimpleAction saApertura;
         private SimpleAction saLiquidacionCierre;
+        private int fEmpresaOid;
+        private string nombreUsuario;
+
+        private int EmpresaOid
+        {
+            get
+            {
+                if (fEmpresaOid <= 0)
+                {
+                    if (SecuritySystem.CurrentUser == null)
+                        fEmpresaOid = ObjectSpace.GetObjectByKey<Usuario>(ObjectSpace.ServiceProvider.GetRequiredService<ISecurityStrategyBase>().User).Empresa.Oid;
+                    else
+                        fEmpresaOid = ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid;
+                }
+                return fEmpresaOid;
+            }
+        }
 
         public vcPartida() : base()
         {
@@ -35,12 +54,15 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
             // 
             TargetObjectType = typeof(SBT.Apps.Contabilidad.Module.BusinessObjects.Partida);
             //
-            // Target required Views (via the TargetXXX properties) and create their Actions.
         }
 
         protected override void OnActivated()
         {
             base.OnActivated();
+            if (string.IsNullOrEmpty(SecuritySystem.CurrentUserName))
+                nombreUsuario = ObjectSpace.ServiceProvider.GetRequiredService<ISecurityStrategyBase>().UserName;
+            else
+                nombreUsuario = SecuritySystem.CurrentUserName;
             // Perform various tasks depending on the target View.
             pwaCierreDiario.Executing += PwaAbrirCierre_Executing;
             pwaCierreDiario.Execute += PwaCierreDiario_Execute;
@@ -48,7 +70,6 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
             pwaCierreMes.Execute += PwaCierreMes_Execute;
             pwaAbrirDias.Executing += PwaAbrirCierre_Executing;
             pwaAbrirDias.Execute += PwaAbrirDias_Execute;
-            pwaCierreDiario.Executing += PwaCierreMes_Executing;
             saApertura.Execute += saPartidaApertura_Execute;
             saApertura.Executing += saPartidaApertura_Executing;
             saLiquidacionCierre.Execute += saPartidaLiquidacionCierre_Execute;
@@ -165,6 +186,7 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
                 return;
             var le = ((DetailView)View).FindItem("Detalles");
             var lv = ((ListPropertyEditor)le).ListView;
+            string sMsg;
             if (le != null && lv != null)
             {
                 if (ptda.Tipo == ETipoPartida.Apertura)
@@ -174,7 +196,9 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
                         ptda.Concepto = $"Partida de Apertura del Ejercicio {ptda.Fecha.Year}";
                     }
                     PartidaAutomatica partidaAutomatica = new(ObjectSpace, ptda, lv);
-                    partidaAutomatica.PartidaApertura(out _);
+                    partidaAutomatica.PartidaApertura(out sMsg);
+                    if (!string.IsNullOrEmpty(sMsg))
+                        Application.ShowViewStrategy.ShowMessage(sMsg, InformationType.Error);
                     lv.Refresh();
                     ptda.UpdateTotDebe(true);
                     ptda.UpdateTotHaber(true);
@@ -220,16 +244,19 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
             var lv = ((ListPropertyEditor)le).ListView;
             if (le != null && lv != null)
             {
+                string sMsg = string.Empty;
                 if (ptda.Tipo == ETipoPartida.Liquidacion)
                 {
                     PartidaAutomatica partidaAutomatica = new (ObjectSpace, ptda, lv);
-                    partidaAutomatica.PartidaLiquidacion(out _);
+                    partidaAutomatica.PartidaLiquidacion(out sMsg);
                 }
                 else if (ptda.Tipo == ETipoPartida.Cierre)
                 {
                     PartidaAutomatica partidaAutomatica = new (ObjectSpace, ptda, lv);
-                    partidaAutomatica.PartidaDeCierre(out _);
+                    partidaAutomatica.PartidaDeCierre(out sMsg);
                 }
+                if (!string.IsNullOrEmpty(sMsg))
+                    Application.ShowViewStrategy.ShowMessage(sMsg, InformationType.Error);
                 lv.Refresh();
                 ptda.UpdateTotDebe(true);
                 ptda.UpdateTotHaber(true);
@@ -271,8 +298,6 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
 
         private void PwaCierreDiario_Execute(object sender, PopupWindowShowActionExecuteEventArgs e)
         {
-            var EmpresaOid = ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid;
-            var sUsuario = ((Usuario)SecuritySystem.CurrentUser).UserName;
             var fechaDesde = ((CierreDiarioParam)e.PopupWindowViewCurrentObject).FechaDesde;
             var fechaHasta = ((CierreDiarioParam)e.PopupWindowViewCurrentObject).FechaHasta;
             DoBeforeExecute(ref e, EmpresaOid, fechaDesde, fechaHasta);
@@ -280,14 +305,15 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
             {
                 ((CierreDiarioParam)e.PopupWindowViewCurrentObject).Bitacora += $"No tiene valor la variable de la empresa de la sesion{Environment.NewLine}";
                 ((CierreDiarioParam)e.PopupWindowViewCurrentObject).Bitacora += $"Hora Finalizó: {DateTime.Now:G} {Environment.NewLine}";
-                throw new UserFriendlyException("No tiene valor la variable de la empresa de la sesion");
+                Application.ShowViewStrategy.ShowMessage(@"Debe seleccionar una empresa para su sesión, cuando ingreso no seleccciono  una", InformationType.Error);
+                return;
             }
             ((CierreDiarioParam)e.PopupWindowViewCurrentObject).Bitacora += $"{Environment.NewLine}Ejecutando el Proceso{Environment.NewLine}";
             var uow = new UnitOfWork((View.ObjectSpace as XPObjectSpace).Session.DataLayer);
             uow.BeginTransaction();
             uow.ExecuteNonQuery("exec spConCierreDiario @Empresa, @FechaDesde, @FechaHasta, @Usuario",
                 new string[] { "@Empresa", "@FechaDesde", "@FechaHasta", "@Usuario" },
-                new object[] { EmpresaOid, fechaDesde, fechaHasta, sUsuario });
+                new object[] { EmpresaOid, fechaDesde, fechaHasta, nombreUsuario });
             //uow.CommitChanges();
             ((CierreDiarioParam)e.PopupWindowViewCurrentObject).Bitacora += $"Hora Finalizó: {DateTime.Now:G}";
             //var OS = Application.CreateObjectSpace(typeof(AuditoriaProceso));
@@ -304,8 +330,6 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
 
         private void PwaAbrirDias_Execute(object sender, PopupWindowShowActionExecuteEventArgs e)
         {
-            var EmpresaOid = ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid;
-            var sUsuario = ((Usuario)SecuritySystem.CurrentUser).UserName;
             var fechaDesde = ((CierreDiarioParam)e.PopupWindowViewCurrentObject).FechaDesde;
             var fechaHasta = ((CierreDiarioParam)e.PopupWindowViewCurrentObject).FechaHasta;
             DoBeforeExecute(ref e, EmpresaOid, fechaDesde, fechaHasta);
@@ -313,12 +337,13 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
             {
                 ((CierreDiarioParam)e.PopupWindowViewCurrentObject).Bitacora += $"No tiene valor la variable de la empresa de la sesion{Environment.NewLine}";
                 ((CierreDiarioParam)e.PopupWindowViewCurrentObject).Bitacora += $"Hora Finalizó: {DateTime.Now:G}{Environment.NewLine}";
-                throw new UserFriendlyException("No tiene valor la variable de la empresa de la sesion");
+                Application.ShowViewStrategy.ShowMessage(@"Debe seleccionar una empresa para su sesión, cuando ingreso no seleccciono  una", InformationType.Error);
+                return;
             }
             ((CierreDiarioParam)e.PopupWindowViewCurrentObject).Bitacora += $"{Environment.NewLine}Ejecutando el Proceso{Environment.NewLine}";
             IObjectSpace ospace = Application.ObjectSpaceProvider.CreateObjectSpace();
             ((XPObjectSpace)ospace).Session.ExecuteNonQuery("exec spConAbrirDias @Empresa, @FechaDesde, @FechaHasta, @Usuario",
-                new string[] { "@Empresa", "@FechaDesde", "@FechaHasta", "@Usuario" }, new object[] { EmpresaOid, fechaDesde, fechaHasta, sUsuario });
+                new string[] { "@Empresa", "@FechaDesde", "@FechaHasta", "@Usuario" }, new object[] { EmpresaOid, fechaDesde, fechaHasta, nombreUsuario });
             ((CierreDiarioParam)e.PopupWindowViewCurrentObject).Bitacora += $"Hora Finalizó: {DateTime.Now:G}";
             var obj = ospace.CreateObject<AuditoriaProceso>();
             obj.AuditarProceso(pwaAbrirDias.Caption, "", ((CierreDiarioParam)e.PopupWindowViewCurrentObject).Bitacora);
@@ -360,7 +385,7 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
             DateTime finMes = new DateTime(pa.FechaCierre.Year, pa.FechaCierre.Month, 1).AddMonths(1).AddDays(-1);
             int x = Convert.ToInt32(ObjectSpace.Evaluate(typeof(SBT.Apps.Contabilidad.Module.BusinessObjects.Partida), "count(*)",
                          CriteriaOperator.Parse("Empresa.Oid == ? && Periodo.Oid == ? && Fecha <= ? && Mayorizada == false",
-                         (SecuritySystem.CurrentUser as Usuario).Empresa.Oid, pa.FechaCierre.Year, finMes)));
+                         EmpresaOid, pa.FechaCierre.Year, finMes)));
             if (x >= 0)
             {
                 MostrarError($@"El cierre de mes no se puede realizar, porque hay días previos al {string.Format("{0:dd/MM/yyyy}", finMes)} pendientes de cerrar");
@@ -370,14 +395,13 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
 
         private void PwaCierreMes_Execute(object sender, PopupWindowShowActionExecuteEventArgs e)
         {
-            var empresaOid = ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid;
             var fechaCierre = ((CierreMesParam)e.PopupWindowViewCurrentObject).FechaCierre;
             ((CierreMesParam)e.PopupWindowViewCurrentObject).Bitacora = $"{vParam.Caption}{Environment.NewLine}";
             ((CierreMesParam)e.PopupWindowViewCurrentObject).Bitacora += $"Hora Inicio: {DateTime.Now:G} {Environment.NewLine}";
             ((CierreMesParam)e.PopupWindowViewCurrentObject).Bitacora += $"{Environment.NewLine}P a r a m e t r o s{Environment.NewLine}";
-            ((CierreMesParam)e.PopupWindowViewCurrentObject).Bitacora += $"Empresa ==> {empresaOid} {Environment.NewLine}";
+            ((CierreMesParam)e.PopupWindowViewCurrentObject).Bitacora += $"Empresa ==> {EmpresaOid} {Environment.NewLine}";
             ((CierreMesParam)e.PopupWindowViewCurrentObject).Bitacora += $"Fecha Cierre ==> {fechaCierre:G} {Environment.NewLine}";
-            if (empresaOid <= 0)
+            if (EmpresaOid <= 0)
             {
                 ((CierreMesParam)e.PopupWindowViewCurrentObject).Bitacora += $"No tiene valor la variable de la empresa de la sesion{Environment.NewLine}";
                 ((CierreMesParam)e.PopupWindowViewCurrentObject).Bitacora += $"Hora Finalizó: {DateTime.Now:G} {Environment.NewLine}";
@@ -387,7 +411,7 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
             UnitOfWork uow = new((View.ObjectSpace as XPObjectSpace).Session.DataLayer);
             // ***** OJO, REVISAR ESTA PARTE NO ES ESTO ****
             uow.ExecuteNonQuery("exec spConAbrirDias @Empresa, @FechaDesde, @FechaHasta, @Usuario",
-                new string[] { "@Empresa", "@FechaDesde", "@FechaHasta", "@Usuario" }, new object[] { empresaOid, fechaCierre });
+                new string[] { "@Empresa", "@FechaDesde", "@FechaHasta", "@Usuario" }, new object[] { EmpresaOid, fechaCierre });
             // --
             ((CierreMesParam)e.PopupWindowViewCurrentObject).Bitacora += $"Hora Finalizó: {DateTime.Now:G}";
             var obj = new AuditoriaProceso(uow);

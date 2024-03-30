@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Facturacion.Module.Controllers;
-using SBT.Apps.RecursoHumano.Module.BusinessObjects;
 
 namespace SBT.Apps.Erp.Blazor.Server.Controllers.Contabilidad
 {

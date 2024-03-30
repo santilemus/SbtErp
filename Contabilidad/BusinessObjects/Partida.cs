@@ -251,7 +251,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         [Browsable(false)]
         [RuleFromBoolProperty("Partida.Tipo No Valido", DefaultContexts.Save,
             "Tipo {TargetObject.Tipo} no es válido porque ya existe",
-            SkipNullOrEmptyValues = false, UsedProperties = "Tipo", TargetCriteria = "[Periodo.Oid] = GetYear([Fecha]) And [Tipo] In ('Diario', 'Liquidacion', 'Cierre')")]
+            SkipNullOrEmptyValues = false, UsedProperties = "Tipo", TargetCriteria = "[Periodo.Oid] = GetYear([Fecha]) And [Tipo] In ('Apertura', 'Liquidacion', 'Cierre')")]
         public bool TipoPartidaValida
         {
             get

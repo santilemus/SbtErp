@@ -305,7 +305,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         }
 
         [Association("Paciente_ConsultaNutricion"), DevExpress.Xpo.Aggregated]
-        [DisplayName("Consultas Nutrición")]
+        [DisplayName("Nutrición")]
         public XPCollection<ConsultaNutricion> Nutriciones => GetCollection<ConsultaNutricion>(nameof(Nutriciones));
 
         [Association("Paciente-ArchivosAdjuntos"), DevExpress.Xpo.Aggregated, XafDisplayName("Archivos Adjuntos"), Index(14)]

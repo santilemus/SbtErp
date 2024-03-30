@@ -501,15 +501,15 @@
         <LayoutGroup Id="Main" RelativeSize="100">
           <LayoutGroup Id="SimpleEditors" RelativeSize="100" Direction="Horizontal">
             <LayoutGroup Id="PersonaDocumento_col1" ShowCaption="False" Index="0" RelativeSize="49.944382647385986" IsNewNode="True">
-              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="4.8452220726783315" IsNewNode="True" />
-              <LayoutItem Id="Tipo" ViewItem="Tipo" Index="1" RelativeSize="3.499327052489906" IsNewNode="True" />
-              <LayoutItem Id="Numero" ViewItem="Numero" Index="2" RelativeSize="3.499327052489906" IsNewNode="True" />
-              <LayoutItem Id="Nombre" ViewItem="Nombre" Index="3" RelativeSize="88.15612382234185" IsNewNode="True" />
+              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="4.8452220726783315" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Tipo" ViewItem="Tipo" Index="1" RelativeSize="3.499327052489906" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Numero" ViewItem="Numero" Index="2" RelativeSize="3.499327052489906" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Nombre" ViewItem="Nombre" Index="3" RelativeSize="88.15612382234185" CaptionLocation="Left" IsNewNode="True" />
             </LayoutGroup>
             <LayoutGroup Id="PersonaDocumento_col2" ShowCaption="False" Index="1" RelativeSize="50.055617352614014" IsNewNode="True">
-              <LayoutItem Id="LugarEmision" ViewItem="LugarEmision" Index="0" RelativeSize="4.8452220726783315" IsNewNode="True" />
-              <LayoutItem Id="FechaEmision" ViewItem="FechaEmision" Index="1" RelativeSize="3.499327052489906" IsNewNode="True" />
-              <LayoutItem Id="Vigente" ViewItem="Vigente" Index="2" RelativeSize="91.65545087483176" IsNewNode="True" />
+              <LayoutItem Id="LugarEmision" ViewItem="LugarEmision" Index="0" RelativeSize="4.8452220726783315" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="FechaEmision" ViewItem="FechaEmision" Index="1" RelativeSize="3.499327052489906" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Vigente" ViewItem="Vigente" Index="2" RelativeSize="91.65545087483176" CaptionLocation="Left" IsNewNode="True" />
             </LayoutGroup>
             <LayoutGroup Id="XPObject" Caption="Oid" Direction="Horizontal" Index="1" RelativeSize="83.58008075370121" Removed="True">
               <LayoutItem Id="Oid" Removed="True" />

@@ -6,6 +6,11 @@ using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Contabilidad.BusinessObjects;
 using System;
+using DevExpress.ExpressApp.Editors;
+using DevExpress.ExpressApp.Core;
+using System.Collections.Generic;
+using DevExpress.Data.Filtering;
+
 namespace SBT.Apps.Contabilidad.Module.BusinessObjects
 {
     /// <summary>
@@ -28,16 +33,26 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         {
             base.AfterConstruction();
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
+            Tipo = ETipoOperacion.Cargo;
+
+            //parameters = new List<XafFilterParameter>();
+            //parameters.Add(new XafFilterParameter("Oid", typeof(int)));
+            //parameters.Add(new XafFilterParameter("FechaDesde", typeof(DateTime)));
+            //parameters.Add(new XafFilterParameter("FechaHasta", typeof(DateTime)));
         }
 
         #region Propiedades
         PartidaModelo partidaModelo;
         Catalogo catalogo;
         string concepto;
-        decimal valorHaber;
-        decimal valorDebe;
-        string expresionItem;
-        string valorItem;
+        //decimal valorHaber;
+        //decimal valorDebe;
+        //string expresionItem;
+        //string valorItem;
+        private Type tipoBO;
+        private string formula;
+        private string criteria;
+        private ETipoOperacion tipoOperacion;
 
         [Association("PartidaModelo-Detalles")]
         public PartidaModelo PartidaModelo
@@ -70,39 +85,104 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             set => SetPropertyValue(nameof(Concepto), ref concepto, value);
         }
 
-        [DbType("money"), Persistent("Debe"), XafDisplayName("Debe")]
-        public decimal ValorDebe
+        //[DbType("money"), Persistent("Debe"), XafDisplayName("Debe")]
+        //public decimal ValorDebe
+        //{
+        //    get => valorDebe;
+        //    set => SetPropertyValue(nameof(ValorDebe), ref valorDebe, value);
+        //}
+
+        //[DbType("money"), Persistent("Haber"), XafDisplayName("Haber")]
+        //public decimal ValorHaber
+        //{
+        //    get => valorHaber;
+        //    set => SetPropertyValue(nameof(ValorHaber), ref valorHaber, value);
+        //}
+
+
+        //[Size(100), Persistent("ExpresionItem"), XafDisplayName("Expresión Item")]
+        //[RuleRequiredField("PartidaModeloDetalle.ExpresionItem_Requerido", DefaultContexts.Save, TargetCriteria = "[PartidaModelo.TipoModelo] = 1",
+        //    SkipNullOrEmptyValues = true)]
+        //public string ExpresionItem
+        //{
+        //    get => expresionItem;
+        //    set => SetPropertyValue(nameof(ExpresionItem), ref expresionItem, value);
+        //}
+
+
+        //[Size(50), Persistent(nameof(ValorItem)), XafDisplayName("Valor Item")]
+        //[RuleRequiredField("PartidaModeloDetalle.ValorItem_Requerido", DefaultContexts.Save, TargetCriteria = "[PartidaModelo.TipoModelo] = 1",
+        //    SkipNullOrEmptyValues = true)]
+        //public string ValorItem
+        //{
+        //    get => valorItem;
+        //    set => SetPropertyValue(nameof(ValorItem), ref valorItem, value);
+        //}
+
+        #region Propiedades en prueba
+        /// <summary>
+        /// El BO para el cual se implementa la formula
+        /// </summary>
+        /// <remarks>
+        /// Mas info
+        /// 1. EditorAliases.TypePropertyEditor implementa la lista de seleccion de los BO
+        ///    Ver: https://docs.devexpress.com/eXpressAppFramework/113579/concepts/business-model-design/data-types-supported-by-built-in-editors/type-properties
+        /// 2. ValueConverter, para hacer la propiedad persistente se utiliza la conversion a string y guardar el nombre del BO en la bd, incluyendo el namespace
+        /// </remarks>
+        [XafDisplayName("Tipo BO"), Persistent(nameof(TipoBO))]
+        [EditorAlias(EditorAliases.TypePropertyEditor)]
+        [ValueConverter(typeof(DevExpress.ExpressApp.Utils.TypeToStringConverter)), ImmediatePostData]
+        //[DataSourceCriteriaProperty(nameof(BOPermitidos))]
+        [Size(150), DbType("varchar(150)")]
+        public Type TipoBO
         {
-            get => valorDebe;
-            set => SetPropertyValue(nameof(ValorDebe), ref valorDebe, value);
+            get => tipoBO;
+            set => SetPropertyValue(nameof(TipoBO), ref tipoBO, value);
         }
 
-        [DbType("money"), Persistent("Haber"), XafDisplayName("Haber")]
-        public decimal ValorHaber
+        //[Browsable(false)]
+        //private Type CriteriaObjectType { get { return typeof(Empleado.Module.BusinessObjects.Empleado); } }
+
+        [Size(1000), DbType("varchar(1000)"), XafDisplayName("Fórmula"), Persistent(nameof(Formula))]
+        [ElementTypeProperty(nameof(TipoBO))]
+        [EditorAlias(EditorAliases.PopupExpressionPropertyEditor)]
+        [VisibleInListView(false)]
+        //[ModelDefault("Width", "50")]
+        [ModelDefault("RowCount", "3")]
+        public string Formula
         {
-            get => valorHaber;
-            set => SetPropertyValue(nameof(ValorHaber), ref valorHaber, value);
+            get => formula;
+            set => SetPropertyValue(nameof(Formula), ref formula, value);
         }
 
-
-        [Size(100), Persistent("ExpresionItem"), XafDisplayName("Expresión Item")]
-        [RuleRequiredField("PartidaModeloDetalle.ExpresionItem_Requerido", DefaultContexts.Save, TargetCriteria = "[PartidaModelo.TipoModelo] = 1",
-            SkipNullOrEmptyValues = true)]
-        public string ExpresionItem
+        [Size(1000), DbType("varchar(1000)"), XafDisplayName("Condición"), Persistent(nameof(Criteria))]
+        [ElementTypeProperty(nameof(TipoBO))]
+        //[EditorAlias("PopupFilterPropertyEditor")]
+        //[EditorAlias(EditorAliases.CriteriaPropertyEditor)]
+        [EditorAlias(EditorAliases.PopupCriteriaPropertyEditor)]
+        [VisibleInListView(false)]
+        [ModelDefault("RowCount", "3")]
+        [CriteriaOptions(nameof(TipoBO))] //, ParametersMemberName = nameof("Nombre Clas IEnumerable con los parametros personalizados para el filtro))]
+        [ImmediatePostData(true)]
+        public string Criteria
         {
-            get => expresionItem;
-            set => SetPropertyValue(nameof(ExpresionItem), ref expresionItem, value);
+            get => criteria;
+            set => SetPropertyValue(nameof(Criteria), ref criteria, value);
         }
 
-
-        [Size(50), Persistent(nameof(ValorItem)), XafDisplayName("Valor Item")]
-        [RuleRequiredField("PartidaModeloDetalle.ValorItem_Requerido", DefaultContexts.Save, TargetCriteria = "[PartidaModelo.TipoModelo] = 1",
-            SkipNullOrEmptyValues = true)]
-        public string ValorItem
+        public ETipoOperacion Tipo
         {
-            get => valorItem;
-            set => SetPropertyValue(nameof(ValorItem), ref valorItem, value);
+            get => tipoOperacion;
+            set => SetPropertyValue(nameof(Tipo), ref tipoOperacion, value);
         }
+
+        //[Browsable(false)]
+        public CriteriaOperator BOPermitidos
+        {
+             get => CriteriaOperator.FromLambda<Type>(x => x.Name.Contains("Venta"));
+        }
+
+        #endregion
 
         #endregion
 
@@ -111,5 +191,8 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         //    // Trigger a custom business logic for the current record in the UI (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112619.aspx).
         //    this.PersistentProperty = "Paid";
         //}
+
+        //IList<IFilterParameter> parameters;
+        //List<XafFilterParameter> parameters;
     }
 }

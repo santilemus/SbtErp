@@ -36,10 +36,10 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         public int Oid { get; set; }
 
         [RuleRequiredField("CierreDiarioParams.FechaDesde_Requerido", "Save;DialogOK", "Fecha Desde debe tener un valor")]
-        [ModelDefault("DisplayFormat", "{0:G}"), ModelDefault("EditMask", "G"), ImmediatePostData(true)]
+        [ModelDefault("DisplayFormat", "{0:dd/MM/yyyy}"), ModelDefault("EditMask", "dd/MM/yyyy"), ImmediatePostData(true)]
         public DateTime FechaDesde { get; set; }
 
-        [ModelDefault("DisplayFormat", "{0:G}"), ModelDefault("EditMask", "G"), ImmediatePostData(true)]
+        [ModelDefault("DisplayFormat", "{0:dd/MM/yyyy}"), ModelDefault("EditMask", "dd/MM/yyyy"), ImmediatePostData(true)]
         [RuleRequiredField("CierreDiarioParams.FechaHasta_Requerido", "Save;DialogOK", "Fecha Hasta debe tener un valor")]
         [RuleValueComparison("CierreDiarioParams.FechaHasta >= FechaDesde", "Save;DialogOK",
             ValueComparisonType.GreaterThanOrEqual, "[FechaDesde]", "Fecha Hasta debe ser mayor que Fecha Desde",

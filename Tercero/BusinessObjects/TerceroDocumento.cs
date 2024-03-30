@@ -18,6 +18,11 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
     [Persistent(nameof(TerceroDocumento)), CreatableItem(false)]
     [ImageName("user_id-info")]
     [RuleCombinationOfPropertiesIsUnique("TerceroDocumento_TipoDocumento", DefaultContexts.Save, "Tercero,Numero,Tipo", IncludeCurrentObject = false)]
+    // nuevas agregadas el 29/03/2024
+    [RuleCriteria("TerceroDocumento.Nit", DefaultContexts.Save, "len(trim(Numero)) = 14", TargetCriteria = "Tipo.Codigo == 'NIT'",
+        CustomMessageTemplate = "Número de NIT no válido", SkipNullOrEmptyValues = true)]
+    [RuleCriteria("TerceroDocumento.Dui", DefaultContexts.Save, "len(trim(Numero)) = 9", TargetCriteria = "Tipo.Codigo == 'DUI'",
+        CustomMessageTemplate = "Número de DUI no válido", SkipNullOrEmptyValues = true)]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class TerceroDocumento : XPObject

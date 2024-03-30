@@ -29,7 +29,6 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             base.AfterConstruction();
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
             Tipo = ETipoPartida.Diario;
-            Preliminar = false;
         }
 
         #region Propiedades
@@ -40,7 +39,6 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         int? presupuesto;
         string concepto;
         SqlObject consulta;
-        bool preliminar;
 
         [DbType("int"), Persistent("Empresa"), XafDisplayName("Empresa"), Browsable(false)]
         public Empresa Empresa
@@ -95,13 +93,6 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             set => SetPropertyValue(nameof(Consulta), ref consulta, value);
         }
 
-        [DbType("bit"), Persistent(nameof(Preliminar)), XafDisplayName("Preliminar")]
-        public bool Preliminar
-        {
-            get => preliminar;
-            set => SetPropertyValue(nameof(Preliminar), ref preliminar, value);
-        }
-
         #endregion
 
         #region Metodos
@@ -152,13 +143,8 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
 
         #region Colecciones
         [Association("PartidaModelo-Detalles"), DevExpress.Xpo.Aggregated, XafDisplayName("Detalles")]
-        public XPCollection<PartidaModeloDetalle> Detalles
-        {
-            get
-            {
-                return GetCollection<PartidaModeloDetalle>(nameof(Detalles));
-            }
-        }
+        public XPCollection<PartidaModeloDetalle> Detalles => GetCollection<PartidaModeloDetalle>(nameof(Detalles));
+
         #endregion
 
         //[Action(Caption = "My UI Action", ConfirmationMessage = "Are you sure?", ImageName = "Attention", AutoCommit = true)]
