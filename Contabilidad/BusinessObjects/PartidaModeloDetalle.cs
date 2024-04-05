@@ -10,6 +10,7 @@ using DevExpress.ExpressApp.Editors;
 using DevExpress.ExpressApp.Core;
 using System.Collections.Generic;
 using DevExpress.Data.Filtering;
+using System.ComponentModel;
 
 namespace SBT.Apps.Contabilidad.Module.BusinessObjects
 {
@@ -140,14 +141,10 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             set => SetPropertyValue(nameof(TipoBO), ref tipoBO, value);
         }
 
-        //[Browsable(false)]
-        //private Type CriteriaObjectType { get { return typeof(Empleado.Module.BusinessObjects.Empleado); } }
-
         [Size(1000), DbType("varchar(1000)"), XafDisplayName("Fórmula"), Persistent(nameof(Formula))]
         [ElementTypeProperty(nameof(TipoBO))]
         [EditorAlias(EditorAliases.PopupExpressionPropertyEditor)]
         [VisibleInListView(false)]
-        //[ModelDefault("Width", "50")]
         [ModelDefault("RowCount", "3")]
         public string Formula
         {
@@ -176,7 +173,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             set => SetPropertyValue(nameof(Tipo), ref tipoOperacion, value);
         }
 
-        //[Browsable(false)]
+        [Browsable(false)]
         public CriteriaOperator BOPermitidos
         {
              get => CriteriaOperator.FromLambda<Type>(x => x.Name.Contains("Venta"));

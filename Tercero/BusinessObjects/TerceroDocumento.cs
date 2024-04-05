@@ -20,9 +20,9 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
     [RuleCombinationOfPropertiesIsUnique("TerceroDocumento_TipoDocumento", DefaultContexts.Save, "Tercero,Numero,Tipo", IncludeCurrentObject = false)]
     // nuevas agregadas el 29/03/2024
     [RuleCriteria("TerceroDocumento.Nit", DefaultContexts.Save, "len(trim(Numero)) = 14", TargetCriteria = "Tipo.Codigo == 'NIT'",
-        CustomMessageTemplate = "Número de NIT no válido", SkipNullOrEmptyValues = true)]
+        CustomMessageTemplate = "Longitud de NIT no válido", SkipNullOrEmptyValues = true)]
     [RuleCriteria("TerceroDocumento.Dui", DefaultContexts.Save, "len(trim(Numero)) = 9", TargetCriteria = "Tipo.Codigo == 'DUI'",
-        CustomMessageTemplate = "Número de DUI no válido", SkipNullOrEmptyValues = true)]
+        CustomMessageTemplate = "Longitud de DUI no válido", SkipNullOrEmptyValues = true)]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class TerceroDocumento : XPObject
@@ -59,6 +59,11 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
 
         [Size(14), DbType("varchar(14)"), XafDisplayName("Número"), Index(2), VisibleInReports(true)]
         [RuleRequiredField("TerceroDocumento.Numero_Requerido", "Save"), Indexed("Tipo", Name = "idxTerceroNoDocumento")]
+        [RuleRegularExpression("TerceroDocumento.Nit_Valido", DefaultContexts.Save, 
+            "^(0?[0-1]{1}|9)(0?[0-9]{1})(\\d{2})(0?[1-9]|[12]\\d|3[01])(0?[1-9]|1[0-2])\\d{2}\\d{3}\\d{1}$", 
+            TargetCriteria = "[Tipo.Codigo] == 'NIT'", SkipNullOrEmptyValues = true, CustomMessageTemplate = "Número de NIT no válido")]
+        [RuleRegularExpression("TerceroDocumento.Dui_Valido", DefaultContexts.Save, "^(0?[0-9]{8})(0?[0-9]{1})$", TargetCriteria = "[Tipo.Codigo] == 'DUI'",
+            SkipNullOrEmptyValues = true, CustomMessageTemplate = "Número de DUI no válido")]
         public System.String Numero
         {
             get => numero;

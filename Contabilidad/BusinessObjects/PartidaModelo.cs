@@ -8,13 +8,13 @@ using SBT.Apps.Base.Module.BusinessObjects;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using DevExpress.ExpressApp.Editors;
 
 namespace SBT.Apps.Contabilidad.Module.BusinessObjects
 {
-    [DefaultClassOptions, NavigationItem("Contabilidad"), ModelDefault("Caption", "Partidas Modelo"), DefaultProperty("Concepto"),
+    [DefaultClassOptions, NavigationItem("Contabilidad"), ModelDefault("Caption", "Partidas Modelo"), DefaultProperty(nameof(Concepto)),
         Persistent("ConPartidaModelo"), CreatableItem(false)]
     [ImageName(nameof(PartidaModelo))]
-    //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     //[Persistent("DatabaseTableName")]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
@@ -39,6 +39,9 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         int? presupuesto;
         string concepto;
         SqlObject consulta;
+        private Type tipoBO;
+        private string nombre;
+        private string comentario;
 
         [DbType("int"), Persistent("Empresa"), XafDisplayName("Empresa"), Browsable(false)]
         public Empresa Empresa
@@ -82,6 +85,21 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         {
             get => tipoModelo;
             set => SetPropertyValue(nameof(TipoModelo), ref tipoModelo, value);
+        }
+
+        [Size(60), DbType("varchar(60)"), System.ComponentModel.DisplayName("Nombre")]
+        [RuleRequiredField("PartidaModelo.Nombre_requerido", DefaultContexts.Save)]
+        public string Nombre
+        {
+            get => nombre;
+            set => SetPropertyValue(nameof(Nombre), ref nombre, value);
+        }
+
+        [Size(200), DbType("varchar(200)"), System.ComponentModel.DisplayName("Comentario")]
+        public string Comentario
+        {
+            get => comentario;
+            set => SetPropertyValue(nameof(Comentario), ref comentario, value);
         }
 
         [DbType("int"), Persistent("Consulta"), XafDisplayName("Consulta"),

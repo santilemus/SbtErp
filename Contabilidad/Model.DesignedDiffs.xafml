@@ -9,6 +9,8 @@
     </Class>
     <Class Name="SBT.Apps.Contabilidad.Module.BusinessObjects.Partida" IsCloneable="True" />
     <Class Name="SBT.Apps.Contabilidad.Module.BusinessObjects.PartidaDetalle" IsCloneable="True" />
+    <Class Name="SBT.Apps.Contabilidad.Module.BusinessObjects.PartidaModelo" IsCloneable="True" />
+    <Class Name="SBT.Apps.Contabilidad.Module.BusinessObjects.PartidaModeloDetalle" IsCloneable="True" />
   </BOModel>
   <NavigationItems>
     <Items>
@@ -729,16 +731,17 @@
     <DetailView Id="PartidaModelo_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
-          <LayoutGroup Id="SimpleEditors" RelativeSize="12.920592193808883" Direction="Horizontal">
-            <LayoutGroup Id="PartidaModelo_col1" ShowCaption="False" Index="0" RelativeSize="49.944258639910814" IsNewNode="True">
-              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="37.5" IsNewNode="True" />
-              <LayoutItem Id="Tipo" ViewItem="Tipo" Index="1" RelativeSize="27.083333333333332" IsNewNode="True" />
-              <LayoutItem Id="Concepto" ViewItem="Concepto" Index="2" RelativeSize="35.416666666666664" IsNewNode="True" />
+          <LayoutGroup Id="SimpleEditors" RelativeSize="10.629067245119305" Direction="Horizontal">
+            <LayoutGroup Id="PartidaModelo_col1" ShowCaption="False" Index="0" RelativeSize="49.90451941438574" IsNewNode="True">
+              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="36.734693877551024" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Tipo" ViewItem="Tipo" Index="1" RelativeSize="26.53061224489796" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Concepto" ViewItem="Concepto" Index="2" RelativeSize="36.734693877551024" CaptionLocation="Left" IsNewNode="True" />
             </LayoutGroup>
-            <LayoutGroup Id="PartidaModelo_col2" ShowCaption="False" Index="1" RelativeSize="50.055741360089186" IsNewNode="True">
-              <LayoutItem Id="TipoModelo" ViewItem="TipoModelo" Index="0" RelativeSize="37.5" IsNewNode="True" />
-              <LayoutItem Id="Consulta" ViewItem="Consulta" Index="1" RelativeSize="27.083333333333332" IsNewNode="True" />
-              <LayoutItem Id="Preliminar" ViewItem="Preliminar" Index="2" RelativeSize="35.416666666666664" IsNewNode="True" />
+            <LayoutGroup Id="PartidaModelo_col2" ShowCaption="False" Index="1" RelativeSize="50.09548058561426" IsNewNode="True">
+              <LayoutItem Id="TipoModelo" ViewItem="TipoModelo" Index="0" RelativeSize="36.734693877551024" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Nombre" ViewItem="Nombre" Index="1" RelativeSize="26.53061224489796" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Comentario" ViewItem="Comentario" Index="2" RelativeSize="26.53061224489796" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="TipoBO" ViewItem="TipoBO" Index="3" RelativeSize="10.204081632653061" CaptionLocation="Left" IsNewNode="True" />
             </LayoutGroup>
             <LayoutGroup Id="XPObject" Caption="Oid" Direction="Horizontal" Index="1" RelativeSize="63.07277628032345" Removed="True">
               <LayoutItem Id="Oid" Removed="True" />
@@ -757,8 +760,8 @@
               </LayoutGroup>
             </LayoutGroup>
           </LayoutGroup>
-          <LayoutGroup Id="Detalles_Group" Direction="Vertical" RelativeSize="87.07940780619111">
-            <LayoutItem Id="Detalles" RelativeSize="100" />
+          <LayoutGroup Id="Detalles_Group" Direction="Vertical" RelativeSize="89.3709327548807" Caption="Detalles">
+            <LayoutItem Id="Detalles" RelativeSize="100" Index="0" />
           </LayoutGroup>
         </LayoutGroup>
       </Layout>
