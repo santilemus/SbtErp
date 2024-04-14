@@ -91,7 +91,7 @@ namespace SBT.Apps.Compra.Module.helper
         {
             var criteria = CriteriaOperator.FromLambda<LibroCompra>(x => x.CompraFactura.Empresa.Oid == empresaOid &&
                             x.Fecha.Date >= fechaDesde && x.Fecha.Date <= fechaHasta && x.CompraFactura.Estado != EEstadoFactura.Anulado &&
-                            string.IsNullOrEmpty(x.TipoDocumento) && x.CompraExcluido != 0.0m);
+                            x.TipoDocumento == "00" && x.CompraExcluido != 0.0m);
             var datos = objectSpace.GetObjects<LibroCompra>(criteria).Select(x => new
             {
                 TipoDocumento = !string.IsNullOrEmpty(x.Nit) ? 1: !string.IsNullOrEmpty(x.Dui) ? 2: 3,

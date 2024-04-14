@@ -1,0 +1,114 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<OutputType>Library</OutputType>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<AssemblyTitle>SBT.Apps.Medico.Generico</AssemblyTitle>
+		<Company>Smart Business Technology, S.A de C.V</Company>
+		<Product>SBT.Apps.Medico.Generico</Product>
+		<Copyright>Copyright © 2021</Copyright>
+		<AssemblyVersion>2.0.*</AssemblyVersion>
+		<FileVersion>2.0.0.0</FileVersion>
+		<Configurations>Debug;Release;EasyTest</Configurations>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'EasyTest|AnyCPU' ">
+		<DebugSymbols>true</DebugSymbols>
+		<OutputPath>bin\EasyTest\</OutputPath>
+		<DefineConstants>TRACE;DEBUG;EASYTEST</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug Net6|AnyCPU'">
+		<OutputPath>bin\Debug Net6\</OutputPath>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="DevExpress.ExpressApp" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.Chart" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.CloneObject.Xpo" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.CodeAnalysis" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.ConditionalAppearance" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.Objects" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.ReportsV2" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.Security.Xpo" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.Validation" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.ViewVariantsModule" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.Xpo" Version="23.1.3" />
+		<PackageReference Include="DevExpress.Persistent.Base" Version="23.1.3" />
+		<PackageReference Include="DevExpress.Persistent.BaseImpl.Xpo" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.AuditTrail.Xpo" Version="23.1.3" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Update="GenericoModule.cs" />
+		<Compile Update="GenericoModule.Designer.cs">
+			<DependentUpon>GenericoModule.cs</DependentUpon>
+		</Compile>
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="Model.DesignedDiffs.xafml">
+			<SubType>Designer</SubType>
+		</EmbeddedResource>
+		<EmbeddedResource Update="GenericoModule.resx">
+			<SubType>Designer</SubType>
+			<DependentUpon>GenericoModule.cs</DependentUpon>
+		</EmbeddedResource>
+		<EmbeddedResource Include="Properties\licenses.licx" />
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="Images\ReadMe.txt" />
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="Images\book_open.png" />
+		<EmbeddedResource Include="Images\book_open_32x32.png" />
+		<EmbeddedResource Include="Images\capsula2.png" />
+		<EmbeddedResource Include="Images\capsula2_32x32.png" />
+		<EmbeddedResource Include="Images\ccmedico.png" />
+		<EmbeddedResource Include="Images\ccmedico_32x32.png" />
+		<EmbeddedResource Include="Images\list-info.png" />
+		<EmbeddedResource Include="Images\list-info_32x32.png" />
+		<EmbeddedResource Include="Images\list-key.png" />
+		<EmbeddedResource Include="Images\list-key_32x32.png" />
+		<EmbeddedResource Include="Images\medicamento.png" />
+		<EmbeddedResource Include="Images\medicamento_32x32.png" />
+		<EmbeddedResource Include="Images\medico.png" />
+		<EmbeddedResource Include="Images\medico_32x32.png" />
+		<EmbeddedResource Include="Images\med_especialista.png" />
+		<EmbeddedResource Include="Images\med_especialista_32x32.png" />
+		<EmbeddedResource Include="Images\FactorRiesgo.png" />
+		<EmbeddedResource Include="Images\FactorRiesgo_32x32.png" />
+		<EmbeddedResource Include="Images\PlanMedico.png" />
+		<EmbeddedResource Include="Images\PlanMedico_32x32.png" />
+		<EmbeddedResource Include="Images\Vacuna.png" />
+		<EmbeddedResource Include="Images\Vacuna_32x32.png" />
+		<EmbeddedResource Include="Images\Enfermedad.png" />
+		<EmbeddedResource Include="Images\Enfermedad_32x32.png" />
+		<EmbeddedResource Include="Images\Recursos.png" />
+		<EmbeddedResource Include="Images\Recursos_32x32.png" />
+		<EmbeddedResource Include="Images\EstiloVida.png" />
+		<EmbeddedResource Include="Images\EstiloVida_32x32.png" />
+		<EmbeddedResource Include="Images\HistoriaFamiliar.png" />
+		<EmbeddedResource Include="Images\HistoriaFamiliar_32x32.png" />
+		<EmbeddedResource Include="Images\HistorialCrecimiento.png" />
+		<EmbeddedResource Include="Images\HistorialCrecimiento_32x32.png" />
+		<EmbeddedResource Include="Images\ProblemaMedico.png" />
+		<EmbeddedResource Include="Images\ProblemaMedico_32x32.png" />
+		<EmbeddedResource Include="Images\RecordatorioClinico.png" />
+		<EmbeddedResource Include="Images\RecordatorioClinico_32x32.png" />
+		<EmbeddedResource Include="Images\Paciente.png" />
+		<EmbeddedResource Include="Images\Paciente_32x32.png" />
+		<EmbeddedResource Include="Images\ConsultaSigno.png" />
+		<EmbeddedResource Include="Images\ConsultaSigno_32x32.png" />
+		<EmbeddedResource Include="Images\SignoLista.png" />
+		<EmbeddedResource Include="Images\SignoLista_32x32.png" />
+		<EmbeddedResource Include="Images\UltraSonografiaObstetrica.png" />
+		<EmbeddedResource Include="Images\UltraSonografiaObstetrica_32x32.png" />
+		<EmbeddedResource Include="Images\UltraSonografiaPelvica.png" />
+		<EmbeddedResource Include="Images\UltraSonografiaPelvica_32x32.png" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Remove="BusinessObjects\RecursoMedico.cs" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\Base\SBT.Apps.Base.csproj" />
+	  <ProjectReference Include="..\Empleado\SBT.Apps.Empleado.csproj" />
+	  <ProjectReference Include="..\Producto\SBT.Apps.Producto.csproj" />
+	  <ProjectReference Include="..\Tercero\SBT.Apps.Tercero.csproj" />
+	</ItemGroup>
+</Project>

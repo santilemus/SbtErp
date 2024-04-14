@@ -1,18 +1,10 @@
 ﻿using System;
-using System.Linq;
-using System.Text;
 using System.ComponentModel;
 using DevExpress.ExpressApp;
-using DevExpress.ExpressApp.DC;
 using System.Collections.Generic;
-using DevExpress.ExpressApp.Model;
-using DevExpress.ExpressApp.Editors;
-using DevExpress.ExpressApp.Actions;
 using DevExpress.ExpressApp.Updating;
-using DevExpress.ExpressApp.Model.Core;
-using DevExpress.ExpressApp.Model.DomainLogics;
-using DevExpress.ExpressApp.Model.NodeGenerators;
 using DevExpress.Persistent.BaseImpl;
+using SBT.Apps.Erp.Module.Win.Controllers;
 
 namespace SBT.Apps.Erp.Module.Win {
     [ToolboxItemFilter("Xaf.Platform.Win")]
@@ -37,6 +29,12 @@ namespace SBT.Apps.Erp.Module.Win {
             //application.CreateCustomModelDifferenceStore += Application_CreateCustomModelDifferenceStore;
             application.CreateCustomUserModelDifferenceStore += Application_CreateCustomUserModelDifferenceStore;
             // Manage various aspects of the application UI and behavior at the module level.
+            application.CreateCustomLogonWindowControllers += Application_CreateCustomLogonWindowControllers;
+        }
+
+        private void Application_CreateCustomLogonWindowControllers(object sender, CreateCustomLogonWindowControllersEventArgs e)
+        {
+            e.Controllers.Add(((XafApplication)sender).CreateController<LoginController>());
         }
     }
 }

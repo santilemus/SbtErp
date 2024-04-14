@@ -1,0 +1,170 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<OutputType>Library</OutputType>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<AssemblyTitle>SBT.Apps.Medico.Expediente</AssemblyTitle>
+		<Company>Smart Business Technology, S.A de C.V</Company>
+		<Product>SBT.Apps.Medico.Expediente</Product>
+		<Copyright>Copyright © 2021</Copyright>
+		<AssemblyVersion>2.0.*</AssemblyVersion>
+		<FileVersion>2.0.0.0</FileVersion>
+		<Configurations>Debug;Release;EasyTest</Configurations>
+		<Copyright>Copyright © 2021</Copyright>
+		<AssemblyVersion>2.0.*</AssemblyVersion>
+		<FileVersion>2.0.0.0</FileVersion>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'EasyTest|AnyCPU' ">
+		<DebugSymbols>true</DebugSymbols>
+		<OutputPath>bin\EasyTest\</OutputPath>
+		<DefineConstants>TRACE;DEBUG;EASYTEST</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug Net6|AnyCPU'">
+		<OutputPath>bin\Debug Net6\</OutputPath>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="DevExpress.ExpressApp" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.Chart" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.CloneObject.Xpo" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.CodeAnalysis" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.ConditionalAppearance" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.Notifications" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.Objects" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.ReportsV2" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.Scheduler" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.Security.Xpo" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.Validation" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.ViewVariantsModule" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.Xpo" Version="23.1.3" />
+		<PackageReference Include="DevExpress.Persistent.Base" Version="23.1.3" />
+		<PackageReference Include="DevExpress.Persistent.BaseImpl.Xpo" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.AuditTrail.Xpo" Version="23.1.3" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Update="Controllers\vcConsultaListView.cs" />
+		<Compile Update="Controllers\vcHistoriaFamiliar.cs" />
+		<Compile Update="Controllers\vcPaciente.cs" />
+		<Compile Update="Controllers\vcPacienteAseguradoraLookup.cs" />
+		<Compile Update="ExpedienteModule.cs" />
+		<Compile Update="ExpedienteModule.Designer.cs">
+			<DependentUpon>ExpedienteModule.cs</DependentUpon>
+		</Compile>
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="Images\electrocardiograma.png">
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="Images\electrocardiograma_32x32.png">
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="Images\icons8-sneeze-16.png">
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="Images\icons8-sneeze-30.png">
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="Images\prueba_lab.png">
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="Images\prueba_lab_32x32.png">
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="Images\ReadMe.txt">
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="Model.DesignedDiffs.xafml">
+			<SubType>Designer</SubType>
+		</EmbeddedResource>
+		<EmbeddedResource Update="ExpedienteModule.resx">
+			<SubType>Designer</SubType>
+			<DependentUpon>ExpedienteModule.cs</DependentUpon>
+		</EmbeddedResource>
+		<EmbeddedResource Include="Properties\licenses.licx" />
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="Images\archive-customer.png">
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="Images\archive-customer_32x32.png">
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="Images\examenfis.png">
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="Images\examenfis_32x32.png">
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="Images\list-info.png">
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="Images\list-info_32x32.png">
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="Images\medico.png">
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="Images\medico_32x32.png">
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="Images\planning-customer.png">
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="Images\planning-customer_32x32.png">
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="Images\proforma.png">
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="Images\proforma_32x32.png">
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="Images\signo.png">
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="Images\signo_32x32.png">
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="Images\user_group.png">
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="Images\user_group_32x32.png">
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="Images\vacunas.png">
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="Images\vacunas_32x32.png">
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</EmbeddedResource>
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Remove="BusinessObjects\copias\Vacuna.bo.cs" />
+		<Compile Remove="BusinessObjects\copias\Vacuna.bo.designer.cs" />
+		<Compile Remove="BusinessObjects\copias\VacunaDosis.bo.cs" />
+		<Compile Remove="BusinessObjects\copias\VacunaDosis.bo.designer.cs" />
+		<Compile Remove="BusinessObjects\HistorialCrecimiento.cs" />
+		<Compile Remove="Controllers\vcRecordatorioClinico.cs" />
+		<Compile Remove="Controllers\vcRecordatorioClinico.Designer.cs" />
+		<EmbeddedResource Remove="Controllers\vcRecordatorioClinico.resx" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Remove="Images\electrocardiograma.png" />
+		<None Remove="Images\electrocardiograma_32x32.png" />
+		<None Remove="Images\icons8-sneeze-16.png" />
+		<None Remove="Images\icons8-sneeze-30.png" />
+		<None Remove="Images\prueba_lab.png" />
+		<None Remove="Images\prueba_lab_32x32.png" />
+		<None Remove="Images\ReadMe.txt" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Base\SBT.Apps.Base.csproj" />
+		<ProjectReference Include="..\Empleado\SBT.Apps.Empleado.csproj" />
+		<ProjectReference Include="..\Medico.Generico.Module\SBT.Apps.Medico.Generico.Module.csproj" />
+		<ProjectReference Include="..\Tercero\SBT.Apps.Tercero.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+	  <None Update="UnusableNodes.xml">
+	    <DependentUpon>Model.DesignedDiffs.xafml</DependentUpon>
+	  </None>
+	</ItemGroup>
+</Project>

@@ -1,162 +1,78 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{579E294D-47B3-4E8A-94B8-A81A514F7405}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SBT.Apps.Activo.Module</RootNamespace>
-    <AssemblyName>SBT.Apps.Activo.Module</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'EasyTest|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\EasyTest\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;EASYTEST</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="DevExpress.Data.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.ExpressApp.CloneObject.Xpo.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.ExpressApp.ConditionalAppearance.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.ExpressApp.Objects.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.ExpressApp.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.ExpressApp.Validation.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.ExpressApp.ViewVariantsModule.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.ExpressApp.Xpo.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.Persistent.Base.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.Persistent.BaseImpl.Xpo.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.Printing.v21.2.Core">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DevExpress.Xpo.v21.2">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="mscorlib">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="System">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="System.Core">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="System">
-      <Name>System</Name>
-    </Reference>
-    <Reference Include="System.Drawing" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="BusinessObjects\ActivoAjuste.cs" />
-    <Compile Include="BusinessObjects\ActivoAtributo.cs" />
-    <Compile Include="BusinessObjects\ActivoCatalogo.cs" />
-    <Compile Include="BusinessObjects\ActivoCategoria.cs" />
-    <Compile Include="BusinessObjects\ActivoDepreciacion.cs" />
-    <Compile Include="BusinessObjects\ActivoMejora.cs" />
-    <Compile Include="BusinessObjects\ActivoMovimiento.cs" />
-    <Compile Include="BusinessObjects\ActivoSeguro.cs" />
-    <Compile Include="BusinessObjects\ActivoSeguroDetalle.cs" />
-    <Compile Include="BusinessObjects\EEstadoDepreciacion.cs" />
-    <Compile Include="BusinessObjects\ETipoDepreciacion.cs" />
-    <Compile Include="DatabaseUpdate\Updater.cs" />
-    <Compile Include="Module.cs" />
-    <Compile Include="Module.Designer.cs">
-      <DependentUpon>Module.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Model.DesignedDiffs.xafml" />
-    <EmbeddedResource Include="Module.resx">
-      <DependentUpon>Module.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\licenses.licx" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="BusinessObjects\ReadMe.txt" />
-    <None Include="Controllers\ReadMe.txt" />
-    <None Include="DatabaseUpdate\ReadMe.txt" />
-    <None Include="Images\ReadMe.txt" />
-    <None Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Base\SBT.Apps.Base.csproj">
-      <Project>{A538FE93-206D-4869-BC40-FDC561F8C1D1}</Project>
-      <Name>SBT.Apps.Base</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Empleado\SBT.Apps.Empleado.csproj">
-      <Project>{05F004D2-9388-44DB-A756-2FFB2ECCAE07}</Project>
-      <Name>SBT.Apps.Empleado</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Tercero\SBT.Apps.Tercero.csproj">
-      <Project>{5F15837D-D1E5-44DC-92F0-4F2EBE9C3F8D}</Project>
-      <Name>SBT.Apps.Tercero</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Images\ActivoAjuste.png" />
-    <EmbeddedResource Include="Images\ActivoAjuste_32x32.png" />
-    <EmbeddedResource Include="Images\ActivoAtributo.png" />
-    <EmbeddedResource Include="Images\ActivoAtributo_32x32.png" />
-    <EmbeddedResource Include="Images\ActivoDepreciacion.png" />
-    <EmbeddedResource Include="Images\ActivoDepreciacion_32x32.png" />
-    <EmbeddedResource Include="Images\ActivoMejora.png" />
-    <EmbeddedResource Include="Images\ActivoMejora_32x32.png" />
-    <EmbeddedResource Include="Images\ActivoMovimiento.png" />
-    <EmbeddedResource Include="Images\ActivoMovimiento_32x32.png" />
-    <EmbeddedResource Include="Images\ActivoSeguro.png" />
-    <EmbeddedResource Include="Images\ActivoSeguroDetalle.png" />
-    <EmbeddedResource Include="Images\ActivoSeguroDetalle_32x32.png" />
-    <EmbeddedResource Include="Images\ActivoSeguro_32x32.png" />
-  </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<OutputType>Library</OutputType>
+		<Configurations>Debug;Release;EasyTest</Configurations>
+		<RootNamespace>SBT.Apps.Activo.Module</RootNamespace>
+		<AssemblyName>SBT.Apps.Activo.Module</AssemblyName>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<AssemblyTitle>SBT.Apps.Activo.Module</AssemblyTitle>
+		<Product>SBT.Apps.Activo.Module</Product>
+		<Copyright>Copyright © 2021</Copyright>
+		<AssemblyVersion>2.0.*</AssemblyVersion>
+		<FileVersion>2.0.0.0</FileVersion>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'EasyTest|AnyCPU' ">
+		<DebugSymbols>true</DebugSymbols>
+		<OutputPath>bin\EasyTest\</OutputPath>
+		<DefineConstants>TRACE;DEBUG;EASYTEST</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug Net6|AnyCPU'">
+		<OutputPath>bin\Debug Net6\</OutputPath>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="DevExpress.ExpressApp" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.Chart" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.CloneObject.Xpo" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.CodeAnalysis" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.ConditionalAppearance" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.Objects" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.ReportsV2" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.Security.Xpo" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.Validation" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.ViewVariantsModule" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.Xpo" Version="23.1.3" />
+		<PackageReference Include="DevExpress.Persistent.Base" Version="23.1.3" />
+		<PackageReference Include="DevExpress.Persistent.BaseImpl.Xpo" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.AuditTrail.Xpo" Version="23.1.3" />
+		<!--<PackageReference Include="DevExpress.ExpressApp.Office" Version="23.1" />-->
+		<!--<PackageReference Include="DevExpress.Utils" Version="23.1" />-->
+		<!--<PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="6.0.0" />-->
+		<!--<PackageReference Include="System.Security.AccessControl" Version="6.0.0" />-->
+		<!--<PackageReference Include="System.Configuration.ConfigurationManager" Version="7.0.0" />-->
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Update="Module.cs" />
+		<Compile Update="Module.Designer.cs">
+			<DependentUpon>Module.cs</DependentUpon>
+		</Compile>
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="Model.DesignedDiffs.xafml" />
+		<EmbeddedResource Update="Module.resx">
+			<DependentUpon>Module.cs</DependentUpon>
+		</EmbeddedResource>
+		<EmbeddedResource Include="Properties\licenses.licx" />
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="Images\ActivoAjuste.png" />
+		<EmbeddedResource Include="Images\ActivoAjuste_32x32.png" />
+		<EmbeddedResource Include="Images\ActivoAtributo.png" />
+		<EmbeddedResource Include="Images\ActivoAtributo_32x32.png" />
+		<EmbeddedResource Include="Images\ActivoDepreciacion.png" />
+		<EmbeddedResource Include="Images\ActivoDepreciacion_32x32.png" />
+		<EmbeddedResource Include="Images\ActivoMejora.png" />
+		<EmbeddedResource Include="Images\ActivoMejora_32x32.png" />
+		<EmbeddedResource Include="Images\ActivoMovimiento.png" />
+		<EmbeddedResource Include="Images\ActivoMovimiento_32x32.png" />
+		<EmbeddedResource Include="Images\ActivoSeguro.png" />
+		<EmbeddedResource Include="Images\ActivoSeguroDetalle.png" />
+		<EmbeddedResource Include="Images\ActivoSeguroDetalle_32x32.png" />
+		<EmbeddedResource Include="Images\ActivoSeguro_32x32.png" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\Empleado\SBT.Apps.Empleado.csproj" />
+	  <ProjectReference Include="..\Tercero\SBT.Apps.Tercero.csproj" />
+	</ItemGroup>
 </Project>

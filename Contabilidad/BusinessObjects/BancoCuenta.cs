@@ -1,4 +1,5 @@
 ﻿using DevExpress.Data.Filtering;
+using DevExpress.Drawing;
 using DevExpress.ExpressApp.ConditionalAppearance;
 using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
@@ -135,7 +136,7 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
 
         [XafDisplayName("Saldo Cuenta"), Index(9)]
         [ModelDefault("DisplayFormat", "{0:N2}")]
-        [Appearance("BancoCuenta.Saldo", FontStyle = System.Drawing.FontStyle.Bold, BackColor = "SlateBlue", FontColor = "Orange",
+        [Appearance("BancoCuenta.Saldo", FontStyle = DXFontStyle.Bold, BackColor = "SlateBlue", FontColor = "Orange",
             Criteria = "!IsNull([Saldo])")]
         public decimal Saldo
         {

@@ -476,19 +476,22 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         {
             base.DoTipoFacturaChanged(forceChangeEvents, oldValue);
             AutorizacionDocumento resoluc;
-            if (Caja != null)
-                resoluc = Session.FindObject<AutorizacionDocumento>(CriteriaOperator.Parse("Agencia.Oid == ? && Caja.Oid == ? && Tipo.Codigo == ? && Activo == True",
-                    Agencia.Oid, Caja.Oid, TipoFactura.Codigo));
-            else
-                resoluc = Session.FindObject<AutorizacionDocumento>(CriteriaOperator.Parse("Agencia.Oid == ? && Tipo.Codigo == ? && Activo == True",
-                    Agencia.Oid, TipoFactura.Codigo));
-            var oldresoluc = autorizacionDocumento;
-            autorizacionDocumento = resoluc;
-            OnChanged(nameof(AutorizacionDocumento), oldresoluc, resoluc);
-            if (autorizacionDocumento != null)
+            if (Agencia != null)
             {
-                NoFactura = GetNoFactura(autorizacionDocumento.Oid);
-                OnChanged(nameof(NoFactura));
+                if (Caja != null)
+                    resoluc = Session.FindObject<AutorizacionDocumento>(CriteriaOperator.Parse("Agencia.Oid == ? && Caja.Oid == ? && Tipo.Codigo == ? && Activo == True",
+                        Agencia.Oid, Caja.Oid, TipoFactura.Codigo));
+                else
+                    resoluc = Session.FindObject<AutorizacionDocumento>(CriteriaOperator.Parse("Agencia.Oid == ? && Tipo.Codigo == ? && Activo == True",
+                        Agencia.Oid, TipoFactura.Codigo));
+                var oldresoluc = autorizacionDocumento;
+                autorizacionDocumento = resoluc;
+                OnChanged(nameof(AutorizacionDocumento), oldresoluc, resoluc);
+                if (autorizacionDocumento != null)
+                {
+                    NoFactura = GetNoFactura(autorizacionDocumento.Oid);
+                    OnChanged(nameof(NoFactura));
+                }
             }
         }
 

@@ -13,6 +13,7 @@ using System.ComponentModel;
 using DevExpress.ExpressApp.Editors;
 using System.Runtime.CompilerServices;
 using DevExpress.ExpressApp;
+using DevExpress.Drawing;
 
 namespace SBT.Apps.Banco.Module.BusinessObjects
 {
@@ -260,7 +261,7 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
 
         [XafDisplayName("Saldo Cuenta"), VisibleInListView(false)]
         [ModelDefault("DisplayFormat", "{0:N2}")]
-        [Appearance("BancoTransaccion.CuentaSaldo", FontStyle = System.Drawing.FontStyle.Bold, BackColor = "SlateBlue", FontColor = "Orange",
+        [Appearance("BancoTransaccion.CuentaSaldo", FontStyle = DXFontStyle.Bold, BackColor = "SlateBlue", FontColor = "Orange",
             Criteria = "!IsNull([Saldo])")]
         public decimal Saldo
         {

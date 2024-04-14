@@ -37,53 +37,53 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<Reference Include="DevExpress.ExpressApp.CloneObject.Xpo.v23.1">
-		  <HintPath>..\packages\DevExpress.ExpressApp.CloneObject.Xpo.23.1.3\lib\net452\DevExpress.ExpressApp.CloneObject.Xpo.v23.1.dll</HintPath>
+		  
 		</Reference>
 		<Reference Include="DevExpress.ExpressApp.ConditionalAppearance.v23.1">
-		  <HintPath>..\packages\DevExpress.ExpressApp.ConditionalAppearance.23.1.3\lib\net452\DevExpress.ExpressApp.ConditionalAppearance.v23.1.dll</HintPath>
+		  
 		</Reference>
 		<Reference Include="DevExpress.ExpressApp.Dashboards.Win.v23.1">
-		  <HintPath>..\packages\DevExpress.ExpressApp.Dashboards.Win.23.1.3\lib\net452\DevExpress.ExpressApp.Dashboards.Win.v23.1.dll</HintPath>
+		  
 		</Reference>
 		<Reference Include="DevExpress.ExpressApp.Dashboards.Win.v23.1, Version=23.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
 		<Reference Include="DevExpress.ExpressApp.Notifications.v23.1">
-		  <HintPath>..\packages\DevExpress.ExpressApp.Notifications.23.1.3\lib\net452\DevExpress.ExpressApp.Notifications.v23.1.dll</HintPath>
+		  
 		</Reference>
 		<Reference Include="DevExpress.ExpressApp.Notifications.Win.v23.1">
-		  <HintPath>..\packages\DevExpress.ExpressApp.Notifications.Win.23.1.3\lib\net452\DevExpress.ExpressApp.Notifications.Win.v23.1.dll</HintPath>
+		  
 		</Reference>
 		<Reference Include="DevExpress.ExpressApp.Objects.v23.1">
-		  <HintPath>..\packages\DevExpress.ExpressApp.Objects.23.1.3\lib\net452\DevExpress.ExpressApp.Objects.v23.1.dll</HintPath>
+		  
 		</Reference>
 		<Reference Include="DevExpress.ExpressApp.ReportsV2.v23.1">
-		  <HintPath>..\packages\DevExpress.ExpressApp.ReportsV2.23.1.3\lib\net452\DevExpress.ExpressApp.ReportsV2.v23.1.dll</HintPath>
+		  
 		</Reference>
 		<Reference Include="DevExpress.ExpressApp.ReportsV2.Win.v23.1">
-		  <HintPath>..\packages\DevExpress.ExpressApp.ReportsV2.Win.23.1.3\lib\net452\DevExpress.ExpressApp.ReportsV2.Win.v23.1.dll</HintPath>
+		  
 		</Reference>
 		<Reference Include="DevExpress.ExpressApp.Security.v23.1">
-		  <HintPath>..\packages\DevExpress.ExpressApp.Security.23.1.3\lib\net452\DevExpress.ExpressApp.Security.v23.1.dll</HintPath>
+		  
 		</Reference>
 		<Reference Include="DevExpress.ExpressApp.Security.Xpo.v23.1">
-		  <HintPath>..\packages\DevExpress.ExpressApp.Security.Xpo.23.1.3\lib\net452\DevExpress.ExpressApp.Security.Xpo.v23.1.dll</HintPath>
+		  
 		</Reference>
 		<Reference Include="DevExpress.ExpressApp.v23.1">
-			<HintPath>..\packages\DevExpress.ExpressApp.23.1.3\lib\net452\DevExpress.ExpressApp.v23.1.dll</HintPath>
+			
 		</Reference>
 		<Reference Include="DevExpress.ExpressApp.Validation.v23.1">
-		  <HintPath>..\packages\DevExpress.ExpressApp.Validation.23.1.3\lib\net452\DevExpress.ExpressApp.Validation.v23.1.dll</HintPath>
+		  
 		</Reference>
 		<Reference Include="DevExpress.ExpressApp.Validation.Win.v23.1">
-		  <HintPath>..\packages\DevExpress.ExpressApp.Validation.Win.23.1.3\lib\net452\DevExpress.ExpressApp.Validation.Win.v23.1.dll</HintPath>
+		  
 		</Reference>
 		<Reference Include="DevExpress.ExpressApp.ViewVariantsModule.v23.1">
-		  <HintPath>..\packages\DevExpress.ExpressApp.ViewVariantsModule.23.1.3\lib\net452\DevExpress.ExpressApp.ViewVariantsModule.v23.1.dll</HintPath>
+		  
 		</Reference>
 		<Reference Include="DevExpress.ExpressApp.Xpo.v23.1">
-		  <HintPath>..\packages\DevExpress.ExpressApp.Xpo.23.1.3\lib\net452\DevExpress.ExpressApp.Xpo.v23.1.dll</HintPath>
+		  
 		</Reference>
 		<Reference Include="DevExpress.XtraReports.v23.1.Extensions">
-		  <HintPath>..\packages\DevExpress.Win.Reporting.23.1.3\lib\net452\DevExpress.XtraReports.v23.1.Extensions.dll</HintPath>
+		  
 		</Reference>
 		<Reference Include="System">
 			<Name>System</Name>

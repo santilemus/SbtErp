@@ -1,0 +1,215 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<OutputType>Library</OutputType>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<AssemblyTitle>SBT.Apps.Medico.Module</AssemblyTitle>
+		<Company>Smart Business Technology, S.A de C.V</Company>
+		<Product>SBT.Apps.Medico.Module</Product>
+		<Copyright>Copyright © 2020</Copyright>
+		<AssemblyVersion>2.0.*</AssemblyVersion>
+		<FileVersion>2.0.0.0</FileVersion>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'EasyTest|AnyCPU' ">
+		<DebugSymbols>true</DebugSymbols>
+		<OutputPath>bin\EasyTest\</OutputPath>
+		<DefineConstants>TRACE;DEBUG;EASYTEST</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug Net6|AnyCPU'">
+		<OutputPath>bin\Debug Net6\</OutputPath>
+	</PropertyGroup>
+	<ItemGroup>
+	  <None Remove="Images\account_book.png" />
+	  <None Remove="Images\account_book_32x32.png" />
+	  <None Remove="Images\address_book.png" />
+	  <None Remove="Images\address_book_32x32.png" />
+	  <None Remove="Images\archive-customer.png" />
+	  <None Remove="Images\archive-customer_32x32.png" />
+	  <None Remove="Images\archive-man.png" />
+	  <None Remove="Images\archive-man_32x32.png" />
+	  <None Remove="Images\bank-to_vendor.png" />
+	  <None Remove="Images\bank-to_vendor_32x32.png" />
+	  <None Remove="Images\bank.png" />
+	  <None Remove="Images\bank_32x32.png" />
+	  <None Remove="Images\bill-key.png" />
+	  <None Remove="Images\bill-key_32x32.png" />
+	  <None Remove="Images\book_open.png" />
+	  <None Remove="Images\book_open_32x32.png" />
+	  <None Remove="Images\business_report.png" />
+	  <None Remove="Images\business_report_32x32.png" />
+	  <None Remove="Images\capsula2.png" />
+	  <None Remove="Images\capsula2_32x32.png" />
+	  <None Remove="Images\ccmedico.png" />
+	  <None Remove="Images\ccmedico_32x32.png" />
+	  <None Remove="Images\comment-info.png" />
+	  <None Remove="Images\comment-info_32x32.png" />
+	  <None Remove="Images\company-employee.png" />
+	  <None Remove="Images\company-employee_32x32.png" />
+	  <None Remove="Images\company-info.png" />
+	  <None Remove="Images\company-info_32x32.png" />
+	  <None Remove="Images\credit_card-to_bank.png" />
+	  <None Remove="Images\credit_card-to_bank_32x32.png" />
+	  <None Remove="Images\electrocardiograma.png" />
+	  <None Remove="Images\electrocardiograma_32x32.png" />
+	  <None Remove="Images\employees.png" />
+	  <None Remove="Images\employees_32x32.png" />
+	  <None Remove="Images\employee_man-certificate.png" />
+	  <None Remove="Images\employee_man-certificate_32x32.png" />
+	  <None Remove="Images\employee_man-info.png" />
+	  <None Remove="Images\employee_man-info_32x32.png" />
+	  <None Remove="Images\employee_woman-favorite2.png" />
+	  <None Remove="Images\employee_woman-favorite2_32x32.png" />
+	  <None Remove="Images\examenfis.png" />
+	  <None Remove="Images\examenfis_32x32.png" />
+	  <None Remove="Images\list-info.png" />
+	  <None Remove="Images\list-info_32x32.png" />
+	  <None Remove="Images\list-key.png" />
+	  <None Remove="Images\list-key_32x32.png" />
+	  <None Remove="Images\list.png" />
+	  <None Remove="Images\list_32x32.png" />
+	  <None Remove="Images\medicamento.png" />
+	  <None Remove="Images\medicamento_32x32.png" />
+	  <None Remove="Images\medico.png" />
+	  <None Remove="Images\medico_32x32.png" />
+	  <None Remove="Images\med_especialista.png" />
+	  <None Remove="Images\med_especialista_32x32.png" />
+	  <None Remove="Images\money.png" />
+	  <None Remove="Images\money_32x32.png" />
+	  <None Remove="Images\phone.png" />
+	  <None Remove="Images\phone_32x32.png" />
+	  <None Remove="Images\place_blue.png" />
+	  <None Remove="Images\place_blue_32x32.png" />
+	  <None Remove="Images\planning-customer.png" />
+	  <None Remove="Images\planning-customer_32x32.png" />
+	  <None Remove="Images\proforma.png" />
+	  <None Remove="Images\proforma_32x32.png" />
+	  <None Remove="Images\prueba_lab.png" />
+	  <None Remove="Images\prueba_lab_32x32.png" />
+	  <None Remove="Images\signo.png" />
+	  <None Remove="Images\signo_32x32.png" />
+	  <None Remove="Images\user_group.png" />
+	  <None Remove="Images\user_group_32x32.png" />
+	  <None Remove="Images\user_id-certificate.png" />
+	  <None Remove="Images\user_id-certificate_32x32.png" />
+	  <None Remove="Images\user_id-info.png" />
+	  <None Remove="Images\user_id-info_32x32.png" />
+	  <None Remove="Images\vacunas.png" />
+	  <None Remove="Images\vacunas_32x32.png" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Update="CustomAuthentication.cs" />
+		<Compile Update="medicoModule.cs" />
+		<Compile Update="medicoModule.Designer.cs">
+			<DependentUpon>medicoModule.cs</DependentUpon>
+		</Compile>
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Update="medicoModule.resx">
+			<DependentUpon>medicoModule.cs</DependentUpon>
+		</EmbeddedResource>
+		<EmbeddedResource Include="Images\account_book.png" />
+		<EmbeddedResource Include="Images\account_book_32x32.png" />
+		<EmbeddedResource Include="Images\address_book.png" />
+		<EmbeddedResource Include="Images\address_book_32x32.png" />
+		<EmbeddedResource Include="Images\archive-customer.png" />
+		<EmbeddedResource Include="Images\archive-customer_32x32.png" />
+		<EmbeddedResource Include="Images\archive-man.png" />
+		<EmbeddedResource Include="Images\archive-man_32x32.png" />
+		<EmbeddedResource Include="Images\bank-to_vendor.png" />
+		<EmbeddedResource Include="Images\bank-to_vendor_32x32.png" />
+		<EmbeddedResource Include="Images\bank.png" />
+		<EmbeddedResource Include="Images\bank_32x32.png" />
+		<EmbeddedResource Include="Images\bill-key.png" />
+		<EmbeddedResource Include="Images\bill-key_32x32.png" />
+		<EmbeddedResource Include="Images\book_open.png" />
+		<EmbeddedResource Include="Images\book_open_32x32.png" />
+		<EmbeddedResource Include="Images\business_report.png" />
+		<EmbeddedResource Include="Images\business_report_32x32.png" />
+		<EmbeddedResource Include="Images\capsula2.png" />
+		<EmbeddedResource Include="Images\capsula2_32x32.png" />
+		<EmbeddedResource Include="Images\ccmedico.png" />
+		<EmbeddedResource Include="Images\ccmedico_32x32.png" />
+		<EmbeddedResource Include="Images\comment-info.png" />
+		<EmbeddedResource Include="Images\comment-info_32x32.png" />
+		<EmbeddedResource Include="Images\company-employee.png" />
+		<EmbeddedResource Include="Images\company-employee_32x32.png" />
+		<EmbeddedResource Include="Images\company-info.png" />
+		<EmbeddedResource Include="Images\company-info_32x32.png" />
+		<EmbeddedResource Include="Images\credit_card-to_bank.png" />
+		<EmbeddedResource Include="Images\credit_card-to_bank_32x32.png" />
+		<EmbeddedResource Include="Images\electrocardiograma.png" />
+		<EmbeddedResource Include="Images\electrocardiograma_32x32.png" />
+		<EmbeddedResource Include="Images\employees.png" />
+		<EmbeddedResource Include="Images\employees_32x32.png" />
+		<EmbeddedResource Include="Images\employee_man-certificate.png" />
+		<EmbeddedResource Include="Images\employee_man-certificate_32x32.png" />
+		<EmbeddedResource Include="Images\employee_man-info.png" />
+		<EmbeddedResource Include="Images\employee_man-info_32x32.png" />
+		<EmbeddedResource Include="Images\employee_woman-favorite2.png" />
+		<EmbeddedResource Include="Images\employee_woman-favorite2_32x32.png" />
+		<EmbeddedResource Include="Images\examenfis.png" />
+		<EmbeddedResource Include="Images\examenfis_32x32.png" />
+		<EmbeddedResource Include="Images\list-info.png" />
+		<EmbeddedResource Include="Images\list-info_32x32.png" />
+		<EmbeddedResource Include="Images\list-key.png" />
+		<EmbeddedResource Include="Images\list-key_32x32.png" />
+		<EmbeddedResource Include="Images\list.png" />
+		<EmbeddedResource Include="Images\list_32x32.png" />
+		<EmbeddedResource Include="Images\medicamento.png" />
+		<EmbeddedResource Include="Images\medicamento_32x32.png" />
+		<EmbeddedResource Include="Images\medico.png" />
+		<EmbeddedResource Include="Images\medico_32x32.png" />
+		<EmbeddedResource Include="Images\med_especialista.png" />
+		<EmbeddedResource Include="Images\med_especialista_32x32.png" />
+		<EmbeddedResource Include="Images\money.png" />
+		<EmbeddedResource Include="Images\money_32x32.png" />
+		<EmbeddedResource Include="Images\phone.png" />
+		<EmbeddedResource Include="Images\phone_32x32.png" />
+		<EmbeddedResource Include="Images\place_blue.png" />
+		<EmbeddedResource Include="Images\place_blue_32x32.png" />
+		<EmbeddedResource Include="Images\planning-customer.png" />
+		<EmbeddedResource Include="Images\planning-customer_32x32.png" />
+		<EmbeddedResource Include="Images\proforma.png" />
+		<EmbeddedResource Include="Images\proforma_32x32.png" />
+		<EmbeddedResource Include="Images\prueba_lab.png" />
+		<EmbeddedResource Include="Images\prueba_lab_32x32.png" />
+		<EmbeddedResource Include="Images\signo.png" />
+		<EmbeddedResource Include="Images\signo_32x32.png" />
+		<EmbeddedResource Include="Images\user_group.png" />
+		<EmbeddedResource Include="Images\user_group_32x32.png" />
+		<EmbeddedResource Include="Images\user_id-certificate.png" />
+		<EmbeddedResource Include="Images\user_id-certificate_32x32.png" />
+		<EmbeddedResource Include="Images\user_id-info.png" />
+		<EmbeddedResource Include="Images\user_id-info_32x32.png" />
+		<EmbeddedResource Include="Images\vacunas.png" />
+		<EmbeddedResource Include="Images\vacunas_32x32.png" />
+		<EmbeddedResource Include="Properties\licenses.licx" />
+		<EmbeddedResource Include="Model.DesignedDiffs.xafml" />
+	</ItemGroup>
+	<ItemGroup>
+		<Content Include="FunctionalTests\MedicoLogon.inc" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Medico.Expediente.Module\SBT.Apps.Medico.Expediente.Module.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="DevExpress.Data" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.Chart" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.CloneObject.Xpo" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.CodeAnalysis" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.ConditionalAppearance" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.Objects" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.ReportsV2" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.Security.Xpo" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.Validation" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.ViewVariantsModule" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.Xpo" Version="23.1.3" />
+		<PackageReference Include="DevExpress.Persistent.Base" Version="23.1.3" />
+		<PackageReference Include="DevExpress.Persistent.BaseImpl.Xpo" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.AuditTrail.Xpo" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.Dashboards" Version="23.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.Notifications" Version="23.1.3" />
+		<PackageReference Include="DevExpress.Printing.Core" Version="23.1.3" />
+	</ItemGroup>
+</Project>

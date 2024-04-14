@@ -1,5 +1,4 @@
-﻿using DevExpress.Charts.Native;
-using DevExpress.Data.Filtering;
+﻿using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.Actions;
 using DevExpress.ExpressApp.ReportsV2;
@@ -11,9 +10,7 @@ using SBT.Apps.Base.Module.Controllers;
 using SBT.Apps.Facturacion.Module.BusinessObjects;
 using SBT.Apps.Inventario.Module.BusinessObjects;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 
 namespace SBT.Apps.Facturacion.Module.Controllers
 {
@@ -73,30 +70,44 @@ namespace SBT.Apps.Facturacion.Module.Controllers
         {
             if (View == null || View.CurrentObject == null || e.Object == null)
                 return;
-            // cuando cambia la propiedad AutorizacionCorrelativo
-            if (View.CurrentObject == e.Object && e.PropertyName == "AutorizacionCorrelativo" && ObjectSpace.IsNewObject(View.CurrentObject))
-            //(ObjectSpace.IsNewObject(View.CurrentObject) || ObjectSpace.IsModified) && e.OldValue != e.NewValue)
+            if (View.CurrentObject == e.Object && ObjectSpace.IsNewObject(View.CurrentObject))
             {
-                if (e.NewValue == null)
+                if (e.PropertyName == "TipoFactura")
                 {
-                    ((Venta)View.CurrentObject).NoFactura = null;
-                    MostrarError($"No se encontró la autorización de correlativos para {((Venta)View.CurrentObject).TipoFactura.Nombre}. No conoce el número de documento");
-                    return;
+                    if (((Venta)View.CurrentObject).Agencia == null)
+                    {
+                        Application.ShowViewStrategy.ShowMessage(@"Agencia es nula, porque el usuario no tiene asignada una. Seleccionar una en Mis Detalles", InformationType.Error);
+                        return;
+                    }
                 }
-                AutorizacionDocumento aud = (AutorizacionDocumento)e.NewValue;
-                int noFact = Convert.ToInt32(((XPObjectSpace)ObjectSpace).Session.Evaluate<Venta>(CriteriaOperator.Parse("max([NoFactura])"),
-                             CriteriaOperator.Parse("Oid == ?", aud.Oid))) + 1;
-                if (noFact >= aud.NoDesde && noFact < aud.NoHasta)
-                    ((Venta)View.CurrentObject).NoFactura = noFact;
-                else
+                if (e.PropertyName == "AutorizacionCorrelativo")
                 {
-                    ((Venta)View.CurrentObject).NoFactura = null;
-                    MostrarError($"No hay autorización de correlativo disponible para {((Venta)View.CurrentObject).TipoFactura.Nombre}");
+                    if (e.NewValue == null)
+                    {
+                        ((Venta)View.CurrentObject).NoFactura = null;
+                        MostrarError($"No se encontró la autorización de correlativos para {((Venta)View.CurrentObject).TipoFactura.Nombre}. No conoce el número de documento");
+                        return;
+                    }
+                    AutorizacionDocumento aud = (AutorizacionDocumento)e.NewValue;
+                    int noFact = Convert.ToInt32(((XPObjectSpace)ObjectSpace).Session.Evaluate<Venta>(CriteriaOperator.Parse("max([NoFactura])"),
+                                 CriteriaOperator.Parse("Oid == ?", aud.Oid))) + 1;
+                    if (noFact >= aud.NoDesde && noFact < aud.NoHasta)
+                        ((Venta)View.CurrentObject).NoFactura = noFact;
+                    else
+                    {
+                        ((Venta)View.CurrentObject).NoFactura = null;
+                        MostrarError($"No hay autorización de correlativo disponible para {((Venta)View.CurrentObject).TipoFactura.Nombre}");
+                    }
                 }
             }
-
             // agregar aqui si se quiere procesar otros eventos
         }
+
+        private void DoTipoFacturaChanged()
+        {
+
+        }
+
 
         /// <summary>
         /// realizar la actualizacion del inventario, el kardex y el lote cuando el metodo de costeo es PEPS o UEPS
@@ -263,7 +274,6 @@ namespace SBT.Apps.Facturacion.Module.Controllers
             }
         }
 
-
         protected override void DoInitializeComponent()
         {
             base.DoInitializeComponent();
@@ -330,5 +340,7 @@ namespace SBT.Apps.Facturacion.Module.Controllers
                 controller.ShowPreview(handle, objectsCriteria);
             };
         }
+
+        
     }
 }

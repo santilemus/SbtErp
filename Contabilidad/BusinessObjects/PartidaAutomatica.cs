@@ -136,6 +136,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
                 var cta = ObtenerCuentaEspecial(ctaUtilidadPerdida);
                 if (cta != null)
                 {
+                    //decimal saldoActualCta = ObtenerSaldoMes(cta.Oid);
                     if (resultadoNeto > 0)     // 4.1. utilidad. Se lleva a cuenta de patrimonio - utilidades del periodo
                         CreateDetalle(cta, cta.Concepto, 0.0m, resultadoNeto);
                     else                       // 4.2. Perdida. Se lleva a cuenta de patrimonio - perdidas del periodo
@@ -283,6 +284,14 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
                                     });
             return saldos;
         }
+
+        private decimal ObtenerSaldoMes(params int[] OidCuentas)
+        {
+            var qSaldos = fObjectSpace.GetObjectsQuery<SaldoMes>();
+            return qSaldos.Where(y => y.Cuenta.Empresa.Oid == fPartida.Empresa.Oid && y.Periodo.Oid == fPartida.Periodo.Oid &&
+                                      y.Mes == fPartida.Fecha.Month && OidCuentas.Contains(y.Cuenta.Oid)).Sum(x => x.SaldoFin);
+        }
+
 
         /// <summary>
         /// Generar la partida de apertura del periodo actual a partir de la partida de cierre del periodo anterior

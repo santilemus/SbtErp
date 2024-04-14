@@ -10,17 +10,20 @@ using DevExpress.Utils.Svg;
 using DevExpress.XtraSplashScreen;
 
 namespace SBT.Apps.Erp.Win {
-    public partial class XafSplashScreen : SplashScreen {
+    public partial class XafSplashScreen : SplashScreen
+    {
 
         [SupportedOSPlatform("windows")]
-        protected override void DrawContent(GraphicsCache graphicsCache, Skin skin) {
+        protected override void DrawContent(GraphicsCache graphicsCache, Skin skin)
+        {
             Rectangle bounds = ClientRectangle;
             bounds.Width--; bounds.Height--;
             graphicsCache.Graphics.DrawRectangle(graphicsCache.GetPen(Color.FromArgb(255, 87, 87, 87), 1), bounds);
         }
 
         [SupportedOSPlatform("windows")]
-        protected void UpdateLabelsPosition() {
+        protected void UpdateLabelsPosition()
+        {
             labelApplicationName.CalcBestSize();
             int newLeft = (Width - labelApplicationName.Width) / 2;
             labelApplicationName.Location = new Point(newLeft, labelApplicationName.Top);
@@ -30,25 +33,30 @@ namespace SBT.Apps.Erp.Win {
         }
 
         [SupportedOSPlatform("windows")]
-        public XafSplashScreen() {
+        public XafSplashScreen()
+        {
             InitializeComponent();
-            this.labelCopyright.Text = $"Copyright © {DateTime.Now.Year} Company Name{System.Environment.NewLine}All Rights Reserved";
+            
+            this.labelCopyright.Text = $"Copyright © {DateTime.Now.Year} {CompanyName}{System.Environment.NewLine}All Rights Reserved";
             UpdateLabelsPosition();
         }
 
         #region Overrides
 
         [SupportedOSPlatform("windows")]
-        public override void ProcessCommand(Enum cmd, object arg) {
+        public override void ProcessCommand(Enum cmd, object arg)
+        {
             base.ProcessCommand(cmd, arg);
-            if((UpdateSplashCommand)cmd == UpdateSplashCommand.Description) {
+            if ((UpdateSplashCommand)cmd == UpdateSplashCommand.Description)
+            {
                 labelStatus.Text = (string)arg;
             }
         }
-        
-        #endregion
 
-        public enum SplashScreenCommand {
+#endregion
+
+        public enum SplashScreenCommand
+        {
         }
     }
 }

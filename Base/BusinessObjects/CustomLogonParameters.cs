@@ -21,7 +21,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
     /// mas info en: https://docs.devexpress.com/eXpressAppFramework/112982/task-based-help/security/how-to-use-custom-logon-parameters-and-authentication
     /// </remarks>
     [DomainComponent, Serializable]
-    [System.ComponentModel.DisplayName("Conexión")]   // "Log On"
+    [System.ComponentModel.DisplayName("Conectarse")]   // "Log On"
     public class CustomLogonParameters : INotifyPropertyChanged, ISerializable, ICustomObjectSerialize, ISupportClearPassword, IAuthenticationStandardLogonParameters
     {
         int oidSucursal;
