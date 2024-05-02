@@ -1,5 +1,7 @@
 ﻿using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.Blazor;
+using DevExpress.ExpressApp.Blazor.Templates;
+using DevExpress.ExpressApp.Templates;
 using DevExpress.ExpressApp.Utils;
 using DevExpress.ExpressApp.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
@@ -75,5 +77,17 @@ public class BlazorBlazorApplication : BlazorApplication {
         List<Controller> result = base.CreateLogonWindowControllers();
         result.Add(new CustomLogonEditActionVisibilityController());
         return result;
+    }
+
+    protected override IFrameTemplate CreateDefaultTemplate(TemplateContext context)
+    {
+        if (context == TemplateContext.LogonWindow)
+        {
+            return new LogonWindowErp() { HeaderCaption = Title };
+        }
+        else
+        {
+            return base.CreateDefaultTemplate(context);
+        }
     }
 }

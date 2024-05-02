@@ -11,6 +11,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
     [ModelDefault("Caption", "Tercero Dirección"), NavigationItem(false), DefaultProperty(nameof(Direccion))]
     [Persistent("TerceroDireccion"), CreatableItem(false)]
     [ImageName("address")]
+    [FriendlyKeyProperty(nameof(Direccion))]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class TerceroDireccion : XPObject

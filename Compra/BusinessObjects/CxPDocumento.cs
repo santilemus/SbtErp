@@ -1,4 +1,5 @@
 ﻿using DevExpress.Data.Filtering;
+using DevExpress.ExpressApp.ConditionalAppearance;
 using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
@@ -7,13 +8,18 @@ using System;
 
 namespace SBT.Apps.CxP.Module.BusinessObjects
 {
-    [DefaultClassOptions, ModelDefault("Caption", "Documento CxP")]
+    [DefaultClassOptions, ModelDefault("Caption", "CxP Documento")]
     [MapInheritance(MapInheritanceType.ParentTable)]
     [CreatableItem(false)]
     //[ImageName("BO_Contact")]
+    [Appearance("CxPDocumento_enable_valores", AppearanceItemType = "ViewItem",
+        Criteria = "[Factura] Is Not Null And [Factura.Detalles][].Count() = 0", Enabled = true, 
+        TargetItems = "Gravada;Iva;IvaRetenido;IvaPercibido;NoSujeta;Exenta")]
+    [Appearance("CxPDocumento.Hide_Detalle", AppearanceItemType = "ViewItem",
+        Criteria = "[Factura] Is Not Null And [Factura.Detalles][].Count() = 0", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide,
+        TargetItems = "Detalles")]
     //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
-    //[Persistent("DatabaseTableName")]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class CxPDocumento : CxPTransaccion
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
@@ -32,31 +38,35 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
 
         #region Propiedades
 
-        [Persistent(nameof(Gravada)), DbType("numeric(14,2)")]
+        //[Persistent(nameof(Gravada)), DbType("numeric(14,2)")]
         decimal gravada;
-        [Persistent(nameof(Iva)), DbType("numeric(14,2)")]
+        //[Persistent(nameof(Iva)), DbType("numeric(14,2)")]
         decimal iva;
-        [Persistent(nameof(IvaPercibido)), DbType("numeric(14,2)")]
+        //[Persistent(nameof(IvaPercibido)), DbType("numeric(14,2)")]
         decimal ivaPercibido;
-        [Persistent(nameof(IvaRetenido)), DbType("numeric(14,2)")]
+        //[Persistent(nameof(IvaRetenido)), DbType("numeric(14,2)")]
         decimal ivaRetenido;
-        [Persistent(nameof(NoSujeta)), DbType("numeric(14,2)")]
+        //[Persistent(nameof(NoSujeta)), DbType("numeric(14,2)")]
         decimal noSujeta;
-        [Persistent(nameof(Exenta)), DbType("numeric(14,2)")]
+        //[Persistent(nameof(Exenta)), DbType("numeric(14,2)")]
         decimal exenta;
 
-        [PersistentAlias(nameof(gravada)), XafDisplayName("Gravado"), Index(9)]
+        //[PersistentAlias(nameof(gravada)), XafDisplayName("Gravado"), Index(9)]
+        [Persistent(nameof(Gravada)), DbType("numeric(14,2)")]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         public decimal Gravada
         {
             get { return gravada; }
+            set => SetPropertyValue(nameof(Gravada), ref gravada, value);
         }
 
-        [PersistentAlias(nameof(iva)), XafDisplayName("IVA"), Index(10)]
+        //[PersistentAlias(nameof(iva)), XafDisplayName("IVA"), Index(10)]
+        [Persistent(nameof(Iva)), DbType("numeric(14,2)")]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         public decimal Iva
         {
             get { return iva; }
+            set => SetPropertyValue(nameof(Iva), ref iva, value);
         }
 
         [PersistentAlias("[Gravada] + [Iva]")]
@@ -67,30 +77,41 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
             get { return Convert.ToDecimal(EvaluateAlias(nameof(SubTotal))); }
         }
 
-        [PersistentAlias(nameof(ivaRetenido)), XafDisplayName("(-) Iva Retenido"), VisibleInListView(false), Index(12)]
+        //[PersistentAlias(nameof(ivaRetenido)), XafDisplayName("(-) Iva Retenido"), VisibleInListView(false), Index(12)]
+        [Persistent(nameof(IvaRetenido)), DbType("numeric(14,2)")]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         public decimal IvaRetenido
         {
             get { return ivaRetenido; }
+            set => SetPropertyValue(nameof(IvaRetenido), ref ivaRetenido, value);
         }
 
-        [PersistentAlias(nameof(ivaPercibido)), XafDisplayName("(+) Iva Percibido"), VisibleInListView(false), Index(13)]
+        //[PersistentAlias(nameof(ivaPercibido)), XafDisplayName("(+) Iva Percibido"), VisibleInListView(false), Index(13)]
+        [Persistent(nameof(IvaPercibido)), DbType("numeric(14,2)")]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         public decimal IvaPercibido
         {
             get { return ivaPercibido; }
+            set => SetPropertyValue(nameof(IvaPercibido), ref  ivaPercibido, value);
         }
 
-        [PersistentAlias(nameof(noSujeta)), XafDisplayName("No Sujeta"), VisibleInListView(false), Index(14)]
+        //[PersistentAlias(nameof(noSujeta)), XafDisplayName("No Sujeta"), VisibleInListView(false), Index(14)]
+        [Persistent(nameof(NoSujeta)), DbType("numeric(14,2)")]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         public decimal NoSujeta
         {
             get { return noSujeta; }
+            set => SetPropertyValue(nameof(NoSujeta), ref noSujeta, value); 
         }
 
-        [PersistentAlias(nameof(exenta)), XafDisplayName("Exento"), VisibleInListView(true), Index(15)]
+        //[PersistentAlias(nameof(exenta)), XafDisplayName("Exento"), VisibleInListView(true), Index(15)]
+        [Persistent(nameof(Exenta)), DbType("numeric(14,2)")]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
-        public decimal Exenta => exenta;
+        public decimal Exenta
+        {
+            get => exenta;
+            set => SetPropertyValue(nameof(Exenta), ref exenta, value);
+        }
 
         #endregion
 
@@ -158,6 +179,17 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
                 item.PrecioUnidad = 0.0m;
             }
             base.Anular();
+        }
+
+        protected override void DoFromCompraFactura()
+        {
+            base.DoFromCompraFactura();
+            Exenta = Factura.Exenta ?? 0.0m;
+            Gravada = Factura.Gravada ?? 0.0m;
+            Iva = Factura.Iva ?? 0.0m;
+            NoSujeta = Factura.NoSujeta ?? 0.0m;
+            IvaPercibido = Factura.IvaPercibido ?? 0.0m;
+            IvaRetenido = Factura.IvaRetenido ?? 0.0m;
         }
         #endregion
 

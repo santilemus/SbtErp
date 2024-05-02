@@ -35,6 +35,7 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
     [Appearance("CompraFactura_SujetoExcluido", AppearanceItemType = "ViewItem", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, 
         Context = "DetailView", TargetItems = "IvaPercibido;IvaRetenido;Fovial;Exenta;NoSujeta;Numero", Criteria = "[TipoFactura.Codigo] == 'COVE06'")]
     [ImageName(nameof(CompraFactura))]
+    [FriendlyKeyProperty(nameof(NumeroFactura))]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class CompraFactura : XPCustomFacturaBO

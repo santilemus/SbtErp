@@ -25,6 +25,7 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
     [DefaultClassOptions, ModelDefault("Caption", "Orden Compra"), NavigationItem("Compras"), CreatableItem(false),
         DefaultProperty(nameof(Proveedor)), Persistent(nameof(OrdenCompra))]
     [ImageName(nameof(OrdenCompra))]
+    [FriendlyKeyProperty(nameof(Numero))]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class OrdenCompra : XPCustomFacturaBO

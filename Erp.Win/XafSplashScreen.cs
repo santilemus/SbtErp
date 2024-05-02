@@ -37,7 +37,7 @@ namespace SBT.Apps.Erp.Win {
         {
             InitializeComponent();
             
-            this.labelCopyright.Text = $"Copyright © {DateTime.Now.Year} {CompanyName}{System.Environment.NewLine}All Rights Reserved";
+            this.labelCopyright.Text = $"Copyright © {DateTime.Now.Year} SBT Technology, S.A de C.V{System.Environment.NewLine}All Rights Reserved";
             UpdateLabelsPosition();
         }
 

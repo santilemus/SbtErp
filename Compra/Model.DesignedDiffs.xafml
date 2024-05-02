@@ -8,6 +8,44 @@
     <SchemaModule Name="SystemModule" Version="23.2.5.0" IsNewNode="True" />
   </SchemaModules>
   <Views>
+    <ListView Id="CompraFactura_CxPTransacciones_ListView" DataAccessMode="Server">
+      <Columns>
+        <ColumnInfo Id="Comentario" Index="-1" />
+        <ColumnInfo Id="FechaAnula" Width="140" Index="-1" />
+        <ColumnInfo Id="UsuarioAnulo" Index="-1" />
+        <ColumnInfo Id="Oid" Index="0" />
+        <ColumnInfo Id="Numero" Width="98" Index="1" />
+        <ColumnInfo Id="Fecha" Width="86" Index="2" />
+        <ColumnInfo Id="Tipo" Width="220" Index="3" />
+        <ColumnInfo Id="BancoTransaccion" Width="216" Index="4" />
+        <ColumnInfo Id="Moneda" Index="5" />
+        <ColumnInfo Id="ValorMoneda" Width="92" Index="6" />
+        <ColumnInfo Id="Monto" Width="102" Index="7" />
+        <ColumnInfo Id="Estado" Width="98" Index="8" />
+      </Columns>
+      <Variants>
+        <Variant Id="@1cfadc31-59f5-4974-a54c-84c33cfc0fb7" ViewID="CompraFactura_CxPTransacciones_ListView_Todos" IsNewNode="True" />
+        <Variant Id="@440922c5-cc03-4208-9466-47adbb14aadf" ViewID="CompraFactura_NDebito_ListView" IsNewNode="True" />
+        <Variant Id="@6da86478-f8b6-4dd1-90ba-c65875f30553" ViewID="CompraFactura_NCredito_ListView" IsNewNode="True" />
+      </Variants>
+    </ListView>
+    <ListView Id="CompraFactura_CxPTransacciones_ListView_Todos" ClassName="SBT.Apps.CxP.Module.BusinessObjects.CxPTransaccion" DataAccessMode="Server" Caption="CxP - Todos" IsNewNode="True">
+      <Columns IsNewNode="True">
+        <ColumnInfo Id="Comentario" PropertyName="Comentario" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Factura" PropertyName="Factura" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="FechaAnula" PropertyName="FechaAnula" Width="140" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="UsuarioAnulo" PropertyName="UsuarioAnulo" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Oid" PropertyName="Oid" Index="0" IsNewNode="True" />
+        <ColumnInfo Id="Numero" PropertyName="Numero" Width="98" Index="1" IsNewNode="True" />
+        <ColumnInfo Id="Fecha" PropertyName="Fecha" Width="86" Index="2" IsNewNode="True" />
+        <ColumnInfo Id="Tipo" PropertyName="Tipo" Width="220" Index="3" IsNewNode="True" />
+        <ColumnInfo Id="BancoTransaccion" PropertyName="BancoTransaccion" Width="216" Index="4" IsNewNode="True" />
+        <ColumnInfo Id="Moneda" PropertyName="Moneda" Index="5" IsNewNode="True" />
+        <ColumnInfo Id="ValorMoneda" PropertyName="ValorMoneda" Width="92" Index="6" IsNewNode="True" />
+        <ColumnInfo Id="Monto" PropertyName="Monto" Width="102" Index="7" IsNewNode="True" />
+        <ColumnInfo Id="Estado" PropertyName="Estado" Width="98" Index="8" IsNewNode="True" />
+      </Columns>
+    </ListView>
     <DetailView Id="CompraFactura_DetailView" DefaultFocusedItem="Fecha">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
@@ -482,6 +520,40 @@
         <ColumnInfo Id="OrdenCompra" PropertyName="OrdenCompra" Index="10" IsNewNode="True" />
       </Columns>
     </ListView>
+    <ListView Id="CompraFactura_NCredito_ListView" ClassName="SBT.Apps.CxP.Module.BusinessObjects.CxPTransaccion" DataAccessMode="Server" Caption="CxP - Nota Crédito" Criteria="[Tipo.Padre.Oid] = 1 And [Tipo.Activo] = True" IsNewNode="True">
+      <Columns IsNewNode="True">
+        <ColumnInfo Id="Comentario" PropertyName="Comentario" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Factura" PropertyName="Factura" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="FechaAnula" PropertyName="FechaAnula" Width="140" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="UsuarioAnulo" PropertyName="UsuarioAnulo" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Oid" PropertyName="Oid" Index="0" IsNewNode="True" />
+        <ColumnInfo Id="Numero" PropertyName="Numero" Width="98" Index="1" IsNewNode="True" />
+        <ColumnInfo Id="Fecha" PropertyName="Fecha" Width="86" Index="2" IsNewNode="True" />
+        <ColumnInfo Id="Tipo" PropertyName="Tipo" Width="220" Index="3" IsNewNode="True" />
+        <ColumnInfo Id="BancoTransaccion" PropertyName="BancoTransaccion" Width="216" Index="4" IsNewNode="True" />
+        <ColumnInfo Id="Moneda" PropertyName="Moneda" Index="5" IsNewNode="True" />
+        <ColumnInfo Id="ValorMoneda" PropertyName="ValorMoneda" Width="92" Index="6" IsNewNode="True" />
+        <ColumnInfo Id="Monto" PropertyName="Monto" Width="102" Index="7" IsNewNode="True" />
+        <ColumnInfo Id="Estado" PropertyName="Estado" Width="98" Index="8" IsNewNode="True" />
+      </Columns>
+    </ListView>
+    <ListView Id="CompraFactura_NDebito_ListView" ClassName="SBT.Apps.CxP.Module.BusinessObjects.CxPTransaccion" DataAccessMode="Server" Caption="CxP - Nota Débito" Criteria="[Tipo.Padre.Oid] = 16 And [Tipo.Activo] = True" IsNewNode="True">
+      <Columns IsNewNode="True">
+        <ColumnInfo Id="Comentario" PropertyName="Comentario" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Factura" PropertyName="Factura" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="FechaAnula" PropertyName="FechaAnula" Width="140" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="UsuarioAnulo" PropertyName="UsuarioAnulo" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Oid" PropertyName="Oid" Index="0" IsNewNode="True" />
+        <ColumnInfo Id="Numero" PropertyName="Numero" Width="98" Index="1" IsNewNode="True" />
+        <ColumnInfo Id="Fecha" PropertyName="Fecha" Width="86" Index="2" IsNewNode="True" />
+        <ColumnInfo Id="Tipo" PropertyName="Tipo" Width="220" Index="3" IsNewNode="True" />
+        <ColumnInfo Id="BancoTransaccion" PropertyName="BancoTransaccion" Width="216" Index="4" IsNewNode="True" />
+        <ColumnInfo Id="Moneda" PropertyName="Moneda" Index="5" IsNewNode="True" />
+        <ColumnInfo Id="ValorMoneda" PropertyName="ValorMoneda" Width="92" Index="6" IsNewNode="True" />
+        <ColumnInfo Id="Monto" PropertyName="Monto" Width="102" Index="7" IsNewNode="True" />
+        <ColumnInfo Id="Estado" PropertyName="Estado" Width="98" Index="8" IsNewNode="True" />
+      </Columns>
+    </ListView>
     <DetailView Id="CompraFacturaDetalle_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
@@ -510,10 +582,37 @@
         </LayoutGroup>
       </Layout>
     </DetailView>
+    <ListView Id="CxPDNotasDebito_ListView" ClassName="SBT.Apps.CxP.Module.BusinessObjects.CxPDocumento" Caption="CxP - Notas Débito" Criteria="[Tipo.Padre.Oid] = 16 And [Tipo.Activo] = True" DetailViewID="CxPNotaDebito_DetailView" IsNewNode="True">
+      <Columns IsNewNode="True">
+        <ColumnInfo Id="BancoTransaccion" PropertyName="BancoTransaccion" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Comentario" PropertyName="Comentario" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Factura" PropertyName="Factura" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="FechaAnula" PropertyName="FechaAnula" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="IvaPercibido" PropertyName="IvaPercibido" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="IvaRetenido" PropertyName="IvaRetenido" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Monto" PropertyName="Monto" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="NoSujeta" PropertyName="NoSujeta" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="UsuarioAnulo" PropertyName="UsuarioAnulo" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="ValorMoneda" PropertyName="ValorMoneda" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Oid" PropertyName="Oid" Index="0" IsNewNode="True" />
+        <ColumnInfo Id="Numero" PropertyName="Numero" Index="1" Width="85" IsNewNode="True" />
+        <ColumnInfo Id="Fecha" PropertyName="Fecha" Index="2" IsNewNode="True" />
+        <ColumnInfo Id="Tipo" PropertyName="Tipo" Index="3" Width="187" IsNewNode="True" />
+        <ColumnInfo Id="Moneda" PropertyName="Moneda" Index="4" Width="149" IsNewNode="True" />
+        <ColumnInfo Id="Exenta" PropertyName="Exenta" Index="5" Width="122" IsNewNode="True" />
+        <ColumnInfo Id="Gravada" PropertyName="Gravada" Width="109" Index="6" IsNewNode="True" />
+        <ColumnInfo Id="Iva" PropertyName="Iva" Width="104" Index="7" IsNewNode="True" />
+        <ColumnInfo Id="SubTotal" PropertyName="SubTotal" Index="8" Width="74" IsNewNode="True" />
+        <ColumnInfo Id="Estado" PropertyName="Estado" Index="9" IsNewNode="True" />
+      </Columns>
+    </ListView>
     <DetailView Id="CxPDocumento_DetailView">
+      <Items>
+        <PropertyEditor Id="Tipo" DataSourceCriteria="[Padre.Oid] In (1, 16) And [Activo] = True" />
+      </Items>
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
-          <LayoutGroup Id="SimpleEditors" RelativeSize="23.355704697986578" Direction="Horizontal">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="13.232104121475054" Direction="Horizontal">
             <LayoutGroup Id="CxPTransaccion" Index="0" RelativeSize="100" Removed="True">
               <LayoutGroup Id="CxPTransaccion_col1" RelativeSize="50">
                 <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="20.454545454545453" IsNewNode="True" />
@@ -532,41 +631,38 @@
                 <LayoutItem Id="UsuarioAnulo" RelativeSize="14.772727272727273" />
               </LayoutGroup>
             </LayoutGroup>
-            <LayoutGroup Id="CxPTransaccion_col1" ShowCaption="False" Index="0" RelativeSize="50" IsNewNode="True">
-              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="20.689655172413794" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="Fecha" ViewItem="Fecha" Index="1" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="Tipo" ViewItem="Tipo" Index="2" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="Numero" ViewItem="Numero" Index="3" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="Moneda" ViewItem="Moneda" Index="4" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="ValorMoneda" ViewItem="ValorMoneda" Index="5" RelativeSize="19.54022988505747" CaptionLocation="Left" IsNewNode="True" />
+            <LayoutGroup Id="CxPTransaccion_col1" ShowCaption="False" Index="0" RelativeSize="49.617790132036134" IsNewNode="True">
+              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="29.508196721311474" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Fecha" ViewItem="Fecha" Index="1" RelativeSize="21.311475409836067" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Tipo" ViewItem="Tipo" Index="2" RelativeSize="21.311475409836067" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Numero" ViewItem="Numero" Index="3" RelativeSize="27.868852459016395" CaptionLocation="Left" IsNewNode="True" />
             </LayoutGroup>
-            <LayoutGroup Id="CxPTransaccion_col2" ShowCaption="False" Index="1" RelativeSize="50" IsNewNode="True">
-              <LayoutItem Id="BancoTransaccion" ViewItem="BancoTransaccion" Index="0" RelativeSize="20.689655172413794" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="Estado" ViewItem="Estado" Index="1" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="Comentario" ViewItem="Comentario" Index="2" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="FechaAnula" ViewItem="FechaAnula" Index="3" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="UsuarioAnulo" ViewItem="UsuarioAnulo" Index="4" RelativeSize="34.48275862068966" CaptionLocation="Left" IsNewNode="True" />
+            <LayoutGroup Id="CxPTransaccion_col2" ShowCaption="False" Index="1" RelativeSize="50.382209867963866" IsNewNode="True">
+              <LayoutItem Id="NumeroDocumento" ViewItem="NumeroDocumento" Index="0" RelativeSize="29.508196721311474" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Moneda" ViewItem="Moneda" CaptionLocation="Left" Index="1" RelativeSize="21.311475409836067" IsNewNode="True" />
+              <LayoutItem Id="Estado" ViewItem="Estado" Index="2" RelativeSize="21.311475409836067" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Comentario" ViewItem="Comentario" Index="3" RelativeSize="27.868852459016395" CaptionLocation="Left" IsNewNode="True" />
             </LayoutGroup>
             <LayoutGroup Id="XPObject" Index="1" RelativeSize="6.896551724137931" Caption="Oid" Removed="True">
               <LayoutItem Id="Oid" RelativeSize="100" Removed="True" />
             </LayoutGroup>
             <LayoutGroup Id="CxPDocumento" Removed="True" />
           </LayoutGroup>
-          <LayoutGroup Id="Detalles_Group" Direction="Vertical" RelativeSize="76.64429530201342" Caption="Detalles">
-            <LayoutItem Id="Detalles" RelativeSize="69.11487758945385" />
-            <LayoutGroup Id="CxPDocumento" ShowCaption="True" Caption="Totales" Direction="Horizontal" Index="1" RelativeSize="30.88512241054614" IsCollapsibleGroup="True" IsNewNode="True">
-              <LayoutGroup Id="CxPDocumento_col1" ShowCaption="False" Index="0" RelativeSize="50" IsNewNode="True">
-                <LayoutItem Id="Exenta" ViewItem="Exenta" Index="0" RelativeSize="29.032258064516128" CaptionLocation="Left" IsNewNode="True" />
-                <LayoutItem Id="Gravada" ViewItem="Gravada" Index="1" RelativeSize="20.967741935483872" CaptionLocation="Left" IsNewNode="True" />
-                <LayoutItem Id="Iva" ViewItem="Iva" Index="2" RelativeSize="20.967741935483872" CaptionLocation="Left" IsNewNode="True" />
-                <LayoutItem Id="SubTotal" ViewItem="SubTotal" Index="3" RelativeSize="29.032258064516128" CaptionLocation="Left" IsNewNode="True" />
-              </LayoutGroup>
-              <LayoutGroup Id="CxPDocumento_col2" ShowCaption="False" Index="1" RelativeSize="50" IsNewNode="True">
-                <LayoutItem Id="IvaRetenido" ViewItem="IvaRetenido" Index="0" RelativeSize="29.032258064516128" CaptionLocation="Left" IsNewNode="True" />
-                <LayoutItem Id="IvaPercibido" ViewItem="IvaPercibido" Index="1" RelativeSize="20.967741935483872" CaptionLocation="Left" IsNewNode="True" />
-                <LayoutItem Id="NoSujeta" ViewItem="NoSujeta" Index="2" RelativeSize="20.967741935483872" CaptionLocation="Left" IsNewNode="True" />
-                <LayoutItem Id="Monto" ViewItem="Monto" Index="3" RelativeSize="29.032258064516128" CaptionLocation="Left" IsNewNode="True" />
-              </LayoutGroup>
+          <LayoutGroup Id="Detalles_Group" Direction="Vertical" RelativeSize="68.98047722342733" Caption="Detalles">
+            <LayoutItem Id="Detalles" RelativeSize="100" />
+          </LayoutGroup>
+          <LayoutGroup Id="CxPDocumento" ShowCaption="True" Caption="Totales" IsCollapsibleGroup="True" Direction="Horizontal" Index="2" RelativeSize="17.787418655097614" IsNewNode="True">
+            <LayoutGroup Id="CxPDocumento_col1" ShowCaption="False" Index="0" RelativeSize="49.610757254069355" IsNewNode="True">
+              <LayoutItem Id="Exenta" ViewItem="Exenta" CaptionLocation="Left" Index="0" RelativeSize="29.032258064516128" IsNewNode="True" />
+              <LayoutItem Id="Gravada" ViewItem="Gravada" CaptionLocation="Left" Index="1" RelativeSize="20.967741935483872" IsNewNode="True" />
+              <LayoutItem Id="Iva" ViewItem="Iva" CaptionLocation="Left" Index="2" RelativeSize="20.967741935483872" IsNewNode="True" />
+              <LayoutItem Id="SubTotal" ViewItem="SubTotal" CaptionLocation="Left" Index="3" RelativeSize="29.032258064516128" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="CxPDocumento_col2" ShowCaption="False" Index="1" RelativeSize="50.389242745930645" IsNewNode="True">
+              <LayoutItem Id="IvaRetenido" ViewItem="IvaRetenido" CaptionLocation="Left" Index="0" RelativeSize="29.032258064516128" IsNewNode="True" />
+              <LayoutItem Id="IvaPercibido" ViewItem="IvaPercibido" CaptionLocation="Left" Index="1" RelativeSize="20.967741935483872" IsNewNode="True" />
+              <LayoutItem Id="NoSujeta" ViewItem="NoSujeta" CaptionLocation="Left" Index="2" RelativeSize="20.967741935483872" IsNewNode="True" />
+              <LayoutItem Id="Monto" ViewItem="Monto" CaptionLocation="Left" Index="3" RelativeSize="29.032258064516128" IsNewNode="True" />
             </LayoutGroup>
           </LayoutGroup>
         </LayoutGroup>
@@ -574,16 +670,203 @@
     </DetailView>
     <ListView Id="CxPDocumento_Detalles_ListView">
       <Columns>
-        <ColumnInfo Id="CantidadAnulada" Width="82" />
         <ColumnInfo Id="Documento" Width="82" />
-        <ColumnInfo Id="Oid" Width="58" />
-        <ColumnInfo Id="FacturaDetalle" Width="467" />
-        <ColumnInfo Id="Cantidad" Width="91" />
-        <ColumnInfo Id="PrecioUnidad" Width="90" />
-        <ColumnInfo Id="Exenta" Width="96" />
-        <ColumnInfo Id="Iva" Width="89" />
-        <ColumnInfo Id="Gravada" Width="117" />
-        <ColumnInfo Id="NoSujeta" Width="106" />
+        <ColumnInfo Id="NoSujeta" Width="106" Index="-1" />
+        <ColumnInfo Id="Oid" Width="58" Index="-1" />
+        <ColumnInfo Id="FacturaDetalle" Width="136" Index="0" />
+        <ColumnInfo Id="Cantidad" Width="91" Index="1" />
+        <ColumnInfo Id="PrecioUnidad" Width="112" Index="2" />
+        <ColumnInfo Id="Exenta" Width="60" Index="3" />
+        <ColumnInfo Id="Iva" Width="60" Index="4" />
+        <ColumnInfo Id="Gravada" Width="100" Index="5" />
+        <ColumnInfo Id="CantidadAnulada" Width="133" Index="6" />
+      </Columns>
+    </ListView>
+    <ListView Id="CxPDocumento_ListView">
+      <Columns>
+        <ColumnInfo Id="Oid" Index="0" />
+        <ColumnInfo Id="Numero" Index="1" Width="85" />
+        <ColumnInfo Id="Fecha" Index="2" />
+        <ColumnInfo Id="Tipo" Index="3" Width="187" />
+        <ColumnInfo Id="Moneda" Index="4" Width="149" />
+        <ColumnInfo Id="Exenta" Index="5" Width="122" />
+        <ColumnInfo Id="Gravada" Width="109" Index="6" />
+        <ColumnInfo Id="Iva" Width="104" Index="7" />
+        <ColumnInfo Id="SubTotal" Index="8" Width="74" />
+        <ColumnInfo Id="Estado" Index="9" />
+      </Columns>
+      <Variants>
+        <Variant Id="@681b3845-98ac-44b1-9ff4-f2b99fe30aac" ViewID="CxPDNotasDebito_ListView" IsNewNode="True" />
+        <Variant Id="@c1e338d7-f858-4bdb-bd4a-a863f20cbcdf" ViewID="CxPDocumento_Todos_ListView" IsNewNode="True" />
+        <Variant Id="@cb8666dc-7a77-484e-872e-ee1935190c6f" ViewID="CxPNotasCredito_ListView" IsNewNode="True" />
+      </Variants>
+    </ListView>
+    <ListView Id="CxPDocumento_Todos_ListView" ClassName="SBT.Apps.CxP.Module.BusinessObjects.CxPDocumento" Caption="CxP Documento - Todos" IsNewNode="True">
+      <Columns IsNewNode="True">
+        <ColumnInfo Id="BancoTransaccion" PropertyName="BancoTransaccion" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Comentario" PropertyName="Comentario" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Factura" PropertyName="Factura" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="FechaAnula" PropertyName="FechaAnula" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="IvaPercibido" PropertyName="IvaPercibido" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="IvaRetenido" PropertyName="IvaRetenido" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Monto" PropertyName="Monto" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="NoSujeta" PropertyName="NoSujeta" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="UsuarioAnulo" PropertyName="UsuarioAnulo" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="ValorMoneda" PropertyName="ValorMoneda" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Oid" PropertyName="Oid" Index="0" IsNewNode="True" />
+        <ColumnInfo Id="Numero" PropertyName="Numero" Index="1" Width="85" IsNewNode="True" />
+        <ColumnInfo Id="Fecha" PropertyName="Fecha" Index="2" IsNewNode="True" />
+        <ColumnInfo Id="Tipo" PropertyName="Tipo" Index="3" Width="187" IsNewNode="True" />
+        <ColumnInfo Id="Moneda" PropertyName="Moneda" Index="4" Width="149" IsNewNode="True" />
+        <ColumnInfo Id="Exenta" PropertyName="Exenta" Index="5" Width="122" IsNewNode="True" />
+        <ColumnInfo Id="Gravada" PropertyName="Gravada" Width="109" Index="6" IsNewNode="True" />
+        <ColumnInfo Id="Iva" PropertyName="Iva" Width="104" Index="7" IsNewNode="True" />
+        <ColumnInfo Id="SubTotal" PropertyName="SubTotal" Index="8" Width="74" IsNewNode="True" />
+        <ColumnInfo Id="Estado" PropertyName="Estado" Index="9" IsNewNode="True" />
+      </Columns>
+    </ListView>
+    <DetailView Id="CxPNotaCredito_DetailView" CaptionColon=":" EnableCaptionColon="True" CaptionLocation="Default" CaptionHorizontalAlignment="Default" CaptionVerticalAlignment="Default" CaptionWordWrap="Default" EnableLayoutGroupImages="True" CustomizationEnabled="True" RequiredFieldMark="*" ClassName="SBT.Apps.CxP.Module.BusinessObjects.CxPDocumento" Caption="CxP - Nota Crédito" IsNewNode="True">
+      <Items IsNewNode="True">
+        <PropertyEditor Id="BancoTransaccion" PropertyName="BancoTransaccion" IsNewNode="True" />
+        <PropertyEditor Id="Comentario" PropertyName="Comentario" IsNewNode="True" />
+        <PropertyEditor Id="Detalles" PropertyName="Detalles" View="CxPDocumento_Detalles_ListView" IsNewNode="True" />
+        <PropertyEditor Id="Estado" PropertyName="Estado" IsNewNode="True" />
+        <PropertyEditor Id="Exenta" PropertyName="Exenta" IsNewNode="True" />
+        <PropertyEditor Id="Fecha" PropertyName="Fecha" IsNewNode="True" />
+        <PropertyEditor Id="FechaAnula" PropertyName="FechaAnula" IsNewNode="True" />
+        <PropertyEditor Id="Gravada" PropertyName="Gravada" IsNewNode="True" />
+        <PropertyEditor Id="Iva" PropertyName="Iva" IsNewNode="True" />
+        <PropertyEditor Id="IvaPercibido" PropertyName="IvaPercibido" IsNewNode="True" />
+        <PropertyEditor Id="IvaRetenido" PropertyName="IvaRetenido" IsNewNode="True" />
+        <PropertyEditor Id="Moneda" PropertyName="Moneda" IsNewNode="True" />
+        <PropertyEditor Id="Monto" PropertyName="Monto" Caption="Total" IsNewNode="True" />
+        <PropertyEditor Id="NoSujeta" PropertyName="NoSujeta" IsNewNode="True" />
+        <PropertyEditor Id="Numero" PropertyName="Numero" IsNewNode="True" />
+        <PropertyEditor Id="NumeroDocumento" PropertyName="NumeroDocumento" IsNewNode="True" />
+        <PropertyEditor Id="Oid" PropertyName="Oid" IsNewNode="True" />
+        <PropertyEditor Id="SubTotal" PropertyName="SubTotal" IsNewNode="True" />
+        <PropertyEditor Id="Tipo" PropertyName="Tipo" IsNewNode="True" />
+        <PropertyEditor Id="UsuarioAnulo" PropertyName="UsuarioAnulo" IsNewNode="True" />
+        <PropertyEditor Id="ValorMoneda" PropertyName="ValorMoneda" IsNewNode="True" />
+      </Items>
+      <Layout IsNewNode="True">
+        <LayoutGroup Id="Main" Index="0" ShowCaption="False" RelativeSize="100" IsNewNode="True">
+          <LayoutGroup Id="SimpleEditors" Index="0" Direction="Horizontal" ShowCaption="False" RelativeSize="13.232104121475054" IsNewNode="True">
+            <LayoutGroup Id="CxPTransaccion_col1" ShowCaption="False" Index="0" RelativeSize="49.617790132036134" IsNewNode="True">
+              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="29.508196721311474" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Fecha" ViewItem="Fecha" Index="1" RelativeSize="21.311475409836067" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Tipo" ViewItem="Tipo" Index="2" RelativeSize="21.311475409836067" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Numero" ViewItem="Numero" Index="3" RelativeSize="27.868852459016395" CaptionLocation="Left" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="CxPTransaccion_col2" ShowCaption="False" Index="1" RelativeSize="50.382209867963866" IsNewNode="True">
+              <LayoutItem Id="NumeroDocumento" ViewItem="NumeroDocumento" Index="0" RelativeSize="29.508196721311474" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Moneda" ViewItem="Moneda" CaptionLocation="Left" Index="1" RelativeSize="21.311475409836067" IsNewNode="True" />
+              <LayoutItem Id="Estado" ViewItem="Estado" Index="2" RelativeSize="21.311475409836067" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Comentario" ViewItem="Comentario" Index="3" RelativeSize="27.868852459016395" CaptionLocation="Left" IsNewNode="True" />
+            </LayoutGroup>
+          </LayoutGroup>
+          <LayoutGroup Id="Detalles_Group" Index="1" ShowCaption="True" RelativeSize="68.98047722342733" Caption="Detalles" IsNewNode="True">
+            <LayoutItem Id="Detalles" ViewItem="Detalles" ShowCaption="" Index="0" RelativeSize="100" IsNewNode="True" />
+          </LayoutGroup>
+          <LayoutGroup Id="CxPDocumento" ShowCaption="True" Caption="Totales" IsCollapsibleGroup="True" Direction="Horizontal" Index="2" RelativeSize="17.787418655097614" IsNewNode="True">
+            <LayoutGroup Id="CxPDocumento_col1" ShowCaption="False" Index="0" RelativeSize="49.610757254069355" IsNewNode="True">
+              <LayoutItem Id="Exenta" ViewItem="Exenta" CaptionLocation="Left" Index="0" RelativeSize="29.032258064516128" IsNewNode="True" />
+              <LayoutItem Id="Gravada" ViewItem="Gravada" CaptionLocation="Left" Index="1" RelativeSize="20.967741935483872" IsNewNode="True" />
+              <LayoutItem Id="Iva" ViewItem="Iva" CaptionLocation="Left" Index="2" RelativeSize="20.967741935483872" IsNewNode="True" />
+              <LayoutItem Id="SubTotal" ViewItem="SubTotal" CaptionLocation="Left" Index="3" RelativeSize="29.032258064516128" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="CxPDocumento_col2" ShowCaption="False" Index="1" RelativeSize="50.389242745930645" IsNewNode="True">
+              <LayoutItem Id="IvaRetenido" ViewItem="IvaRetenido" CaptionLocation="Left" Index="0" RelativeSize="29.032258064516128" IsNewNode="True" />
+              <LayoutItem Id="IvaPercibido" ViewItem="IvaPercibido" CaptionLocation="Left" Index="1" RelativeSize="20.967741935483872" IsNewNode="True" />
+              <LayoutItem Id="NoSujeta" ViewItem="NoSujeta" CaptionLocation="Left" Index="2" RelativeSize="20.967741935483872" IsNewNode="True" />
+              <LayoutItem Id="Monto" ViewItem="Monto" CaptionLocation="Left" Index="3" RelativeSize="29.032258064516128" IsNewNode="True" />
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <DetailView Id="CxPNotaDebito_DetailView" CaptionColon=":" EnableCaptionColon="True" CaptionLocation="Default" CaptionHorizontalAlignment="Default" CaptionVerticalAlignment="Default" CaptionWordWrap="Default" EnableLayoutGroupImages="True" CustomizationEnabled="True" RequiredFieldMark="*" ClassName="SBT.Apps.CxP.Module.BusinessObjects.CxPDocumento" Caption="CxP - Nota Débito" IsNewNode="True">
+      <Items IsNewNode="True">
+        <PropertyEditor Id="BancoTransaccion" PropertyName="BancoTransaccion" IsNewNode="True" />
+        <PropertyEditor Id="Comentario" PropertyName="Comentario" IsNewNode="True" />
+        <PropertyEditor Id="Detalles" PropertyName="Detalles" View="CxPDocumento_Detalles_ListView" IsNewNode="True" />
+        <PropertyEditor Id="Estado" PropertyName="Estado" IsNewNode="True" />
+        <PropertyEditor Id="Exenta" PropertyName="Exenta" IsNewNode="True" />
+        <PropertyEditor Id="Fecha" PropertyName="Fecha" IsNewNode="True" />
+        <PropertyEditor Id="FechaAnula" PropertyName="FechaAnula" IsNewNode="True" />
+        <PropertyEditor Id="Gravada" PropertyName="Gravada" IsNewNode="True" />
+        <PropertyEditor Id="Iva" PropertyName="Iva" IsNewNode="True" />
+        <PropertyEditor Id="IvaPercibido" PropertyName="IvaPercibido" IsNewNode="True" />
+        <PropertyEditor Id="IvaRetenido" PropertyName="IvaRetenido" IsNewNode="True" />
+        <PropertyEditor Id="Moneda" PropertyName="Moneda" IsNewNode="True" />
+        <PropertyEditor Id="Monto" PropertyName="Monto" IsNewNode="True" />
+        <PropertyEditor Id="NoSujeta" PropertyName="NoSujeta" IsNewNode="True" />
+        <PropertyEditor Id="Numero" PropertyName="Numero" IsNewNode="True" />
+        <PropertyEditor Id="NumeroDocumento" PropertyName="NumeroDocumento" IsNewNode="True" />
+        <PropertyEditor Id="Oid" PropertyName="Oid" IsNewNode="True" />
+        <PropertyEditor Id="SubTotal" PropertyName="SubTotal" IsNewNode="True" />
+        <PropertyEditor Id="Tipo" PropertyName="Tipo" IsNewNode="True" />
+        <PropertyEditor Id="UsuarioAnulo" PropertyName="UsuarioAnulo" IsNewNode="True" />
+        <PropertyEditor Id="ValorMoneda" PropertyName="ValorMoneda" IsNewNode="True" />
+      </Items>
+      <Layout IsNewNode="True">
+        <LayoutGroup Id="Main" Index="0" ShowCaption="False" RelativeSize="100" IsNewNode="True">
+          <LayoutGroup Id="SimpleEditors" Index="0" Direction="Horizontal" ShowCaption="False" RelativeSize="13.232104121475054" IsNewNode="True">
+            <LayoutGroup Id="CxPTransaccion_col1" ShowCaption="False" Index="0" RelativeSize="49.89576094510076" IsNewNode="True">
+              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="29.508196721311474" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Fecha" ViewItem="Fecha" Index="1" RelativeSize="21.311475409836067" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Tipo" ViewItem="Tipo" Index="2" RelativeSize="21.311475409836067" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Numero" ViewItem="Numero" Index="3" RelativeSize="27.868852459016395" CaptionLocation="Left" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="CxPTransaccion_col2" ShowCaption="False" Index="1" RelativeSize="50.10423905489924" IsNewNode="True">
+              <LayoutItem Id="NumeroDocumento" ViewItem="NumeroDocumento" Index="0" RelativeSize="29.508196721311474" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Moneda" ViewItem="Moneda" CaptionLocation="Left" Index="1" RelativeSize="21.311475409836067" IsNewNode="True" />
+              <LayoutItem Id="Estado" ViewItem="Estado" Index="2" RelativeSize="21.311475409836067" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Comentario" ViewItem="Comentario" Index="3" RelativeSize="27.868852459016395" CaptionLocation="Left" IsNewNode="True" />
+            </LayoutGroup>
+          </LayoutGroup>
+          <LayoutGroup Id="Detalles_Group" Index="1" ShowCaption="True" RelativeSize="68.98047722342733" Caption="Detalles" IsNewNode="True">
+            <LayoutItem Id="Detalles" ViewItem="Detalles" Index="0" RelativeSize="100" IsNewNode="True" />
+          </LayoutGroup>
+          <LayoutGroup Id="CxPDocumento" ShowCaption="True" Caption="Totales" IsCollapsibleGroup="True" Direction="Horizontal" Index="2" RelativeSize="17.787418655097614" IsNewNode="True">
+            <LayoutGroup Id="CxPDocumento_col1" ShowCaption="False" Index="0" RelativeSize="49.89384288747346" IsNewNode="True">
+              <LayoutItem Id="Exenta" ViewItem="Exenta" CaptionLocation="Left" Index="0" RelativeSize="29.032258064516128" IsNewNode="True" />
+              <LayoutItem Id="Gravada" ViewItem="Gravada" CaptionLocation="Left" Index="1" RelativeSize="20.967741935483872" IsNewNode="True" />
+              <LayoutItem Id="Iva" ViewItem="Iva" CaptionLocation="Left" Index="2" RelativeSize="20.967741935483872" IsNewNode="True" />
+              <LayoutItem Id="SubTotal" ViewItem="SubTotal" CaptionLocation="Left" Index="3" RelativeSize="29.032258064516128" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="CxPDocumento_col2" ShowCaption="False" Index="1" RelativeSize="50.10615711252654" IsNewNode="True">
+              <LayoutItem Id="IvaRetenido" ViewItem="IvaRetenido" CaptionLocation="Left" Index="0" RelativeSize="29.032258064516128" IsNewNode="True" />
+              <LayoutItem Id="IvaPercibido" ViewItem="IvaPercibido" CaptionLocation="Left" Index="1" RelativeSize="20.967741935483872" IsNewNode="True" />
+              <LayoutItem Id="NoSujeta" ViewItem="NoSujeta" CaptionLocation="Left" Index="2" RelativeSize="20.967741935483872" IsNewNode="True" />
+              <LayoutItem Id="Monto" ViewItem="Monto" CaptionLocation="Left" Index="3" RelativeSize="29.032258064516128" IsNewNode="True" />
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="CxPNotasCredito_ListView" ClassName="SBT.Apps.CxP.Module.BusinessObjects.CxPDocumento" Caption="CxP - Notas de Crédito" Criteria="[Tipo.Padre.Oid] = 1 And [Tipo.Activo] = True" DetailViewID="CxPNotaCredito_DetailView" IsNewNode="True">
+      <Columns IsNewNode="True">
+        <ColumnInfo Id="BancoTransaccion" PropertyName="BancoTransaccion" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Comentario" PropertyName="Comentario" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Factura" PropertyName="Factura" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="FechaAnula" PropertyName="FechaAnula" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="IvaPercibido" PropertyName="IvaPercibido" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="IvaRetenido" PropertyName="IvaRetenido" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Monto" PropertyName="Monto" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="NoSujeta" PropertyName="NoSujeta" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="UsuarioAnulo" PropertyName="UsuarioAnulo" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="ValorMoneda" PropertyName="ValorMoneda" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Oid" PropertyName="Oid" Index="0" IsNewNode="True" />
+        <ColumnInfo Id="Numero" PropertyName="Numero" Index="1" Width="85" IsNewNode="True" />
+        <ColumnInfo Id="Fecha" PropertyName="Fecha" Index="2" IsNewNode="True" />
+        <ColumnInfo Id="Tipo" PropertyName="Tipo" Index="3" Width="187" IsNewNode="True" />
+        <ColumnInfo Id="Moneda" PropertyName="Moneda" Index="4" Width="149" IsNewNode="True" />
+        <ColumnInfo Id="Exenta" PropertyName="Exenta" Index="5" Width="122" IsNewNode="True" />
+        <ColumnInfo Id="Gravada" PropertyName="Gravada" Width="109" Index="6" IsNewNode="True" />
+        <ColumnInfo Id="Iva" PropertyName="Iva" Width="104" Index="7" IsNewNode="True" />
+        <ColumnInfo Id="SubTotal" PropertyName="SubTotal" Index="8" Width="74" IsNewNode="True" />
+        <ColumnInfo Id="Estado" PropertyName="Estado" Index="9" IsNewNode="True" />
       </Columns>
     </ListView>
     <DetailView Id="CxPTransaccion_DetailView">
@@ -591,20 +874,20 @@
         <LayoutGroup Id="Main" RelativeSize="100">
           <LayoutGroup Id="SimpleEditors" RelativeSize="100" Direction="Horizontal">
             <LayoutGroup Id="CxPTransaccion_col1" ShowCaption="False" Index="0" RelativeSize="49.944629014396455" IsNewNode="True">
-              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="4.621309370988446" IsNewNode="True" />
-              <LayoutItem Id="Tipo" ViewItem="Tipo" Index="1" RelativeSize="3.337612323491656" IsNewNode="True" />
-              <LayoutItem Id="BancoTransaccion" ViewItem="BancoTransaccion" Index="2" RelativeSize="3.337612323491656" IsNewNode="True" />
-              <LayoutItem Id="Fecha" ViewItem="Fecha" Index="3" RelativeSize="3.337612323491656" IsNewNode="True" />
-              <LayoutItem Id="Numero" ViewItem="Numero" Index="4" RelativeSize="3.337612323491656" IsNewNode="True" />
-              <LayoutItem Id="Moneda" ViewItem="Moneda" Index="5" RelativeSize="82.02824133504492" IsNewNode="True" />
+              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="4.621309370988446" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Tipo" ViewItem="Tipo" Index="1" RelativeSize="3.337612323491656" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="BancoTransaccion" ViewItem="BancoTransaccion" Index="2" RelativeSize="3.337612323491656" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Fecha" ViewItem="Fecha" Index="3" RelativeSize="3.337612323491656" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Numero" ViewItem="Numero" Index="4" RelativeSize="3.337612323491656" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Moneda" ViewItem="Moneda" Index="5" RelativeSize="82.02824133504492" CaptionLocation="Left" IsNewNode="True" />
             </LayoutGroup>
             <LayoutGroup Id="CxPTransaccion_col2" ShowCaption="False" Index="1" RelativeSize="50.055370985603545" IsNewNode="True">
-              <LayoutItem Id="ValorMoneda" ViewItem="ValorMoneda" Index="0" RelativeSize="4.621309370988446" IsNewNode="True" />
-              <LayoutItem Id="Monto" ViewItem="Monto" Index="1" RelativeSize="3.337612323491656" IsNewNode="True" />
-              <LayoutItem Id="Estado" ViewItem="Estado" Index="2" RelativeSize="3.337612323491656" IsNewNode="True" />
-              <LayoutItem Id="Comentario" ViewItem="Comentario" Index="3" RelativeSize="3.337612323491656" IsNewNode="True" />
-              <LayoutItem Id="FechaAnula" ViewItem="FechaAnula" Index="4" RelativeSize="3.337612323491656" IsNewNode="True" />
-              <LayoutItem Id="UsuarioAnulo" ViewItem="UsuarioAnulo" Index="5" RelativeSize="82.02824133504492" IsNewNode="True" />
+              <LayoutItem Id="ValorMoneda" ViewItem="ValorMoneda" Index="0" RelativeSize="4.621309370988446" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Monto" ViewItem="Monto" Index="1" RelativeSize="3.337612323491656" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Estado" ViewItem="Estado" Index="2" RelativeSize="3.337612323491656" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Comentario" ViewItem="Comentario" Index="3" RelativeSize="3.337612323491656" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="FechaAnula" ViewItem="FechaAnula" Index="4" RelativeSize="3.337612323491656" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="UsuarioAnulo" ViewItem="UsuarioAnulo" Index="5" RelativeSize="82.02824133504492" CaptionLocation="Left" IsNewNode="True" />
             </LayoutGroup>
             <LayoutGroup Id="XPObject" Caption="Oid" Index="1" RelativeSize="72.27214377406932" Removed="True">
               <LayoutItem Id="Oid" Removed="True" />

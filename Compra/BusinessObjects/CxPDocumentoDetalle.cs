@@ -76,7 +76,7 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
         /// Cantidad de producto
         /// </summary>
         [DbType("numeric(12,2)"), XafDisplayName("Cantidad"), VisibleInLookupListView(true)]
-        [RuleRange("CxPDocumentoDetalle.Cantidad_Rango", DefaultContexts.Save, "0.0", "[VentaDetalle.Cantidad]",
+        [RuleRange("CxPDocumentoDetalle.Cantidad_Rango", DefaultContexts.Save, "0.0", "[CompraFacturaDetalle.Cantidad]",
             ParametersMode.Expression, SkipNullOrEmptyValues = false,
             CustomMessageTemplate = "Cantidad debe ser mayor o igual a 0.0 y menor o igual a la cantidad en el documento de compra")]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]

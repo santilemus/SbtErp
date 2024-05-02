@@ -15,6 +15,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
     [RuleIsReferenced("Tercero_Referencia", DefaultContexts.Delete, typeof(SBT.Apps.Tercero.Module.BusinessObjects.Tercero), nameof(Oid),
         MessageTemplateMustBeReferenced = "Para borrar el objeto '{TargetObject}', debe estar seguro que no es utilizado (referenciado) en ningún lugar.",
         InvertResult = true, FoundObjectMessageFormat = "'{0}'", FoundObjectMessagesSeparator = ";")]
+    [FriendlyKeyProperty(nameof(Nombre))]
     public class Tercero : XPObjectBaseBO
     {
         public override void AfterConstruction()

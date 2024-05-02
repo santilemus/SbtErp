@@ -50,6 +50,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
     [ImageName("factura")]
     [RuleObjectExists("", CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction, LooksFor = typeof(Empresa))]
     [OptimisticLockingReadBehavior(OptimisticLockingReadBehavior.Default, true)]
+    [FriendlyKeyProperty(nameof(Cliente))]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class Venta : XPCustomFacturaBO
@@ -188,6 +189,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
 
         [XafDisplayName("Cliente Agencia"), VisibleInListView(false), Index(7)]
         [DetailViewLayout("Datos del Cliente", LayoutGroupType.SimpleEditorsGroup, 1)]
+        [DataSourceCriteria("[Tercero] == '@This.Cliente'")]
         public TerceroSucursal ClienteAgencia
         {
             get => clienteAgencia;

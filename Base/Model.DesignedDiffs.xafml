@@ -158,9 +158,6 @@
               </LayoutGroup>
             </LayoutGroup>
           </LayoutGroup>
-          <LayoutGroup Id="Cuentas_Group" Direction="Vertical" RelativeSize="77.66367137355584">
-            <LayoutItem Id="Cuentas" RelativeSize="100" />
-          </LayoutGroup>
         </LayoutGroup>
       </Layout>
     </DetailView>
@@ -413,7 +410,7 @@
       </Layout>
     </DetailView>
     <ListView Id="Listas_ListView" DataAccessMode="Server" />
-    <ListView Id="Listas_LookupListView" DataAccessMode="Queryable" />
+    <ListView Id="Listas_LookupListView" DataAccessMode="Server" />
     <DetailView Id="Moneda_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">

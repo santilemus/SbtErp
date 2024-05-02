@@ -62,7 +62,7 @@ namespace SBT.Apps.Contabilidad
                 mInfoPartidas = tInfoCatalogo.CreateMember("Partidas", typeof(XPCollection<SBT.Apps.Contabilidad.Module.BusinessObjects.PartidaDetalle>));
                 mInfoPartidas.AddAttribute(new DevExpress.Xpo.AssociationAttribute("Catalogo-Partidas",
                                                      typeof(SBT.Apps.Contabilidad.Module.BusinessObjects.PartidaDetalle)), true);
-                mInfoPartidas.AddAttribute(new DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Partidas Detalle"), true);
+                mInfoPartidas.AddAttribute(new System.ComponentModel.DisplayNameAttribute("Partidas Detalle"), true);
             }
             if (mInfoCuenta == null)
                 mInfoCuenta = tInfoPartidaDetalle.CreateMember("Cuenta", typeof(SBT.Apps.Contabilidad.BusinessObjects.Catalogo));
@@ -70,7 +70,7 @@ namespace SBT.Apps.Contabilidad
                 mInfoCuenta.AddAttribute(new DevExpress.Xpo.AssociationAttribute("Catalogo-Partidas",
                                                      typeof(SBT.Apps.Contabilidad.BusinessObjects.Catalogo)), true);
             if (mInfoCuenta.FindAttribute<DevExpress.ExpressApp.DC.XafDisplayNameAttribute>() == null)
-                mInfoCuenta.AddAttribute(new DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Cuenta"), true);
+                mInfoCuenta.AddAttribute(new System.ComponentModel.DisplayNameAttribute("Cuenta"), true);
             ((XafMemberInfo)mInfoPartidas).Refresh();
             ((XafMemberInfo)mInfoCuenta).Refresh();
         }
@@ -98,7 +98,7 @@ namespace SBT.Apps.Contabilidad
                 mInfoSaldos = tInfoCatalogo.CreateMember("SaldosDiarios", typeof(XPCollection<SBT.Apps.Contabilidad.Module.BusinessObjects.SaldoDiario>));
                 mInfoSaldos.AddAttribute(new DevExpress.Xpo.AssociationAttribute("Catalogo-SaldosDiarios",
                                                      typeof(SBT.Apps.Contabilidad.Module.BusinessObjects.SaldoDiario)), true);
-                mInfoSaldos.AddAttribute(new DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Saldos Diarios"), true);
+                mInfoSaldos.AddAttribute(new System.ComponentModel.DisplayNameAttribute("Saldos Diarios"), true);
             }
             if (mInfoCuenta == null)
                 mInfoCuenta = tInfoSaldoDiario.CreateMember("Cuenta", typeof(SBT.Apps.Contabilidad.BusinessObjects.Catalogo));
@@ -106,7 +106,7 @@ namespace SBT.Apps.Contabilidad
                 mInfoCuenta.AddAttribute(new DevExpress.Xpo.AssociationAttribute("Catalogo-SaldosDiarios",
                                                      typeof(SBT.Apps.Contabilidad.BusinessObjects.Catalogo)), true);
             if (mInfoCuenta.FindAttribute<DevExpress.ExpressApp.DC.XafDisplayNameAttribute>() == null)
-                mInfoCuenta.AddAttribute(new DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Cuenta"), true);
+                mInfoCuenta.AddAttribute(new System.ComponentModel.DisplayNameAttribute("Cuenta"), true);
             ((XafMemberInfo)mInfoSaldos).Refresh();
             ((XafMemberInfo)mInfoCuenta).Refresh();
         }
@@ -134,7 +134,7 @@ namespace SBT.Apps.Contabilidad
                 mInfoSaldosMes = tInfoCatalogo.CreateMember("SaldosMeses", typeof(XPCollection<SBT.Apps.Contabilidad.Module.BusinessObjects.SaldoMes>));
                 mInfoSaldosMes.AddAttribute(new DevExpress.Xpo.AssociationAttribute("Catalogo-SaldosMeses",
                                                      typeof(SBT.Apps.Contabilidad.Module.BusinessObjects.SaldoMes)), true);
-                mInfoSaldosMes.AddAttribute(new DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Saldos Mensuales"), true);
+                mInfoSaldosMes.AddAttribute(new System.ComponentModel.DisplayNameAttribute("Saldos Mensuales"), true);
             }
             if (mInfoCuenta == null)
                 mInfoCuenta = tInfoSaldoMes.CreateMember("Cuenta", typeof(SBT.Apps.Contabilidad.BusinessObjects.Catalogo));
@@ -142,7 +142,7 @@ namespace SBT.Apps.Contabilidad
                 mInfoCuenta.AddAttribute(new DevExpress.Xpo.AssociationAttribute("Catalogo-SaldosMeses",
                                                      typeof(SBT.Apps.Contabilidad.BusinessObjects.Catalogo)), true);
             if (mInfoCuenta.FindAttribute<DevExpress.ExpressApp.DC.XafDisplayNameAttribute>() == null)
-                mInfoCuenta.AddAttribute(new DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Cuenta"), true);
+                mInfoCuenta.AddAttribute(new System.ComponentModel.DisplayNameAttribute("Cuenta"), true);
             ((XafMemberInfo)mInfoSaldosMes).Refresh();
             ((XafMemberInfo)mInfoCuenta).Refresh();
         }

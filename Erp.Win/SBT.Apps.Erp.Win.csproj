@@ -11,6 +11,7 @@
 		<UseWindowsForms>true</UseWindowsForms>
 		<ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
 		<UseWPF>False</UseWPF>
+		<Authors>SBT Technology, S.A de C.V</Authors>
 		<Company>SBT Technology, S.A de C.V</Company>
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'EasyTest|AnyCPU' ">

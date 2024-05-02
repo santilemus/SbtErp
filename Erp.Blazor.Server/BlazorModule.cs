@@ -9,6 +9,7 @@ using DevExpress.ExpressApp.Model.Core;
 using DevExpress.ExpressApp.Model.DomainLogics;
 using DevExpress.ExpressApp.Model.NodeGenerators;
 using DevExpress.Persistent.BaseImpl;
+using SBT.Apps.Erp.Blazor.Server.Controllers;
 
 namespace SBT.Apps.Erp.Blazor.Server;
 
@@ -34,5 +35,11 @@ public sealed class BlazorBlazorModule : ModuleBase {
         // For more information, refer to the following topic: https://docs.devexpress.com/eXpressAppFramework/113698/
         //application.CreateCustomModelDifferenceStore += Application_CreateCustomModelDifferenceStore;
         application.CreateCustomUserModelDifferenceStore += Application_CreateCustomUserModelDifferenceStore;
+        application.CreateCustomLogonWindowControllers += Application_CreateCustomLogonWindowControllers;
+    }
+
+    private void Application_CreateCustomLogonWindowControllers(object sender, CreateCustomLogonWindowControllersEventArgs e)
+    {
+        e.Controllers.Add(((XafApplication)sender).CreateController<LoginController>());
     }
 }

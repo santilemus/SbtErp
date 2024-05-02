@@ -27,7 +27,7 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
     /// a los proveedores
     /// </remarks>
 
-    [DefaultClassOptions, ModelDefault("Caption", "Transaccion CxP"), CreatableItem(false), NavigationItem("Compras")]
+    [DefaultClassOptions, ModelDefault("Caption", "CxP Transaccion"), CreatableItem(false), NavigationItem("Compras")]
     [DefaultProperty(nameof(Numero)), Persistent(nameof(CxPTransaccion))]
     [ImageName("bill")]
     [RuleCriteria("CxPTransaccion Pagada", "Save;Delete", "[Factura.Estado] == 0", "Transacciones validas solo para facturas con estado Debe",
@@ -57,6 +57,7 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
 
         BancoTransaccion bancoTransaccion;
         int? numero;
+        string numeroDocumento;
         decimal valorMoneda;
         Moneda moneda;
         CompraFactura factura;
@@ -69,13 +70,6 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
         DateTime fecha;
 
 
-        //[XafDisplayName("Empresa"), Browsable(false), Index(0)]
-        //public Empresa Empresa
-        //{
-        //    get => empresa;
-        //    set => SetPropertyValue(nameof(Empresa), ref empresa, value);
-        //}
-
         //[Association("CxCTipoTransaccion-CxPTransaccioness")]
         [XafDisplayName("Tipo"), Index(0)]
         [DataSourceCriteria("!IsNull([Padre]) && [Activo] == True")]
@@ -83,7 +77,15 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
         public CxCTipoTransaccion Tipo
         {
             get => tipo;
-            set => SetPropertyValue(nameof(Tipo), ref tipo, value);
+            set
+            {
+                bool changed = SetPropertyValue(nameof(Tipo), ref tipo, value);
+                if (!IsLoading && !IsSaving && changed && Factura != null && (Tipo.Padre.Oid == 1 || Tipo.Padre.Oid == 16) 
+                    && Factura.Detalles.Count == 0)
+                {
+                    DoFromCompraFactura();
+                }
+            }
         }
 
         [XafDisplayName("Banco Transacción")]
@@ -116,7 +118,7 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
             set => SetPropertyValue(nameof(Fecha), ref fecha, value);
         }
 
-        [DbType("int"), XafDisplayName("Número"), Index(3)]
+        [Size(100), DbType("varchar(100)"), XafDisplayName("Número"), Index(3)]
         [ModelDefault("AllowEdit", "False")]
         [ToolTip("Numero Correlativo por tipo de documento y empresa")]
         public int? Numero
@@ -125,7 +127,14 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
             set => SetPropertyValue(nameof(Numero), ref numero, value);
         }
 
-        [XafDisplayName("Moneda"), Index(4)]
+        [Size(100), DbType("varchar(100)"), System.ComponentModel.DisplayName("Número Documento"), Index(4)]
+        public string NumeroDocumento
+        {
+            get => numeroDocumento;
+            set => SetPropertyValue(nameof(NumeroDocumento), ref numeroDocumento, value);
+        }
+
+        [XafDisplayName("Moneda"), Index(5)]
         [DataSourceCriteria("[Activa] == True")]
         public Moneda Moneda
         {
@@ -138,7 +147,7 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
             }
         }
 
-        [DbType("numeric(12,2)"), XafDisplayName("Valor Moneda"), Index(5)]
+        [DbType("numeric(12,2)"), XafDisplayName("Valor Moneda"), Index(6)]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         [ModelDefault("AllowEdit", "False")]
         public decimal ValorMoneda
@@ -148,7 +157,7 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
         }
 
         [Association("CompraFactura-CxPTransacciones")]
-        [XafDisplayName("Compra Factura"), Index(6)]
+        [XafDisplayName("Compra Factura"), Index(7)]
         public CompraFactura Factura
         {
             get => factura;
@@ -160,7 +169,7 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
             }
         }
 
-        [DbType("numeric(14,2)"), XafDisplayName("Monto"), Index(7)]
+        [DbType("numeric(14,2)"), XafDisplayName("Monto"), Index(8)]
         [RuleValueComparison("CxPTransaccion.Monto > 0", DefaultContexts.Save, ValueComparisonType.GreaterThan, 0, SkipNullOrEmptyValues = false)]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         public decimal Monto
@@ -169,14 +178,14 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
             set => SetPropertyValue(nameof(Monto), ref monto, value);
         }
 
-        [DbType("smallint"), XafDisplayName("Estado"), Index(8)]
+        [DbType("smallint"), XafDisplayName("Estado"), Index(9)]
         public ECxPTransaccionEstado Estado
         {
             get => estado;
             set => SetPropertyValue(nameof(Estado), ref estado, value);
         }
 
-        [Size(200), DbType("varchar(200)"), XafDisplayName("Comentario"), Index(9)]
+        [Size(200), DbType("varchar(200)"), XafDisplayName("Comentario"), Index(10)]
         public string Comentario
         {
             get => comentario;
@@ -184,14 +193,14 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
         }
 
         [XafDisplayName("Fecha Anulación")]
-        [ModelDefault("AllowEdit", "False"), Index(10)]
+        [ModelDefault("AllowEdit", "False"), Index(11)]
         public DateTime FechaAnula
         {
             get => fechaAnula;
             set => SetPropertyValue(nameof(FechaAnula), ref fechaAnula, value);
         }
         [Size(25), XafDisplayName("Usuario Anulo")]
-        [ModelDefault("AllowEdit", "False"), Index(11)]
+        [ModelDefault("AllowEdit", "False"), Index(12)]
         public string UsuarioAnulo
         {
             get => usuarioAnulo;
@@ -229,6 +238,11 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
                 Numero = Convert.ToInt32(max ?? 0) + 1;
             }
             base.OnSaving();
+        }
+
+        protected virtual void DoFromCompraFactura()
+        {
+            ;
         }
 
         #endregion

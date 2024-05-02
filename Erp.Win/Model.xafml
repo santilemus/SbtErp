@@ -5,8 +5,38 @@
     <LayoutManagerOptions EnableLayoutGroupImages="False" />
   </Options>
   <SchemaModules>
-    <SchemaModule Name="CloneObjectModule" Version="21.2.3.0" IsNewNode="True" />
-    <SchemaModule Name="SystemModule" Version="21.2.3.0" IsNewNode="True" />
-    <SchemaModule Name="SystemWindowsFormsModule" Version="21.2.3.0" IsNewNode="True" />
+    <SchemaModule Name="CloneObjectModule" Version="23.2.5.0" IsNewNode="True" />
+    <SchemaModule Name="SystemModule" Version="23.2.5.0" IsNewNode="True" />
+    <SchemaModule Name="SystemWindowsFormsModule" Version="23.2.5.0" IsNewNode="True" />
   </SchemaModules>
+  <Views>
+    <DetailView Id="CustomLogonParameters_DetailView">
+      <Items>
+        <StaticImage Id="Logo" SizeMode="AutoSize" SvgImageHeight="73" SvgImageWidth="70" />
+      </Items>
+      <Layout>
+        <LayoutGroup Id="Main" TextAlignMode="UseParentOptions">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="100" TextAlignMode="AlignWithChildren" Direction="Vertical">
+            <LayoutGroup Id="CustomLogonParameters" TextAlignMode="AlignWithChildren" Index="0" RelativeSize="100">
+              <LayoutItem Id="Item1" Index="0" RelativeSize="1.3043478260869565" IsNewNode="True" />
+              <LayoutGroup Id="Autoa6ac9776-de95-4dce-8552-61ffe40539b6" Caption="Autoa6ac9776-de95-4dce-8552-61ffe40539b6(5)" Direction="Horizontal" RelativeSize="98.69565217391305" Index="1">
+                <LayoutGroup Id="Auto06adf0fa-0246-4248-ad02-7a4f5e80d896" ShowCaption="False" Caption="" Index="0" RelativeSize="92.33480176211454" IsNewNode="True">
+                  <LayoutItem Id="Empresa" ViewItem="Empresa" Index="0" RelativeSize="5.151515151515151" IsNewNode="True" />
+                  <LayoutItem Id="Agencia" ViewItem="Agencia" Index="1" RelativeSize="3.9393939393939394" IsNewNode="True" />
+                  <LayoutItem Id="UserName" ViewItem="UserName" Index="2" RelativeSize="3.9393939393939394" IsNewNode="True" />
+                  <LayoutItem Id="Password" ViewItem="Password" Index="3" RelativeSize="86.96969696969697" IsNewNode="True" />
+                </LayoutGroup>
+                <LayoutItem Id="Empresa" ViewItem="Empresa" Index="0" RelativeSize="4.415584415584416" Removed="True" />
+                <LayoutItem Id="Agencia" ViewItem="Agencia" Index="1" RelativeSize="3.3766233766233764" Removed="True" />
+                <LayoutItem Id="Logo" ViewItem="Logo" Index="1" RelativeSize="7.665198237885463" IsNewNode="True" />
+                <LayoutItem Id="UserName" ViewItem="UserName" Index="2" RelativeSize="3.3766233766233764" Removed="True" />
+                <LayoutItem Id="Password" ViewItem="Password" Index="3" RelativeSize="88.83116883116882" Removed="True" />
+              </LayoutGroup>
+              <LayoutItem Id="Logo" RelativeSize="12.024756852343058" Removed="True" />
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+  </Views>
 </Application>
