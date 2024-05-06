@@ -19,8 +19,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
     /// existe una tipifiacion o concepto
     /// </summary>
     /// <remarks>
-    /// 1. Faltan los siguientes properties: fecha del cheque,
-    ///                                      moneda.  (evaluar que otros datos harian falta)
+    /// 1. Faltan los siguientes properties: fecha del cheque, moneda.  (evaluar que otros datos harian falta)
     ///                                  
     /// </remarks>
 
@@ -78,7 +77,14 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         public CxCTipoTransaccion Tipo
         {
             get => tipo;
-            set => SetPropertyValue(nameof(Tipo), ref tipo, value);
+            set
+            {
+                bool changed = SetPropertyValue(nameof(Tipo), ref tipo, value);
+                if (!IsLoading && !IsSaving && changed)
+                {
+                    DoTipoChanged(true, tipo);
+                }
+            }
         }
 
         /// <summary>
@@ -105,6 +111,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         [RuleValueComparison("CxCTransaccion.Fecha > Fecha Factura", DefaultContexts.Save,
             ValueComparisonType.GreaterThanOrEqual, "[Venta.Fecha]", ParametersMode.Expression, SkipNullOrEmptyValues = false)]
         [DetailViewLayout("Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
+        [ModelDefault("DisplayFormat", "{0:d}"), ModelDefault("EditMask", "d")]
         public DateTime Fecha
         {
             get => fecha;
@@ -120,8 +127,12 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         [XafDisplayName("Autorización Documento"), PersistentAlias(nameof(autorizacionDocumento)), Index(3)]
         [VisibleInListView(false)]
         [DetailViewLayout("Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
-        public AutorizacionDocumento AutorizacionDocumento => autorizacionDocumento;
-
+        [ModelDefault("AllowEdit", "False")]
+        public AutorizacionDocumento AutorizacionDocumento
+        {
+            get => autorizacionDocumento;
+            set => SetPropertyValue<AutorizacionDocumento>(nameof(AutorizacionDocumento), ref autorizacionDocumento, value);
+        }
 
         [DbType("int"), XafDisplayName("Número"), Index(3)]
         [ModelDefault("AllowEdit", "False")]
@@ -158,7 +169,15 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         public Venta Venta
         {
             get => venta;
-            set => SetPropertyValue(nameof(Venta), ref venta, value);
+            set
+            {
+                bool changed = SetPropertyValue(nameof(Venta), ref venta, value);
+                if (!IsLoading && !IsSaving && changed)
+                {
+                    Moneda = venta.Moneda;
+                    //Moneda = Session.GetObjectByKey<Moneda>(venta.Moneda.Codigo);
+                }
+            }
         }
 
         [DbType("numeric(14,2)"), XafDisplayName("Monto"), Index(7)]
@@ -221,10 +240,14 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         }
 
         /// <summary>
-        ///  No de cheque, No de pago electronico, Id de la remesa, transferencia, no vaucher etc.
+        ///  No de cheque, No de pago electronico, Id de la remesa, transferencia, no vaucher, número nota de crédito, número dte etc.
         /// </summary>
-        [Size(40), DbType("varchar(40)"), XafDisplayName("No Referencia"), Index(12), VisibleInListView(false)]
+        [Size(100), DbType("varchar(100)"), XafDisplayName("No Referencia"), Index(12), VisibleInListView(false)]
         [DetailViewLayout("Datos Pago", LayoutGroupType.SimpleEditorsGroup, 1)]
+        [ToolTip(@"Número de referencia o de documento. Ej: número dte, número nota de crédito, transferencia, remesa, etc")]
+        [RuleRange("CxCTransaccion.Referencia_Rango", DefaultContexts.Save, "[AutorizacionDocumento.NoDesde]", "[AutorizacionDocumento.NoHasta]", 
+            ParametersMode.Expression, TargetCriteria = "([Tipo.Padre.Oid] == 1 || [Tipo.Padre.Oid] == 16) && !IsNull([Venta]) && [AutorizacionDocumento.Clase] != 'Dte'", 
+            SkipNullOrEmptyValues = true, CustomMessageTemplate = @"El valor ingresado en referencia debe estar en el rango autorizado de documentos")]
         public string Referencia
         {
             get => referencia;
@@ -269,6 +292,22 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         #region Collecciones
         #endregion
 
+
+        #region Metodos
+
+        /// <summary>
+        /// Metodo que se debe ejecutar cuando Cambia el Tipo de Transacción. Reescribir en las clases heredades 
+        /// (documentos) cuando corresponda. En el caso de las notas de crédito y débito en este evento se obtiene
+        /// la resolución de autorización para emitir los documentos, próximo correlativo del documento a emitir.
+        /// </summary>
+        /// <param name="forceChangeEvents">Indica si se deben invocar eventos para propiedades afectadas</param>
+        /// <param name="oldValue">El valor de la propiedad Tipo antes del setter</param>
+        protected virtual void DoTipoChanged(bool forceChangeEvents, CxCTipoTransaccion oldValue)
+        {
+
+        }
+
+        #endregion
         //[Action(Caption = "My UI Action", ConfirmationMessage = "Are you sure?", ImageName = "Attention", AutoCommit = true)]
         //public void ActionMethod() {
         //    // Trigger a custom business logic for the current record in the UI (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112619.aspx).

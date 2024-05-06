@@ -112,6 +112,7 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
 
         [DbType("datetime2"), XafDisplayName("Fecha"), Index(2)]
         [RuleRequiredField("CxPTransaccion.Fecha_Requerido", DefaultContexts.Save)]
+        [ModelDefault("DisplayFormat", "{0:d}"), ModelDefault("EditMask", "d")]
         public DateTime Fecha
         {
             get => fecha;

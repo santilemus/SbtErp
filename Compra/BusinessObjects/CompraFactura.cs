@@ -365,8 +365,6 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
         {
             if (CondicionPago == ECondicionPago.Credito)
             {
-                // TipoOperacion == 1 son cargos que incrementan el saldo, 2 son abonos que disminuyen
-                decimal? totSaldo = Total + Convert.ToDecimal(CriteriaOperator.Parse("[CxPTransacciones].Sum(Iif([Tipo.TipoOperacion] == 1, [Monto], Iif([Tipo.TipoOperacion] == 2, -[Monto]))"));
                 base.ActualizarSaldo(valor, status, forceChangeEvents);
             }
         }

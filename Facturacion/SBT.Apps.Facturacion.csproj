@@ -77,7 +77,6 @@
     <Compile Update="Controllers\vcCaja.cs" />
     <Compile Update="Controllers\vcCartera.cs" />
     <Compile Update="Controllers\vcCxCTransaccion.cs" />
-    <Compile Update="Controllers\vcCxCTransaccionDetailView.cs" />
     <Compile Update="Controllers\vcVenta.cs" />
     <Compile Update="Controllers\vcVentaDetalle.cs" />
     <Compile Update="FacturacionModule.cs" />

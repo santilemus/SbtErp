@@ -80,7 +80,7 @@ namespace SBT.Apps.Facturacion.Module.Controllers
                         return;
                     }
                 }
-                if (e.PropertyName == "AutorizacionCorrelativo")
+                if (e.PropertyName == "AutorizacionDocumento")
                 {
                     if (e.NewValue == null)
                     {

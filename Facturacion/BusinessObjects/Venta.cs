@@ -434,7 +434,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         public XPCollection<VentaResumenTributo> ResumenTributos => GetCollection<VentaResumenTributo>(nameof(ResumenTributos));
 
 
-        [Association("Venta-CxCTransacciones"), Index(2), XafDisplayName("Transacciones CxC"), DevExpress.Xpo.Aggregated]
+        [Association("Venta-CxCTransacciones"), Index(2), XafDisplayName("CxC Transacciones"), DevExpress.Xpo.Aggregated]
         public XPCollection<CxC.Module.BusinessObjects.CxCTransaccion> CxCTransacciones => GetCollection<CxC.Module.BusinessObjects.CxCTransaccion>(nameof(CxCTransacciones));
 
 

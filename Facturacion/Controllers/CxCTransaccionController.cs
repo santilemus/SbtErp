@@ -13,10 +13,10 @@ namespace SBT.Apps.Facturacion.Module.Controllers
     /// <summary>
     /// View Controller que corresponde a los documentos de Cuentas por Cobrar
     /// </summary>
-    public class vcCxCTransaccion : ViewControllerBase
+    public class CxCTransaccionController : ViewControllerBase
     {
         InventarioTipoMovimiento tipoMovimiento;
-        public vcCxCTransaccion() : base()
+        public CxCTransaccionController() : base()
         {
             TargetObjectType = typeof(SBT.Apps.CxC.Module.BusinessObjects.CxCTransaccion);
             TargetViewType = ViewType.Any;
@@ -178,16 +178,12 @@ namespace SBT.Apps.Facturacion.Module.Controllers
         /// <param name="item">Es un documento de CxC</param>
         private void ActualizarSaldoFactura(CxCTransaccion item)
         {
-            //decimal fSaldo = Convert.ToDecimal(ObjectSpace.Evaluate(typeof(CxCDocumento), 
-            //    CriteriaOperator.Parse("Sum(Iif([CxCTransaccion.Concepto.Tipo] == 1, [Total] + [Valor], -[Total] - [Valor]))"),
-            //    CriteriaOperator.Parse("[Venta.Oid] == ? && [CxCTransaccion.Estado] != 2", item.Venta.Oid)));
-
             decimal fCargo = Convert.ToDecimal(item.Venta.CxCTransacciones.Where(x => x.Venta == item.Venta && x.Tipo.TipoOperacion == ETipoOperacion.Cargo &&
                                                            x.Estado != ECxCTransaccionEstado.Anulado).Sum(x => x.Monto));
             decimal fAbono = Convert.ToDecimal(item.Venta.CxCTransacciones.Where(x => x.Venta == item.Venta && x.Tipo.TipoOperacion == ETipoOperacion.Abono &&
                                                            x.Estado != ECxCTransaccionEstado.Anulado).Sum(x => x.Monto));
             decimal fNcredito = Convert.ToDecimal(item.Venta.CxCTransacciones.Where(
-                x => x.Venta == item.Venta && x.Tipo.Oid > 1 && x.Tipo.Oid <= 4 && x.Estado != ECxCTransaccionEstado.Anulado).Sum(x => x.Monto));
+                x => x.Venta == item.Venta && x.Tipo.Padre.Oid == 1 && x.Estado != ECxCTransaccionEstado.Anulado).Sum(x => x.Monto));
             decimal monto = Math.Abs(fCargo - fAbono);
             if (fNcredito > 0 && item.Venta.Total == fNcredito)
                 item.Venta.ActualizarSaldo(0.0m, EEstadoFactura.Devolucion, true);

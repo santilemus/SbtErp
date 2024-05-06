@@ -11,9 +11,9 @@ namespace SBT.Apps.Compra.Module.Controllers
     /// <summary>
     /// View Controller para el BO CxPTransaccion (transacciones de cuentas por pagar)
     /// </summary>
-    public class vcCxPTransaccion : ViewControllerBase
+    public class CxPTransaccionController : ViewControllerBase
     {
-        public vcCxPTransaccion() : base()
+        public CxPTransaccionController() : base()
         {
 
         }

@@ -83,7 +83,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             set => SetPropertyValue(nameof(Resolucion), ref resolucion, value);
         }
         [DbType("datetime2"), Index(4), RuleRequiredField("ResCorrelativo.Fecha_Requerido", DefaultContexts.Save)]
-        [ModelDefault("DisplayFormat", "{0:G}"), ModelDefault("EditMask", "G")]
+        [ModelDefault("DisplayFormat", "{0:dd/MM/yyyy}"), ModelDefault("EditMask", "dd/MM/yyyy")]
         public DateTime Fecha
         {
             get => fecha;

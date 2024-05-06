@@ -3,17 +3,18 @@ using DevExpress.ExpressApp.Actions;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Compra.Module.BusinessObjects;
 using SBT.Apps.CxP.Module.BusinessObjects;
+using System.Linq;
 
 namespace SBT.Apps.Compra.Module.Controllers
 {
     /// <summary>
     /// View Controller que aplica a la vista de detalle del BO CompraFactura
     /// </summary>
-    public class vcCompraFacturaDetail : ViewController<DetailView>
+    public class CompraFacturaDetailViewController : ViewController<DetailView>
     {
         private PopupWindowShowAction pwsaPagoAplicar;
         const string key = "Inactivo";
-        public vcCompraFacturaDetail() : base()
+        public CompraFacturaDetailViewController() : base()
         {
             TargetObjectType = typeof(SBT.Apps.Compra.Module.BusinessObjects.CompraFactura);
             pwsaPagoAplicar = new PopupWindowShowAction(this, "saPagoAplicar", DevExpress.Persistent.Base.PredefinedCategory.RecordEdit.ToString());
@@ -29,6 +30,7 @@ namespace SBT.Apps.Compra.Module.Controllers
             pwsaPagoAplicar.Active[key] = (View.ObjectTypeInfo.Type == typeof(SBT.Apps.Compra.Module.BusinessObjects.CompraFactura) &&
                                            View.ObjectSpace.IsNewObject(View.CurrentObject));
             pwsaPagoAplicar.Execute += PwsaPagoAplicar_Execute;
+            //ObjectSpace.Committing += ObjectSpace_Committing;
         }
 
         private void PwsaPagoAplicar_Execute(object sender, PopupWindowShowActionExecuteEventArgs e)
@@ -65,9 +67,33 @@ namespace SBT.Apps.Compra.Module.Controllers
             pwsaPagoAplicar.CustomizePopupWindowParams -= PwsaPagoAplicar_CustomizePopupWindowParams;
             pwsaPagoAplicar.Execute -= PwsaPagoAplicar_Execute;
             pwsaPagoAplicar.Active.RemoveItem(key);
+            //ObjectSpace.Committing -= ObjectSpace_Committing;
             base.OnDeactivated();
         }
 
+        /*
+        /// <summary>
+        /// Evento del ObjectSpace que se ejecuta previo a guardar los cambios en la bd
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ObjectSpace_Committing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            var factura = View.CurrentObject as CompraFactura;
+            if (factura.CxPTransacciones.Count > 0)
+            {
+                decimal totalCxP = factura.CxPTransacciones.Where(x => x.Tipo.Padre.Oid == 1 && x.Estado != ECxPTransaccionEstado.Anulado).Sum(x => x.Monto);
+                if (totalCxP > 0 && (factura.Saldo - totalCxP) == 0.0m) 
+                {
+                    factura.ActualizarSaldo(factura.Saldo - totalCxP, EEstadoFactura.Devolucion, true);
+                    return;
+                }
+                totalCxP = factura.CxPTransacciones.Sum(x => x.Tipo.TipoOperacion == ETipoOperacion.Cargo ? x.Monto : -x.Monto);
+                if (totalCxP > 0)
+                    factura.ActualizarSaldo(factura.Saldo - totalCxP, (factura.Saldo - totalCxP) == 0.0m ? EEstadoFactura.Pagado: factura.Estado, true);
+            }
+        }
+        */
 
     }
 }

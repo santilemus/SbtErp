@@ -4,6 +4,8 @@ using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
+using SBT.Apps.Base.Module.BusinessObjects;
+using SBT.Apps.Facturacion.Module.BusinessObjects;
 using System;
 using System.ComponentModel;
 
@@ -165,6 +167,28 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
             {
                 OnChanged(nameof(NoSujeta), oldNoSujeta, noSujeta);
                 OnChanged(nameof(Monto));
+            }
+        }
+
+        /// <summary>
+        /// Se reescribe para obtener la resolución de autorización para emitir los documentos y sugerir el 
+        /// próximo correlativo del documento a emitir.
+        /// </summary>
+        /// <param name="forceChangeEvents">Indica si se deben invocar eventos para propiedades afectadas</param>
+        /// <param name="oldValue">El valor de la propiedad Tipo antes del setter</param>
+        protected override void DoTipoChanged(bool forceChangeEvents, CxCTipoTransaccion oldValue)
+        {
+            base.DoTipoChanged(forceChangeEvents, oldValue);
+            if ((oldValue.TipoDocumento.Codigo == "DACV01" || oldValue.TipoDocumento.Codigo == "DACV02") && Venta != null && Venta.Agencia != null)
+            {
+                AutorizacionDocumento newAutorizacion;
+                var criteria = CriteriaOperator.FromLambda<AutorizacionDocumento>(x => x.Agencia.Oid == Venta.Agencia.Oid && x.Tipo.Codigo == oldValue.TipoDocumento.Codigo && x.Activo == true);
+                newAutorizacion = Session.FindObject<AutorizacionDocumento>(criteria);
+                var oldAutorizacion = AutorizacionDocumento;
+                AutorizacionDocumento = newAutorizacion;
+                OnChanged(nameof(AutorizacionDocumento), oldAutorizacion, newAutorizacion);
+                // el número de documento tendrá que ingresarse manualmente, porque cuando se trate de un dte ya no es un correlativo vinculado a la resolución
+                // se debe ingresar en la columna referencia
             }
         }
 
