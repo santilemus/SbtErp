@@ -29,6 +29,7 @@ namespace SBT.Apps.Facturacion.Module.Controllers
         private SimpleAction imprimirDocumento;
         private PopupWindowShowAction pwsaAnular;
 
+
         public vcVenta() : base()
         {
             TargetObjectType = typeof(SBT.Apps.Facturacion.Module.BusinessObjects.Venta);

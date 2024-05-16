@@ -5,13 +5,10 @@ using DevExpress.ExpressApp.Model;
 using DevExpress.ExpressApp.Security;
 using DevExpress.ExpressApp.SystemModule;
 using DevExpress.ExpressApp.Xpo;
-using DevExpress.Xpo;
 using Microsoft.Extensions.DependencyInjection;
-using SBT.Apps.Base.Module;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Iva.Module.BusinessObjects;
 using System;
-using static DevExpress.CodeParser.CodeStyle.Formatting.Rules;
 
 namespace SBT.Apps.Iva.Module.Controllers
 {

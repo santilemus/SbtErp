@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SBT.Apps.Base.Module.BusinessObjects;
+using SBT.Apps.Facturacion.Module.BusinessObjects;
 
 namespace SBT.Apps.Facturacion.Module.helper
 {
@@ -89,5 +90,34 @@ namespace SBT.Apps.Facturacion.Module.helper
             });
             return datos;
         }
+
+        /// <summary>
+        /// Obtener el detalle de los documentos anulados a la estructura requerida por el MH
+        /// </summary>
+        /// <param name="objectSpace">objeto que implementa IObjectSpace y que se utilizará para recuperar los datos desde la bd</param>
+        /// <param name="empresaOid">Id de la empresa cuyos datos se van a recuperar</param>
+        /// <param name="fechaDesde">Fecha de Inicio del período a obtner datos</param>
+        /// <param name="fechaHasta">Fecha Fin del período a obtener los datos</param>
+        /// <returns>IEnumerable de tipo dinamico con los datos según la estructura y orden requerido para exportarlos </returns>
+        public static IEnumerable<dynamic> GetDataDocumentosAnulados(IObjectSpace objectSpace, int empresaOid, DateTime fechaDesde, DateTime fechaHasta)
+        {
+            var criteria = CriteriaOperator.FromLambda<Venta>(x => x.Empresa.Oid == empresaOid &&
+                    x.Fecha.Date >= fechaDesde && x.Fecha.Date <= fechaHasta && x.Estado == EEstadoFactura.Anulado);
+            var datos = objectSpace.GetObjects<Venta>(criteria).Select(x => new
+            {
+                x.AutorizacionDocumento.Resolucion,
+                Clase = (int)x.AutorizacionDocumento.Clase,
+                PreimpresoDesde = x.NoFactura,
+                PreimpresoHasta = x.NoFactura,
+                TipoDocumento = (x.TipoFactura.Codigo == "COVE01") ? "03" : (x.TipoFactura.Codigo == "COVE02") ? "01" : "11",
+                TipoDetalle = (x.AutorizacionDocumento.Clase != EClaseDocumento.Dte) ? "A" : "D",
+                x.AutorizacionDocumento.Serie,
+                Desde = x.NoFactura,
+                Hasta = x.NoFactura,
+                CodigoGeneracion = (x.AutorizacionDocumento.Clase != EClaseDocumento.Dte) ? "" : ""
+            }) ;
+            return datos;
+        }
+
     }
 }

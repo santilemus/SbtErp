@@ -11,6 +11,7 @@ using CsvHelper.Configuration;
 using SBT.Apps.Compra.Module.BusinessObjects;
 using SBT.Apps.Compra.Module.helper;
 using SBT.Apps.Facturacion.Module.helper;
+using SBT.Apps.Facturacion.Module.BusinessObjects;
 
 namespace SBT.Apps.Erp.Blazor.Server.Middleware
 {
@@ -93,6 +94,11 @@ namespace SBT.Apps.Erp.Blazor.Server.Middleware
             return CompraConsultaHelper.GetDataFacturaSujetoExcluido(objetSpace, empresaOid, fechaDesde, fechaHasta).ToList();
         }
 
+        private dynamic GetDocumentosAnulados(IXafApplicationProvider applicationProvider, int empresaOid, DateTime fechaDesde, DateTime fechaHasta)
+        {
+            using var objectSpace = CreateObjectSpace(applicationProvider, typeof(Venta));
+            return VentaConsultaHelper.GetDataDocumentosAnulados(objectSpace, empresaOid, fechaDesde, fechaHasta).ToList();
+        }
 
         public async Task InvokeAsync(HttpContext httpContext, IXafApplicationProvider applicationProvider)
         {
@@ -139,6 +145,12 @@ namespace SBT.Apps.Erp.Blazor.Server.Middleware
                         {
                             datos = GetPagoCuentaAnexo(applicationProvider, empresaOid, fechaDesde, fechaHasta);
                             sFileName = sFileName + string.Format("PagoCuenta_{0:MMMyyyy}.csv", fechaHasta);
+                            break;
+                        }
+                    case "VentaDocumentoAnulado":
+                        {
+                            datos = GetDocumentosAnulados(applicationProvider, empresaOid, fechaDesde, fechaHasta);
+                            sFileName = sFileName + string.Format("DocumentoVentaAnulado_{0:MMMyyyy}.csv", fechaHasta);
                             break;
                         }
                 }
