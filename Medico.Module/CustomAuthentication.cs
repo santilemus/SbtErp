@@ -33,6 +33,13 @@ namespace SBT.Apps.Medico.Module
 
             if (!((IAuthenticationStandardUser)usuario).ComparePassword(customLogonParameters.Password))
                 throw new AuthenticationException(usuario.UserName, "Contraseña incorrecta");
+            if (usuario.Agencia != customLogonParameters.Agencia)
+            {
+                var agencia = usuario.Session.GetObjectByKey<EmpresaUnidad>(customLogonParameters.Agencia.Oid);
+                usuario.Agencia = agencia;
+                usuario.Save();
+                usuario.Session.CommitTransaction();
+            }
             return usuario;
         }
 

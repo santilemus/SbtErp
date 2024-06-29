@@ -94,6 +94,7 @@ namespace SBT.Apps.Medico.Module.DatabaseUpdate
                 defaultRole.AddObjectPermission<PermissionPolicyUser>(SecurityOperations.ReadOnlyAccess, "[Oid] = CurrentUserId()", SecurityPermissionState.Allow);
                 defaultRole.AddMemberPermission<PermissionPolicyUser>(SecurityOperations.Write, "ChangePasswordOnFirstLogon", "[Oid] = CurrentUserId()", SecurityPermissionState.Allow);
                 defaultRole.AddMemberPermission<PermissionPolicyUser>(SecurityOperations.Write, "StoredPassword", "[Oid] = CurrentUserId()", SecurityPermissionState.Allow);
+                defaultRole.AddMemberPermission<Usuario>(SecurityOperations.Write, "Agencia", "[Oid] = CurrentUserId()", SecurityPermissionState.Allow);
                 defaultRole.AddTypePermissionsRecursively<PermissionPolicyRole>(SecurityOperations.Read, SecurityPermissionState.Allow);
                 defaultRole.AddTypePermissionsRecursively<Empresa>(SecurityOperations.Read, SecurityPermissionState.Allow);
                 defaultRole.AddTypePermissionsRecursively<Usuario>(SecurityOperations.Read, SecurityPermissionState.Allow);

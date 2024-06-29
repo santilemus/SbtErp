@@ -30,7 +30,7 @@ namespace SBT.Apps.Compra.Module.Controllers
             pwsaPagoAplicar.Active[key] = (View.ObjectTypeInfo.Type == typeof(SBT.Apps.Compra.Module.BusinessObjects.CompraFactura) &&
                                            View.ObjectSpace.IsNewObject(View.CurrentObject));
             pwsaPagoAplicar.Execute += PwsaPagoAplicar_Execute;
-            //ObjectSpace.Committing += ObjectSpace_Committing;
+            ObjectSpace.Committing += ObjectSpace_Committing;
         }
 
         private void PwsaPagoAplicar_Execute(object sender, PopupWindowShowActionExecuteEventArgs e)
@@ -67,11 +67,10 @@ namespace SBT.Apps.Compra.Module.Controllers
             pwsaPagoAplicar.CustomizePopupWindowParams -= PwsaPagoAplicar_CustomizePopupWindowParams;
             pwsaPagoAplicar.Execute -= PwsaPagoAplicar_Execute;
             pwsaPagoAplicar.Active.RemoveItem(key);
-            //ObjectSpace.Committing -= ObjectSpace_Committing;
+            ObjectSpace.Committing -= ObjectSpace_Committing;
             base.OnDeactivated();
         }
 
-        /*
         /// <summary>
         /// Evento del ObjectSpace que se ejecuta previo a guardar los cambios en la bd
         /// </summary>
@@ -82,6 +81,10 @@ namespace SBT.Apps.Compra.Module.Controllers
             var factura = View.CurrentObject as CompraFactura;
             if (factura.CxPTransacciones.Count > 0)
             {
+                var monto = factura.CxPTransacciones.Where(x => x.Estado != ECxPTransaccionEstado.Anulado && x.Tipo.TipoOperacion == ETipoOperacion.Cargo).Sum(x => x.Monto) -
+                            factura.CxPTransacciones.Where(x => x.Estado != ECxPTransaccionEstado.Anulado && x.Tipo.TipoOperacion == ETipoOperacion.Abono).Sum(x => x.Monto);
+                factura.ActualizarSaldo(monto, monto == factura.Saldo ? EEstadoFactura.Pagado: factura.Estado, true);
+                /*
                 decimal totalCxP = factura.CxPTransacciones.Where(x => x.Tipo.Padre.Oid == 1 && x.Estado != ECxPTransaccionEstado.Anulado).Sum(x => x.Monto);
                 if (totalCxP > 0 && (factura.Saldo - totalCxP) == 0.0m) 
                 {
@@ -91,9 +94,9 @@ namespace SBT.Apps.Compra.Module.Controllers
                 totalCxP = factura.CxPTransacciones.Sum(x => x.Tipo.TipoOperacion == ETipoOperacion.Cargo ? x.Monto : -x.Monto);
                 if (totalCxP > 0)
                     factura.ActualizarSaldo(factura.Saldo - totalCxP, (factura.Saldo - totalCxP) == 0.0m ? EEstadoFactura.Pagado: factura.Estado, true);
+                */
             }
         }
-        */
 
     }
 }

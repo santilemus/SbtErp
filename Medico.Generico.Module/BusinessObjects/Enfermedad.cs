@@ -3,6 +3,7 @@ using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
+using System.ComponentModel;
 
 namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 {
@@ -12,7 +13,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 	[DefaultClassOptions, CreatableItem(false)]
     [ModelDefault("Caption", "Enfermedad")]
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Enfermedades")]
-    [DevExpress.ExpressApp.DC.XafDefaultPropertyAttribute("Nombre")]
+    [DefaultProperty(nameof(Nombre))]
     [DevExpress.Persistent.Base.ImageNameAttribute(nameof(Enfermedad))]
     [DevExpress.Persistent.Base.NavigationItemAttribute("Salud")]
     [RuleIsReferenced("Enfermedad_Referencia", DefaultContexts.Delete, typeof(Enfermedad), nameof(Oid),

@@ -147,7 +147,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [DevExpress.Persistent.Base.ToolTipAttribute("Fecha de nacimiento")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [RuleRequiredField("Persona.FechaNacimiento_Requerido", "Save")]
-        [ModelDefault("DisplayFormat", "{0:G}"), ModelDefault("EditMask", "G")]
+        [ModelDefault("DisplayFormat", "{0:d}"), ModelDefault("EditMask", "d")]
         public System.DateTime FechaNacimiento
         {
             get

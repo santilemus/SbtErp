@@ -5,12 +5,15 @@ using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using DevExpress.Xpo;
 using System;
+using System.ComponentModel;
+using System.Threading.Channels;
 
 namespace SBT.Apps.CxP.Module.BusinessObjects
 {
     [DefaultClassOptions, ModelDefault("Caption", "CxP Documento")]
     [MapInheritance(MapInheritanceType.ParentTable)]
     [CreatableItem(false)]
+    [DefaultProperty(nameof(NumeroDocumento))]
     //[ImageName("BO_Contact")]
     [Appearance("CxPDocumento_enable_valores", AppearanceItemType = "ViewItem",
         Criteria = "[Factura] Is Not Null And [Factura.Detalles][].Count() = 0", Enabled = true, 
@@ -57,7 +60,11 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
         public decimal Gravada
         {
             get { return gravada; }
-            set => SetPropertyValue(nameof(Gravada), ref gravada, value);
+            set
+            {
+                bool changed = SetPropertyValue(nameof(Gravada), ref gravada, value);
+                UpdateMonto(changed);
+            }
         }
 
         //[PersistentAlias(nameof(iva)), XafDisplayName("IVA"), Index(10)]
@@ -83,7 +90,11 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
         public decimal IvaRetenido
         {
             get { return ivaRetenido; }
-            set => SetPropertyValue(nameof(IvaRetenido), ref ivaRetenido, value);
+            set
+            {
+                bool changed = SetPropertyValue(nameof(IvaRetenido), ref ivaRetenido, value);
+                UpdateMonto(changed);
+            }
         }
 
         //[PersistentAlias(nameof(ivaPercibido)), XafDisplayName("(+) Iva Percibido"), VisibleInListView(false), Index(13)]
@@ -92,7 +103,11 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
         public decimal IvaPercibido
         {
             get { return ivaPercibido; }
-            set => SetPropertyValue(nameof(IvaPercibido), ref  ivaPercibido, value);
+            set
+            {
+                bool changed = SetPropertyValue(nameof(IvaPercibido), ref ivaPercibido, value);
+                UpdateMonto(changed);
+            }
         }
 
         //[PersistentAlias(nameof(noSujeta)), XafDisplayName("No Sujeta"), VisibleInListView(false), Index(14)]
@@ -101,7 +116,11 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
         public decimal NoSujeta
         {
             get { return noSujeta; }
-            set => SetPropertyValue(nameof(NoSujeta), ref noSujeta, value); 
+            set
+            {
+                bool changed = SetPropertyValue(nameof(NoSujeta), ref noSujeta, value);
+                UpdateMonto(changed);
+            }
         }
 
         //[PersistentAlias(nameof(exenta)), XafDisplayName("Exento"), VisibleInListView(true), Index(15)]
@@ -110,7 +129,11 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
         public decimal Exenta
         {
             get => exenta;
-            set => SetPropertyValue(nameof(Exenta), ref exenta, value);
+            set
+            {
+                bool changed = SetPropertyValue(nameof(Exenta), ref exenta, value);
+                UpdateMonto(changed);
+            }
         }
 
         #endregion
@@ -190,7 +213,18 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
             NoSujeta = Factura.NoSujeta ?? 0.0m;
             IvaPercibido = Factura.IvaPercibido ?? 0.0m;
             IvaRetenido = Factura.IvaRetenido ?? 0.0m;
+            UpdateMonto(true);
         }
+
+        private void UpdateMonto(bool changed)
+        {
+            if (!IsLoading && !IsSaving && changed && Detalles.Count == 0)
+            {
+                Monto = Gravada + Iva - IvaRetenido + IvaPercibido + NoSujeta + Exenta;
+                OnChanged(nameof(Monto));
+            }
+        }
+
         #endregion
 
 

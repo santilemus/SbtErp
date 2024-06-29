@@ -15,9 +15,10 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
     /// Objeto Persistente que corresponde a las Consultas. Es la clase para el objeto de negocios de Consultas
     /// </summary>
     [DefaultClassOptions]
-    [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Consulta")]
-    [DevExpress.Persistent.Base.ImageNameAttribute("planning-customer")]
-    [DevExpress.Persistent.Base.NavigationItem("Salud")]
+    [Persistent(nameof(Consulta))]
+    [System.ComponentModel.DisplayName("Consulta")]
+    [ImageNameAttribute("planning-customer")]
+    [NavigationItem("Salud")]
     [DefaultProperty(nameof(Paciente))]
     [RuleIsReferenced("Consulta_Referencia", DefaultContexts.Delete, typeof(Consulta), nameof(Oid),
        MessageTemplateMustBeReferenced = "Para borrar el objeto '{TargetObject}', debe estar seguro que no es utilizado (referenciado) en ningún lugar.",
@@ -135,7 +136,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         }
 
         [VisibleInDetailView(false), VisibleInListView(false)]
-        [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Institución Médica")]
+        [System.ComponentModel.DisplayName("Institución Médica")]
         [Persistent(nameof(Empresa))]
         [ExplicitLoading]
         public Empresa Empresa
@@ -144,7 +145,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
             set => SetPropertyValue(nameof(Empresa), ref empresa, value);
         }
 
-        [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Próxima Cita")]
+        [System.ComponentModel.DisplayName("Próxima Cita")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         public System.DateTime ProximaCita
         {
@@ -157,7 +158,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
                 SetPropertyValue("ProximaCita", ref _proximaCita, value);
             }
         }
-        [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Realizar Exámenes")]
+        [System.ComponentModel.DisplayName("Realizar Exámenes")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         public System.Boolean RealizarExamenes
         {
@@ -185,7 +186,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
                 SetPropertyValue("Consultorio", ref _consultorio, value);
             }
         }
-        [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Unidad de Remisión"), DbType("varchar(100)")]
+        [System.ComponentModel.DisplayName("Unidad de Remisión"), DbType("varchar(100)")]
         public System.String UnidadDeRemision
         {
             get
@@ -198,7 +199,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
             }
         }
 
-        [XafDisplayName("Estado"), DbType("smallint")]
+        [System.ComponentModel.DisplayName("Estado"), DbType("smallint")]
         public EEstadoConsulta Estado
         {
             get => estado;

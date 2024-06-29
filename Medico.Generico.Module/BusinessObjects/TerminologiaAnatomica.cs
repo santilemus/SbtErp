@@ -3,13 +3,14 @@ using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
+using System.ComponentModel;
 
 namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
 {
     [DefaultClassOptions, CreatableItem(false)]
     //[DevExpress.Persistent.Base.ImageNameAttribute("vacunas")]
     [NavigationItem("Salud"), Persistent("TerminologiaAnatomica"),
-        XafDefaultProperty("TerminoAnatomico"), ModelDefault("Caption", "Terminología Anatómica")]
+        DefaultProperty(nameof(TerminoAnatomico)), ModelDefault("Caption", "Terminología Anatómica")]
     public class TerminologiaAnatomica : XPObject
     {
 

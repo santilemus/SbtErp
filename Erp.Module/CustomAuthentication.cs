@@ -1,7 +1,9 @@
 ﻿using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.Security;
+using DevExpress.Office.Import.OpenXml;
 using DevExpress.Persistent.Base.Security;
+using DevExpress.Xpo;
 using DevExpress.XtraPrinting.Native;
 using SBT.Apps.Base.Module.BusinessObjects;
 using System;
@@ -45,6 +47,13 @@ namespace SBT.Apps.Erp.Module
 
             if (!((IAuthenticationStandardUser)usuario).ComparePassword(customLogonParameters.Password))
                 throw new AuthenticationException(usuario.UserName, "Contraseña incorrecta");
+            if (usuario.Agencia != customLogonParameters.Agencia)
+            {
+                var agencia = usuario.Session.GetObjectByKey<EmpresaUnidad>(customLogonParameters.Agencia.Oid);
+                usuario.Agencia = agencia;
+                usuario.Save();
+                usuario.Session.CommitTransaction();
+            }
             return usuario;
         }
 

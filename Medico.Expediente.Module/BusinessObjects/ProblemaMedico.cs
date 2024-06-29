@@ -5,10 +5,11 @@ using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using SBT.Apps.Medico.Generico.Module.BusinessObjects;
 using System;
+using System.ComponentModel;
 
 namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 {
-    [DefaultClassOptions, ModelDefault("Caption", "Problema Medico"), NavigationItem(false), XafDefaultProperty(nameof(Diagnostico)),
+    [DefaultClassOptions, ModelDefault("Caption", "Problema Medico"), NavigationItem(false), DefaultProperty(nameof(Diagnostico)),
         Persistent(nameof(ProblemaMedico)), CreatableItem(false)]
     [ImageName(nameof(ProblemaMedico))]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
@@ -82,7 +83,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         }
 
         [DbType("datetime"), Persistent("FechaInicio"), XafDisplayName("Fecha Inicio"),
-            ModelDefault("DisplayFormat", "{0:G}"), ModelDefault("EditMask", "G"), Index(4)]
+            ModelDefault("DisplayFormat", "{0:D}"), ModelDefault("EditMask", "D"), Index(4)]
         public DateTime FechaInicio
         {
             get => fechaInicio;
@@ -90,7 +91,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         }
 
         [DbType("datetime"), Persistent("FechaFin"), XafDisplayName("Fecha Fin"),
-         ModelDefault("DisplayFormat", "{0:G}"), ModelDefault("EditMask", "G"), Index(5)]
+         ModelDefault("DisplayFormat", "{0:D}"), ModelDefault("EditMask", "D"), Index(5)]
         public DateTime FechaFin
         {
             get => fechaFin;

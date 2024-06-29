@@ -19,6 +19,8 @@
     @{
         string userAgent = Request.Headers["User-Agent"];
         bool isIE = userAgent.Contains("MSIE") || userAgent.Contains("Trident");
+
+        var devExpressAppScriptUrl = $"_content/DevExpress.ExpressApp.Blazor/styles.css?v={AssemblyInfo.Version}";
     }
     @if(isIE) {
         <link href="css/site.css" rel="stylesheet" />
@@ -35,7 +37,11 @@
     else {
         <component type="typeof(SplashScreen)" render-mode="Static" param-Caption='"Registro Electrónico de Pacientes"' param-ImagePath='"images/SplashScreen.svg"' />
 
-        <link href="_content/DevExpress.ExpressApp.Blazor/styles.css" rel="stylesheet" />
+       @*  <link href="_content/DevExpress.ExpressApp.Blazor/styles.css?test=2413" rel="stylesheet" /> *@
+
+        <link href="\_content/DevExpress.ExpressApp.Blazor/styles.css" asp-append-version="true" rel="stylesheet" />
+        <!-- -->
+        <script src="\_content/DevExpress.ExpressApp.Blazor/scripts.js" asp-append-version="true" \></script>
         <link href="css/site.css" rel="stylesheet" />
         // Uncomment this link to enable CSS isolation. For more information, refer to the following topic: https://learn.microsoft.com/en-us/aspnet/core/blazor/components/css-isolation
         //<link href="SBT.Medico.Blazor.Blazor.Server.styles.css" rel="stylesheet">

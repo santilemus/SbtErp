@@ -4,8 +4,8 @@
     <LayoutManagerOptions RequiredFieldMark="*" />
   </Options>
   <SchemaModules>
-    <SchemaModule Name="CloneObjectModule" Version="21.2.3.0" IsNewNode="True" />
-    <SchemaModule Name="SystemModule" Version="21.2.3.0" IsNewNode="True" />
+    <SchemaModule Name="CloneObjectModule" Version="24.1.3.0" IsNewNode="True" />
+    <SchemaModule Name="SystemModule" Version="24.1.3.0" IsNewNode="True" />
   </SchemaModules>
   <Views>
     <DetailView Id="AsociacionProfesional_DetailView">
@@ -13,13 +13,13 @@
         <LayoutGroup Id="Main" RelativeSize="100">
           <LayoutGroup Id="SimpleEditors" RelativeSize="100">
             <LayoutGroup Id="AsociacionProfesional" RelativeSize="100">
-              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="4.6997389033942563" IsNewNode="True" />
+              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="4.699738903394256" IsNewNode="True" />
               <LayoutItem Id="Nombre" Index="1" RelativeSize="3.3942558746736293" />
               <LayoutItem Id="Direccion" Index="2" RelativeSize="3.3942558746736293" />
               <LayoutItem Id="Telefono" Index="3" RelativeSize="3.3942558746736293" />
-              <LayoutItem Id="Activa" Index="4" RelativeSize="85.117493472584854" />
+              <LayoutItem Id="Activa" Index="4" RelativeSize="85.11749347258485" />
             </LayoutGroup>
-            <LayoutGroup Id="XPObject" Caption="Oid" Index="1" RelativeSize="80.678851174934721" Removed="True">
+            <LayoutGroup Id="XPObject" Caption="Oid" Index="1" RelativeSize="80.67885117493472" Removed="True">
               <LayoutItem Id="Oid" Removed="True" />
             </LayoutGroup>
           </LayoutGroup>
@@ -33,75 +33,76 @@
             <LayoutGroup Id="Cargo" RelativeSize="100">
               <LayoutGroup Id="Cargo_col1" RelativeSize="50">
                 <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="36.734693877551024" IsNewNode="True" />
-                <LayoutItem Id="Nombre" Index="1" RelativeSize="26.530612244897959" />
+                <LayoutItem Id="Nombre" Index="1" RelativeSize="26.53061224489796" />
                 <LayoutItem Id="TipoContrato" Index="2" RelativeSize="36.734693877551024" />
                 <LayoutItem Id="Salario" Index="3" RelativeSize="29.032258064516128" Removed="True" />
               </LayoutGroup>
               <LayoutGroup Id="Cargo_col2" RelativeSize="50">
                 <LayoutItem Id="Salario" ViewItem="Salario" Index="0" RelativeSize="36.734693877551024" IsNewNode="True" />
-                <LayoutItem Id="TipoSalario" RelativeSize="26.530612244897959" Index="1" />
+                <LayoutItem Id="TipoSalario" RelativeSize="26.53061224489796" Index="1" />
                 <LayoutItem Id="Activo" RelativeSize="36.734693877551024" Index="2" />
               </LayoutGroup>
             </LayoutGroup>
-            <LayoutGroup Id="XPObject" Caption="Oid" Index="1" RelativeSize="63.779527559055118" Removed="True">
+            <LayoutGroup Id="XPObject" Caption="Oid" Index="1" RelativeSize="63.77952755905512" Removed="True">
               <LayoutItem Id="Oid" Removed="True" />
             </LayoutGroup>
           </LayoutGroup>
-          <LayoutGroup Id="SizeableEditors" RelativeSize="81.364829396325462" Caption="Obligaciones">
-            <LayoutItem Id="Obligaciones" RelativeSize="98.387096774193552" />
+          <LayoutGroup Id="SizeableEditors" RelativeSize="81.36482939632546" Caption="Obligaciones">
+            <LayoutItem Id="Obligaciones" RelativeSize="98.38709677419355" />
             <LayoutItem Id="Item1" Index="1" RelativeSize="1.6129032258064515" IsNewNode="True" />
           </LayoutGroup>
         </LayoutGroup>
       </Layout>
     </DetailView>
+    <ListView Id="Empleado_Capacitaciones_ListView" AllowEdit="True" DataAccessMode="Server" NewItemRowPosition="Top" />
     <DetailView Id="Empleado_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
-          <LayoutGroup Id="SimpleEditors" RelativeSize="39.537869062901159">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="39.53786906290116">
             <TabbedGroup Id="Item1" CaptionLocation="Top" Index="0" RelativeSize="100" IsNewNode="True">
               <LayoutGroup Id="Persona" ShowCaption="True" Direction="Horizontal" Index="0" RelativeSize="100" Caption="Datos Generales" IsNewNode="True">
-                <LayoutGroup Id="Persona_col1" ShowCaption="False" Index="0" RelativeSize="49.372862029646519" CaptionLocation="Left" IsNewNode="True">
+                <LayoutGroup Id="Persona_col1" ShowCaption="False" Index="0" RelativeSize="49.37286202964652" CaptionLocation="Left" IsNewNode="True">
                   <LayoutItem Id="Nombre" ViewItem="Nombre" Index="0" RelativeSize="14.173228346456693" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="Apellido" ViewItem="Apellido" Index="1" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="Pais" ViewItem="Pais" Index="2" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="Provincia" ViewItem="Provincia" Index="3" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="Ciudad" ViewItem="Ciudad" Index="4" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="Direccion" ViewItem="Direccion" Index="5" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="FechaNacimiento" ViewItem="FechaNacimiento" Index="6" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="Apellido" ViewItem="Apellido" Index="1" RelativeSize="10.236220472440944" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="Pais" ViewItem="Pais" Index="2" RelativeSize="10.236220472440944" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="Provincia" ViewItem="Provincia" Index="3" RelativeSize="10.236220472440944" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="Ciudad" ViewItem="Ciudad" Index="4" RelativeSize="10.236220472440944" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="Direccion" ViewItem="Direccion" Index="5" RelativeSize="10.236220472440944" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="FechaNacimiento" ViewItem="FechaNacimiento" Index="6" RelativeSize="10.236220472440944" CaptionLocation="Left" IsNewNode="True" />
                   <LayoutItem Id="EMail" ViewItem="EMail" Index="7" RelativeSize="24.409448818897637" CaptionLocation="Left" IsNewNode="True" />
                 </LayoutGroup>
-                <LayoutGroup Id="Persona_col2" ShowCaption="False" Index="1" RelativeSize="50.627137970353481" CaptionLocation="Left" IsNewNode="True">
+                <LayoutGroup Id="Persona_col2" ShowCaption="False" Index="1" RelativeSize="50.62713797035348" CaptionLocation="Left" IsNewNode="True">
                   <LayoutItem Id="Genero" ViewItem="Genero" CaptionLocation="Left" Index="0" RelativeSize="14.173228346456693" IsNewNode="True" />
-                  <LayoutItem Id="EstadoCivil" ViewItem="EstadoCivil" CaptionLocation="Left" Index="1" RelativeSize="10.236220472440945" IsNewNode="True" />
-                  <LayoutItem Id="TipoSangre" ViewItem="TipoSangre" Index="2" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="Idioma" ViewItem="Idioma" Index="3" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="FechaMuerte" ViewItem="FechaMuerte" Index="4" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="CausaMuerte" ViewItem="CausaMuerte" Index="5" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="Edad" ViewItem="Edad" Index="6" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="EstadoCivil" ViewItem="EstadoCivil" CaptionLocation="Left" Index="1" RelativeSize="10.236220472440944" IsNewNode="True" />
+                  <LayoutItem Id="TipoSangre" ViewItem="TipoSangre" Index="2" RelativeSize="10.236220472440944" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="Idioma" ViewItem="Idioma" Index="3" RelativeSize="10.236220472440944" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="FechaMuerte" ViewItem="FechaMuerte" Index="4" RelativeSize="10.236220472440944" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="CausaMuerte" ViewItem="CausaMuerte" Index="5" RelativeSize="10.236220472440944" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="Edad" ViewItem="Edad" Index="6" RelativeSize="10.236220472440944" CaptionLocation="Left" IsNewNode="True" />
                   <LayoutItem Id="Nacionalidad" ViewItem="Nacionalidad" CaptionLocation="Left" Index="7" RelativeSize="24.409448818897637" IsNewNode="True" />
                 </LayoutGroup>
               </LayoutGroup>
               <LayoutGroup Id="Empleado" ShowCaption="True" Direction="Horizontal" Index="1" RelativeSize="100" IsNewNode="True">
-                <LayoutGroup Id="Empleado_col1" ShowCaption="False" Index="0" RelativeSize="49.372862029646519" CaptionLocation="Left" IsNewNode="True">
+                <LayoutGroup Id="Empleado_col1" ShowCaption="False" Index="0" RelativeSize="49.37286202964652" CaptionLocation="Left" IsNewNode="True">
                   <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="14.173228346456693" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="FechaIngreso" ViewItem="FechaIngreso" CaptionLocation="Left" Index="1" RelativeSize="10.236220472440945" IsNewNode="True" />
-                  <LayoutItem Id="FechaRetiro" ViewItem="FechaRetiro" CaptionLocation="Left" Index="2" RelativeSize="10.236220472440945" IsNewNode="True" />
-                  <LayoutItem Id="Unidad" ViewItem="Unidad" Index="3" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="Cargo" ViewItem="Cargo" Index="4" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="TipoSalario" ViewItem="TipoSalario" Index="5" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="Salario" ViewItem="Salario" Index="6" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="SalarioMes" ViewItem="SalarioMes" Index="7" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="FechaIngreso" ViewItem="FechaIngreso" CaptionLocation="Left" Index="1" RelativeSize="10.236220472440944" IsNewNode="True" />
+                  <LayoutItem Id="FechaRetiro" ViewItem="FechaRetiro" CaptionLocation="Left" Index="2" RelativeSize="10.236220472440944" IsNewNode="True" />
+                  <LayoutItem Id="Unidad" ViewItem="Unidad" Index="3" RelativeSize="10.236220472440944" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="Cargo" ViewItem="Cargo" Index="4" RelativeSize="10.236220472440944" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="TipoSalario" ViewItem="TipoSalario" Index="5" RelativeSize="10.236220472440944" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="Salario" ViewItem="Salario" Index="6" RelativeSize="10.236220472440944" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="SalarioMes" ViewItem="SalarioMes" Index="7" RelativeSize="10.236220472440944" CaptionLocation="Left" IsNewNode="True" />
                   <LayoutItem Id="TipoContrato" ViewItem="TipoContrato" Index="8" RelativeSize="14.173228346456693" CaptionLocation="Left" IsNewNode="True" />
                 </LayoutGroup>
-                <LayoutGroup Id="Empleado_col2" ShowCaption="False" Index="1" RelativeSize="50.627137970353481" CaptionLocation="Left" IsNewNode="True">
+                <LayoutGroup Id="Empleado_col2" ShowCaption="False" Index="1" RelativeSize="50.62713797035348" CaptionLocation="Left" IsNewNode="True">
                   <LayoutItem Id="DiaDescanso" ViewItem="DiaDescanso" Index="0" RelativeSize="14.173228346456693" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="Estado" ViewItem="Estado" CaptionLocation="Left" Index="1" RelativeSize="10.236220472440945" IsNewNode="True" />
-                  <LayoutItem Id="Banco" ViewItem="Banco" Index="2" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="TipoCuenta" ViewItem="TipoCuenta" Index="3" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="NumeroCuenta" ViewItem="NumeroCuenta" Index="4" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="Pensionado" ViewItem="Pensionado" Index="5" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="NumeroCarne" ViewItem="NumeroCarne" Index="6" RelativeSize="10.236220472440945" CaptionLocation="Left" IsNewNode="True" />
-                  <LayoutItem Id="Titulo" ViewItem="Titulo" CaptionLocation="Left" Index="7" RelativeSize="10.236220472440945" IsNewNode="True" />
+                  <LayoutItem Id="Estado" ViewItem="Estado" CaptionLocation="Left" Index="1" RelativeSize="10.236220472440944" IsNewNode="True" />
+                  <LayoutItem Id="Banco" ViewItem="Banco" Index="2" RelativeSize="10.236220472440944" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="TipoCuenta" ViewItem="TipoCuenta" Index="3" RelativeSize="10.236220472440944" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="NumeroCuenta" ViewItem="NumeroCuenta" Index="4" RelativeSize="10.236220472440944" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="Pensionado" ViewItem="Pensionado" Index="5" RelativeSize="10.236220472440944" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="NumeroCarne" ViewItem="NumeroCarne" Index="6" RelativeSize="10.236220472440944" CaptionLocation="Left" IsNewNode="True" />
+                  <LayoutItem Id="Titulo" ViewItem="Titulo" CaptionLocation="Left" Index="7" RelativeSize="10.236220472440944" IsNewNode="True" />
                   <LayoutItem Id="AFP" ViewItem="AFP" Index="8" RelativeSize="14.173228346456693" CaptionLocation="Left" IsNewNode="True" />
                 </LayoutGroup>
               </LayoutGroup>
@@ -112,17 +113,17 @@
             <LayoutGroup Id="XPObject" Index="1" RelativeSize="43.18181818181818" Caption="Oid" Direction="Horizontal" Removed="True">
               <LayoutItem Id="Oid" RelativeSize="100" Removed="True" />
             </LayoutGroup>
-            <LayoutGroup Id="Empleado" RelativeSize="37.587412587412587" Removed="True">
+            <LayoutGroup Id="Empleado" RelativeSize="37.58741258741259" Removed="True">
               <LayoutGroup Id="Empleado_col1" RelativeSize="50">
                 <LayoutItem Id="Cargo" RelativeSize="14.606741573033707" />
-                <LayoutItem Id="Empresa" RelativeSize="19.101123595505619" />
+                <LayoutItem Id="Empresa" RelativeSize="19.10112359550562" />
                 <LayoutItem Id="Estado" RelativeSize="22.471910112359552" />
                 <LayoutItem Id="Salario" RelativeSize="14.606741573033707" />
                 <LayoutItem Id="TipoSalario" RelativeSize="14.606741573033707" />
                 <LayoutItem Id="Unidad" RelativeSize="14.606741573033707" />
               </LayoutGroup>
               <LayoutGroup Id="Empleado_col2" RelativeSize="50">
-                <LayoutItem Id="Nacionalidad" RelativeSize="19.101123595505619" />
+                <LayoutItem Id="Nacionalidad" RelativeSize="19.10112359550562" />
                 <LayoutItem Id="NumeroCarne" RelativeSize="14.606741573033707" />
                 <LayoutItem Id="NumeroCuenta" RelativeSize="14.606741573033707" />
                 <LayoutItem Id="Pensionado" RelativeSize="14.606741573033707" />
@@ -132,7 +133,7 @@
             </LayoutGroup>
             <LayoutGroup Id="Persona" Removed="True" />
           </LayoutGroup>
-          <TabbedGroup Id="Tabs" RelativeSize="60.462130937098841" Index="1">
+          <TabbedGroup Id="Tabs" RelativeSize="60.46213093709884" Index="1">
             <LayoutGroup Id="Profesiones" RelativeSize="100">
               <LayoutItem Id="Profesiones" RelativeSize="100" />
             </LayoutGroup>
@@ -161,18 +162,21 @@
         </LayoutGroup>
       </Layout>
     </DetailView>
+    <ListView Id="Empleado_Membresias_ListView" AllowEdit="True" DataAccessMode="Server" NewItemRowPosition="Top" />
+    <ListView Id="Empleado_Parientes_ListView" DataAccessMode="Server" AllowEdit="True" NewItemRowPosition="Top" />
+    <ListView Id="Empleado_Profesiones_ListView" AllowEdit="True" DataAccessMode="Server" NewItemRowPosition="Top" />
     <DetailView Id="EmpleadoCapacitacion_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
           <LayoutGroup Id="SimpleEditors" RelativeSize="100">
             <LayoutGroup Id="EmpleadoCapacitacion" RelativeSize="19.919246298788696">
               <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="24.324324324324323" IsNewNode="True" />
-              <LayoutItem Id="Codigo" Index="1" RelativeSize="17.567567567567568" />
-              <LayoutItem Id="Descripcion" Index="2" RelativeSize="17.567567567567568" />
-              <LayoutItem Id="FechaInicio" Index="3" RelativeSize="17.567567567567568" />
+              <LayoutItem Id="Codigo" Index="1" RelativeSize="17.56756756756757" />
+              <LayoutItem Id="Descripcion" Index="2" RelativeSize="17.56756756756757" />
+              <LayoutItem Id="FechaInicio" Index="3" RelativeSize="17.56756756756757" />
               <LayoutItem Id="DiasDuracion" Index="4" RelativeSize="22.972972972972972" />
             </LayoutGroup>
-            <LayoutGroup Id="XPObject" Caption="Oid" Direction="Horizontal" Index="1" RelativeSize="80.080753701211307">
+            <LayoutGroup Id="XPObject" Caption="Oid" Direction="Horizontal" Index="1" RelativeSize="80.08075370121131">
               <LayoutItem Id="Oid" Removed="True" />
             </LayoutGroup>
           </LayoutGroup>
@@ -187,7 +191,7 @@
               <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="37.5" IsNewNode="True" />
               <LayoutItem Id="Vigente" Index="2" RelativeSize="35.416666666666664" />
             </LayoutGroup>
-            <LayoutGroup Id="XPObject" Caption="Oid" Direction="Horizontal" Index="1" RelativeSize="87.079407806191114">
+            <LayoutGroup Id="XPObject" Caption="Oid" Direction="Horizontal" Index="1" RelativeSize="87.07940780619111">
               <LayoutItem Id="Oid" Removed="True" />
             </LayoutGroup>
           </LayoutGroup>
@@ -200,15 +204,15 @@
           <LayoutGroup Id="SimpleEditors" RelativeSize="100" Direction="Horizontal">
             <LayoutGroup Id="EmpleadoPariente_col1" ShowCaption="False" Index="0" RelativeSize="50" IsNewNode="True">
               <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="4.8452220726783315" IsNewNode="True" />
-              <LayoutItem Id="NombreCompleto" ViewItem="NombreCompleto" Index="1" RelativeSize="3.4993270524899058" IsNewNode="True" />
-              <LayoutItem Id="Tipo" ViewItem="Tipo" Index="2" RelativeSize="3.4993270524899058" IsNewNode="True" />
-              <LayoutItem Id="Nombre" ViewItem="Nombre" Index="3" RelativeSize="88.156123822341854" IsNewNode="True" />
+              <LayoutItem Id="NombreCompleto" ViewItem="NombreCompleto" Index="1" RelativeSize="3.499327052489906" IsNewNode="True" />
+              <LayoutItem Id="Tipo" ViewItem="Tipo" Index="2" RelativeSize="3.499327052489906" IsNewNode="True" />
+              <LayoutItem Id="Nombre" ViewItem="Nombre" Index="3" RelativeSize="88.15612382234185" IsNewNode="True" />
             </LayoutGroup>
             <LayoutGroup Id="EmpleadoPariente_col2" ShowCaption="False" Index="1" RelativeSize="50" IsNewNode="True">
               <LayoutItem Id="Apellido" ViewItem="Apellido" Index="0" RelativeSize="4.8452220726783315" IsNewNode="True" />
-              <LayoutItem Id="Beneficiario" ViewItem="Beneficiario" Index="1" RelativeSize="3.4993270524899058" IsNewNode="True" />
-              <LayoutItem Id="FechaNacimiento" ViewItem="FechaNacimiento" Index="2" RelativeSize="3.4993270524899058" IsNewNode="True" />
-              <LayoutItem Id="Direccion" ViewItem="Direccion" Index="3" RelativeSize="88.156123822341854" IsNewNode="True" />
+              <LayoutItem Id="Beneficiario" ViewItem="Beneficiario" Index="1" RelativeSize="3.499327052489906" IsNewNode="True" />
+              <LayoutItem Id="FechaNacimiento" ViewItem="FechaNacimiento" Index="2" RelativeSize="3.499327052489906" IsNewNode="True" />
+              <LayoutItem Id="Direccion" ViewItem="Direccion" Index="3" RelativeSize="88.15612382234185" IsNewNode="True" />
             </LayoutGroup>
             <LayoutGroup Id="XPObject" Index="1" RelativeSize="83.58008075370121" Caption="Oid" Direction="Horizontal" Removed="True">
               <LayoutItem Id="Oid" RelativeSize="100" Removed="True" />
@@ -227,7 +231,7 @@
               <LayoutItem Id="Profesion" Index="1" RelativeSize="27.083333333333332" />
               <LayoutItem Id="NumeroProfesional" Index="2" RelativeSize="35.416666666666664" />
             </LayoutGroup>
-            <LayoutGroup Id="XPObject" Caption="Oid" Direction="Horizontal" Index="1" RelativeSize="87.079407806191114">
+            <LayoutGroup Id="XPObject" Caption="Oid" Direction="Horizontal" Index="1" RelativeSize="87.07940780619111">
               <LayoutItem Id="Oid" Removed="True" />
             </LayoutGroup>
           </LayoutGroup>

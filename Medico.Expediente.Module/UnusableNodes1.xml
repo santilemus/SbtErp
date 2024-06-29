@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Application>
-  <Views Id="Views">
-    <ListView Id="ConsultaNutricion_ListView">
-      <Variants Id="Variants" Current="@3da14034-3cb7-494f-b4c6-385b25cea8f9" />
-    </ListView>
-  </Views>
-</Application>

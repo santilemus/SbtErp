@@ -1,19 +1,37 @@
-﻿using DevExpress.ExpressApp.Model;
+﻿using DevExpress.ExpressApp.DC;
+using DevExpress.ExpressApp.Model;
+using DevExpress.ExpressApp.SystemModule;
 using DevExpress.Persistent.Base;
+using DevExpress.Persistent.Base.General;
+using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
+using DevExpress.XtraScheduler;
+using Microsoft.VisualBasic;
 using System;
 using System.ComponentModel;
 
 namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 {
+
     [DefaultClassOptions, NavigationItem(false), CreatableItem(false), ModelDefault("Caption", "Consulta Nutrición")]
-    [DefaultProperty(nameof(Fecha))]
+    [DefaultProperty(nameof(Paciente))]
     [Persistent(nameof(ConsultaNutricion))]
     //[ImageName("BO_Contact")]
+
+    [ListViewFilter("Consulta Nutrición. En Espera", "[Estado] = 'Espera'", "Esperando Turno con Nutricionista", "Consultas procesadas por recepción y esperando turno con nutricionista asignado")]
+    [ListViewFilter("Consulta Nutrición. Iniciada", "[Estado] == 'Iniciada'", "Pacientes en consultorios", "Pacientes que estan siendo atendidos")]
+    [ListViewFilter("Consulta Nutrición. Paciente siendo atendido", "[Estado] == 'Iniciada' && [Nutricionista.Oid] == EmpleadoActualOid()",
+        "Paciente con su nutricionista", "Consulta atendida por nutricionista de la sesión")]
+    [ListViewFilter("Consulta Nutrición. Finalizada", "[Estado] == 'Finalizada'", "Consultas finalizadas", "Consultas que el nutricionista ha dado por finalizadas")]
+    [ListViewFilter("Consulta Nutrición. Cancelada", "[Estado] == 'Cancelada'", "Consultas Canceladas", "Pacientes que se retiraron antes de pasar consulta")]
+    [ListViewFilter("Consulta Nutrición. Del dia de hoy", "GetDate([Fecha]) == Today()", "Consultas del dia de hoy")]
+    [ListViewFilter("Consulta Nutrición. De la Semana", "IsThisWeek([Fecha])", "Consultas de la Semana Actual")]
+    [ListViewFilter("Consulta Nutrición. Del Mes Actual", "IsThisMonth([Fecha])", "Consultas del Mes Actual")]
+    [ListViewFilter("Consulta Nutrición. Todas", "")]
+
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
-    //[Persistent("DatabaseTableName")]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
-    public class ConsultaNutricion : XPObject
+    public class ConsultaNutricion : XPObject, ISupportNotifications
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
         private Paciente paciente;
         private decimal glucosa;
@@ -49,6 +67,9 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         private string dietaPrescrita;
         private string planNutricional;
         private DateTime fecha;
+        private EEstadoConsulta estado;
+        private Generico.Module.BusinessObjects.Medico nutricionista;
+        private DateTime? alarmTime;
 
         // Use CodeRush to create XPO classes and properties with a few keystrokes.
         // https://docs.devexpress.com/CodeRushForRoslyn/118557
@@ -74,7 +95,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 
         [DetailViewLayout("Datos Generales")]
         [DbType("datetime")]
-        [ModelDefault("EditMask", "dd/MM/yyyy"), ModelDefault("DisplayFormat", "{0:dd/MM/yyy}")]
+        [ModelDefault("EditMask", "dd/MM/yyyy hh:mm tt"), ModelDefault("DisplayFormat", "{0:dd/MM/yyy hh:mm tt}")]
         public DateTime Fecha
         {
             get => fecha;
@@ -251,6 +272,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 
         [DetailViewLayout("Evaluación Nutricional")]
         [DbType("numeric(9,4)")]
+        [ModelDefault("EditMask", "n4"), ModelDefault("DisplayFormat", "{0:N4}")]
         [System.ComponentModel.DisplayName("IMC")]
         public decimal IMC
         {
@@ -276,7 +298,8 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 
         [DetailViewLayout("Evaluación Nutricional")]
         [Size(250), DbType("varchar(250)")]
-        [System.ComponentModel.DisplayName("Observación")]
+        [System.ComponentModel.DisplayName("Observaciones")]
+        [DevExpress.ExpressApp.Model.ModelDefault("RowCount", "5")]
         public string Observacion
         {
             get => observacion;
@@ -287,6 +310,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         [Size(250), DbType("varchar(250)")]
         [System.ComponentModel.DisplayName("Frecuencia Alimentos")]
         [ToolTip("Frecuencia de alimentos y alimentos que no le gustan")]
+        [DevExpress.ExpressApp.Model.ModelDefault("RowCount", "5")]
         public string FrecuenciaAlimento
         {
             get => frecuenciaAlimento;
@@ -329,6 +353,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         }
 
         [DetailViewLayout("Otros Datos")]
+        [ModelDefault("EditMask", "n2"), ModelDefault("DisplayFormat", "{0:N2}")]
         public decimal Caloria
         {
             get => caloria;
@@ -379,10 +404,59 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         [DetailViewLayout("Otros Datos")]
         [Size(250), DbType("varchar(250)")]
         [System.ComponentModel.DisplayName("Plan Nutricional")]
+        [DevExpress.ExpressApp.Model.ModelDefault("RowCount", "5")]
         public string PlanNutricional
         {
             get => planNutricional;
             set => SetPropertyValue(nameof(PlanNutricional), ref planNutricional, value);
+        }
+
+        [System.ComponentModel.DisplayName("Estado"), DbType("smallint")]
+        public EEstadoConsulta Estado
+        {
+            get => estado;
+            set => SetPropertyValue(nameof(Estado), ref estado, value);
+        }
+
+        [RuleRequiredField("ConsultaNutricion.Nutricionista_Requerido", "Save")]
+        //[ExplicitLoading]
+        public Generico.Module.BusinessObjects.Medico Nutricionista
+        {
+            get => nutricionista;
+            set => SetPropertyValue(nameof(Nutricionista), ref nutricionista, value);
+        }
+
+        [Browsable(false)]
+        public DateTime? AlarmTime 
+        { 
+            get => alarmTime;
+            set
+            {
+                if (value == null)
+                {
+                    RemindIn = null;
+                    IsPostponed = false;
+                }
+                SetPropertyValue(nameof(AlarmTime), ref alarmTime, value);
+            } 
+        }
+
+        public object UniqueId => Oid;
+
+        [Browsable(false)]
+        public string NotificationMessage => $@"Paciente {Paciente.Nombre} {Paciente.Apellido} esperando";
+
+        [Browsable(false)]
+        public bool IsPostponed 
+        { 
+            get => GetPropertyValue<bool>(nameof(IsPostponed)); 
+            set => SetPropertyValue(nameof(IsPostponed), value); 
+        }
+
+        public TimeSpan? RemindIn
+        {
+            get => GetPropertyValue<TimeSpan?>(nameof(RemindIn));
+            set => SetPropertyValue(nameof(RemindIn), value);
         }
 
         #endregion
@@ -394,6 +468,28 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         public XPCollection<NutricionRecuento24H> Recuentos24H => GetCollection<NutricionRecuento24H>(nameof(Recuentos24H));
 
         #endregion
+
+        #region Metodos
+        protected override void OnSaving()
+        {
+            base.OnSaving();
+            if (RemindIn.HasValue)
+            {
+                if ((AlarmTime == null) || (AlarmTime < Fecha - RemindIn.Value))
+                {
+                    AlarmTime = Fecha - RemindIn.Value;
+                }
+            }
+            else
+                AlarmTime = null;
+            if (AlarmTime == null)
+            {
+                RemindIn = null;
+                IsPostponed = false;
+            }
+        }
+
+        #endregion Metodos
 
         //private string _PersistentProperty;
         //[XafDisplayName("My display name"), ToolTip("My hint message")]

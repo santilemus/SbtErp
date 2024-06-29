@@ -2,8 +2,8 @@
 <Application Title="SBT.Apps.Medico.Generico.Module" Logo="ExpressAppLogo">
   <Options DataAccessMode="Server" />
   <SchemaModules>
-    <SchemaModule Name="CloneObjectModule" Version="23.2.5.0" IsNewNode="True" />
-    <SchemaModule Name="SystemModule" Version="23.2.5.0" IsNewNode="True" />
+    <SchemaModule Name="CloneObjectModule" Version="24.1.3.0" IsNewNode="True" />
+    <SchemaModule Name="SystemModule" Version="24.1.3.0" IsNewNode="True" />
   </SchemaModules>
   <Views>
     <DetailView Id="CitaBase_DetailView">
@@ -294,6 +294,7 @@
       </Layout>
     </DetailView>
     <ListView Id="Medico_Citas_ListView" DataAccessMode="Client" />
+    <ListView Id="Medico_Consultorios_ListView" AllowEdit="True" DataAccessMode="Server" NewItemRowPosition="Top" />
     <DetailView Id="Medico_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
@@ -420,6 +421,7 @@
         </LayoutGroup>
       </Layout>
     </DetailView>
+    <ListView Id="Medico_Especialidades_ListView" AllowEdit="True" DataAccessMode="Server" NewItemRowPosition="Top" />
     <DetailView Id="MedicoConsultorio_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">

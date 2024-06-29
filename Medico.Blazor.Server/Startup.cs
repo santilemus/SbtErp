@@ -29,7 +29,14 @@ public class Startup {
         services.AddXaf(Configuration, builder => {
             builder.UseApplication<BlazorBlazorApplication>();
             builder.Modules
-                .AddAuditTrailXpo()
+                .AddAuditTrailXpo(options =>
+                {
+                    options.ObjectAuditingMode = DevExpress.Persistent.AuditTrail.ObjectAuditingMode.Lightweight;
+                    //options.Enabled = true; por defecto es true
+                    // la siguiente linea solamente es para mostrar como agregar los eventos y por eso esta con comentario
+                    //options.Events.OnCustomizeSessionAuditingOptions = context => { context.AuditTrailStrategy = DevExpress.Persistent.AuditTrail.AuditTrailStrategy.OnObjectChanged};
+                }
+                )
                 .AddCloningXpo()
                 .AddConditionalAppearance()
                 .AddDashboards(options => {

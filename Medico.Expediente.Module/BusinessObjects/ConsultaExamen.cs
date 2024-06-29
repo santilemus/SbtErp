@@ -59,7 +59,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [RuleValueComparison("ConsultaExamen.FechaPresentacion >= Fecha", DefaultContexts.Save, ValueComparisonType.GreaterThanOrEqual, "[Fecha]", ParametersMode.Expression,
             TargetCriteria = "[Examen.Categoria.Codigo] != 'EX001'")]
-        [ModelDefault("DisplayFormat", "{0:G}"), ModelDefault("EditMask", "G")]
+        [ModelDefault("DisplayFormat", "{0:D}"), ModelDefault("EditMask", "D")]
         public Nullable<System.DateTime> FechaPresentacion
         {
             get => fechaPresentacion;

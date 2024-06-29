@@ -1,0 +1,335 @@
+{
+    "identificacion": {
+        "version": 3,
+        "ambiente": "01",
+        "tipoDte": "03",
+        "numeroControl": "DTE-03-6S4VS44K-034033140211629",
+        "codigoGeneracion": "89BAB2FF-38B0-EA29-0FC2-94FC12CEFC33",
+        "tipoModelo": 1,
+        "tipoOperacion": 2,
+        "tipoContingencia": 3,
+        "motivoContin": null,
+        "fecEmi": "1911-12-14",
+        "horEmi": "22:12:19",
+        "tipoMoneda": "USD"
+    },
+    "documentoRelacionado": [
+        {
+            "tipoDocumento": "09",
+            "tipoGeneracion": 2,
+            "numeroDocumento": "irure ipsum ut ani",
+            "fechaEmision": "1952-06-20"
+        },
+        {
+            "tipoDocumento": "08",
+            "tipoGeneracion": 2,
+            "numeroDocumento": "exercit",
+            "fechaEmision": "1963-02-19"
+        },
+        {
+            "tipoDocumento": "04",
+            "tipoGeneracion": 1,
+            "numeroDocumento": "non in",
+            "fechaEmision": "1943-05-27"
+        }
+    ],
+    "emisor": {
+        "nit": "424530165",
+        "nrc": "283022",
+        "nombre": "labore",
+        "codActividad": "72",
+        "descActividad": "ad",
+        "nombreComercial": "amet do dolor non",
+        "tipoEstablecimiento": "01",
+        "direccion": {
+            "departamento": "07",
+            "municipio": "09",
+            "complemento": "reprehenderit culpa"
+        },
+        "telefono": "veniam cillum ",
+        "correo": "hRj4dJS5R@GljSnnl.ndlh",
+        "codEstableMH": "esto",
+        "codEstable": null,
+        "codPuntoVentaMH": "elit",
+        "codPuntoVenta": "v"
+    },
+    "receptor": {
+        "nit": "858494429",
+        "nrc": "916581",
+        "nombre": "ex",
+        "codActividad": "4044",
+        "descActividad": "sunt eu ea veniam",
+        "nombreComercial": null,
+        "direccion": {
+            "departamento": "01",
+            "municipio": "93",
+            "complemento": "proident dolor"
+        },
+        "telefono": "consectetur sunt offic",
+        "correo": "TbcdNwKfXbpN@sehcfvDKgAjYPCxdrqDGkTVgqZIk.ja"
+    },
+    "otrosDocumentos": [
+        {
+            "codDocAsociado": 4,
+            "descDocumento": "dol",
+            "detalleDocumento": "incididunt aliqua et esse",
+            "medico": null
+        },
+        {
+            "codDocAsociado": 2,
+            "descDocumento": null,
+            "detalleDocumento": null,
+            "medico": {
+                "nombre": "aute",
+                "nit": "72345048800314",
+                "docIdentificacion": "al",
+                "tipoServicio": 3.899725969966831
+            }
+        },
+        {
+            "codDocAsociado": 3,
+            "descDocumento": null,
+            "detalleDocumento": null,
+            "medico": null
+        },
+        {
+            "codDocAsociado": 1,
+            "descDocumento": null,
+            "detalleDocumento": "aliqua",
+            "medico": null
+        },
+        {
+            "codDocAsociado": 1,
+            "descDocumento": "ex adipisicin",
+            "detalleDocumento": null,
+            "medico": null
+        },
+        {
+            "codDocAsociado": 3,
+            "descDocumento": "Lorem ve",
+            "detalleDocumento": "in",
+            "medico": {
+                "nombre": "in occaecat dolore",
+                "nit": "80426654789482",
+                "docIdentificacion": "nisi esse aliqua labore ",
+                "tipoServicio": 4.093819361987521
+            }
+        }
+    ],
+    "ventaTercero": null,
+    "cuerpoDocumento": [
+        {
+            "numItem": 1421,
+            "tipoItem": 4,
+            "numeroDocumento": "magn",
+            "codigo": null,
+            "codTributo": "D5",
+            "descripcion": "velit",
+            "cantidad": "-5.379944499999998e+7",
+            "uniMedida": 37,
+            "precioUni": "1.059182700000001e+7",
+            "montoDescu": "8.533633600000006e+7",
+            "ventaNoSuj": "3.326831700000005e+7",
+            "ventaExenta": "2.179008700000001e+7",
+            "ventaGravada": "5.909307100000002e+7",
+            "tributos": [
+                "do",
+                "in",
+                "se",
+                "la"
+            ],
+            "psv": "6.137605000000003e+7",
+            "noGravado": "9.865093100000001e+7"
+        },
+        {
+            "numItem": 317,
+            "tipoItem": 2,
+            "numeroDocumento": null,
+            "codigo": "occaecat id",
+            "codTributo": "A8",
+            "descripcion": "aliquip in",
+            "cantidad": "3.809221500000004e+7",
+            "uniMedida": 55,
+            "precioUni": "4.968780400000007e+7",
+            "montoDescu": "1.82392000000002e+6",
+            "ventaNoSuj": "6.712630600000001e+7",
+            "ventaExenta": "5.8953760000001e+6",
+            "ventaGravada": "2.791393800000002e+7",
+            "tributos": [
+                "ul",
+                "in"
+            ],
+            "psv": "3.079754000000002e+7",
+            "noGravado": "7.206134500000009e+7"
+        },
+        {
+            "numItem": 1448,
+            "tipoItem": 4,
+            "numeroDocumento": "cupidatat",
+            "codigo": null,
+            "codTributo": "D4",
+            "descripcion": "anim esse incididunt",
+            "cantidad": "1.558086000000009e+7",
+            "uniMedida": 89,
+            "precioUni": "1.586434500000006e+7",
+            "montoDescu": "3.823051700000005e+7",
+            "ventaNoSuj": "1.308287200000001e+7",
+            "ventaExenta": "4.872349700000001e+7",
+            "ventaGravada": "5.161884600000001e+7",
+            "tributos": [
+                "et",
+                "pr",
+                "Ut",
+                "in"
+            ],
+            "psv": "5.130943900000009e+7",
+            "noGravado": "9.541950700000004e+7"
+        },
+        {
+            "numItem": 1923,
+            "tipoItem": 4,
+            "numeroDocumento": "qui cupidat",
+            "codigo": "d",
+            "codTributo": null,
+            "descripcion": "laborum amet",
+            "cantidad": "-9.910975499999999e+7",
+            "uniMedida": 60,
+            "precioUni": "4.973147600000003e+7",
+            "montoDescu": "9.828395300000001e+7",
+            "ventaNoSuj": "5.792814500000004e+7",
+            "ventaExenta": "4.527355000000004e+7",
+            "ventaGravada": "8.660189000000001e+7",
+            "tributos": null,
+            "psv": "6.82924200000002e+6",
+            "noGravado": "8.829494700000007e+7"
+        },
+        {
+            "numItem": 1464,
+            "tipoItem": 2,
+            "numeroDocumento": "magna",
+            "codigo": "in ex eiusmod",
+            "codTributo": "25",
+            "descripcion": "reprehenderit",
+            "cantidad": "-7.668932299999996e+7",
+            "uniMedida": 47,
+            "precioUni": "6.771302600000001e+7",
+            "montoDescu": "2.27285000000002e+6",
+            "ventaNoSuj": "5.463640500000008e+7",
+            "ventaExenta": "9.80640100000004e+6",
+            "ventaGravada": "2.296805500000005e+7",
+            "tributos": [
+                "Du",
+                "id",
+                "el",
+                "cu"
+            ],
+            "psv": "8.26586300000004e+6",
+            "noGravado": "-1.999296599999999e+7"
+        }
+    ],
+    "resumen": {
+        "totalNoSuj": 32376626.01,
+        "totalExenta": 65203972.01,
+        "totalGravada": 87556912.03,
+        "subTotalVentas": 20230268.03,
+        "descuNoSuj": 44811505.03,
+        "descuExenta": 2356117.07,
+        "descuGravada": 82094807.01,
+        "porcentajeDescuento": 48.05,
+        "totalDescu": 41445275.04,
+        "tributos": [
+            {
+                "codigo": "ip",
+                "descripcion": "magna commodo e",
+                "valor": 53770432.01
+            },
+            {
+                "codigo": "of",
+                "descripcion": "proident Ut consectetur dolor laboris",
+                "valor": 27697548.03
+            },
+            {
+                "codigo": "do",
+                "descripcion": "voluptate enim nostrud anim",
+                "valor": 33785908.04
+            },
+            {
+                "codigo": "id",
+                "descripcion": "ipsum",
+                "valor": 37319660.05
+            },
+            {
+                "codigo": "et",
+                "descripcion": "in do elit",
+                "valor": 48435242.02
+            }
+        ],
+        "subTotal": 97965186.02,
+        "ivaPerci1": 69069054.03,
+        "ivaRete1": 1375044.08,
+        "reteRenta": 28697898.07,
+        "montoTotalOperacion": -41618806.97,
+        "totalNoGravado": -52469291.99,
+        "totalPagar": 61138189.01,
+        "totalLetras": "officia consequat aute dolor minim",
+        "saldoFavor": -89340659.98,
+        "condicionOperacion": 3,
+        "pagos": null,
+        "numPagoElectronico": "sunt velit sed aute eu"
+    },
+    "extension": {
+        "nombEntrega": null,
+        "docuEntrega": "dolore mollit id e",
+        "nombRecibe": "voluptate laborum pariatur",
+        "docuRecibe": "dolor aliqua i",
+        "observaciones": null,
+        "placaVehiculo": null
+    },
+    "apendice": [
+        {
+            "campo": "Du",
+            "etiqueta": "tempor ad",
+            "valor": "aliqua ut elit dolor"
+        },
+        {
+            "campo": "Duis sint dolore",
+            "etiqueta": "ut nulla sed Ut sint",
+            "valor": "est occaecat"
+        },
+        {
+            "campo": "Du",
+            "etiqueta": "nostrud incididunt do venia",
+            "valor": "elit eiusmod"
+        },
+        {
+            "campo": "occaecat velit eu",
+            "etiqueta": "ex occaecat eiusmod",
+            "valor": "id"
+        },
+        {
+            "campo": "ut aliquip non E",
+            "etiqueta": "Lorem sunt",
+            "valor": "sed non"
+        },
+        {
+            "campo": "quis deserunt Exce",
+            "etiqueta": "proident",
+            "valor": "sunt enim in"
+        },
+        {
+            "campo": "velit dol",
+            "etiqueta": "id n",
+            "valor": "voluptate ea ipsum"
+        },
+        {
+            "campo": "elit mollit ut ",
+            "etiqueta": "veniam",
+            "valor": "dolore"
+        },
+        {
+            "campo": "amet veniam ",
+            "etiqueta": "do proident ea",
+            "valor": "sit pariatur laborum ad cillum"
+        }
+    ]
+}

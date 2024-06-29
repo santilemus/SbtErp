@@ -140,18 +140,18 @@
 		<EmbeddedResource Include="Images\credit-card_32x32.png" />
 	</ItemGroup>
 	<ItemGroup>
-	  <PackageReference Include="DevExpress.ExpressApp" Version="23.2.5" />
-	  <PackageReference Include="DevExpress.ExpressApp.AuditTrail.Xpo" Version="23.2.5" />
-	  <PackageReference Include="DevExpress.ExpressApp.CloneObject.Xpo" Version="23.2.5" />
-	  <PackageReference Include="DevExpress.ExpressApp.ConditionalAppearance" Version="23.2.5" />
-	  <PackageReference Include="DevExpress.ExpressApp.ReportsV2" Version="23.2.5" />
-	  <PackageReference Include="DevExpress.ExpressApp.Security" Version="23.2.5" />
-	  <PackageReference Include="DevExpress.ExpressApp.Security.Xpo" Version="23.2.5" />
-	  <PackageReference Include="DevExpress.ExpressApp.Validation" Version="23.2.5" />
-	  <PackageReference Include="DevExpress.ExpressApp.ViewVariantsModule" Version="23.2.5" />
-	  <PackageReference Include="DevExpress.ExpressApp.Xpo" Version="23.2.5" />
-	  <PackageReference Include="DevExpress.Persistent.Base" Version="23.2.5" />
-	  <PackageReference Include="DevExpress.Persistent.BaseImpl.Xpo" Version="23.2.5" />
-	  <PackageReference Include="DevExpress.Xpo" Version="23.2.5" />
+	  <PackageReference Include="DevExpress.ExpressApp" Version="24.1.3" />
+	  <PackageReference Include="DevExpress.ExpressApp.AuditTrail.Xpo" Version="24.1.3" />
+	  <PackageReference Include="DevExpress.ExpressApp.CloneObject.Xpo" Version="24.1.3" />
+	  <PackageReference Include="DevExpress.ExpressApp.ConditionalAppearance" Version="24.1.3" />
+	  <PackageReference Include="DevExpress.ExpressApp.ReportsV2" Version="24.1.3" />
+	  <PackageReference Include="DevExpress.ExpressApp.Security" Version="24.1.3" />
+	  <PackageReference Include="DevExpress.ExpressApp.Security.Xpo" Version="24.1.3" />
+	  <PackageReference Include="DevExpress.ExpressApp.Validation" Version="24.1.3" />
+	  <PackageReference Include="DevExpress.ExpressApp.ViewVariantsModule" Version="24.1.3" />
+	  <PackageReference Include="DevExpress.ExpressApp.Xpo" Version="24.1.3" />
+	  <PackageReference Include="DevExpress.Persistent.Base" Version="24.1.3" />
+	  <PackageReference Include="DevExpress.Persistent.BaseImpl.Xpo" Version="24.1.3" />
+	  <PackageReference Include="DevExpress.Xpo" Version="24.1.3" />
 	</ItemGroup>
 </Project>

@@ -1,0 +1,468 @@
+{
+    "identificacion": {
+        "version": 1,
+        "ambiente": "01",
+        "tipoDte": "01",
+        "numeroControl": "DTE-01-K5GNWV2L-928776314822690",
+        "codigoGeneracion": "0C681ABC-32EC-0756-E133-0199D4D2FCF5",
+        "tipoModelo": 2,
+        "tipoOperacion": 2,
+        "tipoContingencia": 4,
+        "motivoContin": "aliquip dolore pariatur",
+        "fecEmi": "1892-01-06",
+        "horEmi": "19:56:4",
+        "tipoMoneda": "USD"
+    },
+    "documentoRelacionado": [
+        {
+            "tipoDocumento": "04",
+            "tipoGeneracion": 2,
+            "numeroDocumento": "officia mollit nulla",
+            "fechaEmision": "1910-08-04"
+        },
+        {
+            "tipoDocumento": "09",
+            "tipoGeneracion": 2,
+            "numeroDocumento": "eius",
+            "fechaEmision": "1927-09-17"
+        },
+        {
+            "tipoDocumento": "04",
+            "tipoGeneracion": 1,
+            "numeroDocumento": "nisi",
+            "fechaEmision": "1910-11-11"
+        }
+    ],
+    "emisor": {
+        "nit": "978462656",
+        "nrc": "9719313",
+        "nombre": "do",
+        "codActividad": "237697",
+        "descActividad": "in mollit velit culpa voluptate",
+        "nombreComercial": null,
+        "tipoEstablecimiento": "01",
+        "direccion": {
+            "departamento": "06",
+            "municipio": "08",
+            "complemento": "Lorem laborum esse"
+        },
+        "telefono": "sunt enim deserunt pari",
+        "correo": "n5V@NhVZYfksTnpoubdhSHPfsA.mq",
+        "codEstableMH": "dolo",
+        "codEstable": "enim",
+        "codPuntoVentaMH": null,
+        "codPuntoVenta": null
+    },
+    "receptor": {
+        "tipoDocumento": "13",
+        "numDocumento": null,
+        "nrc": "48756515",
+        "nombre": "minim sint adipisicing sed amet",
+        "codActividad": "560213",
+        "descActividad": "consectetur exercitation eu sit Duis",
+        "direccion": {
+            "departamento": "10",
+            "municipio": "37",
+            "complemento": "ullamco dolore"
+        },
+        "telefono": null,
+        "correo": null
+    },
+    "otrosDocumentos": [
+        {
+            "codDocAsociado": 3,
+            "descDocumento": "occaecat",
+            "detalleDocumento": "in cupidatat non velit quis",
+            "medico": null
+        },
+        {
+            "codDocAsociado": 2,
+            "descDocumento": "ullamco Duis",
+            "detalleDocumento": null,
+            "medico": null
+        },
+        {
+            "codDocAsociado": 4,
+            "descDocumento": "officia",
+            "detalleDocumento": "voluptate dolor",
+            "medico": null
+        },
+        {
+            "codDocAsociado": 2,
+            "descDocumento": "exerc",
+            "detalleDocumento": null,
+            "medico": {
+                "nombre": "minim irure cupidat",
+                "nit": "48781786277497",
+                "docIdentificacion": null,
+                "tipoServicio": 3.60245356726979
+            }
+        },
+        {
+            "codDocAsociado": 4,
+            "descDocumento": "ea eu reprehenderit culpa nisi",
+            "detalleDocumento": "eiusmod tempor proident dolore mollit",
+            "medico": {
+                "nombre": "aliqua ut sit magna",
+                "nit": "579037366",
+                "docIdentificacion": "velit consequat a",
+                "tipoServicio": 2.7374610736863816
+            }
+        },
+        {
+            "codDocAsociado": 2,
+            "descDocumento": null,
+            "detalleDocumento": null,
+            "medico": {
+                "nombre": "dolore",
+                "nit": "91609493096953",
+                "docIdentificacion": "id ex nulla ",
+                "tipoServicio": 5.193798601658758
+            }
+        }
+    ],
+    "ventaTercero": null,
+    "cuerpoDocumento": [
+        {
+            "numItem": 2,
+            "tipoItem": 3,
+            "numeroDocumento": null,
+            "cantidad": "9.274030000000003e+7",
+            "codigo": "sit adipisicing",
+            "codTributo": "57",
+            "uniMedida": 62,
+            "descripcion": "aliquip dolore",
+            "precioUni": "2.465915100000001e+7",
+            "montoDescu": "6.092446500000002e+7",
+            "ventaNoSuj": "2.595919100000003e+7",
+            "ventaExenta": "9.404285200000001e+7",
+            "ventaGravada": "6.515227100000004e+7",
+            "tributos": [
+                "Ex",
+                "Du",
+                "cu",
+                "al",
+                "mo",
+                "ul",
+                "in"
+            ],
+            "psv": "7.026462600000001e+7",
+            "noGravado": "1.046288900000002e+7",
+            "ivaItem": "2.548501200000005e+7"
+        },
+        {
+            "numItem": 9,
+            "tipoItem": 1,
+            "numeroDocumento": null,
+            "cantidad": "4.31244100000001e+6",
+            "codigo": null,
+            "codTributo": "D4",
+            "uniMedida": 51,
+            "descripcion": "laborum",
+            "precioUni": "-3.609934099999999e+7",
+            "montoDescu": "9.097583500000003e+7",
+            "ventaNoSuj": "5.977836500000003e+7",
+            "ventaExenta": "5.79504700000002e+6",
+            "ventaGravada": "2.26420900000001e+6",
+            "tributos": [
+                "vo"
+            ],
+            "psv": "3.639625400000001e+7",
+            "noGravado": "3.428002800000001e+7",
+            "ivaItem": "5.396834200000001e+7"
+        },
+        {
+            "numItem": 6,
+            "tipoItem": 4,
+            "numeroDocumento": "consequat eu",
+            "cantidad": "-5.06932479999999e+7",
+            "codigo": "id ut cu",
+            "codTributo": "A8",
+            "uniMedida": 41,
+            "descripcion": "in Duis voluptate culpa ut",
+            "precioUni": "9.850366400000001e+7",
+            "montoDescu": "2.621233100000003e+7",
+            "ventaNoSuj": "2.443827300000008e+7",
+            "ventaExenta": "1.958024900000002e+7",
+            "ventaGravada": "8.935221500000003e+7",
+            "tributos": null,
+            "psv": "3.510660800000004e+7",
+            "noGravado": "3.935052900000008e+7",
+            "ivaItem": "7.00741200000006e+6"
+        },
+        {
+            "numItem": 10,
+            "tipoItem": 4,
+            "numeroDocumento": "in nisi cill",
+            "cantidad": "1.88481300000007e+6",
+            "codigo": null,
+            "codTributo": "25",
+            "uniMedida": 65,
+            "descripcion": "deserunt",
+            "precioUni": "8.889055800000001e+7",
+            "montoDescu": "9.229483900000004e+7",
+            "ventaNoSuj": "6.669287700000004e+7",
+            "ventaExenta": "1.584204900000005e+7",
+            "ventaGravada": "4.59092800000002e+6",
+            "tributos": [
+                "Ex",
+                "in",
+                "re",
+                "Du",
+                "do",
+                "ve",
+                "ni",
+                "en"
+            ],
+            "psv": "8.62593500000002e+6",
+            "noGravado": "7.265805400000001e+7",
+            "ivaItem": "3.881926500000006e+7"
+        },
+        {
+            "numItem": 1,
+            "tipoItem": 4,
+            "numeroDocumento": "fugiat ullamco",
+            "cantidad": "-7.964349999999999e+7",
+            "codigo": null,
+            "codTributo": "D4",
+            "uniMedida": 17,
+            "descripcion": "ex enim in culpa dolor",
+            "precioUni": "9.35178900000001e+6",
+            "montoDescu": "7.772561300000003e+7",
+            "ventaNoSuj": "5.757475900000001e+7",
+            "ventaExenta": "7.627177700000001e+7",
+            "ventaGravada": "8.620693300000001e+7",
+            "tributos": [
+                "ci",
+                "au",
+                "mi",
+                "la",
+                "ip",
+                "cu"
+            ],
+            "psv": "1.32396900000002e+6",
+            "noGravado": "7.119069900000001e+7",
+            "ivaItem": "1.45215530000001e+7"
+        },
+        {
+            "numItem": 8,
+            "tipoItem": 1,
+            "numeroDocumento": "consectetur dolor comm",
+            "cantidad": "-1.91076499999997e+6",
+            "codigo": null,
+            "codTributo": "D5",
+            "uniMedida": 3,
+            "descripcion": "magna",
+            "precioUni": "8.726723800000004e+7",
+            "montoDescu": "8.641116800000003e+7",
+            "ventaNoSuj": "4.456732900000003e+7",
+            "ventaExenta": "9.988712900000001e+7",
+            "ventaGravada": "8.534506000000001e+7",
+            "tributos": [
+                "Lo",
+                "es",
+                "qu"
+            ],
+            "psv": "3.44754600000005e+6",
+            "noGravado": "-8.0094099999993e+5",
+            "ivaItem": "6.663790100000003e+7"
+        },
+        {
+            "numItem": 3,
+            "tipoItem": 1,
+            "numeroDocumento": "est laboris e",
+            "cantidad": "6.245106900000007e+7",
+            "codigo": null,
+            "codTributo": "90",
+            "uniMedida": 65,
+            "descripcion": "labore voluptate in Excepteur",
+            "precioUni": "-5.278439899999996e+7",
+            "montoDescu": "5.629917800000003e+7",
+            "ventaNoSuj": "1.528929200000002e+7",
+            "ventaExenta": "2.259105600000006e+7",
+            "ventaGravada": "6.885849200000001e+7",
+            "tributos": [
+                "ex",
+                "al"
+            ],
+            "psv": "2.743772800000001e+7",
+            "noGravado": "6.315282000000004e+7",
+            "ivaItem": "5.767237300000003e+7"
+        },
+        {
+            "numItem": 1,
+            "tipoItem": 2,
+            "numeroDocumento": "velit aliquip labore ull",
+            "cantidad": "1.520630500000005e+7",
+            "codigo": "ut in minim vel",
+            "codTributo": "A8",
+            "uniMedida": 6,
+            "descripcion": "quis in labore ullamco",
+            "precioUni": "-6.902026499999993e+7",
+            "montoDescu": "4.979112400000002e+7",
+            "ventaNoSuj": "9.004671000000001e+7",
+            "ventaExenta": "8.743124800000006e+7",
+            "ventaGravada": "7.671372000000004e+7",
+            "tributos": [
+                "oc",
+                "do",
+                "mo",
+                "cu"
+            ],
+            "psv": "1.371828200000004e+7",
+            "noGravado": "9.547425800000001e+7",
+            "ivaItem": "8.765772000000003e+7"
+        },
+        {
+            "numItem": 6,
+            "tipoItem": 2,
+            "numeroDocumento": null,
+            "cantidad": "5.512982300000002e+7",
+            "codigo": "in exercitation",
+            "codTributo": "A6",
+            "uniMedida": 52,
+            "descripcion": "aute Duis consequat",
+            "precioUni": "-9.597220399999999e+7",
+            "montoDescu": "2.172458000000001e+7",
+            "ventaNoSuj": "4.602792100000003e+7",
+            "ventaExenta": "7.872691900000007e+7",
+            "ventaGravada": "5.526928700000006e+7",
+            "tributos": null,
+            "psv": "3.38182600000005e+6",
+            "noGravado": "5.607080800000003e+7",
+            "ivaItem": "5.924955300000008e+7"
+        },
+        {
+            "numItem": 9,
+            "tipoItem": 4,
+            "numeroDocumento": null,
+            "cantidad": "7.858656600000006e+7",
+            "codigo": null,
+            "codTributo": "D5",
+            "uniMedida": 96,
+            "descripcion": "ullamco adipisicing mollit commodo dolor",
+            "precioUni": "4.403956900000003e+7",
+            "montoDescu": "8.628663100000003e+7",
+            "ventaNoSuj": "1.037583000000003e+7",
+            "ventaExenta": "7.746909200000004e+7",
+            "ventaGravada": "7.838807500000001e+7",
+            "tributos": null,
+            "psv": "7.758591500000001e+7",
+            "noGravado": "3.988039000000007e+7",
+            "ivaItem": "4.370166000000006e+7"
+        }
+    ],
+    "resumen": {
+        "totalNoSuj": 36621818.02,
+        "totalExenta": 23143442.02,
+        "totalGravada": 14089271.05,
+        "subTotalVentas": 52218698.05,
+        "descuNoSuj": 5307740.01,
+        "descuExenta": 8163065.01,
+        "descuGravada": 89878307.04,
+        "porcentajeDescuento": 16.02,
+        "totalDescu": 71218627.04,
+        "tributos": [
+            {
+                "codigo": "91",
+                "descripcion": "quis",
+                "valor": 82720842.03
+            },
+            {
+                "codigo": "39",
+                "descripcion": "deserunt cupidatat fugiat",
+                "valor": 93041256.03
+            },
+            {
+                "codigo": "55",
+                "descripcion": "aute ut consequat sed mollit",
+                "valor": 83790553.04
+            }
+        ],
+        "subTotal": 67561459.01,
+        "ivaRete1": 62102235.05,
+        "reteRenta": 61559924.05,
+        "montoTotalOperacion": 5305519.09,
+        "totalNoGravado": 90052222.01,
+        "totalPagar": 53186845.01,
+        "totalLetras": "dolore velit enim",
+        "totalIva": 50710087.03,
+        "saldoFavor": -43725083.96,
+        "condicionOperacion": 2,
+        "pagos": [
+            {
+                "codigo": "01",
+                "montoPago": 31573809.04,
+                "referencia": null,
+                "plazo": "03",
+                "periodo": null
+            },
+            {
+                "codigo": "12",
+                "montoPago": 13602332.06,
+                "referencia": null,
+                "plazo": "03",
+                "periodo": 34518886.92494634
+            },
+            {
+                "codigo": "99",
+                "montoPago": 64170614.01,
+                "referencia": "et Duis nisi",
+                "plazo": "01",
+                "periodo": -17214555.187709957
+            },
+            {
+                "codigo": "12",
+                "montoPago": 8130234.06,
+                "referencia": null,
+                "plazo": "02",
+                "periodo": null
+            },
+            {
+                "codigo": "",
+                "montoPago": 63156285.05,
+                "referencia": "tempor in eu pariatur nulla",
+                "plazo": "01",
+                "periodo": 56948156.9164159
+            },
+            {
+                "codigo": "04",
+                "montoPago": 72288967.04,
+                "referencia": "",
+                "plazo": "01",
+                "periodo": null
+            },
+            {
+                "codigo": "14",
+                "montoPago": 23700739.01,
+                "referencia": null,
+                "plazo": "02",
+                "periodo": 44822808.73994982
+            },
+            {
+                "codigo": "04",
+                "montoPago": 3645542.08,
+                "referencia": "non",
+                "plazo": "02",
+                "periodo": 25161470.890289903
+            },
+            {
+                "codigo": "10",
+                "montoPago": 78309651.02,
+                "referencia": "cupidatat",
+                "plazo": "02",
+                "periodo": null
+            }
+        ],
+        "numPagoElectronico": "consectetur dolore non"
+    },
+    "extension": {
+        "nombEntrega": "deserunt",
+        "docuEntrega": null,
+        "nombRecibe": null,
+        "docuRecibe": "non consectetur pr",
+        "observaciones": "eiusmod",
+        "placaVehiculo": null
+    },
+    "apendice": null
+}

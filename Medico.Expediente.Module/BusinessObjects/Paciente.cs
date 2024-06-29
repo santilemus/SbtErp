@@ -5,6 +5,7 @@ using DevExpress.Persistent.Base;
 using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using System;
+using System.ComponentModel;
 
 namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 {
@@ -19,7 +20,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
     /// la velocidad. Evaluar si se aplica a otras propiedades
     /// </remarks>
     [DefaultClassOptions]
-    [ModelDefault("Caption", "Paciente"), NavigationItem("Salud"), XafDefaultProperty("NombreCompleto"), ImageName("Paciente")]
+    [ModelDefault("Caption", "Paciente"), NavigationItem("Salud"), DefaultProperty(nameof(NombreCompleto)), ImageName("Paciente")]
     [ListViewFilter("Paciente - Esperando Consulta", "[Consultas][[Estado] = 'Espera']", "Pacientes Esperando Consulta")]
     [ListViewFilter("Paciente - Consultas del Dia", "[Consultas][GetDay([Fecha]) = GetDay(CURRENTDATE())]", "Pacientes - Consultas del día")]
     [ListViewFilter("Paciente - Consulta del día Finalizada", "[Consultas][[Estado] = 'Finalizada' && GetDay([Fecha]) = GetDay(CURRENTDATE())]", "Pacientes - Consulta Finalizada")]
@@ -305,7 +306,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         }
 
         [Association("Paciente_ConsultaNutricion"), DevExpress.Xpo.Aggregated]
-        [DisplayName("Nutrición")]
+        [System.ComponentModel.DisplayName("Nutrición")]
         public XPCollection<ConsultaNutricion> Nutriciones => GetCollection<ConsultaNutricion>(nameof(Nutriciones));
 
         [Association("Paciente-ArchivosAdjuntos"), DevExpress.Xpo.Aggregated, XafDisplayName("Archivos Adjuntos"), Index(14)]

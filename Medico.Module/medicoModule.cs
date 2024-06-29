@@ -1,9 +1,15 @@
+using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.DC;
+using DevExpress.ExpressApp.Notifications;
+using DevExpress.ExpressApp.SystemModule;
 using DevExpress.ExpressApp.Updating;
 using DevExpress.ExpressApp.Xpo;
 using DevExpress.Persistent.BaseImpl;
+using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
+using SBT.Apps.Empleado.Module;
+using SBT.Apps.Medico.Expediente.Module.BusinessObjects;
 using System;
 using System.Collections.Generic;
 using static System.Net.Mime.MediaTypeNames;
@@ -29,6 +35,47 @@ namespace SBT.Apps.Medico.Module
             // Manage various aspects of the application UI and behavior at the module level.
             application.CreateCustomLogonWindowObjectSpace += application_CreateCustomLogonWindowObjectSpace;
             application.ObjectSpaceCreated += Application_ObjectSpaceCreated;
+
+            // para redirigir las notificaciones de consultas al profesional de la salud asignado
+            application.LoggedOn += Application_LoggedOn;
+        }
+
+        /// <summary>
+        /// Evento que se dispara despues de autenticarse y el objeto SecuritySystem es inicializado.
+        /// </summary>
+        /// <remarks>
+        /// Para mostrar la notificación al profesional de la salud que corresponde
+        /// </remarks>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Application_LoggedOn(object sender, LogonEventArgs e)
+        {
+            NotificationsModule notificationsModule = Application.Modules.FindModule<NotificationsModule>();
+            DefaultNotificationsProvider notificationsProvider = notificationsModule.DefaultNotificationsProvider;
+            notificationsProvider.CustomizeNotificationCollectionCriteria += NotificationsProvider_CustomizeNotificationCollectionCriteria;
+
+        }
+
+        /// <summary>
+        /// Para filtrar las notificaciones que corresponden solo al profesional de la salud autenticado
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void NotificationsProvider_CustomizeNotificationCollectionCriteria(object sender, DevExpress.Persistent.Base.General.CustomizeCollectionCriteriaEventArgs e)
+        {
+            if (e.Type == typeof(ConsultaNutricion))
+            {
+                using IObjectSpace os = Application.CreateObjectSpace(typeof(SBT.Apps.Base.Module.BusinessObjects.Usuario));
+                var usuario = os.GetObjectByKey<Usuario>(CurrentUserIdOperator.CurrentUserId());
+                if (usuario.ClassInfo.GetMember("Empleado") != null)
+                {
+                    var empleado = (usuario.GetMemberValue("Empleado") as Empleado.Module.BusinessObjects.Empleado);
+                    if (empleado != null)
+                    {
+                        e.Criteria = CriteriaOperator.FromLambda<ConsultaNutricion>(x => x.Nutricionista == null || x.Nutricionista.Oid == empleado.Oid);
+                    }
+                }
+            }
         }
 
         private void Application_ObjectSpaceCreated(object sender, ObjectSpaceCreatedEventArgs e)

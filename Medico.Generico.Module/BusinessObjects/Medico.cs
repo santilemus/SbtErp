@@ -13,7 +13,7 @@ namespace SBT.Apps.Medico.Generico.Module.BusinessObjects
     /// Objeto Persistente que corresponde a los médicos. Es la clase para el objeto de negocios que corresponde al mantenimiento de médicos
     /// </summary>
 	[DefaultClassOptions]
-    [ModelDefault("Caption", "Medico"), XafDefaultProperty("NombreCompleto"), ImageName("medico")]
+    [ModelDefault("Caption", "Medico"), DefaultProperty(nameof(NombreCompleto)), ImageName("medico")]
     [NavigationItem("Recurso Humano")]
     [MapInheritance(MapInheritanceType.ParentTable)]
     [RuleIsReferenced("Medico_Referencia", DefaultContexts.Delete, typeof(Medico), nameof(Oid),
