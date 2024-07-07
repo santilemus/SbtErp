@@ -56,6 +56,10 @@ namespace SBT.eFactura.Dte.Poco
         /// <summary>
         /// Placa de vehículo
         /// </summary>
+        /// <remarks>
+        /// Para las nota de crédito, no va PlacaVehiculo. Si da problemas se tendrá que generar una clase separada porque al momento de generar el
+        /// json, en el caso del noto Extension de la nota de crédito esta propiedad no existe y por lo tanto no se genera
+        /// </remarks>
         [System.Text.Json.Serialization.JsonPropertyName("placaVehiculo")]
         [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]
         [Length(2, 10)]

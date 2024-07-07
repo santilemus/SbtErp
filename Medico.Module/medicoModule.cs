@@ -65,16 +65,13 @@ namespace SBT.Apps.Medico.Module
         {
             if (e.Type == typeof(ConsultaNutricion))
             {
-                using IObjectSpace os = Application.CreateObjectSpace(typeof(SBT.Apps.Base.Module.BusinessObjects.Usuario));
-                var usuario = os.GetObjectByKey<Usuario>(CurrentUserIdOperator.CurrentUserId());
-                if (usuario.ClassInfo.GetMember("Empleado") != null)
-                {
-                    var empleado = (usuario.GetMemberValue("Empleado") as Empleado.Module.BusinessObjects.Empleado);
-                    if (empleado != null)
-                    {
-                        e.Criteria = CriteriaOperator.FromLambda<ConsultaNutricion>(x => x.Nutricionista == null || x.Nutricionista.Oid == empleado.Oid);
-                    }
-                }
+                e.Criteria = CriteriaOperator.FromLambda<ConsultaNutricion>(x => (x.Asignado == null || x.Asignado.Oid == (Guid)CurrentUserIdOperator.CurrentUserId()) && 
+                x.Estado == EEstadoConsulta.Espera);
+            }
+            if (e.Type == typeof(Consulta))
+            {
+                e.Criteria = CriteriaOperator.FromLambda<Consulta>(x => (x.Asignado == null || x.Asignado.Oid == (Guid)CurrentUserIdOperator.CurrentUserId()) &&
+                x.Estado == EEstadoConsulta.Espera);
             }
         }
 

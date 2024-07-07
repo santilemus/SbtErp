@@ -1,0 +1,34 @@
+﻿@using System.Reactive
+@using Microsoft.AspNetCore.Components.Web
+@using DevExpress.Blazor
+@using DevExpress.XtraPrinting.Native
+@((MarkupString)ComponentModel.DropZone)
+<DxUpload Name="@ComponentModel.Name"
+          UploadUrl="@ComponentModel.UploadUrl"
+          FileUploaded="args => ComponentModel.UploadedSubject.OnNext(Unit.Default)"
+          AllowMultiFileUpload="@ComponentModel.AllowMultiFileUpload"
+          AllowCancel="@ComponentModel.AllowCancel"
+          AllowPause="ComponentModel.AllowPause"
+          AcceptedFileTypes="@(new List<string> {"application/json"})"
+          AllowedFileExtensions="@(new List<string> { ".json"})"
+          FileUploadError="@OnUploadError"
+          ShowSelectButton="false"
+          ExternalDropZoneCssSelector="#overviewDemoDropZone"
+          ExternalDropZoneDragOverCssClass="custom-drag-over border-light text-white">
+</DxUpload>
+<div class="alert alert-danger @(ErrorVisible? " visible" : " invisible")">@MyError</div>
+@code {
+    [Parameter]
+    public UploadFileModel ComponentModel { get; set; }
+    public static RenderFragment Create(UploadFileModel componentModel) =>@<UploadFileComponent ComponentModel=@componentModel />;
+
+    bool ErrorVisible { get; set; } = false;
+    string MyError { get; set; }
+
+    void OnUploadError(FileUploadErrorEventArgs e)
+    {
+        MyError = e.RequestInfo.ResponseText;
+        ErrorVisible = true;
+        InvokeAsync(StateHasChanged);
+    }
+}

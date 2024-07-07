@@ -52,6 +52,7 @@ public class Startup {
                     options.AllowValidationDetailsAccess = false;
                 })
                 .AddViewVariants()
+                .AddNotifications()
                 .Add<SBT.Apps.Medico.Module.medicoModule>()
             	.Add<BlazorBlazorModule>();
             builder.ObjectSpaceProviders

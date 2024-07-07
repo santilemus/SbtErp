@@ -125,15 +125,21 @@ namespace SBT.eFactura.Dte.Poco
         /// <summary>
         /// Precio sugerido de venta
         /// </summary>
+        /// <remarks>
+        /// Se hace nulo porque para las notas de credito y otros documentos no va, pero se intentara usar la misma clase
+        /// </remarks>
         [System.Text.Json.Serialization.JsonPropertyName("psv")]
         [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]
-        public decimal Psv { get; set; }
+        public decimal? Psv { get; set; }
 
         /// <summary>
         /// Cargos / Abonos que no afectan la base imponible
         /// </summary>
+        /// <remarks>
+        /// Se hace nulo porque para las notas de credito y otros documentos no va, pero se intentara utilizar la misma clase
+        /// </remarks>
         [System.Text.Json.Serialization.JsonPropertyName("noGravado")]
         [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]
-        public decimal NoGravado { get; set; }
+        public decimal? NoGravado { get; set; }
     }
 }

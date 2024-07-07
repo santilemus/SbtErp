@@ -4,7 +4,7 @@
     {
         public BancoListViewControllerWeb() : base()
         {
-            TargetObjectType = typeof(Tercero.Module.BusinessObjects.Banco);
+            TargetObjectType = typeof(SBT.Apps.Tercero.Module.BusinessObjects.Banco);
         }
     }
 }

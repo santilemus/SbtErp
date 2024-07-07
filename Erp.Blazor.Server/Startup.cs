@@ -13,6 +13,8 @@ using SBT.Apps.Erp.Blazor.Server.Middleware;
 using DevExpress.Blazor.Configuration;
 using SBT.Apps.Base.Module;
 using Microsoft.AspNetCore.HttpOverrides;
+using SBT.Apps.Erp.Blazor.Server.Editors;
+using SBT.Apps.Empleado.Module;
 
 namespace SBT.Apps.Erp.Blazor.Server;
 
@@ -122,6 +124,11 @@ public class Startup
                             AgenciaActualOidFunction.Evaluate(context);
                             return;
                         }
+                        if (EmpleadoActualOidFunction.CanEvaluate(context))
+                        {
+                            EmpleadoActualOidFunction.Evaluate(context);
+                            return;
+                        }
                         // agregar aqui las otras funciones personalizadas y que son similares a la anterior (van a la bd)
                     };
                 })
@@ -187,6 +194,7 @@ public class Startup
         app.UseAuthorization();
         app.UseXaf();
         app.UseMiddleware<ExportMiddleware>();
+        app.UseMiddleware<UploadFileMiddleware>();
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapXafEndpoints();

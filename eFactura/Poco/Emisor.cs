@@ -97,6 +97,9 @@ namespace SBT.eFactura.Dte.Poco
         /// <summary>
         /// Código del establecimiento asignado por el MH
         /// </summary>
+        /// <remarks>
+        /// No va para NC y otros documentos
+        /// </remarks>
         [System.Text.Json.Serialization.JsonPropertyName("codEstableMH")]
         [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]
         public string? CodEstableMH { get; set; }
@@ -104,6 +107,9 @@ namespace SBT.eFactura.Dte.Poco
         /// <summary>
         /// Código del establecimiento asignado por el contribuyente
         /// </summary>
+        /// <remarks>
+        /// No va para NC y otros documentos
+        /// </remarks>
         [System.Text.Json.Serialization.JsonPropertyName("codEstable")]
         [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]
         public object? CodEstable { get; set; }
@@ -111,6 +117,9 @@ namespace SBT.eFactura.Dte.Poco
         /// <summary>
         /// Código del Punto de Venta (Emisor) Asignado por el MH
         /// </summary>
+        /// <remarks>
+        /// No va para NC  otros documentos
+        /// </remarks>
         [System.Text.Json.Serialization.JsonPropertyName("codPuntoVentaMH")]
         [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]
         public string? CodigoPuntoVentaMH { get; set; }
@@ -118,6 +127,9 @@ namespace SBT.eFactura.Dte.Poco
         /// <summary>
         /// Código del Punto de Venta (Emisor) asignado por el contribuyente
         /// </summary>
+        /// <remarks>
+        /// No va para NC y otros documentos
+        /// </remarks>
         [System.Text.Json.Serialization.JsonPropertyName("codPuntoVenta")]
         [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]
         public string? CodigoPuntoVenta { get; set; }

@@ -1,10 +1,15 @@
-﻿using DevExpress.ExpressApp;
+﻿using DevExpress.Data.Filtering;
+using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.ConditionalAppearance;
 using DevExpress.ExpressApp.DC;
+using DevExpress.ExpressApp.Model;
 using DevExpress.ExpressApp.SystemModule;
 using DevExpress.Persistent.Base;
+using DevExpress.Persistent.Base.General;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
+using DevExpress.Xpo.Metadata;
+using DevExpress.XtraScheduler;
 using SBT.Apps.Base.Module.BusinessObjects;
 using System;
 using System.ComponentModel;
@@ -38,7 +43,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
     [ListViewFilter("Consulta Medica. De la Semana", "IsThisWeek([Fecha])", "Consultas de la Semana Actual")]
     [ListViewFilter("Consulta Medica. Del Mes Actual", "IsThisMonth([Fecha])", "Consultas del Mes Actual")]
     [ListViewFilter("Consulta Medica. Todas", "")]
-    public class Consulta : XPObjectBaseBO
+    public class Consulta : XPObjectBaseBO, ISupportNotifications
     {
         /// <summary>
         /// Metodo para la inicialización de propiedades y/o objetos del BO. Se ejecuta una sola vez después de la creación del objeto
@@ -69,7 +74,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 
         //   SBT.Apps.Producto.Module.BusinessObjects.ProductoPrecio precio;
         //   SBT.Apps.Producto.Module.BusinessObjects.Producto producto;
-        private Generico.Module.BusinessObjects.Medico _medico;
+        private Generico.Module.BusinessObjects.Medico medico;
         private Paciente _paciente;
         private System.String _unidadDeRemision;
         private EmpresaUnidad _consultorio;
@@ -77,8 +82,11 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         private System.DateTime _proximaCita;
         private Empresa empresa;
         private System.String _diagnostico;
-        private System.DateTime _fecha;
+        private System.DateTime? fecha;
         private EEstadoConsulta estado;
+        private DateTime? alarmTime;
+        [Persistent(nameof(Asignado))]
+        private Usuario asignado;
 
         public Consulta(DevExpress.Xpo.Session session)
           : base(session)
@@ -102,21 +110,39 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         [ExplicitLoading]
         public Generico.Module.BusinessObjects.Medico Medico
         {
-            get => _medico;
-            set => SetPropertyValue("Medico", ref _medico, value);
+            get => medico;
+            set 
+            {
+                bool changed = SetPropertyValue(nameof(Medico), ref medico, value);
+                if (!IsLoading && !IsSaving && changed)
+                {
+                    XPClassInfo usuarioInfo = Session.GetClassInfo<Usuario>();
+                    if (usuarioInfo.FindMember("Empleado") != null)
+                    {
+                        CriteriaOperator criteria = CriteriaOperator.And(new BinaryOperator("Empresa.Oid", Medico.Empresa.Oid),
+                            new BinaryOperator("Empleado.Oid", Medico.Oid));
+                        asignado = Session.FindObject<Usuario>(criteria);
+                    }
+                }
+            }
         }
 
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [RuleRequiredField("Consulta.Fecha_Requerido", "Save")]
-        public System.DateTime Fecha
+        [ModelDefault("EditMask", "dd/MM/yyyy hh:mm tt"), ModelDefault("DisplayFormat", "{0:dd/MM/yyy hh:mm tt}")]
+        [RuleRequiredField("Consulta.Fecha_requerido", "{TargetPropertyName} es requerida")]
+        [Persistent(nameof(Fecha))]
+        public System.DateTime? Fecha
         {
-            get
-            {
-                return _fecha;
-            }
+            get => fecha;
             set
             {
-                SetPropertyValue("Fecha", ref _fecha, value);
+                if (value == null)
+                {
+                    RemindIn = null;
+                    IsPostponed = false;
+                }
+                SetPropertyValue(nameof(Fecha), ref fecha, value);
             }
         }
         [DevExpress.Xpo.SizeAttribute(1000), DbType("varchar(1000)")]
@@ -206,6 +232,43 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
             set => SetPropertyValue(nameof(Estado), ref estado, value);
         }
 
+
+        [PersistentAlias(nameof(asignado))]
+        public Usuario Asignado => asignado;
+
+        [Browsable(false)]
+        public DateTime? AlarmTime
+        {
+            get => alarmTime;
+            set
+            {
+                if (value == null)
+                {
+                    RemindIn = null;
+                    IsPostponed = false;
+                }
+                SetPropertyValue(nameof(AlarmTime), ref alarmTime, value);
+            }
+        }
+
+        public object UniqueId => Oid;
+
+        [Browsable(false)]
+        public string NotificationMessage => $@"Paciente {Paciente.Nombre} {Paciente.Apellido} esperando";
+
+        [Browsable(false)]
+        public bool IsPostponed
+        {
+            get => GetPropertyValue<bool>(nameof(IsPostponed));
+            set => SetPropertyValue(nameof(IsPostponed), value);
+        }
+
+        [System.ComponentModel.DisplayName("Recordar en")]
+        public TimeSpan? RemindIn
+        {
+            get => GetPropertyValue<TimeSpan?>(nameof(RemindIn));
+            set => SetPropertyValue(nameof(RemindIn), value);
+        }
 
         //[DevExpress.ExpressApp.DC.XafDisplayName("Producto")]
         //[DataSourceCriteria("[Categoria.Clasificacion] == 4 && [Categoria.EsGrupo] == False && [Categoria.Activa] == true && [Activo] == True")]

@@ -1,0 +1,149 @@
+{
+  "identificacion": {
+    "version": 1,
+    "ambiente": "00",
+    "tipoDte": "14",
+    "numeroControl": "DTE-14-00QB9341-145559386339176",
+    "codigoGeneracion": "E7395D7A-D381-629F-4460-609AD0DAAEBB",
+    "tipoModelo": 2,
+    "tipoOperacion": 2,
+    "tipoContingencia": 3,
+    "motivoContin": null,
+    "fecEmi": "1927-03-23",
+    "horEmi": "21:23:4",
+    "tipoMoneda": "USD"
+  },
+  "emisor": {
+    "nit": "803605639",
+    "nrc": "524154",
+    "nombre": "occaecat eu exercitation ipsum",
+    "codActividad": "63",
+    "descActividad": "Lorem Excepteur occaecat Duis minim",
+    "direccion": {
+      "departamento": "11",
+      "municipio": "75",
+      "complemento": "Ut enim"
+    },
+    "telefono": "aute pariatur",
+    "codEstableMH": null,
+    "codEstable": null,
+    "codPuntoVentaMH": "do v",
+    "codPuntoVenta": null,
+    "correo": "kWMN@eFXrMGdMMBGrhoL.zc"
+  },
+  "sujetoExcluido": {
+    "tipoDocumento": "03",
+    "numDocumento": "adipi",
+    "nombre": "aliquip nulla sunt mollit el",
+    "codActividad": "995",
+    "descActividad": "fugiat ut ut ullamco",
+    "direccion": {
+      "departamento": "01",
+      "municipio": "57",
+      "complemento": "id eiusmod"
+    },
+    "telefono": "Lorem elit",
+    "correo": null
+  },
+  "cuerpoDocumento": [
+    {
+      "numItem": 1402,
+      "tipoItem": 3,
+      "cantidad": "-1.390658099999997e+7",
+      "codigo": "non Lorem",
+      "uniMedida": 20,
+      "descripcion": "nostrud qui et ea",
+      "precioUni": "4.007651200000003e+7",
+      "montoDescu": "6.295223600000003e+7",
+      "compra": "9.592149900000001e+7"
+    },
+    {
+      "numItem": 1667,
+      "tipoItem": 1,
+      "cantidad": "6.527309700000002e+7",
+      "codigo": "minim dolor ir",
+      "uniMedida": 29,
+      "descripcion": "anim culpa",
+      "precioUni": "8.333608700000007e+7",
+      "montoDescu": "6.502160500000005e+7",
+      "compra": "6.969034300000001e+7"
+    },
+    {
+      "numItem": 1720,
+      "tipoItem": 2,
+      "cantidad": "7.658017400000004e+7",
+      "codigo": "ex enim anim tempor ame",
+      "uniMedida": 26,
+      "descripcion": "sed veniam sint laboris incididunt",
+      "precioUni": "5.300118100000004e+7",
+      "montoDescu": "5.186411800000002e+7",
+      "compra": "2.133274300000001e+7"
+    },
+    {
+      "numItem": 1179,
+      "tipoItem": 2,
+      "cantidad": "-4.923663999999999e+7",
+      "codigo": "in in nulla m",
+      "uniMedida": 52,
+      "descripcion": "ad ut est ipsum fugiat",
+      "precioUni": "5.096921100000002e+7",
+      "montoDescu": "8.470656700000003e+7",
+      "compra": "9.181620500000007e+7"
+    },
+    {
+      "numItem": 1827,
+      "tipoItem": 3,
+      "cantidad": "-5.879655899999998e+7",
+      "codigo": "mollit",
+      "uniMedida": 38,
+      "descripcion": "nisi culpa sunt laborum sit",
+      "precioUni": "6.434512200000002e+7",
+      "montoDescu": "8.362158500000003e+7",
+      "compra": "5.344878400000004e+7"
+    },
+    {
+      "numItem": 485,
+      "tipoItem": 2,
+      "cantidad": "-8.79644599999999e+6",
+      "codigo": null,
+      "uniMedida": 22,
+      "descripcion": "minim dolor sit laborum consequat",
+      "precioUni": "9.810177200000003e+7",
+      "montoDescu": "7.118180000000001e+7",
+      "compra": "1.585796100000007e+7"
+    },
+    {
+      "numItem": 1746,
+      "tipoItem": 3,
+      "cantidad": "-8.804957199999993e+7",
+      "codigo": null,
+      "uniMedida": 39,
+      "descripcion": "consequat commodo qui amet id",
+      "precioUni": "7.046685200000004e+7",
+      "montoDescu": "2.418214700000001e+7",
+      "compra": "3.38866400000004e+6"
+    }
+  ],
+  "resumen": {
+    "totalCompra": 75142323.05,
+    "descu": 14804009.01,
+    "totalDescu": 42070741.03,
+    "subTotal": 75378459.01,
+    "ivaRete1": 68804077.03,
+    "reteRenta": 97087283.08,
+    "totalPagar": 50257193.01,
+    "totalLetras": "quis cupidatat laborum commodo",
+    "condicionOperacion": 3,
+    "pagos": [
+      {
+        "codigo": "07",
+        "montoPago": 71239729.01,
+        "referencia": "ex e",
+        "plazo": "02",
+        "periodo": null
+      }
+    ],
+    "observaciones": null
+  },
+  "apendice": null
+}

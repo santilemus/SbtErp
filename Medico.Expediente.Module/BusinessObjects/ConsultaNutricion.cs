@@ -1,14 +1,18 @@
-﻿using DevExpress.ExpressApp.DC;
+﻿using DevExpress.Data.Filtering;
+using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
 using DevExpress.ExpressApp.SystemModule;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Base.General;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
+using DevExpress.Xpo.Metadata;
 using DevExpress.XtraScheduler;
 using Microsoft.VisualBasic;
+using SBT.Apps.Base.Module.BusinessObjects;
 using System;
 using System.ComponentModel;
+using System.Numerics;
 
 namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
 {
@@ -66,9 +70,11 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         private decimal cooh;
         private string dietaPrescrita;
         private string planNutricional;
-        private DateTime fecha;
+        private DateTime? fecha;
         private EEstadoConsulta estado;
         private Generico.Module.BusinessObjects.Medico nutricionista;
+        [Persistent(nameof(Asignado))]
+        private Usuario asignado;
         private DateTime? alarmTime;
 
         // Use CodeRush to create XPO classes and properties with a few keystrokes.
@@ -96,10 +102,20 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         [DetailViewLayout("Datos Generales")]
         [DbType("datetime")]
         [ModelDefault("EditMask", "dd/MM/yyyy hh:mm tt"), ModelDefault("DisplayFormat", "{0:dd/MM/yyy hh:mm tt}")]
-        public DateTime Fecha
+        [RuleRequiredField("ConsultaNutricion.Fecha_requerido", "{TargetPropertyName} es requerida")]
+        [Persistent(nameof(Fecha))]
+        public DateTime? Fecha
         {
             get => fecha;
-            set => SetPropertyValue(nameof(Fecha), ref fecha, value);
+            set
+            {
+                if (value == null)
+                {
+                    RemindIn = null;
+                    IsPostponed = false;
+                }
+                SetPropertyValue(nameof(Fecha), ref fecha, value);
+            }
         }
 
         [DetailViewLayout("Exámenes de Laboratorio")]
@@ -423,8 +439,24 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
         public Generico.Module.BusinessObjects.Medico Nutricionista
         {
             get => nutricionista;
-            set => SetPropertyValue(nameof(Nutricionista), ref nutricionista, value);
+            set
+            {
+                bool changed = SetPropertyValue(nameof(Nutricionista), ref nutricionista, value);
+                if (!IsLoading && !IsSaving && changed)
+                {
+                    XPClassInfo usuarioInfo = Session.GetClassInfo<Usuario>();
+                    if (usuarioInfo.FindMember("Empleado") != null)
+                    {
+                        CriteriaOperator criteria = CriteriaOperator.And(new BinaryOperator("Empresa.Oid", Nutricionista.Empresa.Oid),
+                            new BinaryOperator("Empleado.Oid", Nutricionista.Oid));
+                        asignado = Session.FindObject<Usuario>(criteria);
+                    }                    
+                }
+            }
         }
+
+        [PersistentAlias(nameof(asignado))]
+        public Usuario Asignado => asignado;
 
         [Browsable(false)]
         public DateTime? AlarmTime 
@@ -438,7 +470,7 @@ namespace SBT.Apps.Medico.Expediente.Module.BusinessObjects
                     IsPostponed = false;
                 }
                 SetPropertyValue(nameof(AlarmTime), ref alarmTime, value);
-            } 
+            }
         }
 
         public object UniqueId => Oid;

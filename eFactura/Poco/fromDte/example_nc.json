@@ -1,0 +1,127 @@
+{
+    "identificacion": {
+        "version": 3,
+        "ambiente": "01",
+        "tipoDte": "05",
+        "numeroControl": "DTE-05-FHX9WPIK-356721373728912",
+        "codigoGeneracion": "A96FDDBA-E3BB-1D42-DED2-EA0706779F64",
+        "tipoModelo": 1,
+        "tipoOperacion": 1,
+        "tipoContingencia": 5,
+        "motivoContin": "nisi ad",
+        "fecEmi": "1898-02-26",
+        "horEmi": "14:14:2",
+        "tipoMoneda": "USD"
+    },
+    "documentoRelacionado": [{
+            "tipoDocumento": "03",
+            "tipoGeneracion": 1,
+            "numeroDocumento": "sed non",
+            "fechaEmision": "1936-03-16"
+        }, {
+            "tipoDocumento": "07",
+            "tipoGeneracion": 2,
+            "numeroDocumento": "occaecat eu Du",
+            "fechaEmision": "1948-06-20"
+        }, {
+            "tipoDocumento": "07",
+            "tipoGeneracion": 1,
+            "numeroDocumento": "sint ipsum ullamco",
+            "fechaEmision": "1916-09-25"
+        }, {
+            "tipoDocumento": "07",
+            "tipoGeneracion": 2,
+            "numeroDocumento": "ea velit proident",
+            "fechaEmision": "1926-12-30"
+        }
+    ],
+    "emisor": {
+        "nit": "08179502733971",
+        "nrc": "174121",
+        "nombre": "velit dolor id",
+        "codActividad": "28",
+        "descActividad": "Lorem",
+        "nombreComercial": "laborum dolore",
+        "tipoEstablecimiento": "01",
+        "direccion": {
+            "departamento": "07",
+            "municipio": "00",
+            "complemento": "ullamco Lorem enim"
+        },
+        "telefono": "non fugiat ut",
+        "correo": "FjI8b0dezIm@TbHdNxadsIyqZctYmdyqpqTDeofPPldX.mc"
+    },
+    "receptor": {
+        "nit": "16396837489292",
+        "nrc": "41129900",
+        "nombre": "aliqua officia minim sit et",
+        "codActividad": "39516",
+        "descActividad": "consectetur non veniam",
+        "nombreComercial": null,
+        "direccion": {
+            "departamento": "08",
+            "municipio": "59",
+            "complemento": "consequat non ullamco consectetur aliqua"
+        },
+        "telefono": "laborum nisi voluptat",
+        "correo": "j9xprah6tb@wYtTlWaJQHfXtGozcZRDnMxV.se"
+    },
+    "ventaTercero": {
+        "nit": "92460766585136",
+        "nombre": "dolor laboris enim"
+    },
+    "cuerpoDocumento": [{
+            "numItem": 3,
+            "tipoItem": 1,
+            "numeroDocumento": "eiusmod velit do",
+            "cantidad": "2.334901500000009e+7",
+            "codigo": "dolor",
+            "codTributo": "A6",
+            "uniMedida": 25,
+            "descripcion": null,
+            "precioUni": "-1.268969999999997e+7",
+            "montoDescu": "7.888741400000001e+7",
+            "ventaNoSuj": "1.084090600000009e+7",
+            "ventaExenta": 42601745.00000011,
+            "ventaGravada": "2.575114000000001e+7",
+            "tributos": [
+                "si",
+                "Ut",
+                "ex"
+            ]
+        }
+    ],
+    "resumen": {
+        "totalNoSuj": 46346160.02,
+        "totalExenta": 38005741.03,
+        "totalGravada": 85026545.06,
+        "subTotalVentas": 99801109.06,
+        "descuNoSuj": 64051874.06,
+        "descuExenta": 40534321.05,
+        "descuGravada": 99112898.01,
+        "totalDescu": 62519101.02,
+        "tributos": [{
+                "codigo": "ve",
+                "descripcion": "elit dolore aute in voluptate",
+                "valor": 13879681.09
+            }, {
+                "codigo": "ul",
+                "descripcion": "nulla",
+                "valor": 43805769.05
+            }, {
+                "codigo": "ve",
+                "descripcion": "consequat sed",
+                "valor": 14349058.06
+            }
+        ],
+        "subTotal": 11723451.07,
+        "ivaPerci1": 58255045.03,
+        "ivaRete1": 91676271.01,
+        "reteRenta": 6009448.02,
+        "montoTotalOperacion": 30150532.08,
+        "totalLetras": "cillum",
+        "condicionOperacion": 3
+    },
+    "extension": null,
+    "apendice": null
+}

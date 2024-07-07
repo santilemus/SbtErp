@@ -3,10 +3,13 @@ using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.Actions;
 using DevExpress.ExpressApp.Model;
 using DevExpress.ExpressApp.Security;
+using DevExpress.Persistent.Base;
 using Microsoft.Extensions.DependencyInjection;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Compra.Module.BusinessObjects;
 using System;
+using System.IO;
+using System.Text;
 
 
 namespace SBT.Apps.Compra.Module.Controllers
@@ -15,6 +18,7 @@ namespace SBT.Apps.Compra.Module.Controllers
     {
         private int fEmpresaOid = -1;
         private PopupWindowShowAction pwsaExportarAnexoPagoCuenta;
+        private PopupWindowShowAction pwsaCargaDte;
 
         private int EmpresaOid
         {
@@ -44,6 +48,45 @@ namespace SBT.Apps.Compra.Module.Controllers
             pwsaExportarAnexoPagoCuenta.ImageName = "ExportToCSV";
             pwsaExportarAnexoPagoCuenta.CustomizePopupWindowParams += PwsaExportarAnexoPagoCuenta_CustomizePopupWindowParams;
             pwsaExportarAnexoPagoCuenta.Execute += PwsaExportarAnexoPagoCuenta_Execute;
+
+            pwsaCargaDte = new PopupWindowShowAction(this, "CargarDteCompra", PredefinedCategory.RecordEdit.ToString());
+            pwsaCargaDte.Caption = "Cargar Dte";
+        }
+
+        protected override void OnActivated()
+        {
+            base.OnActivated();
+            pwsaCargaDte.CustomizePopupWindowParams += PwsaCargaDte_CustomizePopupWindowParams;
+            pwsaCargaDte.Execute += PwsaCargaDte_Execute;
+        }
+
+        private void PwsaCargaDte_Execute(object sender, PopupWindowShowActionExecuteEventArgs e)
+        {
+            DoCargarDte((FileUploadParameter)e.PopupWindowViewCurrentObject);
+        }
+
+        protected virtual void DoCargarDte(FileUploadParameter parameter)
+        {
+            using MemoryStream ms = new MemoryStream();
+            parameter.FileData.SaveToStream(ms);
+            ms.Position = 0;
+            using StreamReader rd = new StreamReader(ms, Encoding.UTF8);
+            string json = rd.ReadToEnd();
+            Application.ShowViewStrategy.ShowMessage($@"ejecuto cargar el Dte {parameter.Oid}");
+        }
+
+        protected override void OnDeactivated()
+        {
+            pwsaCargaDte.CustomizePopupWindowParams -= PwsaCargaDte_CustomizePopupWindowParams;
+            base.OnDeactivated();
+        }
+
+        private void PwsaCargaDte_CustomizePopupWindowParams(object sender, CustomizePopupWindowParamsEventArgs e)
+        {
+            IObjectSpace osParam = Application.CreateObjectSpace(typeof(FileUploadParameter));
+            FileUploadParameter fileParams = osParam.CreateObject<FileUploadParameter>();
+            e.View = Application.CreateDetailView(osParam, fileParams);
+            e.View.Caption = "Cargar Dte";
         }
 
         private void PwsaExportarAnexoPagoCuenta_Execute(object sender, PopupWindowShowActionExecuteEventArgs e)

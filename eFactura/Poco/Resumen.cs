@@ -156,9 +156,13 @@ namespace SBT.eFactura.Dte.Poco
         /// <summary>
         /// Pagos del Dte
         /// </summary>
+        /// <remarks>
+        /// Para las notas de credito y otros documentos no va, pero se intentara utilizar esta clase. Si hay problemas se tendra que hacer una
+        /// especifica para las notas de credito
+        /// </remarks>
         [System.Text.Json.Serialization.JsonPropertyName("pagos")]
         [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]
-        public System.Collections.Generic.ICollection<Pagos>? Pagos { get; set; }
+        public System.Collections.Generic.ICollection<Pago>? Pagos { get; set; }
 
         /// <summary>
         /// Número de Pago Electrónico
