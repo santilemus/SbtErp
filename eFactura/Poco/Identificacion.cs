@@ -66,14 +66,14 @@ namespace SBT.eFactura.Dte.Poco
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("tipoContingencia")]
         [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]
-        public int TipoContingencia { get; set; }
+        public int? TipoContingencia { get; set; }
 
         /// <summary>
         /// Motivo de Contingencia
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("motivoContin")]
         [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]
-        public object? MotivoContingencia { get; set; }
+        public string? MotivoContingencia { get; set; }
 
         /// <summary>
         /// Fecha de Generación

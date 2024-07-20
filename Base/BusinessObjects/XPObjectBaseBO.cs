@@ -77,6 +77,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             }
         }
 
+        /*
         /// <summary>
         /// Evitar que se borren objetos, cuando existen referencias a ellos en objetos relacionados
         /// </summary>
@@ -96,6 +97,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
                 throw new Exception($"No puede borrar, Existen objetos, que usan el objeto que esta intentando eliminar : {ToString()}\r\n{usadoPor}");
             }
         }
+        */
 
         #region Propiedades
 

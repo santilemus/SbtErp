@@ -2,6 +2,7 @@
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
+using Microsoft.CodeAnalysis.Operations;
 using SBT.Apps.Base.Module.BusinessObjects;
 using System.ComponentModel;
 using System.Linq;
@@ -12,10 +13,13 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
     /// Objeto Persistente que corresponde a los terceros. Es la clase base para clientes, proveedores, bancos, etc
     /// </summary>
     [DefaultClassOptions, XafDisplayName("Terceros"), ImageName(nameof(Tercero)), NavigationItem("Catalogos"), XafDefaultProperty(nameof(Nombre))]
-    [RuleIsReferenced("Tercero_Referencia", DefaultContexts.Delete, typeof(SBT.Apps.Tercero.Module.BusinessObjects.Tercero), nameof(Oid),
-        MessageTemplateMustBeReferenced = "Para borrar el objeto '{TargetObject}', debe estar seguro que no es utilizado (referenciado) en ningún lugar.",
-        InvertResult = true, FoundObjectMessageFormat = "'{0}'", FoundObjectMessagesSeparator = ";")]
     [FriendlyKeyProperty(nameof(Nombre))]
+    // reglas nuevas agregadas el 10/07/2024 para evitar que ingresen terceros sin NIT o DUI
+    [RuleCriteria("Terceros.TerceroDocumento si Nit or DUI", DefaultContexts.Save, "!([Documentos][[Tipo.Codigo] In ('NIT, DUI')])")]
+    // reglas nuevas agregadas el 10/07/2024 para evitar que borren terceros con objetos relacionados en otros BO
+    [RuleIsReferenced("Tercero con direccion", DefaultContexts.Delete, typeof(TerceroDireccion), "Tercero", InvertResult = true,
+        CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction,
+        MessageTemplateMustBeReferenced = @"No puede borrar el objeto '{TargetObject}' porque se utiliza en la aplicación")]
     public class Tercero : XPObjectBaseBO
     {
         public override void AfterConstruction()
@@ -152,6 +156,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Teléfonos")]
         [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
+        [RuleRequiredField("Tercero.Telefonos_requerido", DefaultContexts.Save, CustomMessageTemplate = @"{TargetPropertyName} no debe estar vacío")]
         public XPCollection<TerceroTelefono> Telefonos
         {
             get
@@ -163,6 +168,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
         [DevExpress.Xpo.Association("Tercero-Giros"), DevExpress.Xpo.Aggregated]
         [DevExpress.Persistent.Base.VisibleInLookupListView(false), DevExpress.Persistent.Base.ImmediatePostData]
         [DevExpress.ExpressApp.DC.XafDisplayName("Giros")]
+        [RuleRequiredField("Tercero.Giros_requerido", DefaultContexts.Save, CustomMessageTemplate = @"{TargetPropertyName} no debe estar vacío")]
         public XPCollection<TerceroGiro> Giros
         {
             get
@@ -185,6 +191,8 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
         [DevExpress.Persistent.Base.ImmediatePostData]
         [DevExpress.Persistent.Base.VisibleInLookupListView(false)]
         [DevExpress.ExpressApp.DC.XafDisplayName("Roles")]
+        [RuleRequiredField("Tercero.Roles_requerido", DefaultContexts.Save, CustomMessageTemplate = @"{TargetPropertyName} no debe estar vacío", 
+            ResultType = ValidationResultType.Warning)]
         public XPCollection<TerceroRole> Roles
         {
             get
@@ -214,6 +222,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
         }
 
         [Association("Tercero-Direcciones"), XafDisplayName("Direcciones")]
+        [RuleRequiredField("Tercero.Dirección_requerido", DefaultContexts.Save, CustomMessageTemplate = @"{TargetPropertyName} no debe estar vacío")]
         public XPCollection<TerceroDireccion> Direcciones
         {
             get
@@ -223,6 +232,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
         }
 
         [Association("Tercero-Documentos"), DevExpress.Xpo.Aggregated, XafDisplayName("Documentos")]
+        [RuleRequiredField("Tercero.Documentos_requerido", DefaultContexts.Save, CustomMessageTemplate = @"{TargetPropertyName} no debe estar vacío")]
         public XPCollection<TerceroDocumento> Documentos
         {
             get

@@ -7,6 +7,8 @@ using DevExpress.Persistent.Base;
 using Microsoft.Extensions.DependencyInjection;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Compra.Module.BusinessObjects;
+using SBT.eFactura.Dte;
+using SBT.eFactura.Dte.Poco;
 using System;
 using System.IO;
 using System.Text;
@@ -69,10 +71,12 @@ namespace SBT.Apps.Compra.Module.Controllers
         {
             using MemoryStream ms = new MemoryStream();
             parameter.FileData.SaveToStream(ms);
-            ms.Position = 0;
-            using StreamReader rd = new StreamReader(ms, Encoding.UTF8);
-            string json = rd.ReadToEnd();
-            Application.ShowViewStrategy.ShowMessage($@"ejecuto cargar el Dte {parameter.Oid}");
+            DteRead<FeCcf> dteCcf = new DteRead<FeCcf>();
+            dteCcf.LoadDteFromStream(ms);
+            if (dteCcf.JsonDte != null)
+            {
+                var ccf = dteCcf.CreateObject();
+            }
         }
 
         protected override void OnDeactivated()

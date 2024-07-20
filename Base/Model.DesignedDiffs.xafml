@@ -245,47 +245,46 @@
     <DetailView Id="Empresa_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
-          <LayoutGroup Id="SimpleEditors" RelativeSize="20.79002079002079" Direction="Horizontal">
-            <LayoutGroup Id="Empresa_col1" ShowCaption="False" Index="0" RelativeSize="48.79478827361564" CaptionLocation="Left" IsNewNode="True">
-              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="18" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="RazonSocial" ViewItem="RazonSocial" Index="1" RelativeSize="13" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="Pais" ViewItem="Pais" Index="2" RelativeSize="13" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="Provincia" ViewItem="Provincia" Index="3" RelativeSize="13" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="Ciudad" ViewItem="Ciudad" Index="4" RelativeSize="13" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="Direccion" ViewItem="Direccion" Index="5" RelativeSize="13" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="EMail" ViewItem="EMail" CaptionLocation="Left" Index="6" RelativeSize="17" IsNewNode="True" />
+          <LayoutGroup Id="SimpleEditors" RelativeSize="40.65040650406504" Direction="Horizontal">
+            <LayoutGroup Id="Empresa_col1" ShowCaption="False" Index="0" RelativeSize="48.706512042818915" CaptionLocation="Left" IsNewNode="True">
+              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="11.333333333333334" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="RazonSocial" ViewItem="RazonSocial" Index="1" RelativeSize="8.666666666666666" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Pais" ViewItem="Pais" Index="2" RelativeSize="8.666666666666666" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Provincia" ViewItem="Provincia" Index="3" RelativeSize="8.666666666666666" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Ciudad" ViewItem="Ciudad" Index="4" RelativeSize="8.666666666666666" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Direccion" ViewItem="Direccion" Index="5" RelativeSize="8.666666666666666" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Nit" ViewItem="Nit" CaptionLocation="Left" Index="6" RelativeSize="8.666666666666666" IsNewNode="True" />
+              <LayoutItem Id="Nrc" ViewItem="Nrc" CaptionLocation="Left" Index="7" RelativeSize="8.666666666666666" IsNewNode="True" />
+              <LayoutItem Id="Clasificacion" ViewItem="Clasificacion" CaptionLocation="Left" Index="8" RelativeSize="8.666666666666666" IsNewNode="True" />
+              <LayoutItem Id="ClaseSociedad" ViewItem="ClaseSociedad" CaptionLocation="Left" Index="9" RelativeSize="8.666666666666666" IsNewNode="True" />
+              <LayoutItem Id="EMail" ViewItem="EMail" CaptionLocation="Left" Index="10" RelativeSize="10.666666666666666" IsNewNode="True" />
             </LayoutGroup>
-            <LayoutGroup Id="Empresa_col2" ShowCaption="False" Index="1" RelativeSize="51.20521172638436" CaptionLocation="Left" IsNewNode="True">
-              <LayoutItem Id="SitioWeb" ViewItem="SitioWeb" Index="0" RelativeSize="18" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="Nit" ViewItem="Nit" Index="1" RelativeSize="13" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="Nrc" ViewItem="Nrc" Index="2" RelativeSize="13" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="Clasificacion" ViewItem="Clasificacion" Index="3" RelativeSize="13" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="Activa" ViewItem="Activa" Index="4" RelativeSize="13" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="ClaseSociedad" ViewItem="ClaseSociedad" Index="5" RelativeSize="13" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="Logo" ViewItem="Logo" CaptionLocation="Left" Index="6" RelativeSize="17" IsNewNode="True" />
+            <LayoutGroup Id="Empresa_col2" ShowCaption="False" Index="1" RelativeSize="51.293487957181085" CaptionLocation="Left" IsNewNode="True">
+              <LayoutItem Id="SitioWeb" ViewItem="SitioWeb" Index="0" RelativeSize="11.333333333333334" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Logo" ViewItem="Logo" CaptionLocation="Left" Index="1" RelativeSize="88.66666666666667" IsNewNode="True" />
             </LayoutGroup>
             <LayoutGroup Id="Empresa" Removed="True" />
             <LayoutGroup Id="XPObject" RelativeSize="53.475935828877006" Caption="Oid" Direction="Horizontal" Removed="True">
               <LayoutItem Id="Oid" RelativeSize="100" Removed="True" />
             </LayoutGroup>
           </LayoutGroup>
-          <LayoutGroup Id="OtrosDatos" ShowCaption="True" Caption="Otros Datos" IsGroupCollapsed="False" IsCollapsibleGroup="True" Index="1" RelativeSize="18.71101871101871" Direction="Horizontal" IsNewNode="True">
-            <LayoutGroup Id="Auto08887d04-933c-498d-a6a2-86f70589fd00" ShowCaption="False" Caption="Auto08887d04-933c-498d-a6a2-86f70589fd00(20)" Index="0" RelativeSize="49.83432736911862" IsNewNode="True">
-              <LayoutItem Id="Sector" ViewItem="Sector" Index="0" RelativeSize="24" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="MonedaDefecto" ViewItem="MonedaDefecto" Index="1" RelativeSize="17.333333333333332" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="PorcentajeIva" ViewItem="PorcentajeIva" Index="2" RelativeSize="17.333333333333332" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="FactorIva" ViewItem="FactorIva" Index="3" RelativeSize="17.333333333333332" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="PorcRetencionIva" ViewItem="PorcRetencionIva" Index="4" RelativeSize="24" CaptionLocation="Left" IsNewNode="True" />
+          <LayoutGroup Id="OtrosDatos" ShowCaption="True" Caption="Otros Datos" IsGroupCollapsed="False" IsCollapsibleGroup="True" Index="1" RelativeSize="23.848238482384822" Direction="Horizontal" IsNewNode="True">
+            <LayoutGroup Id="Auto08887d04-933c-498d-a6a2-86f70589fd00" ShowCaption="False" Caption="Auto08887d04-933c-498d-a6a2-86f70589fd00(20)" Index="0" RelativeSize="49.681528662420384" IsNewNode="True">
+              <LayoutItem Id="MonedaDefecto" ViewItem="MonedaDefecto" Index="0" RelativeSize="23.28767123287671" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="PorcentajeIva" ViewItem="PorcentajeIva" Index="1" RelativeSize="17.80821917808219" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="FactorIva" ViewItem="FactorIva" Index="2" RelativeSize="17.80821917808219" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="PorcRetencionIva" ViewItem="PorcRetencionIva" Index="3" RelativeSize="17.80821917808219" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="PorcPercepcion" ViewItem="PorcPercepcion" CaptionLocation="Left" Index="4" RelativeSize="23.28767123287671" IsNewNode="True" />
             </LayoutGroup>
-            <LayoutGroup Id="Autoc4cad10f-5820-4900-a32f-66af55d9f4d0" ShowCaption="False" Caption="Autoc4cad10f-5820-4900-a32f-66af55d9f4d0(25)" Index="1" RelativeSize="50.16567263088138" IsNewNode="True">
-              <LayoutItem Id="PorcPercepcion" ViewItem="PorcPercepcion" CaptionLocation="Left" Index="0" RelativeSize="24" IsNewNode="True" />
-              <LayoutItem Id="Renta5" ViewItem="Renta5" Index="1" RelativeSize="17.333333333333332" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="Renta10" ViewItem="Renta10" Index="2" RelativeSize="17.333333333333332" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="Renta20" ViewItem="Renta20" Index="3" RelativeSize="17.333333333333332" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="Renta25" ViewItem="Renta25" Index="4" RelativeSize="24" CaptionLocation="Left" IsNewNode="True" />
+            <LayoutGroup Id="Autoc4cad10f-5820-4900-a32f-66af55d9f4d0" ShowCaption="False" Caption="Autoc4cad10f-5820-4900-a32f-66af55d9f4d0(25)" Index="1" RelativeSize="50.318471337579616" IsNewNode="True">
+              <LayoutItem Id="Renta5" ViewItem="Renta5" Index="0" RelativeSize="23.28767123287671" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Renta10" ViewItem="Renta10" Index="1" RelativeSize="17.80821917808219" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Renta20" ViewItem="Renta20" Index="2" RelativeSize="17.80821917808219" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Renta25" ViewItem="Renta25" Index="3" RelativeSize="17.80821917808219" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Activa" ViewItem="Activa" CaptionLocation="Left" Index="4" RelativeSize="23.28767123287671" IsNewNode="True" />
             </LayoutGroup>
           </LayoutGroup>
-          <TabbedGroup Id="Tabs" RelativeSize="60.4989604989605" Index="2">
+          <TabbedGroup Id="Tabs" RelativeSize="35.50135501355014" Index="2">
             <LayoutGroup Id="Telefonos" RelativeSize="100">
               <LayoutItem Id="Telefonos" RelativeSize="100" />
             </LayoutGroup>
@@ -344,17 +343,17 @@
         <LayoutGroup Id="Main" RelativeSize="100">
           <LayoutGroup Id="SimpleEditors" RelativeSize="100" Direction="Horizontal">
             <LayoutGroup Id="EmpresaUnidad_col1" ShowCaption="False" Index="0" RelativeSize="50" IsNewNode="True">
-              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="4.8452220726783315" IsNewNode="True" />
-              <LayoutItem Id="UnidadPadre" ViewItem="UnidadPadre" Index="1" RelativeSize="3.499327052489906" IsNewNode="True" />
-              <LayoutItem Id="Nombre" ViewItem="Nombre" Index="2" RelativeSize="3.499327052489906" IsNewNode="True" />
-              <LayoutItem Id="Direccion" ViewItem="Direccion" Index="3" RelativeSize="3.499327052489906" IsNewNode="True" />
-              <LayoutItem Id="Telefono" ViewItem="Telefono" Index="4" RelativeSize="84.65679676985195" IsNewNode="True" />
+              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="4.8452220726783315" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="UnidadPadre" ViewItem="UnidadPadre" Index="1" RelativeSize="3.499327052489906" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Nombre" ViewItem="Nombre" Index="2" RelativeSize="3.499327052489906" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Direccion" ViewItem="Direccion" Index="3" RelativeSize="3.499327052489906" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Telefono" ViewItem="Telefono" Index="4" RelativeSize="84.65679676985195" CaptionLocation="Left" IsNewNode="True" />
             </LayoutGroup>
             <LayoutGroup Id="EmpresaUnidad_col2" ShowCaption="False" Index="1" RelativeSize="50" IsNewNode="True">
-              <LayoutItem Id="Activa" ViewItem="Activa" Index="0" RelativeSize="4.8452220726783315" IsNewNode="True" />
-              <LayoutItem Id="EMail" ViewItem="EMail" Index="1" RelativeSize="3.499327052489906" IsNewNode="True" />
-              <LayoutItem Id="Role" ViewItem="Role" Index="2" RelativeSize="3.499327052489906" IsNewNode="True" />
-              <LayoutItem Id="Codigo" ViewItem="Codigo" Index="3" RelativeSize="88.15612382234185" IsNewNode="True" />
+              <LayoutItem Id="Activa" ViewItem="Activa" Index="0" RelativeSize="4.8452220726783315" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="EMail" ViewItem="EMail" Index="1" RelativeSize="3.499327052489906" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Role" ViewItem="Role" Index="2" RelativeSize="3.499327052489906" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Codigo" ViewItem="Codigo" Index="3" RelativeSize="88.15612382234185" CaptionLocation="Left" IsNewNode="True" />
             </LayoutGroup>
             <LayoutGroup Id="XPObject" Index="1" RelativeSize="80.08075370121131" Caption="Oid" Direction="Horizontal" Removed="True">
               <LayoutItem Id="Oid" RelativeSize="100" Removed="True" />
@@ -647,11 +646,11 @@
         <LayoutGroup Id="Main" RelativeSize="100">
           <LayoutGroup Id="SimpleEditors" RelativeSize="19.919246298788696">
             <LayoutGroup Id="Usuario" RelativeSize="100" Caption="Agencia" CaptionLocation="Default">
-              <LayoutItem Id="Empresa" Index="0" RelativeSize="24.324324324324323" CaptionLocation="Default" ViewItem="Empresa" IsNewNode="True" />
-              <LayoutItem Id="Agencia" Index="1" RelativeSize="17.56756756756757" CaptionLocation="Default" />
-              <LayoutItem Id="ChangePasswordOnFirstLogon" ViewItem="ChangePasswordOnFirstLogon" Index="2" RelativeSize="17.56756756756757" CaptionLocation="Default" IsNewNode="True" />
-              <LayoutItem Id="UserName" ViewItem="UserName" Index="3" RelativeSize="17.56756756756757" CaptionLocation="Default" IsNewNode="True" />
-              <LayoutItem Id="IsActive" ViewItem="IsActive" Index="4" RelativeSize="22.972972972972972" CaptionLocation="Default" IsNewNode="True" />
+              <LayoutItem Id="Empresa" Index="0" RelativeSize="24.324324324324323" CaptionLocation="Left" ViewItem="Empresa" IsNewNode="True" />
+              <LayoutItem Id="Agencia" Index="1" RelativeSize="17.56756756756757" CaptionLocation="Left" />
+              <LayoutItem Id="ChangePasswordOnFirstLogon" ViewItem="ChangePasswordOnFirstLogon" Index="2" RelativeSize="17.56756756756757" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="UserName" ViewItem="UserName" Index="3" RelativeSize="17.56756756756757" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="IsActive" ViewItem="IsActive" Index="4" RelativeSize="22.972972972972972" CaptionLocation="Left" IsNewNode="True" />
             </LayoutGroup>
             <LayoutGroup Id="PermissionPolicyUser" RelativeSize="5.128205128205129" Caption="PermissionPolicyUser" Direction="Horizontal" Removed="True">
               <LayoutItem Id="IsActive" RelativeSize="100" Index="0" Removed="True" />

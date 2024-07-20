@@ -26,6 +26,9 @@ namespace SBT.Apps.Compra.Module.helper
         /// <cambios>
         /// 01/marzo/2024 por SELM
         /// Se agregan las columnas de TipoOperacion, ClasifiacionRenta, Sector, TipoCostoGasto
+        /// 12/07/2024 por SELM
+        /// Se modifico la lamda expression para obtener las compras con percepciones del período. Se agrega la condición para retornar solo
+        /// los registros que Iva Percibido es diferente de 0.
         /// </cambios>
         public static IEnumerable<dynamic> GetDataLibroCompra(IObjectSpace objectSpace, int empresaOid, DateTime fechaDesde, DateTime fechaHasta)
         {
@@ -71,7 +74,7 @@ namespace SBT.Apps.Compra.Module.helper
         public static IEnumerable<dynamic> GetDataPercepcion(IObjectSpace objectSpace, int empresaOid, DateTime fechaDesde, DateTime fechaHasta)
         {
             var criteria = CriteriaOperator.FromLambda<LibroCompra>(x => x.CompraFactura.Empresa.Oid == empresaOid &&
-                x.Fecha.Date >= fechaDesde && x.Fecha.Date <= fechaHasta && x.CompraFactura.Estado != EEstadoFactura.Anulado);
+                x.Fecha.Date >= fechaDesde && x.Fecha.Date <= fechaHasta && x.CompraFactura.Estado != EEstadoFactura.Anulado && x.IvaPercibido != 0.0m);
             var datos = objectSpace.GetObjects<LibroCompra>(criteria).Select(x => new
             {
                 x.Nit,

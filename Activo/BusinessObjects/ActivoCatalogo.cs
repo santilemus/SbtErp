@@ -1,5 +1,7 @@
-﻿using DevExpress.ExpressApp.DC;
+﻿using DevExpress.ExpressApp;
+using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
+using DevExpress.ExpressApp.SystemModule;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
@@ -13,6 +15,13 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
     [ModelDefault("Caption", "Catálogo Activos"), NavigationItem("Activo Fijo"), CreatableItem(false), DefaultProperty(nameof(Nombre))]
     [Persistent(nameof(ActivoCatalogo))]
     [ImageName("book")]
+    // ListViewFilter
+    [ListViewFilter("Todos", "")]
+    [ListViewFilter("Activos Depreciando", @"[EstadoDepreciacion] == 'Depreciando'")]
+    [ListViewFilter("Activos Depreciados", @"[EstadoDepreciacion] == 'Depreciado'")]
+    [ListViewFilter("Inventarios de Otros Bienes", @"[EstadoDepreciacion] == 'Otros'")]
+    [ListViewFilter("Bienes en Uso", @"[EstadoUso.Codigo] == 'UA001'")]
+
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class ActivoCatalogo : XPObjectBaseBO
@@ -101,16 +110,18 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
             set => SetPropertyValue(nameof(Categoria), ref categoria, value);
         }
 
-        [XafDisplayName("Unidad"), RuleRequiredField("ActivoCatalogo.Unidad_Requerido", "Save")]
+        [XafDisplayName("Unidad Asignada"), RuleRequiredField("ActivoCatalogo.Unidad_Requerido", "Save")]
         [Index(4), VisibleInListView(false)]
+        [ToolTip(@"Departamento o unidad de la organización donde está asignado el activo")]
         public EmpresaUnidad Unidad
         {
             get => unidad;
             set => SetPropertyValue(nameof(Unidad), ref unidad, value);
         }
 
-        [XafDisplayName("Empleado")]
+        [XafDisplayName("Empleado Asignado")]
         [VisibleInListView(false), Index(5)]
+        [ToolTip(@"Empleado responsable o que tiene asignado el activo")]
         public Empleado.Module.BusinessObjects.Empleado Empleado
         {
             get => empleado;
@@ -135,7 +146,7 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
             set => SetPropertyValue(nameof(FechaCompra), ref fechaCompra, value);
         }
 
-        [Size(40), DbType("varchar(40)"), XafDisplayName("Marca")]
+        [Size(50), DbType("varchar(50)"), XafDisplayName("Marca")]
         [Index(8), VisibleInListView(false)]
         public string Marca
         {
@@ -143,7 +154,7 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
             set => SetPropertyValue(nameof(Marca), ref marca, value);
         }
 
-        [Size(40), DbType("varchar(40)"), XafDisplayName("Modelo")]
+        [Size(50), DbType("varchar(50)"), XafDisplayName("Modelo")]
         [VisibleInListView(false), Index(9)]
         public string Modelo
         {
@@ -298,6 +309,7 @@ namespace SBT.Apps.Activo.Module.BusinessObjects
 
 
         [Size(250), DbType("varchar(250)"), XafDisplayName("Observaciones")]
+        [ModelDefault("RowCount", "3")]
         [VisibleInListView(false), Index(27)]
         public string Observaciones
         {

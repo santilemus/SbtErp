@@ -61,6 +61,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Base\SBT.Apps.Base.csproj" />
     <ProjectReference Include="..\Contabilidad\SBT.Apps.Contabilidad.csproj" />
+    <ProjectReference Include="..\eFactura\SBT.eFactura.Dte.csproj" />
     <ProjectReference Include="..\Empleado\SBT.Apps.Empleado.csproj" />
     <ProjectReference Include="..\Producto\SBT.Apps.Producto.csproj" />
   </ItemGroup>

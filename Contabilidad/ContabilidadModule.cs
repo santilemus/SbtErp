@@ -2,9 +2,12 @@
 using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Updating;
+using DevExpress.ExpressApp.Validation;
 using DevExpress.ExpressApp.Xpo;
 using DevExpress.Persistent.BaseImpl;
+using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
+using SBT.Apps.Contabilidad.Module.Validations;
 using System;
 using System.Collections.Generic;
 
@@ -29,7 +32,9 @@ namespace SBT.Apps.Contabilidad
         {
             base.Setup(application);
             // Manage various aspects of the application UI and behavior at the module level.
+
         }
+
         public override void CustomizeTypesInfo(ITypesInfo typesInfo)
         {
             base.CustomizeTypesInfo(typesInfo);

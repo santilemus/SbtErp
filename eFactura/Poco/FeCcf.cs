@@ -9,13 +9,17 @@ namespace SBT.eFactura.Dte.Poco
     /// </summary>
     public class FeCcf
     {
+        public FeCcf() 
+        {
+            Identificacion = new Identificacion();
+        }
         /// <summary>
         /// Identificación del Dte
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("identificacion")]
         [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]
         [Required]
-        public Identificacion? Identificacion { get; set; }
+        public Identificacion Identificacion { get; set; }
 
         /// <summary>
         /// Documentos relacionados al Dte, es opcional
@@ -83,7 +87,6 @@ namespace SBT.eFactura.Dte.Poco
         [System.Text.Json.Serialization.JsonPropertyName("apendice")]
         [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]
         public System.Collections.Generic.ICollection<Apendice>? Apendice { get; set; }
-
 
     }
 }

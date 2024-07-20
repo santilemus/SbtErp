@@ -3,6 +3,7 @@ using DevExpress.ExpressApp.Actions;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Compra.Module.BusinessObjects;
 using SBT.Apps.CxP.Module.BusinessObjects;
+using System;
 using System.Linq;
 
 namespace SBT.Apps.Compra.Module.Controllers
@@ -14,6 +15,8 @@ namespace SBT.Apps.Compra.Module.Controllers
     {
         private PopupWindowShowAction pwsaPagoAplicar;
         const string key = "Inactivo";
+        private PopupWindowShowAction pwsaAnular;
+
         public CompraFacturaDetailViewController() : base()
         {
             TargetObjectType = typeof(SBT.Apps.Compra.Module.BusinessObjects.CompraFactura);
@@ -21,6 +24,19 @@ namespace SBT.Apps.Compra.Module.Controllers
             pwsaPagoAplicar.Caption = "Aplicar Pago";
             pwsaPagoAplicar.ImageName = "bill";
             pwsaPagoAplicar.TargetViewId = "CompraFactura_DetailView";
+
+            pwsaAnular = new PopupWindowShowAction(this, "FacturaCompra_Anular", DevExpress.Persistent.Base.PredefinedCategory.RecordEdit.ToString());
+            pwsaAnular.TargetObjectType = typeof(SBT.Apps.Compra.Module.BusinessObjects.CompraFactura);
+            pwsaAnular.TargetViewType = ViewType.DetailView;
+            pwsaAnular.ToolTip = "Clic para Anular el documento seleccionado";
+            pwsaAnular.SelectionDependencyType = SelectionDependencyType.RequireSingleObject;
+            pwsaAnular.Caption = "Anular";
+            pwsaAnular.ImageName = "Attention";
+            pwsaAnular.TargetObjectsCriteriaMode = TargetObjectsCriteriaMode.TrueForAll;
+            pwsaAnular.TargetObjectsCriteria = "[Estado] = 'Debe' && [Saldo] != 0.0";
+            pwsaAnular.AcceptButtonCaption = "Anular";
+            pwsaAnular.CancelButtonCaption = "Cancelar";
+            pwsaAnular.ConfirmationMessage = "Esta segur@ de anular el documento seleccionado";
         }
 
         protected override void OnActivated()
@@ -31,6 +47,9 @@ namespace SBT.Apps.Compra.Module.Controllers
                                            View.ObjectSpace.IsNewObject(View.CurrentObject));
             pwsaPagoAplicar.Execute += PwsaPagoAplicar_Execute;
             ObjectSpace.Committing += ObjectSpace_Committing;
+
+            pwsaAnular.CustomizePopupWindowParams += PwsaAnular_CustomizePopupWindowParams;
+            pwsaAnular.Execute += PwsaAnular_Execute;
         }
 
         private void PwsaPagoAplicar_Execute(object sender, PopupWindowShowActionExecuteEventArgs e)
@@ -64,6 +83,9 @@ namespace SBT.Apps.Compra.Module.Controllers
 
         protected override void OnDeactivated()
         {
+            pwsaAnular.CustomizePopupWindowParams -= PwsaAnular_CustomizePopupWindowParams;
+            pwsaAnular.Execute -= PwsaAnular_Execute;
+
             pwsaPagoAplicar.CustomizePopupWindowParams -= PwsaPagoAplicar_CustomizePopupWindowParams;
             pwsaPagoAplicar.Execute -= PwsaPagoAplicar_Execute;
             pwsaPagoAplicar.Active.RemoveItem(key);
@@ -96,6 +118,22 @@ namespace SBT.Apps.Compra.Module.Controllers
                     factura.ActualizarSaldo(factura.Saldo - totalCxP, (factura.Saldo - totalCxP) == 0.0m ? EEstadoFactura.Pagado: factura.Estado, true);
                 */
             }
+        }
+
+        private void PwsaAnular_Execute(object sender, PopupWindowShowActionExecuteEventArgs e)
+        {
+            CompraFactura compra = (CompraFactura)View.CurrentObject;
+            compra.Anular(((AnularParametros)e.PopupWindowView.CurrentObject));
+            View.ObjectSpace.CommitChanges();
+        }
+
+        private void PwsaAnular_CustomizePopupWindowParams(object sender, CustomizePopupWindowParamsEventArgs e)
+        {
+            using IObjectSpace osParam = Application.CreateObjectSpace(typeof(AnularParametros));
+            AnularParametros anularParams = osParam.CreateObject<AnularParametros>();
+            anularParams.FechaAnulacion = DateTime.Now;
+            e.View = Application.CreateDetailView(osParam, anularParams);
+            e.View.Caption = "Anular Venta";
         }
 
     }

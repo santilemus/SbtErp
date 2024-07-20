@@ -1,10 +1,14 @@
 ﻿using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Updating;
+using DevExpress.ExpressApp.Validation;
 using DevExpress.ExpressApp.Xpo;
 using DevExpress.Persistent.BaseImpl;
+using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
+using SBT.Apps.Contabilidad.Module.Validations;
+using SBT.Apps.Erp.Module.Validations;
 using System;
 using System.Collections.Generic;
 
@@ -30,6 +34,13 @@ namespace SBT.Apps.Erp.Module
             application.CreateCustomLogonWindowObjectSpace += application_CreateCustomLogonWindowObjectSpace;
             // agregado el 13/nov/2021 por selm
             application.ObjectSpaceCreated += Application_ObjectSpaceCreated;
+        }
+
+        public override void Setup(ApplicationModulesManager moduleManager)
+        {
+            base.Setup(moduleManager);
+            ValidationRulesRegistrator.RegisterRule(moduleManager, typeof(CatalogoCodeRule), typeof(IRuleBaseProperties));
+            ValidationRulesRegistrator.RegisterRule(moduleManager, typeof(ProveedorLibroCompraCodeRule), typeof(IRuleIsReferencedProperties));
         }
 
         // agregado el 13/nov/2021 por selm

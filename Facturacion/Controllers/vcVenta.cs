@@ -291,7 +291,7 @@ namespace SBT.Apps.Facturacion.Module.Controllers
             pwsaAnular.TargetObjectsCriteria = "[Estado] = 'Debe' && [Saldo] != 0.0";
             pwsaAnular.AcceptButtonCaption = "Anular";
             pwsaAnular.CancelButtonCaption = "Cancelar";
-            pwsaAnular.ConfirmationMessage = "Esta segur@ de anular el documento de venta seleccionado";
+            pwsaAnular.ConfirmationMessage = "Esta segur@ de anular el documento seleccionado";
 
 
             imprimirDocumento = new SimpleAction(this, "Venta_ImprimirFactura", DevExpress.Persistent.Base.PredefinedCategory.RecordEdit.ToString());

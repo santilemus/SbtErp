@@ -17,7 +17,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
     [ModelDefault("Caption", "Tercero Documentos"), NavigationItem(false), DefaultProperty(nameof(Numero))]
     [Persistent(nameof(TerceroDocumento)), CreatableItem(false)]
     [ImageName("user_id-info")]
-    [RuleCombinationOfPropertiesIsUnique("TerceroDocumento_TipoDocumento", DefaultContexts.Save, "Tercero,Numero,Tipo", IncludeCurrentObject = false)]
+    [RuleCombinationOfPropertiesIsUnique("TerceroDocumento_TipoDocumento", DefaultContexts.Save, "Numero,Tipo", IncludeCurrentObject = false)]
     // nuevas agregadas el 29/03/2024
     [RuleCriteria("TerceroDocumento.Nit", DefaultContexts.Save, "len(trim(Numero)) = 14", TargetCriteria = "Tipo.Codigo == 'NIT'",
         CustomMessageTemplate = "Longitud de NIT no válido", SkipNullOrEmptyValues = true)]
@@ -64,6 +64,11 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
             TargetCriteria = "[Tipo.Codigo] == 'NIT'", SkipNullOrEmptyValues = true, CustomMessageTemplate = "Número de NIT no válido")]
         [RuleRegularExpression("TerceroDocumento.Dui_Valido", DefaultContexts.Save, "^(0?[0-9]{8})(0?[0-9]{1})$", TargetCriteria = "[Tipo.Codigo] == 'DUI'",
             SkipNullOrEmptyValues = true, CustomMessageTemplate = "Número de DUI no válido")]
+        // reglas nuevas agregadas el 11/07/2024
+        [RuleUniqueValue("TerceroDocumento.Nit_Unico", DefaultContexts.Save, CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction,
+            TargetCriteria = "[Tipo.Codigo] == 'NIT'")]
+        [RuleUniqueValue("TerceroDocumento.Dui_Unico", DefaultContexts.Save, CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction,
+            TargetCriteria = "[Tipo.Codigo] == 'DUI'")]
         public System.String Numero
         {
             get => numero;

@@ -18,7 +18,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
     /// </remarks>
     [NavigationItem(false), ModelDefault("Caption", "Partida Detalle"), ModelDefault("AllowEdit", "True"), CreatableItem(false)]
     [VisibleInDashboards(true), VisibleInReports(true)]
-    //[ImageName("BO_Contact")]
+    [ImageName("Grid")]
     //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
     [DefaultListViewOptions(MasterDetailMode.ListViewOnly, true, NewItemRowPosition.Top)]
     [Persistent("ConPartidaDetalle")]

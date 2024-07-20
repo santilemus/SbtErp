@@ -527,7 +527,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             Tributo tributo = Session.GetObjectByKey<Tributo>(oidTributo);
             if (tributo != null)
             {
-                ExpressionEvaluator eval = new (TypeDescriptor.GetProperties(tributo.TipoBO), tributo.Formula);
+                ExpressionEvaluator eval = new(TypeDescriptor.GetProperties(tributo.TipoBO), tributo.Formula);
 
                 //alternativa 1
                 //CriteriaOperator op = CriteriaOperator.Parse(tributo.Formula);              
@@ -676,15 +676,8 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
 
         public override void Anular(AnularParametros AnularParams)
         {
-            try
-            {
-                base.Anular(AnularParams);
-                DoAnular();
-            }
-            catch (Exception ex)
-            {
-                throw new UserFriendlyException("Error al anular el documento", ex);
-            }
+            base.Anular(AnularParams);
+            DoAnular();
         }
 
         protected override decimal GetTotal()

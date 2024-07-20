@@ -27,7 +27,7 @@ namespace SBT.Apps.Contabilidad.BusinessObjects
     [RuleCriteria("Catalogo [Padre] != [Cuenta]", DefaultContexts.Save, "[CodigoCuenta] != [Padre.CodigoCuenta]",
         "Codigo Cuenta debe ser diferente de Padre", TargetCriteria = "!IsNull([Padre])")]
     [RuleCriteria("Catalogo - Cuenta de Mayor", DefaultContexts.Save, "Len([CodigoCuenta]) == 4 && CtaMayor = True && [CtaResumen] == True",
-        "Las cuentas de 4 digitdos deben ser De Resumen y de Mayor", ResultType = ValidationResultType.Warning, TargetCriteria = "Len([CodigoCuenta]) == 4")]
+        "Las cuentas de 4 digitos deben ser De Resumen y de Mayor", ResultType = ValidationResultType.Warning, TargetCriteria = "Len([CodigoCuenta]) == 4")]
     [RuleCombinationOfPropertiesIsUnique("Catalogo. EmpresaCuentaEspecial Unica", DefaultContexts.Save, "Empresa,CodigoCuenta,CuentaEspecial",
         TargetCriteria = "[CuentaEspecial] > 0")]
     [FriendlyKeyProperty(nameof(CodigoCuenta))]

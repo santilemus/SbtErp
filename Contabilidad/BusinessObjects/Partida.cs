@@ -43,6 +43,21 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
     [ListViewFilter("Partidas del Período Anterior", "(GetYear([Fecha])) == (GetYear(LocalDateTimeToday()) - 1)")]
     [RuleCriteria("Partida Cuadre", DefaultContexts.Save, "[Detalles][].Count() > 0 && [TotalDebe] == [TotalHaber]",
         "Debe cuadrar la Partida Contable y asegurarse que no este vacía, antes de guardar", UsedProperties = "TotalDebe,TotalHaber")]
+
+    /// agregadas el 16/julio/2024 y reemplazan la validacion de la propiedad TipoPartidaValida - PENDIENTE PROBARLAS
+    [RuleObjectExists("Partida.Tipo Partida Existe", DefaultContexts.Save, "[Tipo] In ('Apertura', 'Cierre')", IncludeCurrentObject = false, 
+        CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction, TargetCriteria = "[Tipo] in ('Apertura', 'Cierre')",
+        CustomMessageTemplate = @"Solo puede existir una partida de los siguientes Tipos '{Criteria}', no puede ingresar o generar otra similar en el período")]
+    [RuleObjectExists("Partida de Liquidación del ejercicio", DefaultContexts.Save, "[Tipo] == 'Liquidacion' && [Automatica]",
+        CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction, TargetCriteria = "[Tipo] == 'Liquidacion'", IncludeCurrentObject = false,
+        CustomMessageTemplate = @"Solo puede existir una partida de Liquidacion automática y que corresponde a la liquidación del ejercicio")]
+    [RuleCriteria("Partida.Tipo Liquidaciones manuales validas solo fin del periodo", 
+        DefaultContexts.Save, "[Tipo] == 'Liquidacion' && GetDate([Fecha]) == GetDate([Periodo.FechaFin])",
+        TargetCriteria = "[Tipo] == 'Liquidacion' && ![Automatica]", CustomMessageTemplate = @"Las partidas de liquidación manuales solo son válidas al final del período")]
+    [RuleCriteria("Partida.Periodo Existe", DefaultContexts.Save, @"!IsNull([Periodo]) && GetDate([Fecha]) Between([Periodo.FechaInicio], [Periodo.FechaFin])",
+        CustomMessageTemplate = @"Debe cumplir con la condición '{Criteria}'")]
+    [RuleObjectExists("Partidia.Fecha Cerrada", DefaultContexts.Save, @"[Empresa.Oid] == '@Empresa.Oid' && [FechaCierre] == '@Fecha' && ![DiaCerrado]",
+        LooksFor = typeof(CierreDiario), SkipNullOrEmptyValues = true)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class Partida : XPOBaseDoc
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
@@ -87,6 +102,8 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         decimal? totalDebe;
         [Persistent(nameof(Mayorizada)), DbType("bit")]
         bool mayorizada;
+        private EPartidaEstado estado;
+        private bool automatica;
 
         [DbType("int"), Persistent("Periodo"), XafDisplayName("Período"), VisibleInLookupListView(false), VisibleInListView(false)]
         [RuleRequiredField("Partida.Periodo_Requerido", "Save", SkipNullOrEmptyValues = false)]
@@ -167,6 +184,29 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
                     UpdateTotHaber(false);
                 return totalHaber;
             }
+        }
+        
+        /// <summary>
+        /// Estado de la partida contable. El estado inicial puede ser: Digitado o Generada cuando son automáticas
+        /// </summary>
+        /// <remarks>
+        /// Para identificar las partidas digitadas (manuales) de las automáticas y posteriormente las aprobadas. 
+        /// Solo las partidas aprobadas deberían de incluirse en el cierre
+        /// </remarks>
+        public EPartidaEstado Estado
+        {
+            get => estado;
+            set => SetPropertyValue<EPartidaEstado>(nameof(Estado), ref estado, value);
+        }
+
+        /// <summary>
+        /// Indica cuando la partida fue generada de forma automática, porque corresponde a apertura, liquidación o cierre;
+        /// o porque se genera a partir de la integración çon otros módulos u otros sistemas
+        /// </summary>
+        public bool Automatica
+        {
+            get => automatica;
+            set => SetPropertyValue<bool>(nameof(Automatica), ref automatica, value);
         }
 
         [PersistentAlias(nameof(mayorizada)), XafDisplayName("Mayorizada")]
@@ -322,4 +362,18 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         //    this.PersistentProperty = "Paid";
         //}
     }
+
+    /// <summary>
+    /// Enumeración con los tipos de partida
+    /// <br>Incorporado el 15/julio/2024, para identificar las partidas automáticas (Generada) de las digitas y posteriormente la aprobación o rechazao
+    /// de las partidas automáticas
+    /// </br>
+    /// </summary>
+    public enum EPartidaEstado
+    {
+        Registrada = 0,
+        Aprobada = 1,
+        Rechazada = 2
+    }
+
 }

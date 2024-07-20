@@ -1,0 +1,14 @@
+{
+    "version": 2,
+    "ambiente": "01",
+    "versionApp": 2,
+    "estado": "PROCESADO",
+    "codigoGeneracion": "9984A50B-6803-D6B2-C414-1962381A6BAD",
+    "numeroControl": "DTE-03-00000000-000000000142314",
+    "selloRecibido": "2024757D3AAD901A453FBBBC2233F636B270LCAH",
+    "fhProcesamiento": "04/06/2024 15:36:04",
+    "clasificaMsg": "10",
+    "codigoMsg": "001",
+    "descripcionMsg": "RECIBIDO",
+    "observaciones": []
+  }
