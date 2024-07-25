@@ -64,6 +64,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         AutorizacionDocumento autorizacionDocumento;
         string usuarioAnulo;
         DateTime fechaAnula;
+        private string numeroDocumento;
 
         /// <summary>
         /// Tipo de concepto o de transaccion de cuenta por cobrar
@@ -128,20 +129,39 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         [VisibleInListView(false)]
         [DetailViewLayout("Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
         [ModelDefault("AllowEdit", "False")]
+        [RuleObjectExists(@"CxCTransaccion.AutorizacionDocumento debe existir", DefaultContexts.Save, @"[Tipo.Padre.Oid] in (1, 16)", 
+            CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction, SkipNullOrEmptyValues = false,
+            LooksFor = typeof(SBT.Apps.Facturacion.Module.BusinessObjects.AutorizacionDocumento))]
+        [RuleRequiredField]
         public AutorizacionDocumento AutorizacionDocumento
         {
             get => autorizacionDocumento;
             set => SetPropertyValue<AutorizacionDocumento>(nameof(AutorizacionDocumento), ref autorizacionDocumento, value);
         }
 
+
         [DbType("int"), XafDisplayName("Número"), Index(3)]
         [ModelDefault("AllowEdit", "False")]
         [DetailViewLayout("Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
-        [ToolTip("Numero Correlativo por tipo de documento y empresa")]
+        [ToolTip("Numero Correlativo por tipo de documento, año y empresa")]
         public int? Numero
         {
             get => numero;
             set => SetPropertyValue(nameof(Numero), ref numero, value);
+        }
+
+        /// <summary>
+        /// Es string porque cuando se trata de un Dte es el Guid generado y cuando es formulario es el correlativo autorizado
+        /// </summary>
+        [DbType("varchar(36)"), System.ComponentModel.DisplayName("Número Documento"), Index(4)]
+        [DetailViewLayout("Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
+        [ToolTip("El número de documento según tipo de documento. Puede ser el correlativo autorizado en formulario o el Guid del Dte")]
+        [RuleRequiredField("CxCTransaccion.NumeroDocumento_requerido", DefaultContexts.Save, SkipNullOrEmptyValues = true, 
+            TargetCriteria = "[Tipo.Padre.Oid] in (1, 16)")]
+        public string NumeroDocumento
+        {
+            get => numeroDocumento;
+            set => SetPropertyValue<string>(nameof(NumeroDocumento), ref numeroDocumento, value);
         }
 
         [XafDisplayName("Moneda"), Index(4)]

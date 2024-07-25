@@ -1,11 +1,14 @@
 ﻿using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp;
+using DevExpress.ExpressApp.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Base.Module.Controllers;
 using SBT.Apps.CxC.Module.BusinessObjects;
+using SBT.Apps.Facturacion.Module.BusinessObjects;
 using SBT.Apps.Inventario.Module.BusinessObjects;
 using System;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace SBT.Apps.Facturacion.Module.Controllers
@@ -204,13 +207,43 @@ namespace SBT.Apps.Facturacion.Module.Controllers
         /// <param name="e">Argumento del evento</param>
         private void ObjectSpace_Changed(object sender, ObjectChangedEventArgs e)
         {
+            if (View == null || View.CurrentObject == null || e.Object == null)
+                return;
+
             if (View.CurrentObject == e.Object && e.PropertyName == "Venta")
             {
                 var cxcDocumento = (CxCDocumento)View.CurrentObject;
                 if (cxcDocumento.Venta.Saldo <= 0.0m || cxcDocumento.Venta.Estado != EEstadoFactura.Debe)
                     MostrarError($"La venta con {cxcDocumento.Venta.TipoFactura.Nombre} debe tener saldo >= 0 y Estado Debe para aplicarle {cxcDocumento.Tipo}");
             }
+            // para obtener el correlativo del documento de nota de credito autorizado
+            if (View.CurrentObject == e.Object && ObjectSpace.IsNewObject(View.CurrentObject))
+            {
+                if (e.PropertyName == "AutorizacionDocumento")
+                {
+                    if (e.NewValue == null)
+                    {
+                        ((CxCTransaccion)View.CurrentObject).NumeroDocumento = null;
+                        MostrarError($"No se encontró la autorización de correlativos para {((CxCTransaccion)View.CurrentObject).Tipo.Nombre}. No conoce el número de documento");
+                        return;
+                    }
+                    AutorizacionDocumento aud = (AutorizacionDocumento)e.NewValue;
+                    /// *** NOTA OJO VER PARA CAMBIAR ***
+                    /// Cuando no es dte es que se obtiene el max. Si es un Dte es un Guid. y no se puede obtener el max
+                    string noDoc = Convert.ToString(((XPObjectSpace)ObjectSpace).Session.Evaluate<Venta>(CriteriaOperator.Parse("max([NumeroDocumento])"),
+                                 CriteriaOperator.Parse("Oid == ?", aud.Oid))) + 1;
+                    if (int.TryParse(noDoc, out int val))
+                    {
+                        if (val >= aud.NoDesde && val < aud.NoHasta)
+                            ((CxCTransaccion)View.CurrentObject).NumeroDocumento = noDoc;
+                    }     
+                    else
+                    {
+                        ((CxCTransaccion)View.CurrentObject).NumeroDocumento = null;
+                        MostrarError($"No hay autorización de correlativo disponible para {((CxCTransaccion)View.CurrentObject).Tipo.Nombre}");
+                    }
+                }
+            }
         }
-
     }
 }

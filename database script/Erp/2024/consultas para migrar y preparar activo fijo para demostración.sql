@@ -130,7 +130,32 @@ select razon_social, iif(tipo_persona = 'J', 2, 1) as TipoPersona,
 						   '06142302051080', '06142306881010', '06142406870019', '06142408121010', '06142502081030',
 						   '06142507891013', '06142807061055', '06142904941043', '06143103901020', '06143110790016',
 						   '200999', '94832211011010')
+--- 6. Migrar los estados de uso de los activos
+insert into Listas   
+       (Codigo, Nombre, Categoria, Comentario, Activo)
+select cod_valor, descripcion, 1 as categoria, null, activo 
+  from siaf_sql_pruebas..PAR_LISTAS
+ where tipo_lista = 3
 
+--- 7. Migrar catalogo de activos
+insert into ActivoCatalogo
+       (Empresa, Codigo, Nombre, Categoria, Unidad, Empleado, Proveedor, FechaCompra, Marca, Modelo, NoSerie, InicioDepreciacion,
+	    Moneda, ValorMoneda, VidaUtil, ValorCompra, ValorResidual, TotalDepreciacion, TotalMejora, TotalAjuste, EstadoDepreciacion,
+		FechaDescarga, MesesGarantia, FechaInicioGarantia, EstadoUso, OrdenCompra, Observaciones)
+select 3 as Empresa, left(trim(c.cod_activo), 20) as Codigo,  c.descripcion, 
+       (select Oid from ActivoCategoria x
+	     where x.Codigo = c.cod_familia collate SQL_Latin1_General_CP1_CI_AS) as Categoria,
+	   floor(rand()*(21-10)+10) as Unidad, null as cod_emple, 
+	   (select t.Oid from Tercero t
+	     inner join TerceroDocumento d
+		    on d.Tipo = 'NIT' and d.Tercero = t.Oid
+		 where d.Numero = c.cod_proveedor collate SQL_Latin1_General_CP1_CI_AS) as Proveedor,
+	   c.fecha_compra, c.marca, c.modelo, c.no_serie, c.fecha_ini_depre, c.cod_moneda, c.val_mone, c.vida_util, c.valor_original, 
+	   c.valor_residual, c.acum_depre, c.acum_mejoras, c.acum_ajustes, 
+	   iif(c.estado_activo = 1, 0, iif(c.estado_activo = 2, 1, 2)) as EstadoDepreciacion, 
+	   c.fecha_descarga, c.periodo_garantia, c.fecha_ini_gar, c.estado_uso, c.num_ordenc, c.observaciones
+ from siaf_sql_pruebas..AFI_CATALOGO c
+go
 
 select * from ConCatalogo
  where Empresa = 3
