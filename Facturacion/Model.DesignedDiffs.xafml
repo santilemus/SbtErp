@@ -13,8 +13,8 @@
     <LayoutManagerOptions RequiredFieldMark="*" />
   </Options>
   <SchemaModules>
-    <SchemaModule Name="CloneObjectModule" Version="23.2.5.0" IsNewNode="True" />
-    <SchemaModule Name="SystemModule" Version="23.2.5.0" IsNewNode="True" />
+    <SchemaModule Name="CloneObjectModule" Version="24.1.3.0" IsNewNode="True" />
+    <SchemaModule Name="SystemModule" Version="24.1.3.0" IsNewNode="True" />
   </SchemaModules>
   <Views>
     <DetailView Id="AutorizacionDocumento_DetailView">
@@ -119,12 +119,12 @@
       </Items>
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
-          <LayoutGroup Id="Autob44abf0f-bebe-4269-b292-2605bcd9ddd4" ShowCaption="False" Caption="Autob44abf0f-bebe-4269-b292-2605bcd9ddd4(2)" Direction="Horizontal" Index="0" RelativeSize="19.485791610284167" IsNewNode="True">
+          <LayoutGroup Id="Autob44abf0f-bebe-4269-b292-2605bcd9ddd4" ShowCaption="False" Caption="Autob44abf0f-bebe-4269-b292-2605bcd9ddd4(2)" Direction="Horizontal" Index="0" RelativeSize="19.51219512195122" IsNewNode="True">
             <LayoutGroup Id="Generales_col1" ShowCaption="False" Index="0" RelativeSize="49.76228209191759" IsNewNode="True">
               <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="23.61111111111111" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="Tipo" ViewItem="Tipo" Index="1" RelativeSize="18.055555555555557" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="Fecha" ViewItem="Fecha" Index="2" RelativeSize="18.055555555555557" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="Venta" ViewItem="Venta" Index="3" RelativeSize="18.055555555555557" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Fecha" ViewItem="Fecha" Index="1" RelativeSize="18.055555555555557" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Venta" ViewItem="Venta" Index="2" RelativeSize="18.055555555555557" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Tipo" ViewItem="Tipo" Index="3" RelativeSize="18.055555555555557" CaptionLocation="Left" IsNewNode="True" />
               <LayoutItem Id="AutorizacionDocumento" ViewItem="AutorizacionDocumento" Index="4" RelativeSize="22.22222222222222" CaptionLocation="Left" IsNewNode="True" />
             </LayoutGroup>
             <LayoutGroup Id="Generales_col2" ShowCaption="False" Index="1" RelativeSize="50.23771790808241" IsNewNode="True">
@@ -135,10 +135,10 @@
               <LayoutItem Id="Comentario" ViewItem="Comentario" CaptionLocation="Left" Index="4" RelativeSize="22.22222222222222" IsNewNode="True" />
             </LayoutGroup>
           </LayoutGroup>
-          <LayoutGroup Id="Detalles_Group" Direction="Vertical" Index="1" RelativeSize="58.32205683355886">
+          <LayoutGroup Id="Detalles_Group" Direction="Vertical" Index="1" RelativeSize="58.265582655826556">
             <LayoutItem Id="Detalles" RelativeSize="100" />
           </LayoutGroup>
-          <LayoutGroup Id="SimpleEditors" Index="2" RelativeSize="22.19215155615697">
+          <LayoutGroup Id="SimpleEditors" Index="2" RelativeSize="22.22222222222222">
             <LayoutGroup Id="XPObject" Index="0" RelativeSize="100" Caption="Oid">
               <LayoutGroup Id="Totales" ShowCaption="True" IsCollapsibleGroup="True" Direction="Horizontal" Index="0" RelativeSize="100" IsNewNode="True">
                 <LayoutGroup Id="Totales_col1" ShowCaption="False" Index="0" RelativeSize="49.75806451612903" IsNewNode="True">
@@ -1602,21 +1602,21 @@
     </DetailView>
     <ListView Id="Venta_Detalles_ListView" DataAccessMode="Server">
       <Columns>
+        <ColumnInfo Id="Bodega" Width="211" Index="-1" />
         <ColumnInfo Id="CantidadAnulada" Width="112" />
         <ColumnInfo Id="CodigoBarra" Width="112" Index="-1" />
-        <ColumnInfo Id="Descripcion" Width="82" />
+        <ColumnInfo Id="Lote" Index="-1" Width="82" />
         <ColumnInfo Id="NoSujeta" Width="79" AllowEdit="False" />
         <ColumnInfo Id="Oid" Width="112" />
         <ColumnInfo Id="Venta" Width="112" />
         <ColumnInfo Id="Producto" Width="407" Index="0" SortIndex="0" SortOrder="Ascending" />
-        <ColumnInfo Id="Bodega" Width="211" Index="1" />
-        <ColumnInfo Id="Cantidad" Width="78" Index="2" />
-        <ColumnInfo Id="PrecioUnidad" Width="113" Index="3" />
-        <ColumnInfo Id="PrecioConIva" Width="120" Index="4" />
-        <ColumnInfo Id="Iva" Width="59" Index="5" AllowEdit="False" />
-        <ColumnInfo Id="Exenta" Width="86" Index="6" AllowEdit="False" />
-        <ColumnInfo Id="Gravada" Width="100" Index="7" AllowEdit="False" />
-        <ColumnInfo Id="Lote" Index="8" Width="82" />
+        <ColumnInfo Id="Cantidad" Width="78" Index="1" />
+        <ColumnInfo Id="PrecioUnidad" Width="113" Index="2" />
+        <ColumnInfo Id="PrecioConIva" Width="120" Index="3" />
+        <ColumnInfo Id="Iva" Width="59" Index="4" AllowEdit="False" />
+        <ColumnInfo Id="Exenta" Width="86" Index="5" AllowEdit="False" />
+        <ColumnInfo Id="Gravada" Width="100" Index="6" AllowEdit="False" />
+        <ColumnInfo Id="Descripcion" Width="230" Index="7" />
       </Columns>
     </ListView>
     <ListView Id="Venta_Detalles_ListView_ccf" ClassName="SBT.Apps.Facturacion.Module.BusinessObjects.VentaDetalle" DataAccessMode="Server" DetailViewID="VentaDetalle_DetailView_ccf" IsNewNode="True">

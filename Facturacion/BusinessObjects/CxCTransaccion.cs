@@ -1,4 +1,5 @@
-﻿using DevExpress.ExpressApp.DC;
+﻿using DevExpress.Data.Filtering;
+using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
@@ -26,6 +27,12 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
     [DefaultClassOptions, ModelDefault("Caption", "Cuenta por Cobrar"), NavigationItem("Cuenta por Cobrar")]
     [CreatableItem(false), Persistent(nameof(CxCTransaccion)), DefaultProperty("Numero")]
     [ImageName(nameof(CxCTransaccion))]
+    [RuleCriteria("CxCTransaccion Nota Credito o Debito valida solo cuando es Credito Fiscal", DefaultContexts.Save, 
+        "[Tipo.Padre.Oid] in (1, 16)", TargetCriteria = "[Venta.TipoFactura.Codigo] = 'COVE01' && [Venta.Saldo] > 0.0 && [Venta.Estado] == 'Debe'")]
+    //[RuleObjectExists(@"CxCTransaccion.AutorizacionDocumento debe existir", DefaultContexts.Save, "[Oid] == '@This.AutorizacionDocumento.Oid'",
+    //        CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction, SkipNullOrEmptyValues = false,
+    //        LooksFor = typeof(SBT.Apps.Facturacion.Module.BusinessObjects.AutorizacionDocumento), 
+    //    TargetCriteria = @"[Tipo.Padre.Oid] in (1, 16)")]
 
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
@@ -81,8 +88,16 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
             set
             {
                 bool changed = SetPropertyValue(nameof(Tipo), ref tipo, value);
-                if (!IsLoading && !IsSaving && changed)
+                if (!IsLoading && !IsSaving && Tipo != null && changed)
                 {
+                    if (Tipo.Padre.Oid == 1 || Tipo.Padre.Oid == 16)
+                    {
+                        CriteriaOperator criteria = CriteriaOperator.FromLambda<SBT.Apps.Facturacion.Module.BusinessObjects.AutorizacionDocumento>(
+                            x => x.Tipo.Codigo == "DACV02" && x.Activo == true && x.Agencia.Oid == Venta.Agencia.Oid);
+                        var resolucion = Session.FindObject<SBT.Apps.Facturacion.Module.BusinessObjects.AutorizacionDocumento>(criteria);
+                        AutorizacionDocumento = resolucion;
+                        OnChanged(nameof(AutorizacionDocumento));
+                    }
                     DoTipoChanged(true, tipo);
                 }
             }
@@ -129,9 +144,6 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         [VisibleInListView(false)]
         [DetailViewLayout("Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
         [ModelDefault("AllowEdit", "False")]
-        [RuleObjectExists(@"CxCTransaccion.AutorizacionDocumento debe existir", DefaultContexts.Save, @"[Tipo.Padre.Oid] in (1, 16)", 
-            CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction, SkipNullOrEmptyValues = false,
-            LooksFor = typeof(SBT.Apps.Facturacion.Module.BusinessObjects.AutorizacionDocumento))]
         [RuleRequiredField]
         public AutorizacionDocumento AutorizacionDocumento
         {
@@ -186,6 +198,8 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         [Association("Venta-CxCTransacciones")]
         [XafDisplayName("Venta"), Index(6)]
         [DetailViewLayout("Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
+        // NO ESTA FUNCIONANDO EL SIGUIENTE ATRIBUTO, SE DEBE REVISAR 27/07/2024 Y BORRARLO SI ES EL CASO
+        //[DataSourceCriteria("[Empresa.Oid] == EmpresaActualOid() && [TipoFactura.Codigo] == 'COVE01' && [Estado] == 'Debe' && [CondicionCredito] == 'Credito' && [Saldo] > 0.0")]
         public Venta Venta
         {
             get => venta;
@@ -195,7 +209,6 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
                 if (!IsLoading && !IsSaving && changed)
                 {
                     Moneda = venta.Moneda;
-                    //Moneda = Session.GetObjectByKey<Moneda>(venta.Moneda.Codigo);
                 }
             }
         }

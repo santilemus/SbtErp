@@ -230,7 +230,7 @@ namespace SBT.Apps.Facturacion.Module.Controllers
                     AutorizacionDocumento aud = (AutorizacionDocumento)e.NewValue;
                     /// *** NOTA OJO VER PARA CAMBIAR ***
                     /// Cuando no es dte es que se obtiene el max. Si es un Dte es un Guid. y no se puede obtener el max
-                    string noDoc = Convert.ToString(((XPObjectSpace)ObjectSpace).Session.Evaluate<Venta>(CriteriaOperator.Parse("max([NumeroDocumento])"),
+                    string noDoc = Convert.ToString(((XPObjectSpace)ObjectSpace).Session.Evaluate<CxCTransaccion>(CriteriaOperator.Parse("max([NumeroDocumento])"),
                                  CriteriaOperator.Parse("Oid == ?", aud.Oid))) + 1;
                     if (int.TryParse(noDoc, out int val))
                     {

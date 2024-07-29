@@ -3,6 +3,7 @@ using DevExpress.ExpressApp.Actions;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Compra.Module.BusinessObjects;
 using SBT.Apps.CxP.Module.BusinessObjects;
+using SBT.Apps.Iva.Module.BusinessObjects;
 using System;
 using System.Linq;
 
@@ -47,9 +48,23 @@ namespace SBT.Apps.Compra.Module.Controllers
                                            View.ObjectSpace.IsNewObject(View.CurrentObject));
             pwsaPagoAplicar.Execute += PwsaPagoAplicar_Execute;
             ObjectSpace.Committing += ObjectSpace_Committing;
+            ObjectSpace.ObjectChanged += ObjectSpace_ObjectChanged;
 
             pwsaAnular.CustomizePopupWindowParams += PwsaAnular_CustomizePopupWindowParams;
             pwsaAnular.Execute += PwsaAnular_Execute;
+        }
+
+        protected override void OnDeactivated()
+        {
+            pwsaAnular.CustomizePopupWindowParams -= PwsaAnular_CustomizePopupWindowParams;
+            pwsaAnular.Execute -= PwsaAnular_Execute;
+
+            pwsaPagoAplicar.CustomizePopupWindowParams -= PwsaPagoAplicar_CustomizePopupWindowParams;
+            pwsaPagoAplicar.Execute -= PwsaPagoAplicar_Execute;
+            pwsaPagoAplicar.Active.RemoveItem(key);
+            ObjectSpace.Committing -= ObjectSpace_Committing;
+            ObjectSpace.ObjectChanged -= ObjectSpace_ObjectChanged;
+            base.OnDeactivated();
         }
 
         private void PwsaPagoAplicar_Execute(object sender, PopupWindowShowActionExecuteEventArgs e)
@@ -81,18 +96,6 @@ namespace SBT.Apps.Compra.Module.Controllers
             }
         }
 
-        protected override void OnDeactivated()
-        {
-            pwsaAnular.CustomizePopupWindowParams -= PwsaAnular_CustomizePopupWindowParams;
-            pwsaAnular.Execute -= PwsaAnular_Execute;
-
-            pwsaPagoAplicar.CustomizePopupWindowParams -= PwsaPagoAplicar_CustomizePopupWindowParams;
-            pwsaPagoAplicar.Execute -= PwsaPagoAplicar_Execute;
-            pwsaPagoAplicar.Active.RemoveItem(key);
-            ObjectSpace.Committing -= ObjectSpace_Committing;
-            base.OnDeactivated();
-        }
-
         /// <summary>
         /// Evento del ObjectSpace que se ejecuta previo a guardar los cambios en la bd
         /// </summary>
@@ -117,6 +120,38 @@ namespace SBT.Apps.Compra.Module.Controllers
                 if (totalCxP > 0)
                     factura.ActualizarSaldo(factura.Saldo - totalCxP, (factura.Saldo - totalCxP) == 0.0m ? EEstadoFactura.Pagado: factura.Estado, true);
                 */
+            }
+        }
+
+        /// <summary>
+        /// Para evitar que se modifique el número de factura cuando ya está generado el libro. 
+        /// </summary>
+        /// <remarks>
+        /// PENDIENTE de modificar el procedimiento que genera el libro, porque los registros con GCRecord diferente de nulo se deben borrar del libro antes
+        /// de insertar o actualizar, porque son facturas que se borraron
+        /// </remarks>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <exception cref="NotImplementedException"></exception>
+        private void ObjectSpace_ObjectChanged(object sender, ObjectChangedEventArgs e)
+        {
+            if (View == null || View.CurrentObject == null || e.Object == null)
+                return;
+            if (View.CurrentObject == e.Object && ObjectSpace.IsModified)
+            {
+                if (e.PropertyName == "NumeroFactura")
+                {
+                    var z = ObjectSpace.FirstOrDefault<LibroCompra>(x => x.CompraFactura == (View.CurrentObject as CompraFactura) &&
+                    (x.TipoDocumento == "03" || x.TipoDocumento == "00"));
+                    if (z != null && z.Numero != (View.CurrentObject as CompraFactura).NumeroFactura)
+                    {
+                        Application.ShowViewStrategy.ShowMessage(@"No puede modificar el número de factura porque ya generó el libro de compras. Borrar el registro y volverlo a ingresar",
+                            InformationType.Error);
+                        // se revierte el cambio del número de factura para evitar que el registro se duplique en el libro
+                        (View.CurrentObject as CompraFactura).NumeroFactura = z.Numero;
+                        return;
+                    }
+                }
             }
         }
 
