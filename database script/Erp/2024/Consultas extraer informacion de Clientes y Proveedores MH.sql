@@ -1,15 +1,19 @@
-select * from Empresa
+--select * from Empresa
+
+declare @empresa int = 2
+declare @fechaDesde datetime = '20240101'
+declare @fechaHasta datetime = '20240630'
 
 -- 1. Clientes facturas < 200 
 -- no hay
 select x.* from LibroVentaContribuyente x
  inner join Venta v
     on x.Venta = v.Oid 
- where v.Empresa = 2
+ where v.Empresa = @empresa
    and x.GravadaLocal > 0
    and x.GravadaLocal <= 200
    and v.Estado != 2
-   and x.Fecha between '20230701' and '20231231'
+   and x.Fecha between @fechaDesde and @fechaHasta
 
 -- 2. Operaciones de Clientes mayores de 200.00
 select Format(x.Fecha, 'MM') as Mes, 
@@ -28,10 +32,10 @@ select Format(x.Fecha, 'MM') as Mes,
     on x.Venta = v.Oid 
  inner join Tercero c
     on v.Cliente = c.Oid 
- where v.Empresa = 2
+ where v.Empresa = @empresa
    and x.GravadaLocal >= 200
   -- and v.Estado != 2
-   and cast(x.Fecha as Date) between '20230701' and '20231231'
+   and cast(x.Fecha as Date) between @fechaDesde and @fechaHasta
    and v.GCRecord is null
 union 
 select Format(v.Fecha, 'MM') as Mes, 
@@ -53,10 +57,10 @@ select Format(v.Fecha, 'MM') as Mes,
     from TerceroDocumento
    where Tipo in ('DUI', 'NIT')) as td
     on c.Oid = td.Tercero
- where v.Empresa = 2
+ where v.Empresa = @empresa
    and (coalesce(v.Exenta, 0.00) + coalesce(v.Gravada, 0.00) + coalesce(v.Iva, 0.00)) >= 200
 --   and v.Estado != 2
-   and cast(v.Fecha as Date) between '20230701' and '20231231'
+   and cast(v.Fecha as Date) between @fechaDesde and @fechaHasta
    and v.TipoFactura = 'COVE02'
    and v.GCRecord is null
 
@@ -72,6 +76,39 @@ select Format(x.Fecha, 'MM') as Mes,
     on x.CompraFactura = c.Oid
  inner join Tercero t
     on c.Proveedor = t.Oid 
- where c.Empresa = 2
-   and cast(x.Fecha as Date) between '20230701' and '20231231'
+ where c.Empresa = @empresa
+   and cast(x.Fecha as Date) between @fechaDesde and @fechaHasta
+   and x.TipoDocumento <> '00'   -- excluimos las facturas de sujeto excluido
+   and c.GCRecord is null
+
+-- 4. Compras a proveedores que son sujetos excluidos
+select Format(x.Fecha, 'MM') as Mes, 
+       iif(coalesce(x.Nit, '') = '', 1, iif(coalesce(x.Dui, '') = '', 2, '')) as TipoDocumentoIdentProveedor,
+       coalesce(x.Nit, coalesce(x.Dui, '')) as DocumentoProveedor,
+	   t.Nombre, Format(x.Fecha, 'ddMMyyyy') as Fecha, 
+	   1 as TipoDocumento, 
+	   x.Numero, x.CompraExcluido, 
+	   d.Direccion, '' as NumeroCasa, '' as NoApartamentoLocal,
+	   '' as ComplementoDireccion,
+	   '' as Colonia, 
+	   coalesce(t.EMail, '') as CorreoElectronico,
+	   depa.IdProvincia as Departamento, ciu.IdCiudad as Municipio,
+	   coalesce((select top 1 tt.Telefono
+	               from TerceroTelefono tt
+		          where tt.Tercero = t.OID), '') as Telefono,
+	   Format(x.Fecha, 'yyyy') as Fecha, 3 as Anexo
+  from LibroCompra x
+ inner join CompraFactura c
+    on x.CompraFactura = c.Oid
+ inner join Tercero t
+    on c.Proveedor = t.Oid 
+  left join TerceroDireccion d
+    on t.DireccionPrincipal = d.OID
+  left join vProvincia depa
+    on d.Provincia = depa.Codigo
+  left join vCiudad ciu
+    on d.Ciudad = ciu.Codigo
+ where c.Empresa = @empresa
+   and cast(x.Fecha as Date) between @fechaDesde and @fechaHasta
+   and x.TipoDocumento = '00'   -- excluimos las facturas de sujeto excluido
    and c.GCRecord is null

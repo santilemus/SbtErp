@@ -4,6 +4,7 @@ using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
+using Microsoft.CodeAnalysis.Operations;
 using SBT.Apps.Banco.Module.BusinessObjects;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Facturacion.Module.BusinessObjects;
@@ -24,7 +25,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
     ///                                  
     /// </remarks>
 
-    [DefaultClassOptions, ModelDefault("Caption", "Cuenta por Cobrar"), NavigationItem("Cuenta por Cobrar")]
+    [DefaultClassOptions, ModelDefault("Caption", "Cuenta por Cobrar"), NavigationItem(false)]
     [CreatableItem(false), Persistent(nameof(CxCTransaccion)), DefaultProperty("Numero")]
     [ImageName(nameof(CxCTransaccion))]
     [RuleCriteria("CxCTransaccion Nota Credito o Debito valida solo cuando es Credito Fiscal", DefaultContexts.Save, 
@@ -72,6 +73,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         string usuarioAnulo;
         DateTime fechaAnula;
         private string numeroDocumento;
+        private XPCollection<CxCTipoTransaccion> tipoTransaccionesCxCValidas;
 
         /// <summary>
         /// Tipo de concepto o de transaccion de cuenta por cobrar
@@ -80,7 +82,8 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         [RuleRequiredField("CxCTransaccion.Tipo_Requerido", DefaultContexts.Save)]
         [Index(0), VisibleInLookupListView(true)]
         [DetailViewLayout("Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
-        [DataSourceCriteria("!IsNull([Padre]) && [Activo] == True")]
+        //[DataSourceCriteria("!IsNull([Padre]) && [Activo] == True")]
+        [DataSourceProperty(nameof(TipoTransaccionesCxCValidas))]
         [ImmediatePostData(true)]
         public CxCTipoTransaccion Tipo
         {
@@ -96,9 +99,9 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
                             x => x.Tipo.Codigo == "DACV02" && x.Activo == true && x.Agencia.Oid == Venta.Agencia.Oid);
                         var resolucion = Session.FindObject<SBT.Apps.Facturacion.Module.BusinessObjects.AutorizacionDocumento>(criteria);
                         AutorizacionDocumento = resolucion;
-                        OnChanged(nameof(AutorizacionDocumento));
+                        //OnChanged(nameof(AutorizacionDocumento));
                     }
-                    DoTipoChanged(true, tipo);
+                    //DoTipoChanged(true, tipo);
                 }
             }
         }
@@ -323,6 +326,24 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         #endregion
 
         #region Collecciones
+
+        [Browsable(false)]
+        public XPCollection<CxCTipoTransaccion> TipoTransaccionesCxCValidas
+        {
+            get
+            {
+                if (tipoTransaccionesCxCValidas == null)
+                {
+                    tipoTransaccionesCxCValidas = new XPCollection<CxCTipoTransaccion>(Session);
+                }
+                if (Venta.TipoFactura.Codigo == "COVE02")  // cuando es consumidor final se excluyen notas de credito y debito
+                    tipoTransaccionesCxCValidas.Filter = CriteriaOperator.FromLambda<CxCTipoTransaccion>(x => x.Padre != null  && x.Padre.Oid != 1 && x.Padre.Oid != 16 && x.Activo);
+                else
+                    tipoTransaccionesCxCValidas.Filter = CriteriaOperator.FromLambda<CxCTipoTransaccion>(x => x.Padre != null && x.Activo);
+                return tipoTransaccionesCxCValidas;
+            }
+        }
+            
         #endregion
 
 

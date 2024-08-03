@@ -128,7 +128,7 @@ namespace SBT.Apps.Compra.Module.Controllers
         /// </summary>
         /// <remarks>
         /// PENDIENTE de modificar el procedimiento que genera el libro, porque los registros con GCRecord diferente de nulo se deben borrar del libro antes
-        /// de insertar o actualizar, porque son facturas que se borraron
+        /// de insertar o actualizar, porque son facturas que se borraro
         /// </remarks>
         /// <param name="sender"></param>
         /// <param name="e"></param>

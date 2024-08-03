@@ -427,14 +427,14 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         #endregion
 
         #region Colecciones
-        [Association("Venta-Detalles"), DevExpress.Xpo.Aggregated, XafDisplayName("Detalles"), Index(0)]
+        [Association("Venta-Detalles"), DevExpress.Xpo.Aggregated, XafDisplayName("Detalle Venta"), Index(0)]
         public XPCollection<VentaDetalle> Detalles => GetCollection<VentaDetalle>(nameof(Detalles));
 
         [Association("Factura-ResumenTributos"), DevExpress.Xpo.Aggregated, XafDisplayName("Resumen Tributos"), Index(1)]
         public XPCollection<VentaResumenTributo> ResumenTributos => GetCollection<VentaResumenTributo>(nameof(ResumenTributos));
 
 
-        [Association("Venta-CxCTransacciones"), Index(2), XafDisplayName("Cuenta por Cobrar"), DevExpress.Xpo.Aggregated]
+        [Association("Venta-CxCTransacciones"), Index(2), XafDisplayName("Transacciones"), DevExpress.Xpo.Aggregated]
         public XPCollection<CxC.Module.BusinessObjects.CxCTransaccion> CxCTransacciones => GetCollection<CxC.Module.BusinessObjects.CxCTransaccion>(nameof(CxCTransacciones));
 
 

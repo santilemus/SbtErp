@@ -19,9 +19,6 @@
       </Item>
     </Items>
   </NavigationItems>
-  <Options>
-    <LayoutManagerOptions RequiredFieldMark="*" CaptionLocation="Left" />
-  </Options>
   <SchemaModules>
     <SchemaModule Name="CloneObjectModule" Version="24.1.3.0" IsNewNode="True" />
     <SchemaModule Name="SystemModule" Version="24.1.3.0" IsNewNode="True" />

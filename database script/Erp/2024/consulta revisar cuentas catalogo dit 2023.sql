@@ -66,3 +66,8 @@ select c1.Oid, c1.Empresa, c1.CodigoCuenta, c1.Nombre, c1.TipoCuenta, c1.TipoSal
 s
 delete from Tercero
  where GCRecord is not null
+
+
+select * from ConCatalogo
+ where Empresa = 2
+   and CodigoCuenta like '1102030301'

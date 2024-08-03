@@ -1,5 +1,6 @@
 ﻿using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp;
+using DevExpress.ExpressApp.Actions;
 using DevExpress.ExpressApp.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Base.Module.Controllers;
@@ -19,10 +20,20 @@ namespace SBT.Apps.Facturacion.Module.Controllers
     public class CxCTransaccionController : ViewControllerBase
     {
         InventarioTipoMovimiento tipoMovimiento;
+        PopupWindowShowAction pwsaDevolucionTotal;
         public CxCTransaccionController() : base()
         {
             TargetObjectType = typeof(SBT.Apps.CxC.Module.BusinessObjects.CxCTransaccion);
             TargetViewType = ViewType.Any;
+
+            pwsaDevolucionTotal = new PopupWindowShowAction(this, "pwsaDevolucionTotal", DevExpress.Persistent.Base.PredefinedCategory.RecordEdit);
+            pwsaDevolucionTotal.Caption = "Devolución Total";
+            pwsaDevolucionTotal.ToolTip = @"Clic para generar una nota de crédito que revierte la totalidad de la venta";
+            pwsaDevolucionTotal.TargetObjectType = typeof(SBT.Apps.CxC.Module.BusinessObjects.CxCTransaccion);
+            pwsaDevolucionTotal.TargetViewType = ViewType.ListView;
+            //pwsaDevolucionTotal.TargetObjectsCriteria = "[Venta.Estado] == 'Debe' && [Venta.Saldo] != 0.0";
+            pwsaDevolucionTotal.ImageName = "service";
+            pwsaDevolucionTotal.PaintStyle = DevExpress.ExpressApp.Templates.ActionItemPaintStyle.Image;
         }
 
         protected override void OnActivated()
@@ -30,12 +41,17 @@ namespace SBT.Apps.Facturacion.Module.Controllers
             base.OnActivated();
             ObjectSpace.ObjectChanged += ObjectSpace_Changed;
             ObjectSpace.Committing += ObjectSpace_Commiting;
+            pwsaDevolucionTotal.CustomizePopupWindowParams += PwsaDevolucionTotal_CustomizePopupWindowParams;
+            pwsaDevolucionTotal.Execute += PwsaDevolucionTotal_Execute;
+
         }
 
         protected override void OnDeactivated()
         {
             ObjectSpace.ObjectChanged -= ObjectSpace_Changed;
             ObjectSpace.Committing -= ObjectSpace_Commiting;
+            pwsaDevolucionTotal.CustomizePopupWindowParams -= PwsaDevolucionTotal_CustomizePopupWindowParams;
+            pwsaDevolucionTotal.Execute -= PwsaDevolucionTotal_Execute;
             base.OnDeactivated();
         }
 
@@ -245,5 +261,49 @@ namespace SBT.Apps.Facturacion.Module.Controllers
                 }
             }
         }
+
+        /// <summary>
+        /// evento para generar una nota de crédito por el total de la venta
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void PwsaDevolucionTotal_Execute(object sender, PopupWindowShowActionExecuteEventArgs e)
+        {
+            ((CxCDocumento)e.PopupWindowViewCurrentObject).Save();
+        }
+
+        private void PwsaDevolucionTotal_CustomizePopupWindowParams(object sender, CustomizePopupWindowParamsEventArgs e)
+        {
+            CxCDocumento doc = ObjectSpace.CreateObject<CxCDocumento>();
+            var view = Application.CreateDetailView(doc);
+
+            if (doc == null)
+            {
+                // mensaje aqui
+                return;
+            }
+            var tipo = ObjectSpace.GetObjectByKey<CxCTipoTransaccion>(2);
+            doc.Tipo = tipo ?? null;
+            doc.Moneda = doc.Venta.Moneda;
+            doc.ValorMoneda = doc.Venta.ValorMoneda;
+            doc.Fecha = DateTime.Now;
+            foreach (var item in doc.Venta.Detalles)
+            {
+                var detaCxC = ObjectSpace.CreateObject<CxCDocumentoDetalle>();
+                detaCxC.VentaDetalle = item;
+                detaCxC.CxCDocumento = doc;
+                detaCxC.Cantidad = item.Cantidad;
+                detaCxC.PrecioUnidad = item.PrecioUnidad;
+                detaCxC.Exenta = item.Exenta;
+                detaCxC.Gravada = item.Gravada;
+                detaCxC.NoSujeta = item.NoSujeta;
+                detaCxC.Iva = item.Iva;
+                doc.Detalles.Add(detaCxC);
+            }
+            doc.Estado = ECxCTransaccionEstado.Digitado;
+
+            e.View = view;
+        }
+
     }
 }

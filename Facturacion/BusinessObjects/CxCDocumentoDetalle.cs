@@ -1,4 +1,5 @@
-﻿using DevExpress.ExpressApp;
+﻿using DevExpress.Data.Filtering;
+using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
@@ -49,6 +50,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         decimal cantidad;
         VentaDetalle ventaDetalle;
         CxC.Module.BusinessObjects.CxCDocumento cxCDocumento;
+        XPCollection<VentaDetalle> ventaDetallesValido;
 
         [Association("CxCDocumento-Detalles"), XafDisplayName("CxC Documento"), Index(0)]
         public CxC.Module.BusinessObjects.CxCDocumento CxCDocumento
@@ -59,6 +61,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
 
 
         [Association("VentaDetalle-CxCDocumentoDetalles"), XafDisplayName("Venta Detalle"), Index(1)]
+        [DataSourceProperty(nameof(VentaDetallesValido), DataSourcePropertyIsNullMode.SelectNothing)]
         public VentaDetalle VentaDetalle
         {
             get => ventaDetalle;
@@ -164,6 +167,30 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         [XafDisplayName("Cantidad Anulada"), ModelDefault("DisplayFormat", "{0:N2}"), VisibleInListView(false), VisibleInLookupListView(false)]
         public decimal? CantidadAnulada => cantidadAnulada;
 
+
+        #endregion
+
+        /// <summary>
+        /// Para filtrar unicamente las lineas de detalle del documento de venta que se le esta aplicando la transaccion de CxC
+        /// y además que la (cantidad - cantidad anulada) > 0
+        /// </summary>
+        /// <remarks>
+        /// PENDIENTE VALIDAR QUE NO halla un documento previo (nota de crédito donde se halla devuelto producto, porque en ese caso hay que ver la cantidad real disponible
+        /// para devolver en el documento
+        /// </remarks>
+        #region Collecciones
+        [Browsable(false)]
+        public XPCollection<VentaDetalle> VentaDetallesValido
+        {
+            get
+            {
+                if (ventaDetallesValido == null) {
+                    CriteriaOperator criteria = CriteriaOperator.FromLambda<VentaDetalle>(x => x.Venta.Oid == CxCDocumento.Venta.Oid && (x.Cantidad - x.CantidadAnulada) > 0);
+                    ventaDetallesValido = new XPCollection<VentaDetalle>(Session, criteria);
+                }
+                return ventaDetallesValido;
+            }
+        }
 
         #endregion
 
