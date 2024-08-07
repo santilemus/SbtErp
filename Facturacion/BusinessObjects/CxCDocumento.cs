@@ -19,7 +19,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
     /// </summary>
 
     [DefaultClassOptions, ModelDefault(@"Caption", @"CxC Documento"), NavigationItem(false), CreatableItem(false),
-        Persistent(nameof(CxCDocumento)), DefaultProperty(nameof(Numero))]
+        DefaultProperty(nameof(Numero)), VisibleInReports(true), VisibleInDashboards(true)]
     [MapInheritance(MapInheritanceType.ParentTable)]
     [ImageName(nameof(CxCDocumento))]
     [RuleCriteria("CxCDocumento.SaldoPendiente > 0 y Estado = Debe", DefaultContexts.Save, "[Venta.Estado] == 0 && [Venta.Saldo] <> 0.0",

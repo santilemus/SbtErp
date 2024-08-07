@@ -7,6 +7,7 @@ using DevExpress.ExpressApp.Xpo;
 using DevExpress.Persistent.BaseImpl;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Base.Module.Controllers;
+using SBT.Apps.CxC.Module.BusinessObjects;
 using SBT.Apps.Facturacion.Module.BusinessObjects;
 using SBT.Apps.Inventario.Module.BusinessObjects;
 using System;
@@ -28,13 +29,24 @@ namespace SBT.Apps.Facturacion.Module.Controllers
         private NewObjectViewController newController;
         private SimpleAction imprimirDocumento;
         private PopupWindowShowAction pwsaAnular;
-
+        private PopupWindowShowAction pwsaDevolucionTotal;
 
         public vcVenta() : base()
         {
             TargetObjectType = typeof(SBT.Apps.Facturacion.Module.BusinessObjects.Venta);
             TargetViewType = ViewType.Any;
             TargetViewNesting = Nesting.Root;
+
+            pwsaDevolucionTotal = new PopupWindowShowAction(this, "pwsaDevolucionTotal", DevExpress.Persistent.Base.PredefinedCategory.RecordEdit);
+            pwsaDevolucionTotal.Caption = "Devolución Total";
+            pwsaDevolucionTotal.ToolTip = @"Clic para generar una nota de crédito que revierte la totalidad de la venta";
+            pwsaDevolucionTotal.TargetObjectType = typeof(SBT.Apps.Facturacion.Module.BusinessObjects.Venta);
+            pwsaDevolucionTotal.TargetViewType = ViewType.DetailView;
+            pwsaDevolucionTotal.TargetViewId = "Venta_CxC_DetailView";
+            //pwsaDevolucionTotal.TargetObjectsCriteria = "[Venta.Estado] == 'Debe' && [Venta.Saldo] != 0.0";
+            pwsaDevolucionTotal.ImageName = "service";
+            pwsaDevolucionTotal.PaintStyle = DevExpress.ExpressApp.Templates.ActionItemPaintStyle.Image;
+            pwsaDevolucionTotal.IsSizeable = true;
         }
 
         protected override void OnActivated()
@@ -47,6 +59,8 @@ namespace SBT.Apps.Facturacion.Module.Controllers
                 newController.ObjectCreated += NewController_ObjectCreated;
             pwsaAnular.Execute += PwsaAnular_Execute;
             pwsaAnular.CustomizePopupWindowParams += PwsaAnular_CustomizePopupWindowParams;
+            pwsaDevolucionTotal.CustomizePopupWindowParams += PwsaDevolucionTotal_CustomizePopupWindowParams;
+            pwsaDevolucionTotal.Execute += PwsaDevolucionTotal_Execute;
         }   
 
         protected override void OnDeactivated()
@@ -57,7 +71,8 @@ namespace SBT.Apps.Facturacion.Module.Controllers
                 newController.ObjectCreated -= NewController_ObjectCreated;
             pwsaAnular.Execute -= PwsaAnular_Execute;
             pwsaAnular.CustomizePopupWindowParams -= PwsaAnular_CustomizePopupWindowParams;
-
+            pwsaDevolucionTotal.CustomizePopupWindowParams -= PwsaDevolucionTotal_CustomizePopupWindowParams;
+            pwsaDevolucionTotal.Execute -= PwsaDevolucionTotal_Execute;
             base.OnDeactivated();
         }
 
@@ -318,6 +333,7 @@ namespace SBT.Apps.Facturacion.Module.Controllers
             anularParams.FechaAnulacion = DateTime.Now;
             e.View = Application.CreateDetailView(osParam, anularParams);
             e.View.Caption = "Anular Venta";
+           
         }
 
         private void ImprimirDocumento_Execute(object sender, SimpleActionExecuteEventArgs e)
@@ -342,6 +358,44 @@ namespace SBT.Apps.Facturacion.Module.Controllers
             };
         }
 
-        
+        /// <summary>
+        /// evento para generar una nota de crédito por el total de la venta
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void PwsaDevolucionTotal_Execute(object sender, PopupWindowShowActionExecuteEventArgs e)
+        {
+            //((CxCDocumento)e.PopupWindowViewCurrentObject).Save();
+            ((Venta)View.CurrentObject).CxCTransacciones.Add(((CxCDocumento)e.PopupWindowViewCurrentObject));
+        }
+
+        private void PwsaDevolucionTotal_CustomizePopupWindowParams(object sender, CustomizePopupWindowParamsEventArgs e)
+        {
+            e.DialogController.SaveOnAccept = false;
+            CxCDocumento doc = ObjectSpace.CreateObject<CxCDocumento>();
+            doc.Venta = (Venta)View.CurrentObject;
+            var view = Application.CreateDetailView(ObjectSpace, "CxCDocumento_DetailView", false, doc);
+            var tipo = ObjectSpace.GetObjectByKey<CxCTipoTransaccion>(2);
+            doc.Tipo = tipo ?? null;
+            doc.Moneda = doc.Venta.Moneda;
+            doc.ValorMoneda = doc.Venta.ValorMoneda;
+            doc.Fecha = DateTime.Now;
+            foreach (var item in doc.Venta.Detalles)
+            {
+                var detaCxC = ObjectSpace.CreateObject<CxCDocumentoDetalle>();
+                detaCxC.VentaDetalle = item;
+                detaCxC.CxCDocumento = doc;
+                detaCxC.Cantidad = item.Cantidad;
+                detaCxC.PrecioUnidad = item.PrecioUnidad;
+                detaCxC.Exenta = item.Exenta;
+                detaCxC.Gravada = item.Gravada;
+                detaCxC.NoSujeta = item.NoSujeta;
+                detaCxC.Iva = item.Iva;
+                doc.Detalles.Add(detaCxC);
+            }
+            doc.Estado = ECxCTransaccionEstado.Digitado;
+ 
+            e.View = view;
+        }
     }
 }

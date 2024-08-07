@@ -1,7 +1,9 @@
 ﻿using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.Actions;
+using DevExpress.ExpressApp.ReportsV2;
 using DevExpress.ExpressApp.Xpo;
+using DevExpress.Persistent.BaseImpl;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Base.Module.Controllers;
 using SBT.Apps.CxC.Module.BusinessObjects;
@@ -20,20 +22,22 @@ namespace SBT.Apps.Facturacion.Module.Controllers
     public class CxCTransaccionController : ViewControllerBase
     {
         InventarioTipoMovimiento tipoMovimiento;
-        PopupWindowShowAction pwsaDevolucionTotal;
+        private SimpleAction saImprimirDocumento;
+
         public CxCTransaccionController() : base()
         {
             TargetObjectType = typeof(SBT.Apps.CxC.Module.BusinessObjects.CxCTransaccion);
             TargetViewType = ViewType.Any;
 
-            pwsaDevolucionTotal = new PopupWindowShowAction(this, "pwsaDevolucionTotal", DevExpress.Persistent.Base.PredefinedCategory.RecordEdit);
-            pwsaDevolucionTotal.Caption = "Devolución Total";
-            pwsaDevolucionTotal.ToolTip = @"Clic para generar una nota de crédito que revierte la totalidad de la venta";
-            pwsaDevolucionTotal.TargetObjectType = typeof(SBT.Apps.CxC.Module.BusinessObjects.CxCTransaccion);
-            pwsaDevolucionTotal.TargetViewType = ViewType.ListView;
-            //pwsaDevolucionTotal.TargetObjectsCriteria = "[Venta.Estado] == 'Debe' && [Venta.Saldo] != 0.0";
-            pwsaDevolucionTotal.ImageName = "service";
-            pwsaDevolucionTotal.PaintStyle = DevExpress.ExpressApp.Templates.ActionItemPaintStyle.Image;
+            // para impresion del documento cuando es nota de crédito, débito o cualquier otro documento de la cuenta por cobrar
+            saImprimirDocumento = new SimpleAction(this, "CxC_ImprimirDocumento", DevExpress.Persistent.Base.PredefinedCategory.RecordEdit.ToString());
+            saImprimirDocumento.Caption = "Imprimir";
+            saImprimirDocumento.TargetObjectType = typeof(SBT.Apps.CxC.Module.BusinessObjects.CxCTransaccion);
+            saImprimirDocumento.SelectionDependencyType = SelectionDependencyType.RequireSingleObject;
+            saImprimirDocumento.ToolTip = "Click para mostrar la vista previa de la impresión del documento seleccionado";
+            // la acción solo esta habilitada para notas de crédito o debito (condicion Tipo.Padrre.Oid in (1,16)
+            saImprimirDocumento.TargetObjectsCriteria = "[Oid] > 0 And [Tipo.Padre.Oid] in (1, 16)";
+            saImprimirDocumento.ImageName = "ShowPrintPreview";
         }
 
         protected override void OnActivated()
@@ -41,17 +45,14 @@ namespace SBT.Apps.Facturacion.Module.Controllers
             base.OnActivated();
             ObjectSpace.ObjectChanged += ObjectSpace_Changed;
             ObjectSpace.Committing += ObjectSpace_Commiting;
-            pwsaDevolucionTotal.CustomizePopupWindowParams += PwsaDevolucionTotal_CustomizePopupWindowParams;
-            pwsaDevolucionTotal.Execute += PwsaDevolucionTotal_Execute;
-
+            saImprimirDocumento.Execute += SaImprimirDocumento_Execute;
         }
 
         protected override void OnDeactivated()
         {
             ObjectSpace.ObjectChanged -= ObjectSpace_Changed;
             ObjectSpace.Committing -= ObjectSpace_Commiting;
-            pwsaDevolucionTotal.CustomizePopupWindowParams -= PwsaDevolucionTotal_CustomizePopupWindowParams;
-            pwsaDevolucionTotal.Execute -= PwsaDevolucionTotal_Execute;
+            saImprimirDocumento.Execute -= SaImprimirDocumento_Execute;
             base.OnDeactivated();
         }
 
@@ -263,47 +264,36 @@ namespace SBT.Apps.Facturacion.Module.Controllers
         }
 
         /// <summary>
-        /// evento para generar una nota de crédito por el total de la venta
+        /// Imprimir el documento solo cuando esta habilitada para el tipo de documento: originalmente nota de crédito y débito
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void PwsaDevolucionTotal_Execute(object sender, PopupWindowShowActionExecuteEventArgs e)
+        /// <exception cref="NotImplementedException"></exception>
+        private void SaImprimirDocumento_Execute(object sender, SimpleActionExecuteEventArgs e)
         {
-            ((CxCDocumento)e.PopupWindowViewCurrentObject).Save();
-        }
-
-        private void PwsaDevolucionTotal_CustomizePopupWindowParams(object sender, CustomizePopupWindowParamsEventArgs e)
-        {
-            CxCDocumento doc = ObjectSpace.CreateObject<CxCDocumento>();
-            var view = Application.CreateDetailView(doc);
-
-            if (doc == null)
+            if (View.CurrentObject == null)
             {
-                // mensaje aqui
+                Application.ShowViewStrategy.ShowMessage("No se encuentra ningún documento para imprimir", InformationType.Error);
                 return;
             }
-            var tipo = ObjectSpace.GetObjectByKey<CxCTipoTransaccion>(2);
-            doc.Tipo = tipo ?? null;
-            doc.Moneda = doc.Venta.Moneda;
-            doc.ValorMoneda = doc.Venta.ValorMoneda;
-            doc.Fecha = DateTime.Now;
-            foreach (var item in doc.Venta.Detalles)
+            if (View.CurrentObject.GetType() != typeof(CxCDocumento))
             {
-                var detaCxC = ObjectSpace.CreateObject<CxCDocumentoDetalle>();
-                detaCxC.VentaDetalle = item;
-                detaCxC.CxCDocumento = doc;
-                detaCxC.Cantidad = item.Cantidad;
-                detaCxC.PrecioUnidad = item.PrecioUnidad;
-                detaCxC.Exenta = item.Exenta;
-                detaCxC.Gravada = item.Gravada;
-                detaCxC.NoSujeta = item.NoSujeta;
-                detaCxC.Iva = item.Iva;
-                doc.Detalles.Add(detaCxC);
+                Application.ShowViewStrategy.ShowMessage($@"Objeto seleccionado no válido, debe ser del tipo {nameof(CxCDocumento)}", InformationType.Error);
+                return;
             }
-            doc.Estado = ECxCTransaccionEstado.Digitado;
+            var reportOsProvider = ReportDataProvider.GetReportObjectSpaceProvider(this.Application.ServiceProvider);
+            var reportStorage = ReportDataProvider.GetReportStorage(this.Application.ServiceProvider);
 
-            e.View = view;
+            CxCDocumento doc = (CxCDocumento)View.CurrentObject;
+            IObjectSpace objectSpace = reportOsProvider.CreateObjectSpace(typeof(ReportDataV2));
+            IReportDataV2 reportData = objectSpace.GetObject<IReportDataV2>(doc.AutorizacionDocumento.Reporte);
+            string handle = reportStorage.GetReportContainerHandle(reportData);
+            ReportServiceController controller = Frame.GetController<ReportServiceController>();
+            CriteriaOperator objectsCriteria = ((BaseObjectSpace)objectSpace).GetObjectsCriteria(View.ObjectTypeInfo, e.SelectedObjects);
+            if (controller != null)
+            {
+                controller.ShowPreview(handle, objectsCriteria);
+            };
         }
-
     }
 }

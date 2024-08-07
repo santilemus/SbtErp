@@ -25,7 +25,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
     ///                                  
     /// </remarks>
 
-    [DefaultClassOptions, ModelDefault("Caption", "Cuenta por Cobrar"), NavigationItem(false)]
+    [DefaultClassOptions, ModelDefault("Caption", "CxC Transacción"), NavigationItem(false)]
     [CreatableItem(false), Persistent(nameof(CxCTransaccion)), DefaultProperty("Numero")]
     [ImageName(nameof(CxCTransaccion))]
     [RuleCriteria("CxCTransaccion Nota Credito o Debito valida solo cuando es Credito Fiscal", DefaultContexts.Save, 
@@ -95,9 +95,12 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
                 {
                     if (Tipo.Padre.Oid == 1 || Tipo.Padre.Oid == 16)
                     {
-                        CriteriaOperator criteria = CriteriaOperator.FromLambda<SBT.Apps.Facturacion.Module.BusinessObjects.AutorizacionDocumento>(
-                            x => x.Tipo.Codigo == "DACV02" && x.Activo == true && x.Agencia.Oid == Venta.Agencia.Oid);
-                        var resolucion = Session.FindObject<SBT.Apps.Facturacion.Module.BusinessObjects.AutorizacionDocumento>(criteria);
+                        //CriteriaOperator criteria = CriteriaOperator.FromLambda<SBT.Apps.Facturacion.Module.BusinessObjects.AutorizacionDocumento>(
+                        //    x => x.Tipo.Codigo == "DACV02" && x.Activo == true && x.Agencia.Oid == Venta.Agencia.Oid);
+                        var resolucion = Session.FindObject<AutorizacionDocumento>(CriteriaOperator.And(new BinaryOperator("Tipo.Codigo", "DACV02"), 
+                            new BinaryOperator("Activo", true),
+                            new BinaryOperator("Agencia.Oid", Venta.Agencia.Oid)));
+                        //var resolucion = Session.FindObject<SBT.Apps.Facturacion.Module.BusinessObjects.AutorizacionDocumento>(criteria);
                         AutorizacionDocumento = resolucion;
                         //OnChanged(nameof(AutorizacionDocumento));
                     }

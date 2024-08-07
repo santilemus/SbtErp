@@ -951,7 +951,7 @@
         </LayoutGroup>
       </Layout>
     </DetailView>
-    <ListView Id="Venta_CxC_ListView" ClassName="SBT.Apps.Facturacion.Module.BusinessObjects.Venta" DetailViewID="Venta_CxC_DetailView" Caption="Cuenta por Cobrar" AllowNew="False" AllowDelete="False" Criteria="[Empresa.Oid] = EmpresaActualOid() And [Estado] = ##Enum#SBT.Apps.Base.Module.BusinessObjects.EEstadoFactura,Debe# And [Saldo] &lt;&gt; 0.0m" IsNewNode="True">
+    <ListView Id="Venta_CxC_ListView" ClassName="SBT.Apps.Facturacion.Module.BusinessObjects.Venta" DetailViewID="Venta_CxC_DetailView" Caption="Cuenta por Cobrar" AllowNew="False" AllowDelete="False" Criteria="[Empresa.Oid] = EmpresaActualOid() And ([Estado] In (##Enum#SBT.Apps.Base.Module.BusinessObjects.EEstadoFactura,Debe#, ##Enum#SBT.Apps.Base.Module.BusinessObjects.EEstadoFactura,Devolucion#) Or [Saldo] &lt;&gt; 0.0m)" IsNewNode="True">
       <Columns IsNewNode="True">
         <ColumnInfo Id="Agencia" PropertyName="Agencia" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="AutorizacionDocumento" PropertyName="AutorizacionDocumento" Index="-1" IsNewNode="True" />
