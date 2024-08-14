@@ -1,8 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SBT.eFactura.Dte.Poco
+namespace SBT.eFactura.Dte.Poco.Send
 {
-    public class FeFacturaSujetoExcluido
+    /// <summary>
+    /// POCO class para construir fe-fse-v1.json
+    /// </summary>
+    /// <remarks>
+    /// Clase para construir el json que corresponde a una <b>factura de sujeto excluído a emitir</b> en compras y enviar 
+    /// a la facturación electrónica
+    /// </remarks>
+    public class FeFse
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("identificacion")]
@@ -26,7 +33,7 @@ namespace SBT.eFactura.Dte.Poco
         [System.Text.Json.Serialization.JsonPropertyName("cuerpoDocumento")]
         [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]
         [Required]
-        public System.Collections.Generic.ICollection<CuerpoDocumento>? CuerpoDocumento { get; set; }
+        public ICollection<CuerpoDocumento>? CuerpoDocumento { get; set; }
 
         /// <summary>
         /// Resumen del dte
@@ -40,6 +47,12 @@ namespace SBT.eFactura.Dte.Poco
         [System.Text.Json.Serialization.JsonPropertyName("apendice")]
         [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]
         public Apendice? Apendice { get; set; }
+
+        /// <summary>
+        /// Respuesta generada por la plataforma de facturación electrónica del MH
+        /// </summary>
+        [System.Text.Json.Serialization.JsonPropertyName("responseMH")]
+        public ResponseMH? ResponseMH { get; set; }
 
     }
 }

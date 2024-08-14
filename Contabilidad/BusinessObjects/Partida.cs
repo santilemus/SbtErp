@@ -73,6 +73,8 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             Numero = -1;
             Oid = -1;
             Tipo = ETipoPartida.Diario;
+            Automatica = false;
+            Estado = EPartidaEstado.Aprobada;
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
@@ -364,7 +366,10 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
     }
 
     /// <summary>
-    /// Enumeración con los tipos de partida
+    /// Enumeración con los tipos de partida. Valores válidos son:
+    /// <br>Registrada = 0</br>
+    /// <br>Aprobada = 1</br>
+    /// <br>Rechazada = 2</br>
     /// <br>Incorporado el 15/julio/2024, para identificar las partidas automáticas (Generada) de las digitas y posteriormente la aprobación o rechazao
     /// de las partidas automáticas
     /// </br>

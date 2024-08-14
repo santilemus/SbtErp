@@ -4,8 +4,8 @@
     <LayoutManagerOptions RequiredFieldMark="*" />
   </Options>
   <SchemaModules>
-    <SchemaModule Name="CloneObjectModule" Version="23.2.5.0" IsNewNode="True" />
-    <SchemaModule Name="SystemModule" Version="23.2.5.0" IsNewNode="True" />
+    <SchemaModule Name="CloneObjectModule" Version="24.1.3.0" IsNewNode="True" />
+    <SchemaModule Name="SystemModule" Version="24.1.3.0" IsNewNode="True" />
   </SchemaModules>
   <Views>
     <ListView Id="CompraFactura_CxPTransacciones_ListView" DataAccessMode="Server">
@@ -49,44 +49,49 @@
     <DetailView Id="CompraFactura_DetailView" DefaultFocusedItem="Fecha">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
-          <LayoutGroup Id="Datos Generales" ShowCaption="True" Direction="Horizontal" Index="0" RelativeSize="36.00416233090531" IsCollapsibleGroup="True" IsNewNode="True" Removed="True">
-            <LayoutGroup Id="Datos Generales_col1" ShowCaption="False" Index="0" RelativeSize="49.61139896373057" IsNewNode="True">
-              <LayoutItem Id="Oid" ViewItem="Oid" CaptionLocation="Left" Index="0" RelativeSize="11.764705882352942" IsNewNode="True" />
-              <LayoutItem Id="Fecha" ViewItem="Fecha" CaptionLocation="Left" Index="1" RelativeSize="8.49673202614379" IsNewNode="True" />
-              <LayoutItem Id="OrdenCompra" ViewItem="OrdenCompra" CaptionLocation="Left" Index="2" RelativeSize="8.49673202614379" IsNewNode="True" />
-              <LayoutItem Id="Proveedor" ViewItem="Proveedor" CaptionLocation="Left" Index="3" RelativeSize="8.49673202614379" IsNewNode="True" />
-              <LayoutItem Id="ProveedorGiro" ViewItem="ProveedorGiro" Index="4" RelativeSize="8.49673202614379" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="Tipo" ViewItem="Tipo" CaptionLocation="Left" Index="5" RelativeSize="8.49673202614379" IsNewNode="True" />
-              <LayoutItem Id="NumeroFactura" ViewItem="NumeroFactura" Index="6" RelativeSize="8.49673202614379" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="Serie" ViewItem="Serie" Index="7" RelativeSize="8.49673202614379" IsNewNode="True" />
-              <LayoutItem Id="TipoFactura" ViewItem="TipoFactura" CaptionLocation="Left" Index="8" RelativeSize="8.49673202614379" IsNewNode="True" />
-              <LayoutItem Id="Origen" ViewItem="Origen" CaptionLocation="Left" Index="9" RelativeSize="8.49673202614379" IsNewNode="True" />
-              <LayoutItem Id="Moneda" ViewItem="Moneda" CaptionLocation="Left" Index="10" RelativeSize="11.764705882352942" IsNewNode="True" />
+          <LayoutGroup Id="Datos Generales" ShowCaption="True" Direction="Horizontal" Index="0" RelativeSize="44.225352112676056" IsCollapsibleGroup="True" IsNewNode="True" Removed="True">
+            <LayoutGroup Id="Datos Generales_col1" ShowCaption="False" Index="0" RelativeSize="49.6014171833481" IsNewNode="True">
+              <LayoutItem Id="Oid" ViewItem="Oid" CaptionLocation="Left" Index="0" RelativeSize="12.318840579710145" IsNewNode="True" />
+              <LayoutItem Id="Fecha" ViewItem="Fecha" CaptionLocation="Left" Index="1" RelativeSize="9.420289855072463" IsNewNode="True" />
+              <LayoutItem Id="OrdenCompra" ViewItem="OrdenCompra" CaptionLocation="Left" Index="2" RelativeSize="9.420289855072463" IsNewNode="True" />
+              <LayoutItem Id="Proveedor" ViewItem="Proveedor" CaptionLocation="Left" Index="3" RelativeSize="9.420289855072463" IsNewNode="True" />
+              <LayoutItem Id="ProveedorGiro" ViewItem="ProveedorGiro" Index="4" RelativeSize="9.420289855072463" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Tipo" ViewItem="Tipo" CaptionLocation="Left" Index="5" RelativeSize="9.420289855072463" IsNewNode="True" />
+              <LayoutItem Id="NumeroFactura" ViewItem="NumeroFactura" Index="6" RelativeSize="9.420289855072463" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Serie" ViewItem="Serie" Index="7" RelativeSize="9.420289855072463" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="TipoFactura" ViewItem="TipoFactura" CaptionLocation="Left" Index="8" RelativeSize="9.420289855072463" IsNewNode="True" />
+              <LayoutItem Id="Origen" ViewItem="Origen" CaptionLocation="Left" Index="9" RelativeSize="12.318840579710145" IsNewNode="True" />
             </LayoutGroup>
-            <LayoutGroup Id="Datos Generales_col2" ShowCaption="False" Index="1" RelativeSize="50.38860103626943" Caption="Datos Generales_col2" IsNewNode="True">
-              <LayoutItem Id="ValorMoneda" ViewItem="ValorMoneda" CaptionLocation="Left" Index="0" RelativeSize="11.764705882352942" IsNewNode="True" />
-              <LayoutItem Id="Clase" ViewItem="Clase" CaptionLocation="Left" Index="1" RelativeSize="8.49673202614379" IsNewNode="True" />
-              <LayoutItem Id="TipoOperacion" ViewItem="TipoOperacion" Index="2" RelativeSize="8.49673202614379" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="ClasificacionRenta" ViewItem="ClasificacionRenta" Index="3" RelativeSize="8.49673202614379" IsNewNode="True" />
-              <LayoutItem Id="TipoCostoGasto" ViewItem="TipoCostoGasto" Index="4" RelativeSize="8.49673202614379" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="Concepto" ViewItem="Concepto" CaptionLocation="Left" Index="5" RelativeSize="8.49673202614379" IsNewNode="True" />
-              <LayoutItem Id="CondicionPago" ViewItem="CondicionPago" CaptionLocation="Left" Index="6" RelativeSize="8.49673202614379" IsNewNode="True" />
-              <LayoutItem Id="DiasCredito" ViewItem="DiasCredito" CaptionLocation="Left" Index="7" RelativeSize="8.49673202614379" IsNewNode="True" />
-              <LayoutItem Id="Estado" ViewItem="Estado" CaptionLocation="Left" Index="8" RelativeSize="8.49673202614379" IsNewNode="True" />
-              <LayoutItem Id="Comentario" ViewItem="Comentario" CaptionLocation="Left" Index="9" RelativeSize="20.26143790849673" IsNewNode="True" />
+            <LayoutGroup Id="Datos Generales_col2" ShowCaption="False" Index="1" RelativeSize="50.3985828166519" Caption="Datos Generales_col2" IsNewNode="True">
+              <LayoutItem Id="Moneda" ViewItem="Moneda" CaptionLocation="Left" Index="0" RelativeSize="12.318840579710145" IsNewNode="True" />
+              <LayoutItem Id="Clase" ViewItem="Clase" CaptionLocation="Left" Index="1" RelativeSize="9.420289855072463" IsNewNode="True" />
+              <LayoutItem Id="TipoOperacion" ViewItem="TipoOperacion" Index="2" RelativeSize="9.420289855072463" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="ClasificacionRenta" ViewItem="ClasificacionRenta" Index="3" RelativeSize="9.420289855072463" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="TipoCostoGasto" ViewItem="TipoCostoGasto" Index="4" RelativeSize="9.420289855072463" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Concepto" ViewItem="Concepto" CaptionLocation="Left" Index="5" RelativeSize="9.420289855072463" IsNewNode="True" />
+              <LayoutItem Id="CondicionPago" ViewItem="CondicionPago" CaptionLocation="Left" Index="6" RelativeSize="9.420289855072463" IsNewNode="True" />
+              <LayoutItem Id="DiasCredito" ViewItem="DiasCredito" CaptionLocation="Left" Index="7" RelativeSize="9.420289855072463" IsNewNode="True" />
+              <LayoutItem Id="Estado" ViewItem="Estado" CaptionLocation="Left" Index="8" RelativeSize="9.420289855072463" IsNewNode="True" />
+              <LayoutItem Id="Comentario" ViewItem="Comentario" CaptionLocation="Left" Index="9" RelativeSize="12.318840579710145" IsNewNode="True" />
             </LayoutGroup>
           </LayoutGroup>
-          <TabbedGroup Id="Tabs" Index="1" RelativeSize="41.51925078043705">
-            <LayoutGroup Id="Detalles" RelativeSize="100">
-              <LayoutItem Id="Detalles" RelativeSize="100" />
+          <LayoutGroup Id="Totales" ShowCaption="True" IsCollapsibleGroup="True" Direction="Horizontal" Index="1" RelativeSize="28.450704225352112" Caption="Totales Factura" IsNewNode="True" Removed="True">
+            <LayoutGroup Id="Totales_col1" ShowCaption="False" Index="0" RelativeSize="49.6014171833481" IsNewNode="True">
+              <LayoutItem Id="Exenta" ViewItem="Exenta" CaptionLocation="Left" Index="0" RelativeSize="19.767441860465116" IsNewNode="True" />
+              <LayoutItem Id="Gravada" ViewItem="Gravada" CaptionLocation="Left" Index="1" RelativeSize="15.116279069767442" IsNewNode="True" />
+              <LayoutItem Id="Iva" ViewItem="Iva" CaptionLocation="Left" Index="2" RelativeSize="15.116279069767442" IsNewNode="True" />
+              <LayoutItem Id="SubTotal" ViewItem="SubTotal" CaptionLocation="Left" Index="3" RelativeSize="15.116279069767442" IsNewNode="True" />
+              <LayoutItem Id="IvaPercibido" ViewItem="IvaPercibido" CaptionLocation="Left" Index="4" RelativeSize="15.116279069767442" IsNewNode="True" />
+              <LayoutItem Id="IvaRetenido" ViewItem="IvaRetenido" CaptionLocation="Left" Index="5" RelativeSize="19.767441860465116" IsNewNode="True" />
             </LayoutGroup>
-            <LayoutGroup Id="Ingresos" RelativeSize="100">
-              <LayoutItem Id="Ingresos" RelativeSize="100" />
+            <LayoutGroup Id="Totales_col2" ShowCaption="False" Index="1" RelativeSize="50.3985828166519" IsNewNode="True">
+              <LayoutItem Id="NoSujeta" ViewItem="NoSujeta" CaptionLocation="Left" Index="0" RelativeSize="19.767441860465116" IsNewNode="True" />
+              <LayoutItem Id="Fovial" ViewItem="Fovial" CaptionLocation="Left" Index="1" RelativeSize="15.116279069767442" IsNewNode="True" />
+              <LayoutItem Id="Renta" ViewItem="Renta" CaptionLocation="Left" Index="2" RelativeSize="15.116279069767442" IsNewNode="True" />
+              <LayoutItem Id="Total" ViewItem="Total" CaptionLocation="Left" Index="3" RelativeSize="15.116279069767442" IsNewNode="True" />
+              <LayoutItem Id="Saldo" ViewItem="Saldo" CaptionLocation="Left" Index="4" RelativeSize="34.883720930232556" IsNewNode="True" />
             </LayoutGroup>
-            <LayoutGroup Id="CxPTransacciones" RelativeSize="100">
-              <LayoutItem Id="CxPTransacciones" RelativeSize="100" />
-            </LayoutGroup>
-          </TabbedGroup>
+          </LayoutGroup>
           <LayoutGroup Id="SimpleEditors" RelativeSize="11.810012836970476" Index="2" Removed="True">
             <LayoutGroup Id="XPCustomBaseDoc" Index="0" RelativeSize="100" Removed="True">
               <LayoutGroup Id="XPCustomBaseDoc_col1" RelativeSize="49.961270333075134" Caption="XPCustomBaseDoc_col1">
@@ -101,23 +106,17 @@
               </LayoutGroup>
             </LayoutGroup>
           </LayoutGroup>
-          <LayoutGroup Id="Totales" ShowCaption="True" IsCollapsibleGroup="True" Direction="Horizontal" Index="2" RelativeSize="22.47658688865765" Caption="Totales Factura" IsNewNode="True" Removed="True">
-            <LayoutGroup Id="Totales_col1" ShowCaption="False" Index="0" RelativeSize="49.61139896373057" IsNewNode="True">
-              <LayoutItem Id="Exenta" ViewItem="Exenta" CaptionLocation="Left" Index="0" RelativeSize="20.454545454545453" IsNewNode="True" />
-              <LayoutItem Id="Gravada" ViewItem="Gravada" CaptionLocation="Left" Index="1" RelativeSize="14.772727272727273" IsNewNode="True" />
-              <LayoutItem Id="Iva" ViewItem="Iva" CaptionLocation="Left" Index="2" RelativeSize="14.772727272727273" IsNewNode="True" />
-              <LayoutItem Id="SubTotal" ViewItem="SubTotal" CaptionLocation="Left" Index="3" RelativeSize="14.772727272727273" IsNewNode="True" />
-              <LayoutItem Id="IvaPercibido" ViewItem="IvaPercibido" CaptionLocation="Left" Index="4" RelativeSize="14.772727272727273" IsNewNode="True" />
-              <LayoutItem Id="IvaRetenido" ViewItem="IvaRetenido" CaptionLocation="Left" Index="5" RelativeSize="20.454545454545453" IsNewNode="True" />
+          <TabbedGroup Id="Tabs" Index="2" RelativeSize="27.323943661971832">
+            <LayoutGroup Id="Detalles" RelativeSize="100">
+              <LayoutItem Id="Detalles" RelativeSize="100" />
             </LayoutGroup>
-            <LayoutGroup Id="Totales_col2" ShowCaption="False" Index="1" RelativeSize="50.38860103626943" IsNewNode="True">
-              <LayoutItem Id="NoSujeta" ViewItem="NoSujeta" CaptionLocation="Left" Index="0" RelativeSize="20.454545454545453" IsNewNode="True" />
-              <LayoutItem Id="Fovial" ViewItem="Fovial" CaptionLocation="Left" Index="1" RelativeSize="14.772727272727273" IsNewNode="True" />
-              <LayoutItem Id="Renta" ViewItem="Renta" CaptionLocation="Left" Index="2" RelativeSize="14.772727272727273" IsNewNode="True" />
-              <LayoutItem Id="Total" ViewItem="Total" CaptionLocation="Left" Index="3" RelativeSize="14.772727272727273" IsNewNode="True" />
-              <LayoutItem Id="Saldo" ViewItem="Saldo" CaptionLocation="Left" Index="4" RelativeSize="35.22727272727273" IsNewNode="True" />
+            <LayoutGroup Id="Ingresos" RelativeSize="100">
+              <LayoutItem Id="Ingresos" RelativeSize="100" />
             </LayoutGroup>
-          </LayoutGroup>
+            <LayoutGroup Id="CxPTransacciones" RelativeSize="100">
+              <LayoutItem Id="CxPTransacciones" RelativeSize="100" />
+            </LayoutGroup>
+          </TabbedGroup>
           <LayoutGroup Id="Datos de Pago" RelativeSize="15.466666666666667" ShowCaption="True" Removed="True">
             <LayoutItem Id="Concepto" RelativeSize="22.413793103448278" CaptionLocation="Left" />
             <LayoutItem Id="CondicionPago" RelativeSize="22.413793103448278" CaptionLocation="Left" />
@@ -319,15 +318,15 @@
     </DetailView>
     <ListView Id="CompraFactura_Detalles_ListView">
       <Columns>
-        <ColumnInfo Id="Producto" Index="0" Width="273" />
-        <ColumnInfo Id="Presentacion" Width="112" Index="1" />
-        <ColumnInfo Id="Cantidad" Index="2" Width="91" />
-        <ColumnInfo Id="PrecioUnidad" Index="3" Width="95" />
-        <ColumnInfo Id="Unidades" Width="91" Index="4" />
-        <ColumnInfo Id="Exenta" Index="5" Width="80" />
-        <ColumnInfo Id="Gravada" Index="6" Width="84" />
-        <ColumnInfo Id="Iva" Index="7" />
-        <ColumnInfo Id="NoSujeta" Index="8" />
+        <ColumnInfo Id="Unidades" Width="118" Index="-1" />
+        <ColumnInfo Id="Producto" Index="0" Width="360" />
+        <ColumnInfo Id="Presentacion" Width="153" Index="1" />
+        <ColumnInfo Id="Cantidad" Index="2" Width="124" />
+        <ColumnInfo Id="PrecioUnidad" Index="3" Width="115" />
+        <ColumnInfo Id="Exenta" Index="4" Width="101" />
+        <ColumnInfo Id="Gravada" Index="5" Width="120" />
+        <ColumnInfo Id="Iva" Index="6" Width="81" />
+        <ColumnInfo Id="NoSujeta" Index="7" Width="100" />
       </Columns>
     </ListView>
     <ListView Id="CompraFactura_ListView">

@@ -1,6 +1,7 @@
 ﻿using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
+using DevExpress.ExpressApp.Security.ClientServer;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
@@ -362,6 +363,18 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
         protected virtual void DoTipoChanged(bool forceChangeEvents, CxCTipoTransaccion oldValue)
         {
 
+        }
+
+        protected override void OnSaving()
+        {
+            if (Session is not NestedUnitOfWork && (Session.DataLayer != null) && Session.IsNewObject(this) && 
+               (Session.ObjectLayer is SecuredSessionObjectLayer) && (Numero == null || Numero <= 0))
+            {
+                CriteriaOperator criteria = CriteriaOperator.FromLambda<CxCTransaccion>(x => x.Venta.Empresa.Oid == Venta.Empresa.Oid &&
+                 x.Tipo.Oid == Tipo.Oid && x.Fecha.Year == Fecha.Year);
+                Numero = Convert.ToInt32(Session.Evaluate<Venta>(CriteriaOperator.Parse("Max(Numero)"), criteria) ?? 0) + 1;
+            }
+            base.OnSaving();
         }
 
         #endregion

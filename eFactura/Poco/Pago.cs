@@ -44,6 +44,6 @@ namespace SBT.eFactura.Dte.Poco
         /// Período del plazo pactado para el pago cuando son operaciones al crédito
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("periodo")]
-        public int Periodo { get; set; }
+        public int? Periodo { get; set; }
     }
 }

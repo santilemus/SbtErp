@@ -24,6 +24,8 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
     /// <remarks>
     /// </remarks>
     /// <cambios>
+    /// 13/agosto/2024 por SELM
+    /// Se agrega propiedad Dte para guardar el Json correspondiente cuando es un documento electrónico el que se recibe
     /// 29/febrero/2024 por SELM
     /// 700-DGII-GTR-2024-0001. Líneamientos que entran en vigencia para declaraciones de IVA y pago a cuenta de febrero del 2024.
     /// </cambios>
@@ -75,6 +77,7 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
         private EClasificacionRenta clasificacionRenta;
         private ETipoCostoGasto tipoCostoGasto;
         private TerceroGiro proveedorGiro;
+        private string dte;
 
         [Association("OrdenCompra-Facturas"), XafDisplayName("Orden Compra"), Persistent(nameof(OrdenCompra)), Index(5)]
         [DetailViewLayout("Datos Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
@@ -252,6 +255,17 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
         [VisibleInListView(true)]
         public decimal Total => Convert.ToDecimal(EvaluateAlias(nameof(Total)));
 
+        /// <summary>
+        /// Json del dte se guarda en el documento de compra
+        /// </summary>
+        [Browsable(false)]
+        [DbType("nvarchar(max)")]
+        [Delayed(nameof(Dte), true)]
+        public string Dte
+        {
+            get => GetDelayedPropertyValue<string>(nameof(Dte));
+            set => SetDelayedPropertyValue<string>(nameof(Dte), value);
+        }
 
         #endregion
 
