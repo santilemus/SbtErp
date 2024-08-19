@@ -260,7 +260,7 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
         /// </summary>
         [Browsable(false)]
         [DbType("nvarchar(max)")]
-        [Delayed(nameof(Dte), true)]
+        [Delayed(true)]
         public string Dte
         {
             get => GetDelayedPropertyValue<string>(nameof(Dte));

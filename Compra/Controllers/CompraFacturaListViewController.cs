@@ -1,4 +1,5 @@
 ﻿using DevExpress.Data.Filtering;
+using DevExpress.DataAccess.Native.Sql.ConnectionProviders;
 using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.Actions;
 using DevExpress.ExpressApp.Model;
@@ -140,16 +141,18 @@ namespace SBT.Apps.Compra.Module.Controllers
             }
         }
 
-        protected virtual void DoCargarDte(FileUploadParameter parameter)
+        protected void DoCargarDte(FileUploadParameter parameter)
         {
             using MemoryStream ms = new MemoryStream();
             parameter.FileData.SaveToStream(ms);
+
             // NOTA. Falta evaluar el tipo de Dte para cargar los otros casos. Factura, Factura de Sujeto Excluido
-            DteRead<FeCcf> dteCcf = new DteRead<FeCcf>(ms);
-            //dteCcf.LoadDteFromStream(ms);
-            if (dteCcf.JsonDte != null)
+            //DteRead<FeCcf> dteCcf = new DteRead<FeCcf>(ms);
+            DteRead dteRead = new DteRead(ms);
+
+            if (dteRead.JsonDte != null && dteRead.TipoDte == "03")
             {
-                var ccf = dteCcf.CreateObject();
+                var ccf = dteRead.CreateObject<FeCcf>();
                 string numFactura = ccf.Identificacion.CodigoGeneracion.Replace("-", "");
                 if (ObjectSpace.FirstOrDefault<CompraFactura>(x => x.Empresa.Oid == EmpresaOid && x.NumeroFactura == numFactura) != null)
                 {
@@ -193,7 +196,7 @@ namespace SBT.Apps.Compra.Module.Controllers
                     compraFactura.IvaRetenido = ccf.Resumen.IvaRetenido;
                     if (ccf.Resumen.Tributos != null)
                         compraFactura.Fovial = ccf.Resumen.Tributos.Where(x => x.Codigo == "D1" || x.Codigo == "C8").Sum(x => x.Valor);
-                    compraFactura.Dte = dteCcf.JsonDte; // para guardar el json del dte junto con la factura de compra
+ //                   compraFactura.Dte = dte.JsonDte; // para guardar el json del dte junto con la factura de compra
                     var compraFacturaDetailView = Application.CreateDetailView(os, compraFactura, true);
                     Application.ShowViewStrategy.ShowViewInPopupWindow(compraFacturaDetailView);
                     ObjectSpace.Refresh();

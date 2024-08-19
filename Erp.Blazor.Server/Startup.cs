@@ -160,6 +160,24 @@ public class Startup
                 designer.RegisterSqlDataSourceWizardCustomizationService<CustomSqlDataSourceWizardCustomizationService>();
             });
         });
+
+        services.AddCors(options =>
+        {
+            // esta politica no es correcta para produccion
+            options.AddDefaultPolicy(builder =>
+            {
+                builder.AllowAnyOrigin();
+                builder.AllowAnyMethod();
+                builder.AllowAnyHeader();
+            });
+            /// politica especifica de ejemplo, adecuarla si se va a utilizar
+            options.AddPolicy("Upload", policy =>
+                policy.WithOrigins("http://localhost")
+                .WithMethods("GET", "POST")
+                .WithHeaders("Header1", "Header2")
+            );
+        });
+
     }
 
     private Task DoSignedIn(CookieSignedInContext context)
@@ -191,6 +209,7 @@ public class Startup
         app.UseStaticFiles();
         app.UseRouting();
         app.UseAuthentication();
+        app.UseCors();  // agregado por SELM 18/ago/2024
         app.UseAuthorization();
         app.UseXaf();
         app.UseMiddleware<ExportMiddleware>();

@@ -16,6 +16,7 @@ using DevExpress.ExpressApp.Validation;
 using System.Collections;
 using DevExpress.ExpressApp.Security;
 using Microsoft.Extensions.DependencyInjection;
+using System.Security.Cryptography;
 
 namespace SBT.Apps.Contabilidad.Module.Controllers
 {
@@ -29,23 +30,8 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
         private PopupWindowShowAction pwaCierreMes;
         private SimpleAction saApertura;
         private SimpleAction saLiquidacionCierre;
-        private int fEmpresaOid;
         private string nombreUsuario;
 
-        private int EmpresaOid
-        {
-            get
-            {
-                if (fEmpresaOid <= 0)
-                {
-                    if (SecuritySystem.CurrentUser == null)
-                        fEmpresaOid = ObjectSpace.GetObjectByKey<Usuario>(ObjectSpace.ServiceProvider.GetRequiredService<ISecurityStrategyBase>().User).Empresa.Oid;
-                    else
-                        fEmpresaOid = ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid;
-                }
-                return fEmpresaOid;
-            }
-        }
 
         public vcPartida() : base()
         {
@@ -223,13 +209,23 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
                 e.Cancel = true;
                 MostrarError($"El proceso se cancela porque una propiedad para buscar la partida de {Convert.ToString((View.CurrentObject as Partida).Tipo)} en el período actual es nula");
             }
-            var ptda = ObjectSpace.FindObject<Partida>(CriteriaOperator.Parse("[Empresa.Oid] == ? && [Periodo.Oid] == ? && [Tipo] == ?",
-                (View.CurrentObject as Partida).Empresa.Oid, (View.CurrentObject as Partida).Periodo.Oid, (View.CurrentObject as Partida).Tipo));
+            Partida partidaActual = (View.CurrentObject as Partida);
+            if (partidaActual.Tipo == ETipoPartida.Apertura || partidaActual.Tipo == ETipoPartida.Liquidacion)
+                return;
+            CriteriaOperator criteria;
+            if (ObjectSpace.IsNewObject(this))
+                criteria = CriteriaOperator.FromLambda<Partida>(x => x.Empresa.Oid == partidaActual.Empresa.Oid && x.Periodo.Oid == partidaActual.Periodo.Oid &&
+                 x.Tipo == ETipoPartida.Apertura);
+            else
+                criteria = CriteriaOperator.FromLambda<Partida>(x => x.Empresa.Oid == partidaActual.Empresa.Oid && x.Periodo.Oid == partidaActual.Periodo.Oid &&
+                 x.Tipo == ETipoPartida.Apertura && x.Oid != partidaActual.Oid);
+            var ptda = ObjectSpace.FindObject<Partida>(criteria);
             if (ptda != null && (ptda != View.CurrentObject || !ObjectSpace.IsNewObject(View.CurrentObject)))
             {
                 e.Cancel = true;
                 MostrarError($"Ya existe una partida de {Convert.ToString((View.CurrentObject as Partida).Tipo)}. Solo puede existir una por período");
             }
+
         }
 
         private void saPartidaLiquidacionCierre_Execute(Object sender, SimpleActionExecuteEventArgs e)

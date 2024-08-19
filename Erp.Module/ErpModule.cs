@@ -39,7 +39,6 @@ namespace SBT.Apps.Erp.Module
         public override void Setup(ApplicationModulesManager moduleManager)
         {
             base.Setup(moduleManager);
-            ValidationRulesRegistrator.RegisterRule(moduleManager, typeof(CatalogoCodeRule), typeof(IRuleBaseProperties));
             ValidationRulesRegistrator.RegisterRule(moduleManager, typeof(ProveedorLibroCompraCodeRule), typeof(IRuleIsReferencedProperties));
         }
 

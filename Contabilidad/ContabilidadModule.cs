@@ -35,6 +35,12 @@ namespace SBT.Apps.Contabilidad
 
         }
 
+        public override void Setup(ApplicationModulesManager moduleManager)
+        {
+            base.Setup(moduleManager);
+            ValidationRulesRegistrator.RegisterRule(moduleManager, typeof(CatalogoCodeRule), typeof(IRuleBaseProperties));
+        }
+
         public override void CustomizeTypesInfo(ITypesInfo typesInfo)
         {
             base.CustomizeTypesInfo(typesInfo);

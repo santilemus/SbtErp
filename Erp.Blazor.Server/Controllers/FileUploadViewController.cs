@@ -55,16 +55,5 @@ namespace SBT.Apps.Erp.Blazor.Server.Controllers
             // Unsubscribe from previously subscribed events and release other references and resources.
             base.OnDeactivated();
         }
-
-        //[HttpPost]
-        //[Route("UploadFile")]
-        //public IActionResult UploadFile(IFormFile myFile)
-        //{
-
-        //    // Check whether the file can be uploaded.
-        //    // ...
-        //    BadRequestObjectResult result = new BadRequestObjectResult(@"Ocurrió un error durante la carga del archivo");
-        //    return result;
-        //}
     }
 }

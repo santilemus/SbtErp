@@ -47,7 +47,8 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
     /// agregadas el 16/julio/2024 y reemplazan la validacion de la propiedad TipoPartidaValida - PENDIENTE PROBARLAS
     [RuleObjectExists("Partida.Tipo Partida Existe", DefaultContexts.Save, "[Tipo] In ('Apertura', 'Cierre')", IncludeCurrentObject = false, 
         CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction, TargetCriteria = "[Tipo] in ('Apertura', 'Cierre')",
-        CustomMessageTemplate = @"Solo puede existir una partida de los siguientes Tipos '{Criteria}', no puede ingresar o generar otra similar en el período")]
+        CustomMessageTemplate = @"Solo puede existir una partida de los siguientes Tipos '{Criteria}', no puede ingresar o generar otra similar en el período",
+        ResultType = ValidationResultType.Warning)]
     [RuleObjectExists("Partida de Liquidación del ejercicio", DefaultContexts.Save, "[Tipo] == 'Liquidacion' && [Automatica]",
         CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction, TargetCriteria = "[Tipo] == 'Liquidacion'", IncludeCurrentObject = false,
         CustomMessageTemplate = @"Solo puede existir una partida de Liquidacion automática y que corresponde a la liquidación del ejercicio")]
@@ -56,8 +57,8 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         TargetCriteria = "[Tipo] == 'Liquidacion' && ![Automatica]", CustomMessageTemplate = @"Las partidas de liquidación manuales solo son válidas al final del período")]
     [RuleCriteria("Partida.Periodo Existe", DefaultContexts.Save, @"!IsNull([Periodo]) && GetDate([Fecha]) Between([Periodo.FechaInicio], [Periodo.FechaFin])",
         CustomMessageTemplate = @"Debe cumplir con la condición '{Criteria}'")]
-    [RuleObjectExists("Partidia.Fecha Cerrada", DefaultContexts.Save, @"[Empresa.Oid] == '@Empresa.Oid' && [FechaCierre] == '@Fecha' && ![DiaCerrado]",
-        LooksFor = typeof(CierreDiario), SkipNullOrEmptyValues = true)]
+    //[RuleObjectExists("Partida.Fecha Cerrada", DefaultContexts.Save, @"[Empresa.Oid] == '@Empresa.Oid' && [FechaCierre] == '@Fecha' && ![DiaCerrado]",
+    //    LooksFor = typeof(CierreDiario), SkipNullOrEmptyValues = true)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
     public class Partida : XPOBaseDoc
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
@@ -285,14 +286,18 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
 
         public bool ExistePartidaDe(int APeriodo, ETipoPartida ATipo)
         {
-            var obj = Session.Evaluate<Partida>(CriteriaOperator.Parse("Count()"),
-                CriteriaOperator.Parse("[Empresa] = ? And [Periodo] = ? And [Tipo] = ?", ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid, APeriodo, (int)ATipo));
+            CriteriaOperator criteria;
+            if (Session.IsNewObject(this))
+                criteria = CriteriaOperator.FromLambda<Partida>(x => x.Empresa.Oid == Empresa.Oid && x.Periodo.Oid == Periodo.Oid && x.Tipo == ATipo);
+            else 
+                criteria = CriteriaOperator.FromLambda<Partida>(x => x.Empresa.Oid == Empresa.Oid && x.Periodo.Oid == Periodo.Oid && x.Tipo == ATipo && x.Oid != Oid);
+            var obj = Session.Evaluate<Partida>(CriteriaOperator.Parse("Count()"), criteria);
             return Convert.ToInt32(obj) > 0;
         }
 
         [Browsable(false)]
         [RuleFromBoolProperty("Partida.Tipo No Valido", DefaultContexts.Save,
-            "Tipo {TargetObject.Tipo} no es válido porque ya existe",
+            "Tipo {TargetObject.Tipo} no es válido porque ya existe", ResultType = ValidationResultType.Warning,
             SkipNullOrEmptyValues = false, UsedProperties = "Tipo", TargetCriteria = "[Periodo.Oid] = GetYear([Fecha]) And [Tipo] In ('Apertura', 'Liquidacion', 'Cierre')")]
         public bool TipoPartidaValida
         {
