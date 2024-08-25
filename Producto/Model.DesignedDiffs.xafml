@@ -51,6 +51,45 @@
     </DetailView>
     <ListView Id="Categoria_ListView" DataAccessMode="Server" />
     <ListView Id="Categoria_LookupListView" DataAccessMode="Server" />
+    <DetailView Id="DteCatalogo_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="100">
+            <LayoutGroup Id="DteCatalogo" RelativeSize="100">
+              <LayoutGroup Id="DteCatalogo_col1" RelativeSize="49.95475113122172">
+                <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="4.290822407628129" CaptionLocation="Left" IsNewNode="True" />
+                <LayoutItem Id="Tipo" Index="1" RelativeSize="3.098927294398093" CaptionLocation="Left" />
+                <LayoutItem Id="Codigo" Index="2" RelativeSize="92.61025029797378" CaptionLocation="Left" />
+                <LayoutItem Id="Concepto" Index="3" RelativeSize="87.06766917293233" Removed="True" />
+              </LayoutGroup>
+              <LayoutGroup Id="DteCatalogo_col2" RelativeSize="50.04524886877828">
+                <LayoutItem Id="Concepto" ViewItem="Concepto" Index="0" RelativeSize="4.290822407628129" CaptionLocation="Left" IsNewNode="True" />
+                <LayoutItem Id="Equivalente" RelativeSize="3.098927294398093" Index="1" CaptionLocation="Left" />
+                <LayoutItem Id="Activo" RelativeSize="92.61025029797378" Index="2" CaptionLocation="Left" />
+              </LayoutGroup>
+            </LayoutGroup>
+            <LayoutGroup Id="XPObject" Caption="Oid" RelativeSize="77.77777777777777" Removed="True">
+              <LayoutItem Id="Oid" Removed="True" />
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="DteCatalogo_ListView">
+      <Columns>
+        <ColumnInfo Id="Tipo" Width="168" Index="0" />
+        <ColumnInfo Id="Codigo" Index="1" />
+        <ColumnInfo Id="Concepto" Index="2" />
+        <ColumnInfo Id="Equivalente" Width="105" />
+        <ColumnInfo Id="Activo" Width="88" />
+      </Columns>
+    </ListView>
+    <ListView Id="DteCatalogo_LookupListView">
+      <Columns>
+        <ColumnInfo Id="Codigo" Width="113" />
+        <ColumnInfo Id="Concepto" Width="483" />
+      </Columns>
+    </ListView>
     <ListView Id="InventarioLote_ListView">
       <Columns>
         <ColumnInfo Id="Oid" Width="56" />
@@ -364,15 +403,16 @@
       </Items>
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
-          <LayoutGroup Id="SimpleEditors" RelativeSize="12.32349165596919" Direction="Horizontal">
-            <LayoutGroup Id="Tributo_col1" ShowCaption="False" Index="0" RelativeSize="50" IsNewNode="True">
-              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="37.5" IsNewNode="True" />
-              <LayoutItem Id="Nombre" ViewItem="Nombre" Index="1" RelativeSize="27.083333333333332" IsNewNode="True" />
-              <LayoutItem Id="Clase" ViewItem="Clase" Index="2" RelativeSize="35.416666666666664" IsNewNode="True" />
+          <LayoutGroup Id="SimpleEditors" RelativeSize="10.38961038961039" Direction="Horizontal">
+            <LayoutGroup Id="Tributo_col1" ShowCaption="False" Index="0" RelativeSize="49.95579133510168" IsNewNode="True">
+              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="37.5" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Nombre" ViewItem="Nombre" Index="1" RelativeSize="27.083333333333332" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="CodigoDte" ViewItem="CodigoDte" Index="2" RelativeSize="35.416666666666664" CaptionLocation="Left" IsNewNode="True" />
             </LayoutGroup>
-            <LayoutGroup Id="Tributo_col2" ShowCaption="False" Index="1" RelativeSize="50" IsNewNode="True">
-              <LayoutItem Id="TipoBO" ViewItem="TipoBO" Index="0" RelativeSize="37.5" IsNewNode="True" />
-              <LayoutItem Id="Activo" ViewItem="Activo" Index="1" RelativeSize="62.5" IsNewNode="True" />
+            <LayoutGroup Id="Tributo_col2" ShowCaption="False" Index="1" RelativeSize="50.04420866489832" IsNewNode="True">
+              <LayoutItem Id="Clase" ViewItem="Clase" Index="0" RelativeSize="37.5" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="TipoBO" ViewItem="TipoBO" Index="1" RelativeSize="27.083333333333332" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Activo" ViewItem="Activo" Index="2" RelativeSize="35.416666666666664" CaptionLocation="Left" IsNewNode="True" />
             </LayoutGroup>
             <LayoutGroup Id="Tributo" RelativeSize="100" Removed="True">
               <LayoutGroup Id="Tributo_col1" RelativeSize="50">
@@ -391,12 +431,11 @@
               <LayoutItem Id="Oid" Removed="True" />
             </LayoutGroup>
           </LayoutGroup>
-          <LayoutGroup Id="SizeableEditors" RelativeSize="43.38896020539153" Caption="SizeableEditors">
-            <LayoutItem Id="Formula" RelativeSize="75.7396449704142" />
-            <LayoutItem Id="Comentario" ViewItem="Comentario" Index="1" RelativeSize="21.301775147928993" IsNewNode="True" Removed="True" />
-            <LayoutItem Id="Comentario1" ViewItem="" Index="2" RelativeSize="2.9585798816568047" IsNewNode="True" />
+          <LayoutGroup Id="SizeableEditors" RelativeSize="44.37229437229437" Caption="SizeableEditors">
+            <LayoutItem Id="Formula" RelativeSize="73.41463414634147" CaptionLocation="Left" />
+            <LayoutItem Id="Comentario" ViewItem="Comentario" Index="1" RelativeSize="23.414634146341463" CaptionLocation="Left" IsNewNode="True" Removed="True" />
           </LayoutGroup>
-          <LayoutGroup Id="Categorias_Group" Direction="Vertical" RelativeSize="44.28754813863928" Index="2">
+          <LayoutGroup Id="Categorias_Group" Direction="Vertical" RelativeSize="45.23809523809524" Index="2">
             <LayoutItem Id="Categorias" RelativeSize="100" />
           </LayoutGroup>
         </LayoutGroup>

@@ -164,7 +164,7 @@ namespace SBT.Apps.Compra.Module.Controllers
 
         private void PwsaAnular_CustomizePopupWindowParams(object sender, CustomizePopupWindowParamsEventArgs e)
         {
-            using IObjectSpace osParam = Application.CreateObjectSpace(typeof(AnularParametros));
+            IObjectSpace osParam = Application.CreateObjectSpace(typeof(AnularParametros));
             AnularParametros anularParams = osParam.CreateObject<AnularParametros>();
             anularParams.FechaAnulacion = DateTime.Now;
             e.View = Application.CreateDetailView(osParam, anularParams);

@@ -33,10 +33,10 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
     [Appearance("Venta - Nuevo Registro", AppearanceItemType = "Any", Enabled = true, Context = "DetailView",
         TargetItems = "Bodega;Agencia;Caja;TipoFactura;NoFactura;Cliente", Criteria = "IsNewObject(This)")]
 
-    [Appearance("Venta - Condicion Pago Contado", Criteria = "[CondicionPago] == 0",
+    [Appearance("Venta - Condicion Pago Contado", Criteria = "[CondicionPago] == 'Contado'",
         Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, AppearanceItemType = "LayoutItem", Context = "DetailView",
         TargetItems = "DiasCredito;Saldo;CxCDocumentos")]
-    [Appearance("Venta - Condicion Pago Credito", Criteria = "[CondicionPago] == 1",
+    [Appearance("Venta - Condicion Pago Credito", Criteria = "[CondicionPago] == 'Credito'",
         Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, AppearanceItemType = "LayoutItem", Context = "DetailView",
         TargetItems = "FormaPago;TipoTarjeta;NoTarjeta;Banco;NoReferenciaPago")]
 

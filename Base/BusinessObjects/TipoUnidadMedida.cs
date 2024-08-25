@@ -4,7 +4,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
 {
     public enum TipoUnidadMedida
     {
-        [XafDisplayName("Ninguna")]
+        [XafDisplayName("Otro")]
         Ninguna = 0,
         [XafDisplayName("Longitud")]
         Longitud = 1,
@@ -22,7 +22,10 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         /// Implementar metodos en el BO UnidadMedida para hacer las conversiones de cualquier unidad de medida
         /// </summary>
         [XafDisplayName("Temperatura")]
-        Temperatura = 5
+        Temperatura = 5,
+        [XafDisplayName("Área")]
+        Area = 6,
+        Potencia = 7
         //'L', 'M', 'T', 'I', 'A', 'V', 'F', 'P', 'K'
     }
 }

@@ -191,7 +191,7 @@ namespace SBT.Apps.Compra.Module.Controllers
                     compraFactura.Exenta = ccf.Resumen.TotalExenta;
                     compraFactura.Gravada = ccf.Resumen.TotalGravada;
                     compraFactura.NoSujeta = ccf.Resumen.TotalNoSujeta;
-                    compraFactura.Iva = ccf.Resumen.Tributos.FirstOrDefault<ResumenTributos>(x => x.Codigo == "02")?.Valor ?? 0.0m;
+                    compraFactura.Iva = ccf.Resumen.Tributos.FirstOrDefault<ResumenTributos>(x => x.Codigo == "20")?.Valor ?? 0.0m;
                     compraFactura.IvaPercibido = ccf.Resumen.IvaPercibido;
                     compraFactura.IvaRetenido = ccf.Resumen.IvaRetenido;
                     if (ccf.Resumen.Tributos != null)

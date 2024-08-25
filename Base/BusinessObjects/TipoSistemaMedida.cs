@@ -7,6 +7,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [XafDisplayName("Internacional")]
         Internacional = 1,
         [XafDisplayName("AngloSajón")]
-        AngloSajon = 2
+        AngloSajon = 2,
+        Otro = 3
     }
 }

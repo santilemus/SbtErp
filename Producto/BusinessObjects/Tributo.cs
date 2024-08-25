@@ -44,6 +44,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         Type tipoBO;
         EClaseTributo clase;
         string nombre;
+        private string codigoDte;
 
         [Size(100), DbType("varchar(50)"), Index(0), XafDisplayName("Nombre"), RuleRequiredField("Impuesto.Nombre_Requerido", "Save")]
         public string Nombre
@@ -57,6 +58,17 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         {
             get => clase;
             set => SetPropertyValue(nameof(Clase), ref clase, value);
+        }
+
+        [DbType("varchar(2)"), Size(2), System.ComponentModel.DisplayName("Código Dte")]
+        [RuleRequiredField("Tributo.CodigoDte_Requerido", DefaultContexts.Save)]
+        [RuleUniqueValue("Tributo.CodigoDte_Unico", DefaultContexts.Save, CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction,
+            SkipNullOrEmptyValues = false, IncludeCurrentObject = true)]
+        [Indexed(Name = "idxTributo_CodigoDte")]
+        public string CodigoDte
+        {
+            get => codigoDte;
+            set => SetPropertyValue(nameof(CodigoDte), ref codigoDte, value);
         }
 
         /// <summary>

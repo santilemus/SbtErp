@@ -631,9 +631,6 @@
                 <LayoutItem Id="Simbolo" RelativeSize="3.5665294924554183" />
               </LayoutGroup>
             </LayoutGroup>
-            <LayoutGroup Id="XPObject" Caption="Oid" RelativeSize="78.94736842105263" Removed="True">
-              <LayoutItem Id="Oid" Removed="True" />
-            </LayoutGroup>
           </LayoutGroup>
         </LayoutGroup>
       </Layout>
@@ -667,24 +664,28 @@
       </Items>
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
-          <LayoutGroup Id="SimpleEditors" Direction="Horizontal" RelativeSize="16.41991924629879">
-            <LayoutGroup Id="ZonaGeografica_col1" ShowCaption="False" Index="0" RelativeSize="49.751737835153925" IsNewNode="True">
-              <LayoutItem Id="ZonaPadre" ViewItem="ZonaPadre" Index="0" RelativeSize="29.508196721311474" IsNewNode="True" />
-              <LayoutItem Id="Codigo" ViewItem="Codigo" Index="1" RelativeSize="21.311475409836067" IsNewNode="True" />
-              <LayoutItem Id="Nombre" ViewItem="Nombre" Index="2" RelativeSize="21.311475409836067" IsNewNode="True" />
-              <LayoutItem Id="Gentilicio" ViewItem="Gentilicio" Index="3" RelativeSize="27.868852459016395" IsNewNode="True" />
+          <LayoutGroup Id="SimpleEditors" Direction="Horizontal" RelativeSize="13.723284589426322">
+            <LayoutGroup Id="ZonaGeografica_col1" ShowCaption="False" Index="0" RelativeSize="49.75017844396859" IsNewNode="True">
+              <LayoutItem Id="ZonaPadre" ViewItem="ZonaPadre" Index="0" RelativeSize="29.508196721311474" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Codigo" ViewItem="Codigo" Index="1" RelativeSize="21.311475409836067" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Nombre" ViewItem="Nombre" Index="2" RelativeSize="21.311475409836067" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Gentilicio" ViewItem="Gentilicio" Index="3" RelativeSize="27.868852459016395" CaptionLocation="Left" IsNewNode="True" />
             </LayoutGroup>
-            <LayoutGroup Id="ZonaGeografica_col2" ShowCaption="False" Index="1" RelativeSize="50.248262164846075" IsNewNode="True">
-              <LayoutItem Id="CodigoTelefonico" ViewItem="CodigoTelefonico" Index="0" RelativeSize="29.508196721311474" IsNewNode="True" />
-              <LayoutItem Id="Moneda" ViewItem="Moneda" Index="1" RelativeSize="21.311475409836067" IsNewNode="True" />
-              <LayoutItem Id="Activa" ViewItem="Activa" Index="2" RelativeSize="49.18032786885246" IsNewNode="True" />
+            <LayoutGroup Id="ZonaGeografica_col2" ShowCaption="False" Index="1" RelativeSize="50.24982155603141" IsNewNode="True">
+              <LayoutItem Id="CodigoPaisMH" ViewItem="CodigoPaisMH" Index="0" RelativeSize="29.508196721311474" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="CodigoTelefonico" ViewItem="CodigoTelefonico" Index="1" RelativeSize="21.311475409836067" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Moneda" ViewItem="Moneda" Index="2" RelativeSize="21.311475409836067" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Activa" ViewItem="Activa" Index="3" RelativeSize="27.868852459016395" CaptionLocation="Left" IsNewNode="True" />
             </LayoutGroup>
             <LayoutGroup Id="ZonaGeografica" Removed="True" />
+          </LayoutGroup>
+          <LayoutGroup Id="Zonas_Group" Direction="Vertical" RelativeSize="86.27671541057367">
+            <LayoutItem Id="Zonas" RelativeSize="100" />
           </LayoutGroup>
         </LayoutGroup>
       </Layout>
     </DetailView>
-    <ListView Id="ZonaGeografica_ListView" DataAccessMode="DataView">
+    <ListView Id="ZonaGeografica_ListView" DataAccessMode="Server" AllowEdit="True">
       <Columns>
         <ColumnInfo Id="CodigoTelefonico" Width="121" />
       </Columns>

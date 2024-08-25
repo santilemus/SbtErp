@@ -13,7 +13,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
     /// </summary>
     [ModelDefault("Caption", "Unidad de Medida"), NavigationItem("Catalogos"), Persistent("UnidadMedida"), XafDefaultProperty("Nombre")]
     [ImageName("UnidadMedida")]
-    public class UnidadMedida : XPObject
+    public class UnidadMedida : XPCustomObject
     {
         public UnidadMedida(Session session) : base(session) { }
 
@@ -63,7 +63,22 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         }
 
         #region Propiedades
+        string oid;
         TipoSistemaMedida fTipoSistema;
+        TipoUnidadMedida fTipoUnidad;
+        string fNombre;
+        decimal fMagnitud;
+        string fSimbolo;
+        bool fActivo;
+
+        [Key(false)]
+        [RuleRequiredField("UnidadMedida.Oid_requerido", DefaultContexts.Save)]
+        public string Oid
+        {
+            get => oid;
+            set => SetPropertyValue<string>(nameof(Oid), ref oid, value);
+        }
+
         /// <summary>
         /// Tipo de Sistema de la unidad de medida. Lista de valores puede ser:
         /// 1 = Sistema Internacional
@@ -78,7 +93,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             set => SetPropertyValue(nameof(TipoSistema), ref fTipoSistema, value);
         }
 
-        TipoUnidadMedida fTipoUnidad;
+
         /// <summary>
         /// Tipo de unidad de medida de acuerdo al sistema
         /// </summary>
@@ -91,7 +106,6 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             set => SetPropertyValue(nameof(TipoUnidad), ref fTipoUnidad, value);
         }
 
-        string fNombre;
         /// <summary>
         /// Nombre de la unidad de medida
         /// </summary>
@@ -105,20 +119,19 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             set { SetPropertyValue<string>(nameof(Nombre), ref fNombre, value); }
         }
 
-        decimal fMagnitud;
         /// <summary>
         /// Magnitud de la unidad de medida con respecto a la definida como medida base (tiene valor de 1.0) en cualquiera de los sistemas. Sirve para realizar las conversiones
         /// </summary>
         [Persistent(@"Magnitud")]
-        [DbType("money")]
-        [ModelDefault("DisplayFormat", "{0:#,##0.00####;(#,##0.00####)}"),
+        [DbType("numeric(22,11)")]
+        [ModelDefault("DisplayFormat", "{0:#,##0.00########;(#,##0.00########)}"),
          RuleRequiredField("UnidadMedida.Magnitud_requerido", DefaultContexts.Save, "La Magnitud es requerida")]
         public decimal Magnitud
         {
             get { return fMagnitud; }
             set { SetPropertyValue<decimal>("Magnitud", ref fMagnitud, value); }
         }
-        string fSimbolo;
+
         /// <summary>
         /// Símbolo utilizado para la unidad de medida
         /// </summary>
@@ -132,7 +145,6 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             set { SetPropertyValue<string>("Simbolo", ref fSimbolo, value); }
         }
 
-        bool fActivo;
         /// <summary>
         /// Indica sí la unidad de medida se encuentra vigente o activa
         /// </summary>

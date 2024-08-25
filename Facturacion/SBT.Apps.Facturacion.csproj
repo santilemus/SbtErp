@@ -136,6 +136,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Contabilidad\SBT.Apps.Contabilidad.csproj" />
+    <ProjectReference Include="..\eFactura\SBT.eFactura.Dte.csproj" />
     <ProjectReference Include="..\Producto\SBT.Apps.Producto.csproj" />
   </ItemGroup>
   <ItemGroup>

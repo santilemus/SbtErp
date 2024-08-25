@@ -383,6 +383,17 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
             }
         }
 
+        public override void Anular(AnularParametros AnularParams)
+        {
+            base.Anular(AnularParams);
+            Gravada = 0.0m;
+            Iva = 0.0m;
+            Exenta = 0.0m;
+            NoSujeta = 0.0m;
+            Renta = 0.0m;
+            saldo = 0.0m;
+            DoAnular();
+        }
 
         protected override void RefreshTiposDeFacturas()
         {

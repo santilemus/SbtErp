@@ -2,6 +2,7 @@
 using DevExpress.ExpressApp.DC;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
+using System.ComponentModel;
 using DevExpress.Xpo;
 using System.Text.Json.Serialization;
 
@@ -17,9 +18,9 @@ namespace SBT.Apps.Base.Module.BusinessObjects
     ///    para construir el tree.
     /// </summary>
     [DefaultClassOptions, CreatableItem(false)]
-    [DevExpress.ExpressApp.DC.XafDefaultPropertyAttribute("Nombre")]
-    [DevExpress.Persistent.Base.NavigationItemAttribute("Catalogos")]
-    [DevExpress.Persistent.Base.ImageNameAttribute("place_blue")]
+    [DefaultProperty("Nombre")]
+    [NavigationItem("Catalogos")]
+    [ImageName("place_blue")]
     [RuleIsReferenced("ZonaGeografica_Referencia", DefaultContexts.Delete, typeof(ZonaGeografica), nameof(Codigo),
         MessageTemplateMustBeReferenced = "Para borrar el objeto '{TargetObject}', debe estar seguro que no es utilizado (referenciado) en ningún lugar.",
         InvertResult = true, FoundObjectMessageFormat = "'{0}'", FoundObjectMessagesSeparator = ";")]
@@ -42,6 +43,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         private System.String _gentilicio;
         private System.String _nombre;
         private System.String _codigo;
+        private string codigoPaisMH;
         public ZonaGeografica(DevExpress.Xpo.Session session)
           : base(session)
         {
@@ -118,17 +120,20 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             set => SetPropertyValue(nameof(CodigoTelefonico), ref codigoTelefonico, value);
         }
 
-        [RuleRequiredField("ZonaGeografica.Activa_Requerido", "Save")]
-        public System.Boolean Activa
+        /// <summary>
+        /// Código del país de acuerdo al catálogo emitido por el MH de El Salvaor
+        /// </summary>
+        [Size(4), DbType("varchar(4)"), System.ComponentModel.DisplayName("Código País MH")]
+        [RuleRequiredField("ZonaGeografica.CodigoPaisMH_requerido", DefaultContexts.Save, SkipNullOrEmptyValues = true, 
+            TargetCriteria = "Len(Trim([Codigo])) == 3")]
+        [RuleUniqueValue("ZonaGeografica.CodigoPaisMH_Unico", DefaultContexts.Save, CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction,
+            IncludeCurrentObject = true)]
+        [ToolTip(@"Código del país de acuerdo a la codificación emitida por el Ministerio de Haciena para la factuaración electrónica")]
+        [Indexed(Name = "idxZonaGeografica_CodigoPaisMH")]
+        public string CodigoPaisMH
         {
-            get
-            {
-                return _activa;
-            }
-            set
-            {
-                SetPropertyValue("Activa", ref _activa, value);
-            }
+            get => codigoPaisMH;
+            set => SetPropertyValue(nameof(CodigoPaisMH), ref codigoPaisMH, value);
         }
 
         /// <summary>
@@ -142,6 +147,14 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         {
             get => moneda;
             set => SetPropertyValue(nameof(Moneda), ref moneda, value);
+        }
+
+
+        [RuleRequiredField("ZonaGeografica.Activa_Requerido", "Save")]
+        public System.Boolean Activa
+        {
+            get => _activa;
+            set => SetPropertyValue(nameof(Activa), ref _activa, value);
         }
 
         #region Colleciones
