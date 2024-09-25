@@ -16,6 +16,8 @@ namespace SBT.Apps.Erp.Module
     /// Implementacion de CustomAuthentication para el SBT-ERP. 
     /// Se requiere la seleccion de la empresa y la Agencia, antes de autenticarse. El usuario debe existir en la empresa
     /// para que permita autenticarse. 
+    /// <br>Un usuario solo puede estar vinculado a una empresa a la vez, significa que una misma persona trabajando en diferentes empresas
+    /// necesitará un usuario por empresa.</br>
     /// </summary>
     /// <remarks>
     /// Documentacion en: https://docs.devexpress.com/eXpressAppFramework/112982/task-based-help/security/how-to-use-custom-logon-parameters-and-authentication

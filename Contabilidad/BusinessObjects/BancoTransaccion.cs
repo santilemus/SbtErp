@@ -120,7 +120,7 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
                 bool changed = SetPropertyValue(nameof(BancoCuenta), ref bancoCuenta, value);
                 if (!IsLoading && !IsSaving && changed && Moneda == null)
                 {
-                    Moneda = BancoCuenta.Empresa.MonedaDefecto;
+                    Moneda = BancoCuenta.Moneda;
                     ValorMoneda = Moneda.FactorCambio;
                 }
             }

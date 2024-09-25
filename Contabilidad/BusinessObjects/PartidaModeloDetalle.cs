@@ -54,6 +54,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         private string formula;
         private string criteria;
         private ETipoOperacion tipoOperacion;
+        //private string codigoCuenta;
 
         [Association("PartidaModelo-Detalles")]
         public PartidaModelo PartidaModelo
@@ -70,6 +71,22 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             set => SetPropertyValue(nameof(Cuenta), ref catalogo, value);
         }
 
+        /*
+         * QUITAR EL COMENTARIO CUANDO SE ESTE LISTO PARA PROBAR ESTA FUNCIONALIDAD 
+         * La idea es recuperar el código de cuenta a utilizar vía el BO que se está contabilizando (TipoBO)
+         * Ejemplos: Cuentas de Activo (gasto, depreciación, activo), cuenta asociada a productos, cuenta contable de cuenta de bancos
+        [Size(500), DbType("varchar(500)"), System.ComponentModel.DisplayName("Código Cuenta")]
+        [ToolTip("Expresión para obtener la cuenta cuando es dinámica, es decir; se obtiene desde el TipoBO, por ejemplo las cuentas de un activo fijo")]
+        [ElementTypeProperty(nameof(TipoBO))]
+        [EditorAlias(EditorAliases.PopupExpressionPropertyEditor)]
+        [VisibleInListView(false)]
+        [ModelDefault("RowCount", "3")]
+        public string CodigoCuenta
+        {
+            get => codigoCuenta;
+            set => SetPropertyValue<string>(nameof(CodigoCuenta), ref codigoCuenta, value));
+        }
+        */
 
         [PersistentAlias("[Cuenta.Nombre]")]
         public string NombreCuenta
@@ -78,8 +95,12 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         }
 
 
-        [Size(150), DbType("varchar(150)"), Persistent("Concepto"), XafDisplayName("Concepto"),
+        [Size(500), DbType("varchar(500)"), Persistent("Concepto"), XafDisplayName("Concepto"),
             RuleRequiredField("PartidaModeloDetalle.Concepto_Requerido", "Save")]
+        [ElementTypeProperty(nameof(TipoBO))]
+        [EditorAlias(EditorAliases.PopupExpressionPropertyEditor)]
+        [VisibleInListView(false)]
+        [ModelDefault("RowCount", "3")]
         public string Concepto
         {
             get => concepto;

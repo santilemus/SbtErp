@@ -65,8 +65,8 @@ namespace SBT.Apps.Erp.Module.Controllers
         }
 
         /// <summary>
-        ///  Generar la partida contable para la partida modelo que se recibe en el argumento oidModelo y para 
-        ///  el View.CurrentObject. Es necesario que TargetObjectType sea igual a TipoBO de la partida modelo
+        ///  Generar la partida contable para la partida modelo que se recibe en el argumento oidModelo y para el <b>View.CurrentOBject</b>
+        ///  el View.CurrentObject. Es necesario que la propiedad <b>TargetObjectType</b> del controller, sea igual a TipoBO de la partida modelo
         /// </summary>
         /// <param name="oidModelo">El ID de la partida modelo</param>
         /// <remarks>
@@ -96,7 +96,9 @@ namespace SBT.Apps.Erp.Module.Controllers
                     continue;
                 var detallePtda = osDetalle.CreateObject<PartidaDetalle>();
                 detallePtda.Cuenta = item.Cuenta;
-                detallePtda.Concepto = NuevoConcepto(item.Concepto);
+                detallePtda.Concepto = Convert.ToString(ObjectSpace.Evaluate(tipoBO.GetType(), CriteriaOperator.Parse(item.Concepto), null));
+                //detallePtda.Concepto = NuevoConcepto(item.Concepto);
+                
                 detallePtda.ValorDebe = 0.0m;
                 detallePtda.ValorHaber = 0.0m;
                 detallePtda.AjusteConsolidacion = ETipoOperacionConsolidacion.Ninguno;
@@ -152,14 +154,15 @@ namespace SBT.Apps.Erp.Module.Controllers
         }
 
         /// <summary>
-        ///  Retornar el arreglo con los valores de los parametros, que se obtienen del View.CurrentObject, que es el objeto
-        ///  para el cual se va a generar la partida contable
+        ///  Retornar el arreglo con los valores de los parametros, que se obtienen del <b>View.CurrentObject</b>, que es el objeto
+        ///  para el cual se va a generar la partida contable, por ejemplo para una partida de Ingreso por Venta es 
+        ///  el documento de venta seleccionado para generar el asiento contable
         /// </summary>
         /// <param name="paramsName">arreglo con los nombres de los parámetros</param>
         /// <returns>Arreglo con los valores de los parámetros</returns>
         /// <remarks>
         ///  SUGERENCIA: Implementar validacion de los parametros, para identificar que existe la propiedad (de la cual toman el valor)
-        ///  de esa manera se simplifica el codigo, porque no habria necesidad de testear si la propieadad existe por cada fila (lo cual además
+        ///  de esa manera se simplifica el codigo, porque no habria necesidad de testear si la propiedad existe por cada fila (lo cual además
         ///  tiene el inconveniente que cuando no existe retorna null para ese parametro).
         ///  La validación solo se ejecutaría una vez al inicio y después solo se obtiene su valor con GetMember
         /// </remarks>

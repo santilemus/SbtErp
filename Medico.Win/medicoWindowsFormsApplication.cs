@@ -99,7 +99,7 @@ namespace SBT.Apps.Medico.Win
             }
 
             System.Globalization.CultureInfo cci = System.Globalization.CultureInfo.CurrentCulture;
-            e.SettingsStorage.SaveOption(string.Empty, "Empresa", ((CustomLogonParameters)e.LogonObject).OidEmpresa.ToString(cci.NumberFormat));
+            e.SettingsStorage.SaveOption(string.Empty, "Empresa", ((CustomLogonParameters)e.LogonObject).Empresa.Oid.ToString(cci.NumberFormat));
             e.SettingsStorage.SaveOption(string.Empty, "Agencia", ((CustomLogonParameters)e.LogonObject).Agencia.Oid.ToString(cci.NumberFormat));
             e.Handled = true;
         }
@@ -144,8 +144,8 @@ namespace SBT.Apps.Medico.Win
             /// Session.SessionID
             string sIdSesion = ((CustomLogonParameters)e.LogonParameters).UserName;
             SesionDataHelper.Inicializar(sIdSesion);
-            SesionDataHelper.Agregar("OidEmpresa", ((CustomLogonParameters)e.LogonParameters).OidEmpresa);
-            SesionDataHelper.Agregar("OidSucursal", ((CustomLogonParameters)e.LogonParameters).OidSucursal);
+            SesionDataHelper.Agregar("OidEmpresa", ((CustomLogonParameters)e.LogonParameters).Empresa.Oid);
+            SesionDataHelper.Agregar("OidSucursal", ((CustomLogonParameters)e.LogonParameters).Agencia.Oid);
             // agregar aqui otros variables globales para la sesion, por ejemplo: sucursal, bodega, caja, fecha de trabajo etc
 
             // las siguientes dos lineas son por si se necesitara hacer algo con la informacion del equipo remoto (caso de POS, para identificar las cajas)

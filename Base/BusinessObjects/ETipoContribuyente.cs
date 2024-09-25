@@ -6,9 +6,9 @@ namespace SBT.Apps.Base.Module.BusinessObjects
     /// <summary>
     /// Enumeracion con la clasificacion de los tipos de sujetos relacionado al pago de impuestos. 
     /// Esta clasificacion se utiliza para los Terceros
-    /// Gravado = 0,
-    /// Exento = 1
-    /// SujetoExcluido = 2
+    /// <br>Gravado = 0</br>
+    /// <br>Exento = 1</br>
+    /// <br>SujetoExcluido = 2</br>
     /// </summary>
     public enum ETipoContribuyente
     {

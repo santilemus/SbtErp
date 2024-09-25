@@ -2,9 +2,13 @@
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
+using System.ComponentModel;
 
 namespace SBT.Apps.Base.Module.BusinessObjects
 {
+    /// <summary>
+    /// Estructura organica de la empresa. Clasificación en Departamentos, Secciones, Agencias, Bodegas
+    /// </summary>
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Unidad")]
     [DevExpress.Persistent.Base.ImageNameAttribute("company-employee")]
     [DevExpress.ExpressApp.DC.XafDefaultPropertyAttribute("Nombre")]
@@ -14,7 +18,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         {
             base.AfterConstruction();
             Activa = true;
-            Role = ETipoRoleUnidad.Unidad;
+            Role = ETipoRoleUnidad.Departamento;
         }
         ETipoRoleUnidad? role;
         private Empresa _empresa;
@@ -33,7 +37,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Unidad Padre")]
         [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
         [DataSourceCriteria("[Empresa] == '@This.Empresa'")]
-        [DevExpress.Xpo.ExplicitLoading(1)]
+        [DevExpress.Xpo.ExplicitLoading(Depth = 1)]
         public EmpresaUnidad UnidadPadre
         {
             get
@@ -48,6 +52,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
 
 
         [DevExpress.Xpo.AssociationAttribute("Unidades-Empresa")]
+        [Browsable(false)]
         public Empresa Empresa
         {
             get => _empresa;

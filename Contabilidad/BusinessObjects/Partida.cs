@@ -41,20 +41,23 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
     [ListViewFilter("Partidas Ultimo 30 Días", "[Fecha] >= ADDDAYS(LocalDateTimeToday(), -30)")]
     [ListViewFilter("Partidas del Período", "GetYear([Fecha]) == GetYear(LocalDateTimeToday())", true)]
     [ListViewFilter("Partidas del Período Anterior", "(GetYear([Fecha])) == (GetYear(LocalDateTimeToday()) - 1)")]
-    [RuleCriteria("Partida Cuadre", DefaultContexts.Save, "[Detalles][].Count() > 0 && [TotalDebe] == [TotalHaber]",
+    [RuleCriteria("Partida Cuadre", DefaultContexts.Save, "[Detalles][].Count() > 0 || [TotalDebe] == [TotalHaber]",
         "Debe cuadrar la Partida Contable y asegurarse que no este vacía, antes de guardar", UsedProperties = "TotalDebe,TotalHaber")]
 
     /// agregadas el 16/julio/2024 y reemplazan la validacion de la propiedad TipoPartidaValida - PENDIENTE PROBARLAS
     [RuleObjectExists("Partida.Tipo Partida Existe", DefaultContexts.Save, "[Tipo] In ('Apertura', 'Cierre')", IncludeCurrentObject = false, 
-        CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction, TargetCriteria = "[Tipo] in ('Apertura', 'Cierre')",
+        CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction, TargetCriteria = "GetYear([Fecha]) == [Periodo.Oid]",
         CustomMessageTemplate = @"Solo puede existir una partida de los siguientes Tipos '{Criteria}', no puede ingresar o generar otra similar en el período",
         ResultType = ValidationResultType.Warning)]
-    [RuleObjectExists("Partida de Liquidación del ejercicio", DefaultContexts.Save, "[Tipo] == 'Liquidacion' && [Automatica]",
-        CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction, TargetCriteria = "[Tipo] == 'Liquidacion'", IncludeCurrentObject = false,
+    // -- CORREGIR Y REIMPLEMENTAR DAN PROBLEMAS CUANDO LAS VALIDACIONES SE EJECUTAN ANTES DE INSERTAR EL DETALLE
+    [RuleObjectExists("Partida de Liquidación del ejercicio", DefaultContexts.Save, "[Tipo] == 'Liquidacion' && [Automatica] == True", InvertResult = true,
+        CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction, TargetCriteria = "GetYear([Fecha]) == [Periodo.Oid] And [Tipo] == 'Liquidacion'", IncludeCurrentObject = false,
         CustomMessageTemplate = @"Solo puede existir una partida de Liquidacion automática y que corresponde a la liquidación del ejercicio")]
+
     [RuleCriteria("Partida.Tipo Liquidaciones manuales validas solo fin del periodo", 
         DefaultContexts.Save, "[Tipo] == 'Liquidacion' && GetDate([Fecha]) == GetDate([Periodo.FechaFin])",
         TargetCriteria = "[Tipo] == 'Liquidacion' && ![Automatica]", CustomMessageTemplate = @"Las partidas de liquidación manuales solo son válidas al final del período")]
+    // --*/
     [RuleCriteria("Partida.Periodo Existe", DefaultContexts.Save, @"!IsNull([Periodo]) && GetDate([Fecha]) Between([Periodo.FechaInicio], [Periodo.FechaFin])",
         CustomMessageTemplate = @"Debe cumplir con la condición '{Criteria}'")]
     //[RuleObjectExists("Partida.Fecha Cerrada", DefaultContexts.Save, @"[Empresa.Oid] == '@Empresa.Oid' && [FechaCierre] == '@Fecha' && ![DiaCerrado]",

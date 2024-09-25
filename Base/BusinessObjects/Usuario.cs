@@ -5,6 +5,7 @@ using DevExpress.Persistent.Base;
 using DevExpress.Persistent.BaseImpl.PermissionPolicy;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
+using DevExpress.XtraRichEdit.Model;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -39,7 +40,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
 
         [Association("Empresa-Usuarios"), XafDisplayName("Empresa"), VisibleInListView(true), VisibleInDetailView(true), Index(0)]
         [ImmediatePostData(true)]
-        [ExplicitLoading]
+        //[ExplicitLoading]
         public Empresa Empresa
         {
             get => empresa;
@@ -48,8 +49,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
 
         EmpresaUnidad agencia;
         [DataSourceCriteria("Empresa = '@This.Empresa'"), XafDisplayName("Agencia"), Persistent("Agencia"), Index(1)]
-        [ExplicitLoading]
-        [ImmediatePostData(true)]
+        //[ExplicitLoading(1)]
         public EmpresaUnidad Agencia
         {
             get => agencia;

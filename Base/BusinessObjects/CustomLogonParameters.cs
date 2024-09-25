@@ -24,13 +24,13 @@ namespace SBT.Apps.Base.Module.BusinessObjects
     [System.ComponentModel.DisplayName("Conectarse")]   // "Log On"
     public class CustomLogonParameters : INotifyPropertyChanged, ISerializable, ICustomObjectSerialize, ISupportClearPassword, IAuthenticationStandardLogonParameters
     {
-        int oidSucursal;
-        private int oidEmpresa;
+        //int oidSucursal;
+        //private int oidEmpresa;
         private Empresa empresa;
         private EmpresaUnidad agencia;
         private string password;
 
-        [DataSourceCriteria("Activa == True"), ImmediatePostData(true)]
+        [DataSourceCriteria("Activa == True")]
         [JsonIgnore]
         public Empresa Empresa
         {
@@ -41,21 +41,12 @@ namespace SBT.Apps.Base.Module.BusinessObjects
                 empresa = value;
                 Agencia = null;
                 OnPropertyChanged(nameof(Empresa));
+                if (Empresa != null) 
+                    Empresa.Agencias.Reload();
             }
         }
 
-        /// <summary>
-        /// Propiedad para recuperar la empresa a partir del codigo. La propiedad es utilizada desde el evento
-        /// LastLogonParametersReading del Global.asax, con el valor del codigo de la empresa guardado en la
-        /// sesion anterior
-        /// </summary>
-        [VisibleInDetailView(false), VisibleInListView(false)]
-        public int OidEmpresa
-        {
-            get { return (empresa != null) ? empresa.Oid : 0; }
-        }
-
-        [DataSourceProperty("Empresa.Unidades"), ImmediatePostData(true)]
+        [DataSourceProperty("Empresa.Agencias")]
         [JsonIgnore]
         public EmpresaUnidad Agencia
         {
@@ -65,21 +56,10 @@ namespace SBT.Apps.Base.Module.BusinessObjects
                 if (agencia == value) return;
                 agencia = value;
                 Empresa = agencia?.Empresa;
-                //UserName = Empresa?.Usuarios.FirstOrDefault(x => x.UserName == )?.UserName;
                 OnPropertyChanged(nameof(Agencia));
             }
         }
 
-        /// <summary>
-        /// Propiedad para recuperar la agencia a partir del codigo. La propiedad es utilizada desde el evento
-        /// LastLogonParametersReading del Global.asax, con el valor del codigo de la agencia guardada en la
-        /// sesion anterior
-        /// </summary>
-        [Browsable(false)]
-        public int OidSucursal
-        {
-            get { return (agencia != null) ? agencia.Oid : 1; }
-        }
 
         public CustomLogonParameters() { }
         // ISerializable 

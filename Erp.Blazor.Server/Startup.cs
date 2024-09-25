@@ -42,7 +42,10 @@ public class Startup
         {
             builder.UseApplication<BlazorBlazorApplication>();
             builder.Modules
-                .AddAuditTrailXpo()
+                .AddAuditTrailXpo(options => { 
+                    options.ObjectAuditingMode = DevExpress.Persistent.AuditTrail.ObjectAuditingMode.Lightweight; 
+                    options.Enabled = false; 
+                })
                 .AddCloningXpo()
                 .AddConditionalAppearance()
                 .AddDashboards(options =>
@@ -178,6 +181,11 @@ public class Startup
             );
         });
 
+        // Agregado el 06/sept/2024 por SELM
+        // XPO Profiller, solo para pruebas de identificación de problemas de desempeño
+        DevExpress.Xpo.Logger.ILogger logger = new DevExpress.Xpo.Logger.LoggerBase(5000);
+        DevExpress.Xpo.Logger.LogManager.SetTransport(logger);
+        services.AddSingleton((DevExpress.Xpo.Logger.Transport.ILogSource)logger);
     }
 
     private Task DoSignedIn(CookieSignedInContext context)

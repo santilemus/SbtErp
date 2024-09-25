@@ -12,6 +12,17 @@ using DevExpress.ExpressApp.Editors;
 
 namespace SBT.Apps.Contabilidad.Module.BusinessObjects
 {
+    /// <summary>
+    /// Partida Modelo Encabezado. Son los datos generales de la partida modelo
+    /// </summary>
+    /// <remarks>
+    /// <b>Comentario</b> Agregar la propiedad del BO para el cual se hace la partida modelo al encabezado y agregar filtro
+    /// para los casos donde se va a generar una sola partida con el detalle para todos los registros que cumplen el filtro aplicado
+    /// al BO que se esta contabilizando (para evitar implementar mecanismo de evaluación de los parámetros). 
+    /// Ejemplo: una sola partida para todos los documentos de venta de un día, con el detale
+    /// cada documento contabilizado. Quitar comentario, cuando se haya implementado y probado
+    /// </remarks>
+
     [DefaultClassOptions, NavigationItem("Contabilidad"), ModelDefault("Caption", "Partidas Modelo"), DefaultProperty(nameof(Concepto)),
         Persistent("ConPartidaModelo"), CreatableItem(false)]
     [ImageName(nameof(PartidaModelo))]

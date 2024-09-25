@@ -4,7 +4,6 @@ using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using System.ComponentModel;
 using DevExpress.Xpo;
-using System.Text.Json.Serialization;
 
 namespace SBT.Apps.Base.Module.BusinessObjects
 {
@@ -36,7 +35,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
 
         }
 
-        Moneda moneda;
+        string moneda;
         string codigoTelefonico;
         private System.Boolean _activa;
         private ZonaGeografica _zonaPadre;
@@ -143,7 +142,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [Appearance("ZonaGeografica.Moneda_Ocultar", Criteria = "Not([ZonaPadre] Is Null)",
             Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "DetailView")]
         [RuleRequiredField("ZonaGeografica.Moneda_Requerida", DefaultContexts.Save, TargetCriteria = "[ZonaPadre] Is Null", SkipNullOrEmptyValues = true)]
-        public Moneda Moneda
+        public string Moneda
         {
             get => moneda;
             set => SetPropertyValue(nameof(Moneda), ref moneda, value);
@@ -166,21 +165,6 @@ namespace SBT.Apps.Base.Module.BusinessObjects
                 return GetCollection<ZonaGeografica>(nameof(Zonas));
             }
         }
-        #endregion
-
-        #region ITreeNode Members
-        //IBindingList ITreeNode.Children
-        //{
-        //    get { return Zonas; }
-        //}
-        //string ITreeNode.Name
-        //{
-        //    get { return Nombre; }
-        //}
-        //ITreeNode ITreeNode.Parent
-        //{
-        //    get { return ZonaPadre; }
-        //}
         #endregion
     }
 }

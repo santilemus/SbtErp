@@ -166,7 +166,7 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
             {
                 var changed = SetPropertyValue(nameof(Factura), ref factura, value);
                 if (!IsLoading && !IsSaving && changed && Factura != null)
-                    Moneda = Factura.Empresa.MonedaDefecto;
+                    Moneda = Factura.Moneda;
             }
         }
 

@@ -66,14 +66,16 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         }
 
         #region Propiedades
-        [Browsable(false)]
+
         private Empresa empresa;
+
 #if (Firebird)
         [DbType("DM_ENTERO_CORTO"), Persistent("COD_EMP")]
 #else
         [DbType("smallint"), Persistent("Empresa")]
 #endif
         [Index(0), ModelDefault("AllowEdit", "False")]
+        [Browsable(false)]
         public Empresa Empresa
         {
             get => empresa;
@@ -83,7 +85,6 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         /// <summary>
         /// Correlativo por tipo de documento.
         /// </summary>
-        [Browsable(false)]
         private int? numero;
 #if (Firebird)
         [DbType("DM_ENTERO"), Persistent("NUMERO")]
@@ -92,6 +93,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
 #endif
         [Index(1), XafDisplayName("Número"), ModelDefault("AllowEdit", "False"), RuleRequiredField("XPCustomBaseDocs.Numero_Requerido", "Save"),
             Indexed("Empresa", Unique = false), NonCloneable]
+        [Browsable(false)]
         public int? Numero
         {
             get => numero;
@@ -128,7 +130,6 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             set => SetPropertyValue(nameof(Moneda), ref moneda, value);
         }
 
-        [Browsable(false)]
         private decimal valorMoneda;
 #if (Firebird)
         [DbType("DM_DINERO122"), Persistent("VAL_MONE")]
@@ -136,6 +137,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         [DbType("numeric(12, 2)"), Persistent(nameof(ValorMoneda))]
 #endif
         [XafDisplayName("Valor Moneda"), Index(4), ModelDefault("AllowEdit", "False")]
+        [Browsable(false)]
         public decimal ValorMoneda
         {
             get => valorMoneda;

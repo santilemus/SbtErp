@@ -32,14 +32,18 @@ namespace SBT.Apps.Base.Module.BusinessObjects
                 int id = ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid;
                 var emp = Session.GetObjectByKey<Empresa>(id);
                 this["Empresa"] = emp;
-                if (this.GetType().GetProperty("Moneda") != null && emp != null)
+            }
+            if (this.GetType().GetProperty("Moneda") != null)
+            {
+                Moneda moneda;
+                var parametro = Session.GetObjectByKey<Constante>("MONEDA DEFECTO");
+                if (parametro != null)
                 {
-                    (this["Moneda"]) = (this["Empresa"] as Empresa).MonedaDefecto;
-                    if (this.GetType().GetProperty("ValorMoneda") != null)
-                        this["ValorMoneda"] = (this["Empresa"] as Empresa).MonedaDefecto.FactorCambio;
+                    moneda = Session.GetObjectByKey<Moneda>(parametro.Valor.Trim());
+                    this["Moneda"] = moneda;
+                    this["ValorMoneda"] = moneda?.FactorCambio;
                 }
             }
-
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 

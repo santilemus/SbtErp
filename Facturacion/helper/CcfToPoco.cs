@@ -1,6 +1,8 @@
-﻿using SBT.Apps.Base.Module.BusinessObjects;
+﻿using DevExpress.Data.ExpressionEditor;
+using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Facturacion.Module.BusinessObjects;
 using SBT.Apps.Tercero.Module.BusinessObjects;
+using SBT.eFactura.Dte.Poco;
 using SBT.eFactura.Dte.Poco.Send;
 using System;
 using System.Linq;
@@ -9,22 +11,22 @@ namespace SBT.Apps.Facturacion.Module.helper
 {
     public class CcfToPoco
     {
-        public CcfToPoco(Venta vta)
+        public CcfToPoco(Venta vta, int version, string ambiente, int modeloFact, int tipoTransmision)
         {
             SBT.eFactura.Dte.Poco.Send.FeCcf ccf = new SBT.eFactura.Dte.Poco.Send.FeCcf();
             // agregamos los datos de identificacion del dte
             ccf.Identificacion = new eFactura.Dte.Poco.Identificacion()
             {
-                Version = 1,
-                Ambiente = "",
+                Version = version,    // hay que parametrizarlo en algún lugar. La versión es por tipo de dte
+                Ambiente = ambiente,
                 TipoDte = "03", // credito fiscal
                 NumeroControl = "",
                 CodigoGeneracion = "",
                 FechaEmision = vta.Fecha.Date,
                 HoraEmision = new TimeSpan(vta.Fecha.Hour, vta.Fecha.Minute, vta.Fecha.Second),
-                TipoOperacion = 1, // que es esto
+                TipoOperacion = tipoTransmision, 
                 TipoMoneda = "USD",
-                TipoModelo = 1     // revisar que es esto
+                TipoModelo = modeloFact     
             };
 
             // agregamos los datos del emisor del dte
@@ -68,7 +70,26 @@ namespace SBT.Apps.Facturacion.Module.helper
             };
             if (ccf.Receptor.Telefono  == string.Empty)
                 ccf.Receptor.Telefono = vta.Cliente.Telefonos.FirstOrDefault<TerceroTelefono>(x => x.Tercero.Oid == vta.Cliente.Oid)?.Telefono.Numero;
-            // cuerpo del documento
+            // agregamos el cuerpo del documento (detalle del crédito fiscal)
+            ccf.CuerpoDocumento = vta.Detalles.Select((p, idx) => new CuerpoDocumento
+                    {
+                        NumeroItem = idx + 1,
+                        TipoItem = p.Producto.Categoria.Clasificacion == Producto.Module.BusinessObjects.EClasificacion.Servicios ? 2 : 1,
+                        NumeroDocumento = ccf.Identificacion.CodigoGeneracion,
+                        Codigo = p.Producto.Codigo,
+                        CodTributo = "null",
+                        Descripcion = p.Descripcion ?? p.Producto.Nombre,
+                        Cantidad = p.Cantidad,
+                        UnidadMedida = 59, // unidad. Se debe agregar el atributo de unidad de medida al catalogo de producto
+                        PrecioUnidad = p.PrecioUnidad,
+                        MontoDescuento = 0.0m,
+                        VentaNoSujeta = Convert.ToDecimal(p.NoSujeta),
+                        VentaExenta = Convert.ToDecimal(p.Exenta),
+                        VentaGravada = Convert.ToDecimal(p.Gravada),
+                        Psv = 0.0m,  // precio sugerido de venta *solo informativo
+                        NoGravado = 0.0m // detalle de cargos o abonos al receptor que no afectan la base imponible 
+                    }).ToList();
+            // ahora va el resumen
         } 
 
 

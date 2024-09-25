@@ -77,9 +77,9 @@
     </DetailView>
     <ListView Id="DteCatalogo_ListView">
       <Columns>
-        <ColumnInfo Id="Tipo" Width="168" Index="0" />
+        <ColumnInfo Id="Tipo" Width="471" Index="0" />
         <ColumnInfo Id="Codigo" Index="1" />
-        <ColumnInfo Id="Concepto" Index="2" />
+        <ColumnInfo Id="Concepto" Index="2" Width="443" />
         <ColumnInfo Id="Equivalente" Width="105" />
         <ColumnInfo Id="Activo" Width="88" />
       </Columns>

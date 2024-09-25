@@ -64,7 +64,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             base.AfterConstruction();
             if (((Usuario)SecuritySystem.CurrentUser).Agencia != null)
             {
-                var unidad = this.Session.GetObjectByKey<EmpresaUnidad>(((Usuario)SecuritySystem.CurrentUser).Agencia.Oid);
+                var unidad = Session.GetObjectByKey<EmpresaUnidad>(((Usuario)SecuritySystem.CurrentUser).Agencia.Oid);
                 agencia = unidad;
             }
             giro = null;

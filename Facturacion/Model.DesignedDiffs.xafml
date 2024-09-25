@@ -858,7 +858,6 @@
         <PropertyEditor Id="DiaCerrado" PropertyName="DiaCerrado" IsNewNode="True" />
         <PropertyEditor Id="DiasCredito" PropertyName="DiasCredito" IsNewNode="True" />
         <PropertyEditor Id="DireccionEntrega" PropertyName="DireccionEntrega" IsNewNode="True" />
-        <PropertyEditor Id="Empresa" PropertyName="Empresa" IsNewNode="True" />
         <PropertyEditor Id="Estado" PropertyName="Estado" IsNewNode="True" />
         <PropertyEditor Id="Exenta" PropertyName="Exenta" AllowEdit="False" IsNewNode="True" />
         <PropertyEditor Id="Fecha" PropertyName="Fecha" IsNewNode="True" />
@@ -876,7 +875,6 @@
         <PropertyEditor Id="NotaRemision" PropertyName="NotaRemision" IsNewNode="True" />
         <PropertyEditor Id="NoTarjeta" PropertyName="NoTarjeta" IsNewNode="True" />
         <PropertyEditor Id="Nrc" PropertyName="Nrc" IsNewNode="True" />
-        <PropertyEditor Id="Numero" PropertyName="Numero" IsNewNode="True" />
         <PropertyEditor Id="Oid" PropertyName="Oid" IsNewNode="True" />
         <PropertyEditor Id="ResumenTributos" PropertyName="ResumenTributos" View="Venta_ResumenTributos_ListView" IsNewNode="True" />
         <PropertyEditor Id="Saldo" PropertyName="Saldo" IsNewNode="True" />
@@ -885,7 +883,6 @@
         <PropertyEditor Id="TipoFactura" PropertyName="TipoFactura" IsNewNode="True" />
         <PropertyEditor Id="TipoTarjeta" PropertyName="TipoTarjeta" AllowEdit="False" IsNewNode="True" />
         <PropertyEditor Id="Total" PropertyName="Total" IsNewNode="True" />
-        <PropertyEditor Id="ValorMoneda" PropertyName="ValorMoneda" IsNewNode="True" />
         <PropertyEditor Id="Vendedor" PropertyName="Vendedor" IsNewNode="True" />
       </Items>
       <Layout IsNewNode="True">
@@ -964,7 +961,6 @@
         <ColumnInfo Id="DiaCerrado" PropertyName="DiaCerrado" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="DiasCredito" PropertyName="DiasCredito" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="DireccionEntrega" PropertyName="DireccionEntrega" Index="-1" IsNewNode="True" />
-        <ColumnInfo Id="Empresa" PropertyName="Empresa" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="Giro" PropertyName="Giro" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="GravadaTasaCero" PropertyName="GravadaTasaCero" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="IvaPercibido" PropertyName="IvaPercibido" Index="-1" IsNewNode="True" />
@@ -975,12 +971,10 @@
         <ColumnInfo Id="NotaRemision" PropertyName="NotaRemision" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="NoTarjeta" PropertyName="NoTarjeta" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="Nrc" PropertyName="Nrc" Index="-1" IsNewNode="True" />
-        <ColumnInfo Id="Numero" PropertyName="Numero" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="Oid" PropertyName="Oid" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="SubTotal" PropertyName="SubTotal" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="TerceroNoDomiciliado" PropertyName="TerceroNoDomiciliado" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="TipoTarjeta" PropertyName="TipoTarjeta" Index="-1" IsNewNode="True" />
-        <ColumnInfo Id="ValorMoneda" PropertyName="ValorMoneda" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="Vendedor" PropertyName="Vendedor" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="NoFactura" PropertyName="NoFactura" Index="0" Width="85" SortIndex="0" SortOrder="Ascending" IsNewNode="True" />
         <ColumnInfo Id="Fecha" PropertyName="Fecha" Index="1" Width="100" IsNewNode="True" />
@@ -1166,7 +1160,6 @@
         <PropertyEditor Id="DiaCerrado" PropertyName="DiaCerrado" IsNewNode="True" />
         <PropertyEditor Id="DiasCredito" PropertyName="DiasCredito" IsNewNode="True" />
         <PropertyEditor Id="DireccionEntrega" PropertyName="DireccionEntrega" IsNewNode="True" />
-        <PropertyEditor Id="Empresa" PropertyName="Empresa" IsNewNode="True" />
         <PropertyEditor Id="Estado" PropertyName="Estado" IsNewNode="True" />
         <PropertyEditor Id="Exenta" PropertyName="Exenta" AllowEdit="False" IsNewNode="True" />
         <PropertyEditor Id="Fecha" PropertyName="Fecha" IsNewNode="True" />
@@ -1184,7 +1177,6 @@
         <PropertyEditor Id="NotaRemision" PropertyName="NotaRemision" IsNewNode="True" />
         <PropertyEditor Id="NoTarjeta" PropertyName="NoTarjeta" IsNewNode="True" />
         <PropertyEditor Id="Nrc" PropertyName="Nrc" IsNewNode="True" />
-        <PropertyEditor Id="Numero" PropertyName="Numero" IsNewNode="True" />
         <PropertyEditor Id="Oid" PropertyName="Oid" IsNewNode="True" />
         <PropertyEditor Id="ResumenTributos" PropertyName="ResumenTributos" View="Venta_ResumenTributos_ListView" IsNewNode="True" />
         <PropertyEditor Id="Saldo" PropertyName="Saldo" IsNewNode="True" />
@@ -1193,7 +1185,6 @@
         <PropertyEditor Id="TipoFactura" PropertyName="TipoFactura" IsNewNode="True" />
         <PropertyEditor Id="TipoTarjeta" PropertyName="TipoTarjeta" AllowEdit="False" IsNewNode="True" />
         <PropertyEditor Id="Total" PropertyName="Total" IsNewNode="True" />
-        <PropertyEditor Id="ValorMoneda" PropertyName="ValorMoneda" IsNewNode="True" />
         <PropertyEditor Id="Vendedor" PropertyName="Vendedor" IsNewNode="True" />
       </Items>
       <Layout IsNewNode="True">
@@ -1286,7 +1277,6 @@
         <PropertyEditor Id="DiaCerrado" PropertyName="DiaCerrado" IsNewNode="True" />
         <PropertyEditor Id="DiasCredito" PropertyName="DiasCredito" IsNewNode="True" />
         <PropertyEditor Id="DireccionEntrega" PropertyName="DireccionEntrega" IsNewNode="True" />
-        <PropertyEditor Id="Empresa" PropertyName="Empresa" IsNewNode="True" />
         <PropertyEditor Id="Estado" PropertyName="Estado" IsNewNode="True" />
         <PropertyEditor Id="Exenta" PropertyName="Exenta" AllowEdit="False" IsNewNode="True" />
         <PropertyEditor Id="ExportacionServicio" PropertyName="ExportacionServicio" IsNewNode="True" />
@@ -1305,7 +1295,6 @@
         <PropertyEditor Id="NotaRemision" PropertyName="NotaRemision" IsNewNode="True" />
         <PropertyEditor Id="NoTarjeta" PropertyName="NoTarjeta" IsNewNode="True" />
         <PropertyEditor Id="Nrc" PropertyName="Nrc" IsNewNode="True" />
-        <PropertyEditor Id="Numero" PropertyName="Numero" IsNewNode="True" />
         <PropertyEditor Id="Oid" PropertyName="Oid" IsNewNode="True" />
         <PropertyEditor Id="ResumenTributos" PropertyName="ResumenTributos" View="Venta_ResumenTributos_ListView" IsNewNode="True" />
         <PropertyEditor Id="Saldo" PropertyName="Saldo" IsNewNode="True" />
@@ -1314,7 +1303,6 @@
         <PropertyEditor Id="TipoFactura" PropertyName="TipoFactura" IsNewNode="True" />
         <PropertyEditor Id="TipoTarjeta" PropertyName="TipoTarjeta" AllowEdit="False" IsNewNode="True" />
         <PropertyEditor Id="Total" PropertyName="Total" IsNewNode="True" />
-        <PropertyEditor Id="ValorMoneda" PropertyName="ValorMoneda" IsNewNode="True" />
         <PropertyEditor Id="Vendedor" PropertyName="Vendedor" IsNewNode="True" />
       </Items>
       <Layout IsNewNode="True">
@@ -1397,7 +1385,6 @@
         <PropertyEditor Id="DiaCerrado" PropertyName="DiaCerrado" IsNewNode="True" />
         <PropertyEditor Id="DiasCredito" PropertyName="DiasCredito" IsNewNode="True" />
         <PropertyEditor Id="DireccionEntrega" PropertyName="DireccionEntrega" IsNewNode="True" />
-        <PropertyEditor Id="Empresa" PropertyName="Empresa" IsNewNode="True" />
         <PropertyEditor Id="Estado" PropertyName="Estado" IsNewNode="True" />
         <PropertyEditor Id="Exenta" PropertyName="Exenta" AllowEdit="False" IsNewNode="True" />
         <PropertyEditor Id="Fecha" PropertyName="Fecha" IsNewNode="True" />
@@ -1415,7 +1402,6 @@
         <PropertyEditor Id="NotaRemision" PropertyName="NotaRemision" IsNewNode="True" />
         <PropertyEditor Id="NoTarjeta" PropertyName="NoTarjeta" IsNewNode="True" />
         <PropertyEditor Id="Nrc" PropertyName="Nrc" IsNewNode="True" />
-        <PropertyEditor Id="Numero" PropertyName="Numero" IsNewNode="True" />
         <PropertyEditor Id="Oid" PropertyName="Oid" IsNewNode="True" />
         <PropertyEditor Id="ResumenTributos" PropertyName="ResumenTributos" View="Venta_ResumenTributos_ListView" IsNewNode="True" />
         <PropertyEditor Id="Saldo" PropertyName="Saldo" IsNewNode="True" />
@@ -1424,7 +1410,6 @@
         <PropertyEditor Id="TipoFactura" PropertyName="TipoFactura" IsNewNode="True" />
         <PropertyEditor Id="TipoTarjeta" PropertyName="TipoTarjeta" AllowEdit="False" IsNewNode="True" />
         <PropertyEditor Id="Total" PropertyName="Total" IsNewNode="True" />
-        <PropertyEditor Id="ValorMoneda" PropertyName="ValorMoneda" IsNewNode="True" />
         <PropertyEditor Id="Vendedor" PropertyName="Vendedor" IsNewNode="True" />
       </Items>
       <Layout IsNewNode="True">
@@ -1514,7 +1499,6 @@
         <PropertyEditor Id="DiaCerrado" PropertyName="DiaCerrado" IsNewNode="True" />
         <PropertyEditor Id="DiasCredito" PropertyName="DiasCredito" IsNewNode="True" />
         <PropertyEditor Id="DireccionEntrega" PropertyName="DireccionEntrega" IsNewNode="True" />
-        <PropertyEditor Id="Empresa" PropertyName="Empresa" IsNewNode="True" />
         <PropertyEditor Id="Estado" PropertyName="Estado" IsNewNode="True" />
         <PropertyEditor Id="Exenta" PropertyName="Exenta" AllowEdit="False" IsNewNode="True" />
         <PropertyEditor Id="Fecha" PropertyName="Fecha" IsNewNode="True" />
@@ -1532,7 +1516,6 @@
         <PropertyEditor Id="NotaRemision" PropertyName="NotaRemision" IsNewNode="True" />
         <PropertyEditor Id="NoTarjeta" PropertyName="NoTarjeta" IsNewNode="True" />
         <PropertyEditor Id="Nrc" PropertyName="Nrc" IsNewNode="True" />
-        <PropertyEditor Id="Numero" PropertyName="Numero" IsNewNode="True" />
         <PropertyEditor Id="Oid" PropertyName="Oid" IsNewNode="True" />
         <PropertyEditor Id="ResumenTributos" PropertyName="ResumenTributos" View="Venta_ResumenTributos_ListView" IsNewNode="True" />
         <PropertyEditor Id="Saldo" PropertyName="Saldo" IsNewNode="True" />
@@ -1541,7 +1524,6 @@
         <PropertyEditor Id="TipoFactura" PropertyName="TipoFactura" IsNewNode="True" />
         <PropertyEditor Id="TipoTarjeta" PropertyName="TipoTarjeta" AllowEdit="False" IsNewNode="True" />
         <PropertyEditor Id="Total" PropertyName="Total" IsNewNode="True" />
-        <PropertyEditor Id="ValorMoneda" PropertyName="ValorMoneda" IsNewNode="True" />
         <PropertyEditor Id="Vendedor" PropertyName="Vendedor" IsNewNode="True" />
       </Items>
       <Layout IsNewNode="True">
@@ -1715,7 +1697,6 @@
         <ColumnInfo Id="DiaCerrado" PropertyName="DiaCerrado" Width="50" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="DiasCredito" PropertyName="DiasCredito" Width="70" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="DireccionEntrega" PropertyName="DireccionEntrega" Width="70" Index="-1" IsNewNode="True" />
-        <ColumnInfo Id="Empresa" PropertyName="Empresa" Width="70" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="Giro" PropertyName="Giro" Width="70" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="GravadaTasaCero" PropertyName="GravadaTasaCero" Width="50" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="IvaPercibido" PropertyName="IvaPercibido" Width="70" Index="-1" IsNewNode="True" />
@@ -1726,11 +1707,9 @@
         <ColumnInfo Id="NotaRemision" PropertyName="NotaRemision" Width="50" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="NoTarjeta" PropertyName="NoTarjeta" Width="70" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="Nrc" PropertyName="Nrc" Width="70" Index="-1" IsNewNode="True" />
-        <ColumnInfo Id="Numero" PropertyName="Numero" Width="70" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="SubTotal" PropertyName="SubTotal" Width="50" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="TerceroNoDomiciliado" PropertyName="TerceroNoDomiciliado" Width="70" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="TipoTarjeta" PropertyName="TipoTarjeta" Width="70" Index="-1" IsNewNode="True" />
-        <ColumnInfo Id="ValorMoneda" PropertyName="ValorMoneda" Width="50" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="Vendedor" PropertyName="Vendedor" Width="70" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="Oid" PropertyName="Oid" Width="70" Index="0" IsNewNode="True" />
         <ColumnInfo Id="NoFactura" PropertyName="NoFactura" Width="85" Index="1" IsNewNode="True" />
@@ -1759,7 +1738,6 @@
         <ColumnInfo Id="DiaCerrado" PropertyName="DiaCerrado" Width="50" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="DiasCredito" PropertyName="DiasCredito" Width="70" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="DireccionEntrega" PropertyName="DireccionEntrega" Width="70" Index="-1" IsNewNode="True" />
-        <ColumnInfo Id="Empresa" PropertyName="Empresa" Width="70" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="Giro" PropertyName="Giro" Width="70" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="GravadaTasaCero" PropertyName="GravadaTasaCero" Width="50" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="IvaPercibido" PropertyName="IvaPercibido" Width="70" Index="-1" IsNewNode="True" />
@@ -1769,12 +1747,10 @@
         <ColumnInfo Id="NotaRemision" PropertyName="NotaRemision" Width="50" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="NoTarjeta" PropertyName="NoTarjeta" Width="70" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="Nrc" PropertyName="Nrc" Width="70" Index="-1" IsNewNode="True" />
-        <ColumnInfo Id="Numero" PropertyName="Numero" Width="70" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="SubTotal" PropertyName="SubTotal" Width="50" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="TerceroNoDomiciliado" PropertyName="TerceroNoDomiciliado" Width="70" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="TipoFactura" PropertyName="TipoFactura" Width="100" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="TipoTarjeta" PropertyName="TipoTarjeta" Width="70" Index="-1" IsNewNode="True" />
-        <ColumnInfo Id="ValorMoneda" PropertyName="ValorMoneda" Width="50" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="Vendedor" PropertyName="Vendedor" Width="70" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="Oid" PropertyName="Oid" Width="70" Index="0" IsNewNode="True" />
         <ColumnInfo Id="NoFactura" PropertyName="NoFactura" Width="85" Index="1" IsNewNode="True" />
@@ -1801,7 +1777,6 @@
         <ColumnInfo Id="DiaCerrado" PropertyName="DiaCerrado" Width="50" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="DiasCredito" PropertyName="DiasCredito" Width="70" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="DireccionEntrega" PropertyName="DireccionEntrega" Width="70" Index="-1" IsNewNode="True" />
-        <ColumnInfo Id="Empresa" PropertyName="Empresa" Width="70" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="Giro" PropertyName="Giro" Width="70" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="GravadaTasaCero" PropertyName="GravadaTasaCero" Width="50" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="Iva" PropertyName="Iva" Width="77" Index="-1" IsNewNode="True" />
@@ -1813,13 +1788,11 @@
         <ColumnInfo Id="NotaRemision" PropertyName="NotaRemision" Width="50" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="NoTarjeta" PropertyName="NoTarjeta" Width="70" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="Nrc" PropertyName="Nrc" Width="70" Index="-1" IsNewNode="True" />
-        <ColumnInfo Id="Numero" PropertyName="Numero" Width="70" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="Oid" PropertyName="Oid" Width="70" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="SubTotal" PropertyName="SubTotal" Width="50" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="TerceroNoDomiciliado" PropertyName="TerceroNoDomiciliado" Width="70" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="TipoFactura" PropertyName="TipoFactura" Width="100" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="TipoTarjeta" PropertyName="TipoTarjeta" Width="70" Index="-1" IsNewNode="True" />
-        <ColumnInfo Id="ValorMoneda" PropertyName="ValorMoneda" Width="50" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="Vendedor" PropertyName="Vendedor" Width="70" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="Caja" PropertyName="Caja" Width="55" Index="0" IsNewNode="True" />
         <ColumnInfo Id="NoFactura" PropertyName="NoFactura" Width="85" Index="1" IsNewNode="True" />
@@ -1846,7 +1819,6 @@
         <ColumnInfo Id="DiaCerrado" PropertyName="DiaCerrado" Width="50" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="DiasCredito" PropertyName="DiasCredito" Width="70" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="DireccionEntrega" PropertyName="DireccionEntrega" Width="70" Index="-1" IsNewNode="True" />
-        <ColumnInfo Id="Empresa" PropertyName="Empresa" Width="70" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="Giro" PropertyName="Giro" Width="70" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="GravadaTasaCero" PropertyName="GravadaTasaCero" Width="50" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="IvaPercibido" PropertyName="IvaPercibido" Width="70" Index="-1" IsNewNode="True" />
@@ -1857,12 +1829,10 @@
         <ColumnInfo Id="NotaRemision" PropertyName="NotaRemision" Width="50" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="NoTarjeta" PropertyName="NoTarjeta" Width="70" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="Nrc" PropertyName="Nrc" Width="70" Index="-1" IsNewNode="True" />
-        <ColumnInfo Id="Numero" PropertyName="Numero" Width="70" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="Oid" PropertyName="Oid" Width="70" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="SubTotal" PropertyName="SubTotal" Width="50" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="TerceroNoDomiciliado" PropertyName="TerceroNoDomiciliado" Width="70" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="TipoTarjeta" PropertyName="TipoTarjeta" Width="70" Index="-1" IsNewNode="True" />
-        <ColumnInfo Id="ValorMoneda" PropertyName="ValorMoneda" Width="50" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="Vendedor" PropertyName="Vendedor" Width="70" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="Caja" PropertyName="Caja" Width="55" Index="0" IsNewNode="True" />
         <ColumnInfo Id="NoFactura" PropertyName="NoFactura" Width="85" Index="1" IsNewNode="True" />

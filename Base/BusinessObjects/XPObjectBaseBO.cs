@@ -47,16 +47,17 @@ namespace SBT.Apps.Base.Module.BusinessObjects
                 int id = ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid;
                 var emp = Session.GetObjectByKey<Empresa>(id);
                 this["Empresa"] = emp;
-                if (this.GetType().GetProperty("Moneda") != null && emp != null)
+            }
+            if (this.GetType().GetProperty("Moneda") != null)
+            {
+                Moneda moneda;
+                var parametro = Session.GetObjectByKey<Constante>("MONEDA DEFECTO");
+                if (parametro != null)
                 {
-                    this["Moneda"] = (this["Empresa"] as Empresa).MonedaDefecto;
-                    if (this.GetType().GetProperty("ValorMoneda") != null)
-                        this["ValorMoneda"] = (this["Empresa"] as Empresa).MonedaDefecto.FactorCambio;
+                    moneda = Session.GetObjectByKey<Moneda>(parametro.Valor.Trim());
+                    this["Moneda"] = moneda;
+                    this["ValorMoneda"] = moneda?.FactorCambio;
                 }
-                if (ClassInfo.FindMember("UsuarioCrea") != null)
-                    usuarioCrea = ((Usuario)DevExpress.ExpressApp.SecuritySystem.CurrentUser).UserName;
-                if (ClassInfo.FindMember("FechaCrea") != null)
-                    fechaCrea = DateTime.Now;
             }
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
@@ -190,62 +191,4 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         #endregion Metodos
     }
 
-    /// <summary>
-    /// Implementar validacion en codigo para propiedades del BO XPObjectBaseBO
-    /// </summary>
-    /// <remarks>
-    /// Ver https://docs.devexpress.com/eXpressAppFramework/113051/concepts/extra-modules/validation/implement-custom-rules
-    /// Ver el ejemplo original en CodeRuleObject.cs en: Components\eXpressApp Framework\FeatureCenter\CS\FeatureCenter.Module\Validation
-    /// </remarks>
-
-    //[CodeRule]
-    //public class XPObjectBaseBOIsValidRule: RuleBase<XPObjectBaseBO>
-    //{
-    //    private string usedProperty = "";
-    //    protected override bool IsValidInternal(XPObjectBaseBO target, out string errorMessageTemplate)
-    //    {
-    //        if (target.FechaCrea == null || target.FechaCrea < DateTime.Now)
-    //        {
-    //            errorMessageTemplate = "Fecha de Creacion debe ser ingresada";
-    //            usedProperty = "FechaCrea";
-    //            return false;
-    //        }
-    //        else
-    //        {
-    //            errorMessageTemplate = "solo para que no de error";
-    //            return false; // igual solo para que no de error, esto es un ejemplo de validaciones con codigo
-    //        }
-    //        // otra validacion
-    //        //usedProperty = "TitleOfCourtesy";
-    //        //if (target.Sex == Sex.Male)
-    //        //{
-    //        //    errorMessageTemplate = "Title of Courtesy for males must be 'Mr'.";
-    //        //    return target.TitleOfCourtesy == TitleOfCourtesy.Mr;
-    //        //}
-    //        //else
-    //        //{
-    //        //    errorMessageTemplate = "Title of Courtesy for a woman must be 'Ms', if she is not marred; otherwise, 'Mrs'.";
-    //        //    return target.TitleOfCourtesy == TitleOfCourtesy.Mrs || target.TitleOfCourtesy == TitleOfCourtesy.Ms;
-    //        //}
-    //    }
-    //    public override System.Collections.ObjectModel.ReadOnlyCollection<string> UsedProperties
-    //    {
-    //        get
-    //        {
-    //            if (string.IsNullOrEmpty(usedProperty))
-    //            {
-    //                return base.UsedProperties;
-    //            }
-    //            return new List<string>(new string[] { usedProperty }).AsReadOnly();
-    //        }
-    //    }
-    //    public XPObjectBaseBOIsValidRule() : base("", "Save")
-    //    {
-    //        Properties.SkipNullOrEmptyValues = false;
-    //    }
-    //    public XPObjectBaseBOIsValidRule(IRuleBaseProperties properties)
-    //        : base(properties)
-    //    {
-    //    }
-    //}
 }

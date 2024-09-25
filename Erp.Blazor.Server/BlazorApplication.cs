@@ -90,4 +90,9 @@ public class BlazorBlazorApplication : BlazorApplication {
             return base.CreateDefaultTemplate(context);
         }
     }
+
+    protected override void DisposeCore()
+    {
+        base.DisposeCore();
+    }
 }

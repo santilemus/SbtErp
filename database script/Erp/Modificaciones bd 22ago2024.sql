@@ -210,7 +210,6 @@ alter table ZonaGeografica
 go
 
 -- 5. Crear tabla para los catálogos dte
-
 create table DteCatalogo (
   Oid int identity(1,1) not null,
   Tipo smallint not null,
@@ -218,6 +217,8 @@ create table DteCatalogo (
   Concepto varchar(60) not null,
   Equivalente  varchar(6) null,
   Activo bit default 1 not null,
+  OptimisticLockField int null,
+  GCRecord int null,
   constraint PKDteCatalogo primary key (Oid))
 go
 

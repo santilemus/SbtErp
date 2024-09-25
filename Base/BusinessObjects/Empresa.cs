@@ -1,14 +1,16 @@
-﻿using DevExpress.ExpressApp.DC;
+﻿using DevExpress.Data.Filtering;
+using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using SBT.Apps.Contabilidad.BusinessObjects;
+using System.ComponentModel;
 
 namespace SBT.Apps.Base.Module.BusinessObjects
 {
     /// <summary>
-    /// Objeto persistente que corresponde a las empresas del sistema
+    /// BO que corresponde a las empresas del sistema
     /// </summary>
     /// <remarks>
     /// Ver infomacion de uso de @This en https://docs.devexpress.com/eXpressAppFramework/113204/concepts/filtering/current-object-parameter
@@ -39,7 +41,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         decimal renta10;
         decimal porcPercepcion;
         decimal porcRetencionIva;
-        Moneda monedaDefecto;
+        //Moneda monedaDefecto;
         decimal porcentajeIva;
 
         ClaseSociedad claseSociedad;
@@ -215,20 +217,21 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         }
 
         [XafDisplayName("Clase Sociedad"), RuleRequiredField("Empresa.ClaseSociedad_Requerido", "Save")]
+        [ExplicitLoading]
         public ClaseSociedad ClaseSociedad
         {
             get => claseSociedad;
             set => SetPropertyValue(nameof(ClaseSociedad), ref claseSociedad, value);
         }
 
-        [XafDisplayName("Moneda Defecto")]
-        [VisibleInListView(false)]
-        [Delayed]
-        public Moneda MonedaDefecto
-        {
-            get => GetDelayedPropertyValue<Moneda>(nameof(MonedaDefecto)); 
-            set => SetDelayedPropertyValue(nameof(MonedaDefecto), value);
-        }
+        //[XafDisplayName("Moneda Defecto")]
+        //[VisibleInListView(false)]
+        //[Delayed]
+        //public Moneda MonedaDefecto
+        //{
+        //    get => GetDelayedPropertyValue<Moneda>(nameof(MonedaDefecto)); 
+        //    set => SetDelayedPropertyValue(nameof(MonedaDefecto), value);
+        //}
 
         [DbType("numeric(10,4)"), XafDisplayName("Porcentaje Iva")]
         [ModelDefault("DisplayFormat", "{0:P4}"), ModelDefault("EditMask", "p4")]
@@ -328,48 +331,41 @@ namespace SBT.Apps.Base.Module.BusinessObjects
 
         [DevExpress.Xpo.AssociationAttribute("Telefonos-Empresa"), VisibleInDetailView(true)]
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Teléfonos"), DevExpress.Xpo.Aggregated]
-        public XPCollection<EmpresaTelefono> Telefonos
-        {
-            get
-            {
-                return GetCollection<EmpresaTelefono>("Telefonos");
-            }
-        }
+        public XPCollection<EmpresaTelefono> Telefonos => GetCollection<EmpresaTelefono>("Telefonos");
 
         [DevExpress.Xpo.AssociationAttribute("Empresa-Giros"), DevExpress.Xpo.Aggregated, XafDisplayName("Giros")]
-        public XPCollection<EmpresaGiro> Giros
-        {
-            get
-            {
-                return GetCollection<EmpresaGiro>(nameof(Giros));
-            }
-        }
-
+        public XPCollection<EmpresaGiro> Giros => GetCollection<EmpresaGiro>(nameof(Giros));
 
         [DevExpress.Xpo.AssociationAttribute("Unidades-Empresa"), DevExpress.Xpo.Aggregated, XafDisplayName("Unidades")]
         public XPCollection<EmpresaUnidad> Unidades => GetCollection<EmpresaUnidad>(nameof(Unidades));
 
-        
+        [Association("Empresa-Usuarios"), XafDisplayName("Usuarios")]
+        public XPCollection<Usuario> Usuarios => GetCollection<Usuario>(nameof(Usuarios));
 
-        [Association("Empresa-Usuarios"), /*DevExpress.Xpo.Aggregated,*/ XafDisplayName("Usuarios")]
-        public XPCollection<Usuario> Usuarios
-        {
-            get
-            {
-                return GetCollection<Usuario>(nameof(Usuarios));
-            }
-        }
 
         [Association("Empresa-Catalogos"), XafDisplayName("Cuentas")]
         [DataSourceCriteria("[CuentaEspecial] > 0 && [Empresa.Oid] == EmpresaActualOid()")]
         [ToolTip("Parametrización de las cuentas de liquidación y cierre del ejercicio contable")]
-        public XPCollection<Catalogo> Cuentas
+        public XPCollection<Catalogo> Cuentas => GetCollection<Catalogo>(nameof(Cuentas));
+
+        XPCollection<EmpresaUnidad> agencias;
+        /// <summary>
+        /// Para la lista de seleccion de Agencias en el logon (mostrar solo las agencias y casa matriz)
+        /// </summary>
+        [Browsable(false)]
+        public XPCollection<EmpresaUnidad> Agencias
         {
             get
             {
-                return GetCollection<Catalogo>(nameof(Cuentas));
+                if (agencias == null)
+                {
+                    CriteriaOperator criteria = CriteriaOperator.FromLambda<EmpresaUnidad>(x => x.Empresa.Oid == Oid && x.Activa == true && x.Role == ETipoRoleUnidad.Agencia);
+                    agencias = new XPCollection<EmpresaUnidad>(Session, criteria);
+                }
+                return agencias;
             }
         }
+
     }
 
 }

@@ -48,11 +48,16 @@ namespace SBT.Apps.Base.Module.BusinessObjects
                 int id = ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid;
                 var emp = Session.GetObjectByKey<Empresa>(id);
                 this["Empresa"] = emp;
-                if (this.GetType().GetProperty("Moneda") != null && emp != null)
+            }
+            if (this.GetType().GetProperty("Moneda") != null)
+            {
+                Moneda moneda;
+                var parametro = Session.GetObjectByKey<Constante>("MONEDA DEFECTO");
+                if (parametro != null)
                 {
-                    this["Moneda"] = emp.MonedaDefecto;
-                    if (this.GetType().GetProperty("ValorMoneda") != null && emp.MonedaDefecto != null)
-                        this["ValorMoneda"] = emp.MonedaDefecto.FactorCambio;
+                    moneda = Session.GetObjectByKey<Moneda>(parametro.Valor.Trim());
+                    this["Moneda"] = moneda ?? null;
+                    this["ValorMoneda"] = moneda?.FactorCambio;
                 }
             }
         }

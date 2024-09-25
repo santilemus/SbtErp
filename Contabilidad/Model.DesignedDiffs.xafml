@@ -524,7 +524,7 @@
         </LayoutGroup>
       </Layout>
     </DetailView>
-    <ListView Id="Catalogo_Partidas_ListView">
+    <ListView Id="Catalogo_Partidas_ListView" DataAccessMode="Server">
       <Columns>
         <ColumnInfo Id="NombreCuenta" Width="211" />
       </Columns>
@@ -765,6 +765,7 @@
         <ColumnInfo Id="AjusteConsolidacion" Width="165" Index="5" />
       </Columns>
     </ListView>
+    <ListView Id="PartidaDetalle_LookupListView" DataAccessMode="Server" />
     <DetailView Id="PartidaModelo_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
@@ -806,26 +807,37 @@
     <DetailView Id="PartidaModeloDetalle_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
-          <LayoutGroup Id="SimpleEditors" RelativeSize="19.53867028493894" Direction="Vertical">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="26.771653543307085" Direction="Vertical">
             <LayoutGroup Id="PartidaModeloDetalle_col1" ShowCaption="False" Index="0" RelativeSize="100" IsNewNode="True">
-              <LayoutItem Id="Cuenta" ViewItem="Cuenta" Index="0" RelativeSize="23.61111111111111" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="NombreCuenta" ViewItem="NombreCuenta" Index="1" RelativeSize="18.055555555555557" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="Concepto" ViewItem="Concepto" Index="2" RelativeSize="18.055555555555557" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="Tipo" ViewItem="Tipo" Index="3" RelativeSize="18.055555555555557" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="TipoBO" ViewItem="TipoBO" Index="4" RelativeSize="22.22222222222222" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Cuenta" ViewItem="Cuenta" Index="0" RelativeSize="15.126050420168067" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="NombreCuenta" ViewItem="NombreCuenta" Index="1" RelativeSize="10.92436974789916" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Concepto" ViewItem="Concepto" Index="2" RelativeSize="48.739495798319325" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Tipo" ViewItem="Tipo" Index="3" RelativeSize="10.92436974789916" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="TipoBO" ViewItem="TipoBO" Index="4" RelativeSize="14.285714285714286" CaptionLocation="Left" IsNewNode="True" />
             </LayoutGroup>
             <LayoutGroup Id="XPObject" Index="1" RelativeSize="83.58008075370121" Caption="Oid" Direction="Horizontal" Removed="True">
               <LayoutItem Id="Oid" RelativeSize="100" Removed="True" />
             </LayoutGroup>
             <LayoutGroup Id="PartidaModeloDetalle" Removed="True" />
           </LayoutGroup>
-          <LayoutGroup Id="SizeableEditors" RelativeSize="80.46132971506105">
-            <LayoutItem Id="Formula" Index="0" RelativeSize="52.1079258010118" CaptionLocation="Left" />
-            <LayoutItem Id="Criteria" Index="1" RelativeSize="47.8920741989882" CaptionLocation="Left" />
+          <LayoutGroup Id="SizeableEditors" RelativeSize="73.22834645669292">
+            <LayoutItem Id="Formula" Index="0" RelativeSize="64.0552995391705" CaptionLocation="Left" />
+            <LayoutItem Id="Criteria" Index="1" RelativeSize="35.944700460829495" CaptionLocation="Left" />
+            <LayoutItem Id="Concepto" Removed="True" />
           </LayoutGroup>
         </LayoutGroup>
       </Layout>
     </DetailView>
+    <ListView Id="PartidaModeloDetalle_ListView">
+      <Columns>
+        <ColumnInfo Id="PartidaModelo" Index="-1" Width="131" />
+        <ColumnInfo Id="Cuenta" Index="0" />
+        <ColumnInfo Id="NombreCuenta" Index="1" />
+        <ColumnInfo Id="Concepto" Index="2" Width="523" />
+        <ColumnInfo Id="TipoBO" Index="3" Width="184" />
+        <ColumnInfo Id="Tipo" Index="4" Width="109" />
+      </Columns>
+    </ListView>
     <ListView Id="SaldoDiario_LookupListView" AllowNew="False" AllowUnlink="False" AllowDelete="False" />
     <ListView Id="SaldoMes_LookupListView" AllowUnlink="False" AllowNew="False" AllowDelete="False" />
   </Views>

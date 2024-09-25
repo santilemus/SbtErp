@@ -114,7 +114,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
         }
 
 
-        [Association("Tercero-Documentos"), XafDisplayName("Tercero"), VisibleInListView(false), VisibleInLookupListView(false), Index(7)]
+        [Association("Tercero-Documentos"), XafDisplayName("Tercero"), Browsable(false), Index(7)]
         public Tercero Tercero
         {
             get => tercero;
@@ -123,14 +123,6 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
 
         #endregion
 
-        //private string _PersistentProperty;
-        //[XafDisplayName("My display name"), ToolTip("My hint message")]
-        //[ModelDefault("EditMask", "(000)-00"), Index(0), VisibleInListView(false)]
-        //[Persistent("DatabaseColumnName"), RuleRequiredField(DefaultContexts.Save)]
-        //public string PersistentProperty {
-        //    get { return _PersistentProperty; }
-        //    set { SetPropertyValue("PersistentProperty", ref _PersistentProperty, value); }
-        //}
 
         //[Action(Caption = "My UI Action", ConfirmationMessage = "Are you sure?", ImageName = "Attention", AutoCommit = true)]
         //public void ActionMethod() {

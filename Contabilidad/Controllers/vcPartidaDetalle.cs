@@ -1,6 +1,5 @@
 ﻿using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.SystemModule;
-using DevExpress.ExpressApp.Xpo;
 using DevExpress.Persistent.Validation;
 using SBT.Apps.Base.Module.Controllers;
 using SBT.Apps.Contabilidad.Module.BusinessObjects;
@@ -62,11 +61,11 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
             {
                 try
                 {
-                    RuleSet.CustomNeedToValidateRule += RuleSet_CustomNeedToValidateRule;                   
+                    RuleSet.CustomNeedToValidateRule += RuleSet_CustomNeedToValidateRule;
                     IRuleSet ruleSet = Validator.GetService(Application.ServiceProvider);
                     if (ruleSet != null)
                     {
-                        var reglas = ruleSet.GetRules(typeof(Partida), "Save");
+                        var reglas = ruleSet.GetRules(typeof(Partida), DefaultContexts.Save);
                         RuleSetValidationResult result = ruleSet.ValidateTarget(View.ObjectSpace, View.ObjectSpace.ModifiedObjects[0], reglas, "Custom");
                         if (result.ValidationOutcome > ValidationOutcome.Information)
                         {
@@ -99,11 +98,12 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
         /// <param name="e">parametro para indicar las reglas que se van a ejecutar (en este caso se ignoran dos)</param>
         private void RuleSet_CustomNeedToValidateRule(object sender, CustomNeedToValidateRuleEventArgs e)
         {
-            if (!e.Handled && !(e.Rule.Id == "Partida Cuadre" || e.Rule.Id == "XPOBaseDocs.Numero_Requerido"))
-            {
+            if (!e.Handled && !(e.Rule.Id == "Partida Cuadre" || e.Rule.Id == "XPOBaseDocs.Numero_Requerido") ||
+                e.Rule.Id == "Partida de Liquidación del ejercicio" || e.Rule.Id == "Partida.Tipo Liquidaciones manuales validas solo fin del periodo")
+                e.NeedToValidateRule = false;
+            else
                 e.NeedToValidateRule = true;
-                e.Handled = true;
-            }
+            e.Handled = true;
         }
     }
 }

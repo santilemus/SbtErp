@@ -58,6 +58,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
 
         [XafDisplayName("Dirección Principal"), Index(1)]
         [DataSourceCriteria("[Tercero] == '@This.Oid'")]
+        [ExplicitLoading(1)]
         public TerceroDireccion DireccionPrincipal
         {
             get => direccionPrincipal;
@@ -152,112 +153,42 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
             }
         }
 
-        [DevExpress.Xpo.AssociationAttribute("Tercero-Telefonos")]
-        [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Teléfonos")]
-        [DevExpress.Persistent.Base.ImmediatePostDataAttribute]
-        [DevExpress.Persistent.Base.VisibleInLookupListViewAttribute(false)]
+        [Association("Tercero-Telefonos"), XafDisplayName("Teléfonos")]
         [RuleRequiredField("Tercero.Telefonos_requerido", DefaultContexts.Save, CustomMessageTemplate = @"{TargetPropertyName} no debe estar vacío")]
-        public XPCollection<TerceroTelefono> Telefonos
-        {
-            get
-            {
-                return GetCollection<TerceroTelefono>(nameof(Telefonos));
-            }
-        }
+        public XPCollection<TerceroTelefono> Telefonos => GetCollection<TerceroTelefono>(nameof(Telefonos));
 
-        [DevExpress.Xpo.Association("Tercero-Giros"), DevExpress.Xpo.Aggregated]
-        [DevExpress.Persistent.Base.VisibleInLookupListView(false), DevExpress.Persistent.Base.ImmediatePostData]
-        [DevExpress.ExpressApp.DC.XafDisplayName("Giros")]
+        [Association("Tercero-Giros"), DevExpress.Xpo.Aggregated, XafDisplayName("Giros")]
         [RuleRequiredField("Tercero.Giros_requerido", DefaultContexts.Save, CustomMessageTemplate = @"{TargetPropertyName} no debe estar vacío")]
-        public XPCollection<TerceroGiro> Giros
-        {
-            get
-            {
-                return GetCollection<TerceroGiro>(nameof(Giros));
-            }
-        }
+        public XPCollection<TerceroGiro> Giros => GetCollection<TerceroGiro>(nameof(Giros));
 
         [DevExpress.Xpo.Association("Tercero-Contactos"), XafDisplayName("Contactos")]
-        public XPCollection<TerceroContacto> Contactos
-        {
-            get
-            {
-                return GetCollection<TerceroContacto>(nameof(Contactos));
-            }
-        }
+        public XPCollection<TerceroContacto> Contactos => GetCollection<TerceroContacto>(nameof(Contactos));
 
-        [DevExpress.Xpo.Association("Tercero-Roles"),
-        DevExpress.Xpo.Aggregated]
-        [DevExpress.Persistent.Base.ImmediatePostData]
-        [DevExpress.Persistent.Base.VisibleInLookupListView(false)]
-        [DevExpress.ExpressApp.DC.XafDisplayName("Roles")]
+        [DevExpress.Xpo.Association("Tercero-Roles"), DevExpress.Xpo.Aggregated]
+        [XafDisplayName("Roles")]
         [RuleRequiredField("Tercero.Roles_requerido", DefaultContexts.Save, CustomMessageTemplate = @"{TargetPropertyName} no debe estar vacío", 
             ResultType = ValidationResultType.Warning)]
-        public XPCollection<TerceroRole> Roles
-        {
-            get
-            {
-                return GetCollection<TerceroRole>(nameof(Roles));
-            }
-        }
+        public XPCollection<TerceroRole> Roles => GetCollection<TerceroRole>(nameof(Roles));
 
-        [DevExpress.Xpo.Association("Tercero-Notas"), DevExpress.Xpo.Aggregated]
-        [DevExpress.ExpressApp.DC.XafDisplayName("Notas")]
-        public XPCollection<TerceroNota> Notas
-        {
-            get
-            {
-                return GetCollection<TerceroNota>(nameof(Notas));
-            }
-        }
+        [Association("Tercero-Notas"), DevExpress.Xpo.Aggregated, XafDisplayName("Notas")]
+        public XPCollection<TerceroNota> Notas => GetCollection<TerceroNota>(nameof(Notas));
 
-        [DevExpress.Xpo.Association("Tercero-Sucursales"), DevExpress.Xpo.Aggregated]
-        [DevExpress.ExpressApp.DC.XafDisplayName("Sucursales")]
-        public XPCollection<TerceroSucursal> Sucursales
-        {
-            get
-            {
-                return GetCollection<TerceroSucursal>(nameof(Sucursales));
-            }
-        }
+        [Association("Tercero-Sucursales"), DevExpress.Xpo.Aggregated, XafDisplayName("Sucursales")]
+        public XPCollection<TerceroSucursal> Sucursales => GetCollection<TerceroSucursal>(nameof(Sucursales));
 
         [Association("Tercero-Direcciones"), XafDisplayName("Direcciones")]
         [RuleRequiredField("Tercero.Dirección_requerido", DefaultContexts.Save, CustomMessageTemplate = @"{TargetPropertyName} no debe estar vacío")]
-        public XPCollection<TerceroDireccion> Direcciones
-        {
-            get
-            {
-                return GetCollection<TerceroDireccion>(nameof(Direcciones));
-            }
-        }
+        public XPCollection<TerceroDireccion> Direcciones => GetCollection<TerceroDireccion>(nameof(Direcciones));
 
         [Association("Tercero-Documentos"), DevExpress.Xpo.Aggregated, XafDisplayName("Documentos")]
         [RuleRequiredField("Tercero.Documentos_requerido", DefaultContexts.Save, CustomMessageTemplate = @"{TargetPropertyName} no debe estar vacío")]
-        public XPCollection<TerceroDocumento> Documentos
-        {
-            get
-            {
-                return GetCollection<TerceroDocumento>(nameof(Documentos));
-            }
-        }
+        public XPCollection<TerceroDocumento> Documentos => GetCollection<TerceroDocumento>(nameof(Documentos));
 
         [Association("Tercero-Creditos"), XafDisplayName("Créditos"), DevExpress.Xpo.Aggregated]
-        public XPCollection<TerceroCredito> Creditos
-        {
-            get
-            {
-                return GetCollection<TerceroCredito>(nameof(Creditos));
-            }
-        }
+        public XPCollection<TerceroCredito> Creditos => GetCollection<TerceroCredito>(nameof(Creditos));
 
         [Association("Tercero-Garantias"), DevExpress.Xpo.Aggregated, XafDisplayName("Garantías")]
-        public XPCollection<TerceroGarantia> Garantias
-        {
-            get
-            {
-                return GetCollection<TerceroGarantia>(nameof(Garantias));
-            }
-        }
+        public XPCollection<TerceroGarantia> Garantias => GetCollection<TerceroGarantia>(nameof(Garantias));
 
         //[Association("Tercero-Bancos"), DevExpress.Xpo.Aggregated, XafDisplayName("Bancos")]
         //public XPCollection<Banco> Bancos

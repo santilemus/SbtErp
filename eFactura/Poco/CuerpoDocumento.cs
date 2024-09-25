@@ -17,7 +17,11 @@ namespace SBT.eFactura.Dte.Poco
         public int NumeroItem { get; set; }
 
         /// <summary>
-        /// Tipo de ítem
+        /// Tipo de ítem. Valores validos son los que se obtienen de <b>CAT-011 Tipo de ítem</b>
+        /// <br>Bienes = 1</br>
+        /// <br>Servicios = 2</br>
+        /// <br>Bienes y Servicios (Ambos) = 3</br>
+        /// <br>Otros tributos por item = 4</br>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("tipoItem")]
         [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]
