@@ -30,6 +30,11 @@ namespace SBT.Apps.Contabilidad.BusinessObjects
         "Las cuentas de 4 digitos deben ser De Resumen y de Mayor", ResultType = ValidationResultType.Warning, TargetCriteria = "Len([CodigoCuenta]) == 4")]
     [RuleCombinationOfPropertiesIsUnique("Catalogo. EmpresaCuentaEspecial Unica", DefaultContexts.Save, "Empresa,CodigoCuenta,CuentaEspecial",
         TargetCriteria = "[CuentaEspecial] > 0")]
+
+    // regla nueva agregada el 08/oct/2024
+    [RuleCriteria("Catalogo Grupo.TipoCuenta = TipoCuenta", DefaultContexts.Save, "[TipoCuenta] == [Grupo.Tipo]", 
+        TargetCriteria = "!IsNull([Grupo]) && [CtaMayor] == True", SkipNullOrEmptyValues = true, 
+        CustomMessageTemplate = "Tipo Cuenta debe ser igual al valor de la propiedad CatalogoGrupo.Tipo")]
     [FriendlyKeyProperty(nameof(CodigoCuenta))]
 
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
@@ -67,6 +72,7 @@ namespace SBT.Apps.Contabilidad.BusinessObjects
         bool ctaMayor;
         ETipoSaldoCuenta tipoSaldoCta = ETipoSaldoCuenta.Deudor;
         bool activa;
+        private CatalogoGrupo grupo;
 
 #if Firebird
         [DbType("DM_ENTERO_CORTO"), Persistent("COD_EMP")]
@@ -222,6 +228,13 @@ namespace SBT.Apps.Contabilidad.BusinessObjects
         {
             get => concepto;
             set => SetPropertyValue(nameof(Concepto), ref concepto, value);
+        }
+
+        [ToolTip("Para agrupar la cuenta en informes, en particular los estados financieros. Válido solo para cuentas de mayor")]
+        public CatalogoGrupo Grupo
+        {
+            get => grupo;
+            set => SetPropertyValue<CatalogoGrupo>(nameof(Grupo), ref grupo, value);
         }
 
 #if Firebird

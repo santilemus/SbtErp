@@ -3,7 +3,15 @@
 namespace SBT.Apps.Contabilidad.BusinessObjects
 {
     /// <summary>
-    /// Enumeracion con los tipos de cuenta contable
+    /// Tipos de cuenta contable. Valores válidos son:
+    /// <br>Activo = 1</br>
+    /// <br>Pasivo = 2</br>
+    /// <br>Patrimonio = 3</br>
+    /// <br>Costo = 4</br>
+    /// <br>Gasto = 5</br>
+    /// <br>Ingreso = 6</br>
+    /// <br>Resultado = 7</br>
+    /// <br>Orden = 8</br>
     /// </summary>
     public enum ETipoCuentaCatalogo
     {
