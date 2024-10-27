@@ -168,7 +168,7 @@ namespace SBT.Apps.Contabilidad.BusinessObjects
 #else
         [DbType("bit"), Persistent("CtaResumen")]
 #endif
-        [XafDisplayName("Cuenta Resumen"), Index(7), VisibleInLookupListView(false), RuleRequiredField("Catalogo.CtaResumen_Requerido", DefaultContexts.Save)]
+        [XafDisplayName("Resumen"), Index(7), VisibleInLookupListView(false), RuleRequiredField("Catalogo.CtaResumen_Requerido", DefaultContexts.Save)]
         public bool CtaResumen
         {
             get => ctaResumen;
@@ -243,7 +243,7 @@ namespace SBT.Apps.Contabilidad.BusinessObjects
 #else
         [DbType("bit"), Persistent("Activa")]
 #endif
-        [XafDisplayName("Cuenta Activa"), Index(12), VisibleInLookupListView(false), RuleRequiredField("Catalogo.Activa", "Save")]
+        [XafDisplayName("Activa"), Index(12), VisibleInLookupListView(false), RuleRequiredField("Catalogo.Activa", "Save")]
         public bool Activa
         {
             get => activa;

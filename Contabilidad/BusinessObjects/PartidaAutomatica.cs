@@ -63,8 +63,9 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         private decimal ObtenerSaldoCuenta(ECuentaEspecial tipo)
         {
             IQueryable<SaldoMes> qrySaldoMes = fObjectSpace.GetObjectsQuery<SaldoMes>();
-            SaldoMes saldoMes = qrySaldoMes.Where(y => y.Cuenta.Empresa.Oid == fPartida.Empresa.Oid && y.Cuenta.CuentaEspecial == tipo && y.Cuenta.Activa == true).FirstOrDefault();
-            return (saldoMes != null) ? saldoMes.SaldoFin : 0.0m;
+            decimal saldoMes = qrySaldoMes.Where(y => y.Cuenta.Empresa.Oid == fPartida.Empresa.Oid && y.Cuenta.CuentaEspecial == tipo && y.Cuenta.Activa == true).Sum(x => x.SaldoFin);
+            return saldoMes;
+            //return (saldoMes != null) ? saldoMes.SaldoFin : 0.0m;
         }
 
         private void CreateDetalle(Catalogo cta, string concepto, decimal debe, decimal haber)
@@ -125,11 +126,15 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             if (ctaLiquida != null)
             {
                 decimal resultadoNeto = resultadoBruto - reserva - renta; // - impuestoNoDeducible;
+                
+                //CreateDetalle(ctaLiquida, ctaLiquida.Concepto, Convert.ToDecimal(fCostoGasto), 0.0m);
+                //CreateDetalle(ctaLiquida, ctaLiquida.Concepto, 0.0m, Convert.ToDecimal(fIngreso));
+
                 // 3. Se genera el detalle que corresponde al resultado y se lleva a la cuenta de perdidas y ganancias
                 if (resultadoNeto > 0)
-                    CreateDetalle(ctaLiquida, ctaLiquida.Concepto, resultadoNeto, 0.0m);            // resultado es utilidad
-                                                                                                    //else
-                                                                                                    //    CreateDetalle(ctaLiquida, ctaLiquida.Concepto, 0.0m, Math.Abs(resultadoNeto));  // resultado es perdida
+                    CreateDetalle(ctaLiquida, ctaLiquida.Concepto, 0.0m, resultadoNeto);            // saldo acreedor, resultado es utilidad
+                else
+                    CreateDetalle(ctaLiquida, ctaLiquida.Concepto, Math.Abs(resultadoNeto), 0.0m);  // saldo deudor, resultado es perdida
 
                 // 4. Dependiendo del resultado, se obtiene la cuenta de patrimonio para registrar la utilidad o la perdida
                 ECuentaEspecial ctaUtilidadPerdida = (resultadoNeto > 0) ? ECuentaEspecial.UtilidadEjercicio : ECuentaEspecial.PerdidaEjercicio;
@@ -142,7 +147,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
                     else                       // 4.2. Perdida. Se lleva a cuenta de patrimonio - perdidas del periodo
                     {
                         //CreateDetalle(ctaLiquida, ctaLiquida.Concepto, Math.Abs(resultadoNeto), 0.0m);
-                        CreateDetalle(cta, cta.Concepto, Math.Abs(resultadoNeto), 0.0m);
+                        CreateDetalle(cta, cta.Concepto, 0.0m, Math.Abs(resultadoNeto));
                     }
                 }
             }

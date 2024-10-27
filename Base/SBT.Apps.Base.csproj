@@ -27,6 +27,7 @@
 	</PropertyGroup>
 	<ItemGroup>
 	  <Compile Remove="BusinessObjects\ApplicationUser.cs" />
+	  <Compile Remove="Controllers\ValidationControllerBase.cs" />
 	</ItemGroup>
 	<ItemGroup>
 	  <None Remove="Images\LOGO SBT 2024.svg" />

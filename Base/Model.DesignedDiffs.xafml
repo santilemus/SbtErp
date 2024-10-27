@@ -120,22 +120,22 @@
     <DetailView Id="Catalogo_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
-          <LayoutGroup Id="SimpleEditors" RelativeSize="22.33632862644416" Direction="Horizontal">
-            <LayoutGroup Id="Catalogo_col1" ShowCaption="False" Index="0" RelativeSize="50" IsNewNode="True">
-              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="20.689655172413794" IsNewNode="True" />
-              <LayoutItem Id="Padre" ViewItem="Padre" Index="1" RelativeSize="14.942528735632184" IsNewNode="True" />
-              <LayoutItem Id="CodigoCuenta" ViewItem="CodigoCuenta" Index="2" RelativeSize="14.942528735632184" IsNewNode="True" />
-              <LayoutItem Id="Nombre" ViewItem="Nombre" Index="3" RelativeSize="14.942528735632184" IsNewNode="True" />
-              <LayoutItem Id="TipoCuenta" ViewItem="TipoCuenta" Index="4" RelativeSize="14.942528735632184" IsNewNode="True" />
-              <LayoutItem Id="CtaResumen" ViewItem="CtaResumen" Index="5" RelativeSize="19.54022988505747" IsNewNode="True" />
+          <LayoutGroup Id="SimpleEditors" RelativeSize="26.605504587155963" Direction="Horizontal">
+            <LayoutGroup Id="Catalogo_col1" ShowCaption="False" Index="0" RelativeSize="49.96431120628123" IsNewNode="True">
+              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="20.689655172413794" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Padre" ViewItem="Padre" Index="1" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="CodigoCuenta" ViewItem="CodigoCuenta" Index="2" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Nombre" ViewItem="Nombre" Index="3" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="TipoCuenta" ViewItem="TipoCuenta" Index="4" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="CtaResumen" ViewItem="CtaResumen" Index="5" RelativeSize="19.54022988505747" CaptionLocation="Left" IsNewNode="True" />
             </LayoutGroup>
-            <LayoutGroup Id="Catalogo_col2" ShowCaption="False" Index="1" RelativeSize="50" IsNewNode="True">
-              <LayoutItem Id="CtaMayor" ViewItem="CtaMayor" Index="0" RelativeSize="20.689655172413794" IsNewNode="True" />
-              <LayoutItem Id="TipoSaldoCta" ViewItem="TipoSaldoCta" Index="1" RelativeSize="14.942528735632184" IsNewNode="True" />
-              <LayoutItem Id="CuentaEspecial" ViewItem="CuentaEspecial" Index="2" RelativeSize="14.942528735632184" IsNewNode="True" />
-              <LayoutItem Id="Activa" ViewItem="Activa" Index="3" RelativeSize="14.942528735632184" IsNewNode="True" />
-              <LayoutItem Id="Concepto" ViewItem="Concepto" Index="4" RelativeSize="14.942528735632184" IsNewNode="True" />
-              <LayoutItem Id="Nivel" ViewItem="Nivel" Index="5" RelativeSize="19.54022988505747" IsNewNode="True" />
+            <LayoutGroup Id="Catalogo_col2" ShowCaption="False" Index="1" RelativeSize="50.03568879371877" IsNewNode="True">
+              <LayoutItem Id="CtaMayor" ViewItem="CtaMayor" Index="0" RelativeSize="20.689655172413794" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="TipoSaldoCta" ViewItem="TipoSaldoCta" Index="1" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="CuentaEspecial" ViewItem="CuentaEspecial" Index="2" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Activa" ViewItem="Activa" Index="3" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Concepto" ViewItem="Concepto" Index="4" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Grupo" ViewItem="Grupo" Index="5" RelativeSize="19.54022988505747" CaptionLocation="Left" IsNewNode="True" />
             </LayoutGroup>
             <LayoutGroup Id="XPObject" Caption="Oid" Direction="Horizontal" Index="1" RelativeSize="52.03045685279188" Removed="True">
               <LayoutItem Id="Oid" Removed="True" />
@@ -158,14 +158,58 @@
               </LayoutGroup>
             </LayoutGroup>
           </LayoutGroup>
+          <LayoutGroup Id="Cuentas_Group" Direction="Vertical" RelativeSize="73.39449541284404">
+            <LayoutItem Id="Cuentas" RelativeSize="100" />
+          </LayoutGroup>
         </LayoutGroup>
       </Layout>
     </DetailView>
-    <ListView Id="Catalogo_ListView" DataAccessMode="Server" />
-    <ListView Id="Catalogo_LookupListView" DataAccessMode="Server">
+    <ListView Id="Catalogo_ListView" DataAccessMode="Server">
       <Columns>
+        <ColumnInfo Id="Grupo" Index="-1" />
+        <ColumnInfo Id="Padre" Width="114" />
+        <ColumnInfo Id="CodigoCuenta" Width="143" />
+        <ColumnInfo Id="Nombre" Width="475" />
+        <ColumnInfo Id="TipoCuenta" Width="95" />
+        <ColumnInfo Id="CtaResumen" Width="74" />
+        <ColumnInfo Id="CtaMayor" Width="102" Index="5" />
+        <ColumnInfo Id="TipoSaldoCta" Width="109" Index="6" />
+        <ColumnInfo Id="Activa" Width="61" Index="7" />
+        <ColumnInfo Id="Nivel" Index="8" />
+      </Columns>
+    </ListView>
+    <ListView Id="Catalogo_LookupListView" DataAccessMode="Server" AllowDelete="False" AllowNew="False" ShowFindPanel="True">
+      <Columns>
+        <ColumnInfo Id="Empresa" Index="-1" />
         <ColumnInfo Id="CodigoCuenta" Width="101" />
-        <ColumnInfo Id="Nombre" Width="478" />
+        <ColumnInfo Id="Nombre" Width="478" Index="1" />
+        <ColumnInfo Id="TipoSaldoCta" Index="2" />
+      </Columns>
+    </ListView>
+    <DetailView Id="CatalogoGrupo_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="100">
+            <LayoutGroup Id="CatalogoGrupo" RelativeSize="100">
+              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="5.504587155963303" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Nombre" Index="1" RelativeSize="3.9755351681957185" CaptionLocation="Left" />
+              <LayoutItem Id="Orden" Index="2" RelativeSize="3.9755351681957185" CaptionLocation="Left" />
+              <LayoutItem Id="Tipo" Index="3" RelativeSize="3.9755351681957185" CaptionLocation="Left" />
+              <LayoutItem Id="Activo" Index="4" RelativeSize="82.56880733944953" CaptionLocation="Left" />
+            </LayoutGroup>
+            <LayoutGroup Id="XPObject" Caption="Oid" RelativeSize="72.46653919694073" Removed="True">
+              <LayoutItem Id="Oid" Removed="True" />
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="CatalogoGrupo_ListView">
+      <Columns>
+        <ColumnInfo Id="Nombre" Width="528" />
+        <ColumnInfo Id="Orden" Width="74" />
+        <ColumnInfo Id="Tipo" Width="148" />
+        <ColumnInfo Id="Activo" Width="82" />
       </Columns>
     </ListView>
     <DetailView Id="ClaseSociedad_DetailView">

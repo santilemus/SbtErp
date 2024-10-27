@@ -1,5 +1,6 @@
 ﻿using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.SystemModule;
+using DevExpress.ExpressApp.Xpo;
 using DevExpress.Persistent.Validation;
 using SBT.Apps.Base.Module.Controllers;
 using SBT.Apps.Contabilidad.Module.BusinessObjects;
@@ -41,6 +42,7 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
         {
             base.DoInitializeComponent();
             TargetObjectType = typeof(SBT.Apps.Contabilidad.Module.BusinessObjects.PartidaDetalle);
+
             //TargetViewId = "PartidaDetalle_ListView";
             //TargetViewType = DevExpress.ExpressApp.ViewType.DetailView;
         }
@@ -56,8 +58,7 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
         /// </remarks>
         private void NewController_ObjectCreating(object sender, ObjectCreatingEventArgs e)
         {
-            if (e.ObjectType == typeof(SBT.Apps.Contabilidad.Module.BusinessObjects.PartidaDetalle) &&
-                ObjectSpace.ModifiedObjects.Count == 1 && View.ObjectSpace.IsNewObject(ObjectSpace.ModifiedObjects[0])) /* solo el encabezado de la partida contable y es nueva*/
+            if (ObjectSpace.ModifiedObjects.Count == 1 && View.ObjectSpace.IsNewObject(ObjectSpace.ModifiedObjects[0])) /* solo el encabezado de la partida contable y es nueva*/
             {
                 try
                 {
@@ -66,7 +67,7 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
                     if (ruleSet != null)
                     {
                         var reglas = ruleSet.GetRules(typeof(Partida), DefaultContexts.Save);
-                        RuleSetValidationResult result = ruleSet.ValidateTarget(View.ObjectSpace, View.ObjectSpace.ModifiedObjects[0], reglas, "Custom");
+                        RuleSetValidationResult result = ruleSet.ValidateTarget(ObjectSpace, ObjectSpace.ModifiedObjects[0], reglas, "Custom");
                         if (result.ValidationOutcome > ValidationOutcome.Information)
                         {
                             string sError = string.Empty;

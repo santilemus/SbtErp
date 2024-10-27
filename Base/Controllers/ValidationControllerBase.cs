@@ -27,6 +27,7 @@ namespace SBT.Apps.Base.Module.Controllers
             ObjectSpace.ObjectChanged += ObjectSpace_ObjectChanged;
             ObjectSpace.ObjectReloaded += ObjectSpace_ObjectReloaded;
             View.CurrentObjectChanged += View_CurrentObjectChanged;
+            
         }
         protected override void OnViewControlsCreated()
         {
@@ -69,6 +70,7 @@ namespace SBT.Apps.Base.Module.Controllers
                 IRuleSet ruleSet = Validator.GetService(Application.ServiceProvider);
                 if (ruleSet != null)
                 {
+                    //RuleSetValidationResult result = ruleSet.ValidateTarget(ObjectSpace, View.CurrentObject, ContextIdentifier.Save);
                     RuleSetValidationResult result = ruleSet.ValidateAllTargets(ObjectSpace, targets, DefaultContexts.Save);
                     if (result.ValidationOutcome == ValidationOutcome.Error || result.ValidationOutcome == ValidationOutcome.Warning || result.ValidationOutcome == ValidationOutcome.Information)
                     {

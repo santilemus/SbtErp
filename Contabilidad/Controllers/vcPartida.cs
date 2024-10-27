@@ -59,7 +59,7 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
             saApertura.Execute += saPartidaApertura_Execute;
             saApertura.Executing += saPartidaApertura_Executing;
             saLiquidacionCierre.Execute += saPartidaLiquidacionCierre_Execute;
-            saLiquidacionCierre.Executing += saPartidaApertura_Executing;
+            //saLiquidacionCierre.Executing += saPartidaApertura_Executing REVISAR DESPUES PORQUE DEBE IMPLEMENTARSE PARA CIERRE TAMBIEN PERO EN METODO SEPARADO
             ObjectSpace.Committed += ObjectSpace_Commited;
         }
         protected override void OnViewControlsCreated()
@@ -305,19 +305,16 @@ namespace SBT.Apps.Contabilidad.Module.Controllers
                 return;
             }
             ((CierreDiarioParam)e.PopupWindowViewCurrentObject).Bitacora += $"{Environment.NewLine}Ejecutando el Proceso{Environment.NewLine}";
-            var uow = new UnitOfWork((View.ObjectSpace as XPObjectSpace).Session.DataLayer);
-            uow.BeginTransaction();
-            uow.ExecuteNonQuery("exec spConCierreDiario @Empresa, @FechaDesde, @FechaHasta, @Usuario",
+            using var os = Application.ObjectSpaceProvider.CreateObjectSpace() ;
+            (os as XPObjectSpace).Session.BeginTransaction();
+            (os as XPObjectSpace).Session.ExecuteNonQuery("exec spConCierreDiario @Empresa, @FechaDesde, @FechaHasta, @Usuario",
                 new string[] { "@Empresa", "@FechaDesde", "@FechaHasta", "@Usuario" },
                 new object[] { EmpresaOid, fechaDesde, fechaHasta, nombreUsuario });
-            //uow.CommitChanges();
             ((CierreDiarioParam)e.PopupWindowViewCurrentObject).Bitacora += $"Hora Finalizó: {DateTime.Now:G}";
             //var OS = Application.CreateObjectSpace(typeof(AuditoriaProceso));
-            AuditoriaProceso audit = new (uow);
+            AuditoriaProceso audit = new AuditoriaProceso((os as XPObjectSpace).Session);
             audit.AuditarProceso(pwaCierreDiario.Caption, "", ((CierreDiarioParam)e.PopupWindowViewCurrentObject).Bitacora);
-            uow.CommitTransaction();
-            uow.Disconnect();
-            uow.Dispose();
+            os.CommitChanges();
             View.ObjectSpace.Refresh();
             e.CanCloseWindow = false;
             View.ObjectSpace.Refresh();

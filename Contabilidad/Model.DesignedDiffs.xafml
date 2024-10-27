@@ -483,31 +483,33 @@
       </Items>
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
-          <LayoutGroup Id="SimpleEditors" RelativeSize="32.03463203463203">
-            <LayoutGroup Id="Catalogo" RelativeSize="81.75675675675676">
-              <LayoutGroup Id="Catalogo_col1" RelativeSize="49.95475113122172">
-                <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="17.821782178217823" IsNewNode="True" />
-                <LayoutItem Id="Empresa" Index="1" RelativeSize="12.871287128712872" />
-                <LayoutItem Id="Padre" Index="2" RelativeSize="12.871287128712872" />
-                <LayoutItem Id="CodigoCuenta" Index="3" RelativeSize="12.871287128712872" />
-                <LayoutItem Id="Nombre" Index="4" RelativeSize="12.871287128712872" />
-                <LayoutItem Id="TipoCuenta" Index="5" RelativeSize="12.871287128712872" />
-                <LayoutItem Id="CtaResumen" Index="6" RelativeSize="17.821782178217823" />
+          <LayoutGroup Id="SimpleEditors" RelativeSize="28.01556420233463">
+            <LayoutGroup Id="Catalogo" RelativeSize="100">
+              <LayoutGroup Id="Catalogo_col1" RelativeSize="49.84472049689441">
+                <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="19.767441860465116" IsNewNode="True" />
+                <LayoutItem Id="Empresa" Index="1" RelativeSize="13.131313131313131" Removed="True" />
+                <LayoutItem Id="Padre" Index="1" RelativeSize="15.116279069767442" />
+                <LayoutItem Id="CodigoCuenta" Index="2" RelativeSize="15.116279069767442" />
+                <LayoutItem Id="Nombre" Index="3" RelativeSize="15.116279069767442" />
+                <LayoutItem Id="TipoCuenta" Index="4" RelativeSize="15.116279069767442" />
+                <LayoutItem Id="CtaMayor" RelativeSize="19.767441860465116" Index="5" />
+                <LayoutItem Id="CtaResumen" Index="6" RelativeSize="17.821782178217823" Removed="True" />
               </LayoutGroup>
-              <LayoutGroup Id="Catalogo_col2" RelativeSize="50.04524886877828">
-                <LayoutItem Id="CtaMayor" RelativeSize="17.821782178217823" />
-                <LayoutItem Id="TipoSaldoCta" RelativeSize="12.871287128712872" />
-                <LayoutItem Id="CuentaEspecial" RelativeSize="12.871287128712872" />
-                <LayoutItem Id="Concepto" RelativeSize="12.871287128712872" />
-                <LayoutItem Id="Activa" RelativeSize="12.871287128712872" />
-                <LayoutItem Id="Nivel" RelativeSize="30.693069306930692" />
+              <LayoutGroup Id="Catalogo_col2" RelativeSize="50.15527950310559">
+                <LayoutItem Id="CtaResumen" ViewItem="CtaResumen" Index="0" RelativeSize="19.767441860465116" IsNewNode="True" />
+                <LayoutItem Id="TipoSaldoCta" RelativeSize="15.116279069767442" Index="1" />
+                <LayoutItem Id="CuentaEspecial" RelativeSize="15.116279069767442" Index="2" />
+                <LayoutItem Id="Concepto" RelativeSize="15.116279069767442" Index="3" />
+                <LayoutItem Id="Activa" RelativeSize="15.116279069767442" Index="4" />
+                <LayoutItem Id="Grupo" Index="5" RelativeSize="19.767441860465116" />
+                <LayoutItem Id="Nivel" RelativeSize="13.131313131313131" Index="5" Removed="True" />
               </LayoutGroup>
             </LayoutGroup>
-            <LayoutGroup Id="XPObject" Caption="Oid" Index="1" RelativeSize="18.243243243243242">
+            <LayoutGroup Id="XPObject" Caption="Oid" Index="1" RelativeSize="4.4534412955465585" Removed="True">
               <LayoutItem Id="Oid" Removed="True" />
             </LayoutGroup>
           </LayoutGroup>
-          <TabbedGroup Id="Tabs" Index="1" RelativeSize="67.96536796536796">
+          <TabbedGroup Id="Tabs" Index="1" RelativeSize="71.98443579766537">
             <LayoutGroup Id="Cuentas" Direction="Vertical" RelativeSize="100" Caption="Cuentas">
               <LayoutItem Id="Cuentas" Index="0" RelativeSize="100" ViewItem="Cuentas" IsNewNode="True" />
             </LayoutGroup>
@@ -524,6 +526,7 @@
         </LayoutGroup>
       </Layout>
     </DetailView>
+    <ListView Id="Catalogo_LookupListView" DataAccessMode="Server" AllowDelete="False" AllowNew="False" ShowFindPanel="True" />
     <ListView Id="Catalogo_Partidas_ListView" DataAccessMode="Server">
       <Columns>
         <ColumnInfo Id="NombreCuenta" Width="211" />
