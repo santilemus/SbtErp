@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application>
+  <Views Id="Views">
+    <DetailView Id="Empresa_DetailView">
+      <Layout Id="Layout">
+        <LayoutGroup Id="Main">
+          <LayoutGroup Id="OtrosDatos">
+            <LayoutGroup Id="Auto08887d04-933c-498d-a6a2-86f70589fd00">
+              <LayoutItem Id="MonedaDefecto" ViewItem="MonedaDefecto" />
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+  </Views>
+</Application>

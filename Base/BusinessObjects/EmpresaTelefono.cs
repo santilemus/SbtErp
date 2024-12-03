@@ -7,8 +7,8 @@ namespace SBT.Apps.Base.Module.BusinessObjects
 {
     [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Teléfonos")]
     [DevExpress.Persistent.Base.ImageNameAttribute("phone")]
-    [RuleCombinationOfPropertiesIsUnique("EmpresaTelefono.NumeroUnico", DefaultContexts.Save, "Empresa;Telefono",
-        CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction, SkipNullOrEmptyValues = false)]
+    //[RuleCombinationOfPropertiesIsUnique("EmpresaTelefono.NumeroUnico", DefaultContexts.Save, "Empresa;Telefono",
+    //    CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction, SkipNullOrEmptyValues = false)]
     [DefaultProperty(nameof(Telefono))]
     public class EmpresaTelefono : XPObject
     {

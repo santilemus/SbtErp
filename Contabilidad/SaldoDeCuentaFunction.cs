@@ -1,4 +1,5 @@
 ﻿using DevExpress.Data.Filtering;
+using DevExpress.ExpressApp;
 using DevExpress.Xpo;
 using SBT.Apps.Contabilidad.Module.BusinessObjects;
 using System;
@@ -18,10 +19,10 @@ namespace SBT.Apps.Contabilidad.Module
 
             if (operands[0] is XPBaseObject)
             {
-                var ses = (operands[0] as XPBaseObject).Session;
-                return Convert.ToDecimal(ses.Evaluate<SaldoMes>(CriteriaOperator.Parse("Sum([SaldoFin])"),
-                                       CriteriaOperator.Parse("[Cuenta.Empresa.Oid] == ? && [Periodo.Oid] == ? && [Mes] == ? && [Cuenta.CodigoCuenta] == ?",
-                                       (int)operands[1], (int)operands[2], (int)operands[3], (string)operands[4])));
+                IObjectSpace os = (operands[0] as IObjectSpace);
+                CriteriaOperator criteria = CriteriaOperator.FromLambda<SaldoMes>(x => x.Cuenta.Empresa.Oid == (int)operands[1] &&
+                                            x.Periodo.Oid == (int)operands[2] && x.Mes == (int)operands[3] && x.Cuenta.CodigoCuenta == (string)operands[4]);
+                return Convert.ToDecimal(os.Evaluate(typeof(SaldoMes), CriteriaOperator.Parse("Sum([SaldoFin])"), criteria));
             }
             else
             {

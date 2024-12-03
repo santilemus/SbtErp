@@ -126,15 +126,19 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             if (ctaLiquida != null)
             {
                 decimal resultadoNeto = resultadoBruto - reserva - renta; // - impuestoNoDeducible;
-                
-                //CreateDetalle(ctaLiquida, ctaLiquida.Concepto, Convert.ToDecimal(fCostoGasto), 0.0m);
-                //CreateDetalle(ctaLiquida, ctaLiquida.Concepto, 0.0m, Convert.ToDecimal(fIngreso));
+
+                if (resultadoNeto < 0)
+                {
+                    CreateDetalle(ctaLiquida, ctaLiquida.Concepto, Convert.ToDecimal(fCostoGasto), 0.0m);
+                    CreateDetalle(ctaLiquida, ctaLiquida.Concepto, 0.0m, Convert.ToDecimal(fIngreso));
+                }
 
                 // 3. Se genera el detalle que corresponde al resultado y se lleva a la cuenta de perdidas y ganancias
                 if (resultadoNeto > 0)
                     CreateDetalle(ctaLiquida, ctaLiquida.Concepto, 0.0m, resultadoNeto);            // saldo acreedor, resultado es utilidad
                 else
-                    CreateDetalle(ctaLiquida, ctaLiquida.Concepto, Math.Abs(resultadoNeto), 0.0m);  // saldo deudor, resultado es perdida
+                    // CreateDetalle(ctaLiquida, ctaLiquida.Concepto, resultadoNeto, 0.0m);  // saldo deudor, resultado es perdida
+                    CreateDetalle(ctaLiquida, ctaLiquida.Concepto, 0.0m, Math.Abs(resultadoNeto));
 
                 // 4. Dependiendo del resultado, se obtiene la cuenta de patrimonio para registrar la utilidad o la perdida
                 ECuentaEspecial ctaUtilidadPerdida = (resultadoNeto > 0) ? ECuentaEspecial.UtilidadEjercicio : ECuentaEspecial.PerdidaEjercicio;
@@ -146,8 +150,8 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
                         CreateDetalle(cta, cta.Concepto, 0.0m, resultadoNeto);
                     else                       // 4.2. Perdida. Se lleva a cuenta de patrimonio - perdidas del periodo
                     {
-                        //CreateDetalle(ctaLiquida, ctaLiquida.Concepto, Math.Abs(resultadoNeto), 0.0m);
-                        CreateDetalle(cta, cta.Concepto, 0.0m, Math.Abs(resultadoNeto));
+                        CreateDetalle(cta, cta.Concepto, Math.Abs(resultadoNeto), 0.0m);
+                        //CreateDetalle(cta, cta.Concepto, 0.0m, resultadoNeto);
                     }
                 }
             }

@@ -329,7 +329,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             set => _logo.Value = value;
         }
 
-        [DevExpress.Xpo.AssociationAttribute("Telefonos-Empresa"), VisibleInDetailView(true)]
+        [DevExpress.Xpo.AssociationAttribute("Telefonos-Empresa")]
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Teléfonos"), DevExpress.Xpo.Aggregated]
         public XPCollection<EmpresaTelefono> Telefonos => GetCollection<EmpresaTelefono>("Telefonos");
 

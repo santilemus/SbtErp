@@ -1,5 +1,6 @@
 ﻿using DevExpress.ExpressApp.DC;
 using DevExpress.Persistent.Base;
+using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using System.ComponentModel;
@@ -12,6 +13,8 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
     [DevExpress.Persistent.Base.CreatableItemAttribute(false)]
     [DevExpress.Persistent.Base.ImageNameAttribute("phone")]
     [DefaultProperty(nameof(Telefono))]
+    [RuleObjectExists("TerceroTelefono.Telefono existe", DefaultContexts.Save, "Numero = '@Telefono.Numero'", LooksFor = typeof(Telefono), 
+        CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction, CustomMessageTemplate = "{TargetObject} no existe en Telefono")]
     public class TerceroTelefono : XPObject
     {
         /// <summary>
@@ -40,6 +43,7 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
 
         [XafDisplayName("Teléfono")]
         [ExplicitLoading]
+        [RuleRequiredField("TerceroTelefono.Telefono_requerido", DefaultContexts.Save)]
         public Telefono Telefono
         {
             get => telefono;

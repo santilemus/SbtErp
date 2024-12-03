@@ -69,12 +69,35 @@ namespace SBT.Apps.Compra.Module.Controllers
 
         private void PwsaCargaDte_Execute(object sender, PopupWindowShowActionExecuteEventArgs e)
         {
-            DoCargarDte((FileUploadParameter)e.PopupWindowViewCurrentObject);
+            using MemoryStream ms = new MemoryStream();
+            ((FileUploadParameter)e.PopupWindowViewCurrentObject).FileData.SaveToStream(ms);
+
+            // NOTA. Falta evaluar el tipo de Dte para cargar los otros casos. Factura, Factura de Sujeto Excluido
+            DteRead dteRead = new DteRead(ms);
+
+            if (dteRead.JsonDte != null && dteRead.TipoDte == "03")
+            {
+                IObjectSpace os = Application.CreateObjectSpace(typeof(CompraFactura));
+                var compra = DoCargarCcf(dteRead, os);
+                if (compra != null)
+                {
+                    var compraFacturaDetailView = Application.CreateDetailView(os, compra, true);
+                    Application.ShowViewStrategy.ShowViewInPopupWindow(compraFacturaDetailView, () =>
+                    {
+                        os.CommitChanges();
+                        ObjectSpace.Refresh();
+                        compraFacturaDetailView.Close();
+                        os.Dispose();
+                    });
+                }
+            }
         }
+
 
         protected override void OnDeactivated()
         {
             pwsaCargaDte.CustomizePopupWindowParams -= PwsaCargaDte_CustomizePopupWindowParams;
+            pwsaCargaDte.Execute -= PwsaCargaDte_Execute;
             base.OnDeactivated();
         }
 
@@ -141,67 +164,56 @@ namespace SBT.Apps.Compra.Module.Controllers
             }
         }
 
-        protected void DoCargarDte(FileUploadParameter parameter)
+        private CompraFactura DoCargarCcf(DteRead dteRead, IObjectSpace os)
         {
-            using MemoryStream ms = new MemoryStream();
-            parameter.FileData.SaveToStream(ms);
-
-            // NOTA. Falta evaluar el tipo de Dte para cargar los otros casos. Factura, Factura de Sujeto Excluido
-            //DteRead<FeCcf> dteCcf = new DteRead<FeCcf>(ms);
-            DteRead dteRead = new DteRead(ms);
-
-            if (dteRead.JsonDte != null && dteRead.TipoDte == "03")
+            var ccf = dteRead.CreateObject<FeCcf>();
+            string numFactura = ccf.Identificacion.CodigoGeneracion.Replace("-", "");
+            if (os.FirstOrDefault<CompraFactura>(x => x.Empresa.Oid == EmpresaOid && x.NumeroFactura == numFactura) != null)
             {
-                var ccf = dteRead.CreateObject<FeCcf>();
-                string numFactura = ccf.Identificacion.CodigoGeneracion.Replace("-", "");
-                if (ObjectSpace.FirstOrDefault<CompraFactura>(x => x.Empresa.Oid == EmpresaOid && x.NumeroFactura == numFactura) != null)
-                {
-                    Application.ShowViewStrategy.ShowMessage($@"Dte con código de generación {ccf.Identificacion.CodigoGeneracion} no se cargó porque ya existe", InformationType.Error);
-                    return; // el dte ya se cargo en la aplicacion
-                }
-                var emp = ObjectSpace.GetObjectByKey<Empresa>(EmpresaOid);
-                if (emp != null && emp.Nit != ccf.Receptor.Nit)
-                {
-                    Application.ShowViewStrategy.ShowMessage($@"El receptor del Dte {ccf.Receptor.Nombre}, no corresponde a la empresa de la sesión", InformationType.Error);
-                    return;
-                }
-                if (ccf != null && ccf.Emisor != null)
-                {
-                    IObjectSpace os = Application.CreateObjectSpace(typeof(CompraFactura));
-                    var compraFactura = os.CreateObject<CompraFactura>();
-                    compraFactura.NumeroFactura = numFactura;
-                    var tercero = ObtenerTercero(ccf.Emisor);
-                    compraFactura.Proveedor = os.GetObject<Tercero.Module.BusinessObjects.Tercero>(tercero);
-                    if (ccf.Identificacion.TipoDte == "03")
-                        compraFactura.TipoFactura = os.FirstOrDefault<Listas>(x => x.Codigo == "COVE01");
-                    compraFactura.Fecha = ccf.Identificacion.FechaEmision.DateTime;
-                    compraFactura.Clase = EClaseDocumento.Dte;
-                    compraFactura.ClasificacionRenta = EClasificacionRenta.Gasto;
-                    if (ccf.Resumen.CondicionOperacion == 1)
-                        compraFactura.CondicionPago = ECondicionPago.Contado;
-                    else if (ccf.Resumen.CondicionOperacion == 2)
-                        compraFactura.CondicionPago = ECondicionPago.Credito;
-                    compraFactura.DiasCredito = 0;
-                    compraFactura.Origen = EOrigenCompra.Local;
-                    if (ccf.ResponseMH != null && ccf.ResponseMH.SelloRecibido != null)
-                        compraFactura.Serie = ccf.ResponseMH.SelloRecibido;
-                    else if (ccf.SelloRecibido != null)
-                        compraFactura.Serie = ccf.SelloRecibido;
-                    compraFactura.Moneda = os.FirstOrDefault<Moneda>(x => x.Codigo == ccf.Identificacion.TipoMoneda);
-                    compraFactura.Exenta = ccf.Resumen.TotalExenta;
-                    compraFactura.Gravada = ccf.Resumen.TotalGravada;
-                    compraFactura.NoSujeta = ccf.Resumen.TotalNoSujeta;
-                    compraFactura.Iva = ccf.Resumen.Tributos.FirstOrDefault<ResumenTributos>(x => x.Codigo == "20")?.Valor ?? 0.0m;
-                    compraFactura.IvaPercibido = ccf.Resumen.IvaPercibido;
-                    compraFactura.IvaRetenido = ccf.Resumen.IvaRetenido;
-                    if (ccf.Resumen.Tributos != null)
-                        compraFactura.Fovial = ccf.Resumen.Tributos.Where(x => x.Codigo == "D1" || x.Codigo == "C8").Sum(x => x.Valor);
- //                   compraFactura.Dte = dte.JsonDte; // para guardar el json del dte junto con la factura de compra
-                    var compraFacturaDetailView = Application.CreateDetailView(os, compraFactura, true);
-                    Application.ShowViewStrategy.ShowViewInPopupWindow(compraFacturaDetailView);
-                    ObjectSpace.Refresh();
-                }
-            } 
+                Application.ShowViewStrategy.ShowMessage($@"Dte con código de generación {ccf.Identificacion.CodigoGeneracion} no se cargó porque ya existe", InformationType.Error);
+                return null; // el dte ya se cargo en la aplicacion
+            }
+            var emp = os.GetObjectByKey<Empresa>(EmpresaOid);
+            if (emp != null && emp.Nit != ccf.Receptor.Nit)
+            {
+                Application.ShowViewStrategy.ShowMessage($@"El receptor del Dte {ccf.Receptor.Nombre}, no corresponde a la empresa de la sesión", InformationType.Error);
+                return null;
+            }
+            if (ccf != null && ccf.Emisor != null)
+            {
+                var compraFactura = os.CreateObject<CompraFactura>();
+                compraFactura.NumeroFactura = numFactura;
+                var tercero = ObtenerTercero(ccf.Emisor);
+                compraFactura.Proveedor = os.GetObject<Tercero.Module.BusinessObjects.Tercero>(tercero);
+                if (ccf.Identificacion.TipoDte == "03")
+                    compraFactura.TipoFactura = os.FirstOrDefault<Listas>(x => x.Codigo == "COVE01");
+                compraFactura.Fecha = ccf.Identificacion.FechaEmision.DateTime;
+                compraFactura.Clase = EClaseDocumento.Dte;
+                compraFactura.ClasificacionRenta = EClasificacionRenta.Gasto;
+                if (ccf.Resumen.CondicionOperacion == 1)
+                    compraFactura.CondicionPago = ECondicionPago.Contado;
+                else if (ccf.Resumen.CondicionOperacion == 2)
+                    compraFactura.CondicionPago = ECondicionPago.Credito;
+                compraFactura.DiasCredito = 0;
+                compraFactura.Origen = EOrigenCompra.Local;
+                if (ccf.ResponseMH != null && ccf.ResponseMH.SelloRecibido != null)
+                    compraFactura.Serie = ccf.ResponseMH.SelloRecibido;
+                else if (ccf.SelloRecibido != null)
+                    compraFactura.Serie = ccf.SelloRecibido;
+                compraFactura.Moneda = os.FirstOrDefault<Moneda>(x => x.Codigo == ccf.Identificacion.TipoMoneda);
+                compraFactura.Exenta = ccf.Resumen.TotalExenta;
+                compraFactura.Gravada = ccf.Resumen.TotalGravada;
+                compraFactura.NoSujeta = ccf.Resumen.TotalNoSujeta;
+                compraFactura.Iva = ccf.Resumen.Tributos.FirstOrDefault<ResumenTributos>(x => x.Codigo == "20")?.Valor ?? 0.0m;
+                compraFactura.IvaPercibido = ccf.Resumen.IvaPercibido;
+                compraFactura.IvaRetenido = ccf.Resumen.IvaRetenido;
+                if (ccf.Resumen.Tributos != null)
+                    compraFactura.Fovial = ccf.Resumen.Tributos.Where(x => x.Codigo == "D1" || x.Codigo == "C8").Sum(x => x.Valor);
+                compraFactura.Dte = dteRead.JsonDte; // para guardar el json del dte junto con la factura de compra
+                return compraFactura;
+            }
+            else
+                return null;
         }
 
         /// <summary>
