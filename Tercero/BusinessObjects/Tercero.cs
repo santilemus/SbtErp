@@ -2,7 +2,6 @@
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
-using Microsoft.CodeAnalysis.Operations;
 using SBT.Apps.Base.Module.BusinessObjects;
 using System.ComponentModel;
 using System.Linq;

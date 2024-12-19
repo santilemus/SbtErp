@@ -11,7 +11,6 @@ using SBT.Apps.Compra.Module.BusinessObjects;
 using DevExpress.ClipboardSource.SpreadsheetML;
 using DevExpress.Spreadsheet;
 using DevExpress.XtraSpreadsheet.Model;
-using Microsoft.CodeAnalysis;
 using SBT.Apps.Compra.Module.helper;
 using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp;

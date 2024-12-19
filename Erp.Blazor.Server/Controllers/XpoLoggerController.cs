@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using DevExpress.Xpo.Logger;
 using DevExpress.Xpo.Logger.Transport;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace SBT.Apps.Erp.Blazor.Server.Controllers
 {

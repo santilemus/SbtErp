@@ -19,9 +19,6 @@
 		<OutputPath>bin\EasyTest\</OutputPath>
 		<DefineConstants>TRACE;DEBUG;EASYTEST</DefineConstants>
 	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug Net6|AnyCPU'">
-		<OutputPath>bin\Debug Net6\</OutputPath>
-	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 		<OutputPath>bin\Debug\</OutputPath>
 	</PropertyGroup>

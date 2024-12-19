@@ -86,7 +86,6 @@
     </ListView>
     <ListView Id="DteCatalogo_LookupListView">
       <Columns>
-        <ColumnInfo Id="Codigo" Width="113" />
         <ColumnInfo Id="Concepto" Width="483" />
       </Columns>
     </ListView>
@@ -129,56 +128,28 @@
         </LayoutGroup>
       </Layout>
     </DetailView>
-    <DetailView Id="Presentacion_DetailView">
-      <Layout>
-        <LayoutGroup Id="Main" RelativeSize="100">
-          <LayoutGroup Id="SimpleEditors" RelativeSize="18.741976893453145">
-            <LayoutGroup Id="Presentacion" RelativeSize="100">
-              <LayoutGroup Id="Presentacion_col1" RelativeSize="49.88662131519274">
-                <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="36.734693877551024" CaptionLocation="Left" IsNewNode="True" />
-                <LayoutItem Id="Codigo" Index="1" RelativeSize="26.53061224489796" CaptionLocation="Left" />
-                <LayoutItem Id="Nombre" Index="2" RelativeSize="36.734693877551024" CaptionLocation="Left" />
-                <LayoutItem Id="Unidades" Index="3" RelativeSize="29.032258064516128" Removed="True" />
-              </LayoutGroup>
-              <LayoutGroup Id="Presentacion_col2" RelativeSize="50.11337868480726">
-                <LayoutItem Id="Unidades" ViewItem="Unidades" Index="0" RelativeSize="36.734693877551024" CaptionLocation="Left" IsNewNode="True" />
-                <LayoutItem Id="Activo" RelativeSize="26.53061224489796" Index="1" CaptionLocation="Left" />
-                <LayoutItem Id="Defecto" RelativeSize="36.734693877551024" Index="2" CaptionLocation="Left" />
-              </LayoutGroup>
-            </LayoutGroup>
-            <LayoutGroup Id="XPObject" Caption="Oid" RelativeSize="57.840616966580974" Removed="True">
-              <LayoutItem Id="Oid" Removed="True" />
-            </LayoutGroup>
-          </LayoutGroup>
-          <LayoutGroup Id="Productos_Group" Direction="Vertical" RelativeSize="81.25802310654686">
-            <LayoutItem Id="Productos" RelativeSize="100" />
-          </LayoutGroup>
-        </LayoutGroup>
-      </Layout>
-    </DetailView>
     <DetailView Id="Producto_DetailView">
       <Items>
         <PropertyEditor Id="Categoria" PropertyName="Categoria" IsNewNode="True" />
       </Items>
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
-          <LayoutGroup Id="SimpleEditors" RelativeSize="25.673940949935815" Direction="Horizontal" CaptionLocation="Left">
-            <LayoutGroup Id="Producto_col1" ShowCaption="False" Index="0" RelativeSize="49.72314507198228" CaptionLocation="Left" IsNewNode="True">
-              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="18" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="Categoria" ViewItem="Categoria" Index="1" RelativeSize="13" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="Codigo" ViewItem="Codigo" Index="2" RelativeSize="13" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="CodigoBarra" ViewItem="CodigoBarra" Index="3" RelativeSize="13" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="Nombre" ViewItem="Nombre" Index="4" RelativeSize="13" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="NombreCorto" ViewItem="NombreCorto" Index="5" RelativeSize="13" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="UnidadMedida" ViewItem="UnidadMedida" CaptionLocation="Left" Index="6" RelativeSize="17" IsNewNode="True" />
+          <LayoutGroup Id="SimpleEditors" RelativeSize="18.81081081081081" Direction="Horizontal" CaptionLocation="Left">
+            <LayoutGroup Id="Producto_col1" ShowCaption="False" Index="0" RelativeSize="49.64308890330954" CaptionLocation="Left" IsNewNode="True">
+              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="20.689655172413794" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Categoria" ViewItem="Categoria" Index="1" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Codigo" ViewItem="Codigo" Index="2" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="CodigoBarra" ViewItem="CodigoBarra" Index="3" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Nombre" ViewItem="Nombre" Index="4" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="NombreCorto" ViewItem="NombreCorto" Index="5" RelativeSize="19.54022988505747" CaptionLocation="Left" IsNewNode="True" />
             </LayoutGroup>
-            <LayoutGroup Id="Producto_col2" ShowCaption="False" Index="1" RelativeSize="50.27685492801772" CaptionLocation="Left" IsNewNode="True">
-              <LayoutItem Id="Presentacion" ViewItem="Presentacion" Index="0" RelativeSize="18" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="CostoPromedio" ViewItem="CostoPromedio" Index="1" RelativeSize="13" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="CantMinima" ViewItem="CantMinima" Index="2" RelativeSize="13" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="CantMaxima" ViewItem="CantMaxima" Index="3" RelativeSize="13" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="Activo" ViewItem="Activo" Index="4" RelativeSize="13" CaptionLocation="Left" IsNewNode="True" />
-              <LayoutItem Id="Comentario" ViewItem="Comentario" Index="5" RelativeSize="30" CaptionLocation="Left" IsNewNode="True" />
+            <LayoutGroup Id="Producto_col2" ShowCaption="False" Index="1" RelativeSize="50.35691109669046" CaptionLocation="Left" IsNewNode="True">
+              <LayoutItem Id="UnidadMedida" ViewItem="UnidadMedida" CaptionLocation="Left" Index="0" RelativeSize="20.689655172413794" IsNewNode="True" />
+              <LayoutItem Id="CostoPromedio" ViewItem="CostoPromedio" Index="1" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="CantMinima" ViewItem="CantMinima" Index="2" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="CantMaxima" ViewItem="CantMaxima" Index="3" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Activo" ViewItem="Activo" Index="4" RelativeSize="14.942528735632184" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Comentario" ViewItem="Comentario" Index="5" RelativeSize="19.54022988505747" CaptionLocation="Left" IsNewNode="True" />
             </LayoutGroup>
             <LayoutGroup Id="XPObject" Caption="Oid" Direction="Horizontal" Index="1" RelativeSize="13.306451612903226" Removed="True">
               <LayoutItem Id="Oid" Removed="True" />
@@ -203,7 +174,7 @@
               </LayoutGroup>
             </LayoutGroup>
           </LayoutGroup>
-          <TabbedGroup Id="Tabs" RelativeSize="74.32605905006419">
+          <TabbedGroup Id="Tabs" RelativeSize="81.1891891891892">
             <LayoutGroup Id="Precios" RelativeSize="100">
               <LayoutItem Id="Precios" RelativeSize="100" />
             </LayoutGroup>
@@ -216,6 +187,9 @@
             <LayoutGroup Id="Equivalentes" RelativeSize="100">
               <LayoutItem Id="Equivalentes" RelativeSize="100" />
             </LayoutGroup>
+            <LayoutGroup Id="Presentaciones" RelativeSize="100">
+              <LayoutItem Id="Presentaciones" RelativeSize="100" />
+            </LayoutGroup>
             <LayoutGroup Id="Proveedores" RelativeSize="100">
               <LayoutItem Id="Proveedores" RelativeSize="100" />
             </LayoutGroup>
@@ -225,11 +199,23 @@
             <LayoutGroup Id="CodigosBarra" RelativeSize="100">
               <LayoutItem Id="CodigosBarra" RelativeSize="100" />
             </LayoutGroup>
+            <LayoutGroup Id="Inventarios" RelativeSize="100">
+              <LayoutItem Id="Inventarios" RelativeSize="100" />
+            </LayoutGroup>
           </TabbedGroup>
         </LayoutGroup>
       </Layout>
     </DetailView>
-    <ListView Id="Producto_ListView" DataAccessMode="Server" />
+    <ListView Id="Producto_ListView" DataAccessMode="Server">
+      <Columns>
+        <ColumnInfo Id="Categoria" Width="156" />
+        <ColumnInfo Id="Codigo" Width="140" />
+        <ColumnInfo Id="CodigoBarra" Width="141" />
+        <ColumnInfo Id="UnidadMedida" Width="137" />
+        <ColumnInfo Id="CostoPromedio" Width="120" />
+        <ColumnInfo Id="Activo" Width="78" />
+      </Columns>
+    </ListView>
     <ListView Id="Producto_LookupListView" DataAccessMode="Server" />
     <ListView Id="Producto_Precios_ListView">
       <Columns>
@@ -357,6 +343,32 @@
         </LayoutGroup>
       </Layout>
     </DetailView>
+    <DetailView Id="ProductoPresentacion_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="100">
+            <LayoutGroup Id="ProductoPresentacion" Direction="Vertical" RelativeSize="100" Caption="ProductoPresentacion">
+              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="3.8876889848812093" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Nombre" ViewItem="Nombre" Index="1" RelativeSize="2.8077753779697625" CaptionLocation="Left" IsNewNode="True" Removed="True" />
+              <LayoutItem Id="Unidades" ViewItem="Unidades" Index="2" RelativeSize="2.8077753779697625" CaptionLocation="Left" IsNewNode="True" Removed="True" />
+              <LayoutItem Id="Activo" ViewItem="Activo" Index="3" RelativeSize="2.8077753779697625" CaptionLocation="Left" IsNewNode="True" Removed="True" />
+              <LayoutItem Id="Defecto" ViewItem="Defecto" Index="4" RelativeSize="87.6889848812095" CaptionLocation="Left" IsNewNode="True" Removed="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="XPObject" Caption="Oid" RelativeSize="80.56680161943319" Removed="True">
+              <LayoutItem Id="Oid" CaptionLocation="Left" Removed="True" />
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="ProductoPresentacion_ListView">
+      <Columns>
+        <ColumnInfo Id="Producto" Index="-1" />
+        <ColumnInfo Id="Unidades" Width="166" />
+        <ColumnInfo Id="Activo" Width="124" />
+        <ColumnInfo Id="Defecto" Width="101" />
+      </Columns>
+    </ListView>
     <DetailView Id="ProductoProveedor_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">

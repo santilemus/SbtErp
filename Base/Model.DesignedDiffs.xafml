@@ -651,16 +651,20 @@
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
           <LayoutGroup Id="SimpleEditors" RelativeSize="100" Direction="Horizontal">
-            <LayoutGroup Id="UnidadMedida_col1" ShowCaption="False" Index="0" RelativeSize="50" IsNewNode="True">
-              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="4.621309370988446" IsNewNode="True" />
-              <LayoutItem Id="TipoSistema" ViewItem="TipoSistema" Index="1" RelativeSize="3.337612323491656" IsNewNode="True" />
-              <LayoutItem Id="TipoUnidad" ViewItem="TipoUnidad" Index="2" RelativeSize="3.337612323491656" IsNewNode="True" />
-              <LayoutItem Id="Nombre" ViewItem="Nombre" Index="3" RelativeSize="88.70346598202823" IsNewNode="True" />
+            <LayoutGroup Id="UnidadMedida_col1" ShowCaption="False" Index="0" RelativeSize="51.00401606425703" IsNewNode="True">
+              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="3.8876889848812093" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="TipoSistema" ViewItem="TipoSistema" Index="1" RelativeSize="2.8077753779697625" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="TipoUnidad" ViewItem="TipoUnidad" Index="2" RelativeSize="2.8077753779697625" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Nombre" ViewItem="Nombre" Index="3" RelativeSize="90.49676025917927" CaptionLocation="Left" IsNewNode="True" />
             </LayoutGroup>
-            <LayoutGroup Id="UnidadMedida_col2" ShowCaption="False" Index="1" RelativeSize="50" IsNewNode="True">
-              <LayoutItem Id="Magnitud" ViewItem="Magnitud" Index="0" RelativeSize="4.621309370988446" IsNewNode="True" />
-              <LayoutItem Id="Simbolo" ViewItem="Simbolo" Index="1" RelativeSize="3.337612323491656" IsNewNode="True" />
-              <LayoutItem Id="Activo" ViewItem="Activo" Index="2" RelativeSize="92.0410783055199" IsNewNode="True" />
+            <LayoutGroup Id="UnidadMedida_col2" ShowCaption="False" Index="1" RelativeSize="48.99598393574297" IsNewNode="True">
+              <LayoutItem Id="Magnitud" ViewItem="Magnitud" Index="0" RelativeSize="3.8876889848812093" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Simbolo" ViewItem="Simbolo" Index="1" RelativeSize="2.8077753779697625" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="CodigoDte" ViewItem="CodigoDte" Index="2" RelativeSize="2.8077753779697625" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Activo" ViewItem="Activo" Index="3" RelativeSize="90.49676025917927" CaptionLocation="Left" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="XPObject" Caption="Oid" Index="2" RelativeSize="25.100401606425702" Removed="True">
+              <LayoutItem Id="Oid" Removed="True" />
             </LayoutGroup>
             <LayoutGroup Id="UnidadMedida" RelativeSize="100" Removed="True">
               <LayoutGroup Id="UnidadMedida_col1" RelativeSize="50">
@@ -679,6 +683,15 @@
         </LayoutGroup>
       </Layout>
     </DetailView>
+    <ListView Id="UnidadMedida_ListView">
+      <Columns>
+        <ColumnInfo Id="CodigoDte" Width="148" />
+        <ColumnInfo Id="TipoSistema" Width="129" />
+        <ColumnInfo Id="TipoUnidad" Width="132" />
+        <ColumnInfo Id="Magnitud" Width="145" />
+        <ColumnInfo Id="Simbolo" Width="101" />
+      </Columns>
+    </ListView>
     <DetailView Id="Usuario_DetailView">
       <Items>
         <PropertyEditor Id="Empresa" PropertyName="Empresa" IsNewNode="True" />

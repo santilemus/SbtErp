@@ -5,7 +5,6 @@ using DevExpress.ExpressApp.Security.ClientServer;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
-using Microsoft.CodeAnalysis.Operations;
 using SBT.Apps.Banco.Module.BusinessObjects;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Facturacion.Module.BusinessObjects;

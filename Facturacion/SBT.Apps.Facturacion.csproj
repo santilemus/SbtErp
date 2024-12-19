@@ -140,7 +140,7 @@
     <ProjectReference Include="..\Producto\SBT.Apps.Producto.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="UnusableNodes.xml">
+    <None Update="UnusableNodes1.xml">
       <DependentUpon>Model.DesignedDiffs.xafml</DependentUpon>
     </None>
   </ItemGroup>

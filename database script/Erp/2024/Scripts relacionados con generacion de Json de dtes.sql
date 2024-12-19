@@ -99,3 +99,11 @@ go
 alter table ProductoPresentacion
   drop column Codigo 
 go
+
+-- 8. Agregar UnidadMedida a Producto y la referencia
+alter table Producto
+  add UnidadMedida int null
+go 
+alter table Producto
+  add constraint FK_Producto_UnidadMedida foreign key (UnidadMedida) references UnidadMedida(Oid)
+go
