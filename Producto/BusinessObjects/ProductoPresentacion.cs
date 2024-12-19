@@ -8,17 +8,16 @@ using System.ComponentModel;
 namespace SBT.Apps.Producto.Module.BusinessObjects
 {
     /// <summary>
-    /// BO que corresponde a las presentaciones que pueden tener los productos
-    /// 
+    /// BO que corresponde a las diferentes presentaciones que pueden tener los productos. Por ejemplo: unidad, blister de 5 unidades, caja de 20, caja de 30 unidades, etc
     /// </summary>
 
     [DefaultClassOptions, ModelDefault("Caption", "Presentacion"), DefaultProperty("Nombre"), NavigationItem("Inventario"),
-        CreatableItem(false), Persistent("ProPresentacion")]
+        CreatableItem(false), Persistent(nameof(ProductoPresentacion))]
     [ImageName("Presentacion")]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
-    public class Presentacion : XPObject
+    public class ProductoPresentacion : XPObject
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
-        public Presentacion(Session session)
+        public ProductoPresentacion(Session session)
             : base(session)
         {
         }
@@ -32,17 +31,20 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         }
 
         #region Propiedades
-        string codigo;
-        [DbType("varchar(12)"), Persistent("Codigo")]
-        [Size(12), Index(0), XafDisplayName("Código"), RuleUniqueValue("Presentacion.Codigo_Unico", DefaultContexts.Save,
-           CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction, SkipNullOrEmptyValues = false)]
-        public string Codigo
-        {
-            get => codigo;
-            set => SetPropertyValue("Codigo", ref codigo, value);
-        }
 
         string nombre;
+        decimal unidades;
+        bool activo;
+        bool defecto;
+        private Producto producto;
+
+        [Association("Presentacion-Producto")]
+        public Producto Producto
+        {
+            get => producto;
+            set => SetPropertyValue<Producto>(nameof(Producto), ref producto, value);
+        }
+
         [DbType("varchar(50)"), Persistent("Nombre")]
         [Size(25), XafDisplayName("Nombre"), Index(1), RuleRequiredField("Presentacion.Nombre_Requerido", DefaultContexts.Save)]
         public string Nombre
@@ -51,7 +53,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
             set => SetPropertyValue("Nombre", ref nombre, value);
         }
 
-        decimal unidades;
+
         [DbType("numeric(12,2)"), Persistent(nameof(Unidades))]
         [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         [XafDisplayName("Unidades Inventario"), Index(2), VisibleInLookupListView(false),
@@ -62,7 +64,6 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
             set => SetPropertyValue(nameof(Unidades), ref unidades, value);
         }
 
-        bool activo;
         [DbType("bit"), Persistent("Activo")]
         [XafDisplayName("Activo"), Index(3)]
         public bool Activo
@@ -71,7 +72,6 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
             set => SetPropertyValue("Activo", ref activo, value);
         }
 
-        bool defecto;
         [DbType("bit"), Persistent("Defecto")]
         [XafDisplayName("Defecto"), Index(4), ToolTip("Presentacion o presentacion por defecto")]
         public bool Defecto
@@ -83,14 +83,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         #endregion
 
         #region Colecciones
-        [Association("Presentacion-Productos")]
-        public XPCollection<Producto> Productos
-        {
-            get
-            {
-                return GetCollection<Producto>("Productos");
-            }
-        }
+
         #endregion
 
         //[Action(Caption = "My UI Action", ConfirmationMessage = "Are you sure?", ImageName = "Attention", AutoCommit = true)]

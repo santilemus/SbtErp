@@ -16,7 +16,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
     /// </summary>
     [DefaultClassOptions, ModelDefault("Caption", "Catálogos Dte"), NavigationItem("Facturación"), 
         CreatableItem(false), DefaultProperty(nameof(Concepto))]
-    [Persistent(nameof(DteCatalogo)), FriendlyKeyProperty(nameof(Codigo))]
+    [Persistent(nameof(DteCatalogo))] //, FriendlyKeyProperty(nameof(Codigo))]
     //[ImageName("BO_Contact")]
     //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
@@ -39,7 +39,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         {
             base.AfterConstruction();
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
-            Tipo = ETipoDteCatalogo.AmbienteDestino;
+            Tipo = ETipoDteCatalogo.TipoDeDocumento;
             Activo = true;
         }
 

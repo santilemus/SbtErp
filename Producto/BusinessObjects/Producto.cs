@@ -27,7 +27,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
 
     [Appearance("Productos - Servicios - Intangibles y Otros", AppearanceItemType = "ViewItem", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide,
             Context = "Any", Criteria = "[Categoria.Clasificacion] >= 4",
-            TargetItems = "CodigoBarra;NombreCorto;UnidadMedida;Presentacion;CantMinima;CantMaxima;CostoPromedio;Atributos;ItemsEnsamble;Equivalentes;Lotes;CodigosBarra;Inventarios")]
+            TargetItems = "CodigoBarra;NombreCorto;UnidadMedida;Presentaciones;CantMinima;CantMaxima;CostoPromedio;Atributos;ItemsEnsamble;Equivalentes;Lotes;CodigosBarra;Inventarios")]
     public class Producto : XPObjectBaseBO
     {
         public override void AfterConstruction()
@@ -40,7 +40,6 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         }
 
         decimal costoPromedio;
-        Presentacion presentacion;
         private Categoria categoria;
         private System.String codigo;
         private System.Decimal cantMaxima;
@@ -50,7 +49,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         private System.Boolean activo;
         private System.String nombre;
         private System.String nombreCorto;
-        private string unidadMedida;
+        private UnidadMedida unidadMedida;
         private ProductoCodigoBarra codigoBarra;
         public Producto(DevExpress.Xpo.Session session)
           : base(session)
@@ -124,12 +123,13 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
             set => SetPropertyValue(nameof(NombreCorto), ref nombreCorto, value);
         }
 
-        [Association("Presentacion-Productos"), XafDisplayName("Presentación"), Persistent("Presentacion"), VisibleInListView(false)]
-        [ExplicitLoading]
-        public Presentacion Presentacion
+        /// <summary>
+        /// Unidad de medida. Se agrega el 15/12/2024 porque UnidadMedida.CodigoDte es el dato que va en el dte.
+        /// </summary>
+        public UnidadMedida UnidadMedida
         {
-            get => presentacion;
-            set => SetPropertyValue(nameof(Presentacion), ref presentacion, value);
+            get => unidadMedida;
+            set => SetPropertyValue(nameof(UnidadMedida), ref unidadMedida, value);
         }
 
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Cantidad Mínima")]
@@ -189,74 +189,39 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         #endregion
 
         #region Colecciones
-        [DevExpress.Xpo.AssociationAttribute("Precios-Producto"), XafDisplayName("Precios"),
+        [DevExpress.Xpo.AssociationAttribute("Precios-Producto"), System.ComponentModel.DisplayName("Precios"),
         DevExpress.Xpo.Aggregated]
-        public XPCollection<ProductoPrecio> Precios
-        {
-            get
-            {
-                return GetCollection<ProductoPrecio>("Precios");
-            }
-        }
+        public XPCollection<ProductoPrecio> Precios => GetCollection<ProductoPrecio>(nameof(Precios));
 
-        [AssociationAttribute("ItemsEnsamble-Producto"), DevExpress.Xpo.Aggregated, XafDisplayName("Ensamble Items")]
-        public XPCollection<ProductoEnsamble> ItemsEnsamble
-        {
-            get
-            {
-                return GetCollection<ProductoEnsamble>("ItemsEnsamble");
-            }
-        }
-        [DevExpress.Xpo.AssociationAttribute("Atributos-Producto"), DevExpress.Xpo.Aggregated, XafDisplayName("Atributos")]
-        public XPCollection<ProductoAtributo> Atributos
-        {
-            get
-            {
-                return GetCollection<ProductoAtributo>("Atributos");
-            }
-        }
-        [DevExpress.Xpo.AssociationAttribute("Equivalentes-Producto"), DevExpress.Xpo.Aggregated, XafDisplayName("Equivalentes")]
-        public XPCollection<ProductoEquivalente> Equivalentes
-        {
-            get
-            {
-                return GetCollection<ProductoEquivalente>("Equivalentes");
-            }
-        }
+        [AssociationAttribute("ItemsEnsamble-Producto"), DevExpress.Xpo.Aggregated, System.ComponentModel.DisplayName("Ensamble Items")]
+        public XPCollection<ProductoEnsamble> ItemsEnsamble => GetCollection<ProductoEnsamble>(nameof(ItemsEnsamble));
+
+        [DevExpress.Xpo.AssociationAttribute("Atributos-Producto"), DevExpress.Xpo.Aggregated, System.ComponentModel.DisplayName("Atributos")]
+        public XPCollection<ProductoAtributo> Atributos => GetCollection<ProductoAtributo>(nameof(Atributos));
+
+        [DevExpress.Xpo.AssociationAttribute("Equivalentes-Producto"), DevExpress.Xpo.Aggregated, 
+            System.ComponentModel.DisplayName("Equivalentes")]
+        public XPCollection<ProductoEquivalente> Equivalentes => GetCollection<ProductoEquivalente>(nameof(Equivalentes));
+
+        [Association("Presentacion-Producto"), DevExpress.Xpo.Aggregated]
+        [System.ComponentModel.DisplayName("Presentaciones")]
+        public XPCollection<ProductoPresentacion> Presentaciones => GetCollection<ProductoPresentacion>(nameof(Presentaciones));
+
         [DevExpress.Xpo.AssociationAttribute("Proveedores-Producto"),
         DevExpress.Xpo.Aggregated]
-        public XPCollection<ProductoProveedor> Proveedores
-        {
-            get
-            {
-                return GetCollection<ProductoProveedor>("Proveedores");
-            }
-        }
-        [DevExpress.Xpo.AssociationAttribute("Lotes-Producto"), DevExpress.Xpo.Aggregated, XafDisplayName("Lotes")]
-        public XPCollection<InventarioLote> Lotes
-        {
-            get
-            {
-                return GetCollection<InventarioLote>("Lotes");
-            }
-        }
-        [DevExpress.Xpo.AssociationAttribute("CodigosBarra-Producto"), DevExpress.Xpo.AggregatedAttribute, XafDisplayName("Códigos de Barra")]
-        public XPCollection<ProductoCodigoBarra> CodigosBarra
-        {
-            get
-            {
-                return GetCollection<ProductoCodigoBarra>("CodigosBarra");
-            }
-        }
+        public XPCollection<ProductoProveedor> Proveedores => GetCollection<ProductoProveedor>(nameof(Proveedores));
 
-        [Association("Producto-Inventarios"), DevExpress.Xpo.Aggregated, XafDisplayName("Inventario")]
-        public XPCollection<Inventario.Module.BusinessObjects.Inventario> Inventarios
-        {
-            get
-            {
-                return GetCollection<Inventario.Module.BusinessObjects.Inventario>(nameof(Inventarios));
-            }
-        }
+        [DevExpress.Xpo.AssociationAttribute("Lotes-Producto"), DevExpress.Xpo.Aggregated, 
+         System.ComponentModel.DisplayName("Lotes")]
+        public XPCollection<InventarioLote> Lotes => GetCollection<InventarioLote>(nameof(Lotes));
+
+        [DevExpress.Xpo.AssociationAttribute("CodigosBarra-Producto"), DevExpress.Xpo.AggregatedAttribute, 
+            System.ComponentModel.DisplayName("Códigos de Barra")]
+        public XPCollection<ProductoCodigoBarra> CodigosBarra => GetCollection<ProductoCodigoBarra>(nameof(CodigosBarra));  
+
+        [Association("Producto-Inventarios"), DevExpress.Xpo.Aggregated, System.ComponentModel.DisplayName("Inventario")]
+        public XPCollection<Inventario.Module.BusinessObjects.Inventario> Inventarios =>GetCollection<Inventario.Module.BusinessObjects.Inventario>(nameof(Inventarios));
+
 
         #endregion
 

@@ -13,7 +13,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
     /// </summary>
     [ModelDefault("Caption", "Unidad de Medida"), NavigationItem("Catalogos"), Persistent("UnidadMedida"), XafDefaultProperty("Nombre")]
     [ImageName("UnidadMedida")]
-    public class UnidadMedida : XPCustomObject
+    public class UnidadMedida : XPObject
     {
         public UnidadMedida(Session session) : base(session) { }
 
@@ -63,7 +63,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         }
 
         #region Propiedades
-        string oid;
+        string codigoDte;
         TipoSistemaMedida fTipoSistema;
         TipoUnidadMedida fTipoUnidad;
         string fNombre;
@@ -71,12 +71,11 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         string fSimbolo;
         bool fActivo;
 
-        [Key(false)]
         [RuleRequiredField("UnidadMedida.Oid_requerido", DefaultContexts.Save)]
-        public string Oid
+        public string CodigoDte
         {
-            get => oid;
-            set => SetPropertyValue<string>(nameof(Oid), ref oid, value);
+            get => codigoDte;
+            set => SetPropertyValue<string>(nameof(CodigoDte), ref codigoDte, value);
         }
 
         /// <summary>

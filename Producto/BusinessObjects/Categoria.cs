@@ -17,7 +17,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
     /// </summary>
     [DefaultClassOptions, XafDefaultProperty(nameof(Nombre)), CreatableItem(false)]
     [ModelDefault("Caption", "Categoría Productos"), NavigationItem("Inventario")]
-    [RuleIsReferenced("Categoria_Referencia", DefaultContexts.Delete, typeof(Categoria), nameof(Oid),
+    [RuleIsReferenced("Categoria_Referencia", DefaultContexts.Delete, typeof(Producto), "Categoria",
         MessageTemplateMustBeReferenced = "Para borrar el objeto '{TargetObject}', debe estar seguro que no es utilizado (referenciado) en ningún lugar.",
         InvertResult = true, FoundObjectMessageFormat = "'{0}'", FoundObjectMessagesSeparator = ";")]
     [ImageName("CategoriaProducto")]
@@ -139,7 +139,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         public EClasificacionIVA ClasificacionIva
         {
             get => clasificacionIva;
-            set => SetPropertyValue(nameof(Clasificacion), ref clasificacionIva, value);
+            set => SetPropertyValue(nameof(ClasificacionIva), ref clasificacionIva, value);
         }
 
         /// <summary>

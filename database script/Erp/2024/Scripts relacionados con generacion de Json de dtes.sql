@@ -72,3 +72,30 @@ go
 select * from UnidadMedida
 
 -- 5. Agregar UnidadMedida al producto o al detalle de la venta porque es requerido por el dte
+
+-- 6. borrar la tabla ProPresentacion ya no se utiliza
+drop table ProdPresentacion
+
+-- 7. modificar la tabla ProPresentacion y otros cambios 
+
+drop index iPresentacion_Producto on Producto
+go
+alter table Producto 
+  drop constraint FK_Producto_Presentacion
+go
+alter table Producto
+  drop column Presentacion
+go
+delete from ProductoPresentacion
+go
+dbcc checkident('ProductoPresentacion', reseed, 0)
+go
+alter table ProductoPresentacion
+  add Producto int not null
+go
+alter table ProductoPresentacion
+  add constraint FK_ProductoPresentacion_Producto foreign key(Producto) references Producto(Oid)
+go
+alter table ProductoPresentacion
+  drop column Codigo 
+go

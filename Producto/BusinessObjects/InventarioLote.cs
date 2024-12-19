@@ -127,7 +127,7 @@ namespace SBT.Apps.Inventario.Module.BusinessObjects
         public Producto.Module.BusinessObjects.Producto Producto
         {
             get => _producto;
-            set => SetPropertyValue(nameof(_producto), ref _producto, value);
+            set => SetPropertyValue(nameof(Producto), ref _producto, value);
         }
 
         /// <summary>

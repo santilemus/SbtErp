@@ -30,7 +30,7 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
 
         [DbType("numeric(12,2)"), Persistent(nameof(Unidades))]
         decimal unidades;
-        Presentacion presentacion;
+        ProductoPresentacion presentacion;
         CompraFactura factura;
 
         [Association("CompraFactura-Detalles"), XafDisplayName("Factura")]
@@ -44,9 +44,8 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
         /// Presentacion o empaque. Importante porque cada presentacion contiene diferente cantidad de unidades
         /// </summary>
         [XafDisplayName("Presentación")]
-        [ModelDefault("DisplayFormat", "{0:N2}"), ModelDefault("EditMask", "n2")]
         [ToolTip("Presentación del Producto. Cada presentacion tiene diferente cantidad de unidades")]
-        public Presentacion Presentacion
+        public ProductoPresentacion Presentacion
         {
             get => presentacion;
             set => SetPropertyValue(nameof(Presentacion), ref presentacion, value);

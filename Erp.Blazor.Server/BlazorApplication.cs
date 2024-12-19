@@ -15,6 +15,7 @@ public class BlazorBlazorApplication : BlazorApplication {
         CheckCompatibilityType = DevExpress.ExpressApp.CheckCompatibilityType.DatabaseSchema;
         DatabaseVersionMismatch += BlazorBlazorApplication_DatabaseVersionMismatch;
         CreateCustomLogonWindowObjectSpace += BlazorBlazorApplication_CreateCustomLogonWindowObjectSpace;
+
     }
 
 

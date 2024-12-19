@@ -20,8 +20,8 @@ namespace SBT.Apps.Facturacion.Module.helper
                 Version = version,    // hay que parametrizarlo en algún lugar. La versión es por tipo de dte
                 Ambiente = ambiente,
                 TipoDte = "03", // credito fiscal
-                NumeroControl = "",
-                CodigoGeneracion = "",
+                NumeroControl = vta.NumeroControl,
+                CodigoGeneracion = Convert.ToString(vta.CodigoGeneracion),
                 FechaEmision = vta.Fecha.Date,
                 HoraEmision = new TimeSpan(vta.Fecha.Hour, vta.Fecha.Minute, vta.Fecha.Second),
                 TipoOperacion = tipoTransmision, 
@@ -38,7 +38,7 @@ namespace SBT.Apps.Facturacion.Module.helper
                 CodigoActividad = vta.Empresa.Giros.FirstOrDefault()?.ActEconomica.Codigo,
                 DescripcionActividad = vta.Empresa.Giros.FirstOrDefault()?.ActEconomica.Concepto,
                 Direccion = new eFactura.Dte.Poco.Direccion()
-                { Departamento = vta.Empresa.Provincia.Codigo, Municipio = vta.Empresa.Ciudad.Codigo, Complemento = vta.Empresa.Direccion },
+                { Departamento = vta.Empresa.Provincia.Codigo.Substring(3, 2), Municipio = vta.Empresa.Ciudad.Codigo.Substring(5, 2), Complemento = vta.Empresa.Direccion },
                 Telefono = vta.Empresa.Telefonos.FirstOrDefault<EmpresaTelefono>(x => x.Telefono.Tipo == TipoTelefono.Pbx)?.Telefono.Numero ?? string.Empty,
                 Correo = vta.Empresa.EMail,
                 TipoEstablecimiento = "", // revisar que va acá

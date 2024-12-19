@@ -2,6 +2,17 @@
 
 namespace SBT.Apps.Base.Module.BusinessObjects
 {
+    /// <summary>
+    /// Tipo de Unidad de Medida
+    /// <br>Ninguna = 0</br>
+    /// <br>Longitud = 1</br>
+    /// <br>Masa = 2</br>
+    /// <br>Tiempo = 3</br>
+    /// <br>Volumen = 4</br>
+    /// <br>Temperaatura = 5</br>
+    /// <br>Area = 6</br>
+    /// <br>Potencia = 7</br>
+    /// </summary>
     public enum TipoUnidadMedida
     {
         [XafDisplayName("Otro")]

@@ -100,13 +100,18 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         string noTarjeta;
         SBT.Apps.Tercero.Module.BusinessObjects.Banco banco;
         string noReferenciaPago;
+        private string selloRecibido;
+        [Persistent(nameof(NumeroControl))]
+        [Size(32), DbType("varchar(32)")]
+        private string numeroControl;
+        [Persistent(nameof(CodigoGeneracion))]
+        private Guid codigoGeneracion;
         [Persistent(nameof(DiaCerrado)), DbType("bit"), Browsable(false)]
         readonly bool diaCerrado = false;
 
-
         /// <summary>
         /// Agencia o sucursal
-        /// </summary>
+        /// </summary>0
         [XafDisplayName("Agencia"), PersistentAlias(nameof(agencia)), VisibleInListView(false), Index(1)]
         [DetailViewLayout("Datos Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
         [ExplicitLoading]
@@ -121,6 +126,22 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         {
             get => caja;
             set => SetPropertyValue(nameof(Caja), ref caja, value);
+        }
+
+        [PersistentAlias(nameof(numeroControl))]
+        [System.ComponentModel.DisplayName("Número Control")]
+        public string NumeroControl => numeroControl;
+
+        [PersistentAlias(nameof(codigoGeneracion))]
+        [System.ComponentModel.DisplayName("Codigo Generación")]
+        public Guid CodigoGeneracion => codigoGeneracion;
+
+        [Size(50), DbType("varchar(50)"), System.ComponentModel.DisplayName("Sello Recibido")]
+        [ModelDefault("AllowEdit", "False")]
+        public string SelloRecibido
+        {
+            get => selloRecibido;
+            set => SetPropertyValue(nameof(SelloRecibido), ref selloRecibido, value);
         }
 
         /// <summary>
@@ -655,6 +676,13 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
                (Session.ObjectLayer is SecuredSessionObjectLayer) && (Numero == null || Numero <= 0))
             {
                 Numero = CorrelativoDoc();
+                if (string.IsNullOrEmpty(NumeroControl))
+                {
+                    // Ojo el numero ahora debe incluir la caja en la condicion para calcularlo
+                    var tipoDte = Session.FindObject<DteCatalogo>(CriteriaOperator.FromLambda<DteCatalogo>(x => x.Equivalente == TipoFactura.Codigo && x.Tipo == ETipoDteCatalogo.TipoDeDocumento));
+                    numeroControl = string.Format("DTE-{0}-{1:D4}{2:D4}-{3:D15}", tipoDte.Codigo, Agencia.Oid, Caja.Oid, Numero);
+                }
+                codigoGeneracion = new Guid();
             }
             base.OnSaving();
         }
