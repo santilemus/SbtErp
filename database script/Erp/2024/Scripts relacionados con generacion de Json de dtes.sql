@@ -107,3 +107,49 @@ go
 alter table Producto
   add constraint FK_Producto_UnidadMedida foreign key (UnidadMedida) references UnidadMedida(Oid)
 go
+
+alter table Venta
+  add NumeroControl varchar(32),
+      CodigoGeneracion uniqueidentifier,
+	  SelloRecibido varchar(50)
+go
+
+-- 9. Modificamos Listas para agregar ahi codigoalterno para el codigo de los documentos de los dte y noos
+--    evitamos complicaciones innecesarias
+alter table Listas
+  add CodigoAlterno varchar(6) null
+go
+
+-- 10.1 Agregamos columna NoCaja al usuario
+alter table PermissionPolicyUser
+  add Caja int null
+go
+
+-- 10.2 Actualizamos todos los documentos de venta emitidos a la caja 1, asumiendo que ya se creo el registro en caja
+update Venta 
+   set Caja = 1
+ where Empresa = 1
+go
+alter table VentaDetalle
+  add constraint FK_VentaDetalle_UnidadMedida foreign key(UnidadMedida) references UnidadMedida(Oid)
+go
+-- repetir para las otras empresas (previa creacion del registro de la caja)
+
+-- 11. atualizar la unidad de medida en productos
+update Producto 
+   set UnidadMedida = 55
+go
+
+--12 . Borrar tabla que ya no se utiliza
+drop table Usuario 
+go
+
+--13. Agregar UnidadMedida OrdenCompraDetalle
+alter table OrdenCompraDetalle
+  add UnidadMedida int null
+go
+
+--14. Agregar UnidadMedida CompraFacturaDetalle
+alter table CompraFacturaDetalle
+  add UnidadMedida int null
+go

@@ -42,8 +42,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         protected decimal? exenta;
         decimal precioUnidad;
         decimal cantidad;
-
-
+        private UnidadMedida unidadMedida;
 
         [PersistentAlias(nameof(oid)), XafDisplayName("Oid"), Index(0)]
         public long Oid => oid;
@@ -58,7 +57,23 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
                 Producto oldProducto = producto;
                 bool changed = SetPropertyValue(nameof(Producto), ref producto, value);
                 if (!IsLoading && !IsSaving && changed && oldProducto != producto)
+                {
+                    UnidadMedida = Producto.UnidadMedida;
                     DoProductoChanged(true, oldProducto);
+                }
+            }
+        }
+
+        public UnidadMedida UnidadMedida
+        {
+            get => unidadMedida;
+            set
+            {
+                // PENDIENTE REVISAR (20/12/2024) porque Cantidad * UM.magnitud debe ser la cant. a ingresar al inventario cuando aplique
+                //UnidadMedida oldUM = um;
+                SetPropertyValue(nameof(UnidadMedida), ref unidadMedida, value);
+                //if (!IsLoading && !IsSaving && changed && oldUM != um && Cantidad == 0.0m)
+                //    Cantidad = um.Magnitud;
             }
         }
 

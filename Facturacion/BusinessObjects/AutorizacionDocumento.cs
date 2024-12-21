@@ -60,8 +60,6 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             set => SetPropertyValue(nameof(Agencia), ref agencia, value);
         }
 
-        [Association("Caja-Correlativos"), XafDisplayName("Caja No"), Index(1),
-            RuleRequiredField("ResCorrelativo.Caja_Requerido", DefaultContexts.Save, TargetCriteria = "[Tipo.Codigo] in ('COVE05', 'DACV03')")]
         [DataSourceCriteria("[Agencia] == '@This.Agencia'")]
         public Caja Caja
         {

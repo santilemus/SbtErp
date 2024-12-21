@@ -438,21 +438,28 @@
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
           <LayoutGroup Id="SimpleEditors" Direction="Horizontal" RelativeSize="100">
-            <LayoutGroup Id="Listas_col1" ShowCaption="False" Index="0" RelativeSize="50" IsNewNode="True">
-              <LayoutItem Id="Codigo" ViewItem="Codigo" Index="0" RelativeSize="4.533333333333333" IsNewNode="True" />
-              <LayoutItem Id="Nombre" ViewItem="Nombre" Index="1" RelativeSize="3.466666666666667" IsNewNode="True" />
-              <LayoutItem Id="Categoria" ViewItem="Categoria" Index="2" RelativeSize="92" IsNewNode="True" />
+            <LayoutGroup Id="Listas_col1" ShowCaption="False" Index="0" RelativeSize="49.93924665856622" IsNewNode="True">
+              <LayoutItem Id="Codigo" ViewItem="Codigo" Index="0" RelativeSize="3.8876889848812093" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Nombre" ViewItem="Nombre" Index="1" RelativeSize="2.8077753779697625" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="CodigoAlterno" ViewItem="CodigoAlterno" Index="2" RelativeSize="93.30453563714903" CaptionLocation="Left" IsNewNode="True" />
             </LayoutGroup>
-            <LayoutGroup Id="Listas_col2" ShowCaption="False" Index="1" RelativeSize="50" IsNewNode="True">
-              <LayoutItem Id="Comentario" ViewItem="Comentario" Index="0" RelativeSize="4.533333333333333" IsNewNode="True" />
-              <LayoutItem Id="Activo" ViewItem="Activo" Index="1" RelativeSize="95.46666666666667" IsNewNode="True" />
+            <LayoutGroup Id="Listas_col2" ShowCaption="False" Index="1" RelativeSize="50.06075334143378" IsNewNode="True">
+              <LayoutItem Id="Categoria" ViewItem="Categoria" Index="0" RelativeSize="3.8876889848812093" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Comentario" ViewItem="Comentario" Index="1" RelativeSize="2.8077753779697625" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Activo" ViewItem="Activo" Index="2" RelativeSize="93.30453563714903" CaptionLocation="Left" IsNewNode="True" />
             </LayoutGroup>
             <LayoutGroup Id="Listas" Removed="True" />
           </LayoutGroup>
         </LayoutGroup>
       </Layout>
     </DetailView>
-    <ListView Id="Listas_ListView" DataAccessMode="Server" />
+    <ListView Id="Listas_ListView" DataAccessMode="Server">
+      <Columns>
+        <ColumnInfo Id="Categoria" Width="188" />
+        <ColumnInfo Id="CodigoAlterno" Width="160" />
+        <ColumnInfo Id="Activo" Width="107" />
+      </Columns>
+    </ListView>
     <ListView Id="Listas_LookupListView" DataAccessMode="Server" />
     <DetailView Id="Moneda_DetailView">
       <Layout>
@@ -702,6 +709,7 @@
             <LayoutGroup Id="Usuario" RelativeSize="100" Caption="Agencia" CaptionLocation="Default">
               <LayoutItem Id="Empresa" Index="0" RelativeSize="24.324324324324323" CaptionLocation="Left" ViewItem="Empresa" IsNewNode="True" />
               <LayoutItem Id="Agencia" Index="1" RelativeSize="17.56756756756757" CaptionLocation="Left" />
+              <LayoutItem Id="Caja" CaptionLocation="Left" />
               <LayoutItem Id="ChangePasswordOnFirstLogon" ViewItem="ChangePasswordOnFirstLogon" Index="2" RelativeSize="17.56756756756757" CaptionLocation="Left" IsNewNode="True" />
               <LayoutItem Id="UserName" ViewItem="UserName" Index="3" RelativeSize="17.56756756756757" CaptionLocation="Left" IsNewNode="True" />
               <LayoutItem Id="IsActive" ViewItem="IsActive" Index="4" RelativeSize="22.972972972972972" CaptionLocation="Left" IsNewNode="True" />

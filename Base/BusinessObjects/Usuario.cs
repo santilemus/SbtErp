@@ -18,7 +18,6 @@ namespace SBT.Apps.Base.Module.BusinessObjects
     /// </summary>
     [DefaultClassOptions(), DefaultProperty("UserName"), DevExpress.ExpressApp.Model.ModelDefault("Caption", "Usuarios - Empresa"),
         NavigationItem(false), CreatableItem(false)]
-    [Persistent(@"Usuario")]
     [DevExpress.Xpo.MapInheritance(MapInheritanceType.ParentTable)]
     [RuleCriteria("Usuario_Prevent_delete_logged_in_user", DefaultContexts.Delete, "[Oid] != CurrentUserId()",
         "No puede borrar el usuario con el cual inicio la sesion actual. Por favor, ingreso con otra cuenta de usuario y reintente la operación.")]
@@ -48,6 +47,8 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         }
 
         EmpresaUnidad agencia;
+        private int caja;
+
         [DataSourceCriteria("Empresa = '@This.Empresa'"), XafDisplayName("Agencia"), Persistent("Agencia"), Index(1)]
         //[ExplicitLoading(1)]
         public EmpresaUnidad Agencia
@@ -55,6 +56,31 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             get => agencia;
             set => SetPropertyValue(nameof(Agencia), ref agencia, value);
         }
+
+        public int Caja
+        {
+            get => caja;
+            set => SetPropertyValue(nameof(Caja), ref caja, value);
+        }
+
+        /// <summary>
+        /// Validar que la caja exista. Pendiente de implementar solo se deja para que permita pasar
+        /// </summary>
+        [Browsable(false)]
+        [RuleFromBoolProperty("Usuario.Caja No Valida", DefaultContexts.Save, "Caja {TargetObject.Caja} no existe o no está activa")]
+        public bool CajaEsValida
+        {
+           get
+            {
+                if (Agencia == null)
+                    return false;
+                // revisar esta implementacion. Evaluar pasar Cajas de Facturacion a este module o realizar una consulta directa a la base aquí
+                var oidCaja = Session.ExecuteScalar(string.Format("select Oid from FacCaja where NoCaja = {0} And Agencia = {1} And Activa = 1 And GCRecord is null",
+                                                    Caja, Agencia.Oid));
+                return oidCaja != null; 
+            }
+        }
+
         IObjectSpace IObjectSpaceLink.ObjectSpace { get; set; }
 
 

@@ -66,12 +66,14 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             {
                 var unidad = Session.GetObjectByKey<EmpresaUnidad>(((Usuario)SecuritySystem.CurrentUser).Agencia.Oid);
                 agencia = unidad;
+                int noCaja = ((Usuario)SecuritySystem.CurrentUser).Caja;
+                CriteriaOperator criteria = CriteriaOperator.FromLambda<Caja>(x => x.Agencia.Oid == agencia.Oid && x.NoCaja == noCaja);
+                var caja = Session.FindObject<Caja>(criteria);
+                Caja = caja;
             }
             giro = null;
             formaPago = EFormaPago.Efectivo;
             ExportacionServicio = false;
-            // PENDIENTE asignar la caja de forma automatica, a partir de la agencia
-
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
@@ -120,8 +122,8 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             get => agencia;
         }
 
-        [Association("Caja-Facturas"), XafDisplayName("Caja"), Index(2)]
         [DetailViewLayout("Datos Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
+        [RuleRequiredField("Venta.Caja_requerido", DefaultContexts.Save)]
         public Caja Caja
         {
             get => caja;
@@ -469,7 +471,13 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         /// <returns></returns>
         protected override int CorrelativoDoc()
         {
+            /// OJO: PRIORIDAD. Validar cuando se hace el documento que el usuario tenga una caja válida asignada
+            /// 
             object max;
+            CriteriaOperator criteria = CriteriaOperator.FromLambda<Venta>(x => x.Empresa.Oid == Empresa.Oid && x.TipoFactura.Codigo == TipoFactura.Codigo &&
+                                        x.Fecha.Year == Fecha.Year &&  x.Caja.Oid == Caja.Oid);
+            max = Session.Evaluate<Venta>(CriteriaOperator.Parse("max(Numero)"), criteria);
+            /*
             string sCriteria = "Empresa.Oid == ? && TipoFactura.Codigo == ? && GetYear(Fecha) == ?";
             if (Caja != null)
             {
@@ -480,6 +488,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             else
                 max = Session.Evaluate<Venta>(CriteriaOperator.Parse("Max(Numero)"),
                                               CriteriaOperator.Parse(sCriteria, Empresa.Oid, TipoFactura.Codigo, Fecha.Year));
+            */
             return Convert.ToInt32(max ?? 0) + 1;
         }
 
@@ -501,11 +510,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             AutorizacionDocumento resoluc;
             if (Agencia != null)
             {
-                if (Caja != null)
-                    resoluc = Session.FindObject<AutorizacionDocumento>(CriteriaOperator.Parse("Agencia.Oid == ? && Caja.Oid == ? && Tipo.Codigo == ? && Activo == True",
-                        Agencia.Oid, Caja.Oid, TipoFactura.Codigo));
-                else
-                    resoluc = Session.FindObject<AutorizacionDocumento>(CriteriaOperator.Parse("Agencia.Oid == ? && Tipo.Codigo == ? && Activo == True",
+                resoluc = Session.FindObject<AutorizacionDocumento>(CriteriaOperator.Parse("Agencia.Oid == ? && Tipo.Codigo == ? && Activo == True",
                         Agencia.Oid, TipoFactura.Codigo));
                 var oldresoluc = autorizacionDocumento;
                 autorizacionDocumento = resoluc;
@@ -659,14 +664,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
 
         public override void ActualizarSaldo(decimal valor, EEstadoFactura status, bool forceChangeEvents)
         {
-            if (CondicionPago == ECondicionPago.Credito)
-            {
-                saldo = Total;
-            }
-            else
-            {
-                saldo = 0.0m;
-            }
+            saldo = (CondicionPago == ECondicionPago.Credito) ? Total : 0.0m;
             base.ActualizarSaldo(valor, status, forceChangeEvents);
         }
 
@@ -677,12 +675,8 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             {
                 Numero = CorrelativoDoc();
                 if (string.IsNullOrEmpty(NumeroControl))
-                {
-                    // Ojo el numero ahora debe incluir la caja en la condicion para calcularlo
-                    var tipoDte = Session.FindObject<DteCatalogo>(CriteriaOperator.FromLambda<DteCatalogo>(x => x.Equivalente == TipoFactura.Codigo && x.Tipo == ETipoDteCatalogo.TipoDeDocumento));
-                    numeroControl = string.Format("DTE-{0}-{1:D4}{2:D4}-{3:D15}", tipoDte.Codigo, Agencia.Oid, Caja.Oid, Numero);
-                }
-                codigoGeneracion = new Guid();
+                    numeroControl = string.Format("DTE-{0}-{1:D4}{2:D4}-{3:D15}", TipoFactura.CodigoAlterno, Agencia.Oid, Caja.Oid, Numero);
+                codigoGeneracion = Guid.NewGuid();
             }
             base.OnSaving();
         }

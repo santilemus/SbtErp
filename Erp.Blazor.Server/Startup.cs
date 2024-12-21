@@ -144,6 +144,12 @@ public class Startup
                 {
                     options.IsSupportChangePassword = true;
                 });
+            // agregado el 19/dic/2024 para poder obtener la ip del cliente ** sera util para recuperar la caja con base a la direccion ip **
+            builder.Services.Configure<ForwardedHeadersOptions>(options => {
+                options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+                options.KnownNetworks.Clear();
+                options.KnownProxies.Clear();
+            });
         });
         services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
         {

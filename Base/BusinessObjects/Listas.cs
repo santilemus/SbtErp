@@ -4,6 +4,10 @@ using DevExpress.Xpo;
 
 namespace SBT.Apps.Base.Module.BusinessObjects
 {
+    /// <summary>
+    /// BO para listas genericas de objetos que se utilizan en cualquier módulo del sistema
+    /// </summary>
+    
     [DefaultClassOptions, CreatableItem(false)]
     [DevExpress.ExpressApp.DC.XafDefaultPropertyAttribute("Nombre")]
     [DevExpress.Persistent.Base.NavigationItemAttribute("Catalogos")]
@@ -20,77 +24,77 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         private System.String _comentario;
         private System.String _nombre;
         private System.String _codigo;
+        private string codigoAlterno;
+
         public Listas(DevExpress.Xpo.Session session)
           : base(session)
         {
         }
+
+        /// <summary>
+        /// Código del objeto. Es el Oid o llave primaria en la base de datos
+        /// </summary>
         [RuleUniqueValue("Listas.Codigo_Unico", DefaultContexts.Save, CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction)]
         [DevExpress.Xpo.Size(12), DbType("varchar(12)"), Index(0)]
         [DevExpress.Xpo.KeyAttribute, VisibleInLookupListView(true)]
         [RuleRequiredField("Listas.Codigo_Requerido", "Save")]
         public System.String Codigo
         {
-            get
-            {
-                return _codigo;
-            }
-            set
-            {
-                SetPropertyValue("Codigo", ref _codigo, value);
-            }
+            get => _codigo;
+            set => SetPropertyValue(nameof(Codigo), ref _codigo, value);
         }
+        /// <summary>
+        /// Concepto o nombre comprensivo para el usuario
+        /// </summary>
         [DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Nombre"), DbType("varchar(100)")]
         [Index(1)]
         [RuleRequiredField("Lista.NombreRequerido", DefaultContexts.Save, "Nombre es requerido")]
         public System.String Nombre
         {
-            get
-            {
-                return _nombre;
-            }
-            set
-            {
-                SetPropertyValue("Nombre", ref _nombre, value);
-            }
+            get => _nombre;
+            set => SetPropertyValue(nameof(Nombre), ref _nombre, value);
         }
+
+        /// <summary>
+        /// Categoria de la lista. Clasifica los elementos para agruparlos de acuerdo a una misma categoría y 
+        /// filtrar cuando se va utilizar la lista
+        /// </summary>
         [Index(2)]
         [RuleRequiredField("Lista.CategoriaRequerida", DefaultContexts.Save, "Categoría es requerida")]
         public CategoriaLista Categoria
         {
-            get
-            {
-                return _categoria;
-            }
-            set
-            {
-                SetPropertyValue("Categoria", ref _categoria, value);
-            }
+            get => _categoria;
+            set => SetPropertyValue(nameof(Categoria), ref _categoria, value);
         }
 
-        [DevExpress.Xpo.Size(250), DbType("varchar(250)"), Index(3), VisibleInListView(false)]
+        /// <summary>
+        /// Codigo alterno, cuando es requerido para otros propósitos por ejemplo estándarización con reguladores
+        /// </summary>
+        [Index(3), DisplayName("Código Alterno")]
+        [Indexed(Name = "idxCodigoAlterno_Listas")]
+        public string CodigoAlterno
+        {
+            get => codigoAlterno;
+            set => SetPropertyValue(nameof(CodigoAlterno), ref codigoAlterno, value);
+        }
+
+        /// <summary>
+        /// Comentario del registro
+        /// </summary>
+        [DevExpress.Xpo.Size(250), DbType("varchar(250)"), Index(4), VisibleInListView(false)]
         public System.String Comentario
         {
-            get
-            {
-                return _comentario;
-            }
-            set
-            {
-                SetPropertyValue("Comentario", ref _comentario, value);
-            }
+            get => _comentario;
+            set => SetPropertyValue(nameof(Comentario), ref _comentario, value);
         }
-        [Index(4)]
+
+        //Indica si el registro o elemento de la lista está activo
+        [Index(5)]
         [RuleRequiredField("Lista.Activa", DefaultContexts.Save, "Activa es requerida")]
         public System.Boolean Activo
         {
-            get
-            {
-                return _activo;
-            }
-            set
-            {
-                SetPropertyValue("Activo", ref _activo, value);
-            }
+            get => _activo;
+            set => SetPropertyValue(nameof(Activo), ref _activo, value);
         }
 
     }

@@ -50,32 +50,25 @@
     <DetailView Id="Caja_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
-          <LayoutGroup Id="SimpleEditors" RelativeSize="16.41991924629879" Direction="Horizontal">
-            <LayoutGroup Id="Caja_col1" ShowCaption="False" Index="0" RelativeSize="49.944258639910814" IsNewNode="True">
-              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="29.508196721311474" IsNewNode="True" />
-              <LayoutItem Id="NoCaja" ViewItem="NoCaja" Index="1" RelativeSize="21.311475409836067" IsNewNode="True" />
-              <LayoutItem Id="Descripcion" ViewItem="Descripcion" Index="2" RelativeSize="21.311475409836067" IsNewNode="True" />
-              <LayoutItem Id="NoSerie" ViewItem="NoSerie" Index="3" RelativeSize="27.868852459016395" IsNewNode="True" />
+          <LayoutGroup Id="SimpleEditors" RelativeSize="100" Direction="Horizontal">
+            <LayoutGroup Id="Caja_col1" ShowCaption="False" Index="0" RelativeSize="49.80988593155894" IsNewNode="True">
+              <LayoutItem Id="Oid" ViewItem="Oid" Index="0" RelativeSize="7.086614173228346" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Agencia" ViewItem="Agencia" Index="1" RelativeSize="5.118110236220472" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="NoCaja" ViewItem="NoCaja" Index="2" RelativeSize="5.118110236220472" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Descripcion" ViewItem="Descripcion" Index="3" RelativeSize="5.118110236220472" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="NoSerie" ViewItem="NoSerie" Index="4" RelativeSize="77.55905511811024" CaptionLocation="Left" IsNewNode="True" />
             </LayoutGroup>
-            <LayoutGroup Id="Caja_col2" ShowCaption="False" Index="1" RelativeSize="50.055741360089186" IsNewNode="True">
-              <LayoutItem Id="NoAutorizacion" ViewItem="NoAutorizacion" Index="0" RelativeSize="29.508196721311474" IsNewNode="True" />
-              <LayoutItem Id="FechaAutorizacion" ViewItem="FechaAutorizacion" Index="1" RelativeSize="21.311475409836067" IsNewNode="True" />
-              <LayoutItem Id="Activa" ViewItem="Activa" Index="2" RelativeSize="21.311475409836067" IsNewNode="True" />
-              <LayoutItem Id="Comentario" ViewItem="Comentario" Index="3" RelativeSize="27.868852459016395" IsNewNode="True" />
+            <LayoutGroup Id="Caja_col2" ShowCaption="False" Index="1" RelativeSize="50.19011406844106" IsNewNode="True">
+              <LayoutItem Id="NoAutorizacion" ViewItem="NoAutorizacion" Index="0" RelativeSize="7.086614173228346" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="FechaAutorizacion" ViewItem="FechaAutorizacion" Index="1" RelativeSize="5.118110236220472" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Activa" ViewItem="Activa" Index="2" RelativeSize="5.118110236220472" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="Comentario" ViewItem="Comentario" Index="3" RelativeSize="82.67716535433071" CaptionLocation="Left" IsNewNode="True" />
             </LayoutGroup>
             <LayoutGroup Id="XPObject" Index="1" RelativeSize="60.107816711590296" Caption="Oid" Direction="Horizontal" Removed="True">
               <LayoutItem Id="Oid" RelativeSize="100" Removed="True" />
             </LayoutGroup>
             <LayoutGroup Id="Caja" Removed="True" />
           </LayoutGroup>
-          <TabbedGroup Id="Tabs" RelativeSize="83.58008075370121">
-            <LayoutGroup Id="Autorizaciones" RelativeSize="100">
-              <LayoutItem Id="Autorizaciones" RelativeSize="100" />
-            </LayoutGroup>
-            <LayoutGroup Id="Ventas" RelativeSize="100">
-              <LayoutItem Id="Ventas" RelativeSize="100" />
-            </LayoutGroup>
-          </TabbedGroup>
         </LayoutGroup>
       </Layout>
     </DetailView>
@@ -1577,10 +1570,10 @@
     </ListView>
     <ListView Id="Venta_ListView">
       <Columns>
-        <ColumnInfo Id="Caja" Width="55" />
         <ColumnInfo Id="NoFactura" Width="85" />
         <ColumnInfo Id="Fecha" Index="2" Width="77" />
         <ColumnInfo Id="Cliente" Width="341" Index="3" />
+        <ColumnInfo Id="Caja" Width="55" />
         <ColumnInfo Id="FormaPago" Width="110" Index="4" />
         <ColumnInfo Id="TipoFactura" Width="100" Index="5" />
         <ColumnInfo Id="Exenta" Index="6" Width="91" />

@@ -39,7 +39,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
         {
             base.AfterConstruction();
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
-            Tipo = ETipoDteCatalogo.TipoDeDocumento;
+            Tipo = ETipoDteCatalogo.TipoContingencia;
             Activo = true;
         }
 

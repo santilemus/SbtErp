@@ -8,8 +8,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
     /// </summary>
     public enum ETipoDteCatalogo
     {
-        [XafDisplayName("CAT-002 Tipo de Documento")]
-        TipoDeDocumento = 2,
+        // CAT-002 Tipo de Documento está en Listas, se agrego columna CodigoAlterno
         // CAT-003 Modelo de Facturación es Enum EModeloFacturacion
         // CAT-004 Tipo de Transmisión es ETipoTransmision
         [XafDisplayName("CAT-005 Tipo de Contingencia")]

@@ -44,6 +44,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         string comentario;
 
         [DbType("int"), Persistent(nameof(NoCaja)), XafDisplayName("No Caja"), Index(0)]
+        [Indexed("Agencia", Name = "iNoCajaAgencia_Caja", Unique = true)]
         public int NoCaja
         {
             get => noCaja;
@@ -58,7 +59,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             set => SetPropertyValue(nameof(Descripcion), ref descripcion, value);
         }
 
-        [XafDisplayName("Sucursal"), Persistent(nameof(Agencia)), Index(2), VisibleInLookupListView(true)]
+        [XafDisplayName("Agencia"), Persistent(nameof(Agencia)), Index(2), VisibleInLookupListView(true)]
         [DataSourceCriteria("[Empresa.Oid] = EmpresaActualOid() And [Activa] == True And [Role] == 2")]
         public EmpresaUnidad Agencia
         {
@@ -103,23 +104,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         #endregion
 
         #region Colecciones
-        [Association("Caja-Correlativos"), XafDisplayName("Correlativos"), Index(0)]
-        public XPCollection<AutorizacionDocumento> Autorizaciones
-        {
-            get
-            {
-                return GetCollection<AutorizacionDocumento>(nameof(Autorizaciones));
-            }
-        }
 
-        [Association("Caja-Facturas"), DevExpress.Xpo.Aggregated, XafDisplayName("Facturas"), Index(1)]
-        public XPCollection<Venta> Ventas
-        {
-            get
-            {
-                return GetCollection<Venta>(nameof(Ventas));
-            }
-        }
         #endregion
 
         //[Action(Caption = "My UI Action", ConfirmationMessage = "Are you sure?", ImageName = "Attention", AutoCommit = true)]
