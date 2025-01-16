@@ -1,11 +1,14 @@
-﻿using DevExpress.Data.Filtering;
+﻿using DevExpress.Charts.Native;
+using DevExpress.Data.Filtering;
 using DevExpress.DataAccess.Native.Sql.ConnectionProviders;
 using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.Actions;
 using DevExpress.ExpressApp.Model;
 using DevExpress.ExpressApp.Security;
 using DevExpress.Office.Import.OpenXml;
+using DevExpress.Pdf.Native;
 using DevExpress.Persistent.Base;
+using Json.More;
 using Microsoft.Extensions.DependencyInjection;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Compra.Module.BusinessObjects;
@@ -17,6 +20,8 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
+using System.Threading;
 
 
 namespace SBT.Apps.Compra.Module.Controllers
@@ -147,23 +152,6 @@ namespace SBT.Apps.Compra.Module.Controllers
 
         #region Metodos para cargar el Dte en las compras
 
-        /// <summary>
-        /// METODO TEMPORAL BORRAR DESPUES
-        /// </summary>
-        /// <param name="memoryStream"></param>
-        /// <returns></returns>
-        static string ConvertMemoryStreamToString(MemoryStream memoryStream)
-        {
-            // Reset the position of the MemoryStream
-            memoryStream.Position = 0;
-
-            // Read the MemoryStream and convert to string
-            using (StreamReader reader = new StreamReader(memoryStream, Encoding.UTF8))
-            {
-                return reader.ReadToEnd();
-            }
-        }
-
         private CompraFactura DoCargarCcf(DteRead dteRead, IObjectSpace os)
         {
             var ccf = dteRead.CreateObject<FeCcf>();
@@ -196,10 +184,7 @@ namespace SBT.Apps.Compra.Module.Controllers
                     compraFactura.CondicionPago = ECondicionPago.Credito;
                 compraFactura.DiasCredito = 0;
                 compraFactura.Origen = EOrigenCompra.Local;
-                if (ccf.ResponseMH != null && ccf.ResponseMH.SelloRecibido != null)
-                    compraFactura.Serie = ccf.ResponseMH.SelloRecibido;
-                else if (ccf.SelloRecibido != null)
-                    compraFactura.Serie = ccf.SelloRecibido;
+                compraFactura.Serie = dteRead.GetSelloRecibido();
                 compraFactura.Moneda = os.FirstOrDefault<Moneda>(x => x.Codigo == ccf.Identificacion.TipoMoneda);
                 compraFactura.Exenta = ccf.Resumen.TotalExenta;
                 compraFactura.Gravada = ccf.Resumen.TotalGravada;
@@ -223,58 +208,68 @@ namespace SBT.Apps.Compra.Module.Controllers
         /// <returns></returns>
         private Tercero.Module.BusinessObjects.Tercero ObtenerTercero(Emisor emisor)
         {
-            var os = Application.CreateObjectSpace(typeof(Tercero.Module.BusinessObjects.Tercero));
-            var terceroDocumento = os.FirstOrDefault<TerceroDocumento>(x => x.Numero == emisor.Nit);
+            var osTercero = Application.CreateObjectSpace(typeof(Tercero.Module.BusinessObjects.Tercero));
+            var terceroDocumento = osTercero.FirstOrDefault<TerceroDocumento>(x => x.Numero == emisor.Nit || x.Numero == emisor.Nrc);
             if (terceroDocumento != null)
                 return terceroDocumento.Tercero;
-            terceroDocumento = os.FirstOrDefault<TerceroDocumento>(x => x.Numero == emisor.Nrc);
-            if (terceroDocumento != null)
-                return terceroDocumento.Tercero;
-            var tercero = os.CreateObject<Tercero.Module.BusinessObjects.Tercero>();
+            var tercero = osTercero.CreateObject<Tercero.Module.BusinessObjects.Tercero>();
             tercero.Nombre = emisor.Nombre;
-            var terceroGiro = os.CreateObject<TerceroGiro>();
+            var terceroGiro = osTercero.CreateObject<TerceroGiro>();
             terceroGiro.Tercero = tercero;
             terceroGiro.Sector = ESectorSujetoPasivo.Comercio;
-            terceroGiro.ActEconomica = os.FirstOrDefault<ActividadEconomica>(x => x.Codigo == emisor.CodigoActividad);
+            terceroGiro.ActEconomica = osTercero.FirstOrDefault<ActividadEconomica>(x => x.Codigo == emisor.CodigoActividad);
+            terceroGiro.Save();
             tercero.Giros.Add(terceroGiro);
-            var terceroDireccion = os.CreateObject<TerceroDireccion>();
+            var terceroDireccion = osTercero.CreateObject<TerceroDireccion>();
             terceroDireccion.Tercero = tercero;
-            terceroDireccion.Pais = os.FirstOrDefault<ZonaGeografica>(x => x.Codigo == "SLV");
-            terceroDireccion.Provincia = os.FirstOrDefault<ZonaGeografica>(x => x.Codigo == string.Concat(terceroDireccion.Pais.Codigo, emisor.Direccion.Departamento));
-            terceroDireccion.Ciudad = os.FirstOrDefault<ZonaGeografica>(x => x.Codigo == string.Concat(terceroDireccion.Provincia, emisor.Direccion.Municipio));
+            terceroDireccion.Pais = osTercero.FirstOrDefault<ZonaGeografica>(x => x.Codigo == "SLV");
+            terceroDireccion.Provincia = osTercero.FirstOrDefault<ZonaGeografica>(x => x.Codigo == string.Concat(terceroDireccion.Pais.Codigo, emisor.Direccion.Departamento));
+            terceroDireccion.Ciudad = osTercero.FirstOrDefault<ZonaGeografica>(x => x.Codigo == string.Concat(terceroDireccion.Pais.Codigo, 
+                terceroDireccion.Provincia, emisor.Direccion.Municipio));
             terceroDireccion.Direccion = emisor.Direccion.Complemento;
+            terceroDireccion.Save();
             tercero.Direcciones.Add(terceroDireccion);
             tercero.DireccionPrincipal = terceroDireccion;
             tercero.EMail = emisor.Correo;
-            var terceroTelefono = os.CreateObject<TerceroTelefono>();
+            var terceroTelefono = osTercero.CreateObject<TerceroTelefono>();
             terceroTelefono.Tercero = tercero;
-            terceroTelefono.Telefono = os.FirstOrDefault<Telefono>(x => x.Numero == emisor.Telefono);
+            terceroTelefono.Telefono = osTercero.FirstOrDefault<Telefono>(x => x.Numero == emisor.Telefono);
             if (terceroTelefono.Telefono == null)
             {
-                var telefono = os.CreateObject<Telefono>();
+                var telefono = osTercero.CreateObject<Telefono>();
                 telefono.Numero = emisor.Telefono;
                 telefono.Tipo = TipoTelefono.Fijo;
                 telefono.Save();
                 terceroTelefono.Telefono = telefono;
             }
+            terceroTelefono.Save();
             tercero.Telefonos.Add(terceroTelefono);
-            var terceroNit = os.CreateObject<TerceroDocumento>();
-            terceroNit.Tipo = os.FirstOrDefault<Listas>(x => x.Codigo == "NIT");
+            var terceroNit = osTercero.CreateObject<TerceroDocumento>();
+            terceroNit.Tipo = osTercero.FirstOrDefault<Listas>(x => x.Codigo == "NIT");
             terceroNit.Tercero = tercero;
             terceroNit.Numero = emisor.Nit;
-            var terceroNrc = os.CreateObject<TerceroDocumento>();
-            terceroNrc.Tipo = os.FirstOrDefault<Listas>(x => x.Codigo == "NRC");
+            terceroNit.Save();
+            var terceroNrc = osTercero.CreateObject<TerceroDocumento>();
+            terceroNrc.Tipo = osTercero.FirstOrDefault<Listas>(x => x.Codigo == "NRC");
             terceroNrc.Tercero = tercero;
             terceroNrc.Numero = emisor.Nrc;
+            terceroNrc.Save();
             tercero.Documentos.Add(terceroNit);
             tercero.Documentos.Add(terceroNrc);
-            var terceroRole = os.CreateObject<TerceroRole>();
+            var terceroRole = osTercero.CreateObject<TerceroRole>();
             terceroRole.Tercero = tercero;
-            terceroRole.IdRole = TipoRoleTercero.Proveedores;
+            terceroRole.IdRole = TipoRoleTercero.Proveedor;
+            terceroRole.Save();
             tercero.Roles.Add(terceroRole);
             //tercero.Save();
-            var terceroDetailView = Application.CreateDetailView(os, tercero, true);
-            Application.ShowViewStrategy.ShowViewInPopupWindow(terceroDetailView);
+            var terceroDetailView = Application.CreateDetailView(osTercero, tercero, true);
+            osTercero.CommitChanges();
+            Application.ShowViewStrategy.ShowViewInPopupWindow(terceroDetailView, () =>
+            {
+                osTercero.CommitChanges();
+                terceroDetailView.Close();
+                osTercero.Dispose();
+            });
             return tercero;
         }
 

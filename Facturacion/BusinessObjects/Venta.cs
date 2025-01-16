@@ -108,6 +108,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         private string numeroControl;
         [Persistent(nameof(CodigoGeneracion))]
         private Guid codigoGeneracion;
+        private int partida;
         [Persistent(nameof(DiaCerrado)), DbType("bit"), Browsable(false)]
         readonly bool diaCerrado = false;
 
@@ -445,6 +446,13 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
         {
             get => exportacionServicio;
             set => SetPropertyValue(nameof(ExportacionServicio), ref exportacionServicio, value);
+        }
+
+        [ModelDefault("AllowEdit", "False"), VisibleInListView(false), VisibleInDetailView(false)]
+        public int Partida
+        {
+            get => partida;
+            set => SetPropertyValue(nameof(Partida), ref partida, value);
         }
 
         #endregion

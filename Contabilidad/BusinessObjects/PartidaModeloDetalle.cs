@@ -8,7 +8,6 @@ using SBT.Apps.Contabilidad.BusinessObjects;
 using System;
 using DevExpress.ExpressApp.Editors;
 using DevExpress.ExpressApp.Core;
-using System.Collections.Generic;
 using DevExpress.Data.Filtering;
 using System.ComponentModel;
 
@@ -54,13 +53,21 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         private string formula;
         private string criteria;
         private ETipoOperacion tipoOperacion;
+        private string cuentaExpresion;
+
         //private string codigoCuenta;
 
         [Association("PartidaModelo-Detalles")]
         public PartidaModelo PartidaModelo
         {
             get => partidaModelo;
-            set => SetPropertyValue(nameof(PartidaModelo), ref partidaModelo, value);
+            set
+            {
+                //var oldValue = PartidaModelo;
+                bool changed = SetPropertyValue(nameof(PartidaModelo), ref partidaModelo, value);
+                if (!IsLoading && !IsSaving && changed && PartidaModelo != null && TipoBO == null)
+                    TipoBO = PartidaModelo.TipoBO;
+            }
         }
 
 
@@ -69,6 +76,18 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         {
             get => catalogo;
             set => SetPropertyValue(nameof(Cuenta), ref catalogo, value);
+        }
+
+
+        [Size(1000), DbType("varchar(400)"), XafDisplayName("Cuenta Expresión"), Persistent(nameof(CuentaExpresion))]
+        [ElementTypeProperty(nameof(TipoBO))]
+        [EditorAlias(EditorAliases.PopupExpressionPropertyEditor)]
+        [VisibleInListView(false)]
+        [ModelDefault("RowCount", "3")]
+        public string CuentaExpresion
+        {
+            get => cuentaExpresion;
+            set => SetPropertyValue(nameof(CuentaExpresion), ref cuentaExpresion, value);
         }
 
         /*
@@ -93,7 +112,6 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         {
             get { return Convert.ToString(EvaluateAlias(nameof(NombreCuenta))); }
         }
-
 
         [Size(500), DbType("varchar(500)"), Persistent("Concepto"), XafDisplayName("Concepto"),
             RuleRequiredField("PartidaModeloDetalle.Concepto_Requerido", "Save")]

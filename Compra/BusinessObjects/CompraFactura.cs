@@ -8,6 +8,7 @@ using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
+using SBT.Apps.Contabilidad.Module.BusinessObjects;
 using SBT.Apps.CxP.Module.BusinessObjects;
 using SBT.Apps.Inventario.Module.BusinessObjects;
 using SBT.Apps.Producto.Module.BusinessObjects;
@@ -78,6 +79,7 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
         private ETipoCostoGasto tipoCostoGasto;
         private TerceroGiro proveedorGiro;
         private string dte;
+        private int partida;
 
         [Association("OrdenCompra-Facturas"), XafDisplayName("Orden Compra"), Persistent(nameof(OrdenCompra)), Index(5)]
         [DetailViewLayout("Datos Generales", LayoutGroupType.SimpleEditorsGroup, 0)]
@@ -254,6 +256,13 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
         [DetailViewLayout("Totales", LayoutGroupType.SimpleEditorsGroup, 10)]
         [VisibleInListView(true)]
         public decimal Total => Convert.ToDecimal(EvaluateAlias(nameof(Total)));
+
+        [ModelDefault("AllowEdit", "False"), VisibleInListView(false), VisibleInDetailView(false)]
+        public int Partida
+        {
+            get => partida;
+            set => SetPropertyValue(nameof(Partida), ref partida, value);
+        }
 
         /// <summary>
         /// Json del dte se guarda en el documento de compra

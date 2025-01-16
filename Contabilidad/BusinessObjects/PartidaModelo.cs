@@ -53,6 +53,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         private Type tipoBO;
         private string nombre;
         private string comentario;
+        private string propiedadFecha;
 
         [DbType("int"), Persistent("Empresa"), XafDisplayName("Empresa"), Browsable(false)]
         public Empresa Empresa
@@ -111,6 +112,34 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         {
             get => comentario;
             set => SetPropertyValue(nameof(Comentario), ref comentario, value);
+        }
+
+        /// <summary>
+        /// El BO para el cual se implementa la formula
+        /// </summary>
+        /// <remarks>
+        /// Mas info
+        /// 1. EditorAliases.TypePropertyEditor implementa la lista de seleccion de los BO
+        ///    Ver: https://docs.devexpress.com/eXpressAppFramework/113579/concepts/business-model-design/data-types-supported-by-built-in-editors/type-properties
+        /// 2. ValueConverter, para hacer la propiedad persistente se utiliza la conversion a string y guardar el nombre del BO en la bd, incluyendo el namespace
+        /// </remarks>
+        [XafDisplayName("Tipo BO"), Persistent(nameof(TipoBO))]
+        [EditorAlias(EditorAliases.TypePropertyEditor)]
+        [ValueConverter(typeof(DevExpress.ExpressApp.Utils.TypeToStringConverter)), ImmediatePostData]
+        //[DataSourceCriteriaProperty(nameof(BOPermitidos))]
+        [Size(150), DbType("varchar(150)")]
+        public Type TipoBO
+        {
+            get => tipoBO;
+            set => SetPropertyValue(nameof(TipoBO), ref tipoBO, value);
+        }
+
+        [System.ComponentModel.DisplayName("Propiedad Fecha"), Size(50), DbType("varchar(50)")]
+        [ToolTip(@"Nombre de la propiedad fecha en el origen de datos para asignarlo como fecha de la partida a generar")]
+        public string PropiedadFecha
+        {
+            get => propiedadFecha;
+            set => SetPropertyValue(nameof(PropiedadFecha), ref propiedadFecha, value);
         }
 
         [DbType("int"), Persistent("Consulta"), XafDisplayName("Consulta"),

@@ -350,7 +350,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
 
         XPCollection<EmpresaUnidad> agencias;
         /// <summary>
-        /// Para la lista de seleccion de Agencias en el logon (mostrar solo las agencias y casa matriz)
+        /// Para la lista de seleccion de Agencias en el logon (se muestran los roles que son validos para los dte, por eso se excluye Departamento)
         /// </summary>
         [Browsable(false)]
         public XPCollection<EmpresaUnidad> Agencias
@@ -359,7 +359,7 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             {
                 if (agencias == null)
                 {
-                    CriteriaOperator criteria = CriteriaOperator.FromLambda<EmpresaUnidad>(x => x.Empresa.Oid == Oid && x.Activa == true && x.Role == ETipoRoleUnidad.Agencia);
+                    CriteriaOperator criteria = CriteriaOperator.FromLambda<EmpresaUnidad>(x => x.Empresa.Oid == Oid && x.Activa == true && x.Role != ETipoRoleUnidad.Departamento);
                     agencias = new XPCollection<EmpresaUnidad>(Session, criteria);
                 }
                 return agencias;

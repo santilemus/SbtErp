@@ -53,6 +53,14 @@
         </div>
 
         <script src="_framework/blazor.server.js"></script>
+
+        // agregado por SELM, 30/12/2024 para poner el nombre de la empresa en lugar del logo
+        <script>
+            window.setLogoText = function (text) {
+                document.getElementsByClassName("header-logo")[0].innerHTML = text;
+            };
+        </script>
+        //--
     }
 </body>
 </html>

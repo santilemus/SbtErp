@@ -78,5 +78,12 @@ namespace SBT.Apps.Tercero.Module.BusinessObjects
             set => SetPropertyValue(nameof(Tercero), ref tercero, value);
         }
 
+
+        #region colecciones
+
+        [Association("TerceroRole-TerceroCuentaRole")]
+        [DisplayName("Cuentas")]
+        public XPCollection<TerceroCuentaContable> Cuentas => GetCollection<TerceroCuentaContable>(nameof(Cuentas));
+        #endregion 
     }
 }

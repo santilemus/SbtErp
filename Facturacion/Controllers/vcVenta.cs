@@ -46,7 +46,8 @@ namespace SBT.Apps.Facturacion.Module.Controllers
             //pwsaDevolucionTotal.TargetObjectsCriteria = "[Venta.Estado] == 'Debe' && [Venta.Saldo] != 0.0";
             pwsaDevolucionTotal.ImageName = "service";
             pwsaDevolucionTotal.PaintStyle = DevExpress.ExpressApp.Templates.ActionItemPaintStyle.Image;
-            pwsaDevolucionTotal.IsSizeable = true;
+            pwsaDevolucionTotal.IsSizeable = true; 
+
         }
 
         protected override void OnActivated()

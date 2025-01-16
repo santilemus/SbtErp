@@ -1,4 +1,5 @@
-﻿using DevExpress.Data.ExpressionEditor;
+﻿using DevExpress.CodeParser;
+using DevExpress.Data.ExpressionEditor;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Facturacion.Module.BusinessObjects;
 using SBT.Apps.Tercero.Module.BusinessObjects;
@@ -11,6 +12,7 @@ namespace SBT.Apps.Facturacion.Module.helper
 {
     public class CcfToPoco
     {
+        const int fVersion = 1;
         public CcfToPoco(Venta vta, int version, string ambiente, int modeloFact, int tipoTransmision)
         {
             SBT.eFactura.Dte.Poco.Send.FeCcf ccf = new SBT.eFactura.Dte.Poco.Send.FeCcf();
@@ -19,13 +21,13 @@ namespace SBT.Apps.Facturacion.Module.helper
             {
                 Version = version,    // hay que parametrizarlo en algún lugar. La versión es por tipo de dte
                 Ambiente = ambiente,
-                TipoDte = "03", // credito fiscal
+                TipoDte = vta.TipoFactura.CodigoAlterno, // credito fiscal
                 NumeroControl = vta.NumeroControl,
-                CodigoGeneracion = Convert.ToString(vta.CodigoGeneracion),
+                CodigoGeneracion = Convert.ToString(vta.CodigoGeneracion).ToUpper(),
                 FechaEmision = vta.Fecha.Date,
                 HoraEmision = new TimeSpan(vta.Fecha.Hour, vta.Fecha.Minute, vta.Fecha.Second),
                 TipoOperacion = tipoTransmision, 
-                TipoMoneda = "USD",
+                TipoMoneda = vta.Moneda.Codigo,
                 TipoModelo = modeloFact     
             };
 
@@ -41,18 +43,19 @@ namespace SBT.Apps.Facturacion.Module.helper
                 { Departamento = vta.Empresa.Provincia.Codigo.Substring(3, 2), Municipio = vta.Empresa.Ciudad.Codigo.Substring(5, 2), Complemento = vta.Empresa.Direccion },
                 Telefono = vta.Empresa.Telefonos.FirstOrDefault<EmpresaTelefono>(x => x.Telefono.Tipo == TipoTelefono.Pbx)?.Telefono.Numero ?? string.Empty,
                 Correo = vta.Empresa.EMail,
-                TipoEstablecimiento = "", // revisar que va acá
-                CodEstable = "", // revisar que va acá
-                CodigoPuntoVenta = "" // solo cuando aplique
+                TipoEstablecimiento = (vta.Agencia.Role != ETipoRoleUnidad.Departamento) ? string.Format("{0:00}", (int)vta.Agencia.Role) : "20",
+                //CodEstableMH = "", // no va por el momento
+                CodEstable = vta.Agencia.Codigo 
+                //CodigoPuntoVentaMH = "", // codigo del punto de venta (emisor) asignado por el MH (no va por el moento)
+                //CodigoPuntoVenta = ""  // codigo del punto de venta (emisor) asignado por el contribuyente (no va por el momento)
             };
             if (ccf.Emisor.Telefono == string.Empty)
                 ccf.Emisor.Telefono = vta.Empresa.Telefonos.FirstOrDefault<EmpresaTelefono>(x => x.Empresa.Oid == vta.Empresa.Oid)?.Telefono.Numero ?? string.Empty;
             // agregamos los datos del receptor
-            ccf.Receptor = new eFactura.Dte.Poco.Emisor()
+            ccf.Receptor = new eFactura.Dte.Poco.ReceptorCcf()
             {
                 Nit = vta.Cliente.Documentos.FirstOrDefault<TerceroDocumento>(x => x.Tercero.Oid == vta.Cliente.Oid && x.Tipo.Codigo == "NIT")?.Numero ?? string.Empty,
                 Nrc = vta.Nrc?.Numero ?? string.Empty,
-                CodEstable = vta.Cliente.Oid,
                 Nombre = vta.Cliente.Nombre,
                 Direccion = new eFactura.Dte.Poco.Direccion()
                 {
@@ -80,7 +83,7 @@ namespace SBT.Apps.Facturacion.Module.helper
                         CodTributo = "null",
                         Descripcion = p.Descripcion ?? p.Producto.Nombre,
                         Cantidad = p.Cantidad,
-                        UnidadMedida = 59, // unidad. Se debe agregar el atributo de unidad de medida al catalogo de producto
+                        UnidadMedida = Convert.ToInt32(p.UnidadMedida.CodigoDte), 
                         PrecioUnidad = p.PrecioUnidad,
                         MontoDescuento = 0.0m,
                         VentaNoSujeta = Convert.ToDecimal(p.NoSujeta),
@@ -90,6 +93,20 @@ namespace SBT.Apps.Facturacion.Module.helper
                         NoGravado = 0.0m // detalle de cargos o abonos al receptor que no afectan la base imponible 
                     }).ToList();
             // ahora va el resumen
+            ccf.Resumen = new Resumen()
+            {
+                TotalNoSujeta = (decimal)vta.NoSujeta,
+                TotalExenta = (decimal)vta.Exenta,
+                TotalGravada = (decimal)vta.Gravada,
+                SubTotalVentas = (decimal)vta.SubTotal,
+                // revisar mas adelante, cuando se hagan los cambios en el BO para obtener el valor de los descuentos
+                DescuentoNoSujeta = 0.0m,
+                DescuentoExenta = 0.0m,
+                DescuentoGravada = 0.0m,
+                TotalDescuento = 0.0m,
+                PorcentajeDescuento = 0.0m
+                // faltan datos aqui
+            };
         } 
 
 

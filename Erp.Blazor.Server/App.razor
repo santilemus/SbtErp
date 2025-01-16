@@ -1,4 +1,11 @@
-﻿<Router AppAssembly="@typeof(Program).Assembly" AdditionalAssemblies="new[] { typeof(DevExpress.ExpressApp.Blazor.BlazorApplication).Assembly }">
+﻿@using DevExpress.ExpressApp.Security;
+@using DevExpress.Persistent.BaseImpl.PermissionPolicy;
+@using SBT.Apps.Base.Module.BusinessObjects;
+
+@inject IJSRuntime jsRuntume
+@inject DevExpress.ExpressApp.Blazor.Services.IXafApplicationProvider appProvider
+
+<Router AppAssembly="@typeof(Program).Assembly" AdditionalAssemblies="new[] { typeof(DevExpress.ExpressApp.Blazor.BlazorApplication).Assembly }">
     <Found Context="routeData">
         <RouteView RouteData="@routeData" />
     </Found>
@@ -9,3 +16,14 @@
         </LayoutView>
     </NotFound>
 </Router>
+
+@code {
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        Usuario currentUser = appProvider.GetApplication()?.GetSecurityStrategy()?.User as Usuario;
+        if (currentUser != null)
+        {
+            await jsRuntume.InvokeVoidAsync("setLogoText", currentUser.Empresa.RazonSocial);
+        }
+    }
+}

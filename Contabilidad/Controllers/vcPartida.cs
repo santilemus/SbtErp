@@ -3,20 +3,15 @@ using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.Actions;
 using DevExpress.ExpressApp.Editors;
 using DevExpress.ExpressApp.Xpo;
-using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
-using SBT.Apps.Base.Module;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Base.Module.Controllers;
 using SBT.Apps.Contabilidad.Module.BusinessObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using DevExpress.ExpressApp.Validation;
-using System.Collections;
 using DevExpress.ExpressApp.Security;
 using Microsoft.Extensions.DependencyInjection;
-using System.Security.Cryptography;
 
 namespace SBT.Apps.Contabilidad.Module.Controllers
 {

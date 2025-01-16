@@ -94,6 +94,9 @@ public class Startup
                     options.UseSharedDataStoreProvider = true;
                     // agregado por SELM el 13/07/2023 para permitir ejecutar sentencias sql via Session
                     options.AllowICommandChannelDoWithSecurityContext = true;
+                    // agregado por SELM el 28/12/2024 por error en blazor 'System.InvalidOperationException: The connection does not support MultipleActiveResultSets'
+                    // sino funciona quitarlo despues
+                    options.EnablePoolingInConnectionString = true;
                 })
                 .AddNonPersistent();
             builder.Security

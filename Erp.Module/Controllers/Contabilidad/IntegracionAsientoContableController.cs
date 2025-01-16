@@ -7,14 +7,14 @@ using Microsoft.Extensions.DependencyInjection;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Contabilidad.Module.BusinessObjects;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using DevExpress.Xpo;
 using DevExpress.Xpo.Metadata;
-using DevExpress.ExpressApp.Xpo;
-using DevExpress.ExpressApp.DC;
+using System.Collections.Generic;
+using SBT.Apps.Contabilidad.BusinessObjects;
+using System.Reflection;
 
-namespace SBT.Apps.Erp.Module.Controllers
+namespace SBT.Apps.Erp.Module.Controllers.Contabilidad
 {
     /// <summary>
     /// View Controller para probar mecanismo de generación de Partidas automáticas desde otros módulos y utilizando mecanismo de partidas modelo
@@ -24,31 +24,16 @@ namespace SBT.Apps.Erp.Module.Controllers
     /// <remarks>
     /// I D E A S
     /// 1. Es el controlador base, implementar aquí la funcionalidad común o genérica
-    /// 2. Heredar de este controlador para implementar la funcionalidad específica de las transacciones (o documentos) que generan asientos contables
-    /// 3. Implementar aquí filtrado de las partidas modelo que aplican para las transacciones (o documentos) de acuerdo al TargetObjectType
-    /// 4. Evaluar implementar partidas automáticas. Es decir, que se generen cuando se guarda la transacción (ver como funcionaría la modificación
-    /// 5. Será  necesario identificar las transacciones para las cuales ya se genero el asiento contable. Idealmente en lugar de un Estado debería de
-    ///    registrarse el número de asiento contable que se genero.
-    /// 6. Será necesario identificar las partidas generadas con este mecanismo (automáticas o no) para obligar a su revisión antes de aplicarlas
-    ///    en la contabilidad. Esto obligará a revisar el proceso de cierre y apertura, aplicando en el cierre solo los asientos contables que han sido
-    ///    marcados como revisados.
-    /// 7. Será necesario evaluar como proceder cuando se modifica la transacción que dió origen a la partida (factura de venta por ejemplo). Se traslada
+    /// 2. Será necesario evaluar como proceder cuando se modifica la transacción que dió origen a la partida (factura de venta por ejemplo). Se traslada
     ///    la modificación a la partida de forma automática (que sucede si ya fue cerrado el día o mes), o el contador debe realizar un asiento de diario
     ///    para aplicar el ajuste.
     /// </remarks>
-    public class PartidaAutoBaseController: ViewController
-    { 
+    public class IntegracionAsientoContableController : ViewController
+    {
         int empresaOid;
+        //IObjectSpace osPartidaModelo;
         SingleChoiceAction scaModelos;  // revisar si esta se puede utilizar. Tomar en cuenta que en algunos casos se debe crear un popup para el ingreso de parámetros
-        // ejemplo: si es una partida de ventas consolidada por día o período, es necesario poder ingresar: fecha desde y fecha hasta
-        public PartidaAutoBaseController(): base()
-        {
-            // la siguiente linea se debe asignar en los controladores heredados
-            //TargetObjectType = typeof(SBT.Apps.Facturacion.Module.BusinessObjects.Venta);
-            // PENDIENTE. Ver como creamos las opciones de selección de partidas modelo permitidas para el BO, tomar en cuenta el numeral 3 de I D E A S.
-            // una opción es evaluar SingleChoiseAction
-        }
-
+                                        // ejemplo: si es una partida de ventas consolidada por día o período, es necesario poder ingresar: fecha desde y fecha hasta
         private int EmpresaOid
         {
             get
@@ -64,6 +49,67 @@ namespace SBT.Apps.Erp.Module.Controllers
             }
         }
 
+        public IntegracionAsientoContableController() : base()
+        {
+            // la siguiente linea se debe asignar en los controladores heredados
+            scaModelos = new SingleChoiceAction(this, "Seleccionar Partidas Modelo", DevExpress.Persistent.Base.PredefinedCategory.Tools);
+            scaModelos.Caption = "Generar Partida";
+            scaModelos.ToolTip = @"Seleccionar modelo para generar el asiento contable del BO actual";
+            scaModelos.ItemType = SingleChoiceActionItemType.ItemIsMode;
+            scaModelos.DefaultItemMode = DefaultItemMode.LastExecutedItem;
+            scaModelos.EmptyItemsBehavior = EmptyItemsBehavior.Disable;
+            scaModelos.PaintStyle = DevExpress.ExpressApp.Templates.ActionItemPaintStyle.Image;
+            scaModelos.ShowItemsOnClick = true;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+        }
+
+        protected override void OnActivated()
+        {
+            base.OnActivated();
+            FillItemFromModelo();
+            scaModelos.Execute += ScaModelos_Execute;
+        }
+
+        protected override void OnDeactivated()
+        {
+            scaModelos.Execute -= ScaModelos_Execute;
+            base.OnDeactivated();
+        }
+
+        private void FillItemFromModelo()
+        {
+            CriteriaOperator criteria = CriteriaOperator.FromLambda<PartidaModelo>(x => x.Empresa.Oid == EmpresaOid && x.TipoBO == TargetObjectType);
+            IList<PartidaModelo> modelos = ObjectSpace.GetObjects<PartidaModelo>(criteria);
+            if (modelos.Count > 0)
+            {
+                scaModelos.Items.Clear();
+                foreach (var modelo in modelos)
+                    scaModelos.Items.Add(new ChoiceActionItem(modelo.Nombre, modelo));
+            }
+        }
+
+        private void ScaModelos_Execute(object sender, SingleChoiceActionExecuteEventArgs e)
+        {
+            DoExecute(e);
+        }
+
+        protected void DoSourceBO<T>(string caption, ViewType viewType, string viewId = "")
+        {
+            TargetObjectType = typeof(T);
+            TargetViewType = viewType;
+            scaModelos.Caption = caption;
+            scaModelos.TargetObjectType = typeof(T);
+            scaModelos.TargetViewType = viewType;
+            scaModelos.Id = string.Format("{0}_GenerarPartida", GetType().Name);
+            if (!string.IsNullOrEmpty(viewId))
+                scaModelos.TargetViewId = viewId;
+            scaModelos.EmptyItemsBehavior = EmptyItemsBehavior.Deactivate;
+        }
+
         /// <summary>
         ///  Generar la partida contable para la partida modelo que se recibe en el argumento oidModelo y para el <b>View.CurrentOBject</b>
         ///  el View.CurrentObject. Es necesario que la propiedad <b>TargetObjectType</b> del controller, sea igual a TipoBO de la partida modelo
@@ -73,48 +119,64 @@ namespace SBT.Apps.Erp.Module.Controllers
         /// Esta implementación los parámetros de la partida modelo deben corresponder a propiedades del objet actual de la vista.
         /// Para recibir parámetros hay que re-implementar el método o sobrecargarlo
         /// </remarks>
-        protected virtual void DoGenerarPartida(int oidModelo)
+        protected virtual void DoExecute(SingleChoiceActionExecuteEventArgs e)
         {
-            using IObjectSpace os = Application.CreateObjectSpace(typeof(SBT.Apps.Contabilidad.Module.BusinessObjects.Partida));
-            var modelo = os.FirstOrDefault<PartidaModelo>(x => x.Oid == oidModelo);
-            if (!PuedeGenerarPartida(oidModelo, modelo))
+            IObjectSpace osPartida = Application.CreateObjectSpace(typeof(Partida));
+            var modelo = scaModelos.SelectedItem.Data as PartidaModelo;
+            if (!PuedeGenerarPartida(modelo.Oid, modelo, e))
                 return;
-            var partida = os.CreateObject<Partida>();
+            var partida = osPartida.CreateObject<Partida>();
             partida.Concepto = modelo.Concepto;
             partida.Tipo = modelo.Tipo;
-            using IObjectSpace osDetalle = os.CreateNestedObjectSpace();
+            partida.Estado = EPartidaEstado.Registrada;
+            //partida.Empresa = modelo.Empresa;
+            if (!string.IsNullOrEmpty(modelo.PropiedadFecha))
+                partida.Fecha = GetFechaPartida(modelo.PropiedadFecha) ?? DateTime.Now;
             object valor = null;
             CriteriaOperator condicion = null;
-            foreach(var item in modelo.Detalles)
+            foreach (var item in modelo.Detalles)
             {
-                Type tipoBO = item.TipoBO;
-                string criteria = item.Criteria.Replace("?EmpresaOid", Convert.ToString(EmpresaOid));
-                string[] paramsName = criteria.Split(' ', System.StringSplitOptions.RemoveEmptyEntries).Where(x => x.StartsWith('?')).ToArray();
-                condicion = CriteriaOperator.Parse(criteria, GetParametersValue(paramsName));
-                valor = ObjectSpace.Evaluate(tipoBO.GetType(), CriteriaOperator.Parse(item.Formula), condicion);
+                string[] paramsName = item.Criteria.Split(' ', StringSplitOptions.RemoveEmptyEntries).Where(x => x.StartsWith('?')).ToArray();
+                condicion = CriteriaOperator.Parse(item.Criteria, GetParametersValue(paramsName));
+                valor = osPartida.Evaluate(item.TipoBO, CriteriaOperator.Parse(item.Formula), condicion);
                 if (valor == null || Convert.ToDecimal(valor) == 0)
                     continue;
-                var detallePtda = osDetalle.CreateObject<PartidaDetalle>();
-                detallePtda.Cuenta = item.Cuenta;
-                detallePtda.Concepto = Convert.ToString(ObjectSpace.Evaluate(tipoBO.GetType(), CriteriaOperator.Parse(item.Concepto), null));
-                //detallePtda.Concepto = NuevoConcepto(item.Concepto);
-                
-                detallePtda.ValorDebe = 0.0m;
-                detallePtda.ValorHaber = 0.0m;
-                detallePtda.AjusteConsolidacion = ETipoOperacionConsolidacion.Ninguno;
-                if (item.Tipo == Base.Module.BusinessObjects.ETipoOperacion.Cargo)
-                    detallePtda.ValorDebe = Convert.ToDecimal(valor);
-                else if (item.Tipo == Base.Module.BusinessObjects.ETipoOperacion.Abono)
-                    detallePtda.ValorHaber = Convert.ToDecimal(valor);
-                partida.Detalles.Add(detallePtda);
+                var detalle = osPartida.CreateObject<PartidaDetalle>();
+                detalle.Partida = partida;
+                detalle.Cuenta = osPartida.GetObjectByKey<Catalogo>(item.Cuenta.Oid);
+                detalle.Concepto = Convert.ToString(osPartida.Evaluate(item.TipoBO, CriteriaOperator.Parse(item.Concepto), condicion)).Substring(0, 150);
+                detalle.AjusteConsolidacion = ETipoOperacionConsolidacion.Ninguno;
+                detalle.ValorDebe = (item.Tipo == ETipoOperacion.Cargo) ? Convert.ToDecimal(valor) : 0.0m;
+                detalle.ValorHaber = (item.Tipo == ETipoOperacion.Abono) ? Convert.ToDecimal(valor) : 0.0m;
+                detalle.Save();
+                partida.Detalles.Add(osPartida.GetObject(detalle));
             }
             if (partida.Detalles.Count > 0)
             {
-                partida.Save();
-                os.CommitChanges();
+                osPartida.CommitChanges();
+                var partidaDetalleView = Application.CreateDetailView(osPartida, partida, true);
+                try
+                {
+                    Application.ShowViewStrategy.ShowViewInPopupWindow(partidaDetalleView, () =>
+                    {
+                        osPartida.CommitChanges();
+                        // actualizar la propiedad Partida en el source cuando existe, para indicar el numero de partida que corresponde al documento
+                        PropertyInfo propInfo = ObjectSpace.GetObjectType(e.CurrentObject).GetProperty("Partida");
+                        if (propInfo != null)
+                            propInfo.SetValue(e.CurrentObject, partida.Oid);
+                        ObjectSpace.CommitChanges();
+                        partidaDetalleView.Close();
+                        osPartida.Dispose();
+                    });
+                }
+                catch (Exception ex)
+                {
+                    Application.ShowViewStrategy.ShowMessage(ex.Message);
+                    throw;
+                }
             }
             else
-                Application.ShowViewStrategy.ShowMessage($@"La partida modelo con ID {oidModelo} no hay datos en el origen para generar el asiento contable");
+                Application.ShowViewStrategy.ShowMessage($@"No hay datos en el origen {modelo.TipoBO.Name} para generar el asiento contable");
         }
 
         /// <summary>
@@ -124,13 +186,8 @@ namespace SBT.Apps.Erp.Module.Controllers
         /// <param name="modelo"></param>
         /// <returns>True cuando es factible generar la partida contable</returns>
         /// <remarks>Pendiente de validar que el día este abierto, así como el período contable</remarks>
-        private bool PuedeGenerarPartida(int oidModelo, PartidaModelo modelo)
+        private bool PuedeGenerarPartida(int oidModelo, PartidaModelo modelo, SingleChoiceActionExecuteEventArgs e)
         {
-            if (modelo == null)
-            {
-                Application.ShowViewStrategy.ShowMessage($@"No se encontro la partida  modelo con Id {oidModelo} para generar la partida solicitada");
-                return false; // no hay nada que hacer
-            }
             if (modelo.Detalles.Count == 0)
             {
                 Application.ShowViewStrategy.ShowMessage($@"La partida modelo con ID {oidModelo} no tiene detalles, no hay nada que generar");
@@ -141,12 +198,20 @@ namespace SBT.Apps.Erp.Module.Controllers
                 Application.ShowViewStrategy.ShowMessage($@"La transacción es nueva y aún no se ha guardado, no puede generar aún la partida contable");
                 return false;
             }
-            if (ObjectSpace.GetObjectType(View.CurrentObject) != modelo.Detalles.FirstOrDefault<PartidaModeloDetalle>()?.TipoBO)
+            if (ObjectSpace.GetObjectType(View.CurrentObject) != modelo.Detalles.FirstOrDefault()?.TipoBO)
             {
                 // REVISAR, porque en el detalle de la partida modelo, [TipoBO] de criteria puede ser diferente en cada registro. Esta
                 // validación asume que todos son iguales y solo verifica el primer item del detalle (FistOrDefault). Una partida compleja
                 // podría generarse a partir de 2 o más BO relacianados. Ejemplo: CompraFactura y el Pago de contado (BancoTransaccion)
                 Application.ShowViewStrategy.ShowMessage($@"Tipo BO en la expresión no es igual al Tipo de BO del objeto actual");
+                return false;
+            }
+            PropertyInfo propInfo = ObjectSpace.GetObjectType(e.CurrentObject).GetProperty("Partida");
+            int oidPartida = Convert.ToInt32(propInfo.GetValue(e.CurrentObject));
+            if (propInfo != null && oidPartida > 0)
+            {
+                Application.ShowViewStrategy.ShowMessage($@"NO se puede generar partida para documento seleccionado, porque ya existe una con Id {oidPartida}", 
+                    InformationType.Error);
                 return false;
             }
             // AGREGAR aquí validación de día y período abierto, antes de generar la partida
@@ -179,11 +244,17 @@ namespace SBT.Apps.Erp.Module.Controllers
                 XPMemberInfo memberInfo = (View.CurrentObject as XPBaseObject).ClassInfo.GetMember(propertyName);
                 if (memberInfo != null)
                     paramValues[idx] = (View.CurrentObject as XPBaseObject).GetMemberValue(propertyName);
-                else 
+                else
                     paramValues[idx] = null;
                 idx++;
             }
             return paramValues;
+        }
+
+        private DateTime? GetFechaPartida(string propiedadFecha)
+        {
+            XPMemberInfo memberInfo = (View.CurrentObject as XPBaseObject).ClassInfo.GetMember(propiedadFecha);
+            return (memberInfo != null) ? Convert.ToDateTime((View.CurrentObject as XPBaseObject).GetMemberValue(propiedadFecha)) : null;
         }
 
         /// <summary>
@@ -193,7 +264,7 @@ namespace SBT.Apps.Erp.Module.Controllers
         /// <returns>El concepto para la linea de la partida contable con los valores de las propiedades</returns>
         private string NuevoConcepto(string concepto)
         {
-            string[] propiedadesNombre = concepto.Split(' ', System.StringSplitOptions.RemoveEmptyEntries).Where(x => x.StartsWith('?')).ToArray();
+            string[] propiedadesNombre = concepto.Split(' ', StringSplitOptions.RemoveEmptyEntries).Where(x => x.StartsWith('?')).ToArray();
             string valor = concepto;
             string propiedad;
             foreach (string item in propiedadesNombre)
@@ -204,18 +275,5 @@ namespace SBT.Apps.Erp.Module.Controllers
             return valor;
         }
 
-        private void CreateOpcionesModelo(int oidEmpresa)
-        {
-            IQueryable<PartidaModeloDetalle> queryModelo  = ObjectSpace.GetObjectsQuery<PartidaModeloDetalle>();
-            var listaModelo = queryModelo.Where(x => x.TipoBO.GetType().Name == "SBT.Apps.Facturacion.Module.BusinessObjects.Venta"
-                                                        && x.PartidaModelo.Empresa.Oid == oidEmpresa).
-                                                        Select(y => new { y.PartidaModelo.Oid, y.PartidaModelo.Nombre, y.Tipo, y.TipoBO }).ToList();
-            scaModelos = new SingleChoiceAction(this, "scaPartidaModelo", DevExpress.Persistent.Base.PredefinedCategory.RecordEdit);
-            scaModelos.TargetObjectType = this.TargetObjectType;
-            foreach(var modelo in listaModelo)
-            {
-                scaModelos.Items.Add(new ChoiceActionItem(modelo.Nombre, modelo.Oid));
-            }           
-        }
     }
 }

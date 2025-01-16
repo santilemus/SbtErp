@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace SBT.eFactura.Dte.Poco
 {
     /// <summary>
-    /// Información del Emisor del Dte
+    /// Información del Emisor del Dte. Falta heredarlo de EmisorReceptorBase con las propiedades comunes
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.8.0.0 (Newtonsoft.Json v13.0.3.0)")]
     public class Emisor

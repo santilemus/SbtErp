@@ -153,3 +153,55 @@ go
 alter table CompraFacturaDetalle
   add UnidadMedida int null
 go
+
+-- 15. Agregar columnas a ConPartidaModelo
+alter table ConPartidaModelo
+  add TipoBO varchar(150) null
+go
+
+alter table ConPartidaModelo
+  add PropiedadFecha varchar(50) null
+go
+
+-- 18. Agregar tabla que relaciona las roles del tercero con la cuenta contable. Util en la generacion de las partidas contables automaticas
+create table TerceroCuentaContable(
+  Oid int identity(1,1) not null,
+  TerceroRole int null,
+  Cuenta int null,
+  OptimisticLockField int NULL,
+  GCRecord int NULL
+)
+go
+alter table TerceroCuentaContable
+  add constraint FK_TerceroCuentaContable_Catalogo foreign key (Cuenta) references ConCatalogo(Oid)
+go
+alter table TerceroCuentaContable
+  add constraint FK_TerceroCuentaContable_TerceroRole foreign key(TerceroRole) references TerceroRole(Oid)
+go
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Tabla con las cuentas contables (por empresa) relacionadas al tercero de acuerdo al role' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'TerceroCuentaContable'
+go
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Llave primaria' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'TerceroCuentaContable', @level2type=N'COLUMN',@level2name=N'Oid'
+go
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Role del tercero' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'TerceroCuentaContable', @level2type=N'COLUMN',@level2name=N'TerceroRole'
+go
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Oid de la cuenta contable' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'TerceroCuentaContable', @level2type=N'COLUMN',@level2name=N'Cuenta'
+go
+
+--19. Modificamos el detalle de la partida modelo, agregamos columna para evaluar expresion y retornar cuenta cuando no esta fija en la modelo
+alter table ConPartidaModeloDetalle
+  add CuentaExpresion varchar(400) null
+go
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Expresion para obtener el Oid de la cuenta contable, cuando no es fija, por ejemplo: clientes, proveedores' , 
+     @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'ConPartidaModeloDetalle', @level2type=N'COLUMN',@level2name=N'CuentaExpresion'
+go
+
+-- 20. Modificamos la tabla principal de Ventas para registrar el id de la partida correspondiente, cuando fue generada de forma automática
+alter table Venta
+  add Partida int null
+go
+
+-- 21. Modificamos la tabla de Facturas de Compra para registrar el id de la partida correspondiente, cuando fue generada de forma automática
+alter table CompraFactura
+  add Partida int null
+go

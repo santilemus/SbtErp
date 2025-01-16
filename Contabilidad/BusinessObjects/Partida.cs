@@ -236,7 +236,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         {
             get
             {
-                return GetCollection<PartidaDetalle>(nameof(Detalles));
+                 return GetCollection<PartidaDetalle>(nameof(Detalles));
             }
         }
 

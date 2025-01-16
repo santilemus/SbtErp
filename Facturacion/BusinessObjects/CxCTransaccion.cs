@@ -371,7 +371,7 @@ namespace SBT.Apps.CxC.Module.BusinessObjects
             {
                 CriteriaOperator criteria = CriteriaOperator.FromLambda<CxCTransaccion>(x => x.Venta.Empresa.Oid == Venta.Empresa.Oid &&
                  x.Tipo.Oid == Tipo.Oid && x.Fecha.Year == Fecha.Year);
-                Numero = Convert.ToInt32(Session.Evaluate<Venta>(CriteriaOperator.Parse("Max(Numero)"), criteria) ?? 0) + 1;
+                Numero = Convert.ToInt32(Session.Evaluate<CxCTransaccion>(CriteriaOperator.Parse("Max(Numero)"), criteria) ?? 0) + 1;
             }
             base.OnSaving();
         }

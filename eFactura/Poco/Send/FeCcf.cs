@@ -46,7 +46,7 @@ namespace SBT.eFactura.Dte.Poco.Send
         [System.Text.Json.Serialization.JsonPropertyName("receptor")]
         [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]
         [Required]
-        public Emisor? Receptor { get; set; }
+        public ReceptorCcf? Receptor { get; set; }
 
         /// <summary>
         /// Documentos asociados al Dte

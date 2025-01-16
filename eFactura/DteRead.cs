@@ -45,5 +45,28 @@ namespace SBT.eFactura.Dte
                 return default;
         }
 
+        /// <summary>
+        /// Buscar la propiedadSelloRecibido como propiedad del root y sino como propiedad de los diferentes nodos y retorna su valor
+        /// </summary>
+        /// <remarks>
+        /// Se implementa por separado porque no todos emisores de Dte ponen la propiedad en el mismo nodo
+        /// </remarks>
+        /// <returns>El sello de recibido cuando se encuentra la propiedad y cadena vacía cuando  no existe</returns>
+        public string? GetSelloRecibido()
+        {
+            if (string.IsNullOrEmpty(JsonDte))
+                return string.Empty;
+            using JsonDocument jsonDoc = JsonDocument.Parse(JsonDte);
+            JsonElement sello;
+            if (!jsonDoc.RootElement.TryGetProperty("SelloRecibido", out sello))
+            {
+                var xyz = jsonDoc.RootElement.EnumerateObject().Where(x => x.Value.ValueKind == JsonValueKind.Object);
+                foreach (var x in xyz)
+                    if (x.Value.TryGetProperty("SelloRecibido", out sello))
+                        break;
+            }
+            return (sello.ValueKind != JsonValueKind.Undefined && sello.ValueKind != JsonValueKind.Null) ? sello.GetString() : string.Empty;
+        }
+
     }
 }

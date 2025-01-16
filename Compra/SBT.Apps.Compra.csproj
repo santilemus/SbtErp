@@ -61,9 +61,4 @@
     <EmbeddedResource Include="Images\OrdenCompra.png" />
     <EmbeddedResource Include="Images\OrdenCompra_32x32.png" />
   </ItemGroup>
-  <ItemGroup>
-    <None Update="UnusableNodes1.xml">
-      <DependentUpon>Model.DesignedDiffs.xafml</DependentUpon>
-    </None>
-  </ItemGroup>
 </Project>

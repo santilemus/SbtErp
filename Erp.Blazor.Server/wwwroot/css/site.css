@@ -8,23 +8,34 @@ app {
 }
 
 .header-logo {
+    font-size: x-small;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight:bold;
+    color: darkblue;
+    width: 200px;
+    height: 18px;
+}
+
+/*
+.header-logo {
     flex-shrink: 0;
-    /*background-color: currentColor;*/
+    background-color: currentColor;
     background-image: url('../images/Logo.svg');
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
-    /*
+    
     -webkit-mask: url('../images/Logo.svg');
     mask: url('../images/Logo.svg');
     -webkit-mask-position: center;
     mask-position: center;
     -webkit-mask-repeat: no-repeat;
     mask-repeat: no-repeat;
-    */
+    
     width: 216px;
     height: 28px;
-}
+}*/
+
 
 #blazor-error-ui {
     background: inherit;
