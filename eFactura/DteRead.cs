@@ -52,17 +52,17 @@ namespace SBT.eFactura.Dte
         /// Se implementa por separado porque no todos emisores de Dte ponen la propiedad en el mismo nodo
         /// </remarks>
         /// <returns>El sello de recibido cuando se encuentra la propiedad y cadena vacía cuando  no existe</returns>
-        public string? GetSelloRecibido()
+        public string? GetPropertyValue(string propertyName)
         {
             if (string.IsNullOrEmpty(JsonDte))
                 return string.Empty;
             using JsonDocument jsonDoc = JsonDocument.Parse(JsonDte);
             JsonElement sello;
-            if (!jsonDoc.RootElement.TryGetProperty("SelloRecibido", out sello))
+            if (!jsonDoc.RootElement.TryGetProperty(propertyName, out sello))
             {
                 var xyz = jsonDoc.RootElement.EnumerateObject().Where(x => x.Value.ValueKind == JsonValueKind.Object);
                 foreach (var x in xyz)
-                    if (x.Value.TryGetProperty("SelloRecibido", out sello))
+                    if (x.Value.TryGetProperty(propertyName, out sello))
                         break;
             }
             return (sello.ValueKind != JsonValueKind.Undefined && sello.ValueKind != JsonValueKind.Null) ? sello.GetString() : string.Empty;

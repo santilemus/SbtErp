@@ -307,16 +307,17 @@
     </ListView>
     <ListView Id="BancoTransaccion_ListView">
       <Columns>
+        <ColumnInfo Id="ChequeNo" Width="93" Index="-1" />
         <ColumnInfo Id="Comentario" Index="-1" />
+        <ColumnInfo Id="IdReferencia" Width="154" Index="-1" />
+        <ColumnInfo Id="BancoCuenta" Width="111" />
         <ColumnInfo Id="Clasificacion" Width="157" />
         <ColumnInfo Id="Numero" Width="98" />
         <ColumnInfo Id="Fecha" Width="107" />
-        <ColumnInfo Id="ChequeNo" Width="93" />
-        <ColumnInfo Id="IdReferencia" Width="154" />
-        <ColumnInfo Id="Concepto" Width="193" />
-        <ColumnInfo Id="Abono" Index="8" Width="89" />
-        <ColumnInfo Id="Cargo" Index="9" Width="111" />
-        <ColumnInfo Id="Estado" Index="10" />
+        <ColumnInfo Id="Abono" Index="5" Width="89" />
+        <ColumnInfo Id="Cargo" Index="6" Width="111" />
+        <ColumnInfo Id="Concepto" Width="457" Index="7" />
+        <ColumnInfo Id="Estado" Index="8" />
       </Columns>
     </ListView>
     <ListView Id="BancoTransaccion_LookupListView">

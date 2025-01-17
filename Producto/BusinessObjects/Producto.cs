@@ -27,7 +27,7 @@ namespace SBT.Apps.Producto.Module.BusinessObjects
 
     [Appearance("Productos - Servicios - Intangibles y Otros", AppearanceItemType = "ViewItem", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide,
             Context = "Any", Criteria = "[Categoria.Clasificacion] >= 4",
-            TargetItems = "CodigoBarra;NombreCorto;UnidadMedida;Presentaciones;CantMinima;CantMaxima;CostoPromedio;Atributos;ItemsEnsamble;Equivalentes;Lotes;CodigosBarra;Inventarios")]
+            TargetItems = "CodigoBarra;NombreCorto;Presentaciones;CantMinima;CantMaxima;CostoPromedio;Atributos;ItemsEnsamble;Equivalentes;Lotes;CodigosBarra;Inventarios")]
     public class Producto : XPObjectBaseBO
     {
         public override void AfterConstruction()

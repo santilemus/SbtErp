@@ -11,8 +11,6 @@ using SBT.Apps.Contabilidad.Module.BusinessObjects;
 using System;
 using System.ComponentModel;
 using DevExpress.ExpressApp.Editors;
-using System.Runtime.CompilerServices;
-using DevExpress.ExpressApp;
 using DevExpress.Drawing;
 
 namespace SBT.Apps.Banco.Module.BusinessObjects
@@ -38,7 +36,7 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         Visibility = ViewItemVisibility.Hide, Context = "DetailView", TargetItems = "ChequeNo;Proveedor;Beneficiario;Cargo;Pagos")]
     [Appearance("BancoCuenta.TarjetaCredito", Criteria = "[Cuenta.Tipo Cuenta] = 'Tarjeta'", AppearanceItemType = "ViewItem", TargetItems = "BancoCuenta",
         Context = "DetailView")]
-    [Appearance("BancoCuenta_Cheque", Criteria = "[Clasificacion.Tipo] != 'Cheque'", AppearanceItemType = "ViewItem", Visibility = ViewItemVisibility.Hide, 
+    [Appearance("BancoCuenta_Cheque", Criteria = "[Clasificacion.Tipo] != 'Cheque'", AppearanceItemType = "ViewItem", Visibility = ViewItemVisibility.Hide,
         Context = "DetailView", TargetItems = "ChequeNo")]
 
     [ImageName(nameof(BancoTransaccion))]
@@ -55,13 +53,15 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         public override void AfterConstruction()
         {
             base.AfterConstruction();
+
             numero = null;
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
 
         protected override void OnSaving()
         {
-            if ((Session is not NestedUnitOfWork) && (Session.DataLayer != null) && (Session.ObjectLayer is SecuredSessionObjectLayer))
+            if ((Session is not NestedUnitOfWork) && (Session.DataLayer != null) && (Session.ObjectLayer is SecuredSessionObjectLayer) &&
+                 Session.IsNewObject(this) && (Numero == null || Numero <= 0))
             {
                 if (Clasificacion.Tipo == EBancoTipoTransaccion.Cheque && Session.IsNewObject(this) && chequera != null)
                 {
@@ -69,8 +69,7 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
                         chequera.NumeroActual++;
                     chequera.Save();
                 }
-                if (Session.IsNewObject(this) && (numero == null || numero <= 0))
-                    numero = CorrelativoDoc();
+                numero = CorrelativoDoc();
             }
             base.OnSaving();
         }
@@ -275,7 +274,7 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         }
 
         [Browsable(false)]
-        [RuleFromBoolProperty("BancoTransaccion.ExisteSaldo", DefaultContexts.Save, 
+        [RuleFromBoolProperty("BancoTransaccion.ExisteSaldo", DefaultContexts.Save,
             TargetCriteria = "[Monto] != 0.0 && ([Clasificacion.Tipo] == 'Cheque' || [Clasificacion.Tipo] == 'Cargo')", SkipNullOrEmptyValues = false,
             CustomMessageTemplate = "Para la Emisión de Cheques y Notas de Cargo, la cuenta debe tener fondos suficientes para cubrir el monto de la transacción")]
         private bool ExisteSaldo
@@ -344,10 +343,8 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         protected int CorrelativoDoc()
         {
             object max;
-            var criteria = CriteriaOperator.And(new BinaryOperator("[BancoCuenta.Empresa.Oid]", BancoCuenta.Empresa.Oid),
-                                                new BinaryOperator("[Clasificacion.Tipo]", Clasificacion.Tipo),
-                                                CriteriaOperator.Parse("GetYear(Fecha) == ?", Fecha.Year));
-            //string sCriteria = "BancoCuenta.Empresa.Oid == ? && Clasificacion.Tipo == ? && GetYear(Fecha) == ?";
+            CriteriaOperator criteria = CriteriaOperator.FromLambda<BancoTransaccion>(x => x.BancoCuenta.Empresa.Oid == BancoCuenta.Empresa.Oid &&
+            x.Clasificacion.Tipo == Clasificacion.Tipo && x.Fecha.Year == Fecha.Year);
             var oldValue = Session.LockingOption;
             Session.LockingOption = LockingOption.Optimistic;
             max = Session.Evaluate<BancoTransaccion>(CriteriaOperator.Parse("Max(Numero)"), criteria);

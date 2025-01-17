@@ -94,7 +94,14 @@ namespace SBT.Apps.Erp.Module.Controllers.Contabilidad
 
         private void ScaModelos_Execute(object sender, SingleChoiceActionExecuteEventArgs e)
         {
-            DoExecute(e);
+            try
+            {
+                DoExecute(e);
+            }
+            catch (Exception ex)
+            {
+                Application.ShowViewStrategy.ShowMessage($@"Error al generar Partida contable {ex.Message}", InformationType.Error);
+            }
         }
 
         protected void DoSourceBO<T>(string caption, ViewType viewType, string viewId = "")
@@ -121,10 +128,10 @@ namespace SBT.Apps.Erp.Module.Controllers.Contabilidad
         /// </remarks>
         protected virtual void DoExecute(SingleChoiceActionExecuteEventArgs e)
         {
-            IObjectSpace osPartida = Application.CreateObjectSpace(typeof(Partida));
             var modelo = scaModelos.SelectedItem.Data as PartidaModelo;
             if (!PuedeGenerarPartida(modelo.Oid, modelo, e))
                 return;
+            IObjectSpace osPartida = Application.CreateObjectSpace(typeof(Partida));
             var partida = osPartida.CreateObject<Partida>();
             partida.Concepto = modelo.Concepto;
             partida.Tipo = modelo.Tipo;
@@ -134,29 +141,30 @@ namespace SBT.Apps.Erp.Module.Controllers.Contabilidad
                 partida.Fecha = GetFechaPartida(modelo.PropiedadFecha) ?? DateTime.Now;
             object valor = null;
             CriteriaOperator condicion = null;
-            foreach (var item in modelo.Detalles)
+            try
             {
-                string[] paramsName = item.Criteria.Split(' ', StringSplitOptions.RemoveEmptyEntries).Where(x => x.StartsWith('?')).ToArray();
-                condicion = CriteriaOperator.Parse(item.Criteria, GetParametersValue(paramsName));
-                valor = osPartida.Evaluate(item.TipoBO, CriteriaOperator.Parse(item.Formula), condicion);
-                if (valor == null || Convert.ToDecimal(valor) == 0)
-                    continue;
-                var detalle = osPartida.CreateObject<PartidaDetalle>();
-                detalle.Partida = partida;
-                detalle.Cuenta = osPartida.GetObjectByKey<Catalogo>(item.Cuenta.Oid);
-                detalle.Concepto = Convert.ToString(osPartida.Evaluate(item.TipoBO, CriteriaOperator.Parse(item.Concepto), condicion)).Substring(0, 150);
-                detalle.AjusteConsolidacion = ETipoOperacionConsolidacion.Ninguno;
-                detalle.ValorDebe = (item.Tipo == ETipoOperacion.Cargo) ? Convert.ToDecimal(valor) : 0.0m;
-                detalle.ValorHaber = (item.Tipo == ETipoOperacion.Abono) ? Convert.ToDecimal(valor) : 0.0m;
-                detalle.Save();
-                partida.Detalles.Add(osPartida.GetObject(detalle));
-            }
-            if (partida.Detalles.Count > 0)
-            {
-                osPartida.CommitChanges();
-                var partidaDetalleView = Application.CreateDetailView(osPartida, partida, true);
-                try
+                foreach (var item in modelo.Detalles)
                 {
+                    string[] paramsName = item.Criteria.Split(' ', StringSplitOptions.RemoveEmptyEntries).Where(x => x.StartsWith('?')).ToArray();
+                    condicion = CriteriaOperator.Parse(item.Criteria, GetParametersValue(paramsName));
+                    valor = osPartida.Evaluate(item.TipoBO, CriteriaOperator.Parse(item.Formula), condicion);
+                    if (valor == null || Convert.ToDecimal(valor) == 0)
+                        continue;
+                    var detalle = osPartida.CreateObject<PartidaDetalle>();
+                    detalle.Partida = partida;
+                    detalle.Cuenta = osPartida.GetObjectByKey<Catalogo>(item.Cuenta.Oid);
+                    string sConcepto = Convert.ToString(osPartida.Evaluate(item.TipoBO, CriteriaOperator.Parse(item.Concepto), condicion)).Trim();
+                    detalle.Concepto = sConcepto.Length <= 150 ? sConcepto : sConcepto.Substring(0, 150);
+                    detalle.AjusteConsolidacion = ETipoOperacionConsolidacion.Ninguno;
+                    detalle.ValorDebe = (item.Tipo == ETipoOperacion.Cargo) ? Convert.ToDecimal(valor) : 0.0m;
+                    detalle.ValorHaber = (item.Tipo == ETipoOperacion.Abono) ? Convert.ToDecimal(valor) : 0.0m;
+                    detalle.Save();
+                    partida.Detalles.Add(osPartida.GetObject(detalle));
+                }
+                if (partida.Detalles.Count > 0)
+                {
+                    osPartida.CommitChanges();
+                    var partidaDetalleView = Application.CreateDetailView(osPartida, partida, true);
                     Application.ShowViewStrategy.ShowViewInPopupWindow(partidaDetalleView, () =>
                     {
                         osPartida.CommitChanges();
@@ -169,14 +177,16 @@ namespace SBT.Apps.Erp.Module.Controllers.Contabilidad
                         osPartida.Dispose();
                     });
                 }
-                catch (Exception ex)
+                else
                 {
-                    Application.ShowViewStrategy.ShowMessage(ex.Message);
-                    throw;
+                    osPartida.Dispose();
+                    Application.ShowViewStrategy.ShowMessage($@"No hay datos en el origen {modelo.TipoBO.Name} para generar el asiento contable");
                 }
             }
-            else
-                Application.ShowViewStrategy.ShowMessage($@"No hay datos en el origen {modelo.TipoBO.Name} para generar el asiento contable");
+            catch (Exception ex)
+            {
+                Application.ShowViewStrategy.ShowMessage(ex.Message, InformationType.Error);
+            }
         }
 
         /// <summary>
@@ -210,7 +220,7 @@ namespace SBT.Apps.Erp.Module.Controllers.Contabilidad
             int oidPartida = Convert.ToInt32(propInfo.GetValue(e.CurrentObject));
             if (propInfo != null && oidPartida > 0)
             {
-                Application.ShowViewStrategy.ShowMessage($@"NO se puede generar partida para documento seleccionado, porque ya existe una con Id {oidPartida}", 
+                Application.ShowViewStrategy.ShowMessage($@"NO se puede generar partida para documento seleccionado, porque ya existe una con Id {oidPartida}",
                     InformationType.Error);
                 return false;
             }

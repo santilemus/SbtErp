@@ -184,7 +184,10 @@ namespace SBT.Apps.Compra.Module.Controllers
                     compraFactura.CondicionPago = ECondicionPago.Credito;
                 compraFactura.DiasCredito = 0;
                 compraFactura.Origen = EOrigenCompra.Local;
-                compraFactura.Serie = dteRead.GetSelloRecibido();
+                string sello = dteRead.GetPropertyValue("selloRecibido");
+                if (string.IsNullOrEmpty(sello))
+                    sello = dteRead.GetPropertyValue("SelloRecibido");
+                compraFactura.Serie = sello;
                 compraFactura.Moneda = os.FirstOrDefault<Moneda>(x => x.Codigo == ccf.Identificacion.TipoMoneda);
                 compraFactura.Exenta = ccf.Resumen.TotalExenta;
                 compraFactura.Gravada = ccf.Resumen.TotalGravada;
