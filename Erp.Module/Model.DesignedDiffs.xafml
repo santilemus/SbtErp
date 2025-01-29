@@ -45,7 +45,7 @@
         <ColumnInfo Id="Estado" Width="135" Index="7" />
       </Columns>
     </ListView>
-    <ListView Id="BancoTransaccion_Pagos_ListView">
+    <ListView Id="BancoTransaccion_Pagos_ListView" DetailViewID="CxPTransaccion_DetailView_Pago">
       <Columns>
         <ColumnInfo Id="Comentario" Index="-1" />
         <ColumnInfo Id="FechaAnula" Index="-1" />
@@ -59,6 +59,27 @@
         <ColumnInfo Id="Monto" Width="107" />
       </Columns>
     </ListView>
+    <DetailView Id="CxPTransaccion_DetailView_Pago">
+      <Items>
+        <PropertyEditor Id="Factura" PropertyName="Factura" IsNewNode="True" />
+      </Items>
+      <Layout>
+        <LayoutGroup Id="Main">
+          <LayoutGroup Id="SimpleEditors">
+            <LayoutGroup Id="CxPTransaccion_col1">
+              <LayoutItem Id="Tipo" RelativeSize="4.230317273795535" CaptionLocation="Left" />
+              <LayoutItem Id="Factura" ViewItem="Factura" Index="1" RelativeSize="3.055229142185664" CaptionLocation="Left" IsNewNode="True" />
+              <LayoutItem Id="BancoTransaccion" Index="2" RelativeSize="3.055229142185664" CaptionLocation="Left" />
+              <LayoutItem Id="Fecha" Index="3" RelativeSize="3.055229142185664" CaptionLocation="Left" />
+              <LayoutItem Id="Moneda" Index="4" RelativeSize="3.055229142185664" CaptionLocation="Left" />
+              <LayoutItem Id="Monto" Index="5" RelativeSize="3.055229142185664" CaptionLocation="Left" />
+              <LayoutItem Id="Comentario" Index="6" RelativeSize="3.055229142185664" CaptionLocation="Left" />
+              <LayoutItem Id="Estado" Index="7" RelativeSize="77.43830787309048" CaptionLocation="Left" />
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
     <DetailView Id="Usuario_DetailView">
       <Layout>
         <LayoutGroup Id="Main">

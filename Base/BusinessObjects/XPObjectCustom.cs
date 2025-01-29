@@ -41,7 +41,8 @@ namespace SBT.Apps.Base.Module.BusinessObjects
                 {
                     moneda = Session.GetObjectByKey<Moneda>(parametro.Valor.Trim());
                     this["Moneda"] = moneda;
-                    this["ValorMoneda"] = moneda?.FactorCambio;
+                    if (ClassInfo.FindMember("ValorMoneda") != null)
+                        this["ValorMoneda"] = moneda?.FactorCambio;
                 }
             }
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).

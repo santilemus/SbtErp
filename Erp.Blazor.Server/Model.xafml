@@ -50,6 +50,11 @@
       </Columns>
     </ListView>
     <ListView Id="Empresa_LookupListView" EditorTypeName="DevExpress.ExpressApp.Blazor.Editors.Grid.GridListEditor" DataAccessMode="Queryable" />
+    <DetailView Id="Partida_DetailView">
+      <Items>
+        <PropertyEditor Id="DocumentoSoporte" PropertyEditorType="DevExpress.ExpressApp.FileAttachments.Blazor.Editors.FileDataPropertyEditor" />
+      </Items>
+    </DetailView>
     <ListView Id="Tributo_ListView">
       <Columns>
         <ColumnInfo Id="Nombre" Width="334" />

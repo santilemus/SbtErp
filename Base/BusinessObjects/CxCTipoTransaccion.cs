@@ -39,6 +39,8 @@ namespace SBT.Apps.Base.Module.BusinessObjects
         string codigo;
         string nombre;
         Listas tipoDocumento;
+        //private int bancoTipoTransaccionCargo;
+        //private int bancoTipoTransaccionAbono;
 
         [DbType("smallint"), Key(true), XafDisplayName("Oid")]
         public int Oid
@@ -108,6 +110,20 @@ namespace SBT.Apps.Base.Module.BusinessObjects
             get => activo;
             set => SetPropertyValue(nameof(Activo), ref activo, value);
         }
+
+        /*
+        public int BancoTipoTransaccionCargo
+        {
+            get => bancoTipoTransaccionCargo;
+            set => SetPropertyValue(nameof(BancoTipoTransaccionCargo), ref bancoTipoTransaccionCargo, value);
+        } 
+
+        public int BancoTipoTransaccionAbono
+        {
+            get => bancoTipoTransaccionAbono;
+            set => SetPropertyValue(nameof(BancoTipoTransaccionAbono), ref bancoTipoTransaccionAbono, value);
+        }
+        */
 
         #endregion
 

@@ -498,6 +498,18 @@
         <ColumnInfo Id="OrdenCompra" PropertyName="OrdenCompra" Index="10" IsNewNode="True" />
       </Columns>
     </ListView>
+    <ListView Id="CompraFactura_LookupListView_CxP" ClassName="SBT.Apps.Compra.Module.BusinessObjects.CompraFactura" AllowDelete="False" AllowNew="False" IsNewNode="True">
+      <Columns IsNewNode="True">
+        <ColumnInfo Id="Gravada" PropertyName="Gravada" Index="-1" Width="103" IsNewNode="True" />
+        <ColumnInfo Id="Iva" PropertyName="Iva" Index="-1" Width="106" IsNewNode="True" />
+        <ColumnInfo Id="Total" PropertyName="Total" Index="-1" Width="101" IsNewNode="True" />
+        <ColumnInfo Id="Fecha" PropertyName="Fecha" Index="0" Width="95" IsNewNode="True" />
+        <ColumnInfo Id="NumeroFactura" PropertyName="NumeroFactura" SortIndex="0" SortOrder="Ascending" Index="1" Width="323" IsNewNode="True" />
+        <ColumnInfo Id="TipoFactura" PropertyName="TipoFactura" Index="2" Width="218" IsNewNode="True" />
+        <ColumnInfo Id="Saldo" PropertyName="Saldo" Index="3" Width="145" IsNewNode="True" />
+        <ColumnInfo Id="Renta" PropertyName="Renta" Index="4" Width="124" IsNewNode="True" />
+      </Columns>
+    </ListView>
     <ListView Id="CompraFactura_NCredito_ListView" ClassName="SBT.Apps.CxP.Module.BusinessObjects.CxPTransaccion" DataAccessMode="Server" Caption="CxP - Nota Crédito" Criteria="[Tipo.Padre.Oid] = 1 And [Tipo.Activo] = True" IsNewNode="True">
       <Columns IsNewNode="True">
         <ColumnInfo Id="Comentario" PropertyName="Comentario" Index="-1" IsNewNode="True" />

@@ -1,10 +1,8 @@
 ﻿using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Updating;
-using DevExpress.ExpressApp.Validation;
 using DevExpress.ExpressApp.Xpo;
 using DevExpress.Persistent.BaseImpl;
-using DevExpress.Persistent.Validation;
 using System;
 using System.Collections.Generic;
 

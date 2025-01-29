@@ -57,7 +57,8 @@ namespace SBT.Apps.Base.Module.BusinessObjects
                 {
                     moneda = Session.GetObjectByKey<Moneda>(parametro.Valor.Trim());
                     this["Moneda"] = moneda ?? null;
-                    this["ValorMoneda"] = moneda?.FactorCambio;
+                    if (ClassInfo.FindMember("ValorMoneda") != null)
+                        this["ValorMoneda"] = moneda?.FactorCambio;
                 }
             }
         }

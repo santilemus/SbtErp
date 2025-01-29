@@ -7,22 +7,26 @@ using DevExpress.ExpressApp.Model;
 using DevExpress.ExpressApp.Security.ClientServer;
 using DevExpress.ExpressApp.SystemModule;
 using DevExpress.Persistent.Base;
+using DevExpress.Persistent.BaseImpl;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using System;
 using System.ComponentModel;
 using System.Drawing;
+using SBT.Apps.Empleado.Module.BusinessObjects;
+using System.Reflection;
+using DevExpress.Xpo.Metadata;
+using DevExpress.ExpressApp.Security.Xpo.Adapters;
 
 namespace SBT.Apps.Contabilidad.Module.BusinessObjects
 {
     /// <summary>
     /// Contabilidad. BO correspondientes al encabezado de las partidas contables
     /// </summary>
-    [NavigationItem("Contabilidad"), ModelDefault("Caption", "Partida Contable"), XafDefaultProperty(nameof(Numero)), CreatableItem(false)]
+    [NavigationItem("Contabilidad"), ModelDefault("Caption", "Partida Contable"), DefaultProperty(nameof(Numero)), CreatableItem(false)]
     [ImageName(nameof(Partida)), MapInheritance(MapInheritanceType.OwnTable)]
     [VisibleInReports(true)]
-    //[DefaultProperty("DisplayMemberNameForLookupEditorsOfThisType")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     [Persistent("ConPartida")]
     [Appearance("Partida_Incompleta", AppearanceItemType = "ViewItem", TargetItems = "*",
@@ -50,7 +54,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         CustomMessageTemplate = @"Solo puede existir una partida de los siguientes Tipos '{Criteria}', no puede ingresar o generar otra similar en el período",
         ResultType = ValidationResultType.Warning)]
     // -- CORREGIR Y REIMPLEMENTAR DAN PROBLEMAS CUANDO LAS VALIDACIONES SE EJECUTAN ANTES DE INSERTAR EL DETALLE
-    [RuleObjectExists("Partida de Liquidación del ejercicio", DefaultContexts.Save, "[Tipo] == 'Liquidacion' && [Automatica] == True", InvertResult = true,
+    [RuleObjectExists("Partida de Liquidación del ejercicio", DefaultContexts.Save, "[Tipo] == 'Liquidacion' && [Automatica] == True And [Detalle][]", InvertResult = true,
         CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction, TargetCriteria = "GetYear([Fecha]) == [Periodo.Oid] And [Tipo] == 'Liquidacion'", IncludeCurrentObject = false,
         CustomMessageTemplate = @"Solo puede existir una partida de Liquidacion automática y que corresponde a la liquidación del ejercicio")]
 
@@ -74,6 +78,12 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
             base.AfterConstruction();
             mayorizada = false;
             elaboro = null;
+            if (DevExpress.ExpressApp.SecuritySystem.UserType == typeof(Usuario) && 
+               (DevExpress.ExpressApp.SecuritySystem.CurrentUser as Usuario).ClassInfo.FindMember("Empleado") != null)
+            {
+                var emple = (DevExpress.ExpressApp.SecuritySystem.CurrentUser as Usuario).GetMemberValue("Empleado");
+                elaboro = Session.GetObjectByKey<Empleado.Module.BusinessObjects.Empleado>((emple as Empleado.Module.BusinessObjects.Empleado).Oid);
+            }
             Numero = -1;
             Oid = -1;
             Tipo = ETipoPartida.Diario;
@@ -110,6 +120,7 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         bool mayorizada;
         private EPartidaEstado estado;
         private bool automatica;
+        private FileData documentoSoporte;
 
         [DbType("int"), Persistent("Periodo"), XafDisplayName("Período"), VisibleInLookupListView(false), VisibleInListView(false)]
         [RuleRequiredField("Partida.Periodo_Requerido", "Save", SkipNullOrEmptyValues = false)]
@@ -219,6 +230,16 @@ namespace SBT.Apps.Contabilidad.Module.BusinessObjects
         public bool Mayorizada
         {
             get { return mayorizada; }
+        }
+
+        [System.ComponentModel.DisplayName("Documento de Soporte")]
+        [ToolTip(@"Cargar los documentos de soporte del asiento contable, unidos en  un solo archivo pdf, excel o word", "Tip", ToolTipIconType.Information)]
+        [DevExpress.Xpo.Aggregated, ExpandObjectMembers(ExpandObjectMembers.Never)]
+        [FileTypeFilter("Pdf Files", 1, "*.pdf", "*.docx", "*.xlsx")]
+        public FileData DocumentoSoporte
+        {
+            get => GetDelayedPropertyValue<FileData>(nameof(DocumentoSoporte));
+            set => SetDelayedPropertyValue<FileData>(nameof(DocumentoSoporte), value);
         }
 
         //[Appearance("Partida.TransaccionPartidas Mostrar", TargetItems = nameof(BancoTransaccionPartidas), AppearanceItemType = "ViewItem",

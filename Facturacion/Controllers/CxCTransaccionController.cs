@@ -1,18 +1,25 @@
-﻿using DevExpress.Data.Filtering;
+﻿using DevExpress.Charts.Native;
+using DevExpress.Data.Filtering;
+using DevExpress.Data.Helpers;
+using DevExpress.Data.Linq.Helpers;
+using DevExpress.Data.ODataLinq.Helpers;
 using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.Actions;
 using DevExpress.ExpressApp.ReportsV2;
 using DevExpress.ExpressApp.Xpo;
 using DevExpress.Persistent.BaseImpl;
+using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Base.Module.Controllers;
 using SBT.Apps.CxC.Module.BusinessObjects;
 using SBT.Apps.Facturacion.Module.BusinessObjects;
 using SBT.Apps.Inventario.Module.BusinessObjects;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Security.Cryptography.Pkcs;
 
 namespace SBT.Apps.Facturacion.Module.Controllers
 {
@@ -58,41 +65,46 @@ namespace SBT.Apps.Facturacion.Module.Controllers
 
         private void ObjectSpace_Commiting(object Sender, CancelEventArgs e)
         {
+            if (View.CurrentObject == null)
+                return;
             /// 204 es el Codigo del Tipo de Movimiento de Inventario que corresponde a devoluciones de clientes (notas de credito)
             tipoMovimiento = ObjectSpace.FindObject<InventarioTipoMovimiento>(CriteriaOperator.And(new BinaryOperator("Codigo", "204"), new BinaryOperator("Activo", true)));
             if (tipoMovimiento == null)
             {
-                MostrarError($"No se encontró Tipo de Movimiento de Inventario con código 204 que debe corresponder a Devoluciones de Clientes, el Inventario no se puede actualizar ");
+                Application.ShowViewStrategy.ShowMessage($"No se encontró Tipo de Movimiento de Inventario con código 204 que debe corresponder a Devoluciones de Clientes, el Inventario no se puede actualizar ",
+                    InformationType.Error);
                 e.Cancel = true;
                 return;
             }
-            System.Collections.IList items = ObjectSpace.ModifiedObjects;
-            foreach (object item in items)
+            try
             {
-                if (item.GetType() == typeof(SBT.Apps.CxC.Module.BusinessObjects.CxCTransaccion) ||
-                    item.GetType() == typeof(SBT.Apps.CxC.Module.BusinessObjects.CxCDocumento))
+                var items = ObjectSpace.ModifiedObjects.Cast<IXPObject>().Where<IXPObject>(x => x.GetType() == typeof(CxCTransaccion) || x.GetType() == typeof(CxCDocumento));
+                if (items != null && items.Count() > 0)
+                    ActualizarCxC(items);
+                if ((View.CurrentObject as CxCTransaccion).Tipo.Padre.Oid == 1 || (View.CurrentObject as CxCTransaccion).Tipo.Padre.Oid == 16)
                 {
-                    if (((CxCTransaccion)item).Venta.Estado == EEstadoFactura.Anulado)
-                    {
-                        e.Cancel = true;
-                        return;
-                    }
-                    ActualizarSaldoFactura((CxCTransaccion)item);
-                }
-                else
-                {
-                    CxCDocumentoDetalle fItem = (CxCDocumentoDetalle)item;
-                    if (fItem.VentaDetalle.Producto.Categoria.Clasificacion == Producto.Module.BusinessObjects.EClasificacion.Servicios ||
-                        fItem.VentaDetalle.Producto.Categoria.Clasificacion == Producto.Module.BusinessObjects.EClasificacion.Intangible ||
-                        fItem.VentaDetalle.Producto.Categoria.Clasificacion == Producto.Module.BusinessObjects.EClasificacion.Otros)
-                        continue;
-                    ActualizarInventario(fItem);
-                    ActualizarKardex(fItem);
-                    if (fItem.VentaDetalle.Producto.Categoria.MetodoCosteo == Producto.Module.BusinessObjects.EMetodoCosteoInventario.PEPS ||
-                        fItem.VentaDetalle.Producto.Categoria.MetodoCosteo == Producto.Module.BusinessObjects.EMetodoCosteoInventario.UEPS)
-                        ActualizarLote(fItem);
+                    items = ObjectSpace.ModifiedObjects.Cast<IXPObject>().Where<IXPObject>(x => x.GetType() == typeof(CxCDocumentoDetalle));
+                    if (items != null && items.Count() > 0)
+                        DoProcesarDetalleCxC(items);
                 }
             }
+            catch (Exception ex)
+            {
+                Application.ShowViewStrategy.ShowMessage($@"Error {ex.Message}", InformationType.Error);
+            }
+        }
+
+        private void ActualizarCxC(IEnumerable<IXPObject> items)
+        {
+            foreach (CxCTransaccion item in items)
+                if (item.Estado != ECxCTransaccionEstado.Anulado)
+                    ActualizarSaldoFactura(item);
+        }
+
+        private void DoProcesarDetalleCxC(IEnumerable<IXPObject> items)
+        {
+            foreach (CxCDocumentoDetalle item in items)
+                ActualizarInventario(item);
         }
 
         /// <summary>
@@ -253,7 +265,7 @@ namespace SBT.Apps.Facturacion.Module.Controllers
                     {
                         if (val >= aud.NoDesde && val < aud.NoHasta)
                             ((CxCTransaccion)View.CurrentObject).NumeroDocumento = noDoc;
-                    }     
+                    }
                     else
                     {
                         ((CxCTransaccion)View.CurrentObject).NumeroDocumento = null;

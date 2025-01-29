@@ -12,6 +12,7 @@ using System;
 using System.ComponentModel;
 using DevExpress.ExpressApp.Editors;
 using DevExpress.Drawing;
+using SBT.Apps.Tercero.Module.BusinessObjects;
 
 namespace SBT.Apps.Banco.Module.BusinessObjects
 {
@@ -29,7 +30,6 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
     [RuleIsReferenced("BancoTransaccion.Reference_Editar", DefaultContexts.Save, typeof(BancoConciliacionDetalle), "Transaccion",
         InvertResult = true, CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction,
         MessageTemplateMustBeReferenced = "El objeto {TargetObject} no debe tener referencias.")]
-
     [Appearance("BancoTransaccion.Cheque y Cargo", Criteria = "[Clasificacion.Tipo] == 'Cheque' || [Clasificacion.Tipo] == 'Cargo'", AppearanceItemType = "ViewItem",
         Visibility = ViewItemVisibility.Hide, Context = "DetailView", TargetItems = "Abono;IdReferencia;Cobros")]
     [Appearance("BancoTransaccion.Remesa y Abono", Criteria = "[Clasificacion.Tipo] == 'Abono' || [Clasificacion.Tipo] == 'Remesa'", AppearanceItemType = "ViewItem",
@@ -104,7 +104,7 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         decimal monto;
         EBancoTransaccionEstado estado = EBancoTransaccionEstado.Digitado;
         BancoChequera chequera;
-
+        private Tercero.Module.BusinessObjects.Tercero tercero;
 
         [Association("BancoCuenta-Transacciones"), Persistent(nameof(BancoCuenta)), XafDisplayName("Cuenta"), Index(0)]
         [DataSourceCriteria("[Empresa.Oid] == EmpresaActualOid()")]
@@ -187,10 +187,24 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
         }
 
         [XafDisplayName("Cheque No")]
-        [PersistentAlias(nameof(chequeNo)), Index(7)]
+        [PersistentAlias(nameof(chequeNo)), Index(6)]
         public int ChequeNo
         {
             get => chequeNo;
+        }
+
+        [System.ComponentModel.DisplayName("Tercero"), Index(7), VisibleInListView(false), Persistent(nameof(Tercero))]
+        [DataSourceCriteria(@"[Roles][Not [Id Role] In ('Consultorio', 'Banco', 'Fabricante')]")]
+        [ToolTip(@"Tercero involucrado en la transacción. Cuando es un pago a la CxP es el proveedor; cuando es una transacción de CxC es el cliente")]
+        public Tercero.Module.BusinessObjects.Tercero Tercero
+        {
+            get => tercero;
+            set
+            {
+                bool changed = SetPropertyValue(nameof(Tercero), ref tercero, value);
+                if (!IsLoading && !IsSaving && changed)
+                    Beneficiario = Tercero?.Nombre ?? string.Empty;
+            }
         }
 
         [Size(150), DbType("varchar(150)"), Persistent("Beneficiario"), XafDisplayName("Beneficiario"), Index(8)]

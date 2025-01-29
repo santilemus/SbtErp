@@ -205,3 +205,57 @@ go
 alter table CompraFactura
   add Partida int null
 go
+
+-- 22. Se agrega tabla para guardar documentos y archivos cargados en la aplicación
+
+/****** Object:  Table [dbo].[FileData]    Script Date: 21/1/2025 22:41:08 ******/
+SET ANSI_NULLS ON
+go
+
+SET QUOTED_IDENTIFIER ON
+go
+
+create table [dbo].[FileData](
+	[Oid] [uniqueidentifier] ROWGUIDCOL  NOT NULL,
+	[size] [int] NULL,
+	[FileName] [nvarchar](260) NULL,
+	[Content] [varbinary](max) NULL,
+	[OptimisticLockField] [int] NULL,
+	[GCRecord] [int] NULL,
+ constraint [PK_FileData] PRIMARY KEY CLUSTERED 
+(
+	[Oid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+go
+
+-- 23. Modificamos la tabla del encabezado de la partida contable para agregar columna de referencia al documento de soporte de
+--     la partida
+alter table ConPartida
+  add [DocumentoSoporte] [uniqueidentifier] NULL
+go
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Referencia al documento de soporte de la partida contable. Es foranea a FileData' , 
+     @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'ConPartida', @level2type=N'COLUMN',@level2name=N'DocumentoSoporte'
+go
+alter table ConPartida
+  add constraint FK_ConPartida_DocumentoSoporte foreign key(DocumentoSoporte) references FileData(Oid)
+go
+
+/*
+--24. Agregamos relacion 
+alter table CxCTipoTransaccion
+  add [BancoTipoTransaccionCargo] int null,
+      [BancoTipoTransaccionAbono] int null
+go
+*/
+
+--24. Modificamos la tabla de Transacciones de Bancos, agregamos el Tercero para filtrar el ingreso de pagos (cxp) solo de un proveedor
+alter table BancoTransaccion
+  add Tercero int null
+go
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Referencia al tercero. Cuando es un pago (cxp) es el proveedor, cuando son cobros (cxc) es el cliente' , 
+     @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'BancoTransaccion', @level2type=N'COLUMN',@level2name=N'Tercero'
+go
+alter table BancoTransaccion
+  add constraint FK_BancoTransaccion_Tercero foreign key(Tercero) references Tercero(Oid)
+go

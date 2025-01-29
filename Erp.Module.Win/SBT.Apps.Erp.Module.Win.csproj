@@ -43,7 +43,6 @@
 	<ItemGroup>
 	  <Compile Include="Controllers\LibroCompraListViewControllerWin.cs" />
 	  <Compile Include="Controllers\LoginController.cs" />
-	  <Compile Include="Controllers\vcBancoTransaccionDetailWin.cs" />
 	  <Compile Include="Controllers\WindowsMainController.cs" />
 	  <Compile Include="ErpWindowsFormsModule.cs" />
 	  <Compile Include="ErpWindowsFormsModule.Designer.cs" />

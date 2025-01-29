@@ -42,9 +42,10 @@ public class Startup
         {
             builder.UseApplication<BlazorBlazorApplication>();
             builder.Modules
-                .AddAuditTrailXpo(options => { 
-                    options.ObjectAuditingMode = DevExpress.Persistent.AuditTrail.ObjectAuditingMode.Lightweight; 
-                    options.Enabled = false; 
+                .AddAuditTrailXpo(options =>
+                {
+                    options.ObjectAuditingMode = DevExpress.Persistent.AuditTrail.ObjectAuditingMode.Lightweight;
+                    options.Enabled = false;
                 })
                 .AddCloningXpo()
                 .AddConditionalAppearance()
@@ -72,6 +73,10 @@ public class Startup
                 .AddViewVariants(options =>
                 {
                     options.ShowAdditionalNavigation = true;
+                })
+                .AddFileAttachments(options =>
+                {
+                    options.DefaultMaxFileSize = 1048576;
                 })
                 .Add<SBT.Apps.Erp.Module.ErpModule>()
                 .Add<BlazorBlazorModule>();
@@ -148,7 +153,8 @@ public class Startup
                     options.IsSupportChangePassword = true;
                 });
             // agregado el 19/dic/2024 para poder obtener la ip del cliente ** sera util para recuperar la caja con base a la direccion ip **
-            builder.Services.Configure<ForwardedHeadersOptions>(options => {
+            builder.Services.Configure<ForwardedHeadersOptions>(options =>
+            {
                 options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
                 options.KnownNetworks.Clear();
                 options.KnownProxies.Clear();

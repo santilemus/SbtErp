@@ -23,8 +23,7 @@ namespace SBT.Apps.Banco.Module.Controllers
         {
             base.OnActivated();
             // Es para filtrar los datos para la empresa de la sesion y evitar que se mezclen cuando hay más de una empresa
-            if ((string.Compare(View.GetType().Name, "ListView", StringComparison.Ordinal) == 0) &&
-                !(((ListView)View).CollectionSource.Criteria.ContainsKey("Empresa Actual")))
+            if (!(((ListView)View).CollectionSource.Criteria.ContainsKey("Empresa Actual")))
                 ((ListView)View).CollectionSource.Criteria["Empresa Actual"] = CriteriaOperator.Parse("[BancoCuenta.Empresa.Oid] = ?", ((Usuario)SecuritySystem.CurrentUser).Empresa.Oid);
 
         }
@@ -39,6 +38,7 @@ namespace SBT.Apps.Banco.Module.Controllers
         {
             base.DoInitializeComponent();
             TargetObjectType = typeof(SBT.Apps.Banco.Module.BusinessObjects.BancoTransaccion);
+            TargetViewType = ViewType.ListView;
         }
     }
 }

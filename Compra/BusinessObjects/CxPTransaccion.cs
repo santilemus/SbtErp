@@ -159,6 +159,7 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
 
         [Association("CompraFactura-CxPTransacciones")]
         [XafDisplayName("Compra Factura"), Index(7)]
+        [DataSourceCriteria("[Estado] == 'Debe'")]
         public CompraFactura Factura
         {
             get => factura;
@@ -208,6 +209,23 @@ namespace SBT.Apps.CxP.Module.BusinessObjects
             set => SetPropertyValue(nameof(UsuarioAnulo), ref usuarioAnulo, value);
         }
 
+        /*
+        private XPCollection<CompraFactura> compraFacturas;
+        [Browsable(false)]
+        public XPCollection<CompraFactura> CompraFacturas
+        {
+            get
+            {
+                if (compraFacturas == null)
+                {
+                    var idTercero = BancoTransaccion.Tercero.Oid;
+                    CriteriaOperator criterio = CriteriaOperator.FromLambda<CompraFactura>(x => x.Proveedor.Oid == idTercero);
+                    compraFacturas = new XPCollection<CompraFactura>(Session, CriteriaOperator.Parse("[Pagos][^.Tercero.Oid] = [Proveedor.Oid]")); // && [Saldo] > 0.0m && [Estado] == 'Debe'"));
+                }
+                return compraFacturas;
+            }
+        }
+        */
 
         #endregion
 

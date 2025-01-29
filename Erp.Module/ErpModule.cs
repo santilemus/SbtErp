@@ -40,6 +40,8 @@ namespace SBT.Apps.Erp.Module
         {
             base.Setup(moduleManager);
             ValidationRulesRegistrator.RegisterRule(moduleManager, typeof(ProveedorLibroCompraCodeRule), typeof(IRuleIsReferencedProperties));
+            ValidationRulesRegistrator.RegisterRule(moduleManager, typeof(BancoTransaccionCxPComparisonCodeRule), typeof(IRuleValueComparisonProperties));
+            ValidationRulesRegistrator.RegisterRule(moduleManager, typeof(BancoTransaccionCxPReferenceCodeRule), typeof(IRuleIsReferencedProperties));
         }
 
         // agregado el 13/nov/2021 por selm
@@ -93,7 +95,7 @@ namespace SBT.Apps.Erp.Module
                 mInfoCobros.AddAttribute(new DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Cobros"), true);
                 mInfoCobros.AddAttribute(new DevExpress.ExpressApp.ConditionalAppearance.AppearanceAttribute("BancoTransaccion.Cobros",
                     DevExpress.ExpressApp.ConditionalAppearance.AppearanceItemType.ViewItem,
-                    "([Clasificacion.Tipo] == 1 || [Clasificacion.Tipo] == 2) && [Oid] In (1, 3, 5, 7, 8)")
+                    "([Clasificacion.Tipo] == 'Abono' || [Clasificacion.Tipo] == 'Remesa') && [Oid] In (1, 3, 5, 7, 8)")
                 { Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide }, true);
             }
             ITypeInfo tInfoCxCTransaccion = typesInfo.FindTypeInfo(typeof(SBT.Apps.CxC.Module.BusinessObjects.CxCTransaccion));
@@ -118,7 +120,7 @@ namespace SBT.Apps.Erp.Module
                 mInfoPagos.AddAttribute(new DevExpress.ExpressApp.DC.XafDisplayNameAttribute("Pagos"), true);
                 mInfoPagos.AddAttribute(new DevExpress.ExpressApp.ConditionalAppearance.AppearanceAttribute("BancoTransaccion.Pagos",
                     DevExpress.ExpressApp.ConditionalAppearance.AppearanceItemType.ViewItem,
-                    "([Clasificacion.Tipo] == 3 || [Clasificacion.Tipo] == 4) && [Oid] In (11, 14, 16, 19, 20)")
+                    "([Clasificacion.Tipo] == 'Cheque' || [Clasificacion.Tipo] == 'Cargo') && [Oid] In (11, 14, 16, 19, 20)")
                 { Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide }, true);
             }
             ITypeInfo tInfoCxPTransaccion = typesInfo.FindTypeInfo(typeof(SBT.Apps.CxP.Module.BusinessObjects.CxPTransaccion));
