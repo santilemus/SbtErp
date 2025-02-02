@@ -386,7 +386,7 @@ namespace SBT.Apps.Compra.Module.BusinessObjects
         /// </summary>
         public override void ActualizarSaldo(decimal valor, EEstadoFactura status, bool forceChangeEvents)
         {
-            if (CondicionPago == ECondicionPago.Credito)
+            if (Saldo != 0.0m)
             {
                 base.ActualizarSaldo(valor, status, forceChangeEvents);
             }

@@ -314,6 +314,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             set
             {
                 bool changed = SetPropertyValue(nameof(FormaPago), ref formaPago, value);
+                /*
                 if (!IsLoading && !IsSaving && changed)
                 {
                     if (FormaPago == EFormaPago.Efectivo || FormaPago == EFormaPago.Otro)
@@ -329,8 +330,11 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
                         NoTarjeta = null;
                     }
                 }
+                */
             }
         }
+
+        /*
         [XafDisplayName("Tipo Tarjeta"), DbType("varchar(12)"), VisibleInListView(false), Index(17)]
         [RuleRequiredField("Venta.TipoTarjeta_Requerido", "Save", TargetCriteria = "[FormaPago] == 2",
              ResultType = ValidationResultType.Warning)]
@@ -373,6 +377,7 @@ namespace SBT.Apps.Facturacion.Module.BusinessObjects
             get => noReferenciaPago;
             set => SetPropertyValue(nameof(NoReferenciaPago), ref noReferenciaPago, value);
         }
+        */
 
         [PersistentAlias(nameof(diaCerrado)), XafDisplayName("Día Cerrado"), VisibleInListView(false), Index(29)]
         [DetailViewLayout("Totales", LayoutGroupType.SimpleEditorsGroup, 10)]

@@ -15,11 +15,9 @@ using SBT.Apps.CxC.Module.BusinessObjects;
 using SBT.Apps.Facturacion.Module.BusinessObjects;
 using SBT.Apps.Inventario.Module.BusinessObjects;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Security.Cryptography.Pkcs;
 
 namespace SBT.Apps.Facturacion.Module.Controllers
 {
@@ -28,7 +26,6 @@ namespace SBT.Apps.Facturacion.Module.Controllers
     /// </summary>
     public class CxCTransaccionController : ViewControllerBase
     {
-        InventarioTipoMovimiento tipoMovimiento;
         private SimpleAction saImprimirDocumento;
 
         public CxCTransaccionController() : base()
@@ -65,32 +62,22 @@ namespace SBT.Apps.Facturacion.Module.Controllers
 
         private void ObjectSpace_Commiting(object Sender, CancelEventArgs e)
         {
-            if (View.CurrentObject == null)
-                return;
-            /// 204 es el Codigo del Tipo de Movimiento de Inventario que corresponde a devoluciones de clientes (notas de credito)
-            tipoMovimiento = ObjectSpace.FindObject<InventarioTipoMovimiento>(CriteriaOperator.And(new BinaryOperator("Codigo", "204"), new BinaryOperator("Activo", true)));
-            if (tipoMovimiento == null)
-            {
-                Application.ShowViewStrategy.ShowMessage($"No se encontró Tipo de Movimiento de Inventario con código 204 que debe corresponder a Devoluciones de Clientes, el Inventario no se puede actualizar ",
-                    InformationType.Error);
-                e.Cancel = true;
-                return;
-            }
+            var items = ObjectSpace.ModifiedObjects.Cast<IXPObject>().Where<IXPObject>(x => x.GetType() == typeof(CxCTransaccion) || x.GetType() == typeof(CxCDocumento));
             try
             {
-                var items = ObjectSpace.ModifiedObjects.Cast<IXPObject>().Where<IXPObject>(x => x.GetType() == typeof(CxCTransaccion) || x.GetType() == typeof(CxCDocumento));
                 if (items != null && items.Count() > 0)
                     ActualizarCxC(items);
-                if ((View.CurrentObject as CxCTransaccion).Tipo.Padre.Oid == 1 || (View.CurrentObject as CxCTransaccion).Tipo.Padre.Oid == 16)
+                items = ObjectSpace.ModifiedObjects.Cast<IXPObject>().Where<IXPObject>(x => x.GetType() == typeof(CxCDocumentoDetalle));
+                if (items != null && items.Count() > 0)
                 {
-                    items = ObjectSpace.ModifiedObjects.Cast<IXPObject>().Where<IXPObject>(x => x.GetType() == typeof(CxCDocumentoDetalle));
-                    if (items != null && items.Count() > 0)
-                        DoProcesarDetalleCxC(items);
+                    if (!DoProcesarDetalleCxC(items))
+                        e.Cancel = true;
                 }
             }
             catch (Exception ex)
             {
                 Application.ShowViewStrategy.ShowMessage($@"Error {ex.Message}", InformationType.Error);
+                e.Cancel = true;
             }
         }
 
@@ -101,10 +88,28 @@ namespace SBT.Apps.Facturacion.Module.Controllers
                     ActualizarSaldoFactura(item);
         }
 
-        private void DoProcesarDetalleCxC(IEnumerable<IXPObject> items)
+        private bool DoProcesarDetalleCxC(IEnumerable<IXPObject> items)
         {
+            /// 204 es el Codigo del Tipo de Movimiento de Inventario que corresponde a devoluciones de clientes (notas de credito)
+            /// las 2 siguientes lineas estan fuera del foreach para evitar ejecutarlo mas de una vez
+            CriteriaOperator criteria = CriteriaOperator.FromLambda<InventarioTipoMovimiento>(x => x.Codigo == "204" && x.Activo);
+            InventarioTipoMovimiento tipoMovimiento = ObjectSpace.FindObject<InventarioTipoMovimiento>(criteria);
+            if (tipoMovimiento == null)
+            {
+                Application.ShowViewStrategy.ShowMessage($"No se encontró Tipo de Movimiento de Inventario con código 204 que debe corresponder a Devoluciones de Clientes, el Inventario no se puede actualizar ",
+                    InformationType.Error);
+                return false;
+            }
             foreach (CxCDocumentoDetalle item in items)
-                ActualizarInventario(item);
+            {
+                if (item.CxCDocumento.Tipo.Oid == 2 || item.CxCDocumento.Tipo.Oid == 17)
+                {              
+                    ActualizarInventario(item, tipoMovimiento);
+                    ActualizarKardex(item, tipoMovimiento);
+                    //ActualizarLote;
+                }
+            }
+            return true;
         }
 
         /// <summary>
@@ -117,17 +122,17 @@ namespace SBT.Apps.Facturacion.Module.Controllers
         /// antes, tiene el mismo efecto que restar de las entradas la cantidad del item eliminado del mes
         /// </summary>
         /// <param name="item">El item del detalle de la venta que esta siendo procesado</param>
-        private void ActualizarInventario(CxCDocumentoDetalle item)
+        private void ActualizarInventario(CxCDocumentoDetalle item, InventarioTipoMovimiento tipo)
         {
             Inventario.Module.BusinessObjects.Inventario inventarioItem = ObjectSpace.FindObject<Inventario.Module.BusinessObjects.Inventario>(
                    CriteriaOperator.Parse("[Bodega.Oid] == ? && [Producto.Oid] == ? && [TipoMovimiento.Oid] == ?",
-                   item.VentaDetalle.Bodega.Oid, item.VentaDetalle.Producto.Oid, tipoMovimiento.Oid));
+                   item.VentaDetalle.Bodega.Oid, item.VentaDetalle.Producto.Oid, tipo.Oid));
             if (inventarioItem == null)
             {
                 inventarioItem = ObjectSpace.CreateObject<Inventario.Module.BusinessObjects.Inventario>();
                 inventarioItem.Bodega = item.VentaDetalle.Bodega;
                 inventarioItem.Producto = item.VentaDetalle.Producto;
-                inventarioItem.TipoMovimiento = tipoMovimiento;
+                inventarioItem.TipoMovimiento = tipo;
             }
             if (ObjectSpace.IsNewObject(item))
                 inventarioItem.Cantidad += item.Cantidad;
@@ -154,17 +159,17 @@ namespace SBT.Apps.Facturacion.Module.Controllers
         /// Evaluar en las pruebas porque cuando pase por aqui es posible que item.Oid aun no tenga valor, en cuyo caso 
         /// tendremos que usar otro datos, por ejemplo item.CxCDocumento.Oid
         /// </remarks>
-        private void ActualizarKardex(CxCDocumentoDetalle item)
+        private void ActualizarKardex(CxCDocumentoDetalle item, InventarioTipoMovimiento tipo)
         {
             Kardex kardexItem = ObjectSpace.FindObject<Kardex>(
                 CriteriaOperator.Parse("[Producto.Oid] == ? && [TipoMovimiento] == ? && [Fecha] = ? && [Referencia] == ?",
-                item.VentaDetalle.Producto.Oid, tipoMovimiento.Oid, item.CxCDocumento.Fecha, item.Oid));
+                item.VentaDetalle.Producto.Oid, tipo.Oid, item.CxCDocumento.Fecha, item.Oid));
             if (kardexItem == null)
             {
                 kardexItem = ObjectSpace.CreateObject<Kardex>();
                 kardexItem.Bodega = item.VentaDetalle.Bodega;
                 kardexItem.Producto = item.VentaDetalle.Producto;
-                kardexItem.TipoMovimiento = tipoMovimiento;
+                kardexItem.TipoMovimiento = tipo;
             }
             kardexItem.Cantidad = item.Cantidad;
             kardexItem.CostoUnidad = item.VentaDetalle.Costo;

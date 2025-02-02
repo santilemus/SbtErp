@@ -1,8 +1,13 @@
-﻿using DevExpress.ExpressApp;
+﻿using DevExpress.Data.Filtering;
+using DevExpress.ExpressApp;
+using DevExpress.Xpo;
 using SBT.Apps.Base.Module.BusinessObjects;
 using SBT.Apps.Base.Module.Controllers;
+using SBT.Apps.Compra.Module.BusinessObjects;
 using SBT.Apps.CxP.Module.BusinessObjects;
+using SBT.Apps.Inventario.Module.BusinessObjects;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 
@@ -15,17 +20,19 @@ namespace SBT.Apps.Compra.Module.Controllers
     {
         public CxPTransaccionController() : base()
         {
-
+            DoInitializeComponent();
         }
 
         protected override void OnActivated()
         {
             base.OnActivated();
+            ObjectSpace.Committing += ObjectSpace_Committing;
         }
 
         protected override void OnDeactivated()
         {
             base.OnDeactivated();
+            ObjectSpace.Committing -= ObjectSpace_Committing;
         }
 
         protected override void DoInitializeComponent()
@@ -42,28 +49,59 @@ namespace SBT.Apps.Compra.Module.Controllers
         /// <param name="e"></param>
         private void ObjectSpace_Committing(object Sender, CancelEventArgs﻿ e)
         {
-            System.Collections.IList items = ObjectSpace.ModifiedObjects;
-            if (items == null || items.Count == 0)
+            var items = ObjectSpace.ModifiedObjects.Cast<IXPObject>().Where<IXPObject>(x => x.GetType() == typeof(CxPTransaccion) || x.GetType() == typeof(CxPDocumento));
+            try
             {
-                e.Cancel = true;
-                return;
-            }
-            foreach (object item in items)
-            {
-                if (item.GetType() == typeof(SBT.Apps.CxP.Module.BusinessObjects.CxPTransaccion) ||
-                    item.GetType() == typeof(SBT.Apps.CxP.Module.BusinessObjects.CxPDocumento))
+                if (items != null && items.Count() > 0)
+                    ActualizarCxP(items);
+                items = ObjectSpace.ModifiedObjects.Cast<IXPObject>().Where<IXPObject>(x => x.GetType() == typeof(CxPDocumentoDetalle));
+                if (items != null && items.Count() > 0)
+                    
                 {
-                    if (((CxPTransaccion)item).Factura.Estado != EEstadoFactura.Anulado)
-                        ActualizarSaldoFactura((CxPTransaccion)item);
-                    else
-                        e.Cancel = true;
-                }
-                else
-                {
-                    // aqui cuando es el CxPDocumentoDetalle podria ser necesario actualizar el inventario, kardex, lote
-                    // solo si esos documentos afectan el inventario (por ejemplo notas de credito por devolucion al proveedor) 
+                        DoProcesarDetalleCxP(items);  // aqui se actualiza el inventario
                 }
             }
+            catch (Exception ex)
+            {
+                Application.ShowViewStrategy.ShowMessage($@"Error {ex.Message}", InformationType.Error);
+            }
+        }
+
+        private void ActualizarCxP(IEnumerable<IXPObject> items)
+        {
+            foreach (CxPTransaccion item in items)
+                if (item.Estado != ECxPTransaccionEstado.Anulado)
+                    ActualizarSaldoFactura(item);
+        }
+
+        private bool DoProcesarDetalleCxP(IEnumerable<IXPObject> items)
+        {
+            /// 401 es el Codigo del Tipo de Movimiento de Inventario que corresponde a devoluciones de compras (notas de credito)
+            /// las 2 siguientes lineas estan fuera del foreach para evitar ejecutarlo mas de una vez
+            CriteriaOperator criteria = CriteriaOperator.FromLambda<InventarioTipoMovimiento>(x => x.Codigo == "401" && x.Activo);
+            InventarioTipoMovimiento tipoMovimiento = ObjectSpace.FindObject<InventarioTipoMovimiento>(criteria);
+            if (tipoMovimiento == null)
+            {
+                Application.ShowViewStrategy.ShowMessage($"No se encontró Tipo de Movimiento de Inventario con código 401 que debe corresponder a Devoluciones a proveedores, el Inventario no se puede actualizar ",
+                    InformationType.Error);
+                return false;
+            }
+            foreach (CxPDocumentoDetalle item in items)
+            {
+                if (item.Documento.Tipo.Oid == 2 || item.Documento.Tipo.Oid == 17)
+                {
+                    ActualizarInventario(item, tipoMovimiento);
+                    //ActualizarKardex(item, tipoMovimiento);
+                    //ActualizarLote
+                }
+            }
+            return true;
+        }
+
+        private void ActualizarInventario(CxPDocumentoDetalle item, InventarioTipoMovimiento tipo)
+        {
+            // pendiente de implementar
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -81,15 +119,19 @@ namespace SBT.Apps.Compra.Module.Controllers
             decimal fNcredito = Convert.ToDecimal(item.Factura.CxPTransacciones.Where(
                 x => x.Factura == item.Factura && x.Tipo.Oid > 1 && x.Tipo.Oid <= 4 && x.Estado != ECxPTransaccionEstado.Anulado).Sum(x => x.Monto));
             decimal monto = Math.Abs(fCargo - fAbono);
-            if (fNcredito > 0 && item.Factura.Total == fNcredito)
-                item.Factura.ActualizarSaldo(0.0m, EEstadoFactura.Devolucion, true);
-            else if ((item.Factura.Total - monto) == 0.0m)
+            using (IObjectSpace os = ObjectSpace.CreateNestedObjectSpace())
             {
-                item.Factura.ActualizarSaldo(0.0m, EEstadoFactura.Pagado, true);
+                CompraFactura compraFactura = os.GetObject<CompraFactura>(item.Factura);
+                if (fNcredito > 0 && item.Factura.Total == fNcredito)
+                    compraFactura.ActualizarSaldo(0.0m, EEstadoFactura.Devolucion, true);
+                else if ((item.Factura.Total - item.Factura.Renta - monto) == 0.0m)
+                    compraFactura.ActualizarSaldo(0.0m, EEstadoFactura.Pagado, true);
+                else
+                    compraFactura.ActualizarSaldo(item.Factura.Total - item.Factura.Renta - monto, EEstadoFactura.Debe, true);
+                compraFactura.Save();
+                os.CommitChanges();
             }
-            else
-                item.Factura.ActualizarSaldo(item.Factura.Total - monto, EEstadoFactura.Debe, true);
-            item.Factura.Save();
+            
         }
     }
 }

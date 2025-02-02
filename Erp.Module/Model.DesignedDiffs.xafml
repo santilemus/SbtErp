@@ -30,22 +30,26 @@
     </Rules>
   </Validation>
   <Views>
-    <ListView Id="BancoTransaccion_Cobros_ListView">
+    <ListView Id="BancoTransaccion_Cobros_ListView" AllowDelete="False" AllowNew="False" DataAccessMode="Server">
       <Columns>
-        <ColumnInfo Id="FechaAnula" Width="102" Index="-1" />
+        <ColumnInfo Id="Banco" Width="230" Index="-1" Removed="True" />
+        <ColumnInfo Id="FechaAnula" Width="102" Index="-1" Removed="True" />
         <ColumnInfo Id="Moneda" Index="-1" />
-        <ColumnInfo Id="UsuarioAnulo" Index="-1" />
+        <ColumnInfo Id="UsuarioAnulo" Index="-1" Removed="True" />
         <ColumnInfo Id="ValorMoneda" Index="-1" />
         <ColumnInfo Id="Tipo" Width="158" />
         <ColumnInfo Id="Numero" Width="126" />
         <ColumnInfo Id="Venta" Width="102" Index="3" />
         <ColumnInfo Id="Monto" Width="106" Index="4" />
-        <ColumnInfo Id="Cartera" Width="131" Index="5" />
-        <ColumnInfo Id="Banco" Width="230" Index="6" />
-        <ColumnInfo Id="Estado" Width="135" Index="7" />
+        <ColumnInfo Id="NumeroDocumento" Width="173" Index="4" />
+        <ColumnInfo Id="Estado" Width="135" Index="6" />
+        <ColumnInfo Id="Cartera" Width="131" Index="7" />
+        <ColumnInfo Id="AutorizacionDocumento" Removed="True" />
+        <ColumnInfo Id="Comentario" Removed="True" />
+        <ColumnInfo Id="TipoTarjeta" Removed="True" />
       </Columns>
     </ListView>
-    <ListView Id="BancoTransaccion_Pagos_ListView" DetailViewID="CxPTransaccion_DetailView_Pago">
+    <ListView Id="BancoTransaccion_Pagos_ListView" AllowDelete="False" AllowNew="False" DataAccessMode="Server" IsFooterVisible="True" DetailViewID="CxPTransaccion_DetailView_Pago">
       <Columns>
         <ColumnInfo Id="Comentario" Index="-1" />
         <ColumnInfo Id="FechaAnula" Index="-1" />
@@ -56,7 +60,11 @@
         <ColumnInfo Id="Moneda" Width="111" />
         <ColumnInfo Id="ValorMoneda" Width="121" />
         <ColumnInfo Id="Factura" Width="149" />
-        <ColumnInfo Id="Monto" Width="107" />
+        <ColumnInfo Id="Monto" Width="107">
+          <Summary>
+            <ColumnSummaryItem Id="BancoTransaccion_TotalCxP" SummaryType="Sum" IsNewNode="True" />
+          </Summary>
+        </ColumnInfo>
       </Columns>
     </ListView>
     <DetailView Id="CxPTransaccion_DetailView_Pago">

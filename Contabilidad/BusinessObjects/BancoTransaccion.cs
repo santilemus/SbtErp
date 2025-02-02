@@ -332,17 +332,6 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
 
         #endregion
 
-        [Action(Caption = "Entregar Cheque", ConfirmationMessage = "Esta Seguro?", TargetObjectsCriteria = "Clasificacion.Tipo = 3",
-            SelectionDependencyType = MethodActionSelectionDependencyType.RequireSingleObject, ImageName = "Attention", AutoCommit = true,
-            ToolTip = "Marcar el cheque seleccionado como entregado")]
-
-        public void Entregado()
-        {
-            Estado = EBancoTransaccionEstado.Entregado;
-            Save();
-
-        }
-
         //[Action(Caption = "Test")]
         //public void TestNumberToLetter()
         //{
@@ -387,12 +376,6 @@ namespace SBT.Apps.Banco.Module.BusinessObjects
                 throw;
             }
         }
-
-        //[Action(Caption = "My UI Action", ConfirmationMessage = "Are you sure?", ImageName = "Attention", AutoCommit = true)]
-        //public void ActionMethod() {
-        //    // Trigger a custom business logic for the current record in the UI (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112619.aspx).
-        //    this.PersistentProperty = "Paid";
-        //}
     }
 }
 

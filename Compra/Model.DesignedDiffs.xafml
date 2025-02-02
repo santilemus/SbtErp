@@ -481,21 +481,21 @@
         <ColumnInfo Id="Moneda" PropertyName="Moneda" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="NoSujeta" PropertyName="NoSujeta" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="Oid" PropertyName="Oid" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="OrdenCompra" PropertyName="OrdenCompra" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="Origen" PropertyName="Origen" Width="98" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="SubTotal" PropertyName="SubTotal" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="Tipo" PropertyName="Tipo" Width="88" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="TipoFactura" PropertyName="TipoFactura" Index="-1" Width="106" IsNewNode="True" />
-        <ColumnInfo Id="Fecha" PropertyName="Fecha" Index="0" IsNewNode="True" />
-        <ColumnInfo Id="Proveedor" PropertyName="Proveedor" Width="227" Index="1" IsNewNode="True" />
+        <ColumnInfo Id="Fecha" PropertyName="Fecha" Index="0" Width="90" IsNewNode="True" />
+        <ColumnInfo Id="Proveedor" PropertyName="Proveedor" Width="394" Index="1" IsNewNode="True" />
         <ColumnInfo Id="NumeroFactura" PropertyName="NumeroFactura" SortIndex="0" SortOrder="Ascending" Width="169" Index="2" IsNewNode="True" />
-        <ColumnInfo Id="Exenta" PropertyName="Exenta" Index="3" Width="67" IsNewNode="True" />
+        <ColumnInfo Id="Exenta" PropertyName="Exenta" Index="3" Width="77" IsNewNode="True" />
         <ColumnInfo Id="Gravada" PropertyName="Gravada" Index="4" Width="88" IsNewNode="True" />
         <ColumnInfo Id="Iva" PropertyName="Iva" Index="5" IsNewNode="True" />
-        <ColumnInfo Id="Renta" PropertyName="Renta" Index="6" IsNewNode="True" />
+        <ColumnInfo Id="Renta" PropertyName="Renta" Index="6" Width="112" IsNewNode="True" />
         <ColumnInfo Id="Total" PropertyName="Total" Index="7" Width="93" IsNewNode="True" />
-        <ColumnInfo Id="Estado" PropertyName="Estado" Index="8" IsNewNode="True" />
-        <ColumnInfo Id="Saldo" PropertyName="Saldo" Index="9" Width="102" IsNewNode="True" />
-        <ColumnInfo Id="OrdenCompra" PropertyName="OrdenCompra" Index="10" IsNewNode="True" />
+        <ColumnInfo Id="Saldo" PropertyName="Saldo" Index="8" Width="124" IsNewNode="True" />
+        <ColumnInfo Id="Estado" PropertyName="Estado" Index="9" Width="78" IsNewNode="True" />
       </Columns>
     </ListView>
     <ListView Id="CompraFactura_LookupListView_CxP" ClassName="SBT.Apps.Compra.Module.BusinessObjects.CompraFactura" AllowDelete="False" AllowNew="False" IsNewNode="True">
