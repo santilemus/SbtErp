@@ -147,7 +147,7 @@ namespace SBT.Apps.Compra.Module.helper
                 IssOvm = 0.0m,
                 TipoOperacion = (int)x.TipoOperacion,
                 Clasificacion = (int)x.ClasificacionRenta,
-                Sector = (int)x.ProveedorGiro.Sector,
+                Sector = (x.ProveedorGiro != null) ? (int)x.ProveedorGiro?.Sector: 1,
                 TipoCostoGasto = (int)x.TipoCostoGasto,
                 Periodo = string.Format("{0:MMyyyy}", x.Fecha)
             });

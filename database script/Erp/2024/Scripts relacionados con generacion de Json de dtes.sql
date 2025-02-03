@@ -260,7 +260,7 @@ alter table BancoTransaccion
   add constraint FK_BancoTransaccion_Tercero foreign key(Tercero) references Tercero(Oid)
 go
 
--- 25. Se quitan columnas de la tabla Ventas porque en la nueva lógica, los pagos deben registrarse en CxCTransaccion,
+-- 25. Se quitan columnas de la tabla Ventas porque en la nueva lógica, los pagos deben registrarse en CxCTransaccion en todos los casos
 
 alter table Venta
   drop constraint FK_Venta_Banco
@@ -270,3 +270,5 @@ go
 alter table Venta
   drop column Banco, NoReferenciaPago, TipoTarjeta, NoTarjeta
 go
+
+--- TODOS LOS ANTERIORES APLICADOS EN PRODUCCION EL 22/02/2025

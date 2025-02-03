@@ -46,7 +46,6 @@ namespace SBT.Apps.Erp.Blazor.Server.Middleware
             return ms.ToArray();
         }
 
-        private IObjectSpaceFactory objectSpaceFactory;
         private string GetParameter(IQueryCollection parameters, string paramName)
         {
             return parameters.ContainsKey(paramName) ? parameters[paramName] : string.Empty;

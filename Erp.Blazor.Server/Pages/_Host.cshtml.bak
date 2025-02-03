@@ -40,6 +40,7 @@
         <link href="css/site.css" rel="stylesheet" />
         // Uncomment this link to enable CSS isolation. For more information, refer to the following topic: https://learn.microsoft.com/en-us/aspnet/core/blazor/components/css-isolation
         //<link href="SBT.Apps.Erp.Blazor.Blazor.Server.styles.css" rel="stylesheet">
+        <script src="_content/DevExpress.ExpressApp.Blazor/scripts.js"></script>
 
         <app class="d-none">
             <component type="typeof(App)" render-mode="Server" />

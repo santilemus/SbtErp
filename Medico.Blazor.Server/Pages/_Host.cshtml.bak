@@ -1,8 +1,7 @@
 ﻿@page "/"
-@namespace SBT.Apps.Erp.Blazor.Blazor.Server
+@namespace SBT.Medico.Blazor.Server
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @using DevExpress.ExpressApp.Blazor.Components
-@using SBT.Apps.Erp.Blazor.Server;
 
 <!DOCTYPE html>
 <html lang="en">
@@ -12,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, shrink-to-fit=no" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <!-- meta name="theme-color" content="#000000" -->
-    <title>SIAF</title>
+    <title>Registro Electrónico de Pacientes</title>
     <base href="~/" />
     <component type="typeof(BootstrapThemeLink)" render-mode="Static" />
 </head>
@@ -20,6 +19,8 @@
     @{
         string userAgent = Request.Headers["User-Agent"];
         bool isIE = userAgent.Contains("MSIE") || userAgent.Contains("Trident");
+
+        var devExpressAppScriptUrl = $"_content/DevExpress.ExpressApp.Blazor/styles.css?v={AssemblyInfo.Version}";
     }
     @if(isIE) {
         <link href="css/site.css" rel="stylesheet" />
@@ -28,18 +29,23 @@
                 <img class="mt-2 mr-4" src="_content/DevExpress.ExpressApp.Blazor/images/Sad.svg" width="60" height="60" />
                 <div>
                     <div class="h1">Internet Explorer no es soportado.</div>
-                    <p style="font-size: 1rem; opacity: 0.75;" class="m-0">SIAF no se puede cargar en Internet Explorer.<br>Por favor use un navegador diferente.</p>
+                    <p style="font-size: 1rem; opacity: 0.75;" class="m-0">Registro Electrónico de Pacientes no se puede cargar en Internet Explorer.<br>Por favor usar un navegador diferente.</p>
                 </div>
             </div>
         </div>
     }
     else {
-        <component type="typeof(SplashScreen)" render-mode="Static" param-Caption='"Sistema Administrativo Financiero"' param-ImagePath='"images/SplashScreen.svg"' />
+        <component type="typeof(SplashScreen)" render-mode="Static" param-Caption='"Registro Electrónico de Pacientes"' param-ImagePath='"images/SplashScreen.svg"' />
 
-        <link href="_content/DevExpress.ExpressApp.Blazor/styles.css" rel="stylesheet" />
+       @*  <link href="_content/DevExpress.ExpressApp.Blazor/styles.css?test=2413" rel="stylesheet" /> *@
+
+        <link href="\_content/DevExpress.ExpressApp.Blazor/styles.css" asp-append-version="true" rel="stylesheet" />
+        <!-- -->
+        <script src="\_content/DevExpress.ExpressApp.Blazor/scripts.js" asp-append-version="true" \></script>
         <link href="css/site.css" rel="stylesheet" />
         // Uncomment this link to enable CSS isolation. For more information, refer to the following topic: https://learn.microsoft.com/en-us/aspnet/core/blazor/components/css-isolation
-        //<link href="SBT.Apps.Erp.Blazor.Blazor.Server.styles.css" rel="stylesheet">
+        //<link href="SBT.Medico.Blazor.Blazor.Server.styles.css" rel="stylesheet">
+        <script src="_content/DevExpress.ExpressApp.Blazor/scripts.js"></script>
 
         <app class="d-none">
             <component type="typeof(App)" render-mode="Server" />
@@ -52,14 +58,6 @@
         </div>
 
         <script src="_framework/blazor.server.js"></script>
-
-        // agregado por SELM, 30/12/2024 para poner el nombre de la empresa en lugar del logo
-        <script>
-            window.setLogoText = function (text) {
-                document.getElementsByClassName("header-logo")[0].innerHTML = text;
-            };
-        </script>
-        //--
     }
 </body>
 </html>
